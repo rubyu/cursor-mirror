@@ -24,6 +24,7 @@ This specification assigns a stable, semantic identifier to every test item in A
   - `C` = Cursor capture and hot spot metadata
   - `O` = Overlay window behavior
   - `T` = Tray and application lifetime
+  - `S` = Settings UI and persistence
   - `D` = DPI and multi-monitor coordinates
   - `P` = Packaging and runtime dependencies
   - `R` = Resource management and failure handling
@@ -59,8 +60,9 @@ This section defines the scope and intent of each test family. Code definitions 
 
 - H: Hook lifetime and event handling - Installation, callback behavior, pass-through semantics, and unhooking.
 - C: Cursor capture and hot spot metadata - Cursor handle copying, bitmap conversion, hot spot extraction, and invalid-handle behavior.
-- O: Overlay window behavior - Extended styles, topmost behavior, click-through behavior, no-activate behavior, drawing, and movement.
-- T: Tray and application lifetime - Tray icon creation, menu actions, startup, shutdown, and cleanup.
+- O: Overlay window behavior - Extended styles, topmost behavior, click-through behavior, no-activate behavior, drawing, movement, and opacity behavior.
+- T: Tray and application lifetime - Tray icon creation, menu actions, startup, shutdown, settings entry points, and cleanup.
+- S: Settings UI and persistence - Settings defaults, validation, persistence, reset, immediate application, and settings-window command behavior.
 - D: DPI and multi-monitor coordinates - DPI awareness, virtual screen coordinates, negative coordinates, and scaling behavior.
 - P: Packaging and runtime dependencies - Target runtime, artifact shape, and no-install expectations.
 - R: Resource management and failure handling - Native handle disposal, exception containment, and cleanup under failure.
@@ -131,6 +133,38 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that overlay show or update paths request topmost behavior.
   Refs: Section 4.4.
 
+- COT-MOU-5 - Movement translucency default enabled
+  Verify that default settings enable movement translucency mode.
+  Refs: Section 4.4.1.
+
+- COT-MOU-6 - Movement translucency disabled
+  Verify that disabling movement translucency keeps overlay opacity at normal opacity for movement and idle periods.
+  Refs: Section 4.4.1.
+
+- COT-MOU-7 - Movement enter transition
+  Verify that the first movement after idle enters the moving state and begins a linear transition toward moving opacity.
+  Refs: Section 4.4.1.
+
+- COT-MOU-8 - Movement continuation
+  Verify that repeated movement before the idle delay expires keeps the overlay in moving state and does not start an exit transition.
+  Refs: Section 4.4.1.
+
+- COT-MOU-9 - Idle exit transition
+  Verify that the overlay starts returning to normal opacity only after no movement has been observed for the configured idle delay.
+  Refs: Section 4.4.1.
+
+- COT-MOU-10 - Linear easing
+  Verify that enter and exit opacity transitions are linear between their start and target opacity values.
+  Refs: Section 4.4.1.
+
+- COT-MOU-11 - Zero-duration opacity transition
+  Verify that a zero fade duration applies the target opacity immediately without division-by-zero or transient invalid values.
+  Refs: Section 4.4.1.
+
+- COT-MOU-12 - Opacity does not affect placement
+  Verify that opacity changes do not alter overlay size or hot spot alignment calculations.
+  Refs: Sections 4.4, 4.4.1.
+
 #### A.4.T Tray and Application Lifetime
 ##### Unit
 - COT-MTU-1 - Tray icon created
@@ -148,6 +182,56 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 - COT-MTU-4 - Localized user-visible strings
   Verify that user-visible commands and startup diagnostics are resolved through the localization boundary, with English as the default language.
   Refs: Section 2.3.
+
+- COT-MTU-5 - Settings command dispatch
+  Verify that the tray `Settings` command invokes the settings-window show path.
+  Refs: Sections 2.3, 4.5.
+
+- COT-MTU-6 - Tray primary activation dispatch
+  Verify that primary-button activation of the tray icon invokes the settings-window show path.
+  Refs: Sections 2.3, 4.5.
+
+- COT-MTU-7 - Settings close does not exit
+  Verify that closing the settings window does not invoke application shutdown.
+  Refs: Section 4.5.1.
+
+- COT-MTU-8 - Settings exit command dispatch
+  Verify that `Exit Cursor Mirror` in the settings window invokes the same shutdown path as tray `Exit`.
+  Refs: Sections 2.3, 4.5.1.
+
+#### A.4.S Settings UI and Persistence
+##### Unit
+- COT-MSU-1 - Settings defaults
+  Verify documented default settings: movement translucency enabled, moving opacity `70%`, fade duration `80ms`, and idle delay `120ms`.
+  Refs: Sections 4.4.1, 4.5.1.
+
+- COT-MSU-2 - Moving opacity validation
+  Verify that moving opacity values outside `40%` to `100%` are rejected or clamped consistently at the settings boundary.
+  Refs: Section 4.4.1.
+
+- COT-MSU-3 - Timing validation
+  Verify that fade duration and idle delay values outside their documented ranges are rejected or clamped consistently at the settings boundary.
+  Refs: Section 4.4.1.
+
+- COT-MSU-4 - Settings serialization round trip
+  Verify that settings saved to the structured settings format load back to equivalent runtime settings.
+  Refs: Section 5.5.
+
+- COT-MSU-5 - Missing settings fallback
+  Verify that missing settings load documented defaults without preventing startup.
+  Refs: Section 5.5.
+
+- COT-MSU-6 - Corrupt settings fallback
+  Verify that corrupt settings load documented defaults without preventing startup.
+  Refs: Section 5.5.
+
+- COT-MSU-7 - Settings reset
+  Verify that the settings reset command restores documented defaults.
+  Refs: Section 4.5.1.
+
+- COT-MSU-8 - Immediate settings application
+  Verify that settings changes are applied to runtime services without requiring application restart.
+  Refs: Sections 3.2, 4.5.1.
 
 #### A.4.D DPI and Multi-Monitor Coordinates
 ##### Unit
@@ -191,12 +275,12 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 #### A.5.H Hook Lifetime and Event Handling
 ##### Integration
 - COT-BHI-1 - Real low-level hook install
-  On an interactive Windows desktop, install the real `WH_MOUSE_LL` hook and verify that a mouse move produces one or more callbacks.
+  In an explicitly opt-in interactive test run, install the real `WH_MOUSE_LL` hook and verify that a mouse move produces one or more callbacks. This test MUST NOT run in normal CI or default developer test commands.
   Refs: Sections 4.2, 6.2.
 
 - COT-BHI-2 - Real hook cleanup
-  On an interactive Windows desktop, install and remove the hook, then verify that the process exits without leaving a hook-dependent background thread or window.
-  Refs: Sections 4.2, 5.3.
+  In an explicitly opt-in interactive test run, install and remove the hook, then verify that the process exits without leaving a hook-dependent background thread or window. This test MUST NOT run in normal CI or default developer test commands.
+  Refs: Sections 4.2, 5.3, 6.2.
 
 #### A.5.O Overlay Window Behavior
 ##### Integration
@@ -212,11 +296,49 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Show the overlay over a normal top-level window and verify that the overlay remains visible above it.
   Refs: Section 4.4.
 
+- COT-BOI-4 - Layered opacity application
+  With the overlay visible, apply a non-100% opacity setting and verify that the overlay remains visible, click-through, no-activate, and topmost.
+  Refs: Sections 4.4, 4.4.1.
+
 #### A.5.T Tray and Application Lifetime
 ##### Integration
 - COT-BTI-1 - Tray exit terminates process
   Start the application, invoke tray `Exit`, and verify process termination and tray icon removal.
   Refs: Sections 4.5, 5.3.
+
+- COT-BTI-2 - Tray primary activation opens settings
+  Start the application, activate the tray icon with the primary button, and verify that the settings window appears.
+  Refs: Sections 2.3, 4.5.
+
+- COT-BTI-3 - Tray context settings opens settings
+  Start the application, invoke tray `Settings`, and verify that the settings window appears.
+  Refs: Sections 2.3, 4.5.
+
+- COT-BTI-4 - Settings exit terminates process
+  Start the application, open settings, invoke `Exit Cursor Mirror`, and verify process termination and tray icon removal.
+  Refs: Sections 4.5.1, 5.3.
+
+#### A.5.S Settings UI and Persistence
+##### Integration
+- COT-BSI-1 - Settings controls apply immediately
+  Change movement translucency settings through the settings UI and verify that the runtime controller observes the new values without restarting.
+  Refs: Sections 3.2, 4.5.1.
+
+- COT-BSI-2 - Settings persist after restart
+  Change settings, terminate normally, restart the application, and verify that the changed settings are restored.
+  Refs: Sections 4.5.1, 5.5.
+
+- COT-BSI-3 - Settings close keeps process running
+  Open settings, invoke `Close`, and verify that the process and tray icon remain active.
+  Refs: Section 4.5.1.
+
+- COT-BSI-4 - Duplicate settings open focuses existing window
+  Open settings twice and verify that only one settings window exists and the existing window is brought forward.
+  Refs: Section 4.5.1.
+
+- COT-BSI-5 - Settings reset restores defaults
+  Change settings through the UI, invoke `Reset`, and verify that controls and runtime settings return to documented defaults.
+  Refs: Sections 4.4.1, 4.5.1.
 
 #### A.5.P Packaging and Runtime Dependencies
 ##### Integration
@@ -249,3 +371,15 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 - COT-BVM-5 - Click-through manual pass
   Verify that clicking while the overlay is visible interacts with the application underneath, not the overlay.
   Refs: Sections 4.4, 6.3.
+
+- COT-BVM-6 - Movement translucency manual pass
+  Verify that the overlay becomes translucent while moving, returns to normal opacity after idle, and does not visibly lag behind the real cursor.
+  Refs: Sections 4.4.1, 6.3.
+
+- COT-BVM-7 - Parsec translucency visibility
+  Verify through Parsec that the default moving opacity remains visible enough to solve the missing-cursor problem.
+  Refs: Sections 2.1, 4.4.1, 6.3.
+
+- COT-BVM-8 - Settings UI manual pass
+  Verify that the settings window is readable, does not overlap incoherently at common DPI scales, and provides clear `Close` and `Exit Cursor Mirror` behavior.
+  Refs: Sections 4.5.1, 6.3.

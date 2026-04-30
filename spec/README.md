@@ -24,13 +24,16 @@ The key words `MUST`, `MUST NOT`, `SHOULD`, and `MAY` are to be interpreted as d
   - 4.2 Low-Level Mouse Hook
   - 4.3 Cursor Capture
   - 4.4 Overlay Window
+  - 4.4.1 Movement Translucency Mode
   - 4.5 Tray Resident Application
+  - 4.5.1 Settings Window
   - 4.6 Multi-Monitor Coordinates
 - 5. Packaging and Runtime Dependencies - [05-packaging.md](05-packaging.md)
   - 5.1 Target Runtime
   - 5.2 Build Outputs
   - 5.3 Startup and Shutdown
   - 5.4 Version Information
+  - 5.5 User Settings Persistence
 - 6. Conformance and Testing - [06-testing.md](06-testing.md)
   - 6.1 Deterministic Unit Tests
   - 6.2 Windows API Boundary Tests

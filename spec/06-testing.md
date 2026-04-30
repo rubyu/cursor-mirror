@@ -4,15 +4,22 @@
 - Hook lifetime tests MUST cover inactive, activate, double activate, unhook, double unhook, and dispose paths.
 - Coordinate calculation tests MUST cover hot spot alignment, negative coordinates, large cursor images, and monitor-edge positions.
 - Cursor image conversion tests MUST cover successful image creation, invalid handle behavior, and resource disposal behavior.
+- Movement translucency tests MUST cover default settings, disabled behavior, movement entry, movement continuation, idle exit, linear enter easing, linear exit easing, and zero-duration transitions.
+- Settings tests MUST cover defaults, validation, range clamping or rejection, serialization, deserialization, missing settings, corrupt settings, reset behavior, and immediate application of changed values.
 - Tray controller tests SHOULD cover exit command dispatch and cleanup idempotence.
+- Settings UI controller tests SHOULD cover settings command dispatch, duplicate-window prevention, close-without-exit behavior, and settings-window exit dispatch.
 - Window style tests SHOULD verify that the overlay sets the expected extended styles.
 
 ### 6.2 Windows API Boundary Tests
 - Tests SHOULD isolate Windows API calls behind small interfaces where practical.
 - Unit tests MUST use test doubles for hook installation, cursor capture, and overlay movement when direct Windows API calls would make the test nondeterministic.
+- Automated tests run by normal developer commands or CI MUST NOT install global Windows hooks.
+- Automated tests run by normal developer commands or CI MUST NOT depend on real pointer movement, real tray interaction, or an interactive desktop session.
 - Integration tests MAY exercise real Windows APIs.
-- Integration tests that install a real low-level hook MUST be excluded from normal CI unless the CI environment is explicitly known to support interactive desktop hooks.
+- Integration tests that install a real low-level hook MUST be opt-in and MUST be excluded from normal CI unless the CI environment is explicitly known to support interactive desktop hooks.
+- Opt-in interactive tests SHOULD require an explicit signal such as `CURSOR_MIRROR_RUN_INTERACTIVE_TESTS=1`.
 - Integration tests MUST clean up hooks and tray icons even when assertions fail.
+- UI automation tests SHOULD prefer controller-level or form-level seams that do not require a global hook.
 
 ### 6.3 Manual Validation
 Manual validation MUST include:
@@ -24,6 +31,14 @@ Manual validation MUST include:
 - overlay does not intercept clicks;
 - overlay remains topmost over normal application windows;
 - overlay aligns with the real cursor hot spot;
+- movement translucency is visible during pointer movement;
+- movement translucency returns to normal opacity after idle;
+- movement translucency remains readable through the target remote-control environment at default settings;
+- settings window opens from the tray icon and from the tray context menu;
+- settings changes apply without restarting the application;
+- settings persist after restart;
+- settings `Close` does not terminate the process;
+- settings `Exit Cursor Mirror` terminates the process and removes the tray icon;
 - overlay works on a multi-monitor layout when available;
 - overlay works with at least one high-DPI scale factor when available;
 - behavior through Parsec or the target remote-control environment.
@@ -31,6 +46,7 @@ Manual validation MUST include:
 ### 6.4 Regression Artifacts
 - If a visual alignment bug is fixed, the reproduction steps SHOULD be recorded in the relevant test or issue.
 - If a cursor image conversion bug is fixed, a minimal fixture or synthetic test case SHOULD be added when practical.
+- If a settings or movement-translucency regression is fixed, a deterministic unit test SHOULD be added at the controller or state-machine boundary.
 - Manual Parsec validation results SHOULD record the Windows version, DPI settings, monitor count, and remote-control software version.
 
 ### 6.5 Test Identifiers in Tests

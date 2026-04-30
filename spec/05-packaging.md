@@ -24,3 +24,11 @@
 - The tray `About` command, if present, SHOULD display the product version.
 - Version metadata MUST NOT affect runtime behavior.
 - Build and release version semantics MUST follow Section 10.
+
+### 5.5 User Settings Persistence
+- User settings SHOULD be stored under the current user's application data directory.
+- User settings MUST NOT require administrator privileges to read or write.
+- Settings persistence SHOULD use a structured format such as JSON.
+- Missing settings MUST fall back to documented defaults.
+- Corrupt settings MUST fall back to documented defaults without preventing startup.
+- When corrupt settings are ignored, the application SHOULD avoid noisy normal-startup notifications.
