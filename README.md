@@ -43,6 +43,7 @@ The zip contains:
 ```text
 CursorMirror.exe
 README.md
+LICENSE
 ```
 
 ## Development
@@ -80,3 +81,7 @@ The developer specification is in [spec/README.md](spec/README.md).
 Cursor Mirror targets Windows desktop environments. Internally, it uses Win32 APIs such as `SetWindowsHookEx`, `GetCursorInfo`, `CopyIcon`, `GetIconInfo`, `DrawIconEx`, and `UpdateLayeredWindow`.
 
 The initial implementation is designed around .NET Framework 4.x to avoid requiring a separate modern .NET runtime installation on common Windows systems.
+
+## License
+
+Cursor Mirror is licensed under the MIT License. See [LICENSE](LICENSE).
