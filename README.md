@@ -1,5 +1,9 @@
 # Cursor Mirror
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rubyu/cursor-mirror/main/assets/icons/icon.jpg" alt="Cursor Mirror icon" width="160">
+</p>
+
 Cursor Mirror is a small Windows tray application that mirrors the current Windows cursor as a transparent topmost overlay.
 
 It is intended as a workaround for remote-control environments, such as Parsec, where the real Windows cursor may not be visible to the remote viewer.
