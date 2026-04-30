@@ -11,7 +11,7 @@ namespace CursorMirror
         public const int DefaultFadeDurationMilliseconds = 80;
         public const int DefaultIdleDelayMilliseconds = 120;
 
-        public const int MinimumMovingOpacityPercent = 40;
+        public const int MinimumMovingOpacityPercent = 1;
         public const int MaximumMovingOpacityPercent = 100;
         public const int MinimumFadeDurationMilliseconds = 0;
         public const int MaximumFadeDurationMilliseconds = 300;

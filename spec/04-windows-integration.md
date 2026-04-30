@@ -63,7 +63,7 @@ Recommended extended window styles:
 - The default moving opacity SHOULD be `70%`.
 - The default fade duration SHOULD be `80ms`.
 - The default idle delay SHOULD be `120ms`.
-- Moving opacity MUST be configurable within `40%` to `100%`.
+- Moving opacity MUST be configurable within `1%` to `100%`.
 - Fade duration MUST be configurable within `0ms` to `300ms`.
 - Idle delay MUST be configurable within `50ms` to `500ms`.
 - Values outside supported ranges MUST be rejected or clamped consistently at the settings boundary.

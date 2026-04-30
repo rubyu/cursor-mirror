@@ -37,7 +37,7 @@ namespace CursorMirror.Tests
             CursorMirrorSettings high = CursorMirrorSettings.Default();
             high.MovingOpacityPercent = 999;
 
-            TestAssert.Equal(40, low.Normalize().MovingOpacityPercent, "moving opacity lower clamp");
+            TestAssert.Equal(1, low.Normalize().MovingOpacityPercent, "moving opacity lower clamp");
             TestAssert.Equal(100, high.Normalize().MovingOpacityPercent, "moving opacity upper clamp");
         }
 

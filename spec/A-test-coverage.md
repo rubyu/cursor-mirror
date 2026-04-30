@@ -206,7 +206,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Sections 4.4.1, 4.5.1.
 
 - COT-MSU-2 - Moving opacity validation
-  Verify that moving opacity values outside `40%` to `100%` are rejected or clamped consistently at the settings boundary.
+  Verify that moving opacity values outside `1%` to `100%` are rejected or clamped consistently at the settings boundary.
   Refs: Section 4.4.1.
 
 - COT-MSU-3 - Timing validation
