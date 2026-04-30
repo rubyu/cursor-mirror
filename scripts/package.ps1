@@ -1,6 +1,7 @@
 param(
-    [string]$Version = "0.1.0",
-    [switch]$SkipTests
+    [string]$Version,
+    [switch]$SkipTests,
+    [switch]$RequireStableTag
 )
 
 $ErrorActionPreference = "Stop"
@@ -11,17 +12,39 @@ $buildScript = Join-Path $root "scripts\build.ps1"
 $testScript = Join-Path $root "scripts\test.ps1"
 $bin = Join-Path $root "artifacts\bin\$configuration"
 $packageRoot = Join-Path $root "artifacts\package"
-$stage = Join-Path $packageRoot "CursorMirror-$Version"
-$zip = Join-Path $packageRoot "CursorMirror-$Version-windows.zip"
-$sha = "$zip.sha256"
+$versionJson = Join-Path $bin "CursorMirror.version.json"
 
 if (-not $SkipTests) {
-    & $testScript -Configuration $configuration
+    $testArgs = @{
+        Configuration = $configuration
+    }
+    if ($RequireStableTag) {
+        $testArgs.RequireStableTag = $true
+    }
+
+    & $testScript @testArgs
     if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 } else {
-    & $buildScript -Configuration $configuration
+    $buildArgs = @{
+        Configuration = $configuration
+    }
+    if ($RequireStableTag) {
+        $buildArgs.RequireStableTag = $true
+    }
+
+    & $buildScript @buildArgs
     if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 }
+
+$versionInfo = Get-Content -LiteralPath $versionJson -Raw | ConvertFrom-Json
+if (-not [string]::IsNullOrWhiteSpace($Version) -and $Version -ne $versionInfo.PackageVersion) {
+    throw "Package version '$Version' does not match resolved build version '$($versionInfo.PackageVersion)'."
+}
+
+$packageVersion = $versionInfo.PackageVersion
+$stage = Join-Path $packageRoot "CursorMirror-$packageVersion"
+$zip = Join-Path $packageRoot "CursorMirror-$packageVersion-windows.zip"
+$sha = "$zip.sha256"
 
 if (Test-Path $stage) {
     Remove-Item -LiteralPath $stage -Recurse -Force
@@ -43,5 +66,6 @@ $hash = Get-FileHash -Algorithm SHA256 -LiteralPath $zip
 Set-Content -LiteralPath $sha -Value ($hash.Hash.ToLowerInvariant() + "  " + (Split-Path -Leaf $zip)) -Encoding ASCII
 
 Write-Host "Packaged:"
+Write-Host "  Version: $($versionInfo.InformationalVersion)"
 Write-Host "  $zip"
 Write-Host "  $sha"

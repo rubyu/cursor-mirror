@@ -9,6 +9,7 @@ namespace CursorMirror.Tests
             CursorImageProviderTests.AddTo(suite);
             ControllerTests.AddTo(suite);
             LocalizedStringsTests.AddTo(suite);
+            BuildVersionTests.AddTo(suite);
             return suite.Run();
         }
     }

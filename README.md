@@ -1,5 +1,9 @@
 # Cursor Mirror
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rubyu/cursor-mirror/main/assets/icons/icon.jpg" alt="Cursor Mirror icon" width="160">
+</p>
+
 Cursor Mirror is a small Windows tray application that mirrors the current Windows cursor as a transparent topmost overlay.
 
 It is intended as a workaround for remote-control environments, such as Parsec, where the real Windows cursor may not be visible to the remote viewer.
@@ -71,6 +75,17 @@ Package without running tests:
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\package.ps1 -SkipTests
 ```
+
+## Versioning
+
+Builds embed version metadata at compile time.
+
+- Stable release tags must use `vMAJOR.MINOR.PATCH`, such as `v0.1.0`.
+- Stable binaries embed `vMAJOR.MINOR.PATCH+YYYYMMDD.SHA12` in `AssemblyInformationalVersion`.
+- Development binaries embed `vMAJOR.MINOR.PATCH-dev+YYYYMMDD.SHA12`, with `.dirty` appended for uncommitted changes.
+- `AssemblyVersion` and `AssemblyFileVersion` use `MAJOR.MINOR.PATCH.0`.
+
+Release tags that do not match `vMAJOR.MINOR.PATCH` are rejected before packaging or publication.
 
 ## Specification
 

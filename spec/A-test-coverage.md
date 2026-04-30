@@ -163,6 +163,16 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that controller calculations use one coordinate-space abstraction and do not mix logical and physical units.
   Refs: Section 4.1.
 
+#### A.4.P Packaging and Runtime Dependencies
+##### Unit
+- COT-MPU-1 - Informational version shape
+  Verify that the embedded informational version follows the stable or development snapshot form.
+  Refs: Sections 10.1, 10.3, 10.4.
+
+- COT-MPU-2 - Numeric assembly version shape
+  Verify that the embedded assembly and file versions use the numeric `MAJOR.MINOR.PATCH.0` form required by .NET metadata.
+  Refs: Section 10.3.
+
 #### A.4.R Resource Management and Failure Handling
 ##### Unit
 - COT-MRU-1 - Hook callback exception containment

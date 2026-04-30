@@ -37,6 +37,13 @@ The key words `MUST`, `MUST NOT`, `SHOULD`, and `MAY` are to be interpreted as d
   - 6.3 Manual Validation
   - 6.4 Regression Artifacts
   - 6.5 Test Identifiers in Tests
+- 10. Versioning and Release Semantics - [10-versioning.md](10-versioning.md)
+  - 10.1 Version String Forms
+  - 10.2 Branch and Tag Rules
+  - 10.3 .NET Assembly Metadata
+  - 10.4 Build-Time Embedding
+  - 10.5 Package Naming
+  - 10.6 Informative Examples
 - Appendix A. Test Coverage Checklist - [A-test-coverage.md](A-test-coverage.md)
   - A.1 Overview
   - A.2 Identifiers and Conventions
