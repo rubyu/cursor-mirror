@@ -7,6 +7,7 @@ namespace CursorMirror
     {
         void ShowCursor(Bitmap bitmap, Point location);
         void Move(Point location);
+        void SetOpacity(byte alpha);
         void HideOverlay();
     }
 }

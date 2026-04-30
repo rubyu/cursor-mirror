@@ -20,6 +20,10 @@ namespace CursorMirror
         private const int SWP_NOMOVE = 0x0002;
         private const int SWP_NOACTIVATE = 0x0010;
         private static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
+        private Bitmap _lastBitmap;
+        private Point _lastLocation;
+        private byte _opacity = 255;
+        private bool _isLayerVisible;
 
         [StructLayout(LayoutKind.Sequential)]
         private struct POINT
@@ -116,7 +120,10 @@ namespace CursorMirror
             }
 
             EnsureHandleVisible();
-            UpdateLayer(bitmap, location);
+            _isLayerVisible = true;
+            ReplaceLastBitmap(bitmap);
+            _lastLocation = location;
+            UpdateLayer(_lastBitmap, _lastLocation);
         }
 
         public new void Move(Point location)
@@ -126,12 +133,46 @@ namespace CursorMirror
                 return;
             }
 
-            SetDesktopLocation(location.X, location.Y);
+            _lastLocation = location;
+            if (_lastBitmap != null)
+            {
+                UpdateLayer(_lastBitmap, _lastLocation);
+            }
+            else
+            {
+                SetDesktopLocation(location.X, location.Y);
+            }
+        }
+
+        public void SetOpacity(byte alpha)
+        {
+            if (_opacity == alpha)
+            {
+                return;
+            }
+
+            _opacity = alpha;
+            if (IsHandleCreated && _lastBitmap != null && _isLayerVisible)
+            {
+                UpdateLayer(_lastBitmap, _lastLocation);
+            }
         }
 
         public void HideOverlay()
         {
+            _isLayerVisible = false;
             Hide();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && _lastBitmap != null)
+            {
+                _lastBitmap.Dispose();
+                _lastBitmap = null;
+            }
+
+            base.Dispose(disposing);
         }
 
         private void EnsureHandleVisible()
@@ -161,7 +202,7 @@ namespace CursorMirror
                 BLENDFUNCTION blend = new BLENDFUNCTION();
                 blend.BlendOp = AC_SRC_OVER;
                 blend.BlendFlags = 0;
-                blend.SourceConstantAlpha = 255;
+                blend.SourceConstantAlpha = _opacity;
                 blend.AlphaFormat = AC_SRC_ALPHA;
 
                 UpdateLayeredWindow(Handle, screenDc, ref destination, ref size, memoryDc, ref source, 0, ref blend, ULW_ALPHA);
@@ -188,6 +229,17 @@ namespace CursorMirror
                     ReleaseDC(IntPtr.Zero, screenDc);
                 }
             }
+        }
+
+        private void ReplaceLastBitmap(Bitmap bitmap)
+        {
+            Bitmap replacement = new Bitmap(bitmap);
+            if (_lastBitmap != null)
+            {
+                _lastBitmap.Dispose();
+            }
+
+            _lastBitmap = replacement;
         }
     }
 }

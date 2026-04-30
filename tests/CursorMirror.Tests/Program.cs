@@ -10,6 +10,8 @@ namespace CursorMirror.Tests
             ControllerTests.AddTo(suite);
             LocalizedStringsTests.AddTo(suite);
             BuildVersionTests.AddTo(suite);
+            MovementOpacityControllerTests.AddTo(suite);
+            SettingsTests.AddTo(suite);
             return suite.Run();
         }
     }

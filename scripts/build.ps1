@@ -97,13 +97,13 @@ if ($Configuration -eq "Release") {
 
 & (Join-Path $root "scripts\generate-icon.ps1") -Output $icon
 
-& $csc /nologo /target:library /warn:4 $debugFlag $optimizeFlag /out:$coreOut /reference:System.dll /reference:System.Core.dll /reference:System.Drawing.dll /reference:System.Windows.Forms.dll $coreSources
+& $csc /nologo /target:library /warn:4 $debugFlag $optimizeFlag /out:$coreOut /reference:System.dll /reference:System.Core.dll /reference:System.Drawing.dll /reference:System.Runtime.Serialization.dll /reference:System.Windows.Forms.dll $coreSources
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
-& $csc /nologo /target:winexe /warn:4 $debugFlag $optimizeFlag /out:$appOut "/win32manifest:$manifest" "/win32icon:$icon" /reference:System.dll /reference:System.Core.dll /reference:System.Drawing.dll /reference:System.Windows.Forms.dll $appCoreSources $appSources
+& $csc /nologo /target:winexe /warn:4 $debugFlag $optimizeFlag /out:$appOut "/win32manifest:$manifest" "/win32icon:$icon" /reference:System.dll /reference:System.Core.dll /reference:System.Drawing.dll /reference:System.Runtime.Serialization.dll /reference:System.Windows.Forms.dll $appCoreSources $appSources
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
-& $csc /nologo /target:exe /warn:4 $debugFlag $optimizeFlag /out:$testsOut /reference:System.dll /reference:System.Core.dll /reference:System.Drawing.dll /reference:System.Windows.Forms.dll /reference:$coreOut $testSources
+& $csc /nologo /target:exe /warn:4 $debugFlag $optimizeFlag /out:$testsOut /reference:System.dll /reference:System.Core.dll /reference:System.Drawing.dll /reference:System.Runtime.Serialization.dll /reference:System.Windows.Forms.dll /reference:$coreOut $testSources
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
 Write-Host "Built ($Configuration):"

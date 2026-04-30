@@ -167,8 +167,10 @@ namespace CursorMirror.Tests
         public int MoveCount;
         public int HideCount;
         public int DisposeCount;
+        public int SetOpacityCount;
         public Point LastLocation;
         public Size LastBitmapSize;
+        public byte LastOpacity = 255;
 
         public void ShowCursor(Bitmap bitmap, Point location)
         {
@@ -181,6 +183,12 @@ namespace CursorMirror.Tests
         {
             MoveCount++;
             LastLocation = location;
+        }
+
+        public void SetOpacity(byte alpha)
+        {
+            SetOpacityCount++;
+            LastOpacity = alpha;
         }
 
         public void HideOverlay()
@@ -216,6 +224,22 @@ namespace CursorMirror.Tests
         public void RunNext()
         {
             _actions.Dequeue()();
+        }
+    }
+
+    internal sealed class FakeClock : IClock
+    {
+        private long _now;
+
+        public long Now
+        {
+            get { return _now; }
+            set { _now = value; }
+        }
+
+        public long Milliseconds
+        {
+            get { return _now; }
         }
     }
 }
