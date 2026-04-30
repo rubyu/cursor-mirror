@@ -1,43 +1,43 @@
-## 1. 基礎と表記規約
+## 1. Foundations and Conventions
 
-### 1.1 適用範囲と規範性
-- 想定読者は、実装者、保守者、テスト作成者である。
-- 規範性: この仕様は既定で規範的である。非規範的な内容は明示的に `非規範` と表示する。
-- ラベル付け方針: 章レベル (`##`) の見出しでは、非規範的な章にのみ `(非規範)` を付ける。規範的な章は既定で無表示とする。節レベル (`###`) では、必要に応じて本文中で規範性を補足してよい。
-- 信頼できる情報源:
-  - この仕様は、実行時の振る舞い、Windows API 連携、配布条件、失敗条件について権威を持つ。
-  - テスト識別子は付録 A を正とする。
-  - 製品ドキュメントおよび README はユーザー向けの説明を含んでよいが、この仕様と矛盾してはならない。
+### 1.1 Scope and Normativity
+- Audience: implementers, maintainers, and test authors.
+- Normativity: Normative by default. Non-normative content is explicitly labeled `Informative`.
+- Labeling policy: Chapter-level (`##`) headings add `(Informative)` only for non-normative sections. Normative sections are unlabeled by default. Subsections (`###`) MAY clarify normativity inline when needed.
+- Sources of truth:
+  - This specification is authoritative for runtime behavior, Windows API interaction, packaging constraints, and failure conditions.
+  - Test identifiers are canonical in Appendix A.
+  - Product documentation and README files MAY describe user-facing behavior, but they MUST NOT contradict this specification.
 
-### 1.2 語彙と表記スタイル
-- `LowLevelMouseHook`、`CursorImageProvider`、`OverlayWindow`、`TrayController` などのコンポーネント名は、`monospace` 形式で表示する。
-- `WH_MOUSE_LL`、`WM_MOUSEMOVE`、`WS_EX_TRANSPARENT`、`WS_EX_NOACTIVATE` などの Windows 定数およびメッセージは、`monospace` 形式で表示する。
-- 定義済み用語にスマートクォートを使ってはならない。定義済み識別子には `monospace` 形式を使う。
-- Unicode の矢印記号を使ってはならない。代わりに ASCII 矢印 (`A -> B`) を使うことが望ましい。
-- 仕様内で章や付録を参照するときは `第 X.Y 節` および `付録 A.4` の形式を使う。`Sec.` などの省略形や節記号を使ってはならない。
-- 文体は平易な日本語とし、比喩、慣用表現、くだけた表現を避ける。
-- Native API の失敗を記述する場合、利用可能であれば API 名と Win32 エラーコードを示すことが望ましい。
-- 文末に括弧付き参照がある場合、句点は閉じ括弧の後に置く。
-- 注記の標準接頭辞は `注:` および `注記:` とする。末尾のコロンは常に含める。
+### 1.2 Vocabulary Style
+- Component names such as `LowLevelMouseHook`, `CursorImageProvider`, `OverlayWindow`, and `TrayController` MUST be displayed in monospace format.
+- Windows constants and messages such as `WH_MOUSE_LL`, `WM_MOUSEMOVE`, `WS_EX_TRANSPARENT`, and `WS_EX_NOACTIVATE` MUST be displayed in monospace format.
+- Smart quotation marks MUST NOT be used for defined terms. Authors MUST use monospace format for defined identifiers.
+- Unicode arrows MUST NOT be used. ASCII arrows (`A -> B`) SHOULD be used in their place.
+- Prose MUST reference sections and appendices using the forms `See Section X.Y` and `See Appendix A.4`. Abbreviations such as `Sec.` or section-sign symbols MUST NOT be used.
+- Authors SHOULD employ plain English and MUST avoid idiomatic expressions, metaphors, or colloquial language.
+- Native API failures SHOULD identify the API name and the Win32 error code when available.
+- When a parenthetical reference occurs at the end of a sentence, the period MUST appear after the closing parenthesis.
+- The standard prefixes for notes are `Note:` and `Notes:`. The trailing colon MUST always be included.
 
-### 1.3 用語と定義
-この文書では、製品名として `Cursor Mirror` を使う。コード識別子、プロジェクト名、名前空間、実行ファイル名では `CursorMirror` を使う。
+### 1.3 Terminology and Definitions
+This document uses `Cursor Mirror` as the product name. Code identifiers, project names, namespaces, and executable names use `CursorMirror`.
 
-中核用語:
-- ローレベルマウスフック: `SetWindowsHookEx` によってインストールされる `WH_MOUSE_LL` フック。
-- フックコールバック: Windows がローレベルマウスイベントに対して呼び出す関数。
-- オーバーレイウィンドウ: コピーしたカーソル画像を表示する、枠なし、layered、透明、クリック透過のトップレベルウィンドウ。
-- カーソル画像: 現在のシステムカーソルハンドルからコピーされたビットマップ表現。
-- カーソルホットスポット: Windows が実際のポインター座標として扱う、カーソル画像内の相対座標。
-- ポインター位置: フックデータまたは `GetCursorPos` によって得られる画面座標。
-- トレイコントローラー: 通知領域アイコンとコンテキストメニューを所有するコンポーネント。
+Core entities:
+- Low-level mouse hook: A `WH_MOUSE_LL` hook installed with `SetWindowsHookEx`.
+- Hook callback: The function invoked by Windows for low-level mouse events.
+- Overlay window: A borderless, layered, transparent, click-through top-level window that displays the copied cursor image.
+- Cursor image: The bitmap representation copied from the current system cursor handle.
+- Cursor hot spot: The cursor-relative point that Windows treats as the actual pointer coordinate.
+- Pointer position: The screen coordinate reported by the hook data or `GetCursorPos`.
+- Tray controller: The component that owns the notification-area icon and context menu.
 
-座標用語:
-- 画面座標: 仮想スクリーン座標空間における物理デスクトップ座標。
-- 仮想スクリーン: 負の座標を持つモニターを含む、すべてのモニターを包含する矩形。
-- DPI 認識: Windows が座標やウィンドウサイズをどのように仮想化するかを決める、プロセス単位の設定。
+Coordinate terms:
+- Screen coordinate: A physical desktop coordinate in the virtual screen coordinate space.
+- Virtual screen: The bounding rectangle covering all monitors, including monitors with negative coordinates.
+- DPI awareness: The process-level setting that determines how Windows virtualizes coordinates and window sizes.
 
-振る舞いに関する用語:
-- クリック透過: オーバーレイは背後のアプリケーションに向けられたマウス入力を受け取ったりブロックしたりしてはならない。
-- 非アクティブ化: オーバーレイは表示または移動によってフォーカスを取得してはならない。
-- パススルーフック結果: フックコールバックが `CallNextHookEx` を呼び出し、入力イベントをキャンセルしないこと。
+Behavior terms:
+- Click-through: The overlay MUST NOT receive or block mouse input intended for the underlying application.
+- No-activate: The overlay MUST NOT take focus when shown or moved.
+- Pass-through hook result: The hook callback calls `CallNextHookEx` and does not cancel the input event.

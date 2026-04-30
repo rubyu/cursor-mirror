@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build package and publish release
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Resolve version
+        id: version
+        shell: pwsh
+        run: |
+          $tag = "${{ github.ref_name }}"
+          if ($tag.StartsWith("v")) {
+            $version = $tag.Substring(1)
+          } else {
+            $version = $tag
+          }
+          "version=$version" >> $env:GITHUB_OUTPUT
+
+      - name: Build, test, and package
+        shell: pwsh
+        run: .\scripts\package.ps1 -Version "${{ steps.version.outputs.version }}"
+
+      - name: Publish GitHub Release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = "${{ github.ref_name }}"
+          $version = "${{ steps.version.outputs.version }}"
+          $zip = "artifacts/package/CursorMirror-$version-windows.zip"
+          $sha = "$zip.sha256"
+          gh release create $tag $zip $sha --title "Cursor Mirror $tag" --notes "Automated release for Cursor Mirror $tag."

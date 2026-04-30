@@ -1,64 +1,64 @@
-## 4. Windows 統合
+## 4. Windows Integration
 
-### 4.1 プロセス DPI 認識
-- プロセスはフォームまたはウィンドウを作成する前に、Per-Monitor DPI 認識を宣言または設定することが望ましい。
-- 座標計算は単一の座標空間を使わなければならない。推奨される座標空間は物理画面座標である。
-- オーバーレイ位置は、カーソルホットスポットがポインター位置と一致するように調整されなければならない。
-- テストおよび手動検証は、利用可能であれば 100% 以外のスケール設定を少なくとも 1 つ含まなければならない。
+### 4.1 Process DPI Awareness
+- The process SHOULD declare or set per-monitor DPI awareness before creating forms or windows.
+- Coordinate calculations MUST use a single coordinate space. The preferred coordinate space is physical screen coordinates.
+- The overlay position MUST align the cursor hot spot with the pointer position.
+- Tests and manual validation MUST cover at least one non-100% scale setting when available.
 
-### 4.2 ローレベルマウスフック
-- Cursor Mirror は `SetWindowsHookEx` を使って `WH_MOUSE_LL` フックをインストールしなければならない。
-- フック実装は CreviceApp の `WindowsHook` および `LowLevelMouseHook` ラッパーと構造的に近いことが望ましい。
-  - 管理対象コールバックデリゲートをフックの寿命中は強参照で保持する。
-  - アクティブ状態を公開する。
-  - 二重 activation を拒否する。
-  - 二重 unhook を拒否する。
-  - dispose 時に `UnhookWindowsHookEx` を呼び出す。
-  - パススルーイベントに対して `CallNextHookEx` を呼び出す。
-- フックコールバックは `WM_MOUSEMOVE` を処理しなければならない。
-- フックコールバックは、オーバーレイ更新の目的ではボタン、ホイール、非クライアントイベントを無視してよい。
-- フックコールバックはローレベルマウスイベントをキャンセルしてはならない。
-- フックコールバックは、無効な hook code に対して Windows が別の戻り方を要求する場合を除き、すべてのイベントで `CallNextHookEx` を呼び出さなければならない。
-- フックコールバックは仮想スクリーン由来の負の座標を許容しなければならない。
+### 4.2 Low-Level Mouse Hook
+- Cursor Mirror MUST install a `WH_MOUSE_LL` hook using `SetWindowsHookEx`.
+- The hook implementation SHOULD be structurally similar to CreviceApp's `WindowsHook` and `LowLevelMouseHook` wrappers:
+  - hold the managed callback delegate strongly for the hook lifetime;
+  - expose activation state;
+  - reject double activation;
+  - reject double unhook;
+  - call `UnhookWindowsHookEx` on disposal;
+  - call `CallNextHookEx` for pass-through events.
+- The hook callback MUST handle `WM_MOUSEMOVE`.
+- The hook callback MAY ignore button, wheel, and non-client events for overlay update purposes.
+- The hook callback MUST NOT cancel low-level mouse events.
+- The hook callback MUST call `CallNextHookEx` for every event unless Windows requires a different return path for invalid hook codes.
+- The hook callback MUST tolerate negative coordinates from the virtual screen.
 
-### 4.3 カーソル取得
-- Cursor Mirror は固定カーソル画像を描画するのではなく、Windows のカーソル API を使って現在のカーソルを読み取らなければならない。
-- 実装は `GetCursorInfo` を使ってアクティブカーソルハンドルを得ることが望ましい。
-- 実装は、描画または変換の前にカーソルハンドルをコピーしなければならない。
-- 実装は `CopyIcon`、`GetIconInfo`、`DrawIconEx`、または同等の Windows API を使うことが望ましい。
-- 実装はコピーしたアイコンハンドルとビットマップリソースを破棄しなければならない。
-- 実装はホットスポット情報を抽出し、適用しなければならない。
-- 実装はカラー カーソルとモノクロ カーソルをサポートすることが望ましい。
-- 実装は `GetCursorInfo` が現在のカーソルハンドルとして公開する範囲で、アニメーションカーソルの現在フレームをサポートすることが望ましい。
+### 4.3 Cursor Capture
+- Cursor Mirror MUST read the current cursor using Windows cursor APIs rather than drawing a fixed cursor asset.
+- The implementation SHOULD use `GetCursorInfo` to obtain the active cursor handle.
+- The implementation MUST copy the cursor handle before drawing or converting it.
+- The implementation SHOULD use `CopyIcon`, `GetIconInfo`, and `DrawIconEx` or equivalent Windows APIs.
+- The implementation MUST dispose copied icon handles and bitmap resources.
+- The implementation MUST extract and apply hot spot metadata.
+- The implementation SHOULD support color cursors and monochrome cursors.
+- The implementation SHOULD support animated cursor frames to the extent that `GetCursorInfo` exposes the current cursor handle.
 
-### 4.4 オーバーレイウィンドウ
-- オーバーレイウィンドウはトップレベルかつ枠なしでなければならない。
-- オーバーレイウィンドウは常に最前面でなければならない。
-- オーバーレイウィンドウはクリック透過でなければならない。
-- オーバーレイウィンドウは非アクティブ化されていなければならない。
-- オーバーレイウィンドウはタスクバーに表示されてはならない。
-- オーバーレイウィンドウは Alt+Tab に表示されないことが望ましい。
-- オーバーレイウィンドウは透明背景上にコピーしたカーソル画像だけを描画しなければならない。
-- オーバーレイウィンドウは `overlay.Left + hotSpot.X == pointer.X` かつ `overlay.Top + hotSpot.Y == pointer.Y` となるように移動しなければならない。
-- オーバーレイウィンドウは既定の矢印カーソルより大きいカーソル画像を扱わなければならない。
-- オーバーレイウィンドウは高速移動中の視覚的なちらつきを避けることが望ましい。
+### 4.4 Overlay Window
+- The overlay window MUST be top-level and borderless.
+- The overlay window MUST be always on top.
+- The overlay window MUST be click-through.
+- The overlay window MUST be no-activate.
+- The overlay window MUST NOT appear in the taskbar.
+- The overlay window SHOULD NOT appear in Alt+Tab.
+- The overlay window MUST draw only the copied cursor image over a transparent background.
+- The overlay window MUST move so that `overlay.Left + hotSpot.X == pointer.X` and `overlay.Top + hotSpot.Y == pointer.Y`.
+- The overlay window MUST handle cursor images larger than the default arrow cursor.
+- The overlay window SHOULD avoid visible flicker during rapid movement.
 
-推奨される拡張ウィンドウスタイル:
+Recommended extended window styles:
 
 - `WS_EX_LAYERED`
 - `WS_EX_TRANSPARENT`
 - `WS_EX_NOACTIVATE`
 - `WS_EX_TOOLWINDOW`
 
-### 4.5 タスクトレイ常駐
-- アプリケーションは通知領域アイコンを 1 つ作成しなければならない。
-- トレイアイコンは終了処理が開始されるまで利用可能でなければならない。
-- トレイコンテキストメニューは `Exit` を提供しなければならない。
-- `Exit` が選択された場合、プロセス終了前に unhook とリソース破棄を行わなければならない。
-- 隠しフォームを閉じる場合、またはトレイコントローラーを dispose する場合、通知領域アイコンを削除しなければならない。
+### 4.5 Tray Resident Application
+- The application MUST create one notification-area icon.
+- The tray icon MUST remain available until shutdown begins.
+- The tray context menu MUST provide `Exit`.
+- Selecting `Exit` MUST unhook and dispose resources before process termination.
+- Closing hidden forms or disposing the tray controller MUST remove the notification-area icon.
 
-### 4.6 マルチモニター座標
-- Cursor Mirror は、プライマリモニターが最も左または最も上にない場合でも動作しなければならない。
-- Cursor Mirror は負の `X` および `Y` 画面座標を受け付けなければならない。
-- Cursor Mirror は、カーソルが仮想スクリーン外に部分的に出るモニター境界でもオーバーレイの表示を維持しなければならない。
-- Cursor Mirror は、オーバーレイを単一モニターに clamp しないことが望ましい。
+### 4.6 Multi-Monitor Coordinates
+- Cursor Mirror MUST work when the primary monitor is not the leftmost or topmost monitor.
+- Cursor Mirror MUST accept negative `X` and `Y` screen coordinates.
+- Cursor Mirror MUST keep the overlay visible at monitor boundaries when the cursor is partially outside the virtual screen.
+- Cursor Mirror SHOULD not clamp the overlay to a single monitor.

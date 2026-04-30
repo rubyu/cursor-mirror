@@ -1,25 +1,25 @@
-## 5. パッケージングと実行時依存
+## 5. Packaging and Runtime Dependencies
 
-### 5.1 対象ランタイム
-- 初期実装は、一般的な Windows 10 および Windows 11 環境で追加ランタイムを必要とする可能性を下げるため、`.NET Framework 4.8` を対象にすることが望ましい。
-- 実装は後からモダン .NET の自己完結ビルドを追加してよい。
-- 複数のビルド種別が存在する場合、どの成果物が別途 .NET インストールを必要とせず、どの成果物がインストール済みランタイムに依存するかを、ドキュメントで明確に示さなければならない。
+### 5.1 Target Runtime
+- The initial implementation SHOULD target `.NET Framework 4.8` to reduce the chance that users need to install an additional runtime on common Windows 10 and Windows 11 systems.
+- The implementation MAY later add a modern .NET self-contained build.
+- If multiple build flavors exist, the documentation MUST clearly identify which artifact requires no separate .NET installation and which artifact depends on an installed runtime.
 
-### 5.2 ビルド成果物
-- 既定のリリース成果物は、実用上可能であれば単一実行ファイルであることが望ましい。
-- リリース成果物はインストールを必要としないことが望ましい。
-- リリース成果物は管理者権限を必要としないことが望ましい。
-- アプリケーションはバックグラウンドサービスを必要としてはならない。
-- リリースパッケージは README とライセンスファイルを含んでよい。
+### 5.2 Build Outputs
+- The default release artifact SHOULD be a single executable when practical.
+- The release artifact SHOULD NOT require installation.
+- The release artifact SHOULD NOT require administrator privileges.
+- The application MUST NOT require a background service.
+- The release package MAY include a README and license file.
 
-### 5.3 起動と終了
-- 起動処理は、フックをインストールする前、またはフックのインストール成功直後にトレイアイコンを作成しなければならない。
-- トレイアイコン作成後に起動失敗した場合、終了前にトレイアイコンを削除しなければならない。
-- 終了処理は、オーバーレイウィンドウを dispose する前に unhook しなければならない。
-- 終了処理はトレイメニューから呼び出された場合でも安全でなければならない。
-- 終了処理は冪等であることが望ましい。
+### 5.3 Startup and Shutdown
+- Startup MUST create the tray icon before installing the hook or immediately after successful hook installation.
+- Startup failure after tray icon creation MUST remove the tray icon before exit.
+- Shutdown MUST unhook before disposing the overlay window.
+- Shutdown MUST be safe when invoked from the tray menu.
+- Shutdown SHOULD be idempotent.
 
-### 5.4 バージョン情報
-- リリースビルドは製品名、ファイルバージョン、製品バージョンのメタデータを含むことが望ましい。
-- トレイの `About` コマンドが存在する場合、製品バージョンを表示することが望ましい。
-- バージョンメタデータは実行時の振る舞いに影響してはならない。
+### 5.4 Version Information
+- Release builds SHOULD include product name, file version, and product version metadata.
+- The tray `About` command, if present, SHOULD display the product version.
+- Version metadata MUST NOT affect runtime behavior.

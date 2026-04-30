@@ -1,42 +1,42 @@
-## 6. 適合性とテスト
+## 6. Conformance and Testing
 
-### 6.1 決定的なユニットテスト
-- フック寿命テストは、inactive、activate、double activate、unhook、double unhook、dispose の各経路をカバーしなければならない。
-- 座標計算テストは、ホットスポット整列、負の座標、大きいカーソル画像、モニター境界位置をカバーしなければならない。
-- カーソル画像変換テストは、画像生成成功、無効ハンドルの挙動、リソース破棄の挙動をカバーしなければならない。
-- トレイコントローラーテストは、終了コマンドの dispatch と cleanup の冪等性をカバーすることが望ましい。
-- ウィンドウスタイルテストは、オーバーレイが期待される拡張スタイルを設定することを検証することが望ましい。
+### 6.1 Deterministic Unit Tests
+- Hook lifetime tests MUST cover inactive, activate, double activate, unhook, double unhook, and dispose paths.
+- Coordinate calculation tests MUST cover hot spot alignment, negative coordinates, large cursor images, and monitor-edge positions.
+- Cursor image conversion tests MUST cover successful image creation, invalid handle behavior, and resource disposal behavior.
+- Tray controller tests SHOULD cover exit command dispatch and cleanup idempotence.
+- Window style tests SHOULD verify that the overlay sets the expected extended styles.
 
-### 6.2 Windows API 境界テスト
-- 実用上可能であれば、Windows API 呼び出しは小さな interface の背後に分離することが望ましい。
-- 直接 Windows API を呼ぶとテストが非決定的になる場合、ユニットテストはフックインストール、カーソル取得、オーバーレイ移動に test double を使わなければならない。
-- 統合テストは実 Windows API を実行してよい。
-- 実ローレベルフックをインストールする統合テストは、CI 環境が対話型デスクトップフックをサポートすることが明示的に分かっている場合を除き、通常 CI から除外しなければならない。
-- 統合テストは、アサーションが失敗した場合でもフックとトレイアイコンを cleanup しなければならない。
+### 6.2 Windows API Boundary Tests
+- Tests SHOULD isolate Windows API calls behind small interfaces where practical.
+- Unit tests MUST use test doubles for hook installation, cursor capture, and overlay movement when direct Windows API calls would make the test nondeterministic.
+- Integration tests MAY exercise real Windows APIs.
+- Integration tests that install a real low-level hook MUST be excluded from normal CI unless the CI environment is explicitly known to support interactive desktop hooks.
+- Integration tests MUST clean up hooks and tray icons even when assertions fail.
 
-### 6.3 手動検証
-手動検証は次を含まなければならない。
+### 6.3 Manual Validation
+Manual validation MUST include:
 
-- 通常起動時にメインウィンドウが表示されないこと。
-- トレイアイコンが表示されること。
-- トレイの `Exit` がプロセスを終了し、トレイアイコンを削除すること。
-- カーソルオーバーレイがポインター移動に追従すること。
-- オーバーレイがクリックを横取りしないこと。
-- オーバーレイが通常のアプリケーションウィンドウより前面に残ること。
-- オーバーレイが実カーソルのホットスポットに整列すること。
-- 利用可能であれば、マルチモニター構成で動作すること。
-- 利用可能であれば、少なくとも 1 つの高 DPI スケール設定で動作すること。
-- Parsec または対象リモートコントロール環境を通した挙動。
+- normal startup with no visible main window;
+- tray icon appears;
+- tray `Exit` terminates the process and removes the tray icon;
+- cursor overlay follows pointer movement;
+- overlay does not intercept clicks;
+- overlay remains topmost over normal application windows;
+- overlay aligns with the real cursor hot spot;
+- overlay works on a multi-monitor layout when available;
+- overlay works with at least one high-DPI scale factor when available;
+- behavior through Parsec or the target remote-control environment.
 
-### 6.4 回帰成果物
-- 視覚的な整列バグを修正した場合、再現手順を関連テストまたは issue に記録することが望ましい。
-- カーソル画像変換バグを修正した場合、実用上可能であれば最小 fixture または合成テストケースを追加することが望ましい。
-- 手動 Parsec 検証結果は、Windows バージョン、DPI 設定、モニター数、リモートコントロールソフトウェアのバージョンを記録することが望ましい。
+### 6.4 Regression Artifacts
+- If a visual alignment bug is fixed, the reproduction steps SHOULD be recorded in the relevant test or issue.
+- If a cursor image conversion bug is fixed, a minimal fixture or synthetic test case SHOULD be added when practical.
+- Manual Parsec validation results SHOULD record the Windows version, DPI settings, monitor count, and remote-control software version.
 
-### 6.5 テスト内のテスト識別子
-- すべてのテストは、この仕様への検索性と追跡性を確保するため、隣接コメント内に正規形式 `[COT-<S><F><M>-<n>]` の COT 識別子を含めなければならない。付録 A.2 を参照。
-- COT 識別子は、テスト関数またはテストメソッドの直前コメントの末尾に現れなければならない。
+### 6.5 Test Identifiers in Tests
+- Every test MUST include its COT identifier in the canonical form `[COT-<S><F><M>-<n>]` within an adjacent comment, to ensure searchability and traceability to this specification. See Appendix A.2.
+- The COT identifier MUST appear at the end of the comment immediately preceding the test function or test method.
 
-例:
-- 単一: `[COT-MHU-1]`
-- 複数: `[COT-MHU-1][COT-MOU-2]`
+Examples:
+- Single: `[COT-MHU-1]`
+- Multiple: `[COT-MHU-1][COT-MOU-2]`

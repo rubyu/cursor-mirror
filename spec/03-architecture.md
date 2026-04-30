@@ -1,40 +1,40 @@
-## 3. 実行時アーキテクチャ
+## 3. Runtime Architecture
 
-### 3.1 コンポーネント
-初期実装では、次のコンポーネントを使うことが望ましい。
+### 3.1 Components
+The initial implementation SHOULD use the following components:
 
-- `Program`: アプリケーションのエントリポイントとプロセス全体の初期化。
-- `TrayController`: 通知領域アイコン、コンテキストメニュー、終了コマンド。
-- `LowLevelMouseHook`: `SetWindowsHookEx(WH_MOUSE_LL)` の薄いラッパー。CreviceApp の hook 構造をモデルにする。
-- `CursorImageProvider`: 現在のカーソルハンドルを読み取り、コピーした画像とホットスポット情報を生成する。
-- `OverlayWindow`: 透明、layered、クリック透過のウィンドウを使ってカーソル画像を表示する。
-- `CursorMirrorController`: フックイベント、カーソル取得、オーバーレイ画像更新、オーバーレイ移動を調整する。
+- `Program`: Application entry point and process-wide initialization.
+- `TrayController`: Notification-area icon, context menu, and shutdown command.
+- `LowLevelMouseHook`: Thin wrapper around `SetWindowsHookEx(WH_MOUSE_LL)`, modeled after the CreviceApp hook structure.
+- `CursorImageProvider`: Reads the current cursor handle and produces a copied image plus hot spot metadata.
+- `OverlayWindow`: Displays the cursor image using a transparent, layered, click-through window.
+- `CursorMirrorController`: Coordinates hook events, cursor capture, overlay image updates, and overlay movement.
 
-### 3.2 イベントフロー
-通常のイベントフローは次の通りである。
+### 3.2 Event Flow
+The normal event flow is:
 
-1. `Program` はフォームまたはウィンドウを作成する前に DPI 認識を設定する。
-2. `Program` は WinForms メッセージループを開始する。
-3. `TrayController` はトレイアイコンとコンテキストメニューを作成する。
-4. `OverlayWindow` は非表示または透明状態で作成される。
-5. `LowLevelMouseHook` は `WH_MOUSE_LL` フックをインストールする。
-6. Windows はマウスイベントに対してフックコールバックを呼び出す。
-7. `WM_MOUSEMOVE` を受けた場合、`CursorMirrorController` はポインター位置を読み取り、オーバーレイを更新する。
-8. フックコールバックはパススルーフック結果を返す。
-9. トレイの `Exit` が選択された場合、コントローラーは unhook、オーバーレイ非表示、リソース破棄、トレイアイコン削除を行い、メッセージループを終了する。
+1. `Program` configures DPI awareness before creating any windows.
+2. `Program` starts the WinForms message loop.
+3. `TrayController` creates the tray icon and context menu.
+4. `OverlayWindow` is created hidden or transparent.
+5. `LowLevelMouseHook` installs a `WH_MOUSE_LL` hook.
+6. Windows invokes the hook callback for mouse events.
+7. On `WM_MOUSEMOVE`, `CursorMirrorController` reads the pointer position and updates the overlay.
+8. The hook callback returns a pass-through hook result.
+9. On tray `Exit`, the controller unhooks, hides the overlay, disposes resources, removes the tray icon, and exits the message loop.
 
-### 3.3 スレッドとメッセージポンプ
-- アプリケーションは、トレイアイコン、オーバーレイウィンドウ、フック寿命を管理するために Windows メッセージポンプを実行しなければならない。
-- UI オブジェクトは UI スレッド上で作成および変更されなければならない。
-- ローレベルマウスフックコールバックは、最小限の処理だけを行わなければならない。
-- フックコールバックはブロッキング I/O を実行してはならない。
-- フックコールバックは UI を直接表示してはならない。
-- フックコールバックが UI スレッド以外で呼び出される場合、オーバーレイ更新は UI スレッドにマーシャリングしなければならない。
-- 実装は、ポインター座標とカーソルハンドルが変化していない冗長な移動イベントをまとめることが望ましい。
+### 3.3 Threading and Message Pump
+- The application MUST run a Windows message pump for the tray icon, overlay window, and hook lifetime.
+- UI objects MUST be created and mutated on the UI thread.
+- The low-level mouse hook callback MUST do minimal work.
+- The hook callback MUST NOT perform blocking I/O.
+- The hook callback MUST NOT show UI directly.
+- If the hook callback is invoked off the UI thread, it MUST marshal overlay updates to the UI thread.
+- Implementations SHOULD coalesce redundant move events when the pointer coordinate and cursor handle have not changed.
 
-### 3.4 失敗時の方針
-- ローレベルマウスフックのインストール失敗は、通常運用において致命的である。
-- 特定イベントにおけるカーソル画像取得の失敗は、アプリケーションを終了させてはならない。
-- 特定イベントでカーソル取得に失敗した場合、オーバーレイは可能であれば直前の有効な画像を保持し、位置だけを更新することが望ましい。
-- 終了時にトレイアイコンの削除に失敗した場合、ベストエフォートの後は無視してよい。
-- フックコールバック内の予期しない例外は捕捉し、ログ機構が存在する場合はログし、その後もパススルー動作を維持しなければならない。
+### 3.4 Failure Policy
+- Failure to install the low-level mouse hook is fatal for normal operation.
+- Failure to capture a cursor image for a specific event MUST NOT terminate the application.
+- If cursor capture fails for a specific event, the overlay SHOULD keep the previous valid image and update position when possible.
+- Failure to remove the tray icon during shutdown SHOULD be ignored after best-effort cleanup.
+- Unexpected exceptions in the hook callback MUST be caught, logged when logging exists, and followed by pass-through behavior.

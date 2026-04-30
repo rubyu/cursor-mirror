@@ -1,237 +1,241 @@
-## 付録 A. テストカバレッジチェックリスト
+## Appendix A. Test Coverage Checklist
 
-### A.1 概要
-付録 A は、この仕様のテストカバレッジマップを提供する。カバレッジは、スコープ、テストファミリー、メソッドの順に整理する。各テスト項目は、詳細をすべて本文で再記述するのではなく、関連する規範セクションを参照する。
+### A.1 Overview
+Appendix A provides a testing coverage map for this specification. Coverage is organized by scope, then by test family, and finally by method. Each test item refers to the relevant normative sections instead of restating all details inline.
 
-この付録は全体として規範的である。説明目的の背景情報は明示的に `非規範` と表示してよい。
+This appendix is normative overall. Explanatory background may be explicitly labeled `Informative`.
 
-構成:
-- A.2 識別子と規約
-- A.3 分類と表記
-- A.4 モジュールレベルテスト
-- A.5 広範囲テスト
+Structure:
+- A.2 Identifiers and Conventions
+- A.3 Taxonomy and Notation
+- A.4 Module-Level Tests
+- A.5 Broader-Scope Tests
 
-### A.2 識別子と規約
-#### A.2.1 形式とコード
-この仕様は付録 A のすべてのテスト項目に対して、`COT-<S><F><M>-<n>` 形式の安定した意味的識別子を割り当てる。
+### A.2 Identifiers and Conventions
+#### A.2.1 Format and Codes
+This specification assigns a stable, semantic identifier to every test item in Appendix A using the format `COT-<S><F><M>-<n>`.
 
-- スコープコード `<S>`:
-  - `M` = モジュールレベルテスト
-  - `B` = 広範囲テスト
+- Scope code `<S>`:
+  - `M` = Module-level tests
+  - `B` = Broader-scope tests
 
-- ファミリーコード `<F>`:
-  - `H` = フック寿命とイベント処理
-  - `C` = カーソル取得とホットスポット情報
-  - `O` = オーバーレイウィンドウ挙動
-  - `T` = トレイとアプリケーション寿命
-  - `D` = DPI とマルチモニター座標
-  - `P` = パッケージングと実行時依存
-  - `R` = リソース管理と失敗処理
-  - `V` = 視覚およびリモートコントロール検証
+- Family code `<F>`:
+  - `H` = Hook lifetime and event handling
+  - `C` = Cursor capture and hot spot metadata
+  - `O` = Overlay window behavior
+  - `T` = Tray and application lifetime
+  - `D` = DPI and multi-monitor coordinates
+  - `P` = Packaging and runtime dependencies
+  - `R` = Resource management and failure handling
+  - `V` = Visual and remote-control validation
 
-- メソッドコード `<M>`:
-  - `U` = ユニット
-  - `I` = 統合
-  - `M` = 手動
+- Method code `<M>`:
+  - `U` = Unit
+  - `I` = Integration
+  - `M` = Manual
 
-- カウンター `<n>`:
-  - 一意な `<S,F,M>` の組ごとに、文書順で 1 から始まり 1 ずつ増加する。
+- Counter `<n>`:
+  - For each unique triple `<S,F,M>`, numbering starts at 1 and increments by 1 in document order.
 
-#### A.2.2 安定性と移行
-- 識別子を再利用してはならない。
-- 軽微な文言修正または項目の並べ替えによって識別子を変更してはならない。
-- 項目を別のスコープまたはファミリーへ移動する場合、新しい識別子を発行しなければならない。以前の識別子は retired とし、その後使ってはならない。
-- 編集および変更管理ルール: 既存項目を renumber しない。新規項目は該当する `<S,F,M>` グループの末尾に追加し、次のカウンター値を割り当てる。
+#### A.2.2 Stability and Migration
+- Identifiers MUST NOT be reused.
+- Minor wording edits or reordering items MUST NOT change identifiers.
+- Moving an item across scope or family REQUIRES minting a new identifier. The previous identifier is retired and MUST remain unused thereafter.
+- Editorial and change-control rule: do not renumber existing items. Append new items at the end of the relevant `<S,F,M>` group and allocate the next counter value.
 
-#### A.2.3 利用要件
-- 仕様: 付録 A の各項目は、次の正規形式の COT 識別子で始まらなければならない。
-  `COT-<S><F><M>-<n> - <簡潔な項目タイトル>`
-- テスト: 実装は、対応する COT 識別子を隣接コメントに含め、失敗を検索し、この仕様へ追跡できるようにしなければならない。
-- 簡潔な表記として、実装者は識別子を `[COT-...]` の形で囲んでよい。どちらの形式も適合性の観点では同等である。
-- 各項目は、関連する規範セクションを示す `参照:` 行を含むことが望ましい。
-- 項目本文は、適用できる場合は次の単純なテンプレートに従わなければならない。
-  - 成功: 期待される成功時の振る舞い。
-  - 失敗: 期待される失敗時の振る舞いと cleanup 要件。
-  - 注記: 前提とスコープ境界。
+#### A.2.3 Usage Requirements
+- Specification: Each item in Appendix A MUST start with its COT identifier in the canonical form:
+  `COT-<S><F><M>-<n> - <concise item title>`
+- Tests: Implementations MUST include the corresponding COT identifier in an adjacent comment so failures can be searched and traced to this specification.
+- For compact formatting, implementers MAY wrap identifiers as `[COT-...]`. Both forms are equivalent for conformance.
+- Each item SHOULD include a `Refs:` line naming the relevant normative sections.
+- Item text MUST follow a simple template where applicable:
+  - Success: expected successful behavior.
+  - Failure: expected failure behavior and cleanup requirement.
+  - Notes: assumptions and scope boundaries.
 
-### A.3 分類と表記
-この節は各テストファミリーの範囲と意図を定義する。コード定義は付録 A.2 に集約する。
+### A.3 Taxonomy and Notation
+This section defines the scope and intent of each test family. Code definitions are centralized in Appendix A.2.
 
-- H: フック寿命とイベント処理 - インストール、コールバック挙動、パススルー意味論、unhook。
-- C: カーソル取得とホットスポット情報 - カーソルハンドルのコピー、ビットマップ変換、ホットスポット抽出、無効ハンドル時の挙動。
-- O: オーバーレイウィンドウ挙動 - 拡張スタイル、最前面、クリック透過、非アクティブ化、描画、移動。
-- T: トレイとアプリケーション寿命 - トレイアイコン作成、メニュー操作、起動、終了、cleanup。
-- D: DPI とマルチモニター座標 - DPI 認識、仮想スクリーン座標、負の座標、スケーリング挙動。
-- P: パッケージングと実行時依存 - 対象ランタイム、成果物形状、インストール不要性。
-- R: リソース管理と失敗処理 - Native handle の破棄、例外封じ込め、失敗時 cleanup。
-- V: 視覚およびリモートコントロール検証 - 人間が観察できる整列、および対象リモートコントロールソフトウェアでの挙動。
+- H: Hook lifetime and event handling - Installation, callback behavior, pass-through semantics, and unhooking.
+- C: Cursor capture and hot spot metadata - Cursor handle copying, bitmap conversion, hot spot extraction, and invalid-handle behavior.
+- O: Overlay window behavior - Extended styles, topmost behavior, click-through behavior, no-activate behavior, drawing, and movement.
+- T: Tray and application lifetime - Tray icon creation, menu actions, startup, shutdown, and cleanup.
+- D: DPI and multi-monitor coordinates - DPI awareness, virtual screen coordinates, negative coordinates, and scaling behavior.
+- P: Packaging and runtime dependencies - Target runtime, artifact shape, and no-install expectations.
+- R: Resource management and failure handling - Native handle disposal, exception containment, and cleanup under failure.
+- V: Visual and remote-control validation - Human-observable alignment and target remote-control software behavior.
 
-見出しは `A.<scope>.<family>` に従う。各ファミリー内では、項目をユニット、統合、手動の固定順でグループ化する。
+Headings follow `A.<scope>.<family>`. Within each family, items are grouped by method in the fixed order: Unit, Integration, Manual.
 
-### A.4 モジュールレベルテスト
-#### A.4.H フック寿命とイベント処理
-##### ユニット
-- COT-MHU-1 - hook の inactive と activate
-  新しく作成された hook が inactive 状態を報告し、正常 activation 後に active 状態を報告し、native hook installer が 1 回呼ばれることを検証する。
-  参照: 第 3.1 節, 第 4.2 節。
+### A.4 Module-Level Tests
+#### A.4.H Hook Lifetime and Event Handling
+##### Unit
+- COT-MHU-1 - Hook inactive and activate
+  Verify that a newly created hook reports inactive state, successful activation reports active state, and activation calls the native hook installer once.
+  Refs: Sections 3.1, 4.2.
 
-- COT-MHU-2 - 二重 activate の拒否
-  active 状態の hook を再度 activate すると決定的に失敗し、2 つ目の hook がインストールされないことを検証する。
-  参照: 第 4.2 節。
+- COT-MHU-2 - Double activate rejected
+  Verify that activating an already active hook fails deterministically and does not install a second hook.
+  Refs: Section 4.2.
 
-- COT-MHU-3 - unhook と二重 unhook
-  unhook が inactive 状態へ遷移し、inactive hook の unhook が決定的に失敗することを検証する。
-  参照: 第 4.2 節。
+- COT-MHU-3 - Unhook and double unhook
+  Verify that unhook transitions to inactive state and that unhooking an inactive hook fails deterministically.
+  Refs: Section 4.2.
 
-- COT-MHU-4 - dispose による unhook
-  active hook の dispose が native unhook 関数を 1 回呼び、hook を inactive 状態にすることを検証する。
-  参照: 第 3.4 節, 第 4.2 節。
+- COT-MHU-4 - Dispose unhooks
+  Verify that disposing an active hook calls the native unhook function once and leaves the hook inactive.
+  Refs: Sections 3.4, 4.2.
 
-- COT-MHU-5 - マウス移動の pass-through
-  `WM_MOUSEMOVE` がオーバーレイ更新要求を生成し、それでも pass-through 挙動を返すことを検証する。
-  参照: 第 3.2 節, 第 4.2 節。
+- COT-MHU-5 - Mouse move pass-through
+  Verify that `WM_MOUSEMOVE` produces an overlay update request and still returns pass-through behavior.
+  Refs: Sections 3.2, 4.2.
 
-- COT-MHU-6 - 移動以外の pass-through
-  ボタン、ホイール、その他の無関係なイベントがキャンセルされずに pass-through されることを検証する。
-  参照: 第 4.2 節。
+- COT-MHU-6 - Non-move pass-through
+  Verify that button, wheel, and unrelated events are passed through without cancellation.
+  Refs: Section 4.2.
 
-#### A.4.C カーソル取得とホットスポット情報
-##### ユニット
-- COT-MCU-1 - 現在カーソルハンドルのコピー
-  カーソル取得が、描画または変換の前にアクティブカーソルハンドルをコピーすることを検証する。
-  参照: 第 4.3 節。
+#### A.4.C Cursor Capture and Hot Spot Metadata
+##### Unit
+- COT-MCU-1 - Current cursor handle copied
+  Verify that cursor capture copies the active cursor handle before drawing or converting it.
+  Refs: Section 4.3.
 
-- COT-MCU-2 - ホットスポット抽出
-  カーソルメタデータから返されたホットスポットが保持され、座標計算に公開されることを検証する。
-  参照: 第 4.3 節, 第 4.4 節。
+- COT-MCU-2 - Hot spot extracted
+  Verify that the hot spot returned by cursor metadata is preserved and exposed to coordinate calculation.
+  Refs: Sections 4.3, 4.4.
 
-- COT-MCU-3 - 無効カーソル取得は非致命
-  1 イベント分のカーソル取得失敗がコントローラーを終了させないことを検証する。
-  参照: 第 3.4 節。
+- COT-MCU-3 - Invalid cursor capture is non-fatal
+  Verify that cursor capture failure for one event does not terminate the controller.
+  Refs: Section 3.4.
 
-- COT-MCU-4 - コピー済みアイコンハンドルの破棄
-  成功経路と失敗経路の両方で、コピーされたアイコンハンドルとビットマップリソースが破棄されることを検証する。
-  参照: 第 4.3 節, 第 6.1 節。
+- COT-MCU-4 - Copied icon handle disposed
+  Verify that copied icon handles and bitmap resources are disposed on both success and failure paths.
+  Refs: Sections 4.3, 6.1.
 
-#### A.4.O オーバーレイウィンドウ挙動
-##### ユニット
-- COT-MOU-1 - 拡張スタイル
-  オーバーレイが `WS_EX_LAYERED`、`WS_EX_TRANSPARENT`、`WS_EX_NOACTIVATE`、`WS_EX_TOOLWINDOW`、または同等の挙動を設定することを検証する。
-  参照: 第 4.4 節。
+#### A.4.O Overlay Window Behavior
+##### Unit
+- COT-MOU-1 - Extended styles
+  Verify that the overlay sets `WS_EX_LAYERED`, `WS_EX_TRANSPARENT`, `WS_EX_NOACTIVATE`, and `WS_EX_TOOLWINDOW` or equivalent behavior.
+  Refs: Section 4.4.
 
-- COT-MOU-2 - ホットスポット整列計算
-  ポインター `(px, py)` とホットスポット `(hx, hy)` に対し、オーバーレイ位置が `(px - hx, py - hy)` になることを検証する。
-  参照: 第 4.4 節。
+- COT-MOU-2 - Hot spot alignment calculation
+  For pointer `(px, py)` and hot spot `(hx, hy)`, verify overlay position `(px - hx, py - hy)`.
+  Refs: Section 4.4.
 
-- COT-MOU-3 - 大きいカーソルサイズ
-  オーバーレイサイズが取得したカーソル画像に基づき、既定の矢印サイズを仮定しないことを検証する。
-  参照: 第 4.4 節。
+- COT-MOU-3 - Large cursor size
+  Verify that overlay sizing is based on the captured cursor image and does not assume the default arrow size.
+  Refs: Section 4.4.
 
-- COT-MOU-4 - topmost 要求
-  オーバーレイの表示または更新経路が topmost 挙動を要求することを検証する。
-  参照: 第 4.4 節。
+- COT-MOU-4 - Topmost request
+  Verify that overlay show or update paths request topmost behavior.
+  Refs: Section 4.4.
 
-#### A.4.T トレイとアプリケーション寿命
-##### ユニット
-- COT-MTU-1 - トレイアイコン作成
-  起動処理が通知領域アイコンをちょうど 1 つ作成することを検証する。
-  参照: 第 2.3 節, 第 4.5 節。
+#### A.4.T Tray and Application Lifetime
+##### Unit
+- COT-MTU-1 - Tray icon created
+  Verify that startup creates exactly one tray icon.
+  Refs: Sections 2.3, 4.5.
 
-- COT-MTU-2 - Exit コマンド dispatch
-  `Exit` 選択がアプリケーション終了処理を呼び出すことを検証する。
-  参照: 第 2.3 節, 第 4.5 節, 第 5.3 節。
+- COT-MTU-2 - Exit command dispatch
+  Verify that selecting `Exit` invokes application shutdown.
+  Refs: Sections 2.3, 4.5, 5.3.
 
-- COT-MTU-3 - トレイ cleanup の冪等性
-  トレイ cleanup を複数回実行しても、アイコンが残らず、例外も発生しないことを検証する。
-  参照: 第 4.5 節, 第 5.3 節。
+- COT-MTU-3 - Tray cleanup idempotence
+  Verify that tray cleanup can run more than once without leaving the icon visible or throwing.
+  Refs: Sections 4.5, 5.3.
 
-#### A.4.D DPI とマルチモニター座標
-##### ユニット
-- COT-MDU-1 - 負の座標
-  座標計算が負の `X` および `Y` 値を clamp せずに受け付けることを検証する。
-  参照: 第 4.6 節。
+- COT-MTU-4 - Localized user-visible strings
+  Verify that user-visible commands and startup diagnostics are resolved through the localization boundary, with English as the default language.
+  Refs: Section 2.3.
 
-- COT-MDU-2 - モニター境界座標
-  オーバーレイ配置がプライマリモニターに clamp されないことを検証する。
-  参照: 第 4.4 節, 第 4.6 節。
+#### A.4.D DPI and Multi-Monitor Coordinates
+##### Unit
+- COT-MDU-1 - Negative coordinates
+  Verify that coordinate calculation accepts negative `X` and `Y` values without clamping.
+  Refs: Section 4.6.
 
-- COT-MDU-3 - DPI 座標空間の一貫性
-  コントローラー計算が 1 つの座標空間 abstraction を使い、論理単位と物理単位を混在させないことを検証する。
-  参照: 第 4.1 節。
+- COT-MDU-2 - Monitor-edge coordinates
+  Verify that overlay placement is not clamped to the primary monitor.
+  Refs: Sections 4.4, 4.6.
 
-#### A.4.R リソース管理と失敗処理
-##### ユニット
-- COT-MRU-1 - hook callback 例外の封じ込め
-  イベント処理中の例外が封じ込められ、入力が pass-through のままであることを検証する。
-  参照: 第 3.3 節, 第 3.4 節。
+- COT-MDU-3 - DPI coordinate-space consistency
+  Verify that controller calculations use one coordinate-space abstraction and do not mix logical and physical units.
+  Refs: Section 4.1.
 
-- COT-MRU-2 - 起動失敗時 cleanup
-  トレイ作成後の起動失敗がトレイアイコンを削除し、インストール済み hook を unhook することを検証する。
-  参照: 第 3.4 節, 第 5.3 節。
+#### A.4.R Resource Management and Failure Handling
+##### Unit
+- COT-MRU-1 - Hook callback exception containment
+  Verify that an exception during event processing is contained and input remains pass-through.
+  Refs: Sections 3.3, 3.4.
 
-- COT-MRU-3 - 終了順序
-  終了処理がオーバーレイウィンドウの dispose 前に unhook することを検証する。
-  参照: 第 5.3 節。
+- COT-MRU-2 - Startup failure cleanup
+  Verify that startup failure after tray creation removes the tray icon and unhooks any installed hook.
+  Refs: Sections 3.4, 5.3.
 
-### A.5 広範囲テスト
-#### A.5.H フック寿命とイベント処理
-##### 統合
-- COT-BHI-1 - 実ローレベル hook のインストール
-  対話型 Windows デスクトップ上で実 `WH_MOUSE_LL` hook をインストールし、マウス移動が 1 回以上の callback を生成することを検証する。
-  参照: 第 4.2 節, 第 6.2 節。
+- COT-MRU-3 - Shutdown order
+  Verify that shutdown unhooks before disposing the overlay window.
+  Refs: Section 5.3.
 
-- COT-BHI-2 - 実 hook の cleanup
-  対話型 Windows デスクトップ上で hook をインストールおよび削除し、その後 hook 依存のバックグラウンドスレッドやウィンドウを残さずプロセスが終了することを検証する。
-  参照: 第 4.2 節, 第 5.3 節。
+### A.5 Broader-Scope Tests
+#### A.5.H Hook Lifetime and Event Handling
+##### Integration
+- COT-BHI-1 - Real low-level hook install
+  On an interactive Windows desktop, install the real `WH_MOUSE_LL` hook and verify that a mouse move produces one or more callbacks.
+  Refs: Sections 4.2, 6.2.
 
-#### A.5.O オーバーレイウィンドウ挙動
-##### 統合
-- COT-BOI-1 - クリック透過挙動
-  オーバーレイ表示中に下のテストウィンドウをクリックし、背後のウィンドウがクリックを受け取ることを検証する。
-  参照: 第 4.4 節。
+- COT-BHI-2 - Real hook cleanup
+  On an interactive Windows desktop, install and remove the hook, then verify that the process exits without leaving a hook-dependent background thread or window.
+  Refs: Sections 4.2, 5.3.
 
-- COT-BOI-2 - 非アクティブ化挙動
-  別ウィンドウが focused の状態でオーバーレイを表示および移動し、フォーカスが元のウィンドウに残ることを検証する。
-  参照: 第 4.4 節。
+#### A.5.O Overlay Window Behavior
+##### Integration
+- COT-BOI-1 - Click-through behavior
+  With the overlay visible, click a test window underneath and verify that the underlying window receives the click.
+  Refs: Section 4.4.
 
-- COT-BOI-3 - topmost 挙動
-  通常のトップレベルウィンドウ上にオーバーレイを表示し、その上に見え続けることを検証する。
-  参照: 第 4.4 節。
+- COT-BOI-2 - No-activate behavior
+  With another window focused, show and move the overlay and verify that focus remains on the original window.
+  Refs: Section 4.4.
 
-#### A.5.T トレイとアプリケーション寿命
-##### 統合
-- COT-BTI-1 - トレイ exit によるプロセス終了
-  アプリケーションを起動し、トレイの `Exit` を実行し、プロセス終了とトレイアイコン削除を検証する。
-  参照: 第 4.5 節, 第 5.3 節。
+- COT-BOI-3 - Topmost behavior
+  Show the overlay over a normal top-level window and verify that the overlay remains visible above it.
+  Refs: Section 4.4.
 
-#### A.5.P パッケージングと実行時依存
-##### 統合
-- COT-BPI-1 - リリース成果物の起動
-  clean な対応 Windows 環境でリリース成果物を起動し、通常のトレイ起動を検証する。
-  参照: 第 5.1 節。
+#### A.5.T Tray and Application Lifetime
+##### Integration
+- COT-BTI-1 - Tray exit terminates process
+  Start the application, invoke tray `Exit`, and verify process termination and tray icon removal.
+  Refs: Sections 4.5, 5.3.
 
-- COT-BPI-2 - 管理者権限不要
-  標準ユーザーとしてリリース成果物を起動し、起動に elevation が不要であることを検証する。
-  参照: 第 5.2 節。
+#### A.5.P Packaging and Runtime Dependencies
+##### Integration
+- COT-BPI-1 - Release artifact starts
+  On a clean supported Windows environment, start the release artifact and verify normal tray startup.
+  Refs: Section 5.1.
 
-#### A.5.V 視覚およびリモートコントロール検証
-##### 手動
-- COT-BVM-1 - ローカル視覚整列
-  ローカルデスクトップ上で、オーバーレイ画像が実カーソルのホットスポットに視覚的に整列していることを検証する。
-  参照: 第 4.3 節, 第 4.4 節, 第 6.3 節。
+- COT-BPI-2 - No administrator requirement
+  Start the release artifact as a standard user and verify that startup does not require elevation.
+  Refs: Section 5.2.
 
-- COT-BVM-2 - Parsec での可視性
-  Parsec 経由で、実カーソルが見えない、または正しく送信されない場合に、コピーされたカーソルオーバーレイが見えることを検証する。
-  参照: 第 2.1 節, 第 6.3 節。
+#### A.5.V Visual and Remote-Control Validation
+##### Manual
+- COT-BVM-1 - Local visual alignment
+  Verify that the overlay image is visually aligned with the real cursor hot spot on the local desktop.
+  Refs: Sections 4.3, 4.4, 6.3.
 
-- COT-BVM-3 - マルチモニター手動検証
-  利用可能であれば負の仮想スクリーン座標を含むレイアウトで、モニター間のポインター追跡を検証する。
-  参照: 第 4.6 節, 第 6.3 節。
+- COT-BVM-2 - Parsec visibility
+  Verify through Parsec that the copied cursor overlay is visible when the real cursor is not visible or not transmitted correctly.
+  Refs: Sections 2.1, 6.3.
 
-- COT-BVM-4 - 高 DPI 手動検証
-  利用可能であれば 100% 以外の DPI スケールでカーソル整列を検証する。
-  参照: 第 4.1 節, 第 6.3 節。
+- COT-BVM-3 - Multi-monitor manual pass
+  Verify pointer tracking across monitors, including a layout with negative virtual-screen coordinates when available.
+  Refs: Sections 4.6, 6.3.
 
-- COT-BVM-5 - クリック透過手動検証
-  オーバーレイ表示中のクリックが、オーバーレイではなく背後のアプリケーションに作用することを検証する。
-  参照: 第 4.4 節, 第 6.3 節。
+- COT-BVM-4 - High-DPI manual pass
+  Verify cursor alignment at a non-100% DPI scale factor when available.
+  Refs: Sections 4.1, 6.3.
+
+- COT-BVM-5 - Click-through manual pass
+  Verify that clicking while the overlay is visible interacts with the application underneath, not the overlay.
+  Refs: Sections 4.4, 6.3.

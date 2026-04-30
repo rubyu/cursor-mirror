@@ -1,0 +1,9 @@
+artifacts/
+assets/icons/CursorMirror.ico
+*.user
+*.suo
+*.cache
+*.pdb
+*.obj
+bin/
+obj/

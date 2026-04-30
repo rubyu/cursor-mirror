@@ -1,27 +1,29 @@
-## 2. 目標と非目標
+## 2. Goals and Non-Goals
 
-### 2.1 目標
-- Cursor Mirror は、ハードウェアカーソルまたはシステムカーソルを取得または送信できないリモートコントロールソフトウェアに対して、現在の Windows カーソルを見えるようにしなければならない。
-- Cursor Mirror は、タスクトレイ常駐型の Windows デスクトップアプリケーションとして動作しなければならない。
-- Cursor Mirror は、コピーしたカーソル画像を実カーソルと同じ画面位置に表示しなければならない。
-- Cursor Mirror は、CreviceApp の `WH_MOUSE_LL` パターンに基づくローレベルマウスフックでポインター移動を追跡しなければならない。
-- Cursor Mirror は、マウス入力を背後のデスクトップおよびアプリケーションに完全に通さなければならない。
-- Cursor Mirror は、一般的な対応 Windows 環境で追加ランタイムのインストールを必要としないことが望ましい。
-- Cursor Mirror は、小さく、静かで、予測可能なアプリケーションであることが望ましい。
+### 2.1 Goals
+- Cursor Mirror MUST make the current Windows cursor visible to remote-control software that fails to capture or transmit the hardware/system cursor.
+- Cursor Mirror MUST run as a tray-resident Windows desktop application.
+- Cursor Mirror MUST display a copied cursor image at the same screen position as the real cursor.
+- Cursor Mirror MUST track pointer movement using a low-level mouse hook based on the CreviceApp `WH_MOUSE_LL` pattern.
+- Cursor Mirror MUST keep mouse input fully available to the underlying desktop and applications.
+- Cursor Mirror SHOULD require no additional runtime installation on common supported Windows installations.
+- Cursor Mirror SHOULD be small, quiet, and predictable.
 
-### 2.2 非目標
-- Cursor Mirror はカーソルテーマ管理アプリケーションではない。
-- Cursor Mirror は画面録画アプリケーションでもリモートコントロールアプリケーションでもない。
-- Cursor Mirror は実システムカーソルを隠したり、置き換えたり、変更したりしない。
-- Cursor Mirror はユーザー入力を横取り、再割り当て、キャンセルしない。
-- Cursor Mirror は初期実装で設定 UI を提供しない。
-- Cursor Mirror はジェスチャー認識を実装しない。
+### 2.2 Non-Goals
+- Cursor Mirror is not a cursor theme manager.
+- Cursor Mirror is not a screen recorder or remote-control application.
+- Cursor Mirror does not hide, replace, or modify the real system cursor.
+- Cursor Mirror does not intercept, remap, or cancel user input.
+- Cursor Mirror does not provide a configuration UI in the initial implementation.
+- Cursor Mirror does not implement gesture recognition.
 
-### 2.3 ユーザーに見える製品形状
-- アプリケーションは通常のウィンドウを表示せずに起動しなければならない。
-- アプリケーションは実行中、通知領域アイコンを表示しなければならない。
-- トレイコンテキストメニューは `Exit` コマンドを含まなければならない。
-- アプリケーションは `About` コマンドを含んでよい。
-- アプリケーションは `Pause` コマンドを含んでよい。ただし、一時停止/再開は初期実装では必須ではない。
-- アプリケーションは、正常起動時に通知バルーンを表示しないことが望ましい。
-- 致命的な起動失敗は、プロセス終了前に簡潔なメッセージボックスで報告することが望ましい。
+### 2.3 User-Visible Product Shape
+- The application MUST start without showing a normal window.
+- The application MUST show a notification-area icon while running.
+- The tray context menu MUST include an `Exit` command.
+- The application MAY include an `About` command.
+- The application MAY include a `Pause` command, but pause/resume is not required for the initial implementation.
+- The application SHOULD avoid notification balloons during normal successful startup.
+- Fatal startup failures SHOULD be reported with a simple message box before the process exits.
+- User-visible strings SHOULD be resolved through a localization boundary rather than being scattered as inline literals.
+- The default user-visible language MUST be English. Additional UI cultures MAY be supported.
