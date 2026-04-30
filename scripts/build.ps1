@@ -1,6 +1,7 @@
 param(
     [ValidateSet("Debug", "Release")]
-    [string]$Configuration = "Debug"
+    [string]$Configuration = "Debug",
+    [switch]$RequireStableTag
 )
 
 $ErrorActionPreference = "Stop"
@@ -16,17 +17,75 @@ if (-not (Test-Path $csc)) {
 }
 
 $bin = Join-Path $root "artifacts\bin\$Configuration"
+$generated = Join-Path $root "artifacts\generated\$Configuration"
 New-Item -ItemType Directory -Force -Path $bin | Out-Null
+New-Item -ItemType Directory -Force -Path $generated | Out-Null
 
 $coreOut = Join-Path $bin "CursorMirror.Core.dll"
 $appOut = Join-Path $bin "CursorMirror.exe"
 $testsOut = Join-Path $bin "CursorMirror.Tests.exe"
 $manifest = Join-Path $root "src\CursorMirror.App\app.manifest"
 $icon = Join-Path $root "assets\icons\CursorMirror.ico"
+$versionJson = Join-Path $bin "CursorMirror.version.json"
+$buildVersionSource = Join-Path $generated "BuildVersion.g.cs"
+$coreAssemblyVersionSource = Join-Path $generated "CursorMirror.Core.AssemblyVersion.g.cs"
+$appAssemblyVersionSource = Join-Path $generated "CursorMirror.App.AssemblyVersion.g.cs"
 
-$coreSources = Get-ChildItem -Path (Join-Path $root "src\CursorMirror.Core") -Recurse -Filter *.cs | ForEach-Object { $_.FullName }
-$appCoreSources = Get-ChildItem -Path (Join-Path $root "src\CursorMirror.Core") -Recurse -Filter *.cs | Where-Object { $_.FullName -notmatch "\\Properties\\AssemblyInfo\.cs$" } | ForEach-Object { $_.FullName }
-$appSources = Get-ChildItem -Path (Join-Path $root "src\CursorMirror.App") -Recurse -Filter *.cs | ForEach-Object { $_.FullName }
+function ConvertTo-CSharpLiteral([string]$Value) {
+    return $Value.Replace('\', '\\').Replace('"', '\"')
+}
+
+$resolveArgs = @{
+    RepositoryRoot = $root
+}
+if ($RequireStableTag) {
+    $resolveArgs.RequireStableTag = $true
+}
+
+$versionInfo = & (Join-Path $root "scripts\resolve-version.ps1") @resolveArgs
+if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+$versionInfo | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath $versionJson -Encoding ASCII
+
+$informationalVersion = ConvertTo-CSharpLiteral $versionInfo.InformationalVersion
+$assemblyVersion = ConvertTo-CSharpLiteral $versionInfo.AssemblyVersion
+$fileVersion = ConvertTo-CSharpLiteral $versionInfo.FileVersion
+$packageVersion = ConvertTo-CSharpLiteral $versionInfo.PackageVersion
+$isStable = if ($versionInfo.IsStable) { "true" } else { "false" }
+
+@"
+namespace CursorMirror
+{
+    public static class BuildVersion
+    {
+        public const string InformationalVersion = "$informationalVersion";
+        public const string AssemblyVersion = "$assemblyVersion";
+        public const string FileVersion = "$fileVersion";
+        public const string PackageVersion = "$packageVersion";
+        public const bool IsStable = $isStable;
+    }
+}
+"@ | Set-Content -LiteralPath $buildVersionSource -Encoding ASCII
+
+@"
+using System.Reflection;
+
+[assembly: AssemblyVersion("$assemblyVersion")]
+[assembly: AssemblyFileVersion("$fileVersion")]
+[assembly: AssemblyInformationalVersion("$informationalVersion")]
+"@ | Set-Content -LiteralPath $coreAssemblyVersionSource -Encoding ASCII
+
+@"
+using System.Reflection;
+
+[assembly: AssemblyVersion("$assemblyVersion")]
+[assembly: AssemblyFileVersion("$fileVersion")]
+[assembly: AssemblyInformationalVersion("$informationalVersion")]
+"@ | Set-Content -LiteralPath $appAssemblyVersionSource -Encoding ASCII
+
+$coreSources = @(Get-ChildItem -Path (Join-Path $root "src\CursorMirror.Core") -Recurse -Filter *.cs | ForEach-Object { $_.FullName }) + @($buildVersionSource, $coreAssemblyVersionSource)
+$appCoreSources = @(Get-ChildItem -Path (Join-Path $root "src\CursorMirror.Core") -Recurse -Filter *.cs | Where-Object { $_.FullName -notmatch "\\Properties\\AssemblyInfo\.cs$" } | ForEach-Object { $_.FullName }) + @($buildVersionSource)
+$appSources = @(Get-ChildItem -Path (Join-Path $root "src\CursorMirror.App") -Recurse -Filter *.cs | ForEach-Object { $_.FullName }) + @($appAssemblyVersionSource)
 $testSources = Get-ChildItem -Path (Join-Path $root "tests\CursorMirror.Tests") -Recurse -Filter *.cs | ForEach-Object { $_.FullName }
 
 $debugFlag = "/debug+"
@@ -48,6 +107,7 @@ if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
 Write-Host "Built ($Configuration):"
+Write-Host "  Version: $($versionInfo.InformationalVersion)"
 Write-Host "  $coreOut"
 Write-Host "  $appOut"
 Write-Host "  $testsOut"

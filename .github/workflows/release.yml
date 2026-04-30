@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     tags:
-      - "v*"
+      - "v*.*.*"
 
 permissions:
   contents: write
@@ -16,22 +16,28 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Resolve version
+      - name: Validate release tag
         id: version
         shell: pwsh
         run: |
           $tag = "${{ github.ref_name }}"
-          if ($tag.StartsWith("v")) {
-            $version = $tag.Substring(1)
-          } else {
-            $version = $tag
+          if ($tag -notmatch '^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$') {
+            throw "Release tags must match vMAJOR.MINOR.PATCH, for example v0.1.0."
           }
+          git fetch origin main:refs/remotes/origin/main --tags
+          git merge-base --is-ancestor HEAD origin/main
+          if ($LASTEXITCODE -ne 0) {
+            throw "Release tags must point to a commit contained in origin/main."
+          }
+          $version = $tag.Substring(1)
           "version=$version" >> $env:GITHUB_OUTPUT
 
       - name: Build, test, and package
         shell: pwsh
-        run: .\scripts\package.ps1 -Version "${{ steps.version.outputs.version }}"
+        run: .\scripts\package.ps1 -Version "${{ steps.version.outputs.version }}" -RequireStableTag
 
       - name: Publish GitHub Release
         shell: pwsh

@@ -1,12 +1,20 @@
 param(
     [ValidateSet("Debug", "Release")]
-    [string]$Configuration = "Debug"
+    [string]$Configuration = "Debug",
+    [switch]$RequireStableTag
 )
 
 $ErrorActionPreference = "Stop"
 
 $root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
-& (Join-Path $root "scripts\build.ps1") -Configuration $Configuration
+$buildArgs = @{
+    Configuration = $Configuration
+}
+if ($RequireStableTag) {
+    $buildArgs.RequireStableTag = $true
+}
+
+& (Join-Path $root "scripts\build.ps1") @buildArgs
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
 $tests = Join-Path $root "artifacts\bin\$Configuration\CursorMirror.Tests.exe"

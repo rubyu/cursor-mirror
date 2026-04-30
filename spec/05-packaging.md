@@ -23,3 +23,4 @@
 - Release builds SHOULD include product name, file version, and product version metadata.
 - The tray `About` command, if present, SHOULD display the product version.
 - Version metadata MUST NOT affect runtime behavior.
+- Build and release version semantics MUST follow Section 10.
