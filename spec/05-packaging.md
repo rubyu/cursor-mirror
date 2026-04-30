@@ -11,6 +11,8 @@
 - The release artifact SHOULD NOT require administrator privileges.
 - The application MUST NOT require a background service.
 - The release package MAY include a README and license file.
+- The release package MUST include `CursorMirror.exe`.
+- The release package MUST include `CursorMirror.TraceTool.exe`.
 
 ### 5.3 Startup and Shutdown
 - Startup MUST create the tray icon before installing the hook or immediately after successful hook installation.

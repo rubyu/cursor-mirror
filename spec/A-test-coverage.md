@@ -26,6 +26,7 @@ This specification assigns a stable, semantic identifier to every test item in A
   - `T` = Tray and application lifetime
   - `S` = Settings UI and persistence
   - `D` = DPI and multi-monitor coordinates
+  - `L` = Mouse trace tooling
   - `P` = Packaging and runtime dependencies
   - `R` = Resource management and failure handling
   - `V` = Visual and remote-control validation
@@ -64,6 +65,7 @@ This section defines the scope and intent of each test family. Code definitions 
 - T: Tray and application lifetime - Tray icon creation, menu actions, startup, shutdown, settings entry points, and cleanup.
 - S: Settings UI and persistence - Settings defaults, validation, persistence, reset, immediate application, and settings-window command behavior.
 - D: DPI and multi-monitor coordinates - DPI awareness, virtual screen coordinates, negative coordinates, and scaling behavior.
+- L: Mouse trace tooling - Trace session state, sample collection, UI state derivation, package writing, and manual trace capture.
 - P: Packaging and runtime dependencies - Target runtime, artifact shape, and no-install expectations.
 - R: Resource management and failure handling - Native handle disposal, exception containment, and cleanup under failure.
 - V: Visual and remote-control validation - Human-observable alignment and target remote-control software behavior.
@@ -257,6 +259,40 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that the embedded assembly and file versions use the numeric `MAJOR.MINOR.PATCH.0` form required by .NET metadata.
   Refs: Section 10.3.
 
+#### A.4.L Mouse Trace Tooling
+##### Unit
+- COT-MLU-1 - Trace session starts empty
+  Verify that a newly created trace session is idle, has no samples, and has zero elapsed duration.
+  Refs: Sections 11.4, 11.5.
+
+- COT-MLU-2 - Trace session start and stop transitions
+  Verify `Idle`, `Recording`, `StoppedWithSamples`, and `Saved` transitions without installing a real hook.
+  Refs: Sections 11.4, 11.8.
+
+- COT-MLU-3 - Trace tool button enabled states
+  Verify that Start, Stop, Save, and Exit enabled states match the current trace state.
+  Refs: Section 11.3.
+
+- COT-MLU-4 - Trace sample append increments count
+  Verify that appending movement samples increments sequence and sample count and preserves coordinates.
+  Refs: Section 11.5.
+
+- COT-MLU-5 - Trace elapsed duration formatting
+  Verify that recording duration is formatted consistently for display.
+  Refs: Section 11.3.
+
+- COT-MLU-6 - Trace zip package contents
+  Verify that saving a trace writes a zip package containing `trace.csv` and `metadata.json`, and that the CSV contains the expected header and rows.
+  Refs: Section 11.6.
+
+- COT-MLU-7 - Empty trace save rejected
+  Verify that saving an empty trace fails clearly at the trace writer boundary.
+  Refs: Section 11.6.
+
+- COT-MLU-8 - Repeated stop cleanup
+  Verify that stopping an already stopped trace session is safe and leaves the session in a valid state.
+  Refs: Sections 11.4, 11.7.
+
 #### A.4.R Resource Management and Failure Handling
 ##### Unit
 - COT-MRU-1 - Hook callback exception containment
@@ -349,6 +385,25 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 - COT-BPI-2 - No administrator requirement
   Start the release artifact as a standard user and verify that startup does not require elevation.
   Refs: Section 5.2.
+
+#### A.5.L Mouse Trace Tooling
+##### Integration
+- COT-BLI-1 - Trace tool starts as visible window
+  Start the trace tool and verify that it opens a normal visible window without starting Cursor Mirror.
+  Refs: Sections 11.1, 11.2.
+
+- COT-BLI-2 - Trace package save dialog writes zip
+  Record or inject a trace session, save through the UI, and verify that a zip package is written.
+  Refs: Sections 11.3, 11.6.
+
+##### Manual
+- COT-BLM-1 - Manual trace capture session
+  In an explicitly launched trace tool session, start recording, move the mouse, stop recording, save, and verify that the package can be opened and contains movement samples.
+  Refs: Sections 11.2, 11.6, 11.8.
+
+- COT-BLM-2 - Manual trace hook cleanup
+  Start and stop recording, then exit the trace tool and verify that no hook-dependent process or visible window remains.
+  Refs: Sections 11.2, 11.7, 11.8.
 
 #### A.5.V Visual and Remote-Control Validation
 ##### Manual

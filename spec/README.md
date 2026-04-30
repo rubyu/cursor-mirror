@@ -47,6 +47,15 @@ The key words `MUST`, `MUST NOT`, `SHOULD`, and `MAY` are to be interpreted as d
   - 10.4 Build-Time Embedding
   - 10.5 Package Naming
   - 10.6 Informative Examples
+- 11. Mouse Trace Tool - [11-mouse-trace-tool.md](11-mouse-trace-tool.md)
+  - 11.1 Purpose and Scope
+  - 11.2 Application Shape
+  - 11.3 UI Requirements
+  - 11.4 Recording State Model
+  - 11.5 Captured Data
+  - 11.6 Output Package Format
+  - 11.7 Performance and Safety
+  - 11.8 Testing
 - Appendix A. Test Coverage Checklist - [A-test-coverage.md](A-test-coverage.md)
   - A.1 Overview
   - A.2 Identifiers and Conventions

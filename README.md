@@ -50,6 +50,7 @@ The zip contains:
 
 ```text
 CursorMirror.exe
+CursorMirror.TraceTool.exe
 README.md
 LICENSE
 ```
@@ -73,6 +74,14 @@ Build Release:
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\build.ps1 -Configuration Release
 ```
+
+The release package also includes a diagnostic trace tool:
+
+```text
+CursorMirror.TraceTool.exe
+```
+
+The trace tool is a separate Windows app for collecting mouse movement samples. It starts and stops recording from buttons in its window and saves traces as compressed `.zip` packages containing `trace.csv` and `metadata.json`.
 
 Package without running tests:
 

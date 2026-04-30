@@ -12,6 +12,7 @@ namespace CursorMirror.Tests
             BuildVersionTests.AddTo(suite);
             MovementOpacityControllerTests.AddTo(suite);
             SettingsTests.AddTo(suite);
+            MouseTraceTests.AddTo(suite);
             return suite.Run();
         }
     }
