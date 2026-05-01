@@ -23,13 +23,16 @@ New-Item -ItemType Directory -Force -Path $generated | Out-Null
 
 $coreOut = Join-Path $bin "CursorMirror.Core.dll"
 $appOut = Join-Path $bin "CursorMirror.exe"
+$traceToolOut = Join-Path $bin "CursorMirror.TraceTool.exe"
 $testsOut = Join-Path $bin "CursorMirror.Tests.exe"
 $manifest = Join-Path $root "src\CursorMirror.App\app.manifest"
+$traceToolManifest = Join-Path $root "src\CursorMirror.TraceTool\app.manifest"
 $icon = Join-Path $root "assets\icons\CursorMirror.ico"
 $versionJson = Join-Path $bin "CursorMirror.version.json"
 $buildVersionSource = Join-Path $generated "BuildVersion.g.cs"
 $coreAssemblyVersionSource = Join-Path $generated "CursorMirror.Core.AssemblyVersion.g.cs"
 $appAssemblyVersionSource = Join-Path $generated "CursorMirror.App.AssemblyVersion.g.cs"
+$traceToolAssemblyVersionSource = Join-Path $generated "CursorMirror.TraceTool.AssemblyVersion.g.cs"
 
 function ConvertTo-CSharpLiteral([string]$Value) {
     return $Value.Replace('\', '\\').Replace('"', '\"')
@@ -83,9 +86,18 @@ using System.Reflection;
 [assembly: AssemblyInformationalVersion("$informationalVersion")]
 "@ | Set-Content -LiteralPath $appAssemblyVersionSource -Encoding ASCII
 
+@"
+using System.Reflection;
+
+[assembly: AssemblyVersion("$assemblyVersion")]
+[assembly: AssemblyFileVersion("$fileVersion")]
+[assembly: AssemblyInformationalVersion("$informationalVersion")]
+"@ | Set-Content -LiteralPath $traceToolAssemblyVersionSource -Encoding ASCII
+
 $coreSources = @(Get-ChildItem -Path (Join-Path $root "src\CursorMirror.Core") -Recurse -Filter *.cs | ForEach-Object { $_.FullName }) + @($buildVersionSource, $coreAssemblyVersionSource)
 $appCoreSources = @(Get-ChildItem -Path (Join-Path $root "src\CursorMirror.Core") -Recurse -Filter *.cs | Where-Object { $_.FullName -notmatch "\\Properties\\AssemblyInfo\.cs$" } | ForEach-Object { $_.FullName }) + @($buildVersionSource)
 $appSources = @(Get-ChildItem -Path (Join-Path $root "src\CursorMirror.App") -Recurse -Filter *.cs | ForEach-Object { $_.FullName }) + @($appAssemblyVersionSource)
+$traceToolSources = @(Get-ChildItem -Path (Join-Path $root "src\CursorMirror.TraceTool") -Recurse -Filter *.cs | ForEach-Object { $_.FullName }) + @($traceToolAssemblyVersionSource)
 $testSources = Get-ChildItem -Path (Join-Path $root "tests\CursorMirror.Tests") -Recurse -Filter *.cs | ForEach-Object { $_.FullName }
 
 $debugFlag = "/debug+"
@@ -97,17 +109,21 @@ if ($Configuration -eq "Release") {
 
 & (Join-Path $root "scripts\generate-icon.ps1") -Output $icon
 
-& $csc /nologo /target:library /warn:4 $debugFlag $optimizeFlag /out:$coreOut /reference:System.dll /reference:System.Core.dll /reference:System.Drawing.dll /reference:System.Windows.Forms.dll $coreSources
+& $csc /nologo /target:library /warn:4 $debugFlag $optimizeFlag /out:$coreOut /reference:System.dll /reference:System.Core.dll /reference:System.Drawing.dll /reference:System.IO.Compression.dll /reference:System.Runtime.Serialization.dll /reference:System.Windows.Forms.dll $coreSources
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
-& $csc /nologo /target:winexe /warn:4 $debugFlag $optimizeFlag /out:$appOut "/win32manifest:$manifest" "/win32icon:$icon" /reference:System.dll /reference:System.Core.dll /reference:System.Drawing.dll /reference:System.Windows.Forms.dll $appCoreSources $appSources
+& $csc /nologo /target:winexe /warn:4 $debugFlag $optimizeFlag /out:$appOut "/win32manifest:$manifest" "/win32icon:$icon" /reference:System.dll /reference:System.Core.dll /reference:System.Drawing.dll /reference:System.IO.Compression.dll /reference:System.Runtime.Serialization.dll /reference:System.Windows.Forms.dll $appCoreSources $appSources
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
-& $csc /nologo /target:exe /warn:4 $debugFlag $optimizeFlag /out:$testsOut /reference:System.dll /reference:System.Core.dll /reference:System.Drawing.dll /reference:System.Windows.Forms.dll /reference:$coreOut $testSources
+& $csc /nologo /target:winexe /warn:4 $debugFlag $optimizeFlag /out:$traceToolOut "/win32manifest:$traceToolManifest" "/win32icon:$icon" /reference:System.dll /reference:System.Core.dll /reference:System.Drawing.dll /reference:System.IO.Compression.dll /reference:System.Runtime.Serialization.dll /reference:System.Windows.Forms.dll /reference:$coreOut $traceToolSources
+if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+& $csc /nologo /target:exe /warn:4 $debugFlag $optimizeFlag /out:$testsOut /reference:System.dll /reference:System.Core.dll /reference:System.Drawing.dll /reference:System.IO.Compression.dll /reference:System.Runtime.Serialization.dll /reference:System.Windows.Forms.dll /reference:$coreOut $testSources
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
 Write-Host "Built ($Configuration):"
 Write-Host "  Version: $($versionInfo.InformationalVersion)"
 Write-Host "  $coreOut"
 Write-Host "  $appOut"
+Write-Host "  $traceToolOut"
 Write-Host "  $testsOut"

@@ -14,6 +14,8 @@ It is intended as a workaround for remote-control environments, such as Parsec, 
 - Tracks cursor movement with a low-level `WH_MOUSE_LL` mouse hook.
 - Draws a click-through, no-activate, always-on-top overlay.
 - Aligns the overlay using the cursor hot spot.
+- Makes the mirrored cursor translucent while movement is active.
+- Provides a small settings window from the notification-area icon.
 - Runs from the notification area.
 - Exits from the tray icon context menu.
 - Builds with the C# compiler included with .NET Framework installations.
@@ -27,6 +29,8 @@ CursorMirror.exe
 ```
 
 Cursor Mirror starts without showing a normal window. To quit, right-click the notification-area icon and choose `Exit`.
+
+Left-click the notification-area icon, or choose `Settings` from the context menu, to adjust movement translucency. The settings window also includes an `Exit Cursor Mirror` command.
 
 ## Packaging
 
@@ -46,6 +50,7 @@ The zip contains:
 
 ```text
 CursorMirror.exe
+CursorMirror.TraceTool.exe
 README.md
 LICENSE
 ```
@@ -69,6 +74,14 @@ Build Release:
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\build.ps1 -Configuration Release
 ```
+
+The release package also includes a diagnostic trace tool:
+
+```text
+CursorMirror.TraceTool.exe
+```
+
+The trace tool is a separate Windows app for collecting mouse movement samples. It starts and stops recording from buttons in its window and saves traces as compressed `.zip` packages containing `trace.csv` and `metadata.json`.
 
 Package without running tests:
 

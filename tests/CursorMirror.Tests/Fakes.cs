@@ -167,8 +167,10 @@ namespace CursorMirror.Tests
         public int MoveCount;
         public int HideCount;
         public int DisposeCount;
+        public int SetOpacityCount;
         public Point LastLocation;
         public Size LastBitmapSize;
+        public byte LastOpacity = 255;
 
         public void ShowCursor(Bitmap bitmap, Point location)
         {
@@ -183,6 +185,12 @@ namespace CursorMirror.Tests
             LastLocation = location;
         }
 
+        public void SetOpacity(byte alpha)
+        {
+            SetOpacityCount++;
+            LastOpacity = alpha;
+        }
+
         public void HideOverlay()
         {
             HideCount++;
@@ -191,6 +199,42 @@ namespace CursorMirror.Tests
         public void Dispose()
         {
             DisposeCount++;
+        }
+    }
+
+    internal sealed class FakeCursorPoller : ICursorPoller
+    {
+        private readonly Queue<object> _samples = new Queue<object>();
+        public int TryGetSampleCallCount;
+
+        public void EnqueueSample(CursorPollSample sample)
+        {
+            _samples.Enqueue(sample);
+        }
+
+        public void EnqueueFailure()
+        {
+            _samples.Enqueue(null);
+        }
+
+        public bool TryGetSample(out CursorPollSample sample)
+        {
+            TryGetSampleCallCount++;
+            if (_samples.Count == 0)
+            {
+                sample = new CursorPollSample();
+                return false;
+            }
+
+            object next = _samples.Dequeue();
+            if (next == null)
+            {
+                sample = new CursorPollSample();
+                return false;
+            }
+
+            sample = (CursorPollSample)next;
+            return true;
         }
     }
 
@@ -216,6 +260,22 @@ namespace CursorMirror.Tests
         public void RunNext()
         {
             _actions.Dequeue()();
+        }
+    }
+
+    internal sealed class FakeClock : IClock
+    {
+        private long _now;
+
+        public long Now
+        {
+            get { return _now; }
+            set { _now = value; }
+        }
+
+        public long Milliseconds
+        {
+            get { return _now; }
         }
     }
 }

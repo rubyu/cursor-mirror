@@ -24,13 +24,17 @@ The key words `MUST`, `MUST NOT`, `SHOULD`, and `MAY` are to be interpreted as d
   - 4.2 Low-Level Mouse Hook
   - 4.3 Cursor Capture
   - 4.4 Overlay Window
+  - 4.4.1 Movement Translucency Mode
+  - 4.4.2 Predictive Overlay Positioning
   - 4.5 Tray Resident Application
+  - 4.5.1 Settings Window
   - 4.6 Multi-Monitor Coordinates
 - 5. Packaging and Runtime Dependencies - [05-packaging.md](05-packaging.md)
   - 5.1 Target Runtime
   - 5.2 Build Outputs
   - 5.3 Startup and Shutdown
   - 5.4 Version Information
+  - 5.5 User Settings Persistence
 - 6. Conformance and Testing - [06-testing.md](06-testing.md)
   - 6.1 Deterministic Unit Tests
   - 6.2 Windows API Boundary Tests
@@ -44,6 +48,15 @@ The key words `MUST`, `MUST NOT`, `SHOULD`, and `MAY` are to be interpreted as d
   - 10.4 Build-Time Embedding
   - 10.5 Package Naming
   - 10.6 Informative Examples
+- 11. Mouse Trace Tool - [11-mouse-trace-tool.md](11-mouse-trace-tool.md)
+  - 11.1 Purpose and Scope
+  - 11.2 Application Shape
+  - 11.3 UI Requirements
+  - 11.4 Recording State Model
+  - 11.5 Captured Data
+  - 11.6 Output Package Format
+  - 11.7 Performance and Safety
+  - 11.8 Testing
 - Appendix A. Test Coverage Checklist - [A-test-coverage.md](A-test-coverage.md)
   - A.1 Overview
   - A.2 Identifiers and Conventions

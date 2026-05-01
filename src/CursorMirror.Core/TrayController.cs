@@ -10,14 +10,27 @@ namespace CursorMirror
         private readonly ContextMenuStrip _menu;
         private bool _disposed;
 
-        public TrayController(Action exitAction)
+        public TrayController(Action settingsAction, Action exitAction)
         {
+            if (settingsAction == null)
+            {
+                throw new ArgumentNullException("settingsAction");
+            }
+
             if (exitAction == null)
             {
                 throw new ArgumentNullException("exitAction");
             }
 
             _menu = new ContextMenuStrip();
+            ToolStripMenuItem settingsItem = new ToolStripMenuItem(LocalizedStrings.SettingsCommand);
+            settingsItem.Click += delegate
+            {
+                settingsAction();
+            };
+            _menu.Items.Add(settingsItem);
+            _menu.Items.Add(new ToolStripSeparator());
+
             ToolStripMenuItem exitItem = new ToolStripMenuItem(LocalizedStrings.ExitCommand);
             exitItem.Click += delegate
             {
@@ -29,6 +42,13 @@ namespace CursorMirror
             _notifyIcon.Text = LocalizedStrings.ProductName;
             _notifyIcon.Icon = AppIcon.Load();
             _notifyIcon.ContextMenuStrip = _menu;
+            _notifyIcon.MouseUp += delegate(object sender, MouseEventArgs e)
+            {
+                if (e.Button == MouseButtons.Left)
+                {
+                    settingsAction();
+                }
+            };
             _notifyIcon.Visible = true;
         }
 

@@ -30,6 +30,8 @@ Core entities:
 - Cursor image: The bitmap representation copied from the current system cursor handle.
 - Cursor hot spot: The cursor-relative point that Windows treats as the actual pointer coordinate.
 - Pointer position: The screen coordinate reported by the hook data or `GetCursorPos`.
+- Display pointer position: The exact pointer position or the predicted pointer position selected for overlay display.
+- Prediction horizon: The amount of time, in milliseconds, that predictive overlay positioning extrapolates beyond the latest movement sample.
 - Tray controller: The component that owns the notification-area icon and context menu.
 
 Coordinate terms:

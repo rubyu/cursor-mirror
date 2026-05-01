@@ -10,21 +10,40 @@ namespace CursorMirror
         private readonly CursorMirrorController _controller;
         private readonly LowLevelMouseHook _mouseHook;
         private readonly TrayController _trayController;
+        private readonly SettingsController _settingsController;
+        private readonly Timer _runtimeTimer;
+        private SettingsWindow _settingsWindow;
         private bool _shutdownStarted;
 
         public CursorMirrorApplicationContext()
         {
+            SettingsStore settingsStore = new SettingsStore();
+            CursorMirrorSettings settings = settingsStore.Load();
             _overlayWindow = new OverlayWindow();
             _controller = new CursorMirrorController(
                 new CursorImageProvider(),
                 _overlayWindow,
-                new ControlDispatcher(_overlayWindow));
+                new ControlDispatcher(_overlayWindow),
+                settings,
+                new SystemClock(),
+                new CursorPoller());
+            _settingsController = new SettingsController(settingsStore, settings, _controller.UpdateSettings, ExitFromSettings);
             _mouseHook = new LowLevelMouseHook(_controller.HandleMouseEvent);
+            _runtimeTimer = new Timer();
+            _runtimeTimer.Interval = 8;
+            _runtimeTimer.Tick += delegate
+            {
+                if (!_shutdownStarted)
+                {
+                    _controller.Tick();
+                }
+            };
 
             try
             {
                 _mouseHook.SetHook();
-                _trayController = new TrayController(ExitFromTray);
+                _trayController = new TrayController(ShowSettings, ExitFromTray);
+                _runtimeTimer.Start();
             }
             catch (Win32Exception)
             {
@@ -54,6 +73,27 @@ namespace CursorMirror
             ExitThread();
         }
 
+        private void ExitFromSettings()
+        {
+            Shutdown();
+            ExitThread();
+        }
+
+        private void ShowSettings()
+        {
+            if (_shutdownStarted)
+            {
+                return;
+            }
+
+            if (_settingsWindow == null || _settingsWindow.IsDisposed)
+            {
+                _settingsWindow = new SettingsWindow(_settingsController);
+            }
+
+            _settingsWindow.ShowSettings();
+        }
+
         private void Shutdown()
         {
             if (_shutdownStarted)
@@ -62,6 +102,18 @@ namespace CursorMirror
             }
 
             _shutdownStarted = true;
+
+            if (_runtimeTimer != null)
+            {
+                _runtimeTimer.Stop();
+                _runtimeTimer.Dispose();
+            }
+
+            if (_settingsWindow != null)
+            {
+                _settingsWindow.Dispose();
+                _settingsWindow = null;
+            }
 
             if (_mouseHook != null && _mouseHook.IsActivated)
             {
