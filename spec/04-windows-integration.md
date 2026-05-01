@@ -93,6 +93,13 @@ Recommended extended window styles:
 - A failsafe offset cap MAY be implemented for corrupted input or timestamp bugs, but it MUST be disabled by default or set high enough that normal fast movement is not clipped.
 - The default fixed prediction horizon SHOULD be `8ms`.
 - If DWM timing is available, Cursor Mirror SHOULD choose a next-vblank prediction horizon from DWM composition timing.
+- If DWM timing is available, Cursor Mirror SHOULD schedule its normal runtime polling and overlay movement tick near the upcoming DWM vblank instead of relying only on a general-purpose UI timer.
+- The DWM-synchronized runtime scheduler SHOULD wake slightly before the target vblank, then dispatch `GetCursorPos` polling and overlay movement onto the dedicated overlay runtime thread.
+- The normal overlay hot path SHOULD avoid dispatching through the tray or settings UI thread.
+- The overlay runtime thread SHOULD own the overlay window, cursor polling, prediction, opacity updates, and layered-window movement.
+- The scheduler SHOULD request a `1ms` timer resolution while active and release that request during shutdown.
+- The scheduler MUST avoid overlapping queued runtime ticks.
+- If DWM timing is unavailable or invalid, the scheduler MUST fall back to a documented high-resolution interval loop.
 - Invalid, late, stale, or excessive DWM horizons MUST fall back to exact pointer positioning or a documented fixed-horizon fallback.
 - The implementation SHOULD expose diagnostic counters for invalid DWM horizon, late DWM horizon, excessive horizon, fallback-to-hold, and prediction reset due to invalid `dt` or idle gaps.
 - The overlay MUST apply hot spot placement after choosing the exact or predicted pointer position.

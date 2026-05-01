@@ -1,49 +1,58 @@
 using System;
 using System.ComponentModel;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace CursorMirror
 {
     internal sealed class CursorMirrorApplicationContext : ApplicationContext
     {
-        private readonly OverlayWindow _overlayWindow;
-        private readonly CursorMirrorController _controller;
+        private readonly OverlayRuntimeThread _overlayRuntime;
         private readonly LowLevelMouseHook _mouseHook;
         private readonly TrayController _trayController;
         private readonly SettingsController _settingsController;
-        private readonly Timer _runtimeTimer;
+        private readonly EventWaitHandle _shutdownEvent;
+        private readonly System.Windows.Forms.Timer _shutdownSignalTimer;
         private SettingsWindow _settingsWindow;
         private bool _shutdownStarted;
 
         public CursorMirrorApplicationContext()
+            : this(new SettingsStore())
         {
-            SettingsStore settingsStore = new SettingsStore();
-            CursorMirrorSettings settings = settingsStore.Load();
-            _overlayWindow = new OverlayWindow();
-            _controller = new CursorMirrorController(
-                new CursorImageProvider(),
-                _overlayWindow,
-                new ControlDispatcher(_overlayWindow),
-                settings,
-                new SystemClock(),
-                new CursorPoller());
-            _settingsController = new SettingsController(settingsStore, settings, _controller.UpdateSettings, ExitFromSettings);
-            _mouseHook = new LowLevelMouseHook(_controller.HandleMouseEvent);
-            _runtimeTimer = new Timer();
-            _runtimeTimer.Interval = 8;
-            _runtimeTimer.Tick += delegate
+        }
+
+        private CursorMirrorApplicationContext(SettingsStore settingsStore)
+            : this(settingsStore, settingsStore.Load())
+        {
+        }
+
+        public CursorMirrorApplicationContext(SettingsStore settingsStore, CursorMirrorSettings settings)
+        {
+            if (settingsStore == null)
             {
-                if (!_shutdownStarted)
-                {
-                    _controller.Tick();
-                }
-            };
+                throw new ArgumentNullException("settingsStore");
+            }
+
+            if (settings == null)
+            {
+                throw new ArgumentNullException("settings");
+            }
+
+            settings = settings.Normalize();
 
             try
             {
+                _shutdownEvent = CursorMirrorRuntimeSignals.CreateMainShutdownEvent();
+                _overlayRuntime = new OverlayRuntimeThread(settings);
+                _overlayRuntime.Start();
+                _settingsController = new SettingsController(settingsStore, settings, _overlayRuntime.UpdateSettings, ExitFromSettings);
+                _mouseHook = new LowLevelMouseHook(_overlayRuntime.HandleMouseEvent);
                 _mouseHook.SetHook();
                 _trayController = new TrayController(ShowSettings, ExitFromTray);
-                _runtimeTimer.Start();
+                _shutdownSignalTimer = new System.Windows.Forms.Timer();
+                _shutdownSignalTimer.Interval = 250;
+                _shutdownSignalTimer.Tick += delegate { CheckExternalShutdownSignal(); };
+                _shutdownSignalTimer.Start();
             }
             catch (Win32Exception)
             {
@@ -55,6 +64,21 @@ namespace CursorMirror
                 Shutdown();
                 throw;
             }
+        }
+
+        private void CheckExternalShutdownSignal()
+        {
+            if (_shutdownStarted)
+            {
+                return;
+            }
+
+            if (_shutdownEvent.WaitOne(0))
+            {
+                ExitFromExternalShutdown();
+                return;
+            }
+
         }
 
         protected override void Dispose(bool disposing)
@@ -74,6 +98,12 @@ namespace CursorMirror
         }
 
         private void ExitFromSettings()
+        {
+            Shutdown();
+            ExitThread();
+        }
+
+        private void ExitFromExternalShutdown()
         {
             Shutdown();
             ExitThread();
@@ -103,10 +133,10 @@ namespace CursorMirror
 
             _shutdownStarted = true;
 
-            if (_runtimeTimer != null)
+            if (_shutdownSignalTimer != null)
             {
-                _runtimeTimer.Stop();
-                _runtimeTimer.Dispose();
+                _shutdownSignalTimer.Stop();
+                _shutdownSignalTimer.Dispose();
             }
 
             if (_settingsWindow != null)
@@ -131,9 +161,14 @@ namespace CursorMirror
                 _trayController.Dispose();
             }
 
-            if (_controller != null)
+            if (_overlayRuntime != null)
             {
-                _controller.Dispose();
+                _overlayRuntime.Dispose();
+            }
+
+            if (_shutdownEvent != null)
+            {
+                _shutdownEvent.Dispose();
             }
         }
     }

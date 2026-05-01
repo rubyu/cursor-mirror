@@ -17,6 +17,10 @@
 - Automated tests run by normal developer commands or CI MUST NOT install global Windows hooks.
 - Automated tests run by normal developer commands or CI MUST NOT depend on real pointer movement, real tray interaction, or an interactive desktop session.
 - Predictive overlay positioning tests MUST use synthetic timestamps and movement samples for normal unit and CI coverage.
+- DWM-synchronized runtime scheduler tests MUST use synthetic DWM timing inputs for normal unit and CI coverage.
+- Normal unit and CI tests MUST NOT require a real DWM compositor timing query to succeed.
+- Dedicated overlay runtime tests SHOULD isolate thread ownership and dispatch behavior without installing a real hook or requiring real pointer movement.
+- Performance and latency comparisons for overlay runtime changes SHOULD be based on trace packages captured through the trace tool, with DWM timing, runtime scheduler timing, and reference polling streams enabled.
 - Integration tests MAY exercise real Windows APIs.
 - Integration tests that install a real low-level hook MUST be opt-in and MUST be excluded from normal CI unless the CI environment is explicitly known to support interactive desktop hooks.
 - Opt-in interactive tests SHOULD require an explicit signal such as `CURSOR_MIRROR_RUN_INTERACTIVE_TESTS=1`.
@@ -43,6 +47,7 @@ Manual validation MUST include:
 - settings persist after restart;
 - settings `Close` does not terminate the process;
 - settings `Exit Cursor Mirror` terminates the process and removes the tray icon;
+- overlay tracking remains responsive while the settings window is open or being changed;
 - overlay works on a multi-monitor layout when available;
 - overlay works with at least one high-DPI scale factor when available;
 - behavior through Parsec or the target remote-control environment.
