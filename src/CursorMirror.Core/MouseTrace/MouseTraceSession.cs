@@ -12,6 +12,11 @@ namespace CursorMirror.MouseTrace
         private long _startTicks;
         private long _stopTicks;
         private int _pollIntervalMilliseconds;
+        private int _referencePollIntervalMilliseconds;
+        private int _timerResolutionMilliseconds;
+        private int _runtimeSchedulerWakeAdvanceMilliseconds;
+        private int _runtimeSchedulerFallbackIntervalMilliseconds;
+        private bool _timerResolutionSucceeded;
         private MouseTraceState _state = MouseTraceState.Idle;
 
         public MouseTraceState State
@@ -42,6 +47,8 @@ namespace CursorMirror.MouseTrace
             {
                 int hookMoveSamples = 0;
                 int cursorPollSamples = 0;
+                int referencePollSamples = 0;
+                int runtimeSchedulerPollSamples = 0;
                 int dwmTimingSamples = 0;
 
                 for (int i = 0; i < _samples.Count; i++)
@@ -55,6 +62,14 @@ namespace CursorMirror.MouseTrace
                     {
                         cursorPollSamples++;
                     }
+                    else if (sample.EventType == "referencePoll")
+                    {
+                        referencePollSamples++;
+                    }
+                    else if (sample.EventType == "runtimeSchedulerPoll")
+                    {
+                        runtimeSchedulerPollSamples++;
+                    }
 
                     if (sample.DwmTimingAvailable)
                     {
@@ -62,7 +77,13 @@ namespace CursorMirror.MouseTrace
                     }
                 }
 
-                return new MouseTraceSampleCounts(_samples.Count, hookMoveSamples, cursorPollSamples, dwmTimingSamples);
+                return new MouseTraceSampleCounts(
+                    _samples.Count,
+                    hookMoveSamples,
+                    cursorPollSamples,
+                    referencePollSamples,
+                    runtimeSchedulerPollSamples,
+                    dwmTimingSamples);
             }
         }
 
@@ -90,12 +111,46 @@ namespace CursorMirror.MouseTrace
 
         public void Start(long stopwatchTicks, int pollIntervalMilliseconds)
         {
+            Start(stopwatchTicks, pollIntervalMilliseconds, 0, 0, false);
+        }
+
+        public void Start(
+            long stopwatchTicks,
+            int pollIntervalMilliseconds,
+            int referencePollIntervalMilliseconds,
+            int timerResolutionMilliseconds,
+            bool timerResolutionSucceeded)
+        {
+            Start(
+                stopwatchTicks,
+                pollIntervalMilliseconds,
+                referencePollIntervalMilliseconds,
+                timerResolutionMilliseconds,
+                timerResolutionSucceeded,
+                0,
+                0);
+        }
+
+        public void Start(
+            long stopwatchTicks,
+            int pollIntervalMilliseconds,
+            int referencePollIntervalMilliseconds,
+            int timerResolutionMilliseconds,
+            bool timerResolutionSucceeded,
+            int runtimeSchedulerWakeAdvanceMilliseconds,
+            int runtimeSchedulerFallbackIntervalMilliseconds)
+        {
             lock (_syncRoot)
             {
                 _samples.Clear();
                 _startTicks = stopwatchTicks;
                 _stopTicks = stopwatchTicks;
                 _pollIntervalMilliseconds = Math.Max(0, pollIntervalMilliseconds);
+                _referencePollIntervalMilliseconds = Math.Max(0, referencePollIntervalMilliseconds);
+                _timerResolutionMilliseconds = Math.Max(0, timerResolutionMilliseconds);
+                _timerResolutionSucceeded = timerResolutionSucceeded;
+                _runtimeSchedulerWakeAdvanceMilliseconds = Math.Max(0, runtimeSchedulerWakeAdvanceMilliseconds);
+                _runtimeSchedulerFallbackIntervalMilliseconds = Math.Max(0, runtimeSchedulerFallbackIntervalMilliseconds);
                 _state = MouseTraceState.Recording;
             }
         }
@@ -151,6 +206,41 @@ namespace CursorMirror.MouseTrace
             AddSample(stopwatchTicks, cursorPoint, "poll", null, cursorPoint, null, null, null, null, dwmTimingAvailable, dwmTiming);
         }
 
+        public void AddReferencePoll(long stopwatchTicks, Point cursorPoint)
+        {
+            AddSample(stopwatchTicks, cursorPoint, "referencePoll", null, cursorPoint, null, null, null, null, false, new DwmTimingInfo());
+        }
+
+        public void AddRuntimeSchedulerPoll(
+            long stopwatchTicks,
+            Point cursorPoint,
+            bool dwmTimingAvailable,
+            DwmTimingInfo dwmTiming,
+            bool schedulerTimingUsable,
+            long? targetVBlankTicks,
+            long? plannedTickTicks,
+            long actualTickTicks,
+            long? vBlankLeadMicroseconds)
+        {
+            AddSample(
+                stopwatchTicks,
+                cursorPoint,
+                "runtimeSchedulerPoll",
+                null,
+                cursorPoint,
+                null,
+                null,
+                null,
+                null,
+                dwmTimingAvailable,
+                dwmTiming,
+                schedulerTimingUsable,
+                targetVBlankTicks,
+                plannedTickTicks,
+                actualTickTicks,
+                vBlankLeadMicroseconds);
+        }
+
         private void AddSample(
             long stopwatchTicks,
             Point primaryPoint,
@@ -163,6 +253,43 @@ namespace CursorMirror.MouseTrace
             long? hookExtraInfo,
             bool dwmTimingAvailable,
             DwmTimingInfo dwmTiming)
+        {
+            AddSample(
+                stopwatchTicks,
+                primaryPoint,
+                eventType,
+                hookPoint,
+                cursorPoint,
+                hookMouseData,
+                hookFlags,
+                hookTimeMilliseconds,
+                hookExtraInfo,
+                dwmTimingAvailable,
+                dwmTiming,
+                null,
+                null,
+                null,
+                null,
+                null);
+        }
+
+        private void AddSample(
+            long stopwatchTicks,
+            Point primaryPoint,
+            string eventType,
+            Point? hookPoint,
+            Point? cursorPoint,
+            uint? hookMouseData,
+            uint? hookFlags,
+            uint? hookTimeMilliseconds,
+            long? hookExtraInfo,
+            bool dwmTimingAvailable,
+            DwmTimingInfo dwmTiming,
+            bool? runtimeSchedulerTimingUsable,
+            long? runtimeSchedulerTargetVBlankTicks,
+            long? runtimeSchedulerPlannedTickTicks,
+            long? runtimeSchedulerActualTickTicks,
+            long? runtimeSchedulerVBlankLeadMicroseconds)
         {
             lock (_syncRoot)
             {
@@ -189,7 +316,12 @@ namespace CursorMirror.MouseTrace
                     hookTimeMilliseconds,
                     hookExtraInfo,
                     dwmTimingAvailable,
-                    dwmTiming));
+                    dwmTiming,
+                    runtimeSchedulerTimingUsable,
+                    runtimeSchedulerTargetVBlankTicks,
+                    runtimeSchedulerPlannedTickTicks,
+                    runtimeSchedulerActualTickTicks,
+                    runtimeSchedulerVBlankLeadMicroseconds));
             }
         }
 
@@ -197,7 +329,18 @@ namespace CursorMirror.MouseTrace
         {
             lock (_syncRoot)
             {
-                return new MouseTraceSnapshot(_state, _startTicks, _stopTicks, TicksToMicroseconds(_stopTicks - _startTicks), _samples.ToArray(), _pollIntervalMilliseconds);
+                return new MouseTraceSnapshot(
+                    _state,
+                    _startTicks,
+                    _stopTicks,
+                    TicksToMicroseconds(_stopTicks - _startTicks),
+                    _samples.ToArray(),
+                    _pollIntervalMilliseconds,
+                    _referencePollIntervalMilliseconds,
+                    _timerResolutionMilliseconds,
+                    _timerResolutionSucceeded,
+                    _runtimeSchedulerWakeAdvanceMilliseconds,
+                    _runtimeSchedulerFallbackIntervalMilliseconds);
             }
         }
 

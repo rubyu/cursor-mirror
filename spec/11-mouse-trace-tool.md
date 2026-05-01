@@ -18,6 +18,10 @@
 - The trace tool MUST install the low-level mouse hook only while recording is active.
 - The trace tool MUST unhook when recording stops or the application exits.
 - The trace tool SHOULD poll the current cursor position while recording, even when no low-level hook callback is being delivered.
+- The trace tool SHOULD record a product-equivalent cursor polling stream and a separate high-precision reference cursor polling stream.
+- The high-precision reference stream SHOULD target a shorter interval than the product-equivalent stream and MUST be clearly distinguishable in the trace data.
+- The trace tool SHOULD record a DWM-synchronized runtime scheduler polling stream that mirrors Cursor Mirror's normal runtime scheduler.
+- The runtime scheduler stream SHOULD decide its wake timing on a background thread and capture the cursor position on the UI thread, matching the main application dispatch shape.
 - The trace tool SHOULD record Desktop Window Manager timing information while recording when the operating system exposes it.
 
 ### 11.3 UI Requirements
@@ -28,6 +32,8 @@
   - total sample count display;
   - hook movement sample count display;
   - cursor polling sample count display;
+  - high-precision reference polling sample count display;
+  - runtime scheduler polling sample count display;
   - DWM timing available sample count display;
   - recording duration display;
   - status display;
@@ -37,7 +43,7 @@
 - `Exit` SHOULD close the application immediately when no unsaved samples exist.
 - `Exit` SHOULD confirm when unsaved samples exist.
 - UI text SHOULD be clear enough for users who are not comfortable with command-line tools.
-- The DWM timing display SHOULD show both available timing samples and the cursor polling sample denominator.
+- The DWM timing display SHOULD show both available timing samples and the product-plus-runtime scheduler polling sample denominator.
 
 ### 11.4 Recording State Model
 The trace tool MUST use an explicit state model with these states:
@@ -70,7 +76,9 @@ Each recorded sample MUST include:
 The initial event types SHOULD include:
 
 - `move` for low-level hook movement events;
-- `poll` for periodic `GetCursorPos` samples.
+- `poll` for product-equivalent periodic `GetCursorPos` samples;
+- `referencePoll` for high-precision reference `GetCursorPos` samples;
+- `runtimeSchedulerPoll` for DWM-synchronized runtime scheduler `GetCursorPos` samples.
 
 For `move` samples, the trace SHOULD include:
 
@@ -84,6 +92,22 @@ For `move` samples, the trace SHOULD include:
 For `poll` samples, the trace SHOULD include:
 
 - current `GetCursorPos` `x` and `y` screen coordinates.
+
+For `referencePoll` samples, the trace SHOULD include:
+
+- current `GetCursorPos` `x` and `y` screen coordinates;
+- high-resolution timestamp ticks captured as close to the native cursor read as practical.
+
+For `runtimeSchedulerPoll` samples, the trace SHOULD include:
+
+- current `GetCursorPos` `x` and `y` screen coordinates captured on the UI thread;
+- whether DWM timing was usable for the scheduler decision;
+- target vblank QPC ticks when available;
+- planned tick QPC ticks when available;
+- actual tick QPC ticks captured as close to the native cursor read as practical;
+- lead time from the actual tick to the target vblank in microseconds when available.
+
+The product-equivalent `poll` stream SHOULD remain the legacy model input proxy. The `runtimeSchedulerPoll` stream SHOULD be treated as the current product runtime input proxy. The `referencePoll` stream SHOULD be treated as a higher-resolution reference stream for analysis and target reconstruction, not as product-available runtime input.
 
 For samples where Desktop Window Manager timing is available, the trace SHOULD include:
 
@@ -104,6 +128,23 @@ Optional fields MAY include:
 - virtual-screen bounds;
 - display-output identifier.
 
+Trace metadata SHOULD include:
+
+- trace format version;
+- Cursor Mirror version and build metadata;
+- requested product-equivalent polling interval;
+- requested high-precision reference polling interval;
+- requested runtime scheduler wake lead and fallback interval;
+- requested high-resolution timer period and whether it was acquired;
+- product-equivalent poll, reference poll, runtime scheduler poll, hook move, and DWM timing sample counts;
+- observed interval statistics for hook move, product-equivalent poll, reference poll, and runtime scheduler streams;
+- DWM timing availability percentage;
+- operating system, runtime, bitness, and processor-count metadata;
+- virtual-screen bounds;
+- monitor bounds, working area, primary flag, bits per pixel, and device name;
+- system DPI values;
+- quality warning identifiers for missing streams, low DWM availability, or unexpectedly coarse polling.
+
 ### 11.6 Output Package Format
 - Trace output MUST be saved as a `.zip` package by default.
 - The zip package MUST use the highest compression level exposed by the built-in compression API for the target runtime.
@@ -118,7 +159,7 @@ Optional fields MAY include:
 Example `trace.csv` header:
 
 ```csv
-sequence,stopwatchTicks,elapsedMicroseconds,x,y,event,hookX,hookY,cursorX,cursorY,hookMouseData,hookFlags,hookTimeMilliseconds,hookExtraInfo,dwmTimingAvailable,dwmRateRefreshNumerator,dwmRateRefreshDenominator,dwmQpcRefreshPeriod,dwmQpcVBlank,dwmRefreshCount,dwmQpcCompose,dwmFrame,dwmRefreshFrame,dwmFrameDisplayed,dwmQpcFrameDisplayed,dwmRefreshFrameDisplayed,dwmFrameComplete,dwmQpcFrameComplete,dwmFramePending,dwmQpcFramePending,dwmRefreshNextDisplayed,dwmRefreshNextPresented,dwmFramesDisplayed,dwmFramesDropped,dwmFramesMissed
+sequence,stopwatchTicks,elapsedMicroseconds,x,y,event,hookX,hookY,cursorX,cursorY,hookMouseData,hookFlags,hookTimeMilliseconds,hookExtraInfo,dwmTimingAvailable,dwmRateRefreshNumerator,dwmRateRefreshDenominator,dwmQpcRefreshPeriod,dwmQpcVBlank,dwmRefreshCount,dwmQpcCompose,dwmFrame,dwmRefreshFrame,dwmFrameDisplayed,dwmQpcFrameDisplayed,dwmRefreshFrameDisplayed,dwmFrameComplete,dwmQpcFrameComplete,dwmFramePending,dwmQpcFramePending,dwmRefreshNextDisplayed,dwmRefreshNextPresented,dwmFramesDisplayed,dwmFramesDropped,dwmFramesMissed,runtimeSchedulerTimingUsable,runtimeSchedulerTargetVBlankTicks,runtimeSchedulerPlannedTickTicks,runtimeSchedulerActualTickTicks,runtimeSchedulerVBlankLeadMicroseconds
 ```
 
 Example package:
@@ -133,6 +174,12 @@ cursor-mirror-trace-20260430-153012.zip
 - The hook callback MUST do minimal work.
 - File I/O MUST NOT occur inside the hook callback.
 - Periodic cursor-position polling SHOULD avoid blocking work and SHOULD stop when recording stops.
+- High-precision reference polling SHOULD run only while recording is active.
+- High-precision reference polling SHOULD use bounded work per sample and SHOULD stop promptly when recording stops or the tool exits.
+- Runtime scheduler polling SHOULD run only while recording is active.
+- Runtime scheduler polling MUST avoid overlapping queued UI-thread captures.
+- Runtime scheduler polling SHOULD stop promptly when recording stops or the tool exits.
+- If the tool requests a shorter Windows timer period for recording quality, it MUST release that request when recording stops or the tool exits.
 - DWM timing capture failure MUST NOT stop recording.
 - UI updates SHOULD be throttled, for example to `10Hz` to `30Hz`.
 - Recording MUST store samples in memory until saved.
@@ -143,5 +190,5 @@ cursor-mirror-trace-20260430-153012.zip
 
 ### 11.8 Testing
 - Normal CI MUST NOT launch the trace tool or install a real Windows hook.
-- Unit tests MUST cover trace session state transitions, button enabled state derivation, total and per-source sample counting, duration formatting, output package writing, and empty-save behavior.
+- Unit tests MUST cover trace session state transitions, button enabled state derivation, total and per-source sample counting, duration formatting, output package writing, reference polling sample fields, runtime scheduler polling sample fields, metadata quality fields, and empty-save behavior.
 - Manual validation MUST cover visible-window startup, real hook recording, start/stop/save behavior, unsaved exit confirmation, real hook cleanup, and saved package readability.

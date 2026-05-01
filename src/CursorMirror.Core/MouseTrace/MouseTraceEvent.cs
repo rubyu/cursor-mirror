@@ -24,6 +24,53 @@ namespace CursorMirror.MouseTrace
             long? hookExtraInfo,
             bool dwmTimingAvailable,
             DwmTimingInfo dwmTiming)
+            : this(
+                sequence,
+                stopwatchTicks,
+                elapsedMicroseconds,
+                x,
+                y,
+                eventType,
+                hookX,
+                hookY,
+                cursorX,
+                cursorY,
+                hookMouseData,
+                hookFlags,
+                hookTimeMilliseconds,
+                hookExtraInfo,
+                dwmTimingAvailable,
+                dwmTiming,
+                null,
+                null,
+                null,
+                null,
+                null)
+        {
+        }
+
+        public MouseTraceEvent(
+            long sequence,
+            long stopwatchTicks,
+            long elapsedMicroseconds,
+            int x,
+            int y,
+            string eventType,
+            int? hookX,
+            int? hookY,
+            int? cursorX,
+            int? cursorY,
+            uint? hookMouseData,
+            uint? hookFlags,
+            uint? hookTimeMilliseconds,
+            long? hookExtraInfo,
+            bool dwmTimingAvailable,
+            DwmTimingInfo dwmTiming,
+            bool? runtimeSchedulerTimingUsable,
+            long? runtimeSchedulerTargetVBlankTicks,
+            long? runtimeSchedulerPlannedTickTicks,
+            long? runtimeSchedulerActualTickTicks,
+            long? runtimeSchedulerVBlankLeadMicroseconds)
         {
             Sequence = sequence;
             StopwatchTicks = stopwatchTicks;
@@ -41,6 +88,11 @@ namespace CursorMirror.MouseTrace
             HookExtraInfo = hookExtraInfo;
             DwmTimingAvailable = dwmTimingAvailable;
             DwmTiming = dwmTiming;
+            RuntimeSchedulerTimingUsable = runtimeSchedulerTimingUsable;
+            RuntimeSchedulerTargetVBlankTicks = runtimeSchedulerTargetVBlankTicks;
+            RuntimeSchedulerPlannedTickTicks = runtimeSchedulerPlannedTickTicks;
+            RuntimeSchedulerActualTickTicks = runtimeSchedulerActualTickTicks;
+            RuntimeSchedulerVBlankLeadMicroseconds = runtimeSchedulerVBlankLeadMicroseconds;
         }
 
         public long Sequence { get; private set; }
@@ -74,5 +126,15 @@ namespace CursorMirror.MouseTrace
         public bool DwmTimingAvailable { get; private set; }
 
         public DwmTimingInfo DwmTiming { get; private set; }
+
+        public bool? RuntimeSchedulerTimingUsable { get; private set; }
+
+        public long? RuntimeSchedulerTargetVBlankTicks { get; private set; }
+
+        public long? RuntimeSchedulerPlannedTickTicks { get; private set; }
+
+        public long? RuntimeSchedulerActualTickTicks { get; private set; }
+
+        public long? RuntimeSchedulerVBlankLeadMicroseconds { get; private set; }
     }
 }

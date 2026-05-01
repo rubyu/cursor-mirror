@@ -22,6 +22,9 @@ namespace CursorMirror.Tests
             suite.Add("COT-MLU-9", TraceHookAndPollSampleFields);
             suite.Add("COT-MLU-10", TraceDwmTimingFields);
             suite.Add("COT-MLU-11", TraceSampleCountBreakdown);
+            suite.Add("COT-MLU-12", TraceReferencePollFields);
+            suite.Add("COT-MLU-13", TraceMetadataIncludesCaptureQuality);
+            suite.Add("COT-MLU-14", TraceRuntimeSchedulerPollFields);
         }
 
         // Trace session starts empty [COT-MLU-1]
@@ -182,6 +185,7 @@ namespace CursorMirror.Tests
 
             session.AddHookMove(start + 10, new Point(10, 20), 30, 40, 50, new IntPtr(60), new Point(11, 21));
             session.AddPoll(start + 20, new Point(12, 22), false, new DwmTimingInfo());
+            session.AddReferencePoll(start + 30, new Point(13, 23));
             MouseTraceSnapshot snapshot = session.Snapshot();
 
             TestAssert.Equal(8, snapshot.PollIntervalMilliseconds, "poll interval");
@@ -198,6 +202,9 @@ namespace CursorMirror.Tests
             TestAssert.False(snapshot.Samples[1].HookX.HasValue, "poll hook x empty");
             TestAssert.Equal(12, snapshot.Samples[1].CursorX.Value, "poll cursor x");
             TestAssert.Equal(22, snapshot.Samples[1].CursorY.Value, "poll cursor y");
+            TestAssert.Equal("referencePoll", snapshot.Samples[2].EventType, "reference poll event type");
+            TestAssert.Equal(13, snapshot.Samples[2].CursorX.Value, "reference poll cursor x");
+            TestAssert.Equal(23, snapshot.Samples[2].CursorY.Value, "reference poll cursor y");
         }
 
         // Trace DWM timing fields [COT-MLU-10]
@@ -231,8 +238,9 @@ namespace CursorMirror.Tests
                 timing.FramesDropped = 16;
                 timing.FramesMissed = 17;
 
-                session.Start(start, 8);
+                session.Start(start, 8, 2, 1, true, 2, 8);
                 session.AddPoll(start + 20, new Point(12, 22), true, timing);
+                session.AddReferencePoll(start + 30, new Point(13, 23));
                 session.Stop(start + 30);
 
                 new MouseTracePackageWriter().Write(path, session.Snapshot());
@@ -253,12 +261,17 @@ namespace CursorMirror.Tests
                     }
 
                     TestAssert.True(csv.Contains("dwmTimingAvailable,dwmRateRefreshNumerator"), "dwm header");
+                    TestAssert.True(csv.Contains("runtimeSchedulerTimingUsable,runtimeSchedulerTargetVBlankTicks"), "runtime scheduler header");
                     TestAssert.True(csv.Contains(",poll,,,12,22,"), "poll row values");
                     TestAssert.True(csv.Contains("true,60000,1001,166667,123456,42,"), "dwm row values");
-                    TestAssert.True(metadataJson.Contains("\"TraceFormatVersion\":2"), "metadata trace format version");
+                    TestAssert.True(metadataJson.Contains("\"TraceFormatVersion\":4"), "metadata trace format version");
                     TestAssert.True(metadataJson.Contains("\"PollSampleCount\":1"), "metadata poll sample count");
+                    TestAssert.True(metadataJson.Contains("\"ReferencePollSampleCount\":1"), "metadata reference poll sample count");
                     TestAssert.True(metadataJson.Contains("\"DwmTimingSampleCount\":1"), "metadata dwm timing sample count");
                     TestAssert.True(metadataJson.Contains("\"PollIntervalMilliseconds\":8"), "metadata poll interval");
+                    TestAssert.True(metadataJson.Contains("\"ReferencePollIntervalMilliseconds\":2"), "metadata reference poll interval");
+                    TestAssert.True(metadataJson.Contains("\"TimerResolutionMilliseconds\":1"), "metadata timer resolution");
+                    TestAssert.True(metadataJson.Contains("\"TimerResolutionSucceeded\":true"), "metadata timer resolution result");
                 }
             }
             finally
@@ -278,13 +291,120 @@ namespace CursorMirror.Tests
             session.AddHookMove(start + 20, new Point(11, 21), 0, 0, 20, IntPtr.Zero, new Point(11, 21));
             session.AddPoll(start + 30, new Point(12, 22), true, new DwmTimingInfo());
             session.AddPoll(start + 40, new Point(13, 23), false, new DwmTimingInfo());
+            session.AddReferencePoll(start + 50, new Point(14, 24));
+            session.AddRuntimeSchedulerPoll(start + 60, new Point(15, 25), false, new DwmTimingInfo(), false, null, null, start + 60, null);
 
             MouseTraceSampleCounts counts = session.GetSampleCounts();
 
-            TestAssert.Equal(4, counts.TotalSamples, "total sample count");
+            TestAssert.Equal(6, counts.TotalSamples, "total sample count");
             TestAssert.Equal(2, counts.HookMoveSamples, "hook move sample count");
             TestAssert.Equal(2, counts.CursorPollSamples, "cursor poll sample count");
+            TestAssert.Equal(1, counts.ReferencePollSamples, "reference poll sample count");
+            TestAssert.Equal(1, counts.RuntimeSchedulerPollSamples, "runtime scheduler poll sample count");
             TestAssert.Equal(1, counts.DwmTimingSamples, "dwm timing sample count");
+        }
+
+        // Trace reference poll fields [COT-MLU-12]
+        private static void TraceReferencePollFields()
+        {
+            MouseTraceSession session = new MouseTraceSession();
+            long start = 1000;
+            session.Start(start, 8, 2, 1, true);
+
+            session.AddReferencePoll(start + 10, new Point(100, 200));
+            MouseTraceSnapshot snapshot = session.Snapshot();
+
+            TestAssert.Equal(2, snapshot.ReferencePollIntervalMilliseconds, "reference poll interval");
+            TestAssert.Equal(1, snapshot.TimerResolutionMilliseconds, "timer resolution");
+            TestAssert.True(snapshot.TimerResolutionSucceeded, "timer resolution succeeded");
+            TestAssert.Equal("referencePoll", snapshot.Samples[0].EventType, "reference poll event type");
+            TestAssert.Equal(100, snapshot.Samples[0].X, "reference poll x");
+            TestAssert.Equal(200, snapshot.Samples[0].Y, "reference poll y");
+            TestAssert.Equal(100, snapshot.Samples[0].CursorX.Value, "reference poll cursor x");
+            TestAssert.Equal(200, snapshot.Samples[0].CursorY.Value, "reference poll cursor y");
+            TestAssert.False(snapshot.Samples[0].DwmTimingAvailable, "reference poll has no dwm timing");
+        }
+
+        // Trace metadata includes capture quality [COT-MLU-13]
+        private static void TraceMetadataIncludesCaptureQuality()
+        {
+            string directory = NewTestDirectory();
+            try
+            {
+                string path = Path.Combine(directory, "trace.zip");
+                MouseTraceSession session = new MouseTraceSession();
+                long start = 1000;
+                long oneMillisecond = Stopwatch.Frequency / 1000;
+                session.Start(start, 8, 2, 1, true, 2, 8);
+                session.AddHookMove(start + oneMillisecond, new Point(1, 1), 0, 0, 0, IntPtr.Zero, new Point(1, 1));
+                session.AddHookMove(start + (2 * oneMillisecond), new Point(2, 2), 0, 0, 0, IntPtr.Zero, new Point(2, 2));
+                session.AddPoll(start + (8 * oneMillisecond), new Point(3, 3), true, new DwmTimingInfo());
+                session.AddPoll(start + (16 * oneMillisecond), new Point(4, 4), false, new DwmTimingInfo());
+                session.AddReferencePoll(start + (2 * oneMillisecond), new Point(5, 5));
+                session.AddReferencePoll(start + (4 * oneMillisecond), new Point(6, 6));
+                session.AddRuntimeSchedulerPoll(start + (10 * oneMillisecond), new Point(7, 7), true, new DwmTimingInfo(), true, start + (20 * oneMillisecond), start + (18 * oneMillisecond), start + (10 * oneMillisecond), 10000);
+                session.AddRuntimeSchedulerPoll(start + (18 * oneMillisecond), new Point(8, 8), false, new DwmTimingInfo(), false, null, null, start + (18 * oneMillisecond), null);
+                session.Stop(start + (24 * oneMillisecond));
+
+                new MouseTracePackageWriter().Write(path, session.Snapshot());
+
+                using (FileStream stream = File.OpenRead(path))
+                using (ZipArchive archive = new ZipArchive(stream, ZipArchiveMode.Read))
+                using (StreamReader reader = new StreamReader(archive.GetEntry("metadata.json").Open()))
+                {
+                    string metadataJson = reader.ReadToEnd();
+                    TestAssert.True(metadataJson.Contains("\"HookMoveIntervalStats\""), "metadata hook interval stats");
+                    TestAssert.True(metadataJson.Contains("\"ProductPollIntervalStats\""), "metadata product poll interval stats");
+                    TestAssert.True(metadataJson.Contains("\"ReferencePollIntervalStats\""), "metadata reference poll interval stats");
+                    TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerPollIntervalStats\""), "metadata runtime scheduler poll interval stats");
+                    TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerPollSampleCount\":2"), "metadata runtime scheduler poll sample count");
+                    TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerWakeAdvanceMilliseconds\":2"), "metadata runtime scheduler wake advance");
+                    TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerFallbackIntervalMilliseconds\":8"), "metadata runtime scheduler fallback interval");
+                    TestAssert.True(metadataJson.Contains("\"DwmTimingAvailabilityPercent\":50"), "metadata dwm availability percent");
+                    TestAssert.True(metadataJson.Contains("\"OperatingSystemVersion\""), "metadata os version");
+                    TestAssert.True(metadataJson.Contains("\"Monitors\""), "metadata monitors");
+                    TestAssert.True(metadataJson.Contains("\"QualityWarnings\""), "metadata quality warnings");
+                }
+            }
+            finally
+            {
+                DeleteDirectory(directory);
+            }
+        }
+
+        // Trace runtime scheduler poll fields [COT-MLU-14]
+        private static void TraceRuntimeSchedulerPollFields()
+        {
+            MouseTraceSession session = new MouseTraceSession();
+            long start = 1000;
+            DwmTimingInfo timing = new DwmTimingInfo();
+            timing.QpcRefreshPeriod = 100;
+            timing.QpcVBlank = 2000;
+            session.Start(start, 8, 2, 1, true, 2, 8);
+
+            session.AddRuntimeSchedulerPoll(
+                start + 10,
+                new Point(100, 200),
+                true,
+                timing,
+                true,
+                2000,
+                1800,
+                start + 10,
+                990);
+            MouseTraceSnapshot snapshot = session.Snapshot();
+
+            TestAssert.Equal(2, snapshot.RuntimeSchedulerWakeAdvanceMilliseconds, "runtime scheduler wake advance");
+            TestAssert.Equal(8, snapshot.RuntimeSchedulerFallbackIntervalMilliseconds, "runtime scheduler fallback interval");
+            TestAssert.Equal("runtimeSchedulerPoll", snapshot.Samples[0].EventType, "runtime scheduler event type");
+            TestAssert.Equal(100, snapshot.Samples[0].X, "runtime scheduler x");
+            TestAssert.Equal(200, snapshot.Samples[0].Y, "runtime scheduler y");
+            TestAssert.Equal(100, snapshot.Samples[0].CursorX.Value, "runtime scheduler cursor x");
+            TestAssert.True(snapshot.Samples[0].RuntimeSchedulerTimingUsable.Value, "runtime scheduler timing usable");
+            TestAssert.Equal(2000L, snapshot.Samples[0].RuntimeSchedulerTargetVBlankTicks.Value, "runtime scheduler target vblank");
+            TestAssert.Equal(1800L, snapshot.Samples[0].RuntimeSchedulerPlannedTickTicks.Value, "runtime scheduler planned tick");
+            TestAssert.Equal(start + 10, snapshot.Samples[0].RuntimeSchedulerActualTickTicks.Value, "runtime scheduler actual tick");
+            TestAssert.Equal(990L, snapshot.Samples[0].RuntimeSchedulerVBlankLeadMicroseconds.Value, "runtime scheduler lead");
         }
 
         private static string NewTestDirectory()
