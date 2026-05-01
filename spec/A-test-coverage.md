@@ -27,6 +27,7 @@ This specification assigns a stable, semantic identifier to every test item in A
   - `S` = Settings UI and persistence
   - `D` = DPI and multi-monitor coordinates
   - `L` = Mouse trace tooling
+  - `E` = Demo application and virtual pointer stream
   - `P` = Packaging and runtime dependencies
   - `R` = Resource management and failure handling
   - `V` = Visual and remote-control validation
@@ -66,6 +67,7 @@ This section defines the scope and intent of each test family. Code definitions 
 - S: Settings UI and persistence - Settings defaults, validation, persistence, reset, immediate application, and settings-window command behavior.
 - D: DPI and multi-monitor coordinates - DPI awareness, virtual screen coordinates, negative coordinates, and scaling behavior.
 - L: Mouse trace tooling - Trace session state, sample collection, UI state derivation, package writing, and manual trace capture.
+- E: Demo application and virtual pointer stream - Demo startup controls, deterministic synthetic signal generation, and demo-scene behavior.
 - P: Packaging and runtime dependencies - Target runtime, artifact shape, and no-install expectations.
 - R: Resource management and failure handling - Native handle disposal, exception containment, and cleanup under failure.
 - V: Visual and remote-control validation - Human-observable alignment and target remote-control software behavior.
@@ -207,6 +209,18 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that missing DWM timing falls back to exact pointer positioning and increments the diagnostic counters.
   Refs: Section 4.4.2.
 
+- COT-MOU-23 - DWM scheduler waits until vblank lead
+  Verify that a synthetic DWM timing sample before the configured wake lead produces a bounded wait rather than an immediate runtime tick.
+  Refs: Sections 4.4.2, 6.2.
+
+- COT-MOU-24 - DWM scheduler one tick per vblank
+  Verify that the DWM-synchronized runtime scheduler decision logic requests one runtime tick for a target vblank and advances to the next vblank after that target has already been requested.
+  Refs: Sections 4.4.2, 6.2.
+
+- COT-MOU-25 - DWM scheduler invalid timing fallback
+  Verify that invalid synthetic DWM timing is reported as unusable and selects the documented fallback delay without requiring a real compositor query.
+  Refs: Sections 4.4.2, 6.2.
+
 #### A.4.T Tray and Application Lifetime
 ##### Unit
 - COT-MTU-1 - Tray icon created
@@ -241,6 +255,10 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that `Exit Cursor Mirror` in the settings window invokes the same shutdown path as tray `Exit`.
   Refs: Sections 2.3, 4.5.1.
 
+- COT-MTU-9 - Overlay runtime dispatch boundary
+  Verify that hook and settings entry points post work to the overlay runtime boundary without performing cursor capture, cursor polling, or overlay mutation on the calling thread.
+  Refs: Sections 3.2, 3.3, 4.4.2.
+
 #### A.4.S Settings UI and Persistence
 ##### Unit
 - COT-MSU-1 - Settings defaults
@@ -260,11 +278,11 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Section 5.5.
 
 - COT-MSU-5 - Missing settings fallback
-  Verify that missing settings load documented defaults without preventing startup.
+  Verify that missing settings load documented defaults without reporting a restoration failure.
   Refs: Section 5.5.
 
 - COT-MSU-6 - Corrupt settings fallback
-  Verify that corrupt settings load documented defaults without preventing startup.
+  Verify that corrupt settings load documented defaults and report a restoration failure that the UI can surface to the user.
   Refs: Section 5.5.
 
 - COT-MSU-7 - Settings reset
@@ -278,6 +296,18 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 - COT-MSU-9 - Prediction setting persistence
   Verify that predictive overlay positioning can be disabled, saved, loaded, reset to default enabled, and applied immediately.
   Refs: Sections 2.3, 4.4.2, 4.5.1, 5.5.
+
+- COT-MSU-10 - Durable settings save validation
+  Verify that settings are written to a temporary file, validated by loading them back, and only then replace the active settings file.
+  Refs: Sections 5.5, 5.6.
+
+- COT-MSU-11 - Settings backup retention
+  Verify that successful saves retain timestamped backups of previous settings and keep only the newest `5` backups.
+  Refs: Section 5.6.
+
+- COT-MSU-12 - Failed staged save preserves active settings
+  Verify that a failed temporary-file validation or replacement failure leaves the previous active settings readable when possible.
+  Refs: Section 5.6.
 
 #### A.4.D DPI and Multi-Monitor Coordinates
 ##### Unit
@@ -338,7 +368,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Sections 11.4, 11.7.
 
 - COT-MLU-9 - Trace hook and poll sample fields
-  Verify that hook movement samples and periodic cursor-position poll samples preserve their source-specific fields.
+  Verify that hook movement samples, product-equivalent cursor-position poll samples, and reference poll samples preserve their source-specific fields.
   Refs: Section 11.5.
 
 - COT-MLU-10 - Trace DWM timing fields
@@ -346,8 +376,62 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Sections 11.5, 11.6.
 
 - COT-MLU-11 - Trace sample count breakdown
-  Verify that total, hook movement, cursor polling, and DWM timing sample counts are reported separately.
+  Verify that total, hook movement, product-equivalent cursor polling, reference polling, runtime scheduler polling, and DWM timing sample counts are reported separately.
   Refs: Sections 11.3, 11.5.
+
+- COT-MLU-12 - Trace reference poll fields
+  Verify that reference polling samples preserve cursor coordinates and reference polling/timer-resolution capture settings.
+  Refs: Section 11.5.
+
+- COT-MLU-13 - Trace metadata quality fields
+  Verify that trace metadata includes interval statistics, runtime scheduler capture settings, DWM availability, environment metadata, monitor metadata, and quality warning fields.
+  Refs: Sections 11.5, 11.6.
+
+- COT-MLU-14 - Trace runtime scheduler poll fields
+  Verify that runtime scheduler polling samples preserve cursor coordinates, scheduler timing usability, target vblank, planned tick, actual tick, and vblank lead fields.
+  Refs: Section 11.5.
+
+#### A.4.E Demo Application and Virtual Pointer Stream
+##### Unit
+- COT-MEU-1 - Deterministic demo pointer stream
+  Verify that two virtual streams created with the same bounds and speed produce identical positions, phases, hook flags, poll flags, and timing fields for the same elapsed-time sequence.
+  Refs: Sections 12.4, 12.5.
+
+- COT-MEU-2 - Stopped phase hook suppression
+  Verify that stopped endpoint phases continue to produce polling samples while suppressing hook-like movement samples.
+  Refs: Section 12.5.
+
+- COT-MEU-3 - Demo path timing fields
+  Verify that demo path samples include positive clock and refresh-like timing fields for deterministic analysis without opening a window or moving the real cursor.
+  Refs: Section 12.5.
+
+- COT-MEU-4 - External input enters Free mode
+  Verify that the demo Free mode controller switches from Auto mode to Free mode when external user input is recorded.
+  Refs: Section 12.5.
+
+- COT-MEU-5 - Free mode resumes after three seconds
+  Verify that Free mode does not resume before `3` seconds of no user input and does resume at the documented timeout.
+  Refs: Section 12.5.
+
+- COT-MEU-6 - Repeated external input extends Free mode
+  Verify that each new external user input restarts the `3` second Free mode timeout.
+  Refs: Section 12.5.
+
+- COT-MEU-7 - Demo path starts at left edge
+  Verify that a newly created deterministic demo pointer stream starts at the left endpoint and begins moving right.
+  Refs: Sections 12.4, 12.5.
+
+- COT-MEU-8 - Demo settings defaults
+  Verify that demo settings default to `640 x 480`, system language, normal speed, mirrored cursor enabled, and documented cursor overlay defaults.
+  Refs: Sections 12.3, 12.4.
+
+- COT-MEU-9 - Demo settings persistence
+  Verify that demo startup selections persist per user and load back to equivalent normalized settings on the next launch, that missing demo settings are first-run defaults, and that corrupt demo settings report a restoration failure.
+  Refs: Section 12.3.
+
+- COT-MEU-10 - Durable demo settings save
+  Verify that demo settings use the same staged validation, backup retention, and active-file preservation behavior as main settings.
+  Refs: Sections 5.6, 12.3.
 
 #### A.4.R Resource Management and Failure Handling
 ##### Unit
@@ -410,6 +494,10 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Start the application, open settings, invoke `Exit Cursor Mirror`, and verify process termination and tray icon removal.
   Refs: Sections 4.5.1, 5.3.
 
+- COT-BTI-5 - Overlay runtime remains responsive during settings use
+  Start the application, keep the settings window open, change settings repeatedly, and verify that cursor overlay movement continues without routing the hot path through the settings UI thread. This test MAY use trace-tool latency comparisons for evidence.
+  Refs: Sections 3.3, 4.4.2, 6.2.
+
 #### A.5.S Settings UI and Persistence
 ##### Integration
 - COT-BSI-1 - Settings controls apply immediately
@@ -464,6 +552,37 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 - COT-BLM-2 - Manual trace hook cleanup
   Start and stop recording, then exit the trace tool and verify that no hook-dependent process or visible window remains.
   Refs: Sections 11.2, 11.7, 11.8.
+
+#### A.5.E Demo Application and Virtual Pointer Stream
+##### Integration
+- COT-BEI-1 - Demo app release launch
+  Start `CursorMirror.Demo.exe` from a release package and verify that it opens a normal visible startup window without launching the main tray application.
+  Refs: Sections 5.2, 12.2.
+
+##### Manual
+- COT-BEM-1 - Demo startup and Esc stop
+  Start the demo from the startup view, press `Esc`, and verify that the startup view returns and demo input injection stops.
+  Refs: Sections 12.2, 12.3.
+
+- COT-BEM-2 - Demo display modes and status
+  Run the demo in every window preset and fullscreen, verify real cursor horizontal motion with eased endpoint stops, verify that lower-right status remains visible and readable, verify that mirrored cursor enabled or disabled status appears above the other status fields, and verify that startup explanatory text is not clipped at the default dialog size.
+  Refs: Sections 12.3, 12.4.
+
+- COT-BEM-3 - Demo Free mode and resume
+  While the demo is running, move the mouse manually, verify that cursor injection stops and Free mode is displayed, then stop user input and verify that Auto mode resumes after `3` seconds from the left endpoint.
+  Refs: Sections 12.4, 12.5.
+
+- COT-BEM-4 - Demo main-app conflict warning
+  Start the main tray application, then start the demo application with the mirrored cursor setting enabled and verify that a warning is shown before the demo starts and that choosing the shutdown path exits the tray application through its normal shutdown flow.
+  Refs: Sections 12.1, 12.7.
+
+- COT-BEM-5 - Demo mirrored cursor setting
+  Start the demo with the mirrored cursor setting enabled and verify that the demo-owned overlay appears; start it again with the setting disabled and verify that the demo still moves the real cursor without creating a demo-owned overlay.
+  Refs: Sections 12.1, 12.3, 12.4.
+
+- COT-BEM-6 - Demo language and persistence
+  Change demo display language and startup selections, exit and restart the demo, then verify that the selected language and startup selections are restored.
+  Refs: Section 12.3.
 
 #### A.5.V Visual and Remote-Control Validation
 ##### Manual
