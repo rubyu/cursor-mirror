@@ -9,46 +9,68 @@ namespace CursorMirror.TraceTool
 {
     public sealed class TraceToolForm : Form
     {
+        private const int CursorPollIntervalMilliseconds = 8;
+
         private readonly MouseTraceSession _session = new MouseTraceSession();
         private readonly MouseTracePackageWriter _writer = new MouseTracePackageWriter();
+        private readonly ITraceNativeMethods _traceNativeMethods;
         private readonly Button _startButton;
         private readonly Button _stopButton;
         private readonly Button _saveButton;
         private readonly Button _exitButton;
         private readonly Label _sampleCountValue;
+        private readonly Label _hookMoveCountValue;
+        private readonly Label _cursorPollCountValue;
+        private readonly Label _dwmTimingCountValue;
         private readonly Label _durationValue;
         private readonly Label _statusValue;
         private readonly Timer _uiTimer;
+        private readonly Timer _pollTimer;
         private LowLevelMouseHook _mouseHook;
         private bool _savedSinceStop;
 
         public TraceToolForm()
+            : this(new TraceNativeMethods())
         {
+        }
+
+        public TraceToolForm(ITraceNativeMethods traceNativeMethods)
+        {
+            if (traceNativeMethods == null)
+            {
+                throw new ArgumentNullException("traceNativeMethods");
+            }
+
+            _traceNativeMethods = traceNativeMethods;
+
             Text = LocalizedStrings.TraceToolTitle;
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
             StartPosition = FormStartPosition.CenterScreen;
-            ClientSize = new Size(420, 190);
+            ClientSize = new Size(460, 260);
 
             TableLayoutPanel layout = new TableLayoutPanel();
             layout.Dock = DockStyle.Fill;
             layout.Padding = new Padding(12);
             layout.ColumnCount = 2;
-            layout.RowCount = 5;
-            layout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 140));
+            layout.RowCount = 7;
+            layout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 170));
             layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
             Controls.Add(layout);
 
             _statusValue = AddValueRow(layout, 0, LocalizedStrings.TraceStatusLabel);
-            _sampleCountValue = AddValueRow(layout, 1, LocalizedStrings.TraceSampleCountLabel);
-            _durationValue = AddValueRow(layout, 2, LocalizedStrings.TraceDurationLabel);
+            _sampleCountValue = AddValueRow(layout, 1, LocalizedStrings.TraceTotalSampleCountLabel);
+            _hookMoveCountValue = AddValueRow(layout, 2, LocalizedStrings.TraceHookMoveSampleCountLabel);
+            _cursorPollCountValue = AddValueRow(layout, 3, LocalizedStrings.TraceCursorPollSampleCountLabel);
+            _dwmTimingCountValue = AddValueRow(layout, 4, LocalizedStrings.TraceDwmTimingSampleCountLabel);
+            _durationValue = AddValueRow(layout, 5, LocalizedStrings.TraceDurationLabel);
 
             FlowLayoutPanel buttons = new FlowLayoutPanel();
             buttons.Dock = DockStyle.Fill;
             buttons.FlowDirection = FlowDirection.LeftToRight;
             buttons.WrapContents = false;
-            layout.Controls.Add(buttons, 0, 4);
+            layout.Controls.Add(buttons, 0, 6);
             layout.SetColumnSpan(buttons, 2);
 
             _startButton = AddButton(buttons, LocalizedStrings.TraceStartRecordingCommand, StartRecording);
@@ -59,6 +81,10 @@ namespace CursorMirror.TraceTool
             _uiTimer = new Timer();
             _uiTimer.Interval = 100;
             _uiTimer.Tick += delegate { RefreshUi(); };
+
+            _pollTimer = new Timer();
+            _pollTimer.Interval = CursorPollIntervalMilliseconds;
+            _pollTimer.Tick += delegate { CapturePollSample(); };
 
             RefreshUi();
         }
@@ -82,6 +108,7 @@ namespace CursorMirror.TraceTool
 
             StopHook();
             _uiTimer.Stop();
+            _pollTimer.Stop();
             base.OnFormClosing(e);
         }
 
@@ -93,6 +120,11 @@ namespace CursorMirror.TraceTool
                 if (_uiTimer != null)
                 {
                     _uiTimer.Dispose();
+                }
+
+                if (_pollTimer != null)
+                {
+                    _pollTimer.Dispose();
                 }
             }
 
@@ -141,11 +173,13 @@ namespace CursorMirror.TraceTool
             }
 
             StopHook();
-            _session.Start(Stopwatch.GetTimestamp());
+            _session.Start(Stopwatch.GetTimestamp(), CursorPollIntervalMilliseconds);
             _savedSinceStop = false;
             _mouseHook = new LowLevelMouseHook(HandleMouseEvent);
             _mouseHook.SetHook();
+            _pollTimer.Start();
             _uiTimer.Start();
+            CapturePollSample();
             RefreshUi();
         }
 
@@ -159,6 +193,7 @@ namespace CursorMirror.TraceTool
         {
             StopHook();
             _session.Stop(Stopwatch.GetTimestamp());
+            _pollTimer.Stop();
             _uiTimer.Stop();
         }
 
@@ -198,10 +233,42 @@ namespace CursorMirror.TraceTool
         {
             if (mouseEvent == LowLevelMouseHook.MouseEvent.WM_MOUSEMOVE)
             {
-                _session.AddMove(Stopwatch.GetTimestamp(), new Point(data.pt.x, data.pt.y));
+                Point? cursorPoint = TryGetCursorPoint();
+                _session.AddHookMove(
+                    Stopwatch.GetTimestamp(),
+                    new Point(data.pt.x, data.pt.y),
+                    data.mouseData,
+                    data.flags,
+                    data.time,
+                    data.dwExtraInfo,
+                    cursorPoint);
             }
 
             return HookResult.Transfer;
+        }
+
+        private void CapturePollSample()
+        {
+            Point? cursorPoint = TryGetCursorPoint();
+            if (!cursorPoint.HasValue)
+            {
+                return;
+            }
+
+            DwmTimingInfo timing;
+            bool hasTiming = _traceNativeMethods.TryGetDwmTimingInfo(out timing);
+            _session.AddPoll(Stopwatch.GetTimestamp(), cursorPoint.Value, hasTiming, timing);
+        }
+
+        private Point? TryGetCursorPoint()
+        {
+            NativePoint point;
+            if (!_traceNativeMethods.GetCursorPos(out point))
+            {
+                return null;
+            }
+
+            return new Point(point.x, point.y);
         }
 
         private void StopHook()
@@ -244,7 +311,11 @@ namespace CursorMirror.TraceTool
             _exitButton.Enabled = uiState.ExitEnabled;
 
             _statusValue.Text = LocalizedStrings.TraceStateLabel(state.ToString());
-            _sampleCountValue.Text = _session.SampleCount.ToString();
+            MouseTraceSampleCounts counts = _session.GetSampleCounts();
+            _sampleCountValue.Text = counts.TotalSamples.ToString();
+            _hookMoveCountValue.Text = counts.HookMoveSamples.ToString();
+            _cursorPollCountValue.Text = counts.CursorPollSamples.ToString();
+            _dwmTimingCountValue.Text = LocalizedStrings.TraceDwmTimingSampleCount(counts.DwmTimingSamples, counts.CursorPollSamples);
             _durationValue.Text = MouseTraceFormat.FormatDuration(_session.ElapsedMicroseconds);
         }
     }

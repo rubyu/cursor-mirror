@@ -16,6 +16,7 @@ namespace CursorMirror.Tests
             suite.Add("COT-MSU-6", CorruptSettingsFallback);
             suite.Add("COT-MSU-7", SettingsReset);
             suite.Add("COT-MSU-8", ImmediateSettingsApplication);
+            suite.Add("COT-MSU-9", PredictionSettingPersistence);
         }
 
         // Settings defaults [COT-MSU-1]
@@ -24,9 +25,12 @@ namespace CursorMirror.Tests
             CursorMirrorSettings settings = CursorMirrorSettings.Default();
 
             TestAssert.True(settings.MovementTranslucencyEnabled, "default enabled");
+            TestAssert.True(settings.PredictionEnabled, "prediction default enabled");
             TestAssert.Equal(70, settings.MovingOpacityPercent, "default moving opacity");
             TestAssert.Equal(80, settings.FadeDurationMilliseconds, "default fade duration");
             TestAssert.Equal(120, settings.IdleDelayMilliseconds, "default idle delay");
+            TestAssert.Equal(8, settings.PredictionHorizonMilliseconds, "default prediction horizon");
+            TestAssert.Equal(100, settings.PredictionIdleResetMilliseconds, "default prediction idle reset");
         }
 
         // Moving opacity validation [COT-MSU-2]
@@ -47,16 +51,24 @@ namespace CursorMirror.Tests
             CursorMirrorSettings settings = CursorMirrorSettings.Default();
             settings.FadeDurationMilliseconds = -10;
             settings.IdleDelayMilliseconds = 5;
+            settings.PredictionHorizonMilliseconds = -1;
+            settings.PredictionIdleResetMilliseconds = 0;
             CursorMirrorSettings low = settings.Normalize();
 
             settings.FadeDurationMilliseconds = 999;
             settings.IdleDelayMilliseconds = 999;
+            settings.PredictionHorizonMilliseconds = 999;
+            settings.PredictionIdleResetMilliseconds = 9999;
             CursorMirrorSettings high = settings.Normalize();
 
             TestAssert.Equal(0, low.FadeDurationMilliseconds, "fade duration lower clamp");
             TestAssert.Equal(50, low.IdleDelayMilliseconds, "idle delay lower clamp");
+            TestAssert.Equal(0, low.PredictionHorizonMilliseconds, "prediction horizon lower clamp");
+            TestAssert.Equal(1, low.PredictionIdleResetMilliseconds, "prediction idle reset lower clamp");
             TestAssert.Equal(300, high.FadeDurationMilliseconds, "fade duration upper clamp");
             TestAssert.Equal(500, high.IdleDelayMilliseconds, "idle delay upper clamp");
+            TestAssert.Equal(16, high.PredictionHorizonMilliseconds, "prediction horizon upper clamp");
+            TestAssert.Equal(1000, high.PredictionIdleResetMilliseconds, "prediction idle reset upper clamp");
         }
 
         // Settings serialization round trip [COT-MSU-4]
@@ -69,17 +81,23 @@ namespace CursorMirror.Tests
                 SettingsStore store = new SettingsStore(path);
                 CursorMirrorSettings settings = CursorMirrorSettings.Default();
                 settings.MovementTranslucencyEnabled = false;
+                settings.PredictionEnabled = false;
                 settings.MovingOpacityPercent = 88;
                 settings.FadeDurationMilliseconds = 240;
                 settings.IdleDelayMilliseconds = 450;
+                settings.PredictionHorizonMilliseconds = 12;
+                settings.PredictionIdleResetMilliseconds = 250;
 
                 store.Save(settings);
                 CursorMirrorSettings loaded = store.Load();
 
                 TestAssert.False(loaded.MovementTranslucencyEnabled, "loaded enabled flag");
+                TestAssert.False(loaded.PredictionEnabled, "loaded prediction enabled flag");
                 TestAssert.Equal(88, loaded.MovingOpacityPercent, "loaded opacity");
                 TestAssert.Equal(240, loaded.FadeDurationMilliseconds, "loaded fade duration");
                 TestAssert.Equal(450, loaded.IdleDelayMilliseconds, "loaded idle delay");
+                TestAssert.Equal(12, loaded.PredictionHorizonMilliseconds, "loaded prediction horizon");
+                TestAssert.Equal(250, loaded.PredictionIdleResetMilliseconds, "loaded prediction idle reset");
             }
             finally
             {
@@ -97,6 +115,7 @@ namespace CursorMirror.Tests
                 CursorMirrorSettings settings = store.Load();
 
                 TestAssert.Equal(70, settings.MovingOpacityPercent, "missing settings default");
+                TestAssert.True(settings.PredictionEnabled, "missing settings prediction default");
             }
             finally
             {
@@ -116,6 +135,7 @@ namespace CursorMirror.Tests
                 CursorMirrorSettings settings = store.Load();
 
                 TestAssert.Equal(70, settings.MovingOpacityPercent, "corrupt settings default");
+                TestAssert.True(settings.PredictionEnabled, "corrupt settings prediction default");
             }
             finally
             {
@@ -145,7 +165,9 @@ namespace CursorMirror.Tests
 
                 TestAssert.Equal(2, applyCount, "reset apply count");
                 TestAssert.Equal(70, controller.CurrentSettings.MovingOpacityPercent, "reset current opacity");
+                TestAssert.True(controller.CurrentSettings.PredictionEnabled, "reset current prediction");
                 TestAssert.Equal(70, applied.MovingOpacityPercent, "reset applied opacity");
+                TestAssert.True(applied.PredictionEnabled, "reset applied prediction");
             }
             finally
             {
@@ -176,7 +198,44 @@ namespace CursorMirror.Tests
 
                 TestAssert.Equal(2, applyCount, "settings apply count");
                 TestAssert.Equal(90, applied.MovingOpacityPercent, "applied updated opacity");
+                TestAssert.False(applied.PredictionEnabled, "applied updated prediction");
                 TestAssert.Equal(90, controller.CurrentSettings.MovingOpacityPercent, "current updated opacity");
+                TestAssert.False(controller.CurrentSettings.PredictionEnabled, "current updated prediction");
+            }
+            finally
+            {
+                DeleteDirectory(directory);
+            }
+        }
+
+        // Prediction setting persistence [COT-MSU-9]
+        private static void PredictionSettingPersistence()
+        {
+            string directory = NewTestDirectory();
+            try
+            {
+                string path = Path.Combine(directory, "settings.json");
+                SettingsStore store = new SettingsStore(path);
+                CursorMirrorSettings settings = CursorMirrorSettings.Default();
+                settings.PredictionEnabled = false;
+
+                store.Save(settings);
+                CursorMirrorSettings loaded = store.Load();
+
+                TestAssert.False(loaded.PredictionEnabled, "disabled prediction must persist");
+
+                File.WriteAllText(
+                    path,
+                    "{\"MovementTranslucencyEnabled\":false,\"MovingOpacityPercent\":80,\"FadeDurationMilliseconds\":90,\"IdleDelayMilliseconds\":100}",
+                    System.Text.Encoding.UTF8);
+                CursorMirrorSettings oldFormat = store.Load();
+
+                TestAssert.True(oldFormat.PredictionEnabled, "old settings must use prediction default");
+
+                SettingsController controller = new SettingsController(store, loaded, delegate { }, delegate { });
+                controller.ResetToDefaults();
+
+                TestAssert.True(controller.CurrentSettings.PredictionEnabled, "reset restores prediction default");
             }
             finally
             {
@@ -187,6 +246,7 @@ namespace CursorMirror.Tests
         private static CursorMirrorSettings ChangedSettings()
         {
             CursorMirrorSettings settings = CursorMirrorSettings.Default();
+            settings.PredictionEnabled = false;
             settings.MovingOpacityPercent = 90;
             settings.FadeDurationMilliseconds = 160;
             settings.IdleDelayMilliseconds = 300;

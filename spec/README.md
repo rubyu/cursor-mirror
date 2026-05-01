@@ -25,6 +25,7 @@ The key words `MUST`, `MUST NOT`, `SHOULD`, and `MAY` are to be interpreted as d
   - 4.3 Cursor Capture
   - 4.4 Overlay Window
   - 4.4.1 Movement Translucency Mode
+  - 4.4.2 Predictive Overlay Positioning
   - 4.5 Tray Resident Application
   - 4.5.1 Settings Window
   - 4.6 Multi-Monitor Coordinates

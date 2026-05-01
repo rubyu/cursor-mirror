@@ -11,7 +11,7 @@ namespace CursorMirror
         private readonly LowLevelMouseHook _mouseHook;
         private readonly TrayController _trayController;
         private readonly SettingsController _settingsController;
-        private readonly Timer _opacityTimer;
+        private readonly Timer _runtimeTimer;
         private SettingsWindow _settingsWindow;
         private bool _shutdownStarted;
 
@@ -25,12 +25,13 @@ namespace CursorMirror
                 _overlayWindow,
                 new ControlDispatcher(_overlayWindow),
                 settings,
-                new SystemClock());
+                new SystemClock(),
+                new CursorPoller());
             _settingsController = new SettingsController(settingsStore, settings, _controller.UpdateSettings, ExitFromSettings);
             _mouseHook = new LowLevelMouseHook(_controller.HandleMouseEvent);
-            _opacityTimer = new Timer();
-            _opacityTimer.Interval = 16;
-            _opacityTimer.Tick += delegate
+            _runtimeTimer = new Timer();
+            _runtimeTimer.Interval = 8;
+            _runtimeTimer.Tick += delegate
             {
                 if (!_shutdownStarted)
                 {
@@ -42,7 +43,7 @@ namespace CursorMirror
             {
                 _mouseHook.SetHook();
                 _trayController = new TrayController(ShowSettings, ExitFromTray);
-                _opacityTimer.Start();
+                _runtimeTimer.Start();
             }
             catch (Win32Exception)
             {
@@ -102,10 +103,10 @@ namespace CursorMirror
 
             _shutdownStarted = true;
 
-            if (_opacityTimer != null)
+            if (_runtimeTimer != null)
             {
-                _opacityTimer.Stop();
-                _opacityTimer.Dispose();
+                _runtimeTimer.Stop();
+                _runtimeTimer.Dispose();
             }
 
             if (_settingsWindow != null)

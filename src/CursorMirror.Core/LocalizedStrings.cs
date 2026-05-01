@@ -29,6 +29,11 @@ namespace CursorMirror
             get { return Get("MovementTranslucencyLabel"); }
         }
 
+        public static string PredictiveOverlayPositioningLabel
+        {
+            get { return Get("PredictiveOverlayPositioningLabel"); }
+        }
+
         public static string MovingOpacityLabel
         {
             get { return Get("MovingOpacityLabel"); }
@@ -72,6 +77,26 @@ namespace CursorMirror
         public static string TraceSampleCountLabel
         {
             get { return Get("TraceSampleCountLabel"); }
+        }
+
+        public static string TraceTotalSampleCountLabel
+        {
+            get { return Get("TraceTotalSampleCountLabel"); }
+        }
+
+        public static string TraceHookMoveSampleCountLabel
+        {
+            get { return Get("TraceHookMoveSampleCountLabel"); }
+        }
+
+        public static string TraceCursorPollSampleCountLabel
+        {
+            get { return Get("TraceCursorPollSampleCountLabel"); }
+        }
+
+        public static string TraceDwmTimingSampleCountLabel
+        {
+            get { return Get("TraceDwmTimingSampleCountLabel"); }
         }
 
         public static string TraceDurationLabel
@@ -119,6 +144,14 @@ namespace CursorMirror
             return string.Format(CultureInfo.CurrentUICulture, Get("TraceStateLabelFormat"), state);
         }
 
+        public static string TraceDwmTimingSampleCount(int availableSamples, int pollSamples)
+        {
+            int safePollSamples = pollSamples < 0 ? 0 : pollSamples;
+            int safeAvailableSamples = availableSamples < 0 ? 0 : availableSamples;
+            double percent = safePollSamples == 0 ? 0 : (safeAvailableSamples * 100.0) / safePollSamples;
+            return string.Format(CultureInfo.CurrentUICulture, Get("TraceDwmTimingSampleCountFormat"), safeAvailableSamples, safePollSamples, percent);
+        }
+
         public static string StartupFailureTitle
         {
             get { return ProductName; }
@@ -156,6 +189,8 @@ namespace CursorMirror
                     return "Cursor Mirror Settings";
                 case "MovementTranslucencyLabel":
                     return "Movement translucency";
+                case "PredictiveOverlayPositioningLabel":
+                    return "Predict cursor position";
                 case "MovingOpacityLabel":
                     return "Moving opacity (%)";
                 case "FadeDurationLabel":
@@ -174,6 +209,14 @@ namespace CursorMirror
                     return "Status";
                 case "TraceSampleCountLabel":
                     return "Samples";
+                case "TraceTotalSampleCountLabel":
+                    return "Total samples";
+                case "TraceHookMoveSampleCountLabel":
+                    return "Hook move";
+                case "TraceCursorPollSampleCountLabel":
+                    return "Cursor poll";
+                case "TraceDwmTimingSampleCountLabel":
+                    return "DWM timing";
                 case "TraceDurationLabel":
                     return "Duration";
                 case "TraceStartRecordingCommand":
@@ -192,6 +235,8 @@ namespace CursorMirror
                     return "Unsaved trace samples will be discarded. Start a new recording?";
                 case "TraceStateLabelFormat":
                     return "{0}";
+                case "TraceDwmTimingSampleCountFormat":
+                    return "{0} / {1} ({2:0.0}%)";
                 case "StartupFailureMessageFormat":
                     return "Cursor Mirror failed to start.\r\n\r\n{0}";
                 default:
@@ -211,6 +256,8 @@ namespace CursorMirror
                     return "Cursor Mirror 設定";
                 case "MovementTranslucencyLabel":
                     return "移動中に半透明にする";
+                case "PredictiveOverlayPositioningLabel":
+                    return "カーソル位置を予測する";
                 case "MovingOpacityLabel":
                     return "移動中の不透明度 (%)";
                 case "FadeDurationLabel":
@@ -229,6 +276,14 @@ namespace CursorMirror
                     return "状態";
                 case "TraceSampleCountLabel":
                     return "サンプル数";
+                case "TraceTotalSampleCountLabel":
+                    return "総サンプル数";
+                case "TraceHookMoveSampleCountLabel":
+                    return "フック移動";
+                case "TraceCursorPollSampleCountLabel":
+                    return "カーソルポーリング";
+                case "TraceDwmTimingSampleCountLabel":
+                    return "DWM タイミング";
                 case "TraceDurationLabel":
                     return "記録時間";
                 case "TraceStartRecordingCommand":
@@ -247,6 +302,8 @@ namespace CursorMirror
                     return "未保存のトレースサンプルは破棄されます。新しい記録を開始しますか？";
                 case "TraceStateLabelFormat":
                     return "{0}";
+                case "TraceDwmTimingSampleCountFormat":
+                    return "{0} / {1} ({2:0.0}%)";
                 case "StartupFailureMessageFormat":
                     return "Cursor Mirror の起動に失敗しました。\r\n\r\n{0}";
                 default:

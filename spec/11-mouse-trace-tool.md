@@ -17,13 +17,18 @@
 - The trace tool MUST use the same low-level hook wrapper pattern as Cursor Mirror where practical.
 - The trace tool MUST install the low-level mouse hook only while recording is active.
 - The trace tool MUST unhook when recording stops or the application exits.
+- The trace tool SHOULD poll the current cursor position while recording, even when no low-level hook callback is being delivered.
+- The trace tool SHOULD record Desktop Window Manager timing information while recording when the operating system exposes it.
 
 ### 11.3 UI Requirements
 - The main window MUST include:
   - `Start Recording`;
   - `Stop Recording`;
   - `Save`;
-  - sample count display;
+  - total sample count display;
+  - hook movement sample count display;
+  - cursor polling sample count display;
+  - DWM timing available sample count display;
   - recording duration display;
   - status display;
   - `Exit`.
@@ -32,6 +37,7 @@
 - `Exit` SHOULD close the application immediately when no unsaved samples exist.
 - `Exit` SHOULD confirm when unsaved samples exist.
 - UI text SHOULD be clear enough for users who are not comfortable with command-line tools.
+- The DWM timing display SHOULD show both available timing samples and the cursor polling sample denominator.
 
 ### 11.4 Recording State Model
 The trace tool MUST use an explicit state model with these states:
@@ -61,13 +67,42 @@ Each recorded sample MUST include:
 - `y` screen coordinate;
 - event type.
 
-The initial event type MAY be `move` only.
+The initial event types SHOULD include:
+
+- `move` for low-level hook movement events;
+- `poll` for periodic `GetCursorPos` samples.
+
+For `move` samples, the trace SHOULD include:
+
+- hook `x` and `y` screen coordinates;
+- current `GetCursorPos` `x` and `y` screen coordinates when available;
+- raw low-level hook `mouseData`;
+- raw low-level hook `flags`;
+- raw low-level hook timestamp;
+- raw low-level hook extra information.
+
+For `poll` samples, the trace SHOULD include:
+
+- current `GetCursorPos` `x` and `y` screen coordinates.
+
+For samples where Desktop Window Manager timing is available, the trace SHOULD include:
+
+- whether DWM timing was available;
+- refresh rate numerator and denominator;
+- refresh period in QPC ticks;
+- last vertical blank QPC time;
+- DWM refresh count;
+- composition QPC time;
+- DWM frame identifiers;
+- displayed, completed, and pending frame QPC times;
+- next displayed and next presented refresh counters;
+- displayed, dropped, and missed frame counters.
 
 Optional fields MAY include:
 
 - monitor identifier;
 - virtual-screen bounds;
-- raw hook timestamp when available.
+- display-output identifier.
 
 ### 11.6 Output Package Format
 - Trace output MUST be saved as a `.zip` package by default.
@@ -80,12 +115,10 @@ Optional fields MAY include:
 - The default package filename SHOULD use the form `cursor-mirror-trace-YYYYMMDD-HHMMSS.zip`.
 - Saving an empty trace MUST fail clearly or be disabled by UI state.
 
-Example `trace.csv`:
+Example `trace.csv` header:
 
 ```csv
-sequence,stopwatchTicks,elapsedMicroseconds,x,y,event
-0,1234567890,0,1200,820,move
-1,1234576400,8510,1202,821,move
+sequence,stopwatchTicks,elapsedMicroseconds,x,y,event,hookX,hookY,cursorX,cursorY,hookMouseData,hookFlags,hookTimeMilliseconds,hookExtraInfo,dwmTimingAvailable,dwmRateRefreshNumerator,dwmRateRefreshDenominator,dwmQpcRefreshPeriod,dwmQpcVBlank,dwmRefreshCount,dwmQpcCompose,dwmFrame,dwmRefreshFrame,dwmFrameDisplayed,dwmQpcFrameDisplayed,dwmRefreshFrameDisplayed,dwmFrameComplete,dwmQpcFrameComplete,dwmFramePending,dwmQpcFramePending,dwmRefreshNextDisplayed,dwmRefreshNextPresented,dwmFramesDisplayed,dwmFramesDropped,dwmFramesMissed
 ```
 
 Example package:
@@ -99,6 +132,8 @@ cursor-mirror-trace-20260430-153012.zip
 ### 11.7 Performance and Safety
 - The hook callback MUST do minimal work.
 - File I/O MUST NOT occur inside the hook callback.
+- Periodic cursor-position polling SHOULD avoid blocking work and SHOULD stop when recording stops.
+- DWM timing capture failure MUST NOT stop recording.
 - UI updates SHOULD be throttled, for example to `10Hz` to `30Hz`.
 - Recording MUST store samples in memory until saved.
 - The tool SHOULD cap in-memory samples or warn when a large recording is running.
@@ -108,5 +143,5 @@ cursor-mirror-trace-20260430-153012.zip
 
 ### 11.8 Testing
 - Normal CI MUST NOT launch the trace tool or install a real Windows hook.
-- Unit tests MUST cover trace session state transitions, button enabled state derivation, sample counting, duration formatting, output package writing, and empty-save behavior.
+- Unit tests MUST cover trace session state transitions, button enabled state derivation, total and per-source sample counting, duration formatting, output package writing, and empty-save behavior.
 - Manual validation MUST cover visible-window startup, real hook recording, start/stop/save behavior, unsaved exit confirmation, real hook cleanup, and saved package readability.

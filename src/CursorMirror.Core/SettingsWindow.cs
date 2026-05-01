@@ -7,6 +7,7 @@ namespace CursorMirror
     public sealed class SettingsWindow : Form
     {
         private readonly SettingsController _controller;
+        private readonly CheckBox _predictionCheckBox;
         private readonly CheckBox _movementTranslucencyCheckBox;
         private readonly NumericUpDown _movingOpacityInput;
         private readonly NumericUpDown _fadeDurationInput;
@@ -28,33 +29,40 @@ namespace CursorMirror
             MinimizeBox = false;
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterScreen;
-            ClientSize = new Size(360, 210);
+            ClientSize = new Size(360, 240);
 
             TableLayoutPanel layout = new TableLayoutPanel();
             layout.Dock = DockStyle.Fill;
             layout.Padding = new Padding(12);
             layout.ColumnCount = 2;
-            layout.RowCount = 6;
+            layout.RowCount = 7;
             layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 55));
             layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 45));
             Controls.Add(layout);
+
+            _predictionCheckBox = new CheckBox();
+            _predictionCheckBox.Text = LocalizedStrings.PredictiveOverlayPositioningLabel;
+            _predictionCheckBox.AutoSize = true;
+            _predictionCheckBox.CheckedChanged += delegate { ApplyFromControls(); };
+            layout.Controls.Add(_predictionCheckBox, 0, 0);
+            layout.SetColumnSpan(_predictionCheckBox, 2);
 
             _movementTranslucencyCheckBox = new CheckBox();
             _movementTranslucencyCheckBox.Text = LocalizedStrings.MovementTranslucencyLabel;
             _movementTranslucencyCheckBox.AutoSize = true;
             _movementTranslucencyCheckBox.CheckedChanged += delegate { ApplyFromControls(); };
-            layout.Controls.Add(_movementTranslucencyCheckBox, 0, 0);
+            layout.Controls.Add(_movementTranslucencyCheckBox, 0, 1);
             layout.SetColumnSpan(_movementTranslucencyCheckBox, 2);
 
-            _movingOpacityInput = AddNumberRow(layout, 1, LocalizedStrings.MovingOpacityLabel, CursorMirrorSettings.MinimumMovingOpacityPercent, CursorMirrorSettings.MaximumMovingOpacityPercent);
-            _fadeDurationInput = AddNumberRow(layout, 2, LocalizedStrings.FadeDurationLabel, CursorMirrorSettings.MinimumFadeDurationMilliseconds, CursorMirrorSettings.MaximumFadeDurationMilliseconds);
-            _idleDelayInput = AddNumberRow(layout, 3, LocalizedStrings.IdleDelayLabel, CursorMirrorSettings.MinimumIdleDelayMilliseconds, CursorMirrorSettings.MaximumIdleDelayMilliseconds);
+            _movingOpacityInput = AddNumberRow(layout, 2, LocalizedStrings.MovingOpacityLabel, CursorMirrorSettings.MinimumMovingOpacityPercent, CursorMirrorSettings.MaximumMovingOpacityPercent);
+            _fadeDurationInput = AddNumberRow(layout, 3, LocalizedStrings.FadeDurationLabel, CursorMirrorSettings.MinimumFadeDurationMilliseconds, CursorMirrorSettings.MaximumFadeDurationMilliseconds);
+            _idleDelayInput = AddNumberRow(layout, 4, LocalizedStrings.IdleDelayLabel, CursorMirrorSettings.MinimumIdleDelayMilliseconds, CursorMirrorSettings.MaximumIdleDelayMilliseconds);
 
             FlowLayoutPanel buttons = new FlowLayoutPanel();
             buttons.Dock = DockStyle.Fill;
             buttons.FlowDirection = FlowDirection.RightToLeft;
             buttons.WrapContents = false;
-            layout.Controls.Add(buttons, 0, 5);
+            layout.Controls.Add(buttons, 0, 6);
             layout.SetColumnSpan(buttons, 2);
 
             Button exitButton = new Button();
@@ -131,6 +139,7 @@ namespace CursorMirror
             try
             {
                 CursorMirrorSettings normalized = settings.Normalize();
+                _predictionCheckBox.Checked = normalized.PredictionEnabled;
                 _movementTranslucencyCheckBox.Checked = normalized.MovementTranslucencyEnabled;
                 _movingOpacityInput.Value = normalized.MovingOpacityPercent;
                 _fadeDurationInput.Value = normalized.FadeDurationMilliseconds;
@@ -149,7 +158,8 @@ namespace CursorMirror
                 return;
             }
 
-            CursorMirrorSettings settings = new CursorMirrorSettings();
+            CursorMirrorSettings settings = _controller.CurrentSettings.Clone();
+            settings.PredictionEnabled = _predictionCheckBox.Checked;
             settings.MovementTranslucencyEnabled = _movementTranslucencyCheckBox.Checked;
             settings.MovingOpacityPercent = (int)_movingOpacityInput.Value;
             settings.FadeDurationMilliseconds = (int)_fadeDurationInput.Value;

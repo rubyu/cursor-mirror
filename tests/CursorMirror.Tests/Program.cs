@@ -7,6 +7,7 @@ namespace CursorMirror.Tests
             TestSuite suite = new TestSuite();
             HookTests.AddTo(suite);
             CursorImageProviderTests.AddTo(suite);
+            CursorPositionPredictorTests.AddTo(suite);
             ControllerTests.AddTo(suite);
             LocalizedStringsTests.AddTo(suite);
             BuildVersionTests.AddTo(suite);

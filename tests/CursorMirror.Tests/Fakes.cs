@@ -202,6 +202,42 @@ namespace CursorMirror.Tests
         }
     }
 
+    internal sealed class FakeCursorPoller : ICursorPoller
+    {
+        private readonly Queue<object> _samples = new Queue<object>();
+        public int TryGetSampleCallCount;
+
+        public void EnqueueSample(CursorPollSample sample)
+        {
+            _samples.Enqueue(sample);
+        }
+
+        public void EnqueueFailure()
+        {
+            _samples.Enqueue(null);
+        }
+
+        public bool TryGetSample(out CursorPollSample sample)
+        {
+            TryGetSampleCallCount++;
+            if (_samples.Count == 0)
+            {
+                sample = new CursorPollSample();
+                return false;
+            }
+
+            object next = _samples.Dequeue();
+            if (next == null)
+            {
+                sample = new CursorPollSample();
+                return false;
+            }
+
+            sample = (CursorPollSample)next;
+            return true;
+        }
+    }
+
     internal sealed class RecordingDispatcher : IUiDispatcher
     {
         private readonly Queue<Action> _actions = new Queue<Action>();

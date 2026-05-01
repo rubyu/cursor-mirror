@@ -54,7 +54,7 @@ namespace CursorMirror.MouseTrace
             using (Stream stream = entry.Open())
             using (StreamWriter writer = new StreamWriter(stream, Utf8NoBom))
             {
-                writer.WriteLine("sequence,stopwatchTicks,elapsedMicroseconds,x,y,event");
+                writer.WriteLine("sequence,stopwatchTicks,elapsedMicroseconds,x,y,event,hookX,hookY,cursorX,cursorY,hookMouseData,hookFlags,hookTimeMilliseconds,hookExtraInfo,dwmTimingAvailable,dwmRateRefreshNumerator,dwmRateRefreshDenominator,dwmQpcRefreshPeriod,dwmQpcVBlank,dwmRefreshCount,dwmQpcCompose,dwmFrame,dwmRefreshFrame,dwmFrameDisplayed,dwmQpcFrameDisplayed,dwmRefreshFrameDisplayed,dwmFrameComplete,dwmQpcFrameComplete,dwmFramePending,dwmQpcFramePending,dwmRefreshNextDisplayed,dwmRefreshNextPresented,dwmFramesDisplayed,dwmFramesDropped,dwmFramesMissed");
                 foreach (MouseTraceEvent sample in snapshot.Samples)
                 {
                     writer.Write(sample.Sequence.ToString(CultureInfo.InvariantCulture));
@@ -68,6 +68,33 @@ namespace CursorMirror.MouseTrace
                     writer.Write(sample.Y.ToString(CultureInfo.InvariantCulture));
                     writer.Write(",");
                     writer.Write(EscapeCsv(sample.EventType));
+                    writer.Write(",");
+                    WriteNullable(writer, sample.HookX);
+                    writer.Write(",");
+                    WriteNullable(writer, sample.HookY);
+                    writer.Write(",");
+                    WriteNullable(writer, sample.CursorX);
+                    writer.Write(",");
+                    WriteNullable(writer, sample.CursorY);
+                    writer.Write(",");
+                    WriteNullable(writer, sample.HookMouseData);
+                    writer.Write(",");
+                    WriteNullable(writer, sample.HookFlags);
+                    writer.Write(",");
+                    WriteNullable(writer, sample.HookTimeMilliseconds);
+                    writer.Write(",");
+                    WriteNullable(writer, sample.HookExtraInfo);
+                    writer.Write(",");
+                    writer.Write(sample.DwmTimingAvailable ? "true" : "false");
+                    writer.Write(",");
+                    if (sample.DwmTimingAvailable)
+                    {
+                        WriteDwmTiming(writer, sample.DwmTiming);
+                    }
+                    else
+                    {
+                        WriteEmptyDwmTiming(writer);
+                    }
                     writer.WriteLine();
                 }
             }
@@ -76,10 +103,15 @@ namespace CursorMirror.MouseTrace
         private static void WriteMetadata(ZipArchive archive, MouseTraceSnapshot snapshot)
         {
             MouseTraceMetadata metadata = new MouseTraceMetadata();
+            metadata.TraceFormatVersion = 2;
             metadata.ProductName = LocalizedStrings.TraceToolTitle;
             metadata.ProductVersion = BuildVersion.InformationalVersion;
             metadata.CreatedUtc = DateTime.UtcNow.ToString("o", CultureInfo.InvariantCulture);
             metadata.SampleCount = snapshot.Samples.Length;
+            metadata.HookSampleCount = CountByEvent(snapshot, "move");
+            metadata.PollSampleCount = CountByEvent(snapshot, "poll");
+            metadata.DwmTimingSampleCount = CountDwmTimingSamples(snapshot);
+            metadata.PollIntervalMilliseconds = snapshot.PollIntervalMilliseconds;
             metadata.DurationMicroseconds = snapshot.DurationMicroseconds;
             metadata.StopwatchFrequency = Stopwatch.Frequency.ToString(CultureInfo.InvariantCulture);
 
@@ -89,6 +121,112 @@ namespace CursorMirror.MouseTrace
                 DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(MouseTraceMetadata));
                 serializer.WriteObject(stream, metadata);
             }
+        }
+
+        private static void WriteDwmTiming(StreamWriter writer, DwmTimingInfo timing)
+        {
+            writer.Write(timing.RateRefresh.Numerator.ToString(CultureInfo.InvariantCulture));
+            writer.Write(",");
+            writer.Write(timing.RateRefresh.Denominator.ToString(CultureInfo.InvariantCulture));
+            writer.Write(",");
+            writer.Write(timing.QpcRefreshPeriod.ToString(CultureInfo.InvariantCulture));
+            writer.Write(",");
+            writer.Write(timing.QpcVBlank.ToString(CultureInfo.InvariantCulture));
+            writer.Write(",");
+            writer.Write(timing.RefreshCount.ToString(CultureInfo.InvariantCulture));
+            writer.Write(",");
+            writer.Write(timing.QpcCompose.ToString(CultureInfo.InvariantCulture));
+            writer.Write(",");
+            writer.Write(timing.Frame.ToString(CultureInfo.InvariantCulture));
+            writer.Write(",");
+            writer.Write(timing.RefreshFrame.ToString(CultureInfo.InvariantCulture));
+            writer.Write(",");
+            writer.Write(timing.FrameDisplayed.ToString(CultureInfo.InvariantCulture));
+            writer.Write(",");
+            writer.Write(timing.QpcFrameDisplayed.ToString(CultureInfo.InvariantCulture));
+            writer.Write(",");
+            writer.Write(timing.RefreshFrameDisplayed.ToString(CultureInfo.InvariantCulture));
+            writer.Write(",");
+            writer.Write(timing.FrameComplete.ToString(CultureInfo.InvariantCulture));
+            writer.Write(",");
+            writer.Write(timing.QpcFrameComplete.ToString(CultureInfo.InvariantCulture));
+            writer.Write(",");
+            writer.Write(timing.FramePending.ToString(CultureInfo.InvariantCulture));
+            writer.Write(",");
+            writer.Write(timing.QpcFramePending.ToString(CultureInfo.InvariantCulture));
+            writer.Write(",");
+            writer.Write(timing.RefreshNextDisplayed.ToString(CultureInfo.InvariantCulture));
+            writer.Write(",");
+            writer.Write(timing.RefreshNextPresented.ToString(CultureInfo.InvariantCulture));
+            writer.Write(",");
+            writer.Write(timing.FramesDisplayed.ToString(CultureInfo.InvariantCulture));
+            writer.Write(",");
+            writer.Write(timing.FramesDropped.ToString(CultureInfo.InvariantCulture));
+            writer.Write(",");
+            writer.Write(timing.FramesMissed.ToString(CultureInfo.InvariantCulture));
+        }
+
+        private static void WriteEmptyDwmTiming(StreamWriter writer)
+        {
+            for (int i = 0; i < 20; i++)
+            {
+                if (i > 0)
+                {
+                    writer.Write(",");
+                }
+            }
+        }
+
+        private static void WriteNullable(StreamWriter writer, int? value)
+        {
+            if (value.HasValue)
+            {
+                writer.Write(value.Value.ToString(CultureInfo.InvariantCulture));
+            }
+        }
+
+        private static void WriteNullable(StreamWriter writer, uint? value)
+        {
+            if (value.HasValue)
+            {
+                writer.Write(value.Value.ToString(CultureInfo.InvariantCulture));
+            }
+        }
+
+        private static void WriteNullable(StreamWriter writer, long? value)
+        {
+            if (value.HasValue)
+            {
+                writer.Write(value.Value.ToString(CultureInfo.InvariantCulture));
+            }
+        }
+
+        private static int CountByEvent(MouseTraceSnapshot snapshot, string eventType)
+        {
+            int count = 0;
+            foreach (MouseTraceEvent sample in snapshot.Samples)
+            {
+                if (string.Equals(sample.EventType, eventType, StringComparison.Ordinal))
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        private static int CountDwmTimingSamples(MouseTraceSnapshot snapshot)
+        {
+            int count = 0;
+            foreach (MouseTraceEvent sample in snapshot.Samples)
+            {
+                if (sample.DwmTimingAvailable)
+                {
+                    count++;
+                }
+            }
+
+            return count;
         }
 
         private static string EscapeCsv(string value)

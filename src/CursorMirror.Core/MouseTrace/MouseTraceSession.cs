@@ -11,6 +11,7 @@ namespace CursorMirror.MouseTrace
         private readonly List<MouseTraceEvent> _samples = new List<MouseTraceEvent>();
         private long _startTicks;
         private long _stopTicks;
+        private int _pollIntervalMilliseconds;
         private MouseTraceState _state = MouseTraceState.Idle;
 
         public MouseTraceState State
@@ -35,6 +36,36 @@ namespace CursorMirror.MouseTrace
             }
         }
 
+        public MouseTraceSampleCounts GetSampleCounts()
+        {
+            lock (_syncRoot)
+            {
+                int hookMoveSamples = 0;
+                int cursorPollSamples = 0;
+                int dwmTimingSamples = 0;
+
+                for (int i = 0; i < _samples.Count; i++)
+                {
+                    MouseTraceEvent sample = _samples[i];
+                    if (sample.EventType == "move")
+                    {
+                        hookMoveSamples++;
+                    }
+                    else if (sample.EventType == "poll")
+                    {
+                        cursorPollSamples++;
+                    }
+
+                    if (sample.DwmTimingAvailable)
+                    {
+                        dwmTimingSamples++;
+                    }
+                }
+
+                return new MouseTraceSampleCounts(_samples.Count, hookMoveSamples, cursorPollSamples, dwmTimingSamples);
+            }
+        }
+
         public long ElapsedMicroseconds
         {
             get
@@ -54,11 +85,17 @@ namespace CursorMirror.MouseTrace
 
         public void Start(long stopwatchTicks)
         {
+            Start(stopwatchTicks, 0);
+        }
+
+        public void Start(long stopwatchTicks, int pollIntervalMilliseconds)
+        {
             lock (_syncRoot)
             {
                 _samples.Clear();
                 _startTicks = stopwatchTicks;
                 _stopTicks = stopwatchTicks;
+                _pollIntervalMilliseconds = Math.Max(0, pollIntervalMilliseconds);
                 _state = MouseTraceState.Recording;
             }
         }
@@ -90,6 +127,43 @@ namespace CursorMirror.MouseTrace
 
         public void AddMove(long stopwatchTicks, Point point)
         {
+            AddSample(stopwatchTicks, point, "move", point, null, null, null, null, null, false, new DwmTimingInfo());
+        }
+
+        public void AddHookMove(long stopwatchTicks, Point hookPoint, uint mouseData, uint flags, uint hookTimeMilliseconds, IntPtr extraInfo, Point? cursorPoint)
+        {
+            AddSample(
+                stopwatchTicks,
+                hookPoint,
+                "move",
+                hookPoint,
+                cursorPoint,
+                mouseData,
+                flags,
+                hookTimeMilliseconds,
+                extraInfo.ToInt64(),
+                false,
+                new DwmTimingInfo());
+        }
+
+        public void AddPoll(long stopwatchTicks, Point cursorPoint, bool dwmTimingAvailable, DwmTimingInfo dwmTiming)
+        {
+            AddSample(stopwatchTicks, cursorPoint, "poll", null, cursorPoint, null, null, null, null, dwmTimingAvailable, dwmTiming);
+        }
+
+        private void AddSample(
+            long stopwatchTicks,
+            Point primaryPoint,
+            string eventType,
+            Point? hookPoint,
+            Point? cursorPoint,
+            uint? hookMouseData,
+            uint? hookFlags,
+            uint? hookTimeMilliseconds,
+            long? hookExtraInfo,
+            bool dwmTimingAvailable,
+            DwmTimingInfo dwmTiming)
+        {
             lock (_syncRoot)
             {
                 if (_state != MouseTraceState.Recording)
@@ -99,7 +173,23 @@ namespace CursorMirror.MouseTrace
 
                 long sequence = _samples.Count;
                 long elapsed = TicksToMicroseconds(stopwatchTicks - _startTicks);
-                _samples.Add(new MouseTraceEvent(sequence, stopwatchTicks, elapsed, point.X, point.Y, "move"));
+                _samples.Add(new MouseTraceEvent(
+                    sequence,
+                    stopwatchTicks,
+                    elapsed,
+                    primaryPoint.X,
+                    primaryPoint.Y,
+                    eventType,
+                    hookPoint.HasValue ? hookPoint.Value.X : (int?)null,
+                    hookPoint.HasValue ? hookPoint.Value.Y : (int?)null,
+                    cursorPoint.HasValue ? cursorPoint.Value.X : (int?)null,
+                    cursorPoint.HasValue ? cursorPoint.Value.Y : (int?)null,
+                    hookMouseData,
+                    hookFlags,
+                    hookTimeMilliseconds,
+                    hookExtraInfo,
+                    dwmTimingAvailable,
+                    dwmTiming));
             }
         }
 
@@ -107,7 +197,7 @@ namespace CursorMirror.MouseTrace
         {
             lock (_syncRoot)
             {
-                return new MouseTraceSnapshot(_state, _startTicks, _stopTicks, TicksToMicroseconds(_stopTicks - _startTicks), _samples.ToArray());
+                return new MouseTraceSnapshot(_state, _startTicks, _stopTicks, TicksToMicroseconds(_stopTicks - _startTicks), _samples.ToArray(), _pollIntervalMilliseconds);
             }
         }
 

@@ -5,6 +5,7 @@
 - Coordinate calculation tests MUST cover hot spot alignment, negative coordinates, large cursor images, and monitor-edge positions.
 - Cursor image conversion tests MUST cover successful image creation, invalid handle behavior, and resource disposal behavior.
 - Movement translucency tests MUST cover default settings, disabled behavior, movement entry, movement continuation, idle exit, linear enter easing, linear exit easing, and zero-duration transitions.
+- Predictive overlay positioning tests MUST cover default settings, disabled behavior, first sample behavior, valid constant-velocity prediction, invalid timestamps, idle reset, reset behavior, negative coordinates, and hot spot placement after prediction.
 - Settings tests MUST cover defaults, validation, range clamping or rejection, serialization, deserialization, missing settings, corrupt settings, reset behavior, and immediate application of changed values.
 - Tray controller tests SHOULD cover exit command dispatch and cleanup idempotence.
 - Settings UI controller tests SHOULD cover settings command dispatch, duplicate-window prevention, close-without-exit behavior, and settings-window exit dispatch.
@@ -15,6 +16,7 @@
 - Unit tests MUST use test doubles for hook installation, cursor capture, and overlay movement when direct Windows API calls would make the test nondeterministic.
 - Automated tests run by normal developer commands or CI MUST NOT install global Windows hooks.
 - Automated tests run by normal developer commands or CI MUST NOT depend on real pointer movement, real tray interaction, or an interactive desktop session.
+- Predictive overlay positioning tests MUST use synthetic timestamps and movement samples for normal unit and CI coverage.
 - Integration tests MAY exercise real Windows APIs.
 - Integration tests that install a real low-level hook MUST be opt-in and MUST be excluded from normal CI unless the CI environment is explicitly known to support interactive desktop hooks.
 - Opt-in interactive tests SHOULD require an explicit signal such as `CURSOR_MIRROR_RUN_INTERACTIVE_TESTS=1`.
@@ -31,6 +33,8 @@ Manual validation MUST include:
 - overlay does not intercept clicks;
 - overlay remains topmost over normal application windows;
 - overlay aligns with the real cursor hot spot;
+- predictive overlay positioning is enabled by default;
+- disabling predictive overlay positioning in settings returns the overlay to exact pointer positioning;
 - movement translucency is visible during pointer movement;
 - movement translucency returns to normal opacity after idle;
 - movement translucency remains readable through the target remote-control environment at default settings;

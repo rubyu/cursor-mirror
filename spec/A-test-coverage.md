@@ -167,6 +167,46 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that opacity changes do not alter overlay size or hot spot alignment calculations.
   Refs: Sections 4.4, 4.4.1.
 
+- COT-MOU-13 - Prediction disabled exact positioning
+  Verify that disabling predictive overlay positioning uses the exact pointer position before hot spot placement.
+  Refs: Sections 4.4, 4.4.2.
+
+- COT-MOU-14 - Prediction first sample exact positioning
+  Verify that the first movement sample has no valid velocity and predicts the exact current pointer position.
+  Refs: Section 4.4.2.
+
+- COT-MOU-15 - Constant-velocity prediction
+  Given two valid movement samples and a fixed horizon, verify that the predicted pointer follows the documented constant-velocity formula.
+  Refs: Section 4.4.2.
+
+- COT-MOU-16 - Prediction invalid timestamp reset
+  Verify that zero or negative sample intervals clear velocity and fall back to exact pointer positioning.
+  Refs: Section 4.4.2.
+
+- COT-MOU-17 - Prediction idle reset
+  Verify that a movement sample after the configured idle reset gap clears velocity and does not extrapolate stale motion.
+  Refs: Section 4.4.2.
+
+- COT-MOU-18 - Prediction reset paths
+  Verify that hiding the overlay, disposing the controller, disabling prediction, or applying prediction-related settings clears prediction velocity.
+  Refs: Section 4.4.2.
+
+- COT-MOU-19 - Prediction then hot spot placement
+  Verify that hot spot placement is applied after selecting the exact or predicted pointer position.
+  Refs: Sections 4.4, 4.4.2.
+
+- COT-MOU-20 - Polling moves overlay without cursor capture
+  Verify that a polling tick moves the existing overlay image using the latest cursor position without recapturing the cursor image.
+  Refs: Sections 4.3, 4.4, 4.4.2.
+
+- COT-MOU-21 - Polling DWM next-vblank prediction
+  Verify that polling samples with valid DWM timing use the next-vblank horizon and the documented prediction gain.
+  Refs: Section 4.4.2.
+
+- COT-MOU-22 - Polling missing DWM fallback
+  Verify that missing DWM timing falls back to exact pointer positioning and increments the diagnostic counters.
+  Refs: Section 4.4.2.
+
 #### A.4.T Tray and Application Lifetime
 ##### Unit
 - COT-MTU-1 - Tray icon created
@@ -204,8 +244,8 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 #### A.4.S Settings UI and Persistence
 ##### Unit
 - COT-MSU-1 - Settings defaults
-  Verify documented default settings: movement translucency enabled, moving opacity `70%`, fade duration `80ms`, and idle delay `120ms`.
-  Refs: Sections 4.4.1, 4.5.1.
+  Verify documented default settings: movement translucency enabled, predictive overlay positioning enabled, moving opacity `70%`, fade duration `80ms`, and idle delay `120ms`.
+  Refs: Sections 4.4.1, 4.4.2, 4.5.1.
 
 - COT-MSU-2 - Moving opacity validation
   Verify that moving opacity values outside `1%` to `100%` are rejected or clamped consistently at the settings boundary.
@@ -234,6 +274,10 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 - COT-MSU-8 - Immediate settings application
   Verify that settings changes are applied to runtime services without requiring application restart.
   Refs: Sections 3.2, 4.5.1.
+
+- COT-MSU-9 - Prediction setting persistence
+  Verify that predictive overlay positioning can be disabled, saved, loaded, reset to default enabled, and applied immediately.
+  Refs: Sections 2.3, 4.4.2, 4.5.1, 5.5.
 
 #### A.4.D DPI and Multi-Monitor Coordinates
 ##### Unit
@@ -292,6 +336,18 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 - COT-MLU-8 - Repeated stop cleanup
   Verify that stopping an already stopped trace session is safe and leaves the session in a valid state.
   Refs: Sections 11.4, 11.7.
+
+- COT-MLU-9 - Trace hook and poll sample fields
+  Verify that hook movement samples and periodic cursor-position poll samples preserve their source-specific fields.
+  Refs: Section 11.5.
+
+- COT-MLU-10 - Trace DWM timing fields
+  Verify that samples with DWM timing available are written with DWM timing fields and reflected in metadata counts.
+  Refs: Sections 11.5, 11.6.
+
+- COT-MLU-11 - Trace sample count breakdown
+  Verify that total, hook movement, cursor polling, and DWM timing sample counts are reported separately.
+  Refs: Sections 11.3, 11.5.
 
 #### A.4.R Resource Management and Failure Handling
 ##### Unit
@@ -376,6 +432,10 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Change settings through the UI, invoke `Reset`, and verify that controls and runtime settings return to documented defaults.
   Refs: Sections 4.4.1, 4.5.1.
 
+- COT-BSI-6 - Prediction toggle applies immediately
+  Change predictive overlay positioning through the settings UI and verify that the runtime controller observes the new value without restarting.
+  Refs: Sections 4.4.2, 4.5.1.
+
 #### A.5.P Packaging and Runtime Dependencies
 ##### Integration
 - COT-BPI-1 - Release artifact starts
@@ -438,3 +498,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 - COT-BVM-8 - Settings UI manual pass
   Verify that the settings window is readable, does not overlap incoherently at common DPI scales, and provides clear `Close` and `Exit Cursor Mirror` behavior.
   Refs: Sections 4.5.1, 6.3.
+
+- COT-BVM-9 - Prediction settings manual pass
+  Verify that predictive overlay positioning is enabled by default, can be disabled from the settings window, and returns to exact pointer positioning when disabled.
+  Refs: Sections 2.3, 4.4.2, 4.5.1, 6.3.
