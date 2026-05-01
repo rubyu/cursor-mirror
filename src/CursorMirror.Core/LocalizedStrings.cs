@@ -1,3 +1,4 @@
+using System;
 using System.Globalization;
 
 namespace CursorMirror
@@ -94,6 +95,16 @@ namespace CursorMirror
             get { return Get("TraceCursorPollSampleCountLabel"); }
         }
 
+        public static string TraceReferencePollSampleCountLabel
+        {
+            get { return Get("TraceReferencePollSampleCountLabel"); }
+        }
+
+        public static string TraceRuntimeSchedulerPollSampleCountLabel
+        {
+            get { return Get("TraceRuntimeSchedulerPollSampleCountLabel"); }
+        }
+
         public static string TraceDwmTimingSampleCountLabel
         {
             get { return Get("TraceDwmTimingSampleCountLabel"); }
@@ -139,6 +150,136 @@ namespace CursorMirror
             get { return Get("TraceDiscardUnsavedMessage"); }
         }
 
+        public static string DemoToolTitle
+        {
+            get { return Get("DemoToolTitle"); }
+        }
+
+        public static string DemoDisplayModeLabel
+        {
+            get { return Get("DemoDisplayModeLabel"); }
+        }
+
+        public static string DemoLanguageLabel
+        {
+            get { return Get("DemoLanguageLabel"); }
+        }
+
+        public static string DemoLanguageSystem
+        {
+            get { return Get("DemoLanguageSystem"); }
+        }
+
+        public static string DemoLanguageEnglish
+        {
+            get { return Get("DemoLanguageEnglish"); }
+        }
+
+        public static string DemoLanguageJapanese
+        {
+            get { return Get("DemoLanguageJapanese"); }
+        }
+
+        public static string DemoSpeedLabel
+        {
+            get { return Get("DemoSpeedLabel"); }
+        }
+
+        public static string DemoMirrorCursorLabel
+        {
+            get { return Get("DemoMirrorCursorLabel"); }
+        }
+
+        public static string DemoStartCommand
+        {
+            get { return Get("DemoStartCommand"); }
+        }
+
+        public static string DemoWindowPresetVga
+        {
+            get { return Get("DemoWindowPresetVga"); }
+        }
+
+        public static string DemoWindowPreset720
+        {
+            get { return Get("DemoWindowPreset720"); }
+        }
+
+        public static string DemoWindowPreset1080
+        {
+            get { return Get("DemoWindowPreset1080"); }
+        }
+
+        public static string DemoFullscreenOption
+        {
+            get { return Get("DemoFullscreenOption"); }
+        }
+
+        public static string DemoSpeedSlow
+        {
+            get { return Get("DemoSpeedSlow"); }
+        }
+
+        public static string DemoSpeedNormal
+        {
+            get { return Get("DemoSpeedNormal"); }
+        }
+
+        public static string DemoSpeedFast
+        {
+            get { return Get("DemoSpeedFast"); }
+        }
+
+        public static string DemoAnyKeyHint
+        {
+            get { return Get("DemoAnyKeyHint"); }
+        }
+
+        public static string DemoEscHint
+        {
+            get { return Get("DemoEscHint"); }
+        }
+
+        public static string DemoRealCursorNote
+        {
+            get { return Get("DemoRealCursorNote"); }
+        }
+
+        public static string DemoMainAppRunningMessage
+        {
+            get { return Get("DemoMainAppRunningMessage"); }
+        }
+
+        public static string DemoMainAppShutdownFailedMessage
+        {
+            get { return Get("DemoMainAppShutdownFailedMessage"); }
+        }
+
+        public static string DemoAutoModeLabel
+        {
+            get { return Get("DemoAutoModeLabel"); }
+        }
+
+        public static string DemoFreeModeLabel
+        {
+            get { return Get("DemoFreeModeLabel"); }
+        }
+
+        public static string DemoResumeActiveLabel
+        {
+            get { return Get("DemoResumeActiveLabel"); }
+        }
+
+        public static string DemoEnabledLabel
+        {
+            get { return Get("DemoEnabledLabel"); }
+        }
+
+        public static string DemoDisabledLabel
+        {
+            get { return Get("DemoDisabledLabel"); }
+        }
+
         public static string TraceStateLabel(string state)
         {
             return string.Format(CultureInfo.CurrentUICulture, Get("TraceStateLabelFormat"), state);
@@ -152,6 +293,37 @@ namespace CursorMirror
             return string.Format(CultureInfo.CurrentUICulture, Get("TraceDwmTimingSampleCountFormat"), safeAvailableSamples, safePollSamples, percent);
         }
 
+        public static string DemoPhaseLabel(string phase)
+        {
+            return Get("DemoPhase" + phase);
+        }
+
+        public static string DemoStatus(
+            string mode,
+            string speed,
+            string resume,
+            int sentMoves)
+        {
+            return string.Format(
+                CultureInfo.CurrentUICulture,
+                Get("DemoStatusFormat"),
+                mode,
+                speed,
+                resume,
+                sentMoves);
+        }
+
+        public static string DemoMirrorCursorStatus(string enabled)
+        {
+            return string.Format(CultureInfo.CurrentUICulture, Get("DemoMirrorCursorStatusFormat"), enabled);
+        }
+
+        public static string DemoResumeCountdown(int remainingMilliseconds)
+        {
+            double seconds = Math.Max(0, remainingMilliseconds) / 1000.0;
+            return string.Format(CultureInfo.CurrentUICulture, Get("DemoResumeCountdownFormat"), seconds);
+        }
+
         public static string StartupFailureTitle
         {
             get { return ProductName; }
@@ -160,6 +332,24 @@ namespace CursorMirror
         public static string StartupFailureMessage(string detail)
         {
             return string.Format(CultureInfo.CurrentUICulture, Get("StartupFailureMessageFormat"), detail);
+        }
+
+        public static string SettingsRestoreFailureMessage(string path, string detail)
+        {
+            return string.Format(
+                CultureInfo.CurrentUICulture,
+                Get("SettingsRestoreFailureMessageFormat"),
+                path,
+                detail);
+        }
+
+        public static string DemoSettingsRestoreFailureMessage(string path, string detail)
+        {
+            return string.Format(
+                CultureInfo.CurrentUICulture,
+                Get("DemoSettingsRestoreFailureMessageFormat"),
+                path,
+                detail);
         }
 
         private static string Get(string key)
@@ -215,6 +405,10 @@ namespace CursorMirror
                     return "Hook move";
                 case "TraceCursorPollSampleCountLabel":
                     return "Cursor poll";
+                case "TraceReferencePollSampleCountLabel":
+                    return "Reference poll";
+                case "TraceRuntimeSchedulerPollSampleCountLabel":
+                    return "Runtime scheduler poll";
                 case "TraceDwmTimingSampleCountLabel":
                     return "DWM timing";
                 case "TraceDurationLabel":
@@ -233,12 +427,82 @@ namespace CursorMirror
                     return "Unsaved trace samples will be discarded. Exit Cursor Mirror Trace Tool?";
                 case "TraceDiscardUnsavedMessage":
                     return "Unsaved trace samples will be discarded. Start a new recording?";
+                case "DemoToolTitle":
+                    return "Cursor Mirror Demo";
+                case "DemoDisplayModeLabel":
+                    return "Display mode";
+                case "DemoLanguageLabel":
+                    return "Language";
+                case "DemoLanguageSystem":
+                    return "System language";
+                case "DemoLanguageEnglish":
+                    return "English";
+                case "DemoLanguageJapanese":
+                    return "Japanese";
+                case "DemoSpeedLabel":
+                    return "Speed";
+                case "DemoMirrorCursorLabel":
+                    return "Show mirrored cursor";
+                case "DemoStartCommand":
+                    return "Start Demo";
+                case "DemoWindowPresetVga":
+                    return "640 x 480";
+                case "DemoWindowPreset720":
+                    return "1280 x 720";
+                case "DemoWindowPreset1080":
+                    return "1920 x 1080";
+                case "DemoFullscreenOption":
+                    return "Fullscreen";
+                case "DemoSpeedSlow":
+                    return "Slow";
+                case "DemoSpeedNormal":
+                    return "Normal";
+                case "DemoSpeedFast":
+                    return "Fast";
+                case "DemoAnyKeyHint":
+                    return "Press any key to stop";
+                case "DemoEscHint":
+                    return "Press Esc to stop";
+                case "DemoRealCursorNote":
+                    return "The demo moves the real Windows cursor.\r\nWhen mirrored cursor is enabled, it shows its own Cursor Mirror overlay.\r\nManual mouse input switches to Free mode; Auto mode resumes after 3 seconds without input.";
+                case "DemoMainAppRunningMessage":
+                    return "Cursor Mirror is already running. Running it together with the demo overlay may show two mirrored cursors.\r\n\r\nChoose Yes to request Cursor Mirror to exit before starting the demo. Choose No to continue anyway. Choose Cancel to return.";
+                case "DemoMainAppShutdownFailedMessage":
+                    return "Cursor Mirror could not be closed automatically. Exit Cursor Mirror from its tray icon, then start the demo again.";
+                case "DemoAutoModeLabel":
+                    return "Auto";
+                case "DemoFreeModeLabel":
+                    return "Free";
+                case "DemoResumeActiveLabel":
+                    return "Active";
+                case "DemoEnabledLabel":
+                    return "On";
+                case "DemoDisabledLabel":
+                    return "Off";
+                case "DemoPhasemoving-right":
+                    return "Moving right";
+                case "DemoPhasehold-right":
+                    return "Hold right";
+                case "DemoPhasemoving-left":
+                    return "Moving left";
+                case "DemoPhasehold-left":
+                    return "Hold left";
+                case "DemoStatusFormat":
+                    return "Mode: {0}\r\nSpeed: {1}\r\nResume: {2}\r\nInjected moves: {3}";
+                case "DemoMirrorCursorStatusFormat":
+                    return "Mirrored cursor: {0}";
+                case "DemoResumeCountdownFormat":
+                    return "{0:0.0}s";
                 case "TraceStateLabelFormat":
                     return "{0}";
                 case "TraceDwmTimingSampleCountFormat":
                     return "{0} / {1} ({2:0.0}%)";
                 case "StartupFailureMessageFormat":
                     return "Cursor Mirror failed to start.\r\n\r\n{0}";
+                case "SettingsRestoreFailureMessageFormat":
+                    return "Settings could not be restored. Defaults will be used and the settings file will be reset.\r\n\r\nFile: {0}\r\nDetail: {1}";
+                case "DemoSettingsRestoreFailureMessageFormat":
+                    return "Demo settings could not be restored. Defaults will be used and the demo settings file will be reset.\r\n\r\nFile: {0}\r\nDetail: {1}";
                 default:
                     return key;
             }
@@ -282,6 +546,10 @@ namespace CursorMirror
                     return "フック移動";
                 case "TraceCursorPollSampleCountLabel":
                     return "カーソルポーリング";
+                case "TraceReferencePollSampleCountLabel":
+                    return "高精度参照ポーリング";
+                case "TraceRuntimeSchedulerPollSampleCountLabel":
+                    return "実行時スケジューラーポーリング";
                 case "TraceDwmTimingSampleCountLabel":
                     return "DWM タイミング";
                 case "TraceDurationLabel":
@@ -300,12 +568,82 @@ namespace CursorMirror
                     return "未保存のトレースサンプルは破棄されます。Cursor Mirror トレースツールを終了しますか？";
                 case "TraceDiscardUnsavedMessage":
                     return "未保存のトレースサンプルは破棄されます。新しい記録を開始しますか？";
+                case "DemoToolTitle":
+                    return "Cursor Mirror デモ";
+                case "DemoDisplayModeLabel":
+                    return "表示モード";
+                case "DemoLanguageLabel":
+                    return "表示言語";
+                case "DemoLanguageSystem":
+                    return "システム設定";
+                case "DemoLanguageEnglish":
+                    return "English";
+                case "DemoLanguageJapanese":
+                    return "日本語";
+                case "DemoSpeedLabel":
+                    return "速度";
+                case "DemoMirrorCursorLabel":
+                    return "ミラーカーソルを表示する";
+                case "DemoStartCommand":
+                    return "デモ開始";
+                case "DemoWindowPresetVga":
+                    return "640 x 480";
+                case "DemoWindowPreset720":
+                    return "1280 x 720";
+                case "DemoWindowPreset1080":
+                    return "1920 x 1080";
+                case "DemoFullscreenOption":
+                    return "フルスクリーン";
+                case "DemoSpeedSlow":
+                    return "低速";
+                case "DemoSpeedNormal":
+                    return "標準";
+                case "DemoSpeedFast":
+                    return "高速";
+                case "DemoAnyKeyHint":
+                    return "いずれかのキーで停止";
+                case "DemoEscHint":
+                    return "Esc で停止";
+                case "DemoRealCursorNote":
+                    return "デモは実際の Windows カーソルを動かします。\r\nミラーカーソルが有効な場合はオーバーレイも表示します。\r\nマウス操作で Free mode、3 秒間入力がなければ Auto mode に戻ります。";
+                case "DemoMainAppRunningMessage":
+                    return "Cursor Mirror 本体が起動中です。デモのオーバーレイと同時に使うと、ミラーカーソルが二重に表示される場合があります。\r\n\r\nYes を選ぶと、デモ開始前に Cursor Mirror 本体へ終了を要求します。No を選ぶとそのまま続行します。Cancel を選ぶと戻ります。";
+                case "DemoMainAppShutdownFailedMessage":
+                    return "Cursor Mirror 本体を自動で終了できませんでした。タスクトレイのアイコンから Cursor Mirror を終了してから、もう一度デモを開始してください。";
+                case "DemoAutoModeLabel":
+                    return "Auto";
+                case "DemoFreeModeLabel":
+                    return "Free";
+                case "DemoResumeActiveLabel":
+                    return "実行中";
+                case "DemoEnabledLabel":
+                    return "オン";
+                case "DemoDisabledLabel":
+                    return "オフ";
+                case "DemoPhasemoving-right":
+                    return "右へ移動";
+                case "DemoPhasehold-right":
+                    return "右端で停止";
+                case "DemoPhasemoving-left":
+                    return "左へ移動";
+                case "DemoPhasehold-left":
+                    return "左端で停止";
+                case "DemoStatusFormat":
+                    return "モード: {0}\r\n速度: {1}\r\n復帰: {2}\r\n注入移動: {3}";
+                case "DemoMirrorCursorStatusFormat":
+                    return "ミラーカーソル: {0}";
+                case "DemoResumeCountdownFormat":
+                    return "{0:0.0}s";
                 case "TraceStateLabelFormat":
                     return "{0}";
                 case "TraceDwmTimingSampleCountFormat":
                     return "{0} / {1} ({2:0.0}%)";
                 case "StartupFailureMessageFormat":
                     return "Cursor Mirror の起動に失敗しました。\r\n\r\n{0}";
+                case "SettingsRestoreFailureMessageFormat":
+                    return "設定を復元できませんでした。デフォルト設定を使用し、設定ファイルをリセットします。\r\n\r\nファイル: {0}\r\n詳細: {1}";
+                case "DemoSettingsRestoreFailureMessageFormat":
+                    return "デモ設定を復元できませんでした。デフォルト設定を使用し、デモ設定ファイルをリセットします。\r\n\r\nファイル: {0}\r\n詳細: {1}";
                 default:
                     return null;
             }

@@ -17,6 +17,9 @@ namespace CursorMirror.Tests
             suite.Add("COT-MSU-7", SettingsReset);
             suite.Add("COT-MSU-8", ImmediateSettingsApplication);
             suite.Add("COT-MSU-9", PredictionSettingPersistence);
+            suite.Add("COT-MSU-10", DurableSettingsSaveValidation);
+            suite.Add("COT-MSU-11", SettingsBackupRetention);
+            suite.Add("COT-MSU-12", FailedStagedSavePreservesActiveSettings);
         }
 
         // Settings defaults [COT-MSU-1]
@@ -112,10 +115,12 @@ namespace CursorMirror.Tests
             try
             {
                 SettingsStore store = new SettingsStore(Path.Combine(directory, "missing.json"));
-                CursorMirrorSettings settings = store.Load();
+                string restoreFailureMessage;
+                CursorMirrorSettings settings = store.Load(out restoreFailureMessage);
 
                 TestAssert.Equal(70, settings.MovingOpacityPercent, "missing settings default");
                 TestAssert.True(settings.PredictionEnabled, "missing settings prediction default");
+                TestAssert.Equal(null, restoreFailureMessage, "missing settings is not restore failure");
             }
             finally
             {
@@ -132,10 +137,12 @@ namespace CursorMirror.Tests
                 string path = Path.Combine(directory, "settings.json");
                 File.WriteAllText(path, "{ this is not valid json", System.Text.Encoding.UTF8);
                 SettingsStore store = new SettingsStore(path);
-                CursorMirrorSettings settings = store.Load();
+                string restoreFailureMessage;
+                CursorMirrorSettings settings = store.Load(out restoreFailureMessage);
 
                 TestAssert.Equal(70, settings.MovingOpacityPercent, "corrupt settings default");
                 TestAssert.True(settings.PredictionEnabled, "corrupt settings prediction default");
+                TestAssert.True(!string.IsNullOrWhiteSpace(restoreFailureMessage), "corrupt settings restore failure message");
             }
             finally
             {
@@ -236,6 +243,103 @@ namespace CursorMirror.Tests
                 controller.ResetToDefaults();
 
                 TestAssert.True(controller.CurrentSettings.PredictionEnabled, "reset restores prediction default");
+            }
+            finally
+            {
+                DeleteDirectory(directory);
+            }
+        }
+
+        // Durable settings save validation [COT-MSU-10]
+        private static void DurableSettingsSaveValidation()
+        {
+            string directory = NewTestDirectory();
+            try
+            {
+                string path = Path.Combine(directory, "settings.json");
+                SettingsStore store = new SettingsStore(path);
+                CursorMirrorSettings first = CursorMirrorSettings.Default();
+                first.MovingOpacityPercent = 41;
+                CursorMirrorSettings second = CursorMirrorSettings.Default();
+                second.MovingOpacityPercent = 82;
+
+                store.Save(first);
+                store.Save(second);
+
+                CursorMirrorSettings loaded = store.Load();
+                TestAssert.Equal(82, loaded.MovingOpacityPercent, "active settings replaced after validation");
+
+                string[] backups = Directory.GetFiles(directory, "settings.json.bak.*");
+                TestAssert.Equal(1, backups.Length, "one backup after replacing existing settings");
+                CursorMirrorSettings backup = new SettingsStore(backups[0]).Load();
+                TestAssert.Equal(41, backup.MovingOpacityPercent, "backup contains previous settings");
+
+                string[] temporaryFiles = Directory.GetFiles(directory, "settings.json.tmp.*");
+                TestAssert.Equal(0, temporaryFiles.Length, "temporary files are cleaned after save");
+            }
+            finally
+            {
+                DeleteDirectory(directory);
+            }
+        }
+
+        // Settings backup retention [COT-MSU-11]
+        private static void SettingsBackupRetention()
+        {
+            string directory = NewTestDirectory();
+            try
+            {
+                string path = Path.Combine(directory, "settings.json");
+                SettingsStore store = new SettingsStore(path);
+
+                for (int i = 0; i < 8; i++)
+                {
+                    CursorMirrorSettings settings = CursorMirrorSettings.Default();
+                    settings.MovingOpacityPercent = 20 + i;
+                    store.Save(settings);
+                }
+
+                string[] backups = Directory.GetFiles(directory, "settings.json.bak.*");
+                TestAssert.Equal(DurableJsonSettingsFile.DefaultBackupRetention, backups.Length, "backup retention count");
+                TestAssert.Equal(27, store.Load().MovingOpacityPercent, "active settings are latest");
+            }
+            finally
+            {
+                DeleteDirectory(directory);
+            }
+        }
+
+        // Failed staged save preserves active settings [COT-MSU-12]
+        private static void FailedStagedSavePreservesActiveSettings()
+        {
+            string directory = NewTestDirectory();
+            try
+            {
+                string path = Path.Combine(directory, "settings.json");
+                SettingsStore store = new SettingsStore(path);
+                CursorMirrorSettings active = CursorMirrorSettings.Default();
+                active.MovingOpacityPercent = 55;
+                store.Save(active);
+
+                bool failed = false;
+                try
+                {
+                    DurableJsonSettingsFile.Save(
+                        path,
+                        System.Text.Encoding.UTF8.GetBytes("{ this is not valid json"),
+                        delegate
+                        {
+                            throw new InvalidDataException("validation failed");
+                        });
+                }
+                catch (InvalidDataException)
+                {
+                    failed = true;
+                }
+
+                TestAssert.True(failed, "staged save validation failed");
+                TestAssert.Equal(55, store.Load().MovingOpacityPercent, "active settings preserved after failed staged save");
+                TestAssert.Equal(0, Directory.GetFiles(directory, "settings.json.tmp.*").Length, "failed staged save cleans temp file");
             }
             finally
             {

@@ -12,7 +12,9 @@
 - The application MUST NOT require a background service.
 - The release package MAY include a README and license file.
 - The release package MUST include `CursorMirror.exe`.
+- The release package MUST include `CursorMirror.Core.dll` when any packaged auxiliary executable depends on it.
 - The release package MUST include `CursorMirror.TraceTool.exe`.
+- The release package MUST include `CursorMirror.Demo.exe`.
 
 ### 5.3 Startup and Shutdown
 - Startup MUST create the tray icon before installing the hook or immediately after successful hook installation.
@@ -32,5 +34,17 @@
 - User settings MUST NOT require administrator privileges to read or write.
 - Settings persistence SHOULD use a structured format such as JSON.
 - Missing settings MUST fall back to documented defaults.
-- Corrupt settings MUST fall back to documented defaults without preventing startup.
-- When corrupt settings are ignored, the application SHOULD avoid noisy normal-startup notifications.
+- Corrupt or unreadable settings MUST fall back to documented defaults without preventing startup.
+- When settings restoration fails, the application MUST warn the user with a dialog and SHOULD reset the settings file to the defaults that are being used.
+- Missing settings files MUST be treated as first-run defaults and MUST NOT show a restoration-failure warning.
+
+### 5.6 Durable Settings Writes
+- Settings writes MUST NOT overwrite the active settings file directly.
+- Settings writes MUST first serialize the new settings to a temporary file in the same directory as the active settings file.
+- Before replacing the active settings file, the implementation MUST read the temporary file back through the same deserialization and normalization path used for normal startup.
+- If temporary-file validation fails, the active settings file MUST remain unchanged.
+- When replacing an existing settings file, the previous file MUST be retained as a timestamped backup before or during replacement.
+- Replacement SHOULD use an atomic same-volume operation such as `File.Replace` when available.
+- If atomic replacement is not available, replacement MUST use same-directory rename or move operations and SHOULD attempt to restore the previous file if the final replacement step fails.
+- The implementation MUST retain only the newest `5` backups per settings file and remove older backups after a successful save.
+- Temporary files left by interrupted saves MAY be removed on a later successful save.

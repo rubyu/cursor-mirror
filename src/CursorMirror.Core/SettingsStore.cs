@@ -30,27 +30,25 @@ namespace CursorMirror
 
         public CursorMirrorSettings Load()
         {
+            string restoreFailureMessage;
+            return Load(out restoreFailureMessage);
+        }
+
+        public CursorMirrorSettings Load(out string restoreFailureMessage)
+        {
             try
             {
+                restoreFailureMessage = null;
                 if (!File.Exists(_path))
                 {
                     return CursorMirrorSettings.Default();
                 }
 
-                using (FileStream stream = File.OpenRead(_path))
-                {
-                    DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(CursorMirrorSettings));
-                    CursorMirrorSettings settings = serializer.ReadObject(stream) as CursorMirrorSettings;
-                    if (settings == null)
-                    {
-                        return CursorMirrorSettings.Default();
-                    }
-
-                    return settings.Normalize();
-                }
+                return ReadSettings(_path);
             }
-            catch
+            catch (Exception ex)
             {
+                restoreFailureMessage = ex.Message;
                 return CursorMirrorSettings.Default();
             }
         }
@@ -73,7 +71,28 @@ namespace CursorMirror
             {
                 DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(CursorMirrorSettings));
                 serializer.WriteObject(stream, normalized);
-                File.WriteAllBytes(_path, stream.ToArray());
+                DurableJsonSettingsFile.Save(
+                    _path,
+                    stream.ToArray(),
+                    delegate(string temporaryPath)
+                    {
+                        ReadSettings(temporaryPath);
+                    });
+            }
+        }
+
+        private static CursorMirrorSettings ReadSettings(string path)
+        {
+            using (FileStream stream = File.OpenRead(path))
+            {
+                DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(CursorMirrorSettings));
+                CursorMirrorSettings settings = serializer.ReadObject(stream) as CursorMirrorSettings;
+                if (settings == null)
+                {
+                    throw new InvalidDataException("Settings file did not contain a valid settings object.");
+                }
+
+                return settings.Normalize();
             }
         }
 

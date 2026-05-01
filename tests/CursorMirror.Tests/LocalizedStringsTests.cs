@@ -30,12 +30,32 @@ namespace CursorMirror.Tests
                 TestAssert.Equal("Total samples", LocalizedStrings.TraceTotalSampleCountLabel, "English trace total samples label");
                 TestAssert.Equal("Hook move", LocalizedStrings.TraceHookMoveSampleCountLabel, "English trace hook move label");
                 TestAssert.Equal("Cursor poll", LocalizedStrings.TraceCursorPollSampleCountLabel, "English trace cursor poll label");
+                TestAssert.Equal("Reference poll", LocalizedStrings.TraceReferencePollSampleCountLabel, "English trace reference poll label");
+                TestAssert.Equal("Runtime scheduler poll", LocalizedStrings.TraceRuntimeSchedulerPollSampleCountLabel, "English trace runtime scheduler poll label");
                 TestAssert.Equal("DWM timing", LocalizedStrings.TraceDwmTimingSampleCountLabel, "English trace dwm timing label");
                 TestAssert.Equal("1 / 2 (50.0%)", LocalizedStrings.TraceDwmTimingSampleCount(1, 2), "English trace dwm timing count");
+                TestAssert.Equal("Start Demo", LocalizedStrings.DemoStartCommand, "English demo start command");
+                TestAssert.Equal("Language", LocalizedStrings.DemoLanguageLabel, "English demo language label");
+                TestAssert.Equal("System language", LocalizedStrings.DemoLanguageSystem, "English demo system language option");
+                TestAssert.Equal("Show mirrored cursor", LocalizedStrings.DemoMirrorCursorLabel, "English demo mirror cursor label");
+                TestAssert.Equal("Mirrored cursor: On", LocalizedStrings.DemoMirrorCursorStatus(LocalizedStrings.DemoEnabledLabel), "English demo mirror status");
+                TestAssert.Equal("640 x 480", LocalizedStrings.DemoWindowPresetVga, "English demo VGA preset");
+                TestAssert.Equal("Press Esc to stop", LocalizedStrings.DemoEscHint, "English demo key hint");
+                TestAssert.Equal("Free", LocalizedStrings.DemoFreeModeLabel, "English demo free mode");
+                TestAssert.Equal("3.0s", LocalizedStrings.DemoResumeCountdown(3000), "English demo resume countdown");
+                TestAssert.True(
+                    LocalizedStrings.DemoMainAppRunningMessage.Contains("already running"),
+                    "English demo main-app warning");
                 TestAssert.Equal(
                     "Cursor Mirror failed to start.\r\n\r\nboom",
                     LocalizedStrings.StartupFailureMessage("boom"),
                     "English startup failure message");
+                TestAssert.True(
+                    LocalizedStrings.SettingsRestoreFailureMessage("settings.json", "boom").Contains("Defaults will be used"),
+                    "English settings restore failure message");
+                TestAssert.True(
+                    LocalizedStrings.DemoSettingsRestoreFailureMessage("demo-settings.json", "boom").Contains("Demo settings could not be restored"),
+                    "English demo settings restore failure message");
 
                 Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
                 Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("ja-JP");
@@ -48,12 +68,32 @@ namespace CursorMirror.Tests
                 TestAssert.Equal("総サンプル数", LocalizedStrings.TraceTotalSampleCountLabel, "Japanese trace total samples label");
                 TestAssert.Equal("フック移動", LocalizedStrings.TraceHookMoveSampleCountLabel, "Japanese trace hook move label");
                 TestAssert.Equal("カーソルポーリング", LocalizedStrings.TraceCursorPollSampleCountLabel, "Japanese trace cursor poll label");
+                TestAssert.Equal("高精度参照ポーリング", LocalizedStrings.TraceReferencePollSampleCountLabel, "Japanese trace reference poll label");
+                TestAssert.Equal("実行時スケジューラーポーリング", LocalizedStrings.TraceRuntimeSchedulerPollSampleCountLabel, "Japanese trace runtime scheduler poll label");
                 TestAssert.Equal("DWM タイミング", LocalizedStrings.TraceDwmTimingSampleCountLabel, "Japanese trace dwm timing label");
                 TestAssert.Equal("1 / 2 (50.0%)", LocalizedStrings.TraceDwmTimingSampleCount(1, 2), "Japanese trace dwm timing count");
+                TestAssert.Equal("デモ開始", LocalizedStrings.DemoStartCommand, "Japanese demo start command");
+                TestAssert.Equal("表示言語", LocalizedStrings.DemoLanguageLabel, "Japanese demo language label");
+                TestAssert.Equal("システム設定", LocalizedStrings.DemoLanguageSystem, "Japanese demo system language option");
+                TestAssert.Equal("ミラーカーソルを表示する", LocalizedStrings.DemoMirrorCursorLabel, "Japanese demo mirror cursor label");
+                TestAssert.Equal("ミラーカーソル: オン", LocalizedStrings.DemoMirrorCursorStatus(LocalizedStrings.DemoEnabledLabel), "Japanese demo mirror status");
+                TestAssert.Equal("640 x 480", LocalizedStrings.DemoWindowPresetVga, "Japanese demo VGA preset");
+                TestAssert.Equal("Esc で停止", LocalizedStrings.DemoEscHint, "Japanese demo key hint");
+                TestAssert.Equal("Free", LocalizedStrings.DemoFreeModeLabel, "Japanese demo free mode");
+                TestAssert.Equal("3.0s", LocalizedStrings.DemoResumeCountdown(3000), "Japanese demo resume countdown");
+                TestAssert.True(
+                    LocalizedStrings.DemoMainAppRunningMessage.Contains("起動中"),
+                    "Japanese demo main-app warning");
                 TestAssert.Equal(
                     "Cursor Mirror の起動に失敗しました。\r\n\r\nboom",
                     LocalizedStrings.StartupFailureMessage("boom"),
                     "Japanese startup failure message");
+                TestAssert.True(
+                    LocalizedStrings.SettingsRestoreFailureMessage("settings.json", "boom").Contains("設定を復元できませんでした"),
+                    "Japanese settings restore failure message");
+                TestAssert.True(
+                    LocalizedStrings.DemoSettingsRestoreFailureMessage("demo-settings.json", "boom").Contains("デモ設定を復元できませんでした"),
+                    "Japanese demo settings restore failure message");
             }
             finally
             {
