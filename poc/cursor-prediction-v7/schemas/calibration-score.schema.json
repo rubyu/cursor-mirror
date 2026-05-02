@@ -1,0 +1,219 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cursor-prediction-v7-calibration-score.schema.json",
+  "title": "Cursor Prediction v7 Calibration Score",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "generatedAt",
+    "objective",
+    "runs",
+    "candidates"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "cursor-prediction-v7-score/1"
+    },
+    "generatedAt": {
+      "type": "string"
+    },
+    "baselineCandidate": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "objective": {
+      "type": "object",
+      "required": [
+        "sourceColumn",
+        "lowerIsBetter",
+        "patternScoreFormula"
+      ],
+      "properties": {
+        "sourceColumn": {
+          "const": "estimatedSeparationPixels"
+        },
+        "lowerIsBetter": {
+          "const": true
+        },
+        "patternScoreFormula": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "runs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/run"
+      }
+    },
+    "candidates": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/candidate"
+      }
+    }
+  },
+  "$defs": {
+    "metricStats": {
+      "type": "object",
+      "required": [
+        "frameCount",
+        "darkFrameCount",
+        "meanPx",
+        "p50Px",
+        "p90Px",
+        "p95Px",
+        "p99Px",
+        "maxPx"
+      ],
+      "properties": {
+        "frameCount": {
+          "type": "integer"
+        },
+        "darkFrameCount": {
+          "type": "integer"
+        },
+        "meanPx": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "p50Px": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "p90Px": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "p95Px": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "p99Px": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "maxPx": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "pattern": {
+      "type": "object",
+      "required": [
+        "patternName",
+        "weight",
+        "scorePx",
+        "stats"
+      ],
+      "properties": {
+        "patternName": {
+          "type": "string"
+        },
+        "weight": {
+          "type": "number"
+        },
+        "scorePx": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "stats": {
+          "$ref": "#/$defs/metricStats"
+        },
+        "deltaToBaseline": {
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "run": {
+      "type": "object",
+      "required": [
+        "candidateId",
+        "packagePath",
+        "qualityWarnings",
+        "patterns"
+      ],
+      "properties": {
+        "candidateId": {
+          "type": "string"
+        },
+        "packagePath": {
+          "type": "string"
+        },
+        "qualityWarnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "patterns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/pattern"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "candidate": {
+      "type": "object",
+      "required": [
+        "candidateId",
+        "runCount",
+        "visualScorePx",
+        "patterns"
+      ],
+      "properties": {
+        "candidateId": {
+          "type": "string"
+        },
+        "runCount": {
+          "type": "integer"
+        },
+        "visualScorePx": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "deltaToBaselineScorePx": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "patterns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/pattern"
+          }
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

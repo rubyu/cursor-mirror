@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cursor-prediction-v7-calibrator-package.schema.json",
+  "title": "CursorMirror.Calibrator Package Contract",
+  "type": "object",
+  "required": [
+    "packageExtension",
+    "requiredEntries",
+    "framesCsvRequiredColumns",
+    "metricsJsonRequiredFields",
+    "defaultMotionPatterns"
+  ],
+  "properties": {
+    "packageExtension": {
+      "const": ".zip"
+    },
+    "requiredEntries": {
+      "type": "array",
+      "contains": {
+        "const": "frames.csv"
+      }
+    },
+    "framesCsvRequiredColumns": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "contains": {
+        "const": "estimatedSeparationPixels"
+      }
+    },
+    "metricsJsonRequiredFields": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "contains": {
+        "const": "PatternSummaries"
+      }
+    },
+    "defaultMotionPatterns": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}

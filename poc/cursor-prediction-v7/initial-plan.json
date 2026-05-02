@@ -1,0 +1,191 @@
+{
+  "schemaVersion": "cursor-prediction-v7-initial-plan/1",
+  "createdDate": "2026-05-02",
+  "status": "scaffold_only",
+  "repositoryRoot": "C:\\Users\\seigl\\OneDrive\\my\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\projects\\cursor",
+  "pocRoot": "poc/cursor-prediction-v7",
+  "constraints": {
+    "writeScope": "poc/cursor-prediction-v7",
+    "doNotModifyProductionSource": true,
+    "doNotLaunchCalibratorDuringScaffold": true,
+    "doNotRunGpuTrainingDuringScaffold": true,
+    "singleMeasurementWorker": true
+  },
+  "calibratorOutputContract": {
+    "packageExtension": ".zip",
+    "requiredEntries": [
+      "frames.csv",
+      "metrics.json"
+    ],
+    "framesCsvRequiredColumns": [
+      "frameIndex",
+      "timestampTicks",
+      "elapsedMilliseconds",
+      "patternName",
+      "phaseName",
+      "expectedX",
+      "expectedY",
+      "expectedVelocityPixelsPerSecond",
+      "width",
+      "height",
+      "darkPixelCount",
+      "hasDarkPixels",
+      "darkBoundsX",
+      "darkBoundsY",
+      "darkBoundsWidth",
+      "darkBoundsHeight",
+      "estimatedSeparationPixels"
+    ],
+    "metricsJsonRequiredFields": [
+      "FrameCount",
+      "DarkFrameCount",
+      "BaselineDarkBoundsWidth",
+      "BaselineDarkBoundsHeight",
+      "AverageEstimatedSeparationPixels",
+      "P95EstimatedSeparationPixels",
+      "MaximumEstimatedSeparationPixels",
+      "CaptureSource",
+      "PatternSummaries"
+    ],
+    "defaultMotionPatterns": [
+      "linear-slow",
+      "hold-right",
+      "linear-fast",
+      "hold-left",
+      "quadratic-ease-in",
+      "quadratic-ease-out",
+      "cubic-smoothstep",
+      "cubic-in-out",
+      "rapid-reversal",
+      "sine-sweep",
+      "short-jitter"
+    ]
+  },
+  "objective": {
+    "primarySourceColumn": "estimatedSeparationPixels",
+    "darkFramesOnly": true,
+    "lowerIsBetter": true,
+    "perPatternStats": [
+      "mean",
+      "p50",
+      "p90",
+      "p95",
+      "p99",
+      "max"
+    ],
+    "patternScoreFormula": "0.50*p95 + 0.35*p99 + 0.15*max",
+    "candidateScore": "weighted_mean_of_pattern_scores",
+    "promotionGates": {
+      "maxHighRiskPatternP95RegressionPx": 0.5,
+      "maxAnyPatternMaxRegressionPx": 1.0,
+      "minimumWeightedScoreImprovementPercent": 5.0
+    }
+  },
+  "patternWeights": {
+    "linear-slow": 1.0,
+    "hold-right": 0.75,
+    "linear-fast": 1.4,
+    "hold-left": 0.75,
+    "quadratic-ease-in": 1.2,
+    "quadratic-ease-out": 1.2,
+    "cubic-smoothstep": 1.2,
+    "cubic-in-out": 1.25,
+    "rapid-reversal": 1.6,
+    "sine-sweep": 1.4,
+    "short-jitter": 1.4
+  },
+  "phases": [
+    {
+      "id": "phase-0",
+      "name": "Scaffold and contract lock",
+      "status": "in_progress",
+      "deliverables": [
+        "README.md",
+        "experiment-plan.md",
+        "experiment-log.md",
+        "initial-plan.json",
+        "schemas/*.schema.json",
+        "scripts/score-calibration.js"
+      ]
+    },
+    {
+      "id": "phase-1",
+      "name": "Current default baseline",
+      "status": "planned",
+      "plannedRuns": [
+        "current-default-001",
+        "current-default-002",
+        "current-default-003"
+      ],
+      "durationSeconds": 30
+    },
+    {
+      "id": "phase-2",
+      "name": "Baseline scoring report",
+      "status": "planned"
+    },
+    {
+      "id": "phase-3",
+      "name": "Candidate definition",
+      "status": "planned"
+    },
+    {
+      "id": "phase-4",
+      "name": "Visual measurement loop",
+      "status": "planned"
+    },
+    {
+      "id": "phase-5",
+      "name": "Model search and scoring",
+      "status": "planned"
+    },
+    {
+      "id": "phase-6",
+      "name": "Robustness check",
+      "status": "planned"
+    },
+    {
+      "id": "phase-7",
+      "name": "Final recommendation",
+      "status": "planned"
+    }
+  ],
+  "initialCandidates": [
+    {
+      "id": "current-default",
+      "role": "baseline",
+      "measurementRequired": true
+    },
+    {
+      "id": "gain-grid-050",
+      "role": "candidate",
+      "measurementRequired": true,
+      "requiresCandidateBuild": true
+    },
+    {
+      "id": "gain-grid-075",
+      "role": "candidate",
+      "measurementRequired": true,
+      "requiresCandidateBuild": true
+    },
+    {
+      "id": "gain-grid-100",
+      "role": "candidate",
+      "measurementRequired": true,
+      "requiresCandidateBuild": true
+    },
+    {
+      "id": "safe-ridge-residual-guarded",
+      "role": "candidate",
+      "measurementRequired": true,
+      "requiresCandidateBuild": true
+    },
+    {
+      "id": "teacher-regime-oracle",
+      "role": "teacher_only",
+      "measurementRequired": false
+    }
+  ],
+  "proposedNextMeasurementCommand": ".\\artifacts\\bin\\Release\\CursorMirror.Calibrator.exe --auto-run --duration-seconds 30 --output .\\poc\\cursor-prediction-v7\\runs\\raw\\current-default\\calibration-current-default-001.zip --exit-after-run",
+  "proposedNextScoringCommand": "node .\\poc\\cursor-prediction-v7\\scripts\\score-calibration.js --baseline current-default --run current-default=.\\poc\\cursor-prediction-v7\\runs\\raw\\current-default\\calibration-current-default-001.zip --out .\\poc\\cursor-prediction-v7\\runs\\summaries\\baseline-score.json"
+}

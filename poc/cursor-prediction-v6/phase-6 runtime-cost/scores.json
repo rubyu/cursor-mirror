@@ -1,0 +1,403 @@
+{
+  "generated_at_utc": "2026-05-02T10:35:28.564Z",
+  "phase": "phase-6 runtime-cost",
+  "phase5_path": "phase-5 distillation/scores.json",
+  "dataset_path": "phase-2 dataset-builder/dataset.jsonl",
+  "dataset": {
+    "rows": 27738
+  },
+  "environment": {
+    "node": "v24.14.0",
+    "platform": "Windows_NT 10.0.26200 x64",
+    "cpus": 32,
+    "hrtime": "performance.now()"
+  },
+  "benchmark_policy": {
+    "samples": 11,
+    "units": [
+      "ns_per_prediction",
+      "us_per_prediction"
+    ],
+    "note": "Each sample performs a warm-up pass, then loops over every dataset row for model-specific rounds."
+  },
+  "models": [
+    {
+      "id": "current_dwm_aware_last2_gain_0_75",
+      "selected": false,
+      "spec_type": "current",
+      "rounds": 700,
+      "parameter_count": 1,
+      "allocation_note": "no per-prediction model allocation",
+      "complexity": "already implemented",
+      "phase5_summary": {
+        "id": "current_dwm_aware_last2_gain_0_75",
+        "fold_count": 2,
+        "family": "current_baseline",
+        "mean_delta_mean_px": 0,
+        "mean_delta_rmse_px": 0,
+        "mean_delta_p50_px": 0,
+        "mean_delta_p90_px": 0,
+        "mean_delta_p95_px": 0,
+        "mean_delta_p99_px": 0,
+        "mean_heldout_p99_px": 32.481597635916074,
+        "total_worse_over_1px": 0,
+        "total_worse_over_3px": 0,
+        "total_worse_over_5px": 0,
+        "total_better_over_1px": 0,
+        "total_better_over_3px": 0,
+        "total_better_over_5px": 0,
+        "parameter_count": 1,
+        "implementation_complexity": "already implemented",
+        "fold_deltas": [
+          {
+            "delta_mean_px": 0,
+            "delta_p95_px": 0,
+            "delta_p99_px": 0,
+            "worse_over_3px": 0,
+            "worse_over_5px": 0
+          },
+          {
+            "delta_mean_px": 0,
+            "delta_p95_px": 0,
+            "delta_p99_px": 0,
+            "worse_over_3px": 0,
+            "worse_over_5px": 0
+          }
+        ]
+      },
+      "benchmark": {
+        "samples": 11,
+        "rounds": 700,
+        "predictions_per_sample": 19416600,
+        "ns_per_prediction": {
+          "n": 11,
+          "mean": 33.66227305033275,
+          "median": 33.778066190785204,
+          "p95": 38.184998918451214,
+          "min": 28.38828631171269,
+          "max": 38.251300433649554
+        },
+        "us_per_prediction": {
+          "n": 11,
+          "mean": 0.03366227305033276,
+          "median": 0.0337780661907852,
+          "p95": 0.038184998918451216,
+          "min": 0.02838828631171269,
+          "max": 0.038251300433649556
+        },
+        "heap_delta_bytes_per_sample": {
+          "n": 11,
+          "mean": -36864,
+          "median": -10854400,
+          "p95": 22603952,
+          "min": -10948432,
+          "max": 22603952
+        },
+        "guard": 0.3445951298614228
+      }
+    },
+    {
+      "id": "safe_ridge_residual_guarded",
+      "selected": true,
+      "spec_type": "ridge_residual_guarded",
+      "rounds": 120,
+      "parameter_count": 156,
+      "allocation_note": "JS proxy allocates a temporary feature array; C# can use stackalloc or a reused buffer",
+      "complexity": "moderate: ridge dot products",
+      "phase5_summary": {
+        "id": "safe_ridge_residual_guarded",
+        "fold_count": 2,
+        "family": "ridge_guarded",
+        "mean_delta_mean_px": 0.0814742098328578,
+        "mean_delta_rmse_px": -0.0002920753875441662,
+        "mean_delta_p50_px": 0.14485893581715925,
+        "mean_delta_p90_px": -0.002065872848691086,
+        "mean_delta_p95_px": 0.005056982376965724,
+        "mean_delta_p99_px": -0.026850898936553236,
+        "mean_heldout_p99_px": 32.45474673697952,
+        "total_worse_over_1px": 0,
+        "total_worse_over_3px": 0,
+        "total_worse_over_5px": 0,
+        "total_better_over_1px": 0,
+        "total_better_over_3px": 0,
+        "total_better_over_5px": 0,
+        "parameter_count": 156,
+        "implementation_complexity": "moderate: feature normalization and dot products",
+        "fold_deltas": [
+          {
+            "delta_mean_px": 0.04573099838223449,
+            "delta_p95_px": 0.024119660861764203,
+            "delta_p99_px": -0.025766719777166713,
+            "worse_over_3px": 0,
+            "worse_over_5px": 0
+          },
+          {
+            "delta_mean_px": 0.11721742128348112,
+            "delta_p95_px": -0.014005696107832755,
+            "delta_p99_px": -0.027935078095939758,
+            "worse_over_3px": 0,
+            "worse_over_5px": 0
+          }
+        ]
+      },
+      "benchmark": {
+        "samples": 11,
+        "rounds": 120,
+        "predictions_per_sample": 3328560,
+        "ns_per_prediction": {
+          "n": 11,
+          "mean": 330.577656294723,
+          "median": 331.321382219338,
+          "p95": 353.1340579710144,
+          "min": 309.54091258682405,
+          "max": 353.7163217727786
+        },
+        "us_per_prediction": {
+          "n": 11,
+          "mean": 0.33057765629472313,
+          "median": 0.331321382219338,
+          "p95": 0.3531340579710144,
+          "min": 0.30954091258682404,
+          "max": 0.3537163217727786
+        },
+        "heap_delta_bytes_per_sample": {
+          "n": 11,
+          "mean": 8245384,
+          "median": 14071976,
+          "p95": 15578436,
+          "min": -19480616,
+          "max": 16376736
+        },
+        "guard": 0.059481219154188546
+      }
+    },
+    {
+      "id": "piecewise_residual_table",
+      "selected": false,
+      "spec_type": "piecewise_residual_table",
+      "rounds": 350,
+      "parameter_count": 128,
+      "allocation_note": "no numeric feature vector; key construction in JS allocates strings, C# can use enum indices",
+      "complexity": "low: table lookup",
+      "phase5_summary": {
+        "id": "piecewise_residual_table",
+        "fold_count": 2,
+        "family": "piecewise_table",
+        "mean_delta_mean_px": 0.008245726803532971,
+        "mean_delta_rmse_px": 0.0016277339361843168,
+        "mean_delta_p50_px": 0.00020122862506930786,
+        "mean_delta_p90_px": 0.026162634400436646,
+        "mean_delta_p95_px": 0.06223081766511429,
+        "mean_delta_p99_px": 0.08960999591150198,
+        "mean_heldout_p99_px": 32.571207631827576,
+        "total_worse_over_1px": 33,
+        "total_worse_over_3px": 0,
+        "total_worse_over_5px": 0,
+        "total_better_over_1px": 0,
+        "total_better_over_3px": 0,
+        "total_better_over_5px": 0,
+        "parameter_count": 250,
+        "implementation_complexity": "low: small keyed table",
+        "fold_deltas": [
+          {
+            "delta_mean_px": 0.0022876994282539087,
+            "delta_p95_px": 0.03885106409048511,
+            "delta_p99_px": 0.043216049850620664,
+            "worse_over_3px": 0,
+            "worse_over_5px": 0
+          },
+          {
+            "delta_mean_px": 0.014203754178812034,
+            "delta_p95_px": 0.08561057123974347,
+            "delta_p99_px": 0.1360039419723833,
+            "worse_over_3px": 0,
+            "worse_over_5px": 0
+          }
+        ]
+      },
+      "benchmark": {
+        "samples": 11,
+        "rounds": 350,
+        "predictions_per_sample": 9708300,
+        "ns_per_prediction": {
+          "n": 11,
+          "mean": 378.1252592673747,
+          "median": 376.2191938856441,
+          "p95": 390.7962104590914,
+          "min": 371.2169174829782,
+          "max": 398.4905905256327
+        },
+        "us_per_prediction": {
+          "n": 11,
+          "mean": 0.37812525926737467,
+          "median": 0.37621919388564407,
+          "p95": 0.3907962104590914,
+          "min": 0.3712169174829782,
+          "max": 0.3984905905256327
+        },
+        "heap_delta_bytes_per_sample": {
+          "n": 11,
+          "mean": -14694458.181818182,
+          "median": -14706920,
+          "p95": -14636864,
+          "min": -14713984,
+          "max": -14589752
+        },
+        "guard": 0.17254293286627292
+      }
+    },
+    {
+      "id": "thresholded_piecewise_table",
+      "selected": false,
+      "spec_type": "thresholded_piecewise_table",
+      "rounds": 350,
+      "parameter_count": 0,
+      "allocation_note": "no numeric feature vector; key construction in JS allocates strings, C# can use enum indices",
+      "complexity": "low: table lookup plus active-cell guard",
+      "phase5_summary": {
+        "id": "thresholded_piecewise_table",
+        "fold_count": 2,
+        "family": "thresholded_table",
+        "mean_delta_mean_px": 0.000015395496049341872,
+        "mean_delta_rmse_px": 0.0000029946647770451307,
+        "mean_delta_p50_px": 0,
+        "mean_delta_p90_px": 0,
+        "mean_delta_p95_px": 0,
+        "mean_delta_p99_px": 0,
+        "mean_heldout_p99_px": 32.481597635916074,
+        "total_worse_over_1px": 0,
+        "total_worse_over_3px": 0,
+        "total_worse_over_5px": 0,
+        "total_better_over_1px": 0,
+        "total_better_over_3px": 0,
+        "total_better_over_5px": 0,
+        "parameter_count": 2,
+        "implementation_complexity": "low: small keyed table with active-cell guard",
+        "fold_deltas": [
+          {
+            "delta_mean_px": 0,
+            "delta_p95_px": 0,
+            "delta_p99_px": 0,
+            "worse_over_3px": 0,
+            "worse_over_5px": 0
+          },
+          {
+            "delta_mean_px": 0.000030790992098683745,
+            "delta_p95_px": 0,
+            "delta_p99_px": 0,
+            "worse_over_3px": 0,
+            "worse_over_5px": 0
+          }
+        ]
+      },
+      "benchmark": {
+        "samples": 11,
+        "rounds": 350,
+        "predictions_per_sample": 9708300,
+        "ns_per_prediction": {
+          "n": 11,
+          "mean": 346.15300778246905,
+          "median": 345.72625485409384,
+          "p95": 358.6242699545755,
+          "min": 328.5943059031956,
+          "max": 364.12574807123815
+        },
+        "us_per_prediction": {
+          "n": 11,
+          "mean": 0.346153007782469,
+          "median": 0.34572625485409386,
+          "p95": 0.3586242699545755,
+          "min": 0.3285943059031956,
+          "max": 0.36412574807123815
+        },
+        "heap_delta_bytes_per_sample": {
+          "n": 11,
+          "mean": -646863.2727272727,
+          "median": -6734976,
+          "p95": 26815300,
+          "min": -7092176,
+          "max": 26817504
+        },
+        "guard": 0.1725433531865714
+      }
+    },
+    {
+      "id": "confidence_gated_ridge",
+      "selected": false,
+      "spec_type": "confidence_gated_ridge",
+      "rounds": 700,
+      "parameter_count": 156,
+      "allocation_note": "JS proxy allocates a temporary feature array; C# can use stackalloc or a reused buffer",
+      "complexity": "moderate: ridge dot products plus simple gate",
+      "phase5_summary": {
+        "id": "confidence_gated_ridge",
+        "fold_count": 2,
+        "family": "thresholded_ridge",
+        "mean_delta_mean_px": 0,
+        "mean_delta_rmse_px": 0,
+        "mean_delta_p50_px": 0,
+        "mean_delta_p90_px": 0,
+        "mean_delta_p95_px": 0,
+        "mean_delta_p99_px": 0,
+        "mean_heldout_p99_px": 32.481597635916074,
+        "total_worse_over_1px": 0,
+        "total_worse_over_3px": 0,
+        "total_worse_over_5px": 0,
+        "total_better_over_1px": 0,
+        "total_better_over_3px": 0,
+        "total_better_over_5px": 0,
+        "parameter_count": 156,
+        "implementation_complexity": "moderate: feature normalization plus simple gate",
+        "fold_deltas": [
+          {
+            "delta_mean_px": 0,
+            "delta_p95_px": 0,
+            "delta_p99_px": 0,
+            "worse_over_3px": 0,
+            "worse_over_5px": 0
+          },
+          {
+            "delta_mean_px": 0,
+            "delta_p95_px": 0,
+            "delta_p99_px": 0,
+            "worse_over_3px": 0,
+            "worse_over_5px": 0
+          }
+        ]
+      },
+      "benchmark": {
+        "samples": 11,
+        "rounds": 700,
+        "predictions_per_sample": 19416600,
+        "ns_per_prediction": {
+          "n": 11,
+          "mean": 48.95200404901892,
+          "median": 47.170658096680434,
+          "p95": 58.8350200344035,
+          "min": 43.55512293604441,
+          "max": 63.700374936909725
+        },
+        "us_per_prediction": {
+          "n": 11,
+          "mean": 0.048952004049018914,
+          "median": 0.04717065809668043,
+          "p95": 0.058835020034403496,
+          "min": 0.04355512293604441,
+          "max": 0.06370037493690972
+        },
+        "heap_delta_bytes_per_sample": {
+          "n": 11,
+          "mean": 1255497.4545454546,
+          "median": -10948736,
+          "p95": 22603920,
+          "min": -10948784,
+          "max": 22604240
+        },
+        "guard": 0.3445951298614228
+      }
+    }
+  ],
+  "performance": {
+    "elapsed_sec": 107.63956120000002
+  }
+}

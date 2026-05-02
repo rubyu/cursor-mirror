@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cursor-prediction-v7-report.schema.json",
+  "title": "Cursor Prediction v7 Report Metadata",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "reportDate",
+    "status",
+    "measurementArtifacts",
+    "recommendation"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "cursor-prediction-v7-report/1"
+    },
+    "reportDate": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "measurementArtifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "candidateId",
+          "path"
+        ],
+        "properties": {
+          "candidateId": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "durationSeconds": {
+            "type": "number"
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "scoreArtifact": {
+      "type": "string"
+    },
+    "recommendation": {
+      "type": "object",
+      "required": [
+        "candidateId",
+        "decision"
+      ],
+      "properties": {
+        "candidateId": {
+          "type": "string"
+        },
+        "decision": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

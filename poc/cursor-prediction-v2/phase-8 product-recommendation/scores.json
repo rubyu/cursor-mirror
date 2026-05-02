@@ -1,0 +1,60 @@
+{
+  "phase": "phase-8 product-recommendation",
+  "decision": {
+    "productize": "baseline + DWM-aware next-vblank horizon",
+    "anchor_stream": "poll/current cursor position",
+    "horizon": "next DWM vblank when valid",
+    "predictor": "last2 velocity extrapolation",
+    "gain": 0.75,
+    "learned_correction_productized": false
+  },
+  "accepted_candidate": {
+    "name": "gained-last2-0.75 with DWM-aware next-vblank horizon",
+    "validation_mean_px": 0.597,
+    "validation_p95_px": 1.936,
+    "test_mean_px": 0.947,
+    "test_p95_px": 3.002
+  },
+  "rejected_candidates": [
+    {
+      "name": "standalone neural models",
+      "reason": "did not beat deterministic baseline on validation mean and regressed low-risk bulk"
+    },
+    {
+      "name": "gated GRU hybrid",
+      "test_mean_delta_px": -0.0071,
+      "test_p95_delta_px": -0.0274,
+      "test_p99_delta_px": 0.2892,
+      "regressions_gt1px": 1105,
+      "regressions_gt5px": 9,
+      "reason": "tiny mean/p95 gain with p99 regression and nontrivial regression count"
+    },
+    {
+      "name": "piecewise gain tables and conservative gates",
+      "reason": "mean gains were below material threshold and tail/regression behavior was not compelling"
+    }
+  ],
+  "runtime": {
+    "best_repeat_mean_us_per_call": 0.023827,
+    "best_repeat_p50_us_per_call": 0.023047,
+    "best_repeat_p99_us_per_call": 0.033594,
+    "worst_repeat_p99_us_per_call": 0.039266,
+    "allocated_bytes_over_2000000_predictions": 0,
+    "replay_predictions_checked": 160441,
+    "max_abs_coordinate_difference_px": 0,
+    "targets_met": true
+  },
+  "required_counters": [
+    "invalid_dwm_horizon",
+    "late_dwm_horizon",
+    "horizon_over_1_25x_refresh_period",
+    "fallback_to_hold",
+    "prediction_reset_due_to_invalid_dt_or_idle_gap"
+  ],
+  "implementation_recommendation": {
+    "enable_by_default": true,
+    "keep_gui_disable_option": true,
+    "fallback_policy": "hold current or existing exact/current behavior when DWM horizon is unavailable or invalid",
+    "collect_more_v2_traces_before_revisiting_ml": true
+  }
+}
