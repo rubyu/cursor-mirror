@@ -26,6 +26,7 @@ namespace CursorMirror.TraceTool
         private readonly Label _cursorPollCountValue;
         private readonly Label _referencePollCountValue;
         private readonly Label _runtimeSchedulerPollCountValue;
+        private readonly Label _runtimeSchedulerLoopCountValue;
         private readonly Label _dwmTimingCountValue;
         private readonly Label _durationValue;
         private readonly Label _statusValue;
@@ -34,9 +35,12 @@ namespace CursorMirror.TraceTool
         private LowLevelMouseHook _mouseHook;
         private Thread _referencePollThread;
         private Thread _runtimeSchedulerPollThread;
+        private StaMessageLoopDispatcher _runtimeSchedulerCaptureDispatcher;
+        private HighResolutionWaitTimer _runtimeSchedulerWaitTimer;
         private volatile bool _referencePollActive;
         private volatile bool _runtimeSchedulerPollActive;
         private long _lastRuntimeSchedulerVBlankTicks;
+        private long _runtimeSchedulerLoopIteration;
         private int _runtimeSchedulerPollPending;
         private bool _timerResolutionActive;
         private bool _savedSinceStop;
@@ -60,13 +64,13 @@ namespace CursorMirror.TraceTool
             MaximizeBox = false;
             MinimizeBox = false;
             StartPosition = FormStartPosition.CenterScreen;
-            ClientSize = new Size(540, 320);
+            ClientSize = new Size(560, 350);
 
             TableLayoutPanel layout = new TableLayoutPanel();
             layout.Dock = DockStyle.Fill;
             layout.Padding = new Padding(12);
             layout.ColumnCount = 2;
-            layout.RowCount = 9;
+            layout.RowCount = 10;
             layout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 210));
             layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
             Controls.Add(layout);
@@ -77,14 +81,15 @@ namespace CursorMirror.TraceTool
             _cursorPollCountValue = AddValueRow(layout, 3, LocalizedStrings.TraceCursorPollSampleCountLabel);
             _referencePollCountValue = AddValueRow(layout, 4, LocalizedStrings.TraceReferencePollSampleCountLabel);
             _runtimeSchedulerPollCountValue = AddValueRow(layout, 5, LocalizedStrings.TraceRuntimeSchedulerPollSampleCountLabel);
-            _dwmTimingCountValue = AddValueRow(layout, 6, LocalizedStrings.TraceDwmTimingSampleCountLabel);
-            _durationValue = AddValueRow(layout, 7, LocalizedStrings.TraceDurationLabel);
+            _runtimeSchedulerLoopCountValue = AddValueRow(layout, 6, LocalizedStrings.TraceRuntimeSchedulerLoopSampleCountLabel);
+            _dwmTimingCountValue = AddValueRow(layout, 7, LocalizedStrings.TraceDwmTimingSampleCountLabel);
+            _durationValue = AddValueRow(layout, 8, LocalizedStrings.TraceDurationLabel);
 
             FlowLayoutPanel buttons = new FlowLayoutPanel();
             buttons.Dock = DockStyle.Fill;
             buttons.FlowDirection = FlowDirection.LeftToRight;
             buttons.WrapContents = false;
-            layout.Controls.Add(buttons, 0, 8);
+            layout.Controls.Add(buttons, 0, 9);
             layout.SetColumnSpan(buttons, 2);
 
             _startButton = AddButton(buttons, LocalizedStrings.TraceStartRecordingCommand, StartRecording);
@@ -201,7 +206,8 @@ namespace CursorMirror.TraceTool
                 TimerResolutionMilliseconds,
                 timerResolutionSucceeded,
                 DwmSynchronizedRuntimeScheduler.WakeAdvanceMilliseconds,
-                DwmSynchronizedRuntimeScheduler.FallbackIntervalMilliseconds);
+                DwmSynchronizedRuntimeScheduler.FallbackIntervalMilliseconds,
+                DwmSynchronizedRuntimeScheduler.MaximumDwmSleepMilliseconds);
             _savedSinceStop = false;
             _mouseHook = new LowLevelMouseHook(HandleMouseEvent);
             try
@@ -383,67 +389,124 @@ namespace CursorMirror.TraceTool
         {
             StopRuntimeSchedulerPoller();
             _lastRuntimeSchedulerVBlankTicks = 0;
+            _runtimeSchedulerLoopIteration = 0;
             Interlocked.Exchange(ref _runtimeSchedulerPollPending, 0);
+            _runtimeSchedulerCaptureDispatcher = new StaMessageLoopDispatcher("CursorMirrorTraceRuntimeSchedulerCapture");
+            _runtimeSchedulerCaptureDispatcher.Start();
+            _runtimeSchedulerWaitTimer = HighResolutionWaitTimer.CreateBestEffort();
             _runtimeSchedulerPollActive = true;
             _runtimeSchedulerPollThread = new Thread(RuntimeSchedulerPollLoop);
             _runtimeSchedulerPollThread.Name = "CursorMirrorTraceRuntimeSchedulerPoller";
             _runtimeSchedulerPollThread.IsBackground = true;
+            _runtimeSchedulerPollThread.Priority = ThreadPriority.AboveNormal;
             _runtimeSchedulerPollThread.Start();
         }
 
         private void StopRuntimeSchedulerPoller()
         {
             Thread thread = _runtimeSchedulerPollThread;
-            if (thread == null)
-            {
-                return;
-            }
-
             _runtimeSchedulerPollActive = false;
-            if (thread.IsAlive)
+            if (thread != null && thread.IsAlive)
             {
                 thread.Join(250);
             }
 
             Interlocked.Exchange(ref _runtimeSchedulerPollPending, 0);
             _runtimeSchedulerPollThread = null;
+            if (_runtimeSchedulerCaptureDispatcher != null)
+            {
+                _runtimeSchedulerCaptureDispatcher.Dispose();
+                _runtimeSchedulerCaptureDispatcher = null;
+            }
+
+            if (_runtimeSchedulerWaitTimer != null)
+            {
+                _runtimeSchedulerWaitTimer.Dispose();
+                _runtimeSchedulerWaitTimer = null;
+            }
         }
 
         private void RuntimeSchedulerPollLoop()
         {
             while (_runtimeSchedulerPollActive)
             {
+                long loopStartedTicks = Stopwatch.GetTimestamp();
+                long loopIteration = Interlocked.Increment(ref _runtimeSchedulerLoopIteration);
+                long timingReadStartedTicks = loopStartedTicks;
                 DwmTimingInfo timing;
                 bool hasTiming = _traceNativeMethods.TryGetDwmTimingInfo(out timing);
+                long timingReadCompletedTicks = Stopwatch.GetTimestamp();
+                bool schedulerTimingUsable = false;
+                long? targetVBlankTicks = null;
+                long? plannedTickTicks = null;
+                long? vBlankLeadMicroseconds = null;
+                bool tickRequested = false;
+                int sleepMilliseconds;
+                long decisionCompletedTicks;
+
                 if (hasTiming)
                 {
-                    long now = Stopwatch.GetTimestamp();
                     DwmSynchronizedRuntimeScheduleDecision decision =
                         DwmSynchronizedRuntimeScheduler.EvaluateDwmTiming(
-                            now,
+                            timingReadCompletedTicks,
                             Stopwatch.Frequency,
                             ToSignedTicks(timing.QpcVBlank),
                             ToSignedTicks(timing.QpcRefreshPeriod),
                             _lastRuntimeSchedulerVBlankTicks,
                             DwmSynchronizedRuntimeScheduler.WakeAdvanceMilliseconds,
                             DwmSynchronizedRuntimeScheduler.MaximumDwmSleepMilliseconds);
+                    decisionCompletedTicks = Stopwatch.GetTimestamp();
+                    schedulerTimingUsable = decision.IsDwmTimingUsable;
+                    if (decision.TargetVBlankTicks > 0)
+                    {
+                        targetVBlankTicks = decision.TargetVBlankTicks;
+                        plannedTickTicks = decision.TargetVBlankTicks - MillisecondsToTicks(DwmSynchronizedRuntimeScheduler.WakeAdvanceMilliseconds);
+                        vBlankLeadMicroseconds = MouseTraceSession.TicksToMicroseconds(decision.TargetVBlankTicks - decisionCompletedTicks);
+                    }
 
                     if (decision.ShouldTick)
                     {
                         _lastRuntimeSchedulerVBlankTicks = decision.TargetVBlankTicks;
                         QueueRuntimeSchedulerPollSample(true, timing, decision.TargetVBlankTicks);
-                        SleepRuntimeSchedulerLoop(1);
+                        tickRequested = true;
+                        sleepMilliseconds = 1;
                     }
                     else
                     {
-                        SleepRuntimeSchedulerLoop(decision.DelayMilliseconds);
+                        sleepMilliseconds = decision.DelayMilliseconds;
                     }
                 }
                 else
                 {
+                    decisionCompletedTicks = Stopwatch.GetTimestamp();
                     QueueRuntimeSchedulerPollSample(false, timing, null);
-                    SleepRuntimeSchedulerLoop(DwmSynchronizedRuntimeScheduler.FallbackIntervalMilliseconds);
+                    tickRequested = true;
+                    sleepMilliseconds = DwmSynchronizedRuntimeScheduler.FallbackIntervalMilliseconds;
                 }
+
+                long sleepStartedTicks = Stopwatch.GetTimestamp();
+                long waitTargetTicks = sleepStartedTicks + MillisecondsToTicks(sleepMilliseconds);
+                string waitMethod = SleepRuntimeSchedulerLoop(sleepMilliseconds);
+                long sleepCompletedTicks = Stopwatch.GetTimestamp();
+                _session.AddRuntimeSchedulerLoop(
+                    loopStartedTicks,
+                    hasTiming,
+                    timing,
+                    schedulerTimingUsable,
+                    targetVBlankTicks,
+                    plannedTickTicks,
+                    vBlankLeadMicroseconds,
+                    loopIteration,
+                    loopStartedTicks,
+                    timingReadStartedTicks,
+                    timingReadCompletedTicks,
+                    decisionCompletedTicks,
+                    tickRequested,
+                    sleepMilliseconds,
+                    waitMethod,
+                    waitTargetTicks,
+                    sleepStartedTicks,
+                    sleepCompletedTicks);
             }
         }
 
@@ -469,7 +532,14 @@ namespace CursorMirror.TraceTool
 
             try
             {
-                BeginInvoke(new Action(delegate
+                StaMessageLoopDispatcher dispatcher = _runtimeSchedulerCaptureDispatcher;
+                if (dispatcher == null)
+                {
+                    Interlocked.Exchange(ref _runtimeSchedulerPollPending, 0);
+                    return;
+                }
+
+                dispatcher.BeginInvoke(new Action(delegate
                 {
                     long dispatchStartedTicks = Stopwatch.GetTimestamp();
                     Interlocked.Exchange(ref _runtimeSchedulerPollPending, 0);
@@ -532,14 +602,22 @@ namespace CursorMirror.TraceTool
                 sampleRecordedTicks);
         }
 
-        private void SleepRuntimeSchedulerLoop(int milliseconds)
+        private string SleepRuntimeSchedulerLoop(int milliseconds)
         {
             if (!_runtimeSchedulerPollActive)
             {
-                return;
+                return "none";
             }
 
-            Thread.Sleep(Math.Max(1, milliseconds));
+            int normalizedMilliseconds = Math.Max(1, milliseconds);
+            HighResolutionWaitTimer waitTimer = _runtimeSchedulerWaitTimer;
+            if (waitTimer != null && waitTimer.Wait(normalizedMilliseconds))
+            {
+                return waitTimer.WaitMethod;
+            }
+
+            Thread.Sleep(normalizedMilliseconds);
+            return "threadSleep";
         }
 
         private Point? TryGetCursorPoint()
@@ -643,9 +721,10 @@ namespace CursorMirror.TraceTool
             _cursorPollCountValue.Text = counts.CursorPollSamples.ToString();
             _referencePollCountValue.Text = counts.ReferencePollSamples.ToString();
             _runtimeSchedulerPollCountValue.Text = counts.RuntimeSchedulerPollSamples.ToString();
+            _runtimeSchedulerLoopCountValue.Text = counts.RuntimeSchedulerLoopSamples.ToString();
             _dwmTimingCountValue.Text = LocalizedStrings.TraceDwmTimingSampleCount(
                 counts.DwmTimingSamples,
-                counts.CursorPollSamples + counts.RuntimeSchedulerPollSamples);
+                counts.CursorPollSamples + counts.RuntimeSchedulerPollSamples + counts.RuntimeSchedulerLoopSamples);
             _durationValue.Text = MouseTraceFormat.FormatDuration(_session.ElapsedMicroseconds);
         }
     }

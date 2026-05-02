@@ -8,6 +8,7 @@ namespace CursorMirror.MouseTrace
             int cursorPollSamples,
             int referencePollSamples,
             int runtimeSchedulerPollSamples,
+            int runtimeSchedulerLoopSamples,
             int dwmTimingSamples)
         {
             TotalSamples = totalSamples;
@@ -15,6 +16,7 @@ namespace CursorMirror.MouseTrace
             CursorPollSamples = cursorPollSamples;
             ReferencePollSamples = referencePollSamples;
             RuntimeSchedulerPollSamples = runtimeSchedulerPollSamples;
+            RuntimeSchedulerLoopSamples = runtimeSchedulerLoopSamples;
             DwmTimingSamples = dwmTimingSamples;
         }
 
@@ -27,6 +29,8 @@ namespace CursorMirror.MouseTrace
         public int ReferencePollSamples { get; private set; }
 
         public int RuntimeSchedulerPollSamples { get; private set; }
+
+        public int RuntimeSchedulerLoopSamples { get; private set; }
 
         public int DwmTimingSamples { get; private set; }
     }

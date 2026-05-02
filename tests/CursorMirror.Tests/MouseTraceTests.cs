@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
+using System.Threading;
 using CursorMirror.MouseTrace;
 
 namespace CursorMirror.Tests
@@ -26,6 +27,8 @@ namespace CursorMirror.Tests
             suite.Add("COT-MLU-13", TraceMetadataIncludesCaptureQuality);
             suite.Add("COT-MLU-14", TraceRuntimeSchedulerPollFields);
             suite.Add("COT-MLU-15", TraceRuntimeSchedulerCoalescedTicks);
+            suite.Add("COT-MLU-16", TraceRuntimeSchedulerDedicatedStaDispatcher);
+            suite.Add("COT-MLU-17", TraceRuntimeSchedulerLoopFields);
         }
 
         // Trace session starts empty [COT-MLU-1]
@@ -239,7 +242,7 @@ namespace CursorMirror.Tests
                 timing.FramesDropped = 16;
                 timing.FramesMissed = 17;
 
-                session.Start(start, 8, 2, 1, true, 2, 8);
+                session.Start(start, 8, 2, 1, true, 2, 8, 2);
                 session.AddPoll(start + 20, new Point(12, 22), true, timing);
                 session.AddReferencePoll(start + 30, new Point(13, 23));
                 session.Stop(start + 30);
@@ -263,9 +266,11 @@ namespace CursorMirror.Tests
 
                     TestAssert.True(csv.Contains("dwmTimingAvailable,dwmRateRefreshNumerator"), "dwm header");
                     TestAssert.True(csv.Contains("runtimeSchedulerTimingUsable,runtimeSchedulerTargetVBlankTicks"), "runtime scheduler header");
+                    TestAssert.True(csv.Contains("runtimeSchedulerLoopIteration,runtimeSchedulerLoopStartedTicks"), "runtime scheduler loop header");
+                    TestAssert.True(csv.Contains("runtimeSchedulerWaitMethod,runtimeSchedulerWaitTargetTicks"), "runtime scheduler wait header");
                     TestAssert.True(csv.Contains(",poll,,,12,22,"), "poll row values");
                     TestAssert.True(csv.Contains("true,60000,1001,166667,123456,42,"), "dwm row values");
-                    TestAssert.True(metadataJson.Contains("\"TraceFormatVersion\":5"), "metadata trace format version");
+                    TestAssert.True(metadataJson.Contains("\"TraceFormatVersion\":7"), "metadata trace format version");
                     TestAssert.True(metadataJson.Contains("\"PollSampleCount\":1"), "metadata poll sample count");
                     TestAssert.True(metadataJson.Contains("\"ReferencePollSampleCount\":1"), "metadata reference poll sample count");
                     TestAssert.True(metadataJson.Contains("\"DwmTimingSampleCount\":1"), "metadata dwm timing sample count");
@@ -294,15 +299,17 @@ namespace CursorMirror.Tests
             session.AddPoll(start + 40, new Point(13, 23), false, new DwmTimingInfo());
             session.AddReferencePoll(start + 50, new Point(14, 24));
             session.AddRuntimeSchedulerPoll(start + 60, new Point(15, 25), false, new DwmTimingInfo(), false, null, null, start + 60, null);
+            session.AddRuntimeSchedulerLoop(start + 70, true, new DwmTimingInfo(), true, start + 80, start + 78, 1000, 1, start + 70, start + 71, start + 72, start + 73, false, 2, "testWait", start + 76, start + 74, start + 76);
 
             MouseTraceSampleCounts counts = session.GetSampleCounts();
 
-            TestAssert.Equal(6, counts.TotalSamples, "total sample count");
+            TestAssert.Equal(7, counts.TotalSamples, "total sample count");
             TestAssert.Equal(2, counts.HookMoveSamples, "hook move sample count");
             TestAssert.Equal(2, counts.CursorPollSamples, "cursor poll sample count");
             TestAssert.Equal(1, counts.ReferencePollSamples, "reference poll sample count");
             TestAssert.Equal(1, counts.RuntimeSchedulerPollSamples, "runtime scheduler poll sample count");
-            TestAssert.Equal(1, counts.DwmTimingSamples, "dwm timing sample count");
+            TestAssert.Equal(1, counts.RuntimeSchedulerLoopSamples, "runtime scheduler loop sample count");
+            TestAssert.Equal(2, counts.DwmTimingSamples, "dwm timing sample count");
         }
 
         // Trace reference poll fields [COT-MLU-12]
@@ -336,7 +343,7 @@ namespace CursorMirror.Tests
                 MouseTraceSession session = new MouseTraceSession();
                 long start = 1000;
                 long oneMillisecond = Stopwatch.Frequency / 1000;
-                session.Start(start, 8, 2, 1, true, 2, 8);
+                session.Start(start, 8, 2, 1, true, 2, 8, 2);
                 session.AddHookMove(start + oneMillisecond, new Point(1, 1), 0, 0, 0, IntPtr.Zero, new Point(1, 1));
                 session.AddHookMove(start + (2 * oneMillisecond), new Point(2, 2), 0, 0, 0, IntPtr.Zero, new Point(2, 2));
                 session.AddPoll(start + (8 * oneMillisecond), new Point(3, 3), true, new DwmTimingInfo());
@@ -345,6 +352,8 @@ namespace CursorMirror.Tests
                 session.AddReferencePoll(start + (4 * oneMillisecond), new Point(6, 6));
                 session.AddRuntimeSchedulerPoll(start + (10 * oneMillisecond), new Point(7, 7), true, new DwmTimingInfo(), true, start + (20 * oneMillisecond), start + (18 * oneMillisecond), start + (10 * oneMillisecond), 10000);
                 session.AddRuntimeSchedulerPoll(start + (18 * oneMillisecond), new Point(8, 8), false, new DwmTimingInfo(), false, null, null, start + (18 * oneMillisecond), null);
+                session.AddRuntimeSchedulerLoop(start + (6 * oneMillisecond), true, new DwmTimingInfo(), true, start + (20 * oneMillisecond), start + (18 * oneMillisecond), 12000, 1, start + (6 * oneMillisecond), start + (6 * oneMillisecond), start + (6 * oneMillisecond) + 1, start + (6 * oneMillisecond) + 2, false, 2, "testWait", start + (8 * oneMillisecond), start + (6 * oneMillisecond) + 3, start + (8 * oneMillisecond));
+                session.AddRuntimeSchedulerLoop(start + (8 * oneMillisecond), false, new DwmTimingInfo(), false, null, null, null, 2, start + (8 * oneMillisecond), start + (8 * oneMillisecond), start + (8 * oneMillisecond) + 1, start + (8 * oneMillisecond) + 2, true, 8, "testWait", start + (16 * oneMillisecond), start + (8 * oneMillisecond) + 3, start + (16 * oneMillisecond));
                 session.AddRuntimeSchedulerCoalescedTick();
                 session.Stop(start + (24 * oneMillisecond));
 
@@ -359,10 +368,13 @@ namespace CursorMirror.Tests
                     TestAssert.True(metadataJson.Contains("\"ProductPollIntervalStats\""), "metadata product poll interval stats");
                     TestAssert.True(metadataJson.Contains("\"ReferencePollIntervalStats\""), "metadata reference poll interval stats");
                     TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerPollIntervalStats\""), "metadata runtime scheduler poll interval stats");
+                    TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerLoopIntervalStats\""), "metadata runtime scheduler loop interval stats");
                     TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerPollSampleCount\":2"), "metadata runtime scheduler poll sample count");
+                    TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerLoopSampleCount\":2"), "metadata runtime scheduler loop sample count");
                     TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerCoalescedTickCount\":1"), "metadata runtime scheduler coalesced tick count");
                     TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerWakeAdvanceMilliseconds\":2"), "metadata runtime scheduler wake advance");
                     TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerFallbackIntervalMilliseconds\":8"), "metadata runtime scheduler fallback interval");
+                    TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerMaximumDwmSleepMilliseconds\":2"), "metadata runtime scheduler maximum DWM sleep");
                     TestAssert.True(metadataJson.Contains("\"DwmTimingAvailabilityPercent\":50"), "metadata dwm availability percent");
                     TestAssert.True(metadataJson.Contains("\"OperatingSystemVersion\""), "metadata os version");
                     TestAssert.True(metadataJson.Contains("\"Monitors\""), "metadata monitors");
@@ -383,7 +395,7 @@ namespace CursorMirror.Tests
             DwmTimingInfo timing = new DwmTimingInfo();
             timing.QpcRefreshPeriod = 100;
             timing.QpcVBlank = 2000;
-            session.Start(start, 8, 2, 1, true, 2, 8);
+            session.Start(start, 8, 2, 1, true, 2, 8, 2);
 
             session.AddRuntimeSchedulerPoll(
                 start + 10,
@@ -404,6 +416,7 @@ namespace CursorMirror.Tests
 
             TestAssert.Equal(2, snapshot.RuntimeSchedulerWakeAdvanceMilliseconds, "runtime scheduler wake advance");
             TestAssert.Equal(8, snapshot.RuntimeSchedulerFallbackIntervalMilliseconds, "runtime scheduler fallback interval");
+            TestAssert.Equal(2, snapshot.RuntimeSchedulerMaximumDwmSleepMilliseconds, "runtime scheduler maximum DWM sleep");
             TestAssert.Equal("runtimeSchedulerPoll", snapshot.Samples[0].EventType, "runtime scheduler event type");
             TestAssert.Equal(100, snapshot.Samples[0].X, "runtime scheduler x");
             TestAssert.Equal(200, snapshot.Samples[0].Y, "runtime scheduler y");
@@ -429,7 +442,7 @@ namespace CursorMirror.Tests
                 string path = Path.Combine(directory, "trace.zip");
                 MouseTraceSession session = new MouseTraceSession();
                 long start = 1000;
-                session.Start(start, 8, 2, 1, true, 2, 8);
+                session.Start(start, 8, 2, 1, true, 2, 8, 2);
                 session.AddRuntimeSchedulerCoalescedTick();
                 session.AddRuntimeSchedulerCoalescedTick();
                 session.AddRuntimeSchedulerPoll(start + 10, new Point(10, 20), false, new DwmTimingInfo(), false, null, null, start + 10, null);
@@ -449,6 +462,85 @@ namespace CursorMirror.Tests
             {
                 DeleteDirectory(directory);
             }
+        }
+
+        // Trace runtime scheduler dedicated STA dispatcher [COT-MLU-16]
+        private static void TraceRuntimeSchedulerDedicatedStaDispatcher()
+        {
+            using (StaMessageLoopDispatcher dispatcher = new StaMessageLoopDispatcher("CursorMirrorTestStaDispatcher"))
+            {
+                dispatcher.Start();
+                ManualResetEvent completed = new ManualResetEvent(false);
+                int testThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
+                int actionThreadId = 0;
+                ApartmentState apartmentState = ApartmentState.Unknown;
+                bool invokeRequiredFromAction = true;
+
+                dispatcher.BeginInvoke(delegate
+                {
+                    actionThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
+                    apartmentState = System.Threading.Thread.CurrentThread.GetApartmentState();
+                    invokeRequiredFromAction = dispatcher.InvokeRequired;
+                    completed.Set();
+                });
+
+                TestAssert.True(completed.WaitOne(2000), "dispatcher action completed");
+                TestAssert.True(actionThreadId != 0, "dispatcher action thread recorded");
+                TestAssert.True(actionThreadId != testThreadId, "dispatcher action runs on a dedicated thread");
+                TestAssert.Equal(ApartmentState.STA, apartmentState, "dispatcher thread apartment");
+                TestAssert.False(invokeRequiredFromAction, "dispatcher reports no invoke required on its own thread");
+                completed.Dispose();
+            }
+        }
+
+        // Trace runtime scheduler loop fields [COT-MLU-17]
+        private static void TraceRuntimeSchedulerLoopFields()
+        {
+            MouseTraceSession session = new MouseTraceSession();
+            long start = 1000;
+            DwmTimingInfo timing = new DwmTimingInfo();
+            timing.QpcRefreshPeriod = 100;
+            timing.QpcVBlank = 2000;
+            session.Start(start, 8, 2, 1, true, 2, 8, 2);
+
+            session.AddRuntimeSchedulerLoop(
+                start + 10,
+                true,
+                timing,
+                true,
+                2000,
+                1800,
+                990,
+                7,
+                start + 10,
+                start + 11,
+                start + 12,
+                start + 13,
+                true,
+                2,
+                "testWait",
+                start + 16,
+                start + 14,
+                start + 16);
+            MouseTraceSnapshot snapshot = session.Snapshot();
+
+            TestAssert.Equal("runtimeSchedulerLoop", snapshot.Samples[0].EventType, "runtime scheduler loop event type");
+            TestAssert.True(snapshot.Samples[0].DwmTimingAvailable, "runtime scheduler loop DWM timing");
+            TestAssert.True(snapshot.Samples[0].RuntimeSchedulerTimingUsable.Value, "runtime scheduler loop timing usable");
+            TestAssert.Equal(2000L, snapshot.Samples[0].RuntimeSchedulerTargetVBlankTicks.Value, "runtime scheduler loop target vblank");
+            TestAssert.Equal(1800L, snapshot.Samples[0].RuntimeSchedulerPlannedTickTicks.Value, "runtime scheduler loop planned tick");
+            TestAssert.Equal(990L, snapshot.Samples[0].RuntimeSchedulerVBlankLeadMicroseconds.Value, "runtime scheduler loop lead");
+            TestAssert.Equal(7L, snapshot.Samples[0].RuntimeSchedulerLoopIteration.Value, "runtime scheduler loop iteration");
+            TestAssert.Equal(start + 10, snapshot.Samples[0].RuntimeSchedulerLoopStartedTicks.Value, "runtime scheduler loop started");
+            TestAssert.Equal(start + 11, snapshot.Samples[0].RuntimeSchedulerTimingReadStartedTicks.Value, "runtime scheduler timing read started");
+            TestAssert.Equal(start + 12, snapshot.Samples[0].RuntimeSchedulerTimingReadCompletedTicks.Value, "runtime scheduler timing read completed");
+            TestAssert.Equal(start + 13, snapshot.Samples[0].RuntimeSchedulerDecisionCompletedTicks.Value, "runtime scheduler decision completed");
+            TestAssert.True(snapshot.Samples[0].RuntimeSchedulerTickRequested.Value, "runtime scheduler tick requested");
+            TestAssert.Equal(2, snapshot.Samples[0].RuntimeSchedulerSleepRequestedMilliseconds.Value, "runtime scheduler sleep requested");
+            TestAssert.Equal("testWait", snapshot.Samples[0].RuntimeSchedulerWaitMethod, "runtime scheduler wait method");
+            TestAssert.Equal(start + 16, snapshot.Samples[0].RuntimeSchedulerWaitTargetTicks.Value, "runtime scheduler wait target");
+            TestAssert.Equal(start + 14, snapshot.Samples[0].RuntimeSchedulerSleepStartedTicks.Value, "runtime scheduler sleep started");
+            TestAssert.Equal(start + 16, snapshot.Samples[0].RuntimeSchedulerSleepCompletedTicks.Value, "runtime scheduler sleep completed");
         }
 
         private static string NewTestDirectory()

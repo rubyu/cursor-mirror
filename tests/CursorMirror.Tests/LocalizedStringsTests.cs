@@ -39,6 +39,7 @@ namespace CursorMirror.Tests
                 TestAssert.Equal("Cursor poll", LocalizedStrings.TraceCursorPollSampleCountLabel, "English trace cursor poll label");
                 TestAssert.Equal("Reference poll", LocalizedStrings.TraceReferencePollSampleCountLabel, "English trace reference poll label");
                 TestAssert.Equal("Runtime scheduler poll", LocalizedStrings.TraceRuntimeSchedulerPollSampleCountLabel, "English trace runtime scheduler poll label");
+                TestAssert.Equal("Runtime scheduler loop", LocalizedStrings.TraceRuntimeSchedulerLoopSampleCountLabel, "English trace runtime scheduler loop label");
                 TestAssert.Equal("DWM timing", LocalizedStrings.TraceDwmTimingSampleCountLabel, "English trace dwm timing label");
                 TestAssert.Equal("1 / 2 (50.0%)", LocalizedStrings.TraceDwmTimingSampleCount(1, 2), "English trace dwm timing count");
                 TestAssert.Equal("Start Demo", LocalizedStrings.DemoStartCommand, "English demo start command");
@@ -85,6 +86,7 @@ namespace CursorMirror.Tests
                 TestAssert.Equal("カーソルポーリング", LocalizedStrings.TraceCursorPollSampleCountLabel, "Japanese trace cursor poll label");
                 TestAssert.Equal("高精度参照ポーリング", LocalizedStrings.TraceReferencePollSampleCountLabel, "Japanese trace reference poll label");
                 TestAssert.Equal("実行時スケジューラーポーリング", LocalizedStrings.TraceRuntimeSchedulerPollSampleCountLabel, "Japanese trace runtime scheduler poll label");
+                TestAssert.Equal("実行時スケジューラーループ", LocalizedStrings.TraceRuntimeSchedulerLoopSampleCountLabel, "Japanese trace runtime scheduler loop label");
                 TestAssert.Equal("DWM タイミング", LocalizedStrings.TraceDwmTimingSampleCountLabel, "Japanese trace dwm timing label");
                 TestAssert.Equal("1 / 2 (50.0%)", LocalizedStrings.TraceDwmTimingSampleCount(1, 2), "Japanese trace dwm timing count");
                 TestAssert.Equal("デモ開始", LocalizedStrings.DemoStartCommand, "Japanese demo start command");

@@ -135,6 +135,11 @@ namespace CursorMirror
             get { return Get("TraceRuntimeSchedulerPollSampleCountLabel"); }
         }
 
+        public static string TraceRuntimeSchedulerLoopSampleCountLabel
+        {
+            get { return Get("TraceRuntimeSchedulerLoopSampleCountLabel"); }
+        }
+
         public static string TraceDwmTimingSampleCountLabel
         {
             get { return Get("TraceDwmTimingSampleCountLabel"); }
@@ -476,6 +481,8 @@ namespace CursorMirror
                     return "Reference poll";
                 case "TraceRuntimeSchedulerPollSampleCountLabel":
                     return "Runtime scheduler poll";
+                case "TraceRuntimeSchedulerLoopSampleCountLabel":
+                    return "Runtime scheduler loop";
                 case "TraceDwmTimingSampleCountLabel":
                     return "DWM timing";
                 case "TraceDurationLabel":
@@ -639,6 +646,8 @@ namespace CursorMirror
                     return "高精度参照ポーリング";
                 case "TraceRuntimeSchedulerPollSampleCountLabel":
                     return "実行時スケジューラーポーリング";
+                case "TraceRuntimeSchedulerLoopSampleCountLabel":
+                    return "実行時スケジューラーループ";
                 case "TraceDwmTimingSampleCountLabel":
                     return "DWM タイミング";
                 case "TraceDurationLabel":

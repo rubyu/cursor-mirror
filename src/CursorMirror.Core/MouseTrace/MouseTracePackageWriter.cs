@@ -57,7 +57,7 @@ namespace CursorMirror.MouseTrace
             using (Stream stream = entry.Open())
             using (StreamWriter writer = new StreamWriter(stream, Utf8NoBom))
             {
-                writer.WriteLine("sequence,stopwatchTicks,elapsedMicroseconds,x,y,event,hookX,hookY,cursorX,cursorY,hookMouseData,hookFlags,hookTimeMilliseconds,hookExtraInfo,dwmTimingAvailable,dwmRateRefreshNumerator,dwmRateRefreshDenominator,dwmQpcRefreshPeriod,dwmQpcVBlank,dwmRefreshCount,dwmQpcCompose,dwmFrame,dwmRefreshFrame,dwmFrameDisplayed,dwmQpcFrameDisplayed,dwmRefreshFrameDisplayed,dwmFrameComplete,dwmQpcFrameComplete,dwmFramePending,dwmQpcFramePending,dwmRefreshNextDisplayed,dwmRefreshNextPresented,dwmFramesDisplayed,dwmFramesDropped,dwmFramesMissed,runtimeSchedulerTimingUsable,runtimeSchedulerTargetVBlankTicks,runtimeSchedulerPlannedTickTicks,runtimeSchedulerActualTickTicks,runtimeSchedulerVBlankLeadMicroseconds,runtimeSchedulerQueuedTickTicks,runtimeSchedulerDispatchStartedTicks,runtimeSchedulerCursorReadStartedTicks,runtimeSchedulerCursorReadCompletedTicks,runtimeSchedulerSampleRecordedTicks");
+                writer.WriteLine("sequence,stopwatchTicks,elapsedMicroseconds,x,y,event,hookX,hookY,cursorX,cursorY,hookMouseData,hookFlags,hookTimeMilliseconds,hookExtraInfo,dwmTimingAvailable,dwmRateRefreshNumerator,dwmRateRefreshDenominator,dwmQpcRefreshPeriod,dwmQpcVBlank,dwmRefreshCount,dwmQpcCompose,dwmFrame,dwmRefreshFrame,dwmFrameDisplayed,dwmQpcFrameDisplayed,dwmRefreshFrameDisplayed,dwmFrameComplete,dwmQpcFrameComplete,dwmFramePending,dwmQpcFramePending,dwmRefreshNextDisplayed,dwmRefreshNextPresented,dwmFramesDisplayed,dwmFramesDropped,dwmFramesMissed,runtimeSchedulerTimingUsable,runtimeSchedulerTargetVBlankTicks,runtimeSchedulerPlannedTickTicks,runtimeSchedulerActualTickTicks,runtimeSchedulerVBlankLeadMicroseconds,runtimeSchedulerQueuedTickTicks,runtimeSchedulerDispatchStartedTicks,runtimeSchedulerCursorReadStartedTicks,runtimeSchedulerCursorReadCompletedTicks,runtimeSchedulerSampleRecordedTicks,runtimeSchedulerLoopIteration,runtimeSchedulerLoopStartedTicks,runtimeSchedulerTimingReadStartedTicks,runtimeSchedulerTimingReadCompletedTicks,runtimeSchedulerDecisionCompletedTicks,runtimeSchedulerTickRequested,runtimeSchedulerSleepRequestedMilliseconds,runtimeSchedulerWaitMethod,runtimeSchedulerWaitTargetTicks,runtimeSchedulerSleepStartedTicks,runtimeSchedulerSleepCompletedTicks");
                 foreach (MouseTraceEvent sample in snapshot.Samples)
                 {
                     writer.Write(sample.Sequence.ToString(CultureInfo.InvariantCulture));
@@ -118,6 +118,28 @@ namespace CursorMirror.MouseTrace
                     WriteNullable(writer, sample.RuntimeSchedulerCursorReadCompletedTicks);
                     writer.Write(",");
                     WriteNullable(writer, sample.RuntimeSchedulerSampleRecordedTicks);
+                    writer.Write(",");
+                    WriteNullable(writer, sample.RuntimeSchedulerLoopIteration);
+                    writer.Write(",");
+                    WriteNullable(writer, sample.RuntimeSchedulerLoopStartedTicks);
+                    writer.Write(",");
+                    WriteNullable(writer, sample.RuntimeSchedulerTimingReadStartedTicks);
+                    writer.Write(",");
+                    WriteNullable(writer, sample.RuntimeSchedulerTimingReadCompletedTicks);
+                    writer.Write(",");
+                    WriteNullable(writer, sample.RuntimeSchedulerDecisionCompletedTicks);
+                    writer.Write(",");
+                    WriteNullable(writer, sample.RuntimeSchedulerTickRequested);
+                    writer.Write(",");
+                    WriteNullable(writer, sample.RuntimeSchedulerSleepRequestedMilliseconds);
+                    writer.Write(",");
+                    writer.Write(EscapeCsv(sample.RuntimeSchedulerWaitMethod));
+                    writer.Write(",");
+                    WriteNullable(writer, sample.RuntimeSchedulerWaitTargetTicks);
+                    writer.Write(",");
+                    WriteNullable(writer, sample.RuntimeSchedulerSleepStartedTicks);
+                    writer.Write(",");
+                    WriteNullable(writer, sample.RuntimeSchedulerSleepCompletedTicks);
                     writer.WriteLine();
                 }
             }
@@ -126,7 +148,7 @@ namespace CursorMirror.MouseTrace
         private static void WriteMetadata(ZipArchive archive, MouseTraceSnapshot snapshot)
         {
             MouseTraceMetadata metadata = new MouseTraceMetadata();
-            metadata.TraceFormatVersion = 5;
+            metadata.TraceFormatVersion = 7;
             metadata.ProductName = LocalizedStrings.TraceToolTitle;
             metadata.ProductVersion = BuildVersion.InformationalVersion;
             metadata.CreatedUtc = DateTime.UtcNow.ToString("o", CultureInfo.InvariantCulture);
@@ -135,6 +157,7 @@ namespace CursorMirror.MouseTrace
             metadata.PollSampleCount = CountByEvent(snapshot, "poll");
             metadata.ReferencePollSampleCount = CountByEvent(snapshot, "referencePoll");
             metadata.RuntimeSchedulerPollSampleCount = CountByEvent(snapshot, "runtimeSchedulerPoll");
+            metadata.RuntimeSchedulerLoopSampleCount = CountByEvent(snapshot, "runtimeSchedulerLoop");
             metadata.DwmTimingSampleCount = CountDwmTimingSamples(snapshot);
             metadata.PollIntervalMilliseconds = snapshot.PollIntervalMilliseconds;
             metadata.ReferencePollIntervalMilliseconds = snapshot.ReferencePollIntervalMilliseconds;
@@ -142,6 +165,7 @@ namespace CursorMirror.MouseTrace
             metadata.TimerResolutionSucceeded = snapshot.TimerResolutionSucceeded;
             metadata.RuntimeSchedulerWakeAdvanceMilliseconds = snapshot.RuntimeSchedulerWakeAdvanceMilliseconds;
             metadata.RuntimeSchedulerFallbackIntervalMilliseconds = snapshot.RuntimeSchedulerFallbackIntervalMilliseconds;
+            metadata.RuntimeSchedulerMaximumDwmSleepMilliseconds = snapshot.RuntimeSchedulerMaximumDwmSleepMilliseconds;
             metadata.RuntimeSchedulerCoalescedTickCount = snapshot.RuntimeSchedulerCoalescedTickCount;
             metadata.DurationMicroseconds = snapshot.DurationMicroseconds;
             metadata.StopwatchFrequency = Stopwatch.Frequency.ToString(CultureInfo.InvariantCulture);
@@ -149,7 +173,8 @@ namespace CursorMirror.MouseTrace
             metadata.ProductPollIntervalStats = CalculateIntervalStats(snapshot, "poll");
             metadata.ReferencePollIntervalStats = CalculateIntervalStats(snapshot, "referencePoll");
             metadata.RuntimeSchedulerPollIntervalStats = CalculateIntervalStats(snapshot, "runtimeSchedulerPoll");
-            int dwmTimingEligibleSamples = metadata.PollSampleCount + metadata.RuntimeSchedulerPollSampleCount;
+            metadata.RuntimeSchedulerLoopIntervalStats = CalculateIntervalStats(snapshot, "runtimeSchedulerLoop");
+            int dwmTimingEligibleSamples = metadata.PollSampleCount + metadata.RuntimeSchedulerPollSampleCount + metadata.RuntimeSchedulerLoopSampleCount;
             metadata.DwmTimingAvailabilityPercent = dwmTimingEligibleSamples == 0 ? 0 : (metadata.DwmTimingSampleCount * 100.0) / dwmTimingEligibleSamples;
             metadata.OperatingSystemVersion = Environment.OSVersion.VersionString;
             metadata.Is64BitOperatingSystem = Environment.Is64BitOperatingSystem;
@@ -428,7 +453,7 @@ namespace CursorMirror.MouseTrace
                 warnings.Add("reference_poll_interval_p95_exceeds_requested_interval");
             }
 
-            if (metadata.PollSampleCount + metadata.RuntimeSchedulerPollSampleCount > 0 && metadata.DwmTimingAvailabilityPercent < 90.0)
+            if (metadata.PollSampleCount + metadata.RuntimeSchedulerPollSampleCount + metadata.RuntimeSchedulerLoopSampleCount > 0 && metadata.DwmTimingAvailabilityPercent < 90.0)
             {
                 warnings.Add("dwm_timing_availability_below_90_percent");
             }

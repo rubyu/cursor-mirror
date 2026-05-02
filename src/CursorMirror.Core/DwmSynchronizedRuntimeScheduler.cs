@@ -11,12 +11,13 @@ namespace CursorMirror
         public const int TimerResolutionMilliseconds = 1;
         public const int WakeAdvanceMilliseconds = 2;
         public const int FallbackIntervalMilliseconds = 8;
-        public const int MaximumDwmSleepMilliseconds = 8;
+        public const int MaximumDwmSleepMilliseconds = 2;
 
         private readonly IUiDispatcher _dispatcher;
         private readonly Action _tick;
         private readonly Action _runTickOnUiThread;
         private Thread _thread;
+        private HighResolutionWaitTimer _waitTimer;
         private volatile bool _running;
         private bool _disposed;
         private bool _timerResolutionActive;
@@ -60,6 +61,7 @@ namespace CursorMirror
             _lastRequestedVBlankTicks = 0;
             _running = true;
             _timerResolutionActive = TimeBeginPeriodNative(TimerResolutionMilliseconds) == 0;
+            _waitTimer = HighResolutionWaitTimer.CreateBestEffort();
             _thread = new Thread(Run);
             _thread.IsBackground = true;
             _thread.Name = "Cursor Mirror DWM runtime scheduler";
@@ -82,6 +84,12 @@ namespace CursorMirror
             }
 
             _thread = null;
+            if (_waitTimer != null)
+            {
+                _waitTimer.Dispose();
+                _waitTimer = null;
+            }
+
             Interlocked.Exchange(ref _tickPending, 0);
             if (_timerResolutionActive)
             {
@@ -117,6 +125,12 @@ namespace CursorMirror
             long targetVBlankTicks = SelectNextVBlank(nowTicks, lastDwmVBlankTicks, refreshPeriodTicks);
             if (targetVBlankTicks <= lastRequestedVBlankTicks)
             {
+                if (nowTicks < lastRequestedVBlankTicks)
+                {
+                    int delayUntilRequestedVBlank = TicksToDelayMilliseconds(lastRequestedVBlankTicks - nowTicks, stopwatchFrequency, maximumSleep);
+                    return new DwmSynchronizedRuntimeScheduleDecision(true, false, delayUntilRequestedVBlank, lastRequestedVBlankTicks);
+                }
+
                 long periodsAfterLastRequest = ((lastRequestedVBlankTicks - targetVBlankTicks) / refreshPeriodTicks) + 1L;
                 targetVBlankTicks = AddPeriods(targetVBlankTicks, refreshPeriodTicks, periodsAfterLastRequest);
             }
@@ -315,7 +329,14 @@ namespace CursorMirror
                 return;
             }
 
-            Thread.Sleep(NormalizeDelayMilliseconds(milliseconds));
+            int normalizedMilliseconds = NormalizeDelayMilliseconds(milliseconds);
+            HighResolutionWaitTimer waitTimer = _waitTimer;
+            if (waitTimer != null && waitTimer.Wait(normalizedMilliseconds))
+            {
+                return;
+            }
+
+            Thread.Sleep(normalizedMilliseconds);
         }
 
         private void ThrowIfDisposed()

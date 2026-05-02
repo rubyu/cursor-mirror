@@ -127,7 +127,18 @@ namespace CursorMirror.MouseTrace
             long? runtimeSchedulerDispatchStartedTicks,
             long? runtimeSchedulerCursorReadStartedTicks,
             long? runtimeSchedulerCursorReadCompletedTicks,
-            long? runtimeSchedulerSampleRecordedTicks)
+            long? runtimeSchedulerSampleRecordedTicks,
+            long? runtimeSchedulerLoopIteration = null,
+            long? runtimeSchedulerLoopStartedTicks = null,
+            long? runtimeSchedulerTimingReadStartedTicks = null,
+            long? runtimeSchedulerTimingReadCompletedTicks = null,
+            long? runtimeSchedulerDecisionCompletedTicks = null,
+            bool? runtimeSchedulerTickRequested = null,
+            int? runtimeSchedulerSleepRequestedMilliseconds = null,
+            string runtimeSchedulerWaitMethod = null,
+            long? runtimeSchedulerWaitTargetTicks = null,
+            long? runtimeSchedulerSleepStartedTicks = null,
+            long? runtimeSchedulerSleepCompletedTicks = null)
         {
             Sequence = sequence;
             StopwatchTicks = stopwatchTicks;
@@ -155,6 +166,17 @@ namespace CursorMirror.MouseTrace
             RuntimeSchedulerCursorReadStartedTicks = runtimeSchedulerCursorReadStartedTicks;
             RuntimeSchedulerCursorReadCompletedTicks = runtimeSchedulerCursorReadCompletedTicks;
             RuntimeSchedulerSampleRecordedTicks = runtimeSchedulerSampleRecordedTicks;
+            RuntimeSchedulerLoopIteration = runtimeSchedulerLoopIteration;
+            RuntimeSchedulerLoopStartedTicks = runtimeSchedulerLoopStartedTicks;
+            RuntimeSchedulerTimingReadStartedTicks = runtimeSchedulerTimingReadStartedTicks;
+            RuntimeSchedulerTimingReadCompletedTicks = runtimeSchedulerTimingReadCompletedTicks;
+            RuntimeSchedulerDecisionCompletedTicks = runtimeSchedulerDecisionCompletedTicks;
+            RuntimeSchedulerTickRequested = runtimeSchedulerTickRequested;
+            RuntimeSchedulerSleepRequestedMilliseconds = runtimeSchedulerSleepRequestedMilliseconds;
+            RuntimeSchedulerWaitMethod = runtimeSchedulerWaitMethod;
+            RuntimeSchedulerWaitTargetTicks = runtimeSchedulerWaitTargetTicks;
+            RuntimeSchedulerSleepStartedTicks = runtimeSchedulerSleepStartedTicks;
+            RuntimeSchedulerSleepCompletedTicks = runtimeSchedulerSleepCompletedTicks;
         }
 
         public long Sequence { get; private set; }
@@ -208,5 +230,27 @@ namespace CursorMirror.MouseTrace
         public long? RuntimeSchedulerCursorReadCompletedTicks { get; private set; }
 
         public long? RuntimeSchedulerSampleRecordedTicks { get; private set; }
+
+        public long? RuntimeSchedulerLoopIteration { get; private set; }
+
+        public long? RuntimeSchedulerLoopStartedTicks { get; private set; }
+
+        public long? RuntimeSchedulerTimingReadStartedTicks { get; private set; }
+
+        public long? RuntimeSchedulerTimingReadCompletedTicks { get; private set; }
+
+        public long? RuntimeSchedulerDecisionCompletedTicks { get; private set; }
+
+        public bool? RuntimeSchedulerTickRequested { get; private set; }
+
+        public int? RuntimeSchedulerSleepRequestedMilliseconds { get; private set; }
+
+        public string RuntimeSchedulerWaitMethod { get; private set; }
+
+        public long? RuntimeSchedulerWaitTargetTicks { get; private set; }
+
+        public long? RuntimeSchedulerSleepStartedTicks { get; private set; }
+
+        public long? RuntimeSchedulerSleepCompletedTicks { get; private set; }
     }
 }

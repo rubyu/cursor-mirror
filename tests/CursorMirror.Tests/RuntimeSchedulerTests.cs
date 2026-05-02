@@ -9,17 +9,27 @@ namespace CursorMirror.Tests
             suite.Add("COT-MOU-23", DwmSchedulerWaitsUntilVBlankLead);
             suite.Add("COT-MOU-24", DwmSchedulerRequestsOneTickPerVBlank);
             suite.Add("COT-MOU-25", DwmSchedulerInvalidTimingFallsBack);
+            suite.Add("COT-MOU-30", DwmSchedulerHoldsRequestedVBlankUntilItPasses);
+            suite.Add("COT-MOU-31", DwmSchedulerAdvancesAfterRequestedVBlankPasses);
+            suite.Add("COT-MOU-32", HighResolutionWaitTimerBestEffortWaits);
         }
 
         // DWM scheduler waits until the configured vblank lead time [COT-MOU-23]
         private static void DwmSchedulerWaitsUntilVBlankLead()
         {
             DwmSynchronizedRuntimeScheduleDecision decision =
-                DwmSynchronizedRuntimeScheduler.EvaluateDwmTiming(1010, 1000, 1000, 17, 0, 2, 8);
+                DwmSynchronizedRuntimeScheduler.EvaluateDwmTiming(
+                    1010,
+                    1000,
+                    1000,
+                    17,
+                    0,
+                    DwmSynchronizedRuntimeScheduler.WakeAdvanceMilliseconds,
+                    DwmSynchronizedRuntimeScheduler.MaximumDwmSleepMilliseconds);
 
             TestAssert.True(decision.IsDwmTimingUsable, "DWM timing should be usable");
             TestAssert.False(decision.ShouldTick, "scheduler must wait before the lead window");
-            TestAssert.Equal(5, decision.DelayMilliseconds, "delay to wake lead");
+            TestAssert.Equal(2, decision.DelayMilliseconds, "delay to wake lead is capped to the short scheduler cadence");
             TestAssert.Equal(1017L, decision.TargetVBlankTicks, "target vblank");
         }
 
@@ -27,27 +37,99 @@ namespace CursorMirror.Tests
         private static void DwmSchedulerRequestsOneTickPerVBlank()
         {
             DwmSynchronizedRuntimeScheduleDecision first =
-                DwmSynchronizedRuntimeScheduler.EvaluateDwmTiming(1015, 1000, 1000, 17, 0, 2, 8);
+                DwmSynchronizedRuntimeScheduler.EvaluateDwmTiming(
+                    1015,
+                    1000,
+                    1000,
+                    17,
+                    0,
+                    DwmSynchronizedRuntimeScheduler.WakeAdvanceMilliseconds,
+                    DwmSynchronizedRuntimeScheduler.MaximumDwmSleepMilliseconds);
             DwmSynchronizedRuntimeScheduleDecision second =
-                DwmSynchronizedRuntimeScheduler.EvaluateDwmTiming(1016, 1000, 1000, 17, first.TargetVBlankTicks, 2, 8);
+                DwmSynchronizedRuntimeScheduler.EvaluateDwmTiming(
+                    1016,
+                    1000,
+                    1000,
+                    17,
+                    first.TargetVBlankTicks,
+                    DwmSynchronizedRuntimeScheduler.WakeAdvanceMilliseconds,
+                    DwmSynchronizedRuntimeScheduler.MaximumDwmSleepMilliseconds);
 
             TestAssert.True(first.ShouldTick, "scheduler should tick inside the lead window");
             TestAssert.Equal(1017L, first.TargetVBlankTicks, "first target vblank");
             TestAssert.False(second.ShouldTick, "scheduler must not repeat the same vblank");
-            TestAssert.Equal(1034L, second.TargetVBlankTicks, "next target vblank");
-            TestAssert.Equal(8, second.DelayMilliseconds, "long waits should be capped");
+            TestAssert.Equal(1017L, second.TargetVBlankTicks, "requested target vblank must be held until it passes");
+            TestAssert.Equal(1, second.DelayMilliseconds, "wait until requested vblank passes");
         }
 
         // DWM scheduler invalid timing falls back to the fallback loop [COT-MOU-25]
         private static void DwmSchedulerInvalidTimingFallsBack()
         {
             DwmSynchronizedRuntimeScheduleDecision decision =
-                DwmSynchronizedRuntimeScheduler.EvaluateDwmTiming(1000, 1000, 0, 0, 0, 2, 8);
+                DwmSynchronizedRuntimeScheduler.EvaluateDwmTiming(
+                    1000,
+                    1000,
+                    0,
+                    0,
+                    0,
+                    DwmSynchronizedRuntimeScheduler.WakeAdvanceMilliseconds,
+                    DwmSynchronizedRuntimeScheduler.FallbackIntervalMilliseconds);
 
             TestAssert.False(decision.IsDwmTimingUsable, "invalid DWM timing");
             TestAssert.False(decision.ShouldTick, "invalid DWM timing should not trigger a DWM tick");
             TestAssert.Equal(8, decision.DelayMilliseconds, "fallback delay");
             TestAssert.Equal(0L, decision.TargetVBlankTicks, "no target vblank");
+        }
+
+        // DWM scheduler holds a requested vblank until that vblank has passed [COT-MOU-30]
+        private static void DwmSchedulerHoldsRequestedVBlankUntilItPasses()
+        {
+            DwmSynchronizedRuntimeScheduleDecision decision =
+                DwmSynchronizedRuntimeScheduler.EvaluateDwmTiming(
+                    1016,
+                    1000,
+                    1000,
+                    17,
+                    1017,
+                    DwmSynchronizedRuntimeScheduler.WakeAdvanceMilliseconds,
+                    DwmSynchronizedRuntimeScheduler.MaximumDwmSleepMilliseconds);
+
+            TestAssert.True(decision.IsDwmTimingUsable, "DWM timing should be usable");
+            TestAssert.False(decision.ShouldTick, "scheduler must not tick twice for a requested vblank");
+            TestAssert.Equal(1017L, decision.TargetVBlankTicks, "pending requested vblank");
+            TestAssert.Equal(1, decision.DelayMilliseconds, "short wait until requested vblank");
+        }
+
+        // DWM scheduler advances after the requested vblank has passed [COT-MOU-31]
+        private static void DwmSchedulerAdvancesAfterRequestedVBlankPasses()
+        {
+            DwmSynchronizedRuntimeScheduleDecision decision =
+                DwmSynchronizedRuntimeScheduler.EvaluateDwmTiming(
+                    1017,
+                    1000,
+                    1000,
+                    17,
+                    1017,
+                    DwmSynchronizedRuntimeScheduler.WakeAdvanceMilliseconds,
+                    DwmSynchronizedRuntimeScheduler.MaximumDwmSleepMilliseconds);
+
+            TestAssert.True(decision.IsDwmTimingUsable, "DWM timing should be usable");
+            TestAssert.False(decision.ShouldTick, "next vblank lead window is not reached yet");
+            TestAssert.Equal(1034L, decision.TargetVBlankTicks, "next target vblank after requested vblank passes");
+            TestAssert.Equal(2, decision.DelayMilliseconds, "long waits should be capped to the short scheduler cadence");
+        }
+
+        // High-resolution wait timer waits with best-effort fallback [COT-MOU-32]
+        private static void HighResolutionWaitTimerBestEffortWaits()
+        {
+            using (HighResolutionWaitTimer timer = HighResolutionWaitTimer.CreateBestEffort())
+            {
+                TestAssert.True(timer != null, "wait timer should be available on Windows");
+                TestAssert.True(timer.Wait(1), "wait timer should complete");
+                TestAssert.True(
+                    timer.WaitMethod == "highResolutionWaitableTimer" || timer.WaitMethod == "waitableTimer",
+                    "wait timer method should be reported");
+            }
         }
     }
 }
