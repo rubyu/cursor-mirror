@@ -57,7 +57,7 @@ namespace CursorMirror.MouseTrace
             using (Stream stream = entry.Open())
             using (StreamWriter writer = new StreamWriter(stream, Utf8NoBom))
             {
-                writer.WriteLine("sequence,stopwatchTicks,elapsedMicroseconds,x,y,event,hookX,hookY,cursorX,cursorY,hookMouseData,hookFlags,hookTimeMilliseconds,hookExtraInfo,dwmTimingAvailable,dwmRateRefreshNumerator,dwmRateRefreshDenominator,dwmQpcRefreshPeriod,dwmQpcVBlank,dwmRefreshCount,dwmQpcCompose,dwmFrame,dwmRefreshFrame,dwmFrameDisplayed,dwmQpcFrameDisplayed,dwmRefreshFrameDisplayed,dwmFrameComplete,dwmQpcFrameComplete,dwmFramePending,dwmQpcFramePending,dwmRefreshNextDisplayed,dwmRefreshNextPresented,dwmFramesDisplayed,dwmFramesDropped,dwmFramesMissed,runtimeSchedulerTimingUsable,runtimeSchedulerTargetVBlankTicks,runtimeSchedulerPlannedTickTicks,runtimeSchedulerActualTickTicks,runtimeSchedulerVBlankLeadMicroseconds");
+                writer.WriteLine("sequence,stopwatchTicks,elapsedMicroseconds,x,y,event,hookX,hookY,cursorX,cursorY,hookMouseData,hookFlags,hookTimeMilliseconds,hookExtraInfo,dwmTimingAvailable,dwmRateRefreshNumerator,dwmRateRefreshDenominator,dwmQpcRefreshPeriod,dwmQpcVBlank,dwmRefreshCount,dwmQpcCompose,dwmFrame,dwmRefreshFrame,dwmFrameDisplayed,dwmQpcFrameDisplayed,dwmRefreshFrameDisplayed,dwmFrameComplete,dwmQpcFrameComplete,dwmFramePending,dwmQpcFramePending,dwmRefreshNextDisplayed,dwmRefreshNextPresented,dwmFramesDisplayed,dwmFramesDropped,dwmFramesMissed,runtimeSchedulerTimingUsable,runtimeSchedulerTargetVBlankTicks,runtimeSchedulerPlannedTickTicks,runtimeSchedulerActualTickTicks,runtimeSchedulerVBlankLeadMicroseconds,runtimeSchedulerQueuedTickTicks,runtimeSchedulerDispatchStartedTicks,runtimeSchedulerCursorReadStartedTicks,runtimeSchedulerCursorReadCompletedTicks,runtimeSchedulerSampleRecordedTicks");
                 foreach (MouseTraceEvent sample in snapshot.Samples)
                 {
                     writer.Write(sample.Sequence.ToString(CultureInfo.InvariantCulture));
@@ -108,6 +108,16 @@ namespace CursorMirror.MouseTrace
                     WriteNullable(writer, sample.RuntimeSchedulerActualTickTicks);
                     writer.Write(",");
                     WriteNullable(writer, sample.RuntimeSchedulerVBlankLeadMicroseconds);
+                    writer.Write(",");
+                    WriteNullable(writer, sample.RuntimeSchedulerQueuedTickTicks);
+                    writer.Write(",");
+                    WriteNullable(writer, sample.RuntimeSchedulerDispatchStartedTicks);
+                    writer.Write(",");
+                    WriteNullable(writer, sample.RuntimeSchedulerCursorReadStartedTicks);
+                    writer.Write(",");
+                    WriteNullable(writer, sample.RuntimeSchedulerCursorReadCompletedTicks);
+                    writer.Write(",");
+                    WriteNullable(writer, sample.RuntimeSchedulerSampleRecordedTicks);
                     writer.WriteLine();
                 }
             }
@@ -116,7 +126,7 @@ namespace CursorMirror.MouseTrace
         private static void WriteMetadata(ZipArchive archive, MouseTraceSnapshot snapshot)
         {
             MouseTraceMetadata metadata = new MouseTraceMetadata();
-            metadata.TraceFormatVersion = 4;
+            metadata.TraceFormatVersion = 5;
             metadata.ProductName = LocalizedStrings.TraceToolTitle;
             metadata.ProductVersion = BuildVersion.InformationalVersion;
             metadata.CreatedUtc = DateTime.UtcNow.ToString("o", CultureInfo.InvariantCulture);
@@ -132,6 +142,7 @@ namespace CursorMirror.MouseTrace
             metadata.TimerResolutionSucceeded = snapshot.TimerResolutionSucceeded;
             metadata.RuntimeSchedulerWakeAdvanceMilliseconds = snapshot.RuntimeSchedulerWakeAdvanceMilliseconds;
             metadata.RuntimeSchedulerFallbackIntervalMilliseconds = snapshot.RuntimeSchedulerFallbackIntervalMilliseconds;
+            metadata.RuntimeSchedulerCoalescedTickCount = snapshot.RuntimeSchedulerCoalescedTickCount;
             metadata.DurationMicroseconds = snapshot.DurationMicroseconds;
             metadata.StopwatchFrequency = Stopwatch.Frequency.ToString(CultureInfo.InvariantCulture);
             metadata.HookMoveIntervalStats = CalculateIntervalStats(snapshot, "move");

@@ -456,9 +456,11 @@ namespace CursorMirror.TraceTool
 
             if (Interlocked.Exchange(ref _runtimeSchedulerPollPending, 1) != 0)
             {
+                _session.AddRuntimeSchedulerCoalescedTick();
                 return;
             }
 
+            long queuedTickTicks = Stopwatch.GetTimestamp();
             long? plannedTickTicks = null;
             if (targetVBlankTicks.HasValue)
             {
@@ -469,8 +471,9 @@ namespace CursorMirror.TraceTool
             {
                 BeginInvoke(new Action(delegate
                 {
+                    long dispatchStartedTicks = Stopwatch.GetTimestamp();
                     Interlocked.Exchange(ref _runtimeSchedulerPollPending, 0);
-                    CaptureRuntimeSchedulerPollSample(dwmTimingAvailable, timing, targetVBlankTicks, plannedTickTicks);
+                    CaptureRuntimeSchedulerPollSample(dwmTimingAvailable, timing, targetVBlankTicks, plannedTickTicks, queuedTickTicks, dispatchStartedTicks);
                 }));
             }
             catch (ObjectDisposedException)
@@ -483,7 +486,13 @@ namespace CursorMirror.TraceTool
             }
         }
 
-        private void CaptureRuntimeSchedulerPollSample(bool dwmTimingAvailable, DwmTimingInfo timing, long? targetVBlankTicks, long? plannedTickTicks)
+        private void CaptureRuntimeSchedulerPollSample(
+            bool dwmTimingAvailable,
+            DwmTimingInfo timing,
+            long? targetVBlankTicks,
+            long? plannedTickTicks,
+            long queuedTickTicks,
+            long dispatchStartedTicks)
         {
             if (!_runtimeSchedulerPollActive)
             {
@@ -491,20 +500,23 @@ namespace CursorMirror.TraceTool
             }
 
             NativePoint point;
+            long cursorReadStartedTicks = Stopwatch.GetTimestamp();
             if (!_traceNativeMethods.GetCursorPos(out point))
             {
                 return;
             }
 
-            long actualTickTicks = Stopwatch.GetTimestamp();
+            long cursorReadCompletedTicks = Stopwatch.GetTimestamp();
+            long actualTickTicks = dispatchStartedTicks;
             long? vBlankLeadMicroseconds = null;
             if (targetVBlankTicks.HasValue)
             {
                 vBlankLeadMicroseconds = MouseTraceSession.TicksToMicroseconds(targetVBlankTicks.Value - actualTickTicks);
             }
 
+            long sampleRecordedTicks = Stopwatch.GetTimestamp();
             _session.AddRuntimeSchedulerPoll(
-                actualTickTicks,
+                cursorReadCompletedTicks,
                 new Point(point.x, point.y),
                 dwmTimingAvailable,
                 timing,
@@ -512,7 +524,12 @@ namespace CursorMirror.TraceTool
                 targetVBlankTicks,
                 plannedTickTicks,
                 actualTickTicks,
-                vBlankLeadMicroseconds);
+                vBlankLeadMicroseconds,
+                queuedTickTicks,
+                dispatchStartedTicks,
+                cursorReadStartedTicks,
+                cursorReadCompletedTicks,
+                sampleRecordedTicks);
         }
 
         private void SleepRuntimeSchedulerLoop(int milliseconds)

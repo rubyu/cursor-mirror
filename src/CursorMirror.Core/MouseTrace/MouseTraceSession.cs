@@ -16,6 +16,7 @@ namespace CursorMirror.MouseTrace
         private int _timerResolutionMilliseconds;
         private int _runtimeSchedulerWakeAdvanceMilliseconds;
         private int _runtimeSchedulerFallbackIntervalMilliseconds;
+        private int _runtimeSchedulerCoalescedTickCount;
         private bool _timerResolutionSucceeded;
         private MouseTraceState _state = MouseTraceState.Idle;
 
@@ -151,6 +152,7 @@ namespace CursorMirror.MouseTrace
                 _timerResolutionSucceeded = timerResolutionSucceeded;
                 _runtimeSchedulerWakeAdvanceMilliseconds = Math.Max(0, runtimeSchedulerWakeAdvanceMilliseconds);
                 _runtimeSchedulerFallbackIntervalMilliseconds = Math.Max(0, runtimeSchedulerFallbackIntervalMilliseconds);
+                _runtimeSchedulerCoalescedTickCount = 0;
                 _state = MouseTraceState.Recording;
             }
         }
@@ -222,6 +224,39 @@ namespace CursorMirror.MouseTrace
             long actualTickTicks,
             long? vBlankLeadMicroseconds)
         {
+            AddRuntimeSchedulerPoll(
+                stopwatchTicks,
+                cursorPoint,
+                dwmTimingAvailable,
+                dwmTiming,
+                schedulerTimingUsable,
+                targetVBlankTicks,
+                plannedTickTicks,
+                actualTickTicks,
+                vBlankLeadMicroseconds,
+                null,
+                null,
+                null,
+                null,
+                null);
+        }
+
+        public void AddRuntimeSchedulerPoll(
+            long stopwatchTicks,
+            Point cursorPoint,
+            bool dwmTimingAvailable,
+            DwmTimingInfo dwmTiming,
+            bool schedulerTimingUsable,
+            long? targetVBlankTicks,
+            long? plannedTickTicks,
+            long actualTickTicks,
+            long? vBlankLeadMicroseconds,
+            long? queuedTickTicks,
+            long? dispatchStartedTicks,
+            long? cursorReadStartedTicks,
+            long? cursorReadCompletedTicks,
+            long? sampleRecordedTicks)
+        {
             AddSample(
                 stopwatchTicks,
                 cursorPoint,
@@ -238,7 +273,23 @@ namespace CursorMirror.MouseTrace
                 targetVBlankTicks,
                 plannedTickTicks,
                 actualTickTicks,
-                vBlankLeadMicroseconds);
+                vBlankLeadMicroseconds,
+                queuedTickTicks,
+                dispatchStartedTicks,
+                cursorReadStartedTicks,
+                cursorReadCompletedTicks,
+                sampleRecordedTicks);
+        }
+
+        public void AddRuntimeSchedulerCoalescedTick()
+        {
+            lock (_syncRoot)
+            {
+                if (_state == MouseTraceState.Recording)
+                {
+                    _runtimeSchedulerCoalescedTickCount++;
+                }
+            }
         }
 
         private void AddSample(
@@ -291,6 +342,53 @@ namespace CursorMirror.MouseTrace
             long? runtimeSchedulerActualTickTicks,
             long? runtimeSchedulerVBlankLeadMicroseconds)
         {
+            AddSample(
+                stopwatchTicks,
+                primaryPoint,
+                eventType,
+                hookPoint,
+                cursorPoint,
+                hookMouseData,
+                hookFlags,
+                hookTimeMilliseconds,
+                hookExtraInfo,
+                dwmTimingAvailable,
+                dwmTiming,
+                runtimeSchedulerTimingUsable,
+                runtimeSchedulerTargetVBlankTicks,
+                runtimeSchedulerPlannedTickTicks,
+                runtimeSchedulerActualTickTicks,
+                runtimeSchedulerVBlankLeadMicroseconds,
+                null,
+                null,
+                null,
+                null,
+                null);
+        }
+
+        private void AddSample(
+            long stopwatchTicks,
+            Point primaryPoint,
+            string eventType,
+            Point? hookPoint,
+            Point? cursorPoint,
+            uint? hookMouseData,
+            uint? hookFlags,
+            uint? hookTimeMilliseconds,
+            long? hookExtraInfo,
+            bool dwmTimingAvailable,
+            DwmTimingInfo dwmTiming,
+            bool? runtimeSchedulerTimingUsable,
+            long? runtimeSchedulerTargetVBlankTicks,
+            long? runtimeSchedulerPlannedTickTicks,
+            long? runtimeSchedulerActualTickTicks,
+            long? runtimeSchedulerVBlankLeadMicroseconds,
+            long? runtimeSchedulerQueuedTickTicks,
+            long? runtimeSchedulerDispatchStartedTicks,
+            long? runtimeSchedulerCursorReadStartedTicks,
+            long? runtimeSchedulerCursorReadCompletedTicks,
+            long? runtimeSchedulerSampleRecordedTicks)
+        {
             lock (_syncRoot)
             {
                 if (_state != MouseTraceState.Recording)
@@ -321,7 +419,12 @@ namespace CursorMirror.MouseTrace
                     runtimeSchedulerTargetVBlankTicks,
                     runtimeSchedulerPlannedTickTicks,
                     runtimeSchedulerActualTickTicks,
-                    runtimeSchedulerVBlankLeadMicroseconds));
+                    runtimeSchedulerVBlankLeadMicroseconds,
+                    runtimeSchedulerQueuedTickTicks,
+                    runtimeSchedulerDispatchStartedTicks,
+                    runtimeSchedulerCursorReadStartedTicks,
+                    runtimeSchedulerCursorReadCompletedTicks,
+                    runtimeSchedulerSampleRecordedTicks));
             }
         }
 
@@ -340,7 +443,8 @@ namespace CursorMirror.MouseTrace
                     _timerResolutionMilliseconds,
                     _timerResolutionSucceeded,
                     _runtimeSchedulerWakeAdvanceMilliseconds,
-                    _runtimeSchedulerFallbackIntervalMilliseconds);
+                    _runtimeSchedulerFallbackIntervalMilliseconds,
+                    _runtimeSchedulerCoalescedTickCount);
             }
         }
 

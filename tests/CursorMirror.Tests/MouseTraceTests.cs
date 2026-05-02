@@ -25,6 +25,7 @@ namespace CursorMirror.Tests
             suite.Add("COT-MLU-12", TraceReferencePollFields);
             suite.Add("COT-MLU-13", TraceMetadataIncludesCaptureQuality);
             suite.Add("COT-MLU-14", TraceRuntimeSchedulerPollFields);
+            suite.Add("COT-MLU-15", TraceRuntimeSchedulerCoalescedTicks);
         }
 
         // Trace session starts empty [COT-MLU-1]
@@ -264,7 +265,7 @@ namespace CursorMirror.Tests
                     TestAssert.True(csv.Contains("runtimeSchedulerTimingUsable,runtimeSchedulerTargetVBlankTicks"), "runtime scheduler header");
                     TestAssert.True(csv.Contains(",poll,,,12,22,"), "poll row values");
                     TestAssert.True(csv.Contains("true,60000,1001,166667,123456,42,"), "dwm row values");
-                    TestAssert.True(metadataJson.Contains("\"TraceFormatVersion\":4"), "metadata trace format version");
+                    TestAssert.True(metadataJson.Contains("\"TraceFormatVersion\":5"), "metadata trace format version");
                     TestAssert.True(metadataJson.Contains("\"PollSampleCount\":1"), "metadata poll sample count");
                     TestAssert.True(metadataJson.Contains("\"ReferencePollSampleCount\":1"), "metadata reference poll sample count");
                     TestAssert.True(metadataJson.Contains("\"DwmTimingSampleCount\":1"), "metadata dwm timing sample count");
@@ -344,6 +345,7 @@ namespace CursorMirror.Tests
                 session.AddReferencePoll(start + (4 * oneMillisecond), new Point(6, 6));
                 session.AddRuntimeSchedulerPoll(start + (10 * oneMillisecond), new Point(7, 7), true, new DwmTimingInfo(), true, start + (20 * oneMillisecond), start + (18 * oneMillisecond), start + (10 * oneMillisecond), 10000);
                 session.AddRuntimeSchedulerPoll(start + (18 * oneMillisecond), new Point(8, 8), false, new DwmTimingInfo(), false, null, null, start + (18 * oneMillisecond), null);
+                session.AddRuntimeSchedulerCoalescedTick();
                 session.Stop(start + (24 * oneMillisecond));
 
                 new MouseTracePackageWriter().Write(path, session.Snapshot());
@@ -358,6 +360,7 @@ namespace CursorMirror.Tests
                     TestAssert.True(metadataJson.Contains("\"ReferencePollIntervalStats\""), "metadata reference poll interval stats");
                     TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerPollIntervalStats\""), "metadata runtime scheduler poll interval stats");
                     TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerPollSampleCount\":2"), "metadata runtime scheduler poll sample count");
+                    TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerCoalescedTickCount\":1"), "metadata runtime scheduler coalesced tick count");
                     TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerWakeAdvanceMilliseconds\":2"), "metadata runtime scheduler wake advance");
                     TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerFallbackIntervalMilliseconds\":8"), "metadata runtime scheduler fallback interval");
                     TestAssert.True(metadataJson.Contains("\"DwmTimingAvailabilityPercent\":50"), "metadata dwm availability percent");
@@ -391,7 +394,12 @@ namespace CursorMirror.Tests
                 2000,
                 1800,
                 start + 10,
-                990);
+                990,
+                start + 1,
+                start + 2,
+                start + 3,
+                start + 4,
+                start + 5);
             MouseTraceSnapshot snapshot = session.Snapshot();
 
             TestAssert.Equal(2, snapshot.RuntimeSchedulerWakeAdvanceMilliseconds, "runtime scheduler wake advance");
@@ -405,6 +413,42 @@ namespace CursorMirror.Tests
             TestAssert.Equal(1800L, snapshot.Samples[0].RuntimeSchedulerPlannedTickTicks.Value, "runtime scheduler planned tick");
             TestAssert.Equal(start + 10, snapshot.Samples[0].RuntimeSchedulerActualTickTicks.Value, "runtime scheduler actual tick");
             TestAssert.Equal(990L, snapshot.Samples[0].RuntimeSchedulerVBlankLeadMicroseconds.Value, "runtime scheduler lead");
+            TestAssert.Equal(start + 1, snapshot.Samples[0].RuntimeSchedulerQueuedTickTicks.Value, "runtime scheduler queued tick");
+            TestAssert.Equal(start + 2, snapshot.Samples[0].RuntimeSchedulerDispatchStartedTicks.Value, "runtime scheduler dispatch start");
+            TestAssert.Equal(start + 3, snapshot.Samples[0].RuntimeSchedulerCursorReadStartedTicks.Value, "runtime scheduler cursor read start");
+            TestAssert.Equal(start + 4, snapshot.Samples[0].RuntimeSchedulerCursorReadCompletedTicks.Value, "runtime scheduler cursor read completed");
+            TestAssert.Equal(start + 5, snapshot.Samples[0].RuntimeSchedulerSampleRecordedTicks.Value, "runtime scheduler sample recorded");
+        }
+
+        // Trace runtime scheduler coalesced ticks [COT-MLU-15]
+        private static void TraceRuntimeSchedulerCoalescedTicks()
+        {
+            string directory = NewTestDirectory();
+            try
+            {
+                string path = Path.Combine(directory, "trace.zip");
+                MouseTraceSession session = new MouseTraceSession();
+                long start = 1000;
+                session.Start(start, 8, 2, 1, true, 2, 8);
+                session.AddRuntimeSchedulerCoalescedTick();
+                session.AddRuntimeSchedulerCoalescedTick();
+                session.AddRuntimeSchedulerPoll(start + 10, new Point(10, 20), false, new DwmTimingInfo(), false, null, null, start + 10, null);
+                session.Stop(start + 20);
+
+                new MouseTracePackageWriter().Write(path, session.Snapshot());
+
+                using (FileStream stream = File.OpenRead(path))
+                using (ZipArchive archive = new ZipArchive(stream, ZipArchiveMode.Read))
+                using (StreamReader reader = new StreamReader(archive.GetEntry("metadata.json").Open()))
+                {
+                    string metadataJson = reader.ReadToEnd();
+                    TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerCoalescedTickCount\":2"), "metadata runtime scheduler coalesced tick count");
+                }
+            }
+            finally
+            {
+                DeleteDirectory(directory);
+            }
         }
 
         private static string NewTestDirectory()

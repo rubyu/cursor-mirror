@@ -109,6 +109,9 @@ namespace CursorMirror.MouseTrace
 
         [DataMember(Order = 35)]
         public MouseTraceIntervalStats RuntimeSchedulerPollIntervalStats { get; set; }
+
+        [DataMember(Order = 36)]
+        public int RuntimeSchedulerCoalescedTickCount { get; set; }
     }
 
     [DataContract]
