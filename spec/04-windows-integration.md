@@ -136,6 +136,8 @@ Recommended extended window styles:
 - The message-aware scheduler wait SHOULD continue to process queued Windows messages for settings, hook-triggered image refresh, and shutdown while waiting for the next DWM target.
 - The scheduler SHOULD request a `1ms` timer resolution while active and release that request during shutdown.
 - The high-frequency latest-position sampler SHOULD also request a `1ms` timer resolution while active and release that request during shutdown.
+- The default latest-position sampler interval SHOULD be `1ms` so blocking waits do not reduce the freshness of samples consumed by the product runtime scheduler.
+- The high-frequency latest-position sampler MUST use a blocking wait for positive remaining intervals and MUST NOT burn CPU with a tight `Sleep(0)` or spin loop between polls.
 - Runtime scheduler and latest-position sampler threads SHOULD use a priority appropriate for latency-sensitive cursor display work without requiring administrator privileges.
 - The overlay runtime thread and high-frequency latest-position sampler SHOULD NOT request managed `Highest` thread priority by default.
 - Cursor display threads SHOULD NOT request MMCSS by default. MMCSS and managed-priority experiments MAY be implemented as opt-in diagnostics, but the default runtime SHOULD avoid competing with other desktop latency-sensitive workloads.

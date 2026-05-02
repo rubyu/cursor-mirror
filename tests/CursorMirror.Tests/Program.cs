@@ -15,6 +15,7 @@ namespace CursorMirror.Tests
             VersionUpdateTests.AddTo(suite);
             MovementOpacityControllerTests.AddTo(suite);
             RuntimeSchedulerTests.AddTo(suite);
+            HighFrequencyCursorPollerTests.AddTo(suite);
             SettingsTests.AddTo(suite);
             SettingsWindowTests.AddTo(suite);
             MouseTraceTests.AddTo(suite);

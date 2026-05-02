@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace CursorMirror
 {
-    internal sealed class OverlayRuntimeThread : IDisposable
+    public sealed class OverlayRuntimeThread : IDisposable
     {
         private const uint PmRemove = 0x0001;
         private const uint WaitObject0 = 0x00000000;

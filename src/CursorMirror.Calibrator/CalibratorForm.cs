@@ -11,12 +11,14 @@ namespace CursorMirror.Calibrator
     {
         private const int TimerIntervalMilliseconds = 8;
         private const int DefaultDurationSeconds = 10;
-        private const int CaptureWarmupMilliseconds = 300;
+        private const int SimpleTimerCaptureWarmupMilliseconds = 300;
+        private const int ProductRuntimeCaptureWarmupMilliseconds = 1000;
 
         private readonly Panel _startPanel;
         private readonly Button _startButton;
         private readonly Button _saveButton;
         private readonly Button _exitButton;
+        private readonly ComboBox _runtimeModeComboBox;
         private readonly NumericUpDown _durationInput;
         private readonly Label _resultLabel;
         private readonly Timer _timer;
@@ -26,6 +28,7 @@ namespace CursorMirror.Calibrator
 
         private CalibratorCursorDriver _cursorDriver;
         private LowLevelMouseHook _mouseHook;
+        private OverlayRuntimeThread _overlayRuntime;
         private OverlayWindow _overlayWindow;
         private CursorMirrorController _mirrorController;
         private WgcDisplayCapture _capture;
@@ -33,6 +36,7 @@ namespace CursorMirror.Calibrator
         private Rectangle _pathBounds;
         private CalibrationMotionPatternSuite _motionSuite;
         private long _calibrationStartTicks;
+        private int _activeRuntimeMode = CalibrationRuntimeMode.Default;
         private bool _running;
         private bool _savedSinceStop;
 
@@ -51,7 +55,7 @@ namespace CursorMirror.Calibrator
             MaximizeBox = false;
             MinimizeBox = false;
             KeyPreview = true;
-            ClientSize = new Size(470, 190);
+            ClientSize = new Size(520, 230);
             BackColor = Color.White;
 
             _startPanel = new Panel();
@@ -72,10 +76,25 @@ namespace CursorMirror.Calibrator
             note.Location = new Point(14, 46);
             _startPanel.Controls.Add(note);
 
+            Label runtimeModeLabel = new Label();
+            runtimeModeLabel.Text = "Runtime mode";
+            runtimeModeLabel.AutoSize = true;
+            runtimeModeLabel.Location = new Point(14, 96);
+            _startPanel.Controls.Add(runtimeModeLabel);
+
+            _runtimeModeComboBox = new ComboBox();
+            _runtimeModeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            _runtimeModeComboBox.Items.Add(CalibrationRuntimeMode.ToDisplayText(CalibrationRuntimeMode.ProductRuntime));
+            _runtimeModeComboBox.Items.Add(CalibrationRuntimeMode.ToDisplayText(CalibrationRuntimeMode.SimpleTimer));
+            _runtimeModeComboBox.SelectedIndex = RuntimeModeToSelectedIndex(_options.RuntimeMode);
+            _runtimeModeComboBox.Location = new Point(120, 92);
+            _runtimeModeComboBox.Width = 250;
+            _startPanel.Controls.Add(_runtimeModeComboBox);
+
             Label durationLabel = new Label();
             durationLabel.Text = "Duration (s)";
             durationLabel.AutoSize = true;
-            durationLabel.Location = new Point(14, 96);
+            durationLabel.Location = new Point(14, 126);
             _startPanel.Controls.Add(durationLabel);
 
             _durationInput = new NumericUpDown();
@@ -83,33 +102,33 @@ namespace CursorMirror.Calibrator
             _durationInput.Maximum = 60;
             int durationSeconds = _options.DurationSeconds <= 0 ? DefaultDurationSeconds : _options.DurationSeconds;
             _durationInput.Value = Math.Max((int)_durationInput.Minimum, Math.Min((int)_durationInput.Maximum, durationSeconds));
-            _durationInput.Location = new Point(120, 92);
+            _durationInput.Location = new Point(120, 122);
             _startPanel.Controls.Add(_durationInput);
 
             _exitButton = new Button();
             _exitButton.Text = "Exit";
             _exitButton.AutoSize = true;
-            _exitButton.Location = new Point(382, 126);
+            _exitButton.Location = new Point(432, 158);
             _exitButton.Click += delegate { Close(); };
             _startPanel.Controls.Add(_exitButton);
 
             _saveButton = new Button();
             _saveButton.Text = "Save";
             _saveButton.AutoSize = true;
-            _saveButton.Location = new Point(301, 126);
+            _saveButton.Location = new Point(351, 158);
             _saveButton.Click += SaveCalibration;
             _startPanel.Controls.Add(_saveButton);
 
             _startButton = new Button();
             _startButton.Text = "Start";
             _startButton.AutoSize = true;
-            _startButton.Location = new Point(220, 126);
+            _startButton.Location = new Point(270, 158);
             _startButton.Click += delegate { StartCalibration(); };
             _startPanel.Controls.Add(_startButton);
 
             _resultLabel = new Label();
             _resultLabel.AutoSize = true;
-            _resultLabel.Location = new Point(14, 130);
+            _resultLabel.Location = new Point(14, 196);
             _startPanel.Controls.Add(_resultLabel);
 
             _timer = new Timer();
@@ -204,14 +223,8 @@ namespace CursorMirror.Calibrator
                 _cursorDriver = new CalibratorCursorDriver();
 
                 CursorMirrorSettings settings = BuildCursorSettings();
-                _overlayWindow = new OverlayWindow();
-                _mirrorController = new CursorMirrorController(
-                    new CursorImageProvider(),
-                    _overlayWindow,
-                    new ControlDispatcher(_overlayWindow),
-                    settings,
-                    new SystemClock(),
-                    new CursorPoller());
+                _activeRuntimeMode = GetSelectedRuntimeMode();
+                StartOverlayRuntime(settings, _activeRuntimeMode);
 
                 _mouseHook = new LowLevelMouseHook(HandleMouseEvent);
                 _mouseHook.SetHook();
@@ -242,7 +255,11 @@ namespace CursorMirror.Calibrator
             bool isInjected = data.dwExtraInfo == CalibratorCursorDriver.InjectionExtraInfo;
             if (isInjected)
             {
-                if (_mirrorController != null)
+                if (_overlayRuntime != null)
+                {
+                    _overlayRuntime.HandleMouseEvent(mouseEvent, data);
+                }
+                else if (_mirrorController != null)
                 {
                     _mirrorController.HandleMouseEvent(mouseEvent, data);
                 }
@@ -268,7 +285,7 @@ namespace CursorMirror.Calibrator
             }
 
             MoveCursorForElapsed(elapsed);
-            if (_mirrorController != null)
+            if (_activeRuntimeMode == CalibrationRuntimeMode.SimpleTimer && _mirrorController != null)
             {
                 _mirrorController.Tick();
             }
@@ -285,7 +302,7 @@ namespace CursorMirror.Calibrator
 
         private void CaptureFrameCaptured(object sender, CalibrationFrameAnalysis e)
         {
-            if (_stopwatch.IsRunning && _stopwatch.ElapsedMilliseconds < CaptureWarmupMilliseconds)
+            if (_stopwatch.IsRunning && _stopwatch.ElapsedMilliseconds < GetCaptureWarmupMilliseconds())
             {
                 return;
             }
@@ -310,7 +327,7 @@ namespace CursorMirror.Calibrator
 
         private void StopCalibration(bool saveResults)
         {
-            if (!_running && _capture == null && _mouseHook == null)
+            if (!_running && _capture == null && _mouseHook == null && _overlayRuntime == null && _mirrorController == null && _overlayWindow == null)
             {
                 return;
             }
@@ -349,6 +366,11 @@ namespace CursorMirror.Calibrator
             {
                 _mirrorController.Dispose();
                 _mirrorController = null;
+            }
+            else if (_overlayRuntime != null)
+            {
+                _overlayRuntime.Dispose();
+                _overlayRuntime = null;
             }
             else if (_overlayWindow != null)
             {
@@ -433,6 +455,7 @@ namespace CursorMirror.Calibrator
             }
 
             CalibrationSummary summary = CalibrationRunAnalyzer.Summarize(snapshot, "Windows Graphics Capture");
+            summary.RuntimeMode = CalibrationRuntimeMode.ToExternalName(_activeRuntimeMode);
             new CalibrationPackageWriter().Write(path, snapshot, summary);
             _savedSinceStop = true;
             _resultLabel.Text = "Saved " + summary.FrameCount.ToString() + " frames: " + path;
@@ -453,7 +476,7 @@ namespace CursorMirror.Calibrator
         {
             TopMost = false;
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            ClientSize = new Size(470, 190);
+            ClientSize = new Size(520, 230);
             CenterToScreen();
             _startPanel.Visible = true;
             _startPanel.BringToFront();
@@ -559,6 +582,44 @@ namespace CursorMirror.Calibrator
             return settings.Normalize();
         }
 
+        private void StartOverlayRuntime(CursorMirrorSettings settings, int runtimeMode)
+        {
+            if (CalibrationRuntimeMode.Normalize(runtimeMode) == CalibrationRuntimeMode.ProductRuntime)
+            {
+                _overlayRuntime = new OverlayRuntimeThread(settings);
+                _overlayRuntime.Start();
+                return;
+            }
+
+            _overlayWindow = new OverlayWindow();
+            _mirrorController = new CursorMirrorController(
+                new CursorImageProvider(),
+                _overlayWindow,
+                new ControlDispatcher(_overlayWindow),
+                settings,
+                new SystemClock(),
+                new CursorPoller());
+        }
+
+        private int GetSelectedRuntimeMode()
+        {
+            return _runtimeModeComboBox.SelectedIndex == 1
+                ? CalibrationRuntimeMode.SimpleTimer
+                : CalibrationRuntimeMode.ProductRuntime;
+        }
+
+        private int GetCaptureWarmupMilliseconds()
+        {
+            return CalibrationRuntimeMode.Normalize(_activeRuntimeMode) == CalibrationRuntimeMode.ProductRuntime
+                ? ProductRuntimeCaptureWarmupMilliseconds
+                : SimpleTimerCaptureWarmupMilliseconds;
+        }
+
+        private static int RuntimeModeToSelectedIndex(int runtimeMode)
+        {
+            return CalibrationRuntimeMode.Normalize(runtimeMode) == CalibrationRuntimeMode.SimpleTimer ? 1 : 0;
+        }
+
         private bool HasUnsavedFrames()
         {
             return !_running && !_savedSinceStop && FrameCount() > 0;
@@ -580,6 +641,7 @@ namespace CursorMirror.Calibrator
         private void RefreshUi()
         {
             _startButton.Enabled = !_running;
+            _runtimeModeComboBox.Enabled = !_running;
             _saveButton.Enabled = CanSave();
             _exitButton.Enabled = !_running;
         }

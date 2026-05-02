@@ -1,0 +1,91 @@
+{
+  "generatedAt": "2026-05-03T07:26:38.1951616+09:00",
+  "lowerIsBetter": true,
+  "acceptedVariant": "fixed-blocking-1ms",
+  "cpuCheck": {
+    "fixedBlocking1msCpuDeltaSecondsOver5s": 0.062,
+    "fixedBlocking1msApproxOneCorePercent": 1.25
+  },
+  "runs": [
+    {
+      "name": "old-sleep0-run1",
+      "runtimeMode": "ProductRuntime",
+      "frameCount": 1417,
+      "averageEstimatedSeparationPixels": 6.863091037402964,
+      "p95EstimatedSeparationPixels": 12.0,
+      "maximumEstimatedSeparationPixels": 48.0
+    },
+    {
+      "name": "old-sleep0-run2",
+      "runtimeMode": "ProductRuntime",
+      "frameCount": 1417,
+      "averageEstimatedSeparationPixels": 6.827099505998588,
+      "p95EstimatedSeparationPixels": 12.0,
+      "maximumEstimatedSeparationPixels": 94.0
+    },
+    {
+      "name": "fixed-blocking-2ms-run1",
+      "runtimeMode": "ProductRuntime",
+      "frameCount": 1417,
+      "averageEstimatedSeparationPixels": 7.196189131968948,
+      "p95EstimatedSeparationPixels": 12.0,
+      "maximumEstimatedSeparationPixels": 132.0
+    },
+    {
+      "name": "fixed-blocking-2ms-run2",
+      "runtimeMode": "ProductRuntime",
+      "frameCount": 1416,
+      "averageEstimatedSeparationPixels": 6.923728813559322,
+      "p95EstimatedSeparationPixels": 12.0,
+      "maximumEstimatedSeparationPixels": 69.0
+    },
+    {
+      "name": "fixed-blocking-1ms-run1",
+      "runtimeMode": "ProductRuntime",
+      "frameCount": 1416,
+      "averageEstimatedSeparationPixels": 7.505649717514125,
+      "p95EstimatedSeparationPixels": 12.0,
+      "maximumEstimatedSeparationPixels": 12.0
+    },
+    {
+      "name": "fixed-blocking-1ms-run2",
+      "runtimeMode": "ProductRuntime",
+      "frameCount": 1416,
+      "averageEstimatedSeparationPixels": 7.540960451977401,
+      "p95EstimatedSeparationPixels": 12.0,
+      "maximumEstimatedSeparationPixels": 12.0
+    }
+  ],
+  "groups": [
+    {
+      "name": "old-sleep0",
+      "runCount": 2,
+      "decision": "rejected",
+      "reason": "The previous tight Sleep(0) wait loop burns too much CPU.",
+      "meanAverageEstimatedSeparationPixels": 6.845095271700776,
+      "meanP95EstimatedSeparationPixels": 12.0,
+      "maximumOfMaximumEstimatedSeparationPixels": 94.0,
+      "meanFrameCount": 1417.0
+    },
+    {
+      "name": "fixed-blocking-2ms",
+      "runCount": 2,
+      "decision": "rejected",
+      "reason": "Blocking wait fixes CPU, but the 2ms sampling interval can produce larger maximum separation outliers.",
+      "meanAverageEstimatedSeparationPixels": 7.059958972764135,
+      "meanP95EstimatedSeparationPixels": 12.0,
+      "maximumOfMaximumEstimatedSeparationPixels": 132.0,
+      "meanFrameCount": 1416.5
+    },
+    {
+      "name": "fixed-blocking-1ms",
+      "runCount": 2,
+      "decision": "accepted",
+      "reason": "Blocking wait keeps CPU low and the 1ms sampling interval removes large maximum separation outliers.",
+      "meanAverageEstimatedSeparationPixels": 7.523305084745763,
+      "meanP95EstimatedSeparationPixels": 12.0,
+      "maximumOfMaximumEstimatedSeparationPixels": 12.0,
+      "meanFrameCount": 1416.0
+    }
+  ]
+}

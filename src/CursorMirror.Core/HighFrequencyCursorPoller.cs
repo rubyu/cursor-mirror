@@ -9,7 +9,7 @@ namespace CursorMirror
 {
     public sealed class HighFrequencyCursorPoller : ICursorPoller, IDisposable
     {
-        public const int DefaultIntervalMilliseconds = 2;
+        public const int DefaultIntervalMilliseconds = 1;
         public const int DefaultMaximumSampleAgeMilliseconds = 50;
         private const int TimerResolutionMilliseconds = 1;
 
@@ -23,6 +23,7 @@ namespace CursorMirror
         private volatile bool _running;
         private bool _timerResolutionActive;
         private bool _disposed;
+        private HighResolutionWaitTimer _waitTimer;
 
         [DllImport("user32.dll", EntryPoint = "GetCursorPos", SetLastError = true)]
         private static extern bool GetCursorPosNative(out NativePoint point);
@@ -57,6 +58,7 @@ namespace CursorMirror
 
             _running = true;
             _timerResolutionActive = TimeBeginPeriodNative(TimerResolutionMilliseconds) == 0;
+            _waitTimer = HighResolutionWaitTimer.CreateBestEffort();
             CaptureLatest(Stopwatch.GetTimestamp());
             _thread = new Thread(Run);
             _thread.Name = "Cursor Mirror high-frequency cursor poller";
@@ -99,6 +101,12 @@ namespace CursorMirror
             }
 
             _thread = null;
+            if (_waitTimer != null)
+            {
+                _waitTimer.Dispose();
+                _waitTimer = null;
+            }
+
             if (_timerResolutionActive)
             {
                 TimeEndPeriodNative(TimerResolutionMilliseconds);
@@ -136,16 +144,48 @@ namespace CursorMirror
                 }
 
                 long remainingTicks = nextTicks - now;
-                int sleepMilliseconds = (int)((remainingTicks * 1000) / Stopwatch.Frequency);
-                if (sleepMilliseconds > 1)
-                {
-                    Thread.Sleep(Math.Min(sleepMilliseconds, 2));
-                }
-                else
-                {
-                    Thread.Sleep(0);
-                }
+                WaitForRemainingTicks(remainingTicks);
             }
+        }
+
+        private void WaitForRemainingTicks(long remainingTicks)
+        {
+            if (remainingTicks <= 0)
+            {
+                return;
+            }
+
+            HighResolutionWaitTimer waitTimer = _waitTimer;
+            if (waitTimer != null && waitTimer.WaitTicks(remainingTicks, Stopwatch.Frequency))
+            {
+                return;
+            }
+
+            int sleepMilliseconds = CalculateFallbackSleepMilliseconds(
+                remainingTicks,
+                Stopwatch.Frequency,
+                _intervalMilliseconds);
+            if (sleepMilliseconds > 0)
+            {
+                Thread.Sleep(sleepMilliseconds);
+            }
+        }
+
+        private static int CalculateFallbackSleepMilliseconds(long remainingTicks, long stopwatchFrequency, int maximumMilliseconds)
+        {
+            if (remainingTicks <= 0 || stopwatchFrequency <= 0)
+            {
+                return 0;
+            }
+
+            double milliseconds = remainingTicks * 1000.0 / stopwatchFrequency;
+            int roundedMilliseconds = (int)Math.Ceiling(milliseconds);
+            if (roundedMilliseconds < 1)
+            {
+                roundedMilliseconds = 1;
+            }
+
+            return Math.Min(roundedMilliseconds, Math.Max(1, maximumMilliseconds));
         }
 
         private bool TryGetLatestFreshSample(out Point position, out long timestampTicks)

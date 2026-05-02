@@ -23,11 +23,13 @@ namespace CursorMirror.Calibrator
         public int? DwmAdaptiveOscillationMaximumEfficiencyPercent { get; set; }
         public int? DwmAdaptiveOscillationLatchMilliseconds { get; set; }
         public int? DwmPredictionModel { get; set; }
+        public int RuntimeMode { get; set; }
 
         public static CalibratorRunOptions FromArguments(string[] args)
         {
             CalibratorRunOptions options = new CalibratorRunOptions();
             options.DurationSeconds = 10;
+            options.RuntimeMode = CalibrationRuntimeMode.Default;
 
             if (args == null)
             {
@@ -239,6 +241,24 @@ namespace CursorMirror.Calibrator
                 {
                     options.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelLeastSquares;
                 }
+                else if (argument == "--runtime-mode" && i + 1 < args.Length)
+                {
+                    int runtimeMode;
+                    if (CalibrationRuntimeMode.TryParse(args[i + 1], out runtimeMode))
+                    {
+                        options.RuntimeMode = runtimeMode;
+                    }
+
+                    i++;
+                }
+                else if (argument == "--product-runtime")
+                {
+                    options.RuntimeMode = CalibrationRuntimeMode.ProductRuntime;
+                }
+                else if (argument == "--simple-runtime")
+                {
+                    options.RuntimeMode = CalibrationRuntimeMode.SimpleTimer;
+                }
             }
 
             if (options.DurationSeconds < 3)
@@ -251,6 +271,7 @@ namespace CursorMirror.Calibrator
                 options.DurationSeconds = 60;
             }
 
+            options.RuntimeMode = CalibrationRuntimeMode.Normalize(options.RuntimeMode);
             return options;
         }
 
