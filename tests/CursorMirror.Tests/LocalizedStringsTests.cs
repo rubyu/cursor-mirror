@@ -48,6 +48,11 @@ namespace CursorMirror.Tests
                 TestAssert.Equal("System language", LocalizedStrings.DemoLanguageSystem, "English demo system language option");
                 TestAssert.Equal("Show mirrored cursor", LocalizedStrings.DemoMirrorCursorLabel, "English demo mirror cursor label");
                 TestAssert.Equal("Mirrored cursor: On", LocalizedStrings.DemoMirrorCursorStatus(LocalizedStrings.DemoEnabledLabel), "English demo mirror status");
+                TestAssert.Equal("X coordinate: -2", LocalizedStrings.DemoRelativeCursorX(-2), "English demo relative cursor x");
+                TestAssert.Equal(
+                    "Mode: Auto\r\nSpeed: Normal\r\nResume: Active\r\nX coordinate: 12\r\nInjected moves: 34",
+                    LocalizedStrings.DemoStatus("Auto", "Normal", "Active", LocalizedStrings.DemoRelativeCursorX(12), 34),
+                    "English demo status order");
                 TestAssert.Equal("640 x 480", LocalizedStrings.DemoWindowPresetVga, "English demo VGA preset");
                 TestAssert.Equal("Press any key to stop", LocalizedStrings.DemoEscHint, "English demo key hint");
                 TestAssert.Equal("Press any key to stop", LocalizedStrings.DemoAnyKeyHint, "English demo any key hint");
@@ -96,6 +101,11 @@ namespace CursorMirror.Tests
                 TestAssert.Equal("システム設定", LocalizedStrings.DemoLanguageSystem, "Japanese demo system language option");
                 TestAssert.Equal("ミラーカーソルを表示する", LocalizedStrings.DemoMirrorCursorLabel, "Japanese demo mirror cursor label");
                 TestAssert.Equal("ミラーカーソル: オン", LocalizedStrings.DemoMirrorCursorStatus(LocalizedStrings.DemoEnabledLabel), "Japanese demo mirror status");
+                TestAssert.Equal("X座標: -2", LocalizedStrings.DemoRelativeCursorX(-2), "Japanese demo relative cursor x");
+                TestAssert.Equal(
+                    "モード: Auto\r\n速度: Normal\r\n復帰: 実行中\r\nX座標: 12\r\n注入移動: 34",
+                    LocalizedStrings.DemoStatus("Auto", "Normal", "実行中", LocalizedStrings.DemoRelativeCursorX(12), 34),
+                    "Japanese demo status order");
                 TestAssert.Equal("640 x 480", LocalizedStrings.DemoWindowPresetVga, "Japanese demo VGA preset");
                 TestAssert.Equal("いずれかのキーで停止", LocalizedStrings.DemoEscHint, "Japanese demo key hint");
                 TestAssert.Equal("いずれかのキーで停止", LocalizedStrings.DemoAnyKeyHint, "Japanese demo any key hint");

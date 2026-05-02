@@ -10,6 +10,7 @@ namespace CursorMirror.Tests
             suite.Add("COT-MEU-2", StoppedPhaseHookSuppression);
             suite.Add("COT-MEU-3", DemoPathTimingFields);
             suite.Add("COT-MEU-7", DemoPathStartsAtLeftEdge);
+            suite.Add("COT-MEU-11", DemoCursorRelativeXUsesStartPoint);
         }
 
         // Deterministic demo pointer stream [COT-MEU-1]
@@ -87,6 +88,18 @@ namespace CursorMirror.Tests
             TestAssert.Equal(new Point(bounds.Left, bounds.Top + (bounds.Height / 2)), sample.Position, "initial position");
             TestAssert.Equal("moving-right", sample.Phase, "initial phase");
             TestAssert.True(sample.IsMoving, "initial movement");
+        }
+
+        // Demo cursor relative X uses start point [COT-MEU-11]
+        private static void DemoCursorRelativeXUsesStartPoint()
+        {
+            Rectangle bounds = new Rectangle(20, 31, 500, 181);
+            Point start = DemoCursorAlignment.StartPoint(bounds);
+
+            TestAssert.Equal(new Point(20, 122), start, "start point");
+            TestAssert.Equal(0, DemoCursorAlignment.RelativeXFromStart(start, bounds), "start relative x");
+            TestAssert.Equal(280, DemoCursorAlignment.RelativeXFromStart(new Point(300, 139), bounds), "positive relative x");
+            TestAssert.Equal(-9, DemoCursorAlignment.RelativeXFromStart(new Point(11, 113), bounds), "negative relative x");
         }
     }
 }

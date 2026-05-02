@@ -525,6 +525,10 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that demo settings use the same staged validation, backup retention, and active-file preservation behavior as main settings.
   Refs: Sections 5.6, 12.3.
 
+- COT-MEU-11 - Demo cursor relative X
+  Verify that demo cursor alignment reports the cursor X coordinate relative to the demo path's left start endpoint as an integer.
+  Refs: Section 12.4.
+
 #### A.4.R Resource Management and Failure Handling
 ##### Unit
 - COT-MRU-1 - Hook callback exception containment

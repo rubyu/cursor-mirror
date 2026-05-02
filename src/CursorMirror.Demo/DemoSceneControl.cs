@@ -285,12 +285,15 @@ namespace CursorMirror.Demo
                 : LocalizedStrings.DemoResumeCountdown(_modeController.RemainingMilliseconds(now));
             string mirrorText = LocalizedStrings.DemoMirrorCursorStatus(
                 _mirrorCursorEnabled ? LocalizedStrings.DemoEnabledLabel : LocalizedStrings.DemoDisabledLabel);
+            string cursorXText = LocalizedStrings.DemoRelativeCursorX(
+                DemoCursorAlignment.RelativeXFromStart(Cursor.Position, _movementBoundsScreen));
 
             return mirrorText + "\r\n\r\n" + LocalizedStrings.DemoStatus(
                 mode,
                 SpeedLabel(_speed),
                 resumeText,
-                _sentMoveCount) + "\r\n" + LocalizedStrings.DemoAnyKeyHint;
+                cursorXText,
+                _sentMoveCount) + "\r\n\r\n" + LocalizedStrings.DemoAnyKeyHint;
         }
 
         private long CurrentMilliseconds()

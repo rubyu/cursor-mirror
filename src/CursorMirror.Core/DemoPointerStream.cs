@@ -131,7 +131,7 @@ namespace CursorMirror
             double start = _movementBounds.Left;
             double end = _movementBounds.Right;
             double x = movingRight ? Lerp(start, end, progress) : Lerp(end, start, progress);
-            double y = _movementBounds.Top + (_movementBounds.Height / 2.0);
+            double y = DemoCursorAlignment.StartPoint(_movementBounds).Y;
             return new Point((int)Math.Round(x), (int)Math.Round(y));
         }
 

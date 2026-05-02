@@ -46,6 +46,7 @@
 - The demo scene MUST display current status in the lower-right area.
 - The status SHOULD include mode, speed, resume state, and injected movement count.
 - The status MUST show whether the demo-owned mirrored cursor overlay is enabled as a separate top item above the other status fields.
+- The status MUST show the current real cursor X coordinate after mode, speed, and resume state as an integer relative to the demo path's left start endpoint, using a clear `X coordinate` label so separate recordings can be aligned.
 
 ### 12.5 Real Cursor Driving and Free Mode
 - Auto mode MUST move the real Windows cursor using injected mouse movement.

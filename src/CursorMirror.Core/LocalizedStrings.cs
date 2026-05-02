@@ -342,6 +342,7 @@ namespace CursorMirror
             string mode,
             string speed,
             string resume,
+            string relativeCursorX,
             int sentMoves)
         {
             return string.Format(
@@ -350,12 +351,18 @@ namespace CursorMirror
                 mode,
                 speed,
                 resume,
+                relativeCursorX,
                 sentMoves);
         }
 
         public static string DemoMirrorCursorStatus(string enabled)
         {
             return string.Format(CultureInfo.CurrentUICulture, Get("DemoMirrorCursorStatusFormat"), enabled);
+        }
+
+        public static string DemoRelativeCursorX(int relativeX)
+        {
+            return string.Format(CultureInfo.CurrentUICulture, Get("DemoRelativeCursorXFormat"), relativeX);
         }
 
         public static string DemoResumeCountdown(int remainingMilliseconds)
@@ -569,9 +576,11 @@ namespace CursorMirror
                 case "DemoPhasehold-left":
                     return "Hold left";
                 case "DemoStatusFormat":
-                    return "Mode: {0}\r\nSpeed: {1}\r\nResume: {2}\r\nInjected moves: {3}";
+                    return "Mode: {0}\r\nSpeed: {1}\r\nResume: {2}\r\n{3}\r\nInjected moves: {4}";
                 case "DemoMirrorCursorStatusFormat":
                     return "Mirrored cursor: {0}";
+                case "DemoRelativeCursorXFormat":
+                    return "X coordinate: {0}";
                 case "DemoResumeCountdownFormat":
                     return "{0:0.0}s";
                 case "TraceStateLabelFormat":
@@ -736,9 +745,11 @@ namespace CursorMirror
                 case "DemoPhasehold-left":
                     return "左端で停止";
                 case "DemoStatusFormat":
-                    return "モード: {0}\r\n速度: {1}\r\n復帰: {2}\r\n注入移動: {3}";
+                    return "モード: {0}\r\n速度: {1}\r\n復帰: {2}\r\n{3}\r\n注入移動: {4}";
                 case "DemoMirrorCursorStatusFormat":
                     return "ミラーカーソル: {0}";
+                case "DemoRelativeCursorXFormat":
+                    return "X座標: {0}";
                 case "DemoResumeCountdownFormat":
                     return "{0:0.0}s";
                 case "TraceStateLabelFormat":
