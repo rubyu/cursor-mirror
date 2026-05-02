@@ -15,6 +15,7 @@
 - The release package MUST include `CursorMirror.Core.dll` when any packaged auxiliary executable depends on it.
 - The release package MUST include `CursorMirror.TraceTool.exe`.
 - The release package MUST include `CursorMirror.Demo.exe`.
+- The release package MUST include `CursorMirror.Calibrator.exe`.
 
 ### 5.3 Startup and Shutdown
 - Startup MUST create the tray icon before installing the hook or immediately after successful hook installation.

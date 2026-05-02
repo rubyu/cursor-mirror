@@ -8,6 +8,7 @@ namespace CursorMirror.Tests
             HookTests.AddTo(suite);
             CursorImageProviderTests.AddTo(suite);
             CursorPositionPredictorTests.AddTo(suite);
+            CalibrationTests.AddTo(suite);
             ControllerTests.AddTo(suite);
             LocalizedStringsTests.AddTo(suite);
             BuildVersionTests.AddTo(suite);

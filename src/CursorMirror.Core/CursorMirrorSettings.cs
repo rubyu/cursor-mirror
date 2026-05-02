@@ -17,6 +17,21 @@ namespace CursorMirror
         public const int DefaultPredictionHorizonMilliseconds = 8;
         public const int DefaultPredictionIdleResetMilliseconds = 100;
         public const int DefaultPredictionGainPercent = 100;
+        public const int DefaultDwmPredictionHorizonCapMilliseconds = 0;
+        public const bool DefaultDwmAdaptiveGainEnabled = false;
+        public const int DefaultDwmAdaptiveGainPercent = 100;
+        public const int DefaultDwmAdaptiveMinimumSpeedPixelsPerSecond = 1500;
+        public const int DefaultDwmAdaptiveMaximumAccelerationPixelsPerSecondSquared = 40000;
+        public const int DefaultDwmAdaptiveReversalCooldownSamples = 0;
+        public const int DefaultDwmAdaptiveStableDirectionSamples = 0;
+        public const int DefaultDwmAdaptiveOscillationWindowSamples = 0;
+        public const int DefaultDwmAdaptiveOscillationMinimumReversals = 2;
+        public const int DefaultDwmAdaptiveOscillationMaximumSpanPixels = 450;
+        public const int DefaultDwmAdaptiveOscillationMaximumEfficiencyPercent = 55;
+        public const int DefaultDwmAdaptiveOscillationLatchMilliseconds = 0;
+        public const int DwmPredictionModelConstantVelocity = 0;
+        public const int DwmPredictionModelLeastSquares = 1;
+        public const int DefaultDwmPredictionModel = DwmPredictionModelConstantVelocity;
 
         public const int MinimumMovingOpacityPercent = 1;
         public const int MaximumMovingOpacityPercent = 100;
@@ -34,6 +49,30 @@ namespace CursorMirror
         public const int MaximumPredictionIdleResetMilliseconds = 1000;
         public const int MinimumPredictionGainPercent = 50;
         public const int MaximumPredictionGainPercent = 150;
+        public const int MinimumDwmPredictionHorizonCapMilliseconds = 0;
+        public const int MaximumDwmPredictionHorizonCapMilliseconds = 16;
+        public const int MinimumDwmAdaptiveGainPercent = 50;
+        public const int MaximumDwmAdaptiveGainPercent = 150;
+        public const int MinimumDwmAdaptiveMinimumSpeedPixelsPerSecond = 0;
+        public const int MaximumDwmAdaptiveMinimumSpeedPixelsPerSecond = 10000;
+        public const int MinimumDwmAdaptiveMaximumAccelerationPixelsPerSecondSquared = 0;
+        public const int MaximumDwmAdaptiveMaximumAccelerationPixelsPerSecondSquared = 1000000;
+        public const int MinimumDwmAdaptiveReversalCooldownSamples = 0;
+        public const int MaximumDwmAdaptiveReversalCooldownSamples = 30;
+        public const int MinimumDwmAdaptiveStableDirectionSamples = 0;
+        public const int MaximumDwmAdaptiveStableDirectionSamples = 10;
+        public const int MinimumDwmAdaptiveOscillationWindowSamples = 0;
+        public const int MaximumDwmAdaptiveOscillationWindowSamples = 32;
+        public const int MinimumDwmAdaptiveOscillationMinimumReversals = 1;
+        public const int MaximumDwmAdaptiveOscillationMinimumReversals = 10;
+        public const int MinimumDwmAdaptiveOscillationMaximumSpanPixels = 1;
+        public const int MaximumDwmAdaptiveOscillationMaximumSpanPixels = 10000;
+        public const int MinimumDwmAdaptiveOscillationMaximumEfficiencyPercent = 0;
+        public const int MaximumDwmAdaptiveOscillationMaximumEfficiencyPercent = 100;
+        public const int MinimumDwmAdaptiveOscillationLatchMilliseconds = 0;
+        public const int MaximumDwmAdaptiveOscillationLatchMilliseconds = 1000;
+        public const int MinimumDwmPredictionModel = DwmPredictionModelConstantVelocity;
+        public const int MaximumDwmPredictionModel = DwmPredictionModelLeastSquares;
 
         public CursorMirrorSettings()
         {
@@ -73,6 +112,45 @@ namespace CursorMirror
         [DataMember(Order = 11)]
         public int PredictionGainPercent { get; set; }
 
+        [DataMember(Order = 12)]
+        public int DwmPredictionHorizonCapMilliseconds { get; set; }
+
+        [DataMember(Order = 13)]
+        public bool DwmAdaptiveGainEnabled { get; set; }
+
+        [DataMember(Order = 14)]
+        public int DwmAdaptiveGainPercent { get; set; }
+
+        [DataMember(Order = 15)]
+        public int DwmAdaptiveMinimumSpeedPixelsPerSecond { get; set; }
+
+        [DataMember(Order = 16)]
+        public int DwmAdaptiveMaximumAccelerationPixelsPerSecondSquared { get; set; }
+
+        [DataMember(Order = 17)]
+        public int DwmAdaptiveReversalCooldownSamples { get; set; }
+
+        [DataMember(Order = 18)]
+        public int DwmAdaptiveStableDirectionSamples { get; set; }
+
+        [DataMember(Order = 19)]
+        public int DwmAdaptiveOscillationWindowSamples { get; set; }
+
+        [DataMember(Order = 20)]
+        public int DwmAdaptiveOscillationMinimumReversals { get; set; }
+
+        [DataMember(Order = 21)]
+        public int DwmAdaptiveOscillationMaximumSpanPixels { get; set; }
+
+        [DataMember(Order = 22)]
+        public int DwmAdaptiveOscillationMaximumEfficiencyPercent { get; set; }
+
+        [DataMember(Order = 23)]
+        public int DwmAdaptiveOscillationLatchMilliseconds { get; set; }
+
+        [DataMember(Order = 24)]
+        public int DwmPredictionModel { get; set; }
+
         public static CursorMirrorSettings Default()
         {
             return new CursorMirrorSettings();
@@ -92,7 +170,20 @@ namespace CursorMirror
                 IdleFadeEnabled = IdleFadeEnabled,
                 IdleFadeDelayMilliseconds = IdleFadeDelayMilliseconds,
                 IdleOpacityPercent = IdleOpacityPercent,
-                PredictionGainPercent = PredictionGainPercent
+                PredictionGainPercent = PredictionGainPercent,
+                DwmPredictionHorizonCapMilliseconds = DwmPredictionHorizonCapMilliseconds,
+                DwmAdaptiveGainEnabled = DwmAdaptiveGainEnabled,
+                DwmAdaptiveGainPercent = DwmAdaptiveGainPercent,
+                DwmAdaptiveMinimumSpeedPixelsPerSecond = DwmAdaptiveMinimumSpeedPixelsPerSecond,
+                DwmAdaptiveMaximumAccelerationPixelsPerSecondSquared = DwmAdaptiveMaximumAccelerationPixelsPerSecondSquared,
+                DwmAdaptiveReversalCooldownSamples = DwmAdaptiveReversalCooldownSamples,
+                DwmAdaptiveStableDirectionSamples = DwmAdaptiveStableDirectionSamples,
+                DwmAdaptiveOscillationWindowSamples = DwmAdaptiveOscillationWindowSamples,
+                DwmAdaptiveOscillationMinimumReversals = DwmAdaptiveOscillationMinimumReversals,
+                DwmAdaptiveOscillationMaximumSpanPixels = DwmAdaptiveOscillationMaximumSpanPixels,
+                DwmAdaptiveOscillationMaximumEfficiencyPercent = DwmAdaptiveOscillationMaximumEfficiencyPercent,
+                DwmAdaptiveOscillationLatchMilliseconds = DwmAdaptiveOscillationLatchMilliseconds,
+                DwmPredictionModel = DwmPredictionModel
             };
         }
 
@@ -110,7 +201,20 @@ namespace CursorMirror
                 IdleFadeEnabled = IdleFadeEnabled,
                 IdleFadeDelayMilliseconds = Clamp(IdleFadeDelayMilliseconds, MinimumIdleFadeDelayMilliseconds, MaximumIdleFadeDelayMilliseconds),
                 IdleOpacityPercent = Clamp(IdleOpacityPercent, MinimumIdleOpacityPercent, MaximumIdleOpacityPercent),
-                PredictionGainPercent = Clamp(PredictionGainPercent, MinimumPredictionGainPercent, MaximumPredictionGainPercent)
+                PredictionGainPercent = Clamp(PredictionGainPercent, MinimumPredictionGainPercent, MaximumPredictionGainPercent),
+                DwmPredictionHorizonCapMilliseconds = Clamp(DwmPredictionHorizonCapMilliseconds, MinimumDwmPredictionHorizonCapMilliseconds, MaximumDwmPredictionHorizonCapMilliseconds),
+                DwmAdaptiveGainEnabled = DwmAdaptiveGainEnabled,
+                DwmAdaptiveGainPercent = Clamp(DwmAdaptiveGainPercent, MinimumDwmAdaptiveGainPercent, MaximumDwmAdaptiveGainPercent),
+                DwmAdaptiveMinimumSpeedPixelsPerSecond = Clamp(DwmAdaptiveMinimumSpeedPixelsPerSecond, MinimumDwmAdaptiveMinimumSpeedPixelsPerSecond, MaximumDwmAdaptiveMinimumSpeedPixelsPerSecond),
+                DwmAdaptiveMaximumAccelerationPixelsPerSecondSquared = Clamp(DwmAdaptiveMaximumAccelerationPixelsPerSecondSquared, MinimumDwmAdaptiveMaximumAccelerationPixelsPerSecondSquared, MaximumDwmAdaptiveMaximumAccelerationPixelsPerSecondSquared),
+                DwmAdaptiveReversalCooldownSamples = Clamp(DwmAdaptiveReversalCooldownSamples, MinimumDwmAdaptiveReversalCooldownSamples, MaximumDwmAdaptiveReversalCooldownSamples),
+                DwmAdaptiveStableDirectionSamples = Clamp(DwmAdaptiveStableDirectionSamples, MinimumDwmAdaptiveStableDirectionSamples, MaximumDwmAdaptiveStableDirectionSamples),
+                DwmAdaptiveOscillationWindowSamples = Clamp(DwmAdaptiveOscillationWindowSamples, MinimumDwmAdaptiveOscillationWindowSamples, MaximumDwmAdaptiveOscillationWindowSamples),
+                DwmAdaptiveOscillationMinimumReversals = Clamp(DwmAdaptiveOscillationMinimumReversals, MinimumDwmAdaptiveOscillationMinimumReversals, MaximumDwmAdaptiveOscillationMinimumReversals),
+                DwmAdaptiveOscillationMaximumSpanPixels = Clamp(DwmAdaptiveOscillationMaximumSpanPixels, MinimumDwmAdaptiveOscillationMaximumSpanPixels, MaximumDwmAdaptiveOscillationMaximumSpanPixels),
+                DwmAdaptiveOscillationMaximumEfficiencyPercent = Clamp(DwmAdaptiveOscillationMaximumEfficiencyPercent, MinimumDwmAdaptiveOscillationMaximumEfficiencyPercent, MaximumDwmAdaptiveOscillationMaximumEfficiencyPercent),
+                DwmAdaptiveOscillationLatchMilliseconds = Clamp(DwmAdaptiveOscillationLatchMilliseconds, MinimumDwmAdaptiveOscillationLatchMilliseconds, MaximumDwmAdaptiveOscillationLatchMilliseconds),
+                DwmPredictionModel = Clamp(DwmPredictionModel, MinimumDwmPredictionModel, MaximumDwmPredictionModel)
             };
         }
 
@@ -133,6 +237,19 @@ namespace CursorMirror
             IdleFadeDelayMilliseconds = DefaultIdleFadeDelayMilliseconds;
             IdleOpacityPercent = DefaultIdleOpacityPercent;
             PredictionGainPercent = DefaultPredictionGainPercent;
+            DwmPredictionHorizonCapMilliseconds = DefaultDwmPredictionHorizonCapMilliseconds;
+            DwmAdaptiveGainEnabled = DefaultDwmAdaptiveGainEnabled;
+            DwmAdaptiveGainPercent = DefaultDwmAdaptiveGainPercent;
+            DwmAdaptiveMinimumSpeedPixelsPerSecond = DefaultDwmAdaptiveMinimumSpeedPixelsPerSecond;
+            DwmAdaptiveMaximumAccelerationPixelsPerSecondSquared = DefaultDwmAdaptiveMaximumAccelerationPixelsPerSecondSquared;
+            DwmAdaptiveReversalCooldownSamples = DefaultDwmAdaptiveReversalCooldownSamples;
+            DwmAdaptiveStableDirectionSamples = DefaultDwmAdaptiveStableDirectionSamples;
+            DwmAdaptiveOscillationWindowSamples = DefaultDwmAdaptiveOscillationWindowSamples;
+            DwmAdaptiveOscillationMinimumReversals = DefaultDwmAdaptiveOscillationMinimumReversals;
+            DwmAdaptiveOscillationMaximumSpanPixels = DefaultDwmAdaptiveOscillationMaximumSpanPixels;
+            DwmAdaptiveOscillationMaximumEfficiencyPercent = DefaultDwmAdaptiveOscillationMaximumEfficiencyPercent;
+            DwmAdaptiveOscillationLatchMilliseconds = DefaultDwmAdaptiveOscillationLatchMilliseconds;
+            DwmPredictionModel = DefaultDwmPredictionModel;
         }
 
         private static int Clamp(int value, int minimum, int maximum)

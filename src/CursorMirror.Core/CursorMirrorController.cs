@@ -76,7 +76,8 @@ namespace CursorMirror
             _settings = settings.Normalize();
             _opacityController = new MovementOpacityController(_settings);
             _positionPredictor = new CursorPositionPredictor(_settings.PredictionIdleResetMilliseconds, _settings.PredictionGainPercent);
-            _pollPositionPredictor = new DwmAwareCursorPositionPredictor(_settings.PredictionIdleResetMilliseconds, _settings.PredictionGainPercent);
+            _pollPositionPredictor = new DwmAwareCursorPositionPredictor(_settings.PredictionIdleResetMilliseconds);
+            _pollPositionPredictor.ApplySettings(_settings);
             _cursorPoller = cursorPoller;
             _clock = clock;
         }
@@ -134,14 +135,27 @@ namespace CursorMirror
                 _settings.PredictionEnabled != normalized.PredictionEnabled ||
                 _settings.PredictionHorizonMilliseconds != normalized.PredictionHorizonMilliseconds ||
                 _settings.PredictionIdleResetMilliseconds != normalized.PredictionIdleResetMilliseconds ||
-                _settings.PredictionGainPercent != normalized.PredictionGainPercent;
+                _settings.PredictionGainPercent != normalized.PredictionGainPercent ||
+                _settings.DwmPredictionHorizonCapMilliseconds != normalized.DwmPredictionHorizonCapMilliseconds ||
+                _settings.DwmAdaptiveGainEnabled != normalized.DwmAdaptiveGainEnabled ||
+                _settings.DwmAdaptiveGainPercent != normalized.DwmAdaptiveGainPercent ||
+                _settings.DwmAdaptiveMinimumSpeedPixelsPerSecond != normalized.DwmAdaptiveMinimumSpeedPixelsPerSecond ||
+                _settings.DwmAdaptiveMaximumAccelerationPixelsPerSecondSquared != normalized.DwmAdaptiveMaximumAccelerationPixelsPerSecondSquared ||
+                _settings.DwmAdaptiveReversalCooldownSamples != normalized.DwmAdaptiveReversalCooldownSamples ||
+                _settings.DwmAdaptiveStableDirectionSamples != normalized.DwmAdaptiveStableDirectionSamples ||
+                _settings.DwmAdaptiveOscillationWindowSamples != normalized.DwmAdaptiveOscillationWindowSamples ||
+                _settings.DwmAdaptiveOscillationMinimumReversals != normalized.DwmAdaptiveOscillationMinimumReversals ||
+                _settings.DwmAdaptiveOscillationMaximumSpanPixels != normalized.DwmAdaptiveOscillationMaximumSpanPixels ||
+                _settings.DwmAdaptiveOscillationMaximumEfficiencyPercent != normalized.DwmAdaptiveOscillationMaximumEfficiencyPercent ||
+                _settings.DwmAdaptiveOscillationLatchMilliseconds != normalized.DwmAdaptiveOscillationLatchMilliseconds ||
+                _settings.DwmPredictionModel != normalized.DwmPredictionModel;
 
             _settings = normalized;
             _opacityController.ApplySettings(_settings);
             if (predictionChanged)
             {
                 _positionPredictor.ApplySettings(_settings.PredictionIdleResetMilliseconds, _settings.PredictionGainPercent);
-                _pollPositionPredictor.ApplySettings(_settings.PredictionIdleResetMilliseconds, _settings.PredictionGainPercent);
+                _pollPositionPredictor.ApplySettings(_settings);
             }
 
             ApplyOpacity(_clock.Milliseconds);

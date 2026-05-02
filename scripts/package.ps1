@@ -56,6 +56,7 @@ Copy-Item -LiteralPath (Join-Path $bin "CursorMirror.exe") -Destination $stage
 Copy-Item -LiteralPath (Join-Path $bin "CursorMirror.Core.dll") -Destination $stage
 Copy-Item -LiteralPath (Join-Path $bin "CursorMirror.TraceTool.exe") -Destination $stage
 Copy-Item -LiteralPath (Join-Path $bin "CursorMirror.Demo.exe") -Destination $stage
+Copy-Item -LiteralPath (Join-Path $bin "CursorMirror.Calibrator.exe") -Destination $stage
 Copy-Item -LiteralPath (Join-Path $root "README.md") -Destination $stage
 Copy-Item -LiteralPath (Join-Path $root "LICENSE") -Destination $stage
 

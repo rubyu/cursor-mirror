@@ -21,6 +21,12 @@ namespace CursorMirror.Tests
             suite.Add("COT-MOU-29", PollingIgnoresStaleSamples);
             suite.Add("COT-MOU-36", PredictionGainSettingControlsProjection);
             suite.Add("COT-MOU-37", PredictionGainSettingControlsDwmProjection);
+            suite.Add("COT-MOU-38", DwmPredictionHorizonCapControlsProjection);
+            suite.Add("COT-MOU-39", DwmAdaptiveGainControlsFastLinearProjection);
+            suite.Add("COT-MOU-40", DwmAdaptiveGainCooldownHoldsBaseGainAfterReversal);
+            suite.Add("COT-MOU-41", DwmAdaptiveGainOscillationLatchHoldsBaseGain);
+            suite.Add("COT-MOU-42", DwmAdaptiveGainFastLinearOverrideBypassesOscillationLatch);
+            suite.Add("COT-MOU-43", DwmLeastSquaresPredictionFitsLinearMotion);
             suite.Add("COT-MRU-1", HookCallbackExceptionContainment);
             suite.Add("COT-MDU-3", DispatcherMarshalsToUiThread);
         }
@@ -288,6 +294,207 @@ namespace CursorMirror.Tests
             controller.Tick();
 
             TestAssert.Equal(new Point(78, 0), overlay.LastLocation, "75 percent gain scales the DWM horizon projection");
+            controller.Dispose();
+        }
+
+        // DWM prediction horizon cap controls projection [COT-MOU-38]
+        private static void DwmPredictionHorizonCapControlsProjection()
+        {
+            FakeCursorImageProvider provider = new FakeCursorImageProvider();
+            FakeOverlayPresenter overlay = new FakeOverlayPresenter();
+            FakeClock clock = new FakeClock();
+            FakeCursorPoller poller = new FakeCursorPoller();
+            CursorMirrorSettings settings = CursorMirrorSettings.Default();
+            settings.DwmPredictionHorizonCapMilliseconds = 8;
+            provider.EnqueueCapture(new CursorCapture(new IntPtr(1), new Bitmap(16, 16), new Point(0, 0)));
+            CursorMirrorController controller = new CursorMirrorController(provider, overlay, new ImmediateDispatcher(), settings, clock, poller);
+
+            controller.UpdateAt(new Point(0, 0));
+            poller.EnqueueSample(PollSample(new Point(0, 0), 100, true, 100, 100));
+            poller.EnqueueSample(PollSample(new Point(10, 0), 110, true, 100, 100));
+            clock.Now = 10;
+            controller.Tick();
+            controller.Tick();
+
+            TestAssert.Equal(new Point(18, 0), overlay.LastLocation, "DWM horizon cap limits projection");
+            controller.Dispose();
+        }
+
+        // DWM adaptive gain controls fast linear projection [COT-MOU-39]
+        private static void DwmAdaptiveGainControlsFastLinearProjection()
+        {
+            FakeCursorImageProvider provider = new FakeCursorImageProvider();
+            FakeOverlayPresenter overlay = new FakeOverlayPresenter();
+            FakeClock clock = new FakeClock();
+            FakeCursorPoller poller = new FakeCursorPoller();
+            CursorMirrorSettings settings = CursorMirrorSettings.Default();
+            settings.DwmAdaptiveGainEnabled = true;
+            settings.DwmAdaptiveGainPercent = 75;
+            settings.DwmAdaptiveMinimumSpeedPixelsPerSecond = 1000;
+            settings.DwmAdaptiveMaximumAccelerationPixelsPerSecondSquared = 100;
+            provider.EnqueueCapture(new CursorCapture(new IntPtr(1), new Bitmap(16, 16), new Point(0, 0)));
+            CursorMirrorController controller = new CursorMirrorController(provider, overlay, new ImmediateDispatcher(), settings, clock, poller);
+
+            controller.UpdateAt(new Point(0, 0));
+            poller.EnqueueSample(PollSample(new Point(0, 0), 100, true, 110, 16));
+            poller.EnqueueSample(PollSample(new Point(20, 0), 110, true, 120, 16));
+            poller.EnqueueSample(PollSample(new Point(40, 0), 120, true, 130, 16));
+            clock.Now = 10;
+            controller.Tick();
+            controller.Tick();
+            controller.Tick();
+
+            TestAssert.Equal(new Point(55, 0), overlay.LastLocation, "adaptive DWM gain applies to fast linear motion");
+            controller.Dispose();
+        }
+
+        // DWM adaptive gain reversal cooldown [COT-MOU-40]
+        private static void DwmAdaptiveGainCooldownHoldsBaseGainAfterReversal()
+        {
+            FakeCursorImageProvider provider = new FakeCursorImageProvider();
+            FakeOverlayPresenter overlay = new FakeOverlayPresenter();
+            FakeClock clock = new FakeClock();
+            FakeCursorPoller poller = new FakeCursorPoller();
+            CursorMirrorSettings settings = CursorMirrorSettings.Default();
+            settings.DwmAdaptiveGainEnabled = true;
+            settings.DwmAdaptiveGainPercent = 75;
+            settings.DwmAdaptiveMinimumSpeedPixelsPerSecond = 1000;
+            settings.DwmAdaptiveMaximumAccelerationPixelsPerSecondSquared = 1000000;
+            settings.DwmAdaptiveReversalCooldownSamples = 2;
+            provider.EnqueueCapture(new CursorCapture(new IntPtr(1), new Bitmap(16, 16), new Point(0, 0)));
+            CursorMirrorController controller = new CursorMirrorController(provider, overlay, new ImmediateDispatcher(), settings, clock, poller);
+
+            controller.UpdateAt(new Point(0, 0));
+            poller.EnqueueSample(PollSample(new Point(0, 0), 100, true, 110, 16));
+            poller.EnqueueSample(PollSample(new Point(20, 0), 110, true, 120, 16));
+            poller.EnqueueSample(PollSample(new Point(40, 0), 120, true, 130, 16));
+            poller.EnqueueSample(PollSample(new Point(20, 0), 130, true, 140, 16));
+            poller.EnqueueSample(PollSample(new Point(0, 0), 140, true, 150, 16));
+            clock.Now = 10;
+            controller.Tick();
+            controller.Tick();
+            controller.Tick();
+            controller.Tick();
+            controller.Tick();
+
+            TestAssert.Equal(new Point(-20, 0), overlay.LastLocation, "cooldown keeps base gain immediately after reversal");
+            controller.Dispose();
+        }
+
+        // DWM adaptive gain oscillation latch [COT-MOU-41]
+        private static void DwmAdaptiveGainOscillationLatchHoldsBaseGain()
+        {
+            FakeCursorImageProvider provider = new FakeCursorImageProvider();
+            FakeOverlayPresenter overlay = new FakeOverlayPresenter();
+            FakeClock clock = new FakeClock();
+            FakeCursorPoller poller = new FakeCursorPoller();
+            CursorMirrorSettings settings = CursorMirrorSettings.Default();
+            settings.DwmAdaptiveGainEnabled = true;
+            settings.DwmAdaptiveGainPercent = 75;
+            settings.DwmAdaptiveMinimumSpeedPixelsPerSecond = 1000;
+            settings.DwmAdaptiveMaximumAccelerationPixelsPerSecondSquared = 1000000;
+            settings.DwmAdaptiveOscillationWindowSamples = 6;
+            settings.DwmAdaptiveOscillationMinimumReversals = 2;
+            settings.DwmAdaptiveOscillationMaximumSpanPixels = 100;
+            settings.DwmAdaptiveOscillationMaximumEfficiencyPercent = 60;
+            settings.DwmAdaptiveOscillationLatchMilliseconds = 300;
+            provider.EnqueueCapture(new CursorCapture(new IntPtr(1), new Bitmap(16, 16), new Point(0, 0)));
+            CursorMirrorController controller = new CursorMirrorController(provider, overlay, new ImmediateDispatcher(), settings, clock, poller);
+
+            controller.UpdateAt(new Point(0, 0));
+            poller.EnqueueSample(PollSample(new Point(0, 0), 100, true, 110, 16));
+            poller.EnqueueSample(PollSample(new Point(20, 0), 110, true, 120, 16));
+            poller.EnqueueSample(PollSample(new Point(40, 0), 120, true, 130, 16));
+            poller.EnqueueSample(PollSample(new Point(20, 0), 130, true, 140, 16));
+            poller.EnqueueSample(PollSample(new Point(40, 0), 140, true, 150, 16));
+            poller.EnqueueSample(PollSample(new Point(20, 0), 150, true, 160, 16));
+            poller.EnqueueSample(PollSample(new Point(0, 0), 160, true, 170, 16));
+            clock.Now = 10;
+            controller.Tick();
+            controller.Tick();
+            controller.Tick();
+            controller.Tick();
+            controller.Tick();
+            controller.Tick();
+            controller.Tick();
+
+            TestAssert.Equal(new Point(-20, 0), overlay.LastLocation, "oscillation latch keeps base gain after repeated reversals");
+            controller.Dispose();
+        }
+
+        // DWM adaptive gain fast linear override [COT-MOU-42]
+        private static void DwmAdaptiveGainFastLinearOverrideBypassesOscillationLatch()
+        {
+            FakeCursorImageProvider provider = new FakeCursorImageProvider();
+            FakeOverlayPresenter overlay = new FakeOverlayPresenter();
+            FakeClock clock = new FakeClock();
+            FakeCursorPoller poller = new FakeCursorPoller();
+            CursorMirrorSettings settings = CursorMirrorSettings.Default();
+            settings.DwmAdaptiveGainEnabled = true;
+            settings.DwmAdaptiveGainPercent = 75;
+            settings.DwmAdaptiveMinimumSpeedPixelsPerSecond = 1000;
+            settings.DwmAdaptiveMaximumAccelerationPixelsPerSecondSquared = 1000000;
+            settings.DwmAdaptiveOscillationWindowSamples = 32;
+            settings.DwmAdaptiveOscillationMinimumReversals = 2;
+            settings.DwmAdaptiveOscillationMaximumSpanPixels = 100;
+            settings.DwmAdaptiveOscillationMaximumEfficiencyPercent = 60;
+            settings.DwmAdaptiveOscillationLatchMilliseconds = 300;
+            provider.EnqueueCapture(new CursorCapture(new IntPtr(1), new Bitmap(16, 16), new Point(0, 0)));
+            CursorMirrorController controller = new CursorMirrorController(provider, overlay, new ImmediateDispatcher(), settings, clock, poller);
+
+            controller.UpdateAt(new Point(0, 0));
+            int[] oscillation = new[] { 0, 20, 40, 20, 40, 20, 0 };
+            long timestamp = 100;
+            for (int i = 0; i < oscillation.Length; i++)
+            {
+                poller.EnqueueSample(PollSample(new Point(oscillation[i], 0), timestamp, true, timestamp + 10, 16));
+                timestamp += 10;
+            }
+
+            for (int i = 1; i <= 24; i++)
+            {
+                poller.EnqueueSample(PollSample(new Point(i * 30, 0), timestamp, true, timestamp + 10, 16));
+                timestamp += 10;
+            }
+
+            clock.Now = 10;
+            for (int i = 0; i < oscillation.Length + 24; i++)
+            {
+                controller.Tick();
+            }
+
+            TestAssert.Equal(new Point(742, 0), overlay.LastLocation, "fast linear override must bypass an active oscillation latch");
+            controller.Dispose();
+        }
+
+        // DWM least-squares prediction [COT-MOU-43]
+        private static void DwmLeastSquaresPredictionFitsLinearMotion()
+        {
+            FakeCursorImageProvider provider = new FakeCursorImageProvider();
+            FakeOverlayPresenter overlay = new FakeOverlayPresenter();
+            FakeClock clock = new FakeClock();
+            FakeCursorPoller poller = new FakeCursorPoller();
+            CursorMirrorSettings settings = CursorMirrorSettings.Default();
+            settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelLeastSquares;
+            provider.EnqueueCapture(new CursorCapture(new IntPtr(1), new Bitmap(16, 16), new Point(0, 0)));
+            CursorMirrorController controller = new CursorMirrorController(provider, overlay, new ImmediateDispatcher(), settings, clock, poller);
+
+            controller.UpdateAt(new Point(0, 0));
+            poller.EnqueueSample(PollSample(new Point(0, 0), 100, true, 110, 16));
+            poller.EnqueueSample(PollSample(new Point(10, 0), 110, true, 120, 16));
+            poller.EnqueueSample(PollSample(new Point(20, 0), 120, true, 130, 16));
+            poller.EnqueueSample(PollSample(new Point(30, 0), 130, true, 140, 16));
+            poller.EnqueueSample(PollSample(new Point(40, 0), 140, true, 150, 16));
+            poller.EnqueueSample(PollSample(new Point(50, 0), 150, true, 160, 16));
+            clock.Now = 10;
+            controller.Tick();
+            controller.Tick();
+            controller.Tick();
+            controller.Tick();
+            controller.Tick();
+            controller.Tick();
+
+            TestAssert.Equal(new Point(60, 0), overlay.LastLocation, "least-squares model predicts linear motion");
             controller.Dispose();
         }
 

@@ -25,10 +25,12 @@ $coreOut = Join-Path $bin "CursorMirror.Core.dll"
 $appOut = Join-Path $bin "CursorMirror.exe"
 $traceToolOut = Join-Path $bin "CursorMirror.TraceTool.exe"
 $demoOut = Join-Path $bin "CursorMirror.Demo.exe"
+$calibratorOut = Join-Path $bin "CursorMirror.Calibrator.exe"
 $testsOut = Join-Path $bin "CursorMirror.Tests.exe"
 $manifest = Join-Path $root "src\CursorMirror.App\app.manifest"
 $traceToolManifest = Join-Path $root "src\CursorMirror.TraceTool\app.manifest"
 $demoManifest = Join-Path $root "src\CursorMirror.Demo\app.manifest"
+$calibratorManifest = Join-Path $root "src\CursorMirror.Calibrator\app.manifest"
 $icon = Join-Path $root "assets\icons\CursorMirror.ico"
 $versionJson = Join-Path $bin "CursorMirror.version.json"
 $buildVersionSource = Join-Path $generated "BuildVersion.g.cs"
@@ -36,6 +38,7 @@ $coreAssemblyVersionSource = Join-Path $generated "CursorMirror.Core.AssemblyVer
 $appAssemblyVersionSource = Join-Path $generated "CursorMirror.App.AssemblyVersion.g.cs"
 $traceToolAssemblyVersionSource = Join-Path $generated "CursorMirror.TraceTool.AssemblyVersion.g.cs"
 $demoAssemblyVersionSource = Join-Path $generated "CursorMirror.Demo.AssemblyVersion.g.cs"
+$calibratorAssemblyVersionSource = Join-Path $generated "CursorMirror.Calibrator.AssemblyVersion.g.cs"
 
 function ConvertTo-CSharpLiteral([string]$Value) {
     return $Value.Replace('\', '\\').Replace('"', '\"')
@@ -105,12 +108,36 @@ using System.Reflection;
 [assembly: AssemblyInformationalVersion("$informationalVersion")]
 "@ | Set-Content -LiteralPath $demoAssemblyVersionSource -Encoding ASCII
 
+@"
+using System.Reflection;
+
+[assembly: AssemblyVersion("$assemblyVersion")]
+[assembly: AssemblyFileVersion("$fileVersion")]
+[assembly: AssemblyInformationalVersion("$informationalVersion")]
+"@ | Set-Content -LiteralPath $calibratorAssemblyVersionSource -Encoding ASCII
+
 $coreSources = @(Get-ChildItem -Path (Join-Path $root "src\CursorMirror.Core") -Recurse -Filter *.cs | ForEach-Object { $_.FullName }) + @($buildVersionSource, $coreAssemblyVersionSource)
 $appCoreSources = @(Get-ChildItem -Path (Join-Path $root "src\CursorMirror.Core") -Recurse -Filter *.cs | Where-Object { $_.FullName -notmatch "\\Properties\\AssemblyInfo\.cs$" } | ForEach-Object { $_.FullName }) + @($buildVersionSource)
 $appSources = @(Get-ChildItem -Path (Join-Path $root "src\CursorMirror.App") -Recurse -Filter *.cs | ForEach-Object { $_.FullName }) + @($appAssemblyVersionSource)
 $traceToolSources = @(Get-ChildItem -Path (Join-Path $root "src\CursorMirror.TraceTool") -Recurse -Filter *.cs | ForEach-Object { $_.FullName }) + @($traceToolAssemblyVersionSource)
 $demoSources = @(Get-ChildItem -Path (Join-Path $root "src\CursorMirror.Demo") -Recurse -Filter *.cs | ForEach-Object { $_.FullName }) + @($demoAssemblyVersionSource)
+$calibratorSources = @(Get-ChildItem -Path (Join-Path $root "src\CursorMirror.Calibrator") -Recurse -Filter *.cs | ForEach-Object { $_.FullName }) + @($calibratorAssemblyVersionSource)
 $testSources = Get-ChildItem -Path (Join-Path $root "tests\CursorMirror.Tests") -Recurse -Filter *.cs | ForEach-Object { $_.FullName }
+
+$windowsWinmd = Get-ChildItem -Path "${env:ProgramFiles(x86)}\Windows Kits\10\UnionMetadata" -Recurse -Filter Windows.winmd -ErrorAction SilentlyContinue |
+    Where-Object { $_.FullName -notmatch "\\Facade\\" } |
+    Sort-Object FullName -Descending |
+    Select-Object -First 1 -ExpandProperty FullName
+if ([string]::IsNullOrWhiteSpace($windowsWinmd)) {
+    throw "Windows.winmd was not found. Install Windows SDK 10.0.22621 or newer to build CursorMirror.Calibrator.exe."
+}
+
+$windowsRuntimeRef = Join-Path $env:WINDIR "Microsoft.NET\Framework64\v4.0.30319\System.Runtime.WindowsRuntime.dll"
+$windowsRuntimeInteropRef = Join-Path $env:WINDIR "Microsoft.NET\Framework64\v4.0.30319\System.Runtime.InteropServices.WindowsRuntime.dll"
+$systemRuntimeRef = Join-Path $env:WINDIR "Microsoft.NET\Framework64\v4.0.30319\System.Runtime.dll"
+if (-not (Test-Path $windowsRuntimeRef) -or -not (Test-Path $windowsRuntimeInteropRef) -or -not (Test-Path $systemRuntimeRef)) {
+    throw ".NET Framework WinRT reference assemblies were not found."
+}
 
 $debugFlag = "/debug+"
 $optimizeFlag = "/optimize-"
@@ -133,6 +160,9 @@ if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 & $csc /nologo /target:winexe /warn:4 $debugFlag $optimizeFlag /out:$demoOut "/win32manifest:$demoManifest" "/win32icon:$icon" /reference:System.dll /reference:System.Core.dll /reference:System.Drawing.dll /reference:System.IO.Compression.dll /reference:System.Runtime.Serialization.dll /reference:System.Windows.Forms.dll /reference:$coreOut $demoSources
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
+& $csc /nologo /target:winexe /warn:4 $debugFlag $optimizeFlag /out:$calibratorOut "/win32manifest:$calibratorManifest" "/win32icon:$icon" /reference:System.dll /reference:System.Core.dll /reference:System.Drawing.dll /reference:System.IO.Compression.dll /reference:System.Runtime.Serialization.dll /reference:System.Windows.Forms.dll /reference:$windowsRuntimeRef /reference:$windowsRuntimeInteropRef /reference:$systemRuntimeRef /reference:$windowsWinmd /reference:$coreOut $calibratorSources
+if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
 & $csc /nologo /target:exe /warn:4 $debugFlag $optimizeFlag /out:$testsOut /reference:System.dll /reference:System.Core.dll /reference:System.Drawing.dll /reference:System.IO.Compression.dll /reference:System.Runtime.Serialization.dll /reference:System.Windows.Forms.dll /reference:$coreOut $testSources
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
@@ -142,4 +172,5 @@ Write-Host "  $coreOut"
 Write-Host "  $appOut"
 Write-Host "  $traceToolOut"
 Write-Host "  $demoOut"
+Write-Host "  $calibratorOut"
 Write-Host "  $testsOut"

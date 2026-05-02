@@ -99,6 +99,7 @@ Recommended extended window styles:
 - The default product prediction model SHOULD use the latest valid pair of polling samples with constant velocity:
   - `velocity = (currentPosition - previousPosition) / dt`;
   - `predictedPosition = currentPosition + velocity * horizonMs * gain`.
+- Experimental prediction models MAY fit velocity from a bounded recent sample window, provided they remain allocation-free after construction, fall back to exact positioning when the fit is low-confidence, and reset stale history after discontinuous cursor samples.
 - The default prediction gain SHOULD be `100%`.
 - Prediction gain MUST be configurable within `50%` to `150%`.
 - The configured prediction gain SHOULD apply to both the DWM-aware polling predictor and the fixed-horizon fallback predictor.
@@ -111,6 +112,11 @@ Recommended extended window styles:
 - A failsafe offset cap MAY be implemented for corrupted input or timestamp bugs, but it MUST be disabled by default or set high enough that normal fast movement is not clipped.
 - The default fixed prediction horizon SHOULD be `8ms`.
 - If DWM timing is available, Cursor Mirror SHOULD choose a next-vblank prediction horizon from DWM composition timing.
+- If an experimental DWM prediction horizon cap is configured, the DWM-aware polling predictor SHOULD clamp the next-vblank horizon to that cap after validating the DWM horizon.
+- If experimental DWM adaptive gain is enabled, the DWM-aware polling predictor SHOULD apply the alternate gain only when recent motion exceeds the configured speed threshold, direction remains consistent, and acceleration remains within the configured acceleration threshold.
+- If experimental DWM adaptive gain is enabled with a reversal cooldown, the DWM-aware polling predictor SHOULD keep using the normal gain for the configured number of samples after a direction reversal.
+- If experimental DWM adaptive gain is enabled with oscillation suppression, the DWM-aware polling predictor SHOULD keep using the normal gain while recent motion stays within the configured span, contains repeated direction reversals, and has low net-displacement efficiency.
+- Experimental DWM adaptive gain MAY bypass an active oscillation suppression latch when recent motion has become consistently one-directional, high-speed, and high-efficiency.
 - If DWM timing is available, Cursor Mirror SHOULD schedule its normal runtime polling and overlay movement tick near the upcoming DWM vblank instead of relying only on a general-purpose UI timer.
 - The DWM-synchronized runtime scheduler SHOULD select the next distinct target vblank and use a one-shot wait until the configured lead time before that target, then dispatch `GetCursorPos` polling and overlay movement onto the dedicated overlay runtime thread.
 - After a target vblank has been requested, DWM reports that are still within the same-frame neighborhood of that target SHOULD be treated as the same target and MUST NOT generate an additional runtime tick.

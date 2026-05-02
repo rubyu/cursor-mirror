@@ -119,6 +119,22 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that copied icon handles and bitmap resources are disposed on both success and failure paths.
   Refs: Sections 4.3, 6.1.
 
+- COT-MCU-5 - Dark pixel bounds detection
+  Verify that calibration frame analysis detects a bounding rectangle for dark pixels in a synthetic BGRA frame without capturing the screen.
+  Refs: Section 13.4.
+
+- COT-MCU-6 - Calibration summary separation
+  Verify that calibration summary calculation derives baseline dark bounds and estimated separation values from synthetic frame measurements.
+  Refs: Section 13.4.
+
+- COT-MCU-7 - Calibration motion pattern coverage
+  Verify that the calibrator motion suite exposes deterministic compact pattern definitions covering multiple speed ranges, linear movement, quadratic easing, cubic easing, rapid reversal, sinusoidal sweep, short jitter, and stationary holds without launching the calibrator or moving the real cursor.
+  Refs: Section 13.2.
+
+- COT-MCU-8 - Calibration pattern summary separation
+  Verify that calibration summary calculation includes per-pattern frame counts and estimated separation metrics from synthetic frame measurements.
+  Refs: Section 13.4.
+
 #### A.4.O Overlay Window Behavior
 ##### Unit
 - COT-MOU-1 - Extended styles
@@ -269,6 +285,30 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that the configured prediction gain is applied to DWM-aware next-vblank prediction.
   Refs: Sections 4.4, 4.4.2.
 
+- COT-MOU-38 - DWM prediction horizon cap controls projection
+  Verify that an explicitly configured DWM prediction horizon cap limits the DWM-aware next-vblank projection after DWM timing has been accepted.
+  Refs: Section 4.4.2.
+
+- COT-MOU-39 - DWM adaptive gain controls fast linear projection
+  Verify that experimental DWM adaptive gain applies the alternate gain to high-speed, direction-consistent, low-acceleration motion.
+  Refs: Section 4.4.2.
+
+- COT-MOU-40 - DWM adaptive gain cooldown after reversal
+  Verify that experimental DWM adaptive gain keeps the normal gain for the configured sample count immediately after a direction reversal.
+  Refs: Section 4.4.2.
+
+- COT-MOU-41 - DWM adaptive gain oscillation latch
+  Verify that experimental DWM adaptive gain keeps the normal gain after recent small-span motion has repeated reversals and low net-displacement efficiency.
+  Refs: Section 4.4.2.
+
+- COT-MOU-42 - DWM adaptive gain fast linear override
+  Verify that experimental DWM adaptive gain can resume the alternate gain during a high-speed, high-efficiency, one-directional motion even when an oscillation suppression latch is still active.
+  Refs: Section 4.4.2.
+
+- COT-MOU-43 - DWM least-squares prediction
+  Verify that the experimental DWM least-squares prediction model fits a linear recent sample window and predicts using the DWM horizon.
+  Refs: Section 4.4.2.
+
 #### A.4.T Tray and Application Lifetime
 ##### Unit
 - COT-MTU-1 - Tray icon created
@@ -318,7 +358,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Section 4.4.1.
 
 - COT-MSU-3 - Timing validation
-  Verify that fade duration, movement idle delay, idle fade delay, idle opacity, prediction gain, and prediction timing values outside their documented ranges are rejected or clamped consistently at the settings boundary.
+  Verify that fade duration, movement idle delay, idle fade delay, idle opacity, prediction gain, prediction timing, and experimental DWM adaptive prediction values outside their documented ranges are rejected or clamped consistently at the settings boundary.
   Refs: Sections 4.4.1, 4.4.1.1, 4.4.2.
 
 - COT-MSU-4 - Settings serialization round trip

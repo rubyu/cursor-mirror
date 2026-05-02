@@ -53,6 +53,7 @@ CursorMirror.exe
 CursorMirror.Core.dll
 CursorMirror.TraceTool.exe
 CursorMirror.Demo.exe
+CursorMirror.Calibrator.exe
 README.md
 LICENSE
 ```
@@ -92,6 +93,14 @@ CursorMirror.Demo.exe
 ```
 
 The demo app is a separate Windows app for recording demonstrations and comparing cursor visibility across tools. It can run fullscreen or at `640 x 480`, `1280 x 720`, and `1920 x 1080` presets, with `640 x 480` as the default, moves the real Windows cursor from the left edge along a deterministic path, and can show or hide its own Cursor Mirror overlay. Demo language, display mode, speed, overlay, and movement settings are saved per user and restored on the next launch. If demo settings cannot be restored, the demo shows a warning, uses defaults, and attempts to reset the demo settings file. When the built-in overlay is enabled, it uses the same prediction, movement-translucency, and idle-fade settings as the main app. If the main tray app is already running while the demo overlay is enabled, the demo warns before starting and can request the tray app to exit. If the user moves the mouse during the demo, it switches to Free mode and stops injecting cursor movement; Auto mode resumes from the left edge after 3 seconds without user input. Press any keyboard key while the demo is running to return to the startup view.
+
+The package also includes a calibrator app:
+
+```text
+CursorMirror.Calibrator.exe
+```
+
+The calibrator runs a white full-screen measurement scene on the primary display, moves the real cursor through deterministic patterns, and captures frames with Windows Graphics Capture. After a run, use the Save button to write `frames.csv` plus `metrics.json` in a compressed calibration package; raw frames are not saved by default. For automation, pass an explicit output path, such as `--auto-run --duration-seconds 5 --output calibration.zip --exit-after-run`. During calibration, low-level mouse input is blocked so accidental mouse movement does not corrupt the run; pressing any keyboard key stops calibration and releases the mouse hook.
 
 Package without running tests:
 
