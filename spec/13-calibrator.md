@@ -14,6 +14,11 @@
 - Movement samples MUST be evaluated from the current elapsed time during calibration.
 - The default movement suite SHOULD include multiple speed ranges and at least linear, quadratic easing, cubic easing, rapid reversal, sinusoidal sweep, short jitter, and stationary hold patterns.
 - The calibrator MUST run a Cursor Mirror overlay in-process for measurement unless a later specification defines another explicit comparison mode.
+- The calibrator MUST support runtime modes for the measured overlay.
+- The default runtime mode MUST be `ProductRuntime`, which uses the same product overlay runtime path as the main application, including the high-frequency cursor sampler and DWM-synchronized runtime scheduler.
+- The existing direct timer-driven measurement path MUST remain available as `SimpleTimer` for diagnostic comparison.
+- The interactive UI MUST allow selecting the runtime mode before calibration starts and MUST disable that selector while calibration is running.
+- Measurement SHOULD ignore a short startup warm-up period. The `ProductRuntime` warm-up MAY be longer than the `SimpleTimer` warm-up because it starts the product overlay runtime thread and sampler.
 - The calibrator MUST use Windows Graphics Capture for frame acquisition when supported by the operating system.
 - The calibrator MUST capture the real Windows cursor in the captured frames when the operating system exposes that option.
 
@@ -31,10 +36,11 @@
 - The calibrator MAY support an explicit command-line output path for automation. When that output path is provided, an auto-run calibration MAY save to that path without showing the save-file dialog.
 - The calibrator MAY support command-line prediction setting overrides for controlled experiments, including prediction enabled state, prediction model, prediction gain, prediction horizon, DWM prediction horizon cap, DWM adaptive gain parameters, DWM adaptive reversal cooldown, DWM adaptive oscillation suppression, and prediction idle reset.
 - Command-line prediction model names SHOULD accept the same external model names as the UI: `ConstantVelocity` and `LeastSquares`.
+- The calibrator MAY support command-line runtime mode overrides. Runtime mode names SHOULD accept `ProductRuntime` and `SimpleTimer`.
 - Command-line prediction setting overrides MUST be normalized through the same settings bounds as normal Cursor Mirror settings.
 - The calibrator MUST save a compressed `.zip` package containing `frames.csv` and `metrics.json` only after an explicit user save command or an explicit command-line output path.
 - The frame CSV SHOULD include per-frame motion pattern name, phase name, expected position, expected velocity, dark-pixel bounding boxes, and estimated separation values.
-- The metrics JSON SHOULD include frame count, dark-frame count, baseline dark bounds, average estimated separation, p95 estimated separation, maximum estimated separation, capture source, and per-pattern separation summaries.
+- The metrics JSON SHOULD include frame count, dark-frame count, baseline dark bounds, average estimated separation, p95 estimated separation, maximum estimated separation, capture source, runtime mode, and per-pattern separation summaries.
 - Dark-pixel analysis SHOULD use a documented threshold and SHOULD operate in memory before writing aggregate results.
 
 ### 13.5 Testing

@@ -135,6 +135,10 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that calibration summary calculation includes per-pattern frame counts and estimated separation metrics from synthetic frame measurements.
   Refs: Section 13.4.
 
+- COT-MCU-9 - Calibration runtime mode parsing
+  Verify that calibrator runtime mode names parse and normalize to `ProductRuntime` by default while keeping `SimpleTimer` available for diagnostics.
+  Refs: Sections 13.2, 13.4.
+
 #### A.4.O Overlay Window Behavior
 ##### Unit
 - COT-MOU-1 - Extended styles
@@ -308,6 +312,10 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 - COT-MOU-43 - DWM least-squares prediction
   Verify that the experimental DWM least-squares prediction model fits a linear recent sample window and predicts using the DWM horizon.
   Refs: Section 4.4.2.
+
+- COT-MOU-44 - High-frequency poller blocking wait
+  Verify that the high-frequency cursor poller fallback uses a blocking wait interval instead of yielding in a tight loop for positive remaining time.
+  Refs: Sections 3.3, 4.4.2.
 
 #### A.4.T Tray and Application Lifetime
 ##### Unit

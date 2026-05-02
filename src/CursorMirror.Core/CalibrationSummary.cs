@@ -31,5 +31,8 @@ namespace CursorMirror
 
         [DataMember(Order = 9)]
         public CalibrationPatternSummary[] PatternSummaries { get; set; }
+
+        [DataMember(Order = 10)]
+        public string RuntimeMode { get; set; }
     }
 }

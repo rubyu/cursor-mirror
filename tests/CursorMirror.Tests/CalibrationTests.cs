@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Drawing;
+using CursorMirror.Calibrator;
 
 namespace CursorMirror.Tests
 {
@@ -11,6 +12,7 @@ namespace CursorMirror.Tests
             suite.Add("COT-MCU-6", CalibrationSummarySeparation);
             suite.Add("COT-MCU-7", CalibrationMotionPatternCoverage);
             suite.Add("COT-MCU-8", CalibrationPatternSummarySeparation);
+            suite.Add("COT-MCU-9", CalibrationRuntimeModeParsing);
         }
 
         // Dark pixel bounds detection [COT-MCU-5]
@@ -139,6 +141,30 @@ namespace CursorMirror.Tests
             }
 
             return false;
+        }
+
+        // Calibration runtime mode parsing and normalization [COT-MCU-9]
+        private static void CalibrationRuntimeModeParsing()
+        {
+            int runtimeMode;
+
+            TestAssert.Equal(CalibrationRuntimeMode.ProductRuntime, CalibrationRuntimeMode.Default, "default runtime mode");
+            TestAssert.True(CalibrationRuntimeMode.TryParse("ProductRuntime", out runtimeMode), "product runtime parse");
+            TestAssert.Equal(CalibrationRuntimeMode.ProductRuntime, runtimeMode, "product runtime value");
+            TestAssert.True(CalibrationRuntimeMode.TryParse("simple-timer", out runtimeMode), "simple timer parse");
+            TestAssert.Equal(CalibrationRuntimeMode.SimpleTimer, runtimeMode, "simple timer value");
+            TestAssert.Equal(CalibrationRuntimeMode.ProductRuntime, CalibrationRuntimeMode.Normalize(999), "unknown runtime mode normalizes to product");
+            TestAssert.Equal("ProductRuntime", CalibrationRuntimeMode.ToExternalName(CalibrationRuntimeMode.ProductRuntime), "product runtime external name");
+            TestAssert.Equal("SimpleTimer", CalibrationRuntimeMode.ToExternalName(CalibrationRuntimeMode.SimpleTimer), "simple timer external name");
+
+            CalibratorRunOptions defaultOptions = CalibratorRunOptions.FromArguments(new string[0]);
+            TestAssert.Equal(CalibrationRuntimeMode.ProductRuntime, defaultOptions.RuntimeMode, "default options runtime mode");
+
+            CalibratorRunOptions simpleOptions = CalibratorRunOptions.FromArguments(new[] { "--runtime-mode", "SimpleTimer" });
+            TestAssert.Equal(CalibrationRuntimeMode.SimpleTimer, simpleOptions.RuntimeMode, "runtime mode option");
+
+            CalibratorRunOptions productOptions = CalibratorRunOptions.FromArguments(new[] { "--simple-runtime", "--product-runtime" });
+            TestAssert.Equal(CalibrationRuntimeMode.ProductRuntime, productOptions.RuntimeMode, "product runtime switch");
         }
     }
 }
