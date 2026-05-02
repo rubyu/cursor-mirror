@@ -148,7 +148,7 @@ namespace CursorMirror.MouseTrace
         private static void WriteMetadata(ZipArchive archive, MouseTraceSnapshot snapshot)
         {
             MouseTraceMetadata metadata = new MouseTraceMetadata();
-            metadata.TraceFormatVersion = 7;
+            metadata.TraceFormatVersion = 8;
             metadata.ProductName = LocalizedStrings.TraceToolTitle;
             metadata.ProductVersion = BuildVersion.InformationalVersion;
             metadata.CreatedUtc = DateTime.UtcNow.ToString("o", CultureInfo.InvariantCulture);
@@ -167,6 +167,8 @@ namespace CursorMirror.MouseTrace
             metadata.RuntimeSchedulerFallbackIntervalMilliseconds = snapshot.RuntimeSchedulerFallbackIntervalMilliseconds;
             metadata.RuntimeSchedulerMaximumDwmSleepMilliseconds = snapshot.RuntimeSchedulerMaximumDwmSleepMilliseconds;
             metadata.RuntimeSchedulerCoalescedTickCount = snapshot.RuntimeSchedulerCoalescedTickCount;
+            metadata.RuntimeSchedulerThreadProfile = snapshot.RuntimeSchedulerThreadProfile;
+            metadata.RuntimeSchedulerCaptureThreadProfile = snapshot.RuntimeSchedulerCaptureThreadProfile;
             metadata.DurationMicroseconds = snapshot.DurationMicroseconds;
             metadata.StopwatchFrequency = Stopwatch.Frequency.ToString(CultureInfo.InvariantCulture);
             metadata.HookMoveIntervalStats = CalculateIntervalStats(snapshot, "move");
@@ -174,7 +176,9 @@ namespace CursorMirror.MouseTrace
             metadata.ReferencePollIntervalStats = CalculateIntervalStats(snapshot, "referencePoll");
             metadata.RuntimeSchedulerPollIntervalStats = CalculateIntervalStats(snapshot, "runtimeSchedulerPoll");
             metadata.RuntimeSchedulerLoopIntervalStats = CalculateIntervalStats(snapshot, "runtimeSchedulerLoop");
-            int dwmTimingEligibleSamples = metadata.PollSampleCount + metadata.RuntimeSchedulerPollSampleCount + metadata.RuntimeSchedulerLoopSampleCount;
+            int dwmTimingEligibleSamples = metadata.PollSampleCount
+                + metadata.RuntimeSchedulerPollSampleCount
+                + metadata.RuntimeSchedulerLoopSampleCount;
             metadata.DwmTimingAvailabilityPercent = dwmTimingEligibleSamples == 0 ? 0 : (metadata.DwmTimingSampleCount * 100.0) / dwmTimingEligibleSamples;
             metadata.OperatingSystemVersion = Environment.OSVersion.VersionString;
             metadata.Is64BitOperatingSystem = Environment.Is64BitOperatingSystem;
@@ -453,7 +457,10 @@ namespace CursorMirror.MouseTrace
                 warnings.Add("reference_poll_interval_p95_exceeds_requested_interval");
             }
 
-            if (metadata.PollSampleCount + metadata.RuntimeSchedulerPollSampleCount + metadata.RuntimeSchedulerLoopSampleCount > 0 && metadata.DwmTimingAvailabilityPercent < 90.0)
+            if (metadata.PollSampleCount
+                + metadata.RuntimeSchedulerPollSampleCount
+                + metadata.RuntimeSchedulerLoopSampleCount > 0
+                && metadata.DwmTimingAvailabilityPercent < 90.0)
             {
                 warnings.Add("dwm_timing_availability_below_90_percent");
             }

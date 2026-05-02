@@ -29,6 +29,7 @@ namespace CursorMirror.Tests
             suite.Add("COT-MLU-15", TraceRuntimeSchedulerCoalescedTicks);
             suite.Add("COT-MLU-16", TraceRuntimeSchedulerDedicatedStaDispatcher);
             suite.Add("COT-MLU-17", TraceRuntimeSchedulerLoopFields);
+            suite.Add("COT-MLU-18", TraceRuntimeSchedulerLatencyProfileMetadata);
         }
 
         // Trace session starts empty [COT-MLU-1]
@@ -270,7 +271,7 @@ namespace CursorMirror.Tests
                     TestAssert.True(csv.Contains("runtimeSchedulerWaitMethod,runtimeSchedulerWaitTargetTicks"), "runtime scheduler wait header");
                     TestAssert.True(csv.Contains(",poll,,,12,22,"), "poll row values");
                     TestAssert.True(csv.Contains("true,60000,1001,166667,123456,42,"), "dwm row values");
-                    TestAssert.True(metadataJson.Contains("\"TraceFormatVersion\":7"), "metadata trace format version");
+                    TestAssert.True(metadataJson.Contains("\"TraceFormatVersion\":8"), "metadata trace format version");
                     TestAssert.True(metadataJson.Contains("\"PollSampleCount\":1"), "metadata poll sample count");
                     TestAssert.True(metadataJson.Contains("\"ReferencePollSampleCount\":1"), "metadata reference poll sample count");
                     TestAssert.True(metadataJson.Contains("\"DwmTimingSampleCount\":1"), "metadata dwm timing sample count");
@@ -541,6 +542,38 @@ namespace CursorMirror.Tests
             TestAssert.Equal(start + 16, snapshot.Samples[0].RuntimeSchedulerWaitTargetTicks.Value, "runtime scheduler wait target");
             TestAssert.Equal(start + 14, snapshot.Samples[0].RuntimeSchedulerSleepStartedTicks.Value, "runtime scheduler sleep started");
             TestAssert.Equal(start + 16, snapshot.Samples[0].RuntimeSchedulerSleepCompletedTicks.Value, "runtime scheduler sleep completed");
+        }
+
+        // Trace runtime scheduler latency profile metadata [COT-MLU-18]
+        private static void TraceRuntimeSchedulerLatencyProfileMetadata()
+        {
+            string directory = NewTestDirectory();
+            try
+            {
+                string path = Path.Combine(directory, "trace.zip");
+                MouseTraceSession session = new MouseTraceSession();
+                long start = 1000;
+                session.Start(start, 8, 2, 1, true, 2, 8, 2);
+                session.SetRuntimeSchedulerThreadProfile("managed=unavailable;mmcss=unavailable");
+                session.SetRuntimeSchedulerCaptureThreadProfile("managed=unavailable;mmcss=unavailable");
+                session.AddRuntimeSchedulerPoll(start + 10, new Point(10, 20), false, new DwmTimingInfo(), false, null, null, start + 10, null);
+                session.Stop(start + 20);
+
+                new MouseTracePackageWriter().Write(path, session.Snapshot());
+
+                using (FileStream stream = File.OpenRead(path))
+                using (ZipArchive archive = new ZipArchive(stream, ZipArchiveMode.Read))
+                using (StreamReader reader = new StreamReader(archive.GetEntry("metadata.json").Open()))
+                {
+                    string metadataJson = reader.ReadToEnd();
+                    TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerThreadProfile\":\"managed=unavailable;mmcss=unavailable\""), "metadata runtime scheduler thread profile");
+                    TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerCaptureThreadProfile\":\"managed=unavailable;mmcss=unavailable\""), "metadata runtime scheduler capture thread profile");
+                }
+            }
+            finally
+            {
+                DeleteDirectory(directory);
+            }
         }
 
         private static string NewTestDirectory()

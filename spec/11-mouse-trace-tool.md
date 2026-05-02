@@ -20,7 +20,7 @@
 - The trace tool SHOULD poll the current cursor position while recording, even when no low-level hook callback is being delivered.
 - The trace tool SHOULD record a product-equivalent cursor polling stream and a separate high-precision reference cursor polling stream.
 - The high-precision reference stream SHOULD target a shorter interval than the product-equivalent stream and MUST be clearly distinguishable in the trace data.
-- The trace tool SHOULD record a DWM-synchronized runtime scheduler polling stream that mirrors Cursor Mirror's normal runtime scheduler.
+- The trace tool SHOULD record a DWM-synchronized runtime scheduler polling stream that mirrors Cursor Mirror's normal one-shot runtime scheduler.
 - The runtime scheduler stream SHOULD decide its wake timing on a background thread and capture the cursor position on a dedicated STA message-pump thread, matching the main application's overlay runtime dispatch shape without sharing the trace tool's visible UI thread.
 - The runtime scheduler background thread SHOULD use the same latency-sensitive priority as Cursor Mirror's normal runtime scheduler.
 - The trace tool SHOULD record Desktop Window Manager timing information while recording when the operating system exposes it.
@@ -121,14 +121,14 @@ For `runtimeSchedulerLoop` samples, the trace SHOULD include:
 - timing-read-started and timing-read-completed QPC ticks around the DWM timing query;
 - decision-completed QPC ticks after scheduler evaluation;
 - whether the loop requested a runtime scheduler tick;
-- requested sleep duration in milliseconds;
+- requested sleep duration or fallback wait hint in milliseconds;
 - wait method used for the scheduler wait, such as high-resolution waitable timer, normal waitable timer, or thread sleep fallback;
-- wait target QPC ticks derived from the requested sleep duration;
+- absolute wait target QPC ticks used by the runtime scheduler loop;
 - sleep-started and sleep-completed QPC ticks;
 - whether DWM timing was usable for the scheduler decision;
 - target vblank, planned tick, and vblank lead values when available.
 
-The product-equivalent `poll` stream SHOULD remain the legacy model input proxy. The `runtimeSchedulerPoll` stream SHOULD be treated as the current product runtime input proxy. The `referencePoll` stream SHOULD be treated as a higher-resolution reference stream for analysis and target reconstruction, not as product-available runtime input.
+The product-equivalent `poll` stream SHOULD remain the legacy model input proxy. The `runtimeSchedulerPoll` stream SHOULD be treated as the current trace runtime input proxy. The `referencePoll` stream SHOULD be treated as a higher-resolution reference stream for analysis and target reconstruction, not as product-available runtime input.
 
 For samples where Desktop Window Manager timing is available, the trace SHOULD include:
 
@@ -156,6 +156,7 @@ Trace metadata SHOULD include:
 - requested product-equivalent polling interval;
 - requested high-precision reference polling interval;
 - requested runtime scheduler wake lead, maximum DWM sleep interval, and fallback interval;
+- runtime scheduler and runtime scheduler capture-thread latency profile summaries, including whether managed priority and MMCSS were applied when observable; both SHOULD use no elevated managed priority and no MMCSS by default;
 - requested high-resolution timer period and whether it was acquired;
 - product-equivalent poll, reference poll, runtime scheduler poll, runtime scheduler loop, hook move, DWM timing sample counts, and coalesced runtime scheduler tick count;
 - observed interval statistics for hook move, product-equivalent poll, reference poll, runtime scheduler poll, and runtime scheduler loop streams;
@@ -177,7 +178,7 @@ Trace metadata SHOULD include:
 - The default package filename SHOULD use the form `cursor-mirror-trace-YYYYMMDD-HHMMSS.zip`.
 - Saving an empty trace MUST fail clearly or be disabled by UI state.
 
-The trace format version for the fields below MUST be `7`.
+The trace format version for the fields below MUST be `8`.
 
 Example `trace.csv` header:
 
@@ -201,7 +202,7 @@ cursor-mirror-trace-20260430-153012.zip
 - High-precision reference polling SHOULD use bounded work per sample and SHOULD stop promptly when recording stops or the tool exits.
 - Runtime scheduler polling SHOULD run only while recording is active.
 - Runtime scheduler loop diagnostics SHOULD run only while recording is active and SHOULD include loop iterations that do not request cursor capture.
-- Runtime scheduler loop diagnostics SHOULD record the absolute wait target used by the current loop and SHOULD distinguish waitable-timer waits that include final fine-wait alignment.
+- Runtime scheduler loop diagnostics SHOULD record the absolute wait target used by the current one-shot loop and SHOULD distinguish waitable-timer waits that include final fine-wait alignment.
 - Runtime scheduler polling MUST avoid overlapping queued capture-thread callbacks.
 - Runtime scheduler polling SHOULD count scheduler ticks that are coalesced because a previous capture-thread callback is still pending.
 - Runtime scheduler polling SHOULD stop promptly when recording stops or the tool exits.
@@ -217,4 +218,5 @@ cursor-mirror-trace-20260430-153012.zip
 ### 11.8 Testing
 - Normal CI MUST NOT launch the trace tool or install a real Windows hook.
 - Unit tests MUST cover trace session state transitions, button enabled state derivation, total and per-source sample counting, duration formatting, output package writing, reference polling sample fields, runtime scheduler polling split timing fields, runtime scheduler loop timing fields, runtime scheduler coalesced tick metadata, dedicated STA dispatch behavior, metadata quality fields, and empty-save behavior.
+- Unit tests SHOULD cover runtime scheduler latency profile metadata without requiring real priority elevation or MMCSS activation.
 - Manual validation MUST cover visible-window startup, real hook recording, start/stop/save behavior, unsaved exit confirmation, real hook cleanup, and saved package readability.

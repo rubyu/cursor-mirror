@@ -3,12 +3,12 @@ namespace CursorMirror.MouseTrace
     public sealed class MouseTraceSnapshot
     {
         public MouseTraceSnapshot(MouseTraceState state, long startTicks, long stopTicks, long durationMicroseconds, MouseTraceEvent[] samples)
-            : this(state, startTicks, stopTicks, durationMicroseconds, samples, 0, 0, 0, false, 0, 0, 0, 0)
+            : this(state, startTicks, stopTicks, durationMicroseconds, samples, 0, 0, 0, false, 0, 0, 0, 0, null, null)
         {
         }
 
         public MouseTraceSnapshot(MouseTraceState state, long startTicks, long stopTicks, long durationMicroseconds, MouseTraceEvent[] samples, int pollIntervalMilliseconds)
-            : this(state, startTicks, stopTicks, durationMicroseconds, samples, pollIntervalMilliseconds, 0, 0, false, 0, 0, 0, 0)
+            : this(state, startTicks, stopTicks, durationMicroseconds, samples, pollIntervalMilliseconds, 0, 0, false, 0, 0, 0, 0, null, null)
         {
         }
 
@@ -35,7 +35,9 @@ namespace CursorMirror.MouseTrace
                 0,
                 0,
                 0,
-                0)
+                0,
+                null,
+                null)
         {
         }
 
@@ -53,6 +55,41 @@ namespace CursorMirror.MouseTrace
             int runtimeSchedulerFallbackIntervalMilliseconds,
             int runtimeSchedulerMaximumDwmSleepMilliseconds,
             int runtimeSchedulerCoalescedTickCount)
+            : this(
+                state,
+                startTicks,
+                stopTicks,
+                durationMicroseconds,
+                samples,
+                pollIntervalMilliseconds,
+                referencePollIntervalMilliseconds,
+                timerResolutionMilliseconds,
+                timerResolutionSucceeded,
+                runtimeSchedulerWakeAdvanceMilliseconds,
+                runtimeSchedulerFallbackIntervalMilliseconds,
+                runtimeSchedulerMaximumDwmSleepMilliseconds,
+                runtimeSchedulerCoalescedTickCount,
+                null,
+                null)
+        {
+        }
+
+        public MouseTraceSnapshot(
+            MouseTraceState state,
+            long startTicks,
+            long stopTicks,
+            long durationMicroseconds,
+            MouseTraceEvent[] samples,
+            int pollIntervalMilliseconds,
+            int referencePollIntervalMilliseconds,
+            int timerResolutionMilliseconds,
+            bool timerResolutionSucceeded,
+            int runtimeSchedulerWakeAdvanceMilliseconds,
+            int runtimeSchedulerFallbackIntervalMilliseconds,
+            int runtimeSchedulerMaximumDwmSleepMilliseconds,
+            int runtimeSchedulerCoalescedTickCount,
+            string runtimeSchedulerThreadProfile,
+            string runtimeSchedulerCaptureThreadProfile)
         {
             State = state;
             StartTicks = startTicks;
@@ -67,6 +104,12 @@ namespace CursorMirror.MouseTrace
             RuntimeSchedulerFallbackIntervalMilliseconds = runtimeSchedulerFallbackIntervalMilliseconds;
             RuntimeSchedulerMaximumDwmSleepMilliseconds = runtimeSchedulerMaximumDwmSleepMilliseconds;
             RuntimeSchedulerCoalescedTickCount = runtimeSchedulerCoalescedTickCount;
+            RuntimeSchedulerThreadProfile = string.IsNullOrWhiteSpace(runtimeSchedulerThreadProfile)
+                ? ThreadLatencyProfile.UnavailableSummary
+                : runtimeSchedulerThreadProfile;
+            RuntimeSchedulerCaptureThreadProfile = string.IsNullOrWhiteSpace(runtimeSchedulerCaptureThreadProfile)
+                ? ThreadLatencyProfile.UnavailableSummary
+                : runtimeSchedulerCaptureThreadProfile;
         }
 
         public MouseTraceState State { get; private set; }
@@ -94,5 +137,9 @@ namespace CursorMirror.MouseTrace
         public int RuntimeSchedulerMaximumDwmSleepMilliseconds { get; private set; }
 
         public int RuntimeSchedulerCoalescedTickCount { get; private set; }
+
+        public string RuntimeSchedulerThreadProfile { get; private set; }
+
+        public string RuntimeSchedulerCaptureThreadProfile { get; private set; }
     }
 }

@@ -121,6 +121,12 @@ namespace CursorMirror.MouseTrace
 
         [DataMember(Order = 39)]
         public MouseTraceIntervalStats RuntimeSchedulerLoopIntervalStats { get; set; }
+
+        [DataMember(Order = 40)]
+        public string RuntimeSchedulerThreadProfile { get; set; }
+
+        [DataMember(Order = 41)]
+        public string RuntimeSchedulerCaptureThreadProfile { get; set; }
     }
 
     [DataContract]

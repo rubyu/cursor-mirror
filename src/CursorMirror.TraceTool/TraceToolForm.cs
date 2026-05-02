@@ -393,8 +393,10 @@ namespace CursorMirror.TraceTool
             Interlocked.Exchange(ref _runtimeSchedulerPollPending, 0);
             _runtimeSchedulerCaptureDispatcher = new StaMessageLoopDispatcher("CursorMirrorTraceRuntimeSchedulerCapture");
             _runtimeSchedulerCaptureDispatcher.Start();
+            _session.SetRuntimeSchedulerCaptureThreadProfile(_runtimeSchedulerCaptureDispatcher.LatencyProfileSummary);
             _runtimeSchedulerWaitTimer = HighResolutionWaitTimer.CreateBestEffort();
             _runtimeSchedulerPollActive = true;
+            _session.SetRuntimeSchedulerThreadProfile(ThreadLatencyProfile.UnavailableSummary);
             _runtimeSchedulerPollThread = new Thread(RuntimeSchedulerPollLoop);
             _runtimeSchedulerPollThread.Name = "CursorMirrorTraceRuntimeSchedulerPoller";
             _runtimeSchedulerPollThread.IsBackground = true;
@@ -441,41 +443,55 @@ namespace CursorMirror.TraceTool
                 long? plannedTickTicks = null;
                 long? vBlankLeadMicroseconds = null;
                 bool tickRequested = false;
-                int sleepMilliseconds;
-                long preferredWaitUntilTicks = 0;
+                int sleepMilliseconds = DwmSynchronizedRuntimeScheduler.FallbackIntervalMilliseconds;
+                long waitTargetTicks = 0;
                 long decisionCompletedTicks;
+                long sleepStartedTicks;
+                long sleepCompletedTicks;
+                string waitMethod;
 
                 if (hasTiming)
                 {
                     DwmSynchronizedRuntimeScheduleDecision decision =
-                        DwmSynchronizedRuntimeScheduler.EvaluateDwmTiming(
+                        DwmSynchronizedRuntimeScheduler.EvaluateOneShotDwmTiming(
                             timingReadCompletedTicks,
                             Stopwatch.Frequency,
                             ToSignedTicks(timing.QpcVBlank),
                             ToSignedTicks(timing.QpcRefreshPeriod),
                             _lastRuntimeSchedulerVBlankTicks,
                             DwmSynchronizedRuntimeScheduler.WakeAdvanceMilliseconds,
-                            DwmSynchronizedRuntimeScheduler.MaximumDwmSleepMilliseconds);
+                            DwmSynchronizedRuntimeScheduler.FallbackIntervalMilliseconds);
                     decisionCompletedTicks = Stopwatch.GetTimestamp();
                     schedulerTimingUsable = decision.IsDwmTimingUsable;
-                    if (decision.TargetVBlankTicks > 0)
+                    if (decision.IsDwmTimingUsable && decision.TargetVBlankTicks > 0)
                     {
                         targetVBlankTicks = decision.TargetVBlankTicks;
                         plannedTickTicks = decision.TargetVBlankTicks - MillisecondsToTicks(DwmSynchronizedRuntimeScheduler.WakeAdvanceMilliseconds);
-                        vBlankLeadMicroseconds = MouseTraceSession.TicksToMicroseconds(decision.TargetVBlankTicks - decisionCompletedTicks);
-                    }
-
-                    if (decision.ShouldTick)
-                    {
-                        _lastRuntimeSchedulerVBlankTicks = decision.TargetVBlankTicks;
-                        QueueRuntimeSchedulerPollSample(true, timing, decision.TargetVBlankTicks);
-                        tickRequested = true;
-                        sleepMilliseconds = 1;
+                        sleepMilliseconds = Math.Max(1, decision.DelayMilliseconds);
+                        waitTargetTicks = decision.WaitUntilTicks;
+                        sleepStartedTicks = Stopwatch.GetTimestamp();
+                        waitMethod = decision.ShouldTick
+                            ? "none"
+                            : SleepRuntimeSchedulerLoop(DwmSynchronizedRuntimeScheduler.FallbackIntervalMilliseconds, waitTargetTicks);
+                        sleepCompletedTicks = Stopwatch.GetTimestamp();
+                        vBlankLeadMicroseconds = MouseTraceSession.TicksToMicroseconds(decision.TargetVBlankTicks - sleepCompletedTicks);
+                        if (_runtimeSchedulerPollActive)
+                        {
+                            _lastRuntimeSchedulerVBlankTicks = decision.TargetVBlankTicks;
+                            QueueRuntimeSchedulerPollSample(true, timing, decision.TargetVBlankTicks);
+                            tickRequested = true;
+                        }
                     }
                     else
                     {
-                        sleepMilliseconds = decision.DelayMilliseconds;
-                        preferredWaitUntilTicks = decision.WaitUntilTicks;
+                        sleepStartedTicks = Stopwatch.GetTimestamp();
+                        waitTargetTicks = DwmSynchronizedRuntimeScheduler.CalculateCurrentWaitTargetTicks(
+                            sleepStartedTicks,
+                            sleepMilliseconds,
+                            0,
+                            Stopwatch.Frequency);
+                        waitMethod = SleepRuntimeSchedulerLoop(sleepMilliseconds, waitTargetTicks);
+                        sleepCompletedTicks = Stopwatch.GetTimestamp();
                     }
                 }
                 else
@@ -483,17 +499,16 @@ namespace CursorMirror.TraceTool
                     decisionCompletedTicks = Stopwatch.GetTimestamp();
                     QueueRuntimeSchedulerPollSample(false, timing, null);
                     tickRequested = true;
-                    sleepMilliseconds = DwmSynchronizedRuntimeScheduler.FallbackIntervalMilliseconds;
+                    sleepStartedTicks = Stopwatch.GetTimestamp();
+                    waitTargetTicks = DwmSynchronizedRuntimeScheduler.CalculateCurrentWaitTargetTicks(
+                        sleepStartedTicks,
+                        sleepMilliseconds,
+                        0,
+                        Stopwatch.Frequency);
+                    waitMethod = SleepRuntimeSchedulerLoop(sleepMilliseconds, waitTargetTicks);
+                    sleepCompletedTicks = Stopwatch.GetTimestamp();
                 }
 
-                long sleepStartedTicks = Stopwatch.GetTimestamp();
-                long waitTargetTicks = DwmSynchronizedRuntimeScheduler.CalculateCurrentWaitTargetTicks(
-                    sleepStartedTicks,
-                    sleepMilliseconds,
-                    preferredWaitUntilTicks,
-                    Stopwatch.Frequency);
-                string waitMethod = SleepRuntimeSchedulerLoop(sleepMilliseconds, waitTargetTicks);
-                long sleepCompletedTicks = Stopwatch.GetTimestamp();
                 _session.AddRuntimeSchedulerLoop(
                     loopStartedTicks,
                     hasTiming,
@@ -820,7 +835,9 @@ namespace CursorMirror.TraceTool
             _runtimeSchedulerLoopCountValue.Text = counts.RuntimeSchedulerLoopSamples.ToString();
             _dwmTimingCountValue.Text = LocalizedStrings.TraceDwmTimingSampleCount(
                 counts.DwmTimingSamples,
-                counts.CursorPollSamples + counts.RuntimeSchedulerPollSamples + counts.RuntimeSchedulerLoopSamples);
+                counts.CursorPollSamples
+                    + counts.RuntimeSchedulerPollSamples
+                    + counts.RuntimeSchedulerLoopSamples);
             _durationValue.Text = MouseTraceFormat.FormatDuration(_session.ElapsedMicroseconds);
         }
     }

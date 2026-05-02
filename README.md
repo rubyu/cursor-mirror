@@ -83,7 +83,7 @@ The release package also includes a diagnostic trace tool:
 CursorMirror.TraceTool.exe
 ```
 
-The trace tool is a separate Windows app for collecting mouse movement samples. It starts and stops recording from buttons in its window and saves traces as compressed `.zip` packages containing `trace.csv` and `metadata.json`. Trace packages include hook movement samples, product-equivalent cursor polling, high-precision reference cursor polling, DWM timing when available, environment metadata, monitor metadata, and capture-quality statistics.
+The trace tool is a separate Windows app for collecting mouse movement samples. It starts and stops recording from buttons in its window and saves traces as compressed `.zip` packages containing `trace.csv` and `metadata.json`. Trace packages include hook movement samples, product-equivalent cursor polling, high-precision reference cursor polling, runtime scheduler samples, DWM timing when available, environment metadata, monitor metadata, and capture-quality statistics.
 
 The package also includes a demo app:
 

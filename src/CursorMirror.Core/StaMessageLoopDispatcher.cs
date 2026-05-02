@@ -12,6 +12,7 @@ namespace CursorMirror
         private Thread _thread;
         private Control _control;
         private Exception _startupException;
+        private string _latencyProfileSummary = ThreadLatencyProfile.UnavailableSummary;
         private volatile bool _stopping;
         private bool _started;
         private bool _disposed;
@@ -28,6 +29,11 @@ namespace CursorMirror
                 Control control = _control;
                 return control != null && control.InvokeRequired;
             }
+        }
+
+        public string LatencyProfileSummary
+        {
+            get { return _latencyProfileSummary; }
         }
 
         public void Start()

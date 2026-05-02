@@ -479,6 +479,10 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that runtime scheduler loop diagnostic samples preserve loop iteration, timing-read start/completion, decision-completion, tick-requested, sleep-requested, wait method, absolute current-loop wait target, sleep-started, and sleep-completed fields.
   Refs: Sections 11.5, 11.8.
 
+- COT-MLU-18 - Trace runtime scheduler latency profile metadata
+  Verify that trace metadata preserves runtime scheduler and runtime scheduler capture-thread latency profile summaries without launching the visible trace tool or requiring real priority elevation or MMCSS activation.
+  Refs: Sections 11.5, 11.8.
+
 #### A.4.E Demo Application and Virtual Pointer Stream
 ##### Unit
 - COT-MEU-1 - Deterministic demo pointer stream

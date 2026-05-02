@@ -18,6 +18,8 @@ namespace CursorMirror.MouseTrace
         private int _runtimeSchedulerFallbackIntervalMilliseconds;
         private int _runtimeSchedulerMaximumDwmSleepMilliseconds;
         private int _runtimeSchedulerCoalescedTickCount;
+        private string _runtimeSchedulerThreadProfile = ThreadLatencyProfile.UnavailableSummary;
+        private string _runtimeSchedulerCaptureThreadProfile = ThreadLatencyProfile.UnavailableSummary;
         private bool _timerResolutionSucceeded;
         private MouseTraceState _state = MouseTraceState.Idle;
 
@@ -182,6 +184,8 @@ namespace CursorMirror.MouseTrace
                 _runtimeSchedulerFallbackIntervalMilliseconds = Math.Max(0, runtimeSchedulerFallbackIntervalMilliseconds);
                 _runtimeSchedulerMaximumDwmSleepMilliseconds = Math.Max(0, runtimeSchedulerMaximumDwmSleepMilliseconds);
                 _runtimeSchedulerCoalescedTickCount = 0;
+                _runtimeSchedulerThreadProfile = ThreadLatencyProfile.UnavailableSummary;
+                _runtimeSchedulerCaptureThreadProfile = ThreadLatencyProfile.UnavailableSummary;
                 _state = MouseTraceState.Recording;
             }
         }
@@ -317,6 +321,32 @@ namespace CursorMirror.MouseTrace
                 if (_state == MouseTraceState.Recording)
                 {
                     _runtimeSchedulerCoalescedTickCount++;
+                }
+            }
+        }
+
+        public void SetRuntimeSchedulerThreadProfile(string profileSummary)
+        {
+            lock (_syncRoot)
+            {
+                if (_state == MouseTraceState.Recording)
+                {
+                    _runtimeSchedulerThreadProfile = string.IsNullOrWhiteSpace(profileSummary)
+                        ? ThreadLatencyProfile.UnavailableSummary
+                        : profileSummary;
+                }
+            }
+        }
+
+        public void SetRuntimeSchedulerCaptureThreadProfile(string profileSummary)
+        {
+            lock (_syncRoot)
+            {
+                if (_state == MouseTraceState.Recording)
+                {
+                    _runtimeSchedulerCaptureThreadProfile = string.IsNullOrWhiteSpace(profileSummary)
+                        ? ThreadLatencyProfile.UnavailableSummary
+                        : profileSummary;
                 }
             }
         }
@@ -551,7 +581,9 @@ namespace CursorMirror.MouseTrace
                     _runtimeSchedulerWakeAdvanceMilliseconds,
                     _runtimeSchedulerFallbackIntervalMilliseconds,
                     _runtimeSchedulerMaximumDwmSleepMilliseconds,
-                    _runtimeSchedulerCoalescedTickCount);
+                    _runtimeSchedulerCoalescedTickCount,
+                    _runtimeSchedulerThreadProfile,
+                    _runtimeSchedulerCaptureThreadProfile);
             }
         }
 

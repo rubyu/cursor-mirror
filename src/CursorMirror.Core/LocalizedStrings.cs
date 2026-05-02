@@ -446,6 +446,8 @@ namespace CursorMirror
                     return "Movement translucency";
                 case "PredictiveOverlayPositioningLabel":
                     return "Predict cursor position";
+                case "PredictionGainLabel":
+                    return "Prediction gain (%)";
                 case "MovingOpacityLabel":
                     return "Moving opacity (%)";
                 case "FadeDurationLabel":
@@ -461,8 +463,6 @@ namespace CursorMirror
                 case "VersionMenuLabel":
                     return "Version";
                 case "UpdateStatusChecking":
-                case "PredictionGainLabel":
-                    return "Prediction gain (%)";
                     return "Update: checking...";
                 case "UpdateStatusUnknown":
                     return "Update: unknown";
@@ -613,6 +613,8 @@ namespace CursorMirror
                     return "移動中に半透明にする";
                 case "PredictiveOverlayPositioningLabel":
                     return "カーソル位置を予測する";
+                case "PredictionGainLabel":
+                    return "予測ゲイン (%)";
                 case "MovingOpacityLabel":
                     return "移動中の不透明度 (%)";
                 case "FadeDurationLabel":
@@ -634,8 +636,6 @@ namespace CursorMirror
                 case "ResetCommand":
                     return "リセット";
                 case "CloseCommand":
-                case "PredictionGainLabel":
-                    return "予測ゲイン (%)";
                     return "閉じる";
                 case "ExitCursorMirrorCommand":
                     return "Cursor Mirror を終了";
