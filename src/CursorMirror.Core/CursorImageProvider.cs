@@ -30,19 +30,13 @@ namespace CursorMirror
         {
             capture = null;
 
-            NativeCursorInfo cursorInfo = new NativeCursorInfo();
-            cursorInfo.cbSize = Marshal.SizeOf(typeof(NativeCursorInfo));
-            if (!_nativeMethods.GetCursorInfo(ref cursorInfo))
+            IntPtr cursorHandle;
+            if (!TryGetCurrentCursorHandle(out cursorHandle))
             {
                 return false;
             }
 
-            if ((cursorInfo.flags & CURSOR_SHOWING) == 0 || cursorInfo.hCursor == IntPtr.Zero)
-            {
-                return false;
-            }
-
-            IntPtr copiedIcon = _nativeMethods.CopyIcon(cursorInfo.hCursor);
+            IntPtr copiedIcon = _nativeMethods.CopyIcon(cursorHandle);
             if (copiedIcon == IntPtr.Zero)
             {
                 return false;
@@ -84,7 +78,7 @@ namespace CursorMirror
                     }
                 }
 
-                capture = new CursorCapture(cursorInfo.hCursor, bitmap, new Point(iconInfo.xHotspot, iconInfo.yHotspot));
+                capture = new CursorCapture(cursorHandle, bitmap, new Point(iconInfo.xHotspot, iconInfo.yHotspot));
                 bitmap = null;
                 return true;
             }
@@ -107,6 +101,25 @@ namespace CursorMirror
 
                 _nativeMethods.DestroyIcon(copiedIcon);
             }
+        }
+
+        public bool TryGetCurrentCursorHandle(out IntPtr cursorHandle)
+        {
+            cursorHandle = IntPtr.Zero;
+            NativeCursorInfo cursorInfo = new NativeCursorInfo();
+            cursorInfo.cbSize = Marshal.SizeOf(typeof(NativeCursorInfo));
+            if (!_nativeMethods.GetCursorInfo(ref cursorInfo))
+            {
+                return false;
+            }
+
+            if ((cursorInfo.flags & CURSOR_SHOWING) == 0 || cursorInfo.hCursor == IntPtr.Zero)
+            {
+                return false;
+            }
+
+            cursorHandle = cursorInfo.hCursor;
+            return true;
         }
 
         private Size GetIconSize(NativeIconInfo iconInfo)

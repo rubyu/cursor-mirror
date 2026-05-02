@@ -63,6 +63,7 @@ namespace CursorMirror
             _thread = new Thread(Run);
             _thread.IsBackground = true;
             _thread.Name = "Cursor Mirror DWM runtime scheduler";
+            _thread.Priority = ThreadPriority.AboveNormal;
             _thread.Start();
         }
 

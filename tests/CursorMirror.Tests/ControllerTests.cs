@@ -17,6 +17,8 @@ namespace CursorMirror.Tests
             suite.Add("COT-MOU-20", PollingMovesOverlayWithoutCapture);
             suite.Add("COT-MOU-21", PollingDwmNextVBlankPrediction);
             suite.Add("COT-MOU-22", PollingNoDwmFallsBackToExactPosition);
+            suite.Add("COT-MOU-28", HookImageRefreshSkipsSameCursorHandle);
+            suite.Add("COT-MOU-29", PollingIgnoresStaleSamples);
             suite.Add("COT-MRU-1", HookCallbackExceptionContainment);
             suite.Add("COT-MDU-3", DispatcherMarshalsToUiThread);
         }
@@ -192,6 +194,53 @@ namespace CursorMirror.Tests
             TestAssert.Equal(new Point(10, 0), overlay.LastLocation, "missing DWM timing exact placement");
             TestAssert.Equal(1L, controller.PredictionCounters.InvalidDwmHorizon, "invalid DWM horizon counter");
             TestAssert.Equal(1L, controller.PredictionCounters.FallbackToHold, "fallback counter");
+            controller.Dispose();
+        }
+
+        // Hook image refresh skips unchanged cursor handles [COT-MOU-28]
+        private static void HookImageRefreshSkipsSameCursorHandle()
+        {
+            FakeCursorImageProvider provider = new FakeCursorImageProvider();
+            FakeOverlayPresenter overlay = new FakeOverlayPresenter();
+            FakeClock clock = new FakeClock();
+            provider.EnqueueCapture(new CursorCapture(new IntPtr(1), new Bitmap(16, 16), new Point(0, 0)));
+            CursorMirrorController controller = new CursorMirrorController(provider, overlay, new ImmediateDispatcher(), CursorMirrorSettings.Default(), clock);
+
+            clock.Now = 0;
+            controller.UpdateAt(new Point(10, 10));
+            clock.Now = 10;
+            LowLevelMouseHook.MSLLHOOKSTRUCT data = new LowLevelMouseHook.MSLLHOOKSTRUCT();
+            data.pt.x = 20;
+            data.pt.y = 20;
+            controller.HandleMouseEvent(LowLevelMouseHook.MouseEvent.WM_MOUSEMOVE, data);
+
+            TestAssert.Equal(1, provider.CaptureCallCount, "unchanged cursor handle should not recapture inside refresh interval");
+            TestAssert.Equal(1, overlay.ShowCount, "unchanged cursor handle should not redraw image");
+            controller.Dispose();
+        }
+
+        // Polling ignores stale samples [COT-MOU-29]
+        private static void PollingIgnoresStaleSamples()
+        {
+            FakeCursorImageProvider provider = new FakeCursorImageProvider();
+            FakeOverlayPresenter overlay = new FakeOverlayPresenter();
+            FakeClock clock = new FakeClock();
+            FakeCursorPoller poller = new FakeCursorPoller();
+            CursorMirrorSettings settings = CursorMirrorSettings.Default();
+            settings.PredictionEnabled = false;
+            provider.EnqueueCapture(new CursorCapture(new IntPtr(1), new Bitmap(16, 16), new Point(0, 0)));
+            CursorMirrorController controller = new CursorMirrorController(provider, overlay, new ImmediateDispatcher(), settings, clock, poller);
+
+            controller.UpdateAt(new Point(0, 0));
+            poller.EnqueueSample(PollSample(new Point(10, 0), 100, false, 0, 0));
+            poller.EnqueueSample(PollSample(new Point(20, 0), 90, false, 0, 0));
+            clock.Now = 10;
+            controller.Tick();
+            clock.Now = 20;
+            controller.Tick();
+
+            TestAssert.Equal(new Point(10, 0), overlay.LastLocation, "stale poll sample must not move overlay");
+            TestAssert.Equal(1L, controller.PredictionCounters.StalePollSamples, "stale sample counter");
             controller.Dispose();
         }
 

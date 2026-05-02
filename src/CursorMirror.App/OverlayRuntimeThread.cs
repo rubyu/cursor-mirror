@@ -106,6 +106,7 @@ namespace CursorMirror
             OverlayWindow overlayWindow = null;
             CursorMirrorController controller = null;
             DwmSynchronizedRuntimeScheduler runtimeScheduler = null;
+            HighFrequencyCursorPoller cursorPoller = null;
 
             try
             {
@@ -118,13 +119,15 @@ namespace CursorMirror
                 }
 
                 ControlDispatcher dispatcher = new ControlDispatcher(overlayWindow);
+                cursorPoller = new HighFrequencyCursorPoller();
+                cursorPoller.Start();
                 controller = new CursorMirrorController(
                     new CursorImageProvider(),
                     overlayWindow,
                     dispatcher,
                     _initialSettings,
                     new SystemClock(),
-                    new CursorPoller());
+                    cursorPoller);
                 runtimeScheduler = new DwmSynchronizedRuntimeScheduler(dispatcher, RunRuntimeTick);
 
                 lock (_sync)
@@ -150,6 +153,11 @@ namespace CursorMirror
                 if (runtimeScheduler != null)
                 {
                     runtimeScheduler.Dispose();
+                }
+
+                if (cursorPoller != null)
+                {
+                    cursorPoller.Dispose();
                 }
 
                 if (controller != null)
