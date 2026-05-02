@@ -10,6 +10,11 @@ namespace CursorMirror
         private readonly CheckBox _predictionCheckBox;
         private readonly CheckBox _movementTranslucencyCheckBox;
         private readonly CheckBox _idleFadeCheckBox;
+        private Label _movingOpacityLabel;
+        private Label _fadeDurationLabel;
+        private Label _idleDelayLabel;
+        private Label _idleFadeOpacityLabel;
+        private Label _idleFadeDelaySecondsLabel;
         private readonly NumericUpDown _movingOpacityInput;
         private readonly NumericUpDown _fadeDurationInput;
         private readonly NumericUpDown _idleDelayInput;
@@ -28,6 +33,7 @@ namespace CursorMirror
 
             Text = LocalizedStrings.SettingsTitle;
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Icon = AppIcon.Load();
             MaximizeBox = false;
             MinimizeBox = false;
             ShowInTaskbar = false;
@@ -53,13 +59,17 @@ namespace CursorMirror
             _movementTranslucencyCheckBox = new CheckBox();
             _movementTranslucencyCheckBox.Text = LocalizedStrings.MovementTranslucencyLabel;
             _movementTranslucencyCheckBox.AutoSize = true;
-            _movementTranslucencyCheckBox.CheckedChanged += delegate { ApplyFromControls(); };
+            _movementTranslucencyCheckBox.CheckedChanged += delegate
+            {
+                UpdateMovementTranslucencyInputState();
+                ApplyFromControls();
+            };
             layout.Controls.Add(_movementTranslucencyCheckBox, 0, 1);
             layout.SetColumnSpan(_movementTranslucencyCheckBox, 2);
 
-            _movingOpacityInput = AddNumberRow(layout, 2, LocalizedStrings.MovingOpacityLabel, CursorMirrorSettings.MinimumMovingOpacityPercent, CursorMirrorSettings.MaximumMovingOpacityPercent);
-            _fadeDurationInput = AddNumberRow(layout, 3, LocalizedStrings.FadeDurationLabel, CursorMirrorSettings.MinimumFadeDurationMilliseconds, CursorMirrorSettings.MaximumFadeDurationMilliseconds);
-            _idleDelayInput = AddNumberRow(layout, 4, LocalizedStrings.IdleDelayLabel, CursorMirrorSettings.MinimumIdleDelayMilliseconds, CursorMirrorSettings.MaximumIdleDelayMilliseconds);
+            _movingOpacityInput = AddNumberRow(layout, 2, LocalizedStrings.MovingOpacityLabel, CursorMirrorSettings.MinimumMovingOpacityPercent, CursorMirrorSettings.MaximumMovingOpacityPercent, out _movingOpacityLabel);
+            _fadeDurationInput = AddNumberRow(layout, 3, LocalizedStrings.FadeDurationLabel, CursorMirrorSettings.MinimumFadeDurationMilliseconds, CursorMirrorSettings.MaximumFadeDurationMilliseconds, out _fadeDurationLabel);
+            _idleDelayInput = AddNumberRow(layout, 4, LocalizedStrings.IdleDelayLabel, CursorMirrorSettings.MinimumIdleDelayMilliseconds, CursorMirrorSettings.MaximumIdleDelayMilliseconds, out _idleDelayLabel);
 
             _idleFadeCheckBox = new CheckBox();
             _idleFadeCheckBox.Text = LocalizedStrings.IdleFadeLabel;
@@ -72,8 +82,8 @@ namespace CursorMirror
             layout.Controls.Add(_idleFadeCheckBox, 0, 5);
             layout.SetColumnSpan(_idleFadeCheckBox, 2);
 
-            _idleFadeOpacityInput = AddNumberRow(layout, 6, LocalizedStrings.IdleOpacityLabel, CursorMirrorSettings.MinimumIdleOpacityPercent, CursorMirrorSettings.MaximumIdleOpacityPercent);
-            _idleFadeDelaySecondsInput = AddNumberRow(layout, 7, LocalizedStrings.IdleFadeDelayLabel, CursorMirrorSettings.MinimumIdleFadeDelayMilliseconds / 1000, CursorMirrorSettings.MaximumIdleFadeDelayMilliseconds / 1000);
+            _idleFadeOpacityInput = AddNumberRow(layout, 6, LocalizedStrings.IdleOpacityLabel, CursorMirrorSettings.MinimumIdleOpacityPercent, CursorMirrorSettings.MaximumIdleOpacityPercent, out _idleFadeOpacityLabel);
+            _idleFadeDelaySecondsInput = AddNumberRow(layout, 7, LocalizedStrings.IdleFadeDelayLabel, CursorMirrorSettings.MinimumIdleFadeDelayMilliseconds / 1000, CursorMirrorSettings.MaximumIdleFadeDelayMilliseconds / 1000, out _idleFadeDelaySecondsLabel);
 
             FlowLayoutPanel buttons = new FlowLayoutPanel();
             buttons.Dock = DockStyle.Fill;
@@ -132,9 +142,9 @@ namespace CursorMirror
             }
         }
 
-        private NumericUpDown AddNumberRow(TableLayoutPanel layout, int row, string labelText, int minimum, int maximum)
+        private NumericUpDown AddNumberRow(TableLayoutPanel layout, int row, string labelText, int minimum, int maximum, out Label label)
         {
-            Label label = new Label();
+            label = new Label();
             label.Text = labelText;
             label.AutoSize = true;
             label.Anchor = AnchorStyles.Left;
@@ -170,6 +180,7 @@ namespace CursorMirror
                 _loading = false;
             }
 
+            UpdateMovementTranslucencyInputState();
             UpdateIdleFadeInputState();
         }
 
@@ -195,8 +206,21 @@ namespace CursorMirror
         private void UpdateIdleFadeInputState()
         {
             bool enabled = _idleFadeCheckBox.Checked;
+            _idleFadeOpacityLabel.Enabled = enabled;
             _idleFadeOpacityInput.Enabled = enabled;
+            _idleFadeDelaySecondsLabel.Enabled = enabled;
             _idleFadeDelaySecondsInput.Enabled = enabled;
+        }
+
+        private void UpdateMovementTranslucencyInputState()
+        {
+            bool enabled = _movementTranslucencyCheckBox.Checked;
+            _movingOpacityLabel.Enabled = enabled;
+            _movingOpacityInput.Enabled = enabled;
+            _fadeDurationLabel.Enabled = enabled;
+            _fadeDurationInput.Enabled = enabled;
+            _idleDelayLabel.Enabled = enabled;
+            _idleDelayInput.Enabled = enabled;
         }
     }
 }
