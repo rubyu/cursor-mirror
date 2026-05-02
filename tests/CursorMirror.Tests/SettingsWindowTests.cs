@@ -14,6 +14,7 @@ namespace CursorMirror.Tests
             suite.Add("COT-MSU-13", MovementTranslucencyDependentControlsDisabled);
             suite.Add("COT-MSU-14", SettingsWindowUsesApplicationIcon);
             suite.Add("COT-MSU-15", PredictionGainDependentControlDisabled);
+            suite.Add("COT-MSU-16", PredictionModelSelection);
         }
 
         // Movement translucency dependent controls [COT-MSU-13]
@@ -115,22 +116,69 @@ namespace CursorMirror.Tests
                     using (SettingsWindow window = new SettingsWindow(controller))
                     {
                         CheckBox predictionCheckBox = GetField<CheckBox>(window, "_predictionCheckBox");
+                        Label predictionModelLabel = GetField<Label>(window, "_predictionModelLabel");
+                        ComboBox predictionModelInput = GetField<ComboBox>(window, "_predictionModelInput");
                         Label predictionGainLabel = GetField<Label>(window, "_predictionGainLabel");
                         NumericUpDown predictionGainInput = GetField<NumericUpDown>(window, "_predictionGainInput");
 
+                        TestAssert.True(predictionModelLabel.Enabled, "prediction model label initially enabled");
+                        TestAssert.True(predictionModelInput.Enabled, "prediction model input initially enabled");
                         TestAssert.True(predictionGainLabel.Enabled, "prediction gain label initially enabled");
                         TestAssert.True(predictionGainInput.Enabled, "prediction gain input initially enabled");
 
                         predictionCheckBox.Checked = false;
 
+                        TestAssert.False(predictionModelLabel.Enabled, "prediction model label disabled");
+                        TestAssert.False(predictionModelInput.Enabled, "prediction model input disabled");
                         TestAssert.False(predictionGainLabel.Enabled, "prediction gain label disabled");
                         TestAssert.False(predictionGainInput.Enabled, "prediction gain input disabled");
                         TestAssert.False(controller.CurrentSettings.PredictionEnabled, "prediction setting updated");
 
                         predictionCheckBox.Checked = true;
 
+                        TestAssert.True(predictionModelLabel.Enabled, "prediction model label re-enabled");
+                        TestAssert.True(predictionModelInput.Enabled, "prediction model input re-enabled");
                         TestAssert.True(predictionGainLabel.Enabled, "prediction gain label re-enabled");
                         TestAssert.True(predictionGainInput.Enabled, "prediction gain input re-enabled");
+                    }
+                }
+                finally
+                {
+                    DeleteDirectory(directory);
+                }
+            });
+        }
+
+        // Prediction model selection [COT-MSU-16]
+        private static void PredictionModelSelection()
+        {
+            RunOnStaThread(delegate
+            {
+                string directory = NewTestDirectory();
+                try
+                {
+                    SettingsController controller = new SettingsController(
+                        new SettingsStore(Path.Combine(directory, "settings.json")),
+                        CursorMirrorSettings.Default(),
+                        delegate { },
+                        delegate { });
+
+                    using (SettingsWindow window = new SettingsWindow(controller))
+                    {
+                        ComboBox predictionModelInput = GetField<ComboBox>(window, "_predictionModelInput");
+
+                        TestAssert.Equal(2, predictionModelInput.Items.Count, "prediction model option count");
+                        TestAssert.Equal("ConstantVelocity", predictionModelInput.Items[0].ToString(), "constant velocity option");
+                        TestAssert.Equal("LeastSquares (default)", predictionModelInput.Items[1].ToString(), "least-squares default option");
+                        TestAssert.Equal(1, predictionModelInput.SelectedIndex, "least-squares selected by default");
+
+                        predictionModelInput.SelectedIndex = 0;
+
+                        TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, controller.CurrentSettings.DwmPredictionModel, "constant velocity selection applied");
+
+                        predictionModelInput.SelectedIndex = 1;
+
+                        TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelLeastSquares, controller.CurrentSettings.DwmPredictionModel, "least-squares selection applied");
                     }
                 }
                 finally

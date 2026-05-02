@@ -23,6 +23,7 @@ namespace CursorMirror.Tests
             TestAssert.Equal(0, settings.SpeedIndex, "default speed is normal");
             TestAssert.True(settings.MirrorCursorEnabled, "default mirror cursor enabled");
             TestAssert.True(settings.CursorSettings.PredictionEnabled, "default prediction enabled");
+            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelLeastSquares, settings.CursorSettings.DwmPredictionModel, "default prediction model");
             TestAssert.Equal(100, settings.CursorSettings.PredictionGainPercent, "default prediction gain");
             TestAssert.True(settings.CursorSettings.IdleFadeEnabled, "default idle fade enabled");
 
@@ -52,6 +53,7 @@ namespace CursorMirror.Tests
                 settings.SpeedIndex = 2;
                 settings.MirrorCursorEnabled = false;
                 settings.CursorSettings.PredictionEnabled = false;
+                settings.CursorSettings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelConstantVelocity;
                 settings.CursorSettings.PredictionGainPercent = 90;
                 settings.CursorSettings.MovingOpacityPercent = 42;
                 settings.CursorSettings.IdleFadeEnabled = false;
@@ -66,6 +68,7 @@ namespace CursorMirror.Tests
                 TestAssert.Equal(2, loaded.SpeedIndex, "loaded speed");
                 TestAssert.False(loaded.MirrorCursorEnabled, "loaded mirror cursor flag");
                 TestAssert.False(loaded.CursorSettings.PredictionEnabled, "loaded prediction flag");
+                TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, loaded.CursorSettings.DwmPredictionModel, "loaded prediction model");
                 TestAssert.Equal(90, loaded.CursorSettings.PredictionGainPercent, "loaded prediction gain");
                 TestAssert.Equal(42, loaded.CursorSettings.MovingOpacityPercent, "loaded moving opacity");
                 TestAssert.False(loaded.CursorSettings.IdleFadeEnabled, "loaded idle fade flag");
@@ -129,17 +132,20 @@ namespace CursorMirror.Tests
         {
             DemoOverlayControlState mirrorDisabled = DemoOverlayControlState.From(false, true, true, true);
             TestAssert.False(mirrorDisabled.OverlaySettingsEnabled, "mirror disabled overlay settings");
+            TestAssert.False(mirrorDisabled.PredictionModelEnabled, "mirror disabled prediction model");
             TestAssert.False(mirrorDisabled.PredictionGainEnabled, "mirror disabled prediction gain");
             TestAssert.False(mirrorDisabled.MovementTranslucencyInputsEnabled, "mirror disabled movement inputs");
             TestAssert.False(mirrorDisabled.IdleFadeInputsEnabled, "mirror disabled idle fade inputs");
 
             DemoOverlayControlState featureDisabled = DemoOverlayControlState.From(true, false, false, false);
             TestAssert.True(featureDisabled.OverlaySettingsEnabled, "mirror enabled overlay settings");
+            TestAssert.False(featureDisabled.PredictionModelEnabled, "prediction disabled model");
             TestAssert.False(featureDisabled.PredictionGainEnabled, "prediction disabled gain");
             TestAssert.False(featureDisabled.MovementTranslucencyInputsEnabled, "movement disabled inputs");
             TestAssert.False(featureDisabled.IdleFadeInputsEnabled, "idle fade disabled inputs");
 
             DemoOverlayControlState featureEnabled = DemoOverlayControlState.From(true, true, true, true);
+            TestAssert.True(featureEnabled.PredictionModelEnabled, "prediction enabled model");
             TestAssert.True(featureEnabled.PredictionGainEnabled, "prediction enabled gain");
             TestAssert.True(featureEnabled.MovementTranslucencyInputsEnabled, "movement enabled inputs");
             TestAssert.True(featureEnabled.IdleFadeInputsEnabled, "idle fade enabled inputs");

@@ -40,6 +40,11 @@ namespace CursorMirror
             get { return Get("PredictionGainLabel"); }
         }
 
+        public static string PredictionModelLabel
+        {
+            get { return Get("PredictionModelLabel"); }
+        }
+
         public static string MovingOpacityLabel
         {
             get { return Get("MovingOpacityLabel"); }
@@ -396,6 +401,27 @@ namespace CursorMirror
             return string.Format(CultureInfo.CurrentUICulture, Get("UpdateStatusAheadOfLatestFormat"), latestVersion);
         }
 
+        public static string PredictionModelOptionText(int predictionModel)
+        {
+            string name = PredictionModelName(predictionModel);
+            if (predictionModel == CursorMirrorSettings.DefaultDwmPredictionModel)
+            {
+                return name + " (default)";
+            }
+
+            return name;
+        }
+
+        public static string PredictionModelName(int predictionModel)
+        {
+            if (predictionModel == CursorMirrorSettings.DwmPredictionModelLeastSquares)
+            {
+                return "LeastSquares";
+            }
+
+            return "ConstantVelocity";
+        }
+
         public static string StartupFailureTitle
         {
             get { return ProductName; }
@@ -455,6 +481,8 @@ namespace CursorMirror
                     return "Predict cursor position";
                 case "PredictionGainLabel":
                     return "Prediction gain (%)";
+                case "PredictionModelLabel":
+                    return "Prediction model";
                 case "MovingOpacityLabel":
                     return "Moving opacity (%)";
                 case "FadeDurationLabel":
@@ -624,6 +652,8 @@ namespace CursorMirror
                     return "カーソル位置を予測する";
                 case "PredictionGainLabel":
                     return "予測ゲイン (%)";
+                case "PredictionModelLabel":
+                    return "予測モデル";
                 case "MovingOpacityLabel":
                     return "移動中の不透明度 (%)";
                 case "FadeDurationLabel":

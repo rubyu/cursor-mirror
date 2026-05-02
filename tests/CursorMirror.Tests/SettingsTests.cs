@@ -50,7 +50,7 @@ namespace CursorMirror.Tests
             TestAssert.Equal(450, settings.DwmAdaptiveOscillationMaximumSpanPixels, "default DWM adaptive oscillation span");
             TestAssert.Equal(55, settings.DwmAdaptiveOscillationMaximumEfficiencyPercent, "default DWM adaptive oscillation efficiency");
             TestAssert.Equal(0, settings.DwmAdaptiveOscillationLatchMilliseconds, "default DWM adaptive oscillation latch");
-            TestAssert.Equal(0, settings.DwmPredictionModel, "default DWM prediction model");
+            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelLeastSquares, settings.DwmPredictionModel, "default DWM prediction model");
         }
 
         // Moving opacity validation [COT-MSU-2]
@@ -356,7 +356,7 @@ namespace CursorMirror.Tests
                 TestAssert.False(oldFormat.DwmAdaptiveGainEnabled, "old settings must use DWM adaptive gain default");
                 TestAssert.Equal(0, oldFormat.DwmAdaptiveReversalCooldownSamples, "old settings must use DWM adaptive reversal cooldown default");
                 TestAssert.Equal(0, oldFormat.DwmAdaptiveOscillationWindowSamples, "old settings must use DWM adaptive oscillation window default");
-                TestAssert.Equal(0, oldFormat.DwmPredictionModel, "old settings must use DWM prediction model default");
+                TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelLeastSquares, oldFormat.DwmPredictionModel, "old settings must use DWM prediction model default");
 
                 SettingsController controller = new SettingsController(store, loaded, delegate { }, delegate { });
                 controller.ResetToDefaults();

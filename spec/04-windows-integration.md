@@ -88,6 +88,9 @@ Recommended extended window styles:
 #### 4.4.2 Predictive Overlay Positioning
 - Predictive overlay positioning MUST be enabled by default.
 - The settings UI MUST allow the user to disable predictive overlay positioning.
+- The settings UI MUST allow the user to choose the prediction model.
+- User-facing prediction model names MUST be `ConstantVelocity` and `LeastSquares`.
+- The user-facing prediction model option for the default model MUST append ` (default)` to the model name.
 - The settings UI MUST allow the user to tune the prediction gain as a percentage.
 - Prediction MUST affect only the displayed overlay position.
 - Prediction MUST NOT move the real system cursor, cancel input, remap input, or change click targets.
@@ -96,10 +99,11 @@ Recommended extended window styles:
 - The polling path SHOULD drive normal movement-state updates and overlay position updates using `GetCursorPos`.
 - The product runtime SHOULD keep a high-frequency latest-position sampler and let the DWM-synchronized runtime tick consume the newest fresh sample rather than performing the only cursor read after the tick has already reached the overlay runtime thread.
 - When prediction is disabled, the overlay MUST use exact current pointer coordinates from polling, with the low-level hook path acting only as a fallback before polling has established a usable image and position.
-- The default product prediction model SHOULD use the latest valid pair of polling samples with constant velocity:
+- The `ConstantVelocity` prediction model SHOULD use the latest valid pair of polling samples with constant velocity and remain available as the baseline model:
   - `velocity = (currentPosition - previousPosition) / dt`;
   - `predictedPosition = currentPosition + velocity * horizonMs * gain`.
-- Experimental prediction models MAY fit velocity from a bounded recent sample window, provided they remain allocation-free after construction, fall back to exact positioning when the fit is low-confidence, and reset stale history after discontinuous cursor samples.
+- The default product prediction model SHOULD be `LeastSquares`.
+- The `LeastSquares` prediction model SHOULD fit velocity from a bounded recent sample window, remain allocation-free after construction, fall back to exact positioning when the fit is low-confidence, reset stale history after discontinuous cursor samples, and use the tuned default DWM horizon cap from the current calibration POC.
 - The default prediction gain SHOULD be `100%`.
 - Prediction gain MUST be configurable within `50%` to `150%`.
 - The configured prediction gain SHOULD apply to both the DWM-aware polling predictor and the fixed-horizon fallback predictor.
@@ -169,8 +173,9 @@ Recommended extended window styles:
 - The settings window MUST use the Cursor Mirror application icon rather than the default Windows Forms icon.
 - The settings window MUST provide a control for enabling or disabling movement translucency mode.
 - The settings window MUST provide a control for enabling or disabling predictive overlay positioning.
+- The settings window MUST provide a control for selecting the prediction model.
 - The settings window MUST provide a control for prediction gain.
-- When predictive overlay positioning is disabled in the settings window, the prediction gain control MUST be disabled visually and functionally.
+- When predictive overlay positioning is disabled in the settings window, the prediction model and prediction gain controls MUST be disabled visually and functionally.
 - The settings window MUST provide controls for moving opacity, fade duration, and idle delay.
 - When movement translucency mode is disabled in the settings window, moving opacity, fade duration, and idle delay controls MUST be disabled visually and functionally.
 - The settings window MUST provide controls for idle fade enablement, idle opacity, and idle fade delay.

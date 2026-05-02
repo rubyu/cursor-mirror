@@ -28,7 +28,7 @@ Cursor Mirror starts without showing a normal window. To quit, right-click the n
 
 Right-click the notification-area icon to view the embedded version and best-effort update status. The update check uses GitHub Releases, ignores non-stable release tags, and falls back to an unknown status if the check cannot complete.
 
-Left-click the notification-area icon, or choose `Settings` from the context menu, to adjust prediction, prediction gain, movement translucency, and idle fade. The settings window also includes an `Exit Cursor Mirror` command.
+Left-click the notification-area icon, or choose `Settings` from the context menu, to adjust prediction, the prediction model (`ConstantVelocity` or `LeastSquares`), prediction gain, movement translucency, and idle fade. The settings window also includes an `Exit Cursor Mirror` command.
 
 Settings are saved per user and restored on the next launch. If a settings file cannot be restored, Cursor Mirror shows a warning, uses defaults, and attempts to reset that settings file.
 

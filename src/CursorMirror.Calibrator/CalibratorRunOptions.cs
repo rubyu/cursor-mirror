@@ -281,13 +281,13 @@ namespace CursorMirror.Calibrator
         private static bool TryParsePredictionModel(string value, out int model)
         {
             string normalized = (value ?? string.Empty).Trim().ToLowerInvariant();
-            if (normalized == "lsq" || normalized == "least-squares" || normalized == "least_squares")
+            if (normalized == "lsq" || normalized == "leastsquares" || normalized == "least-squares" || normalized == "least_squares")
             {
                 model = CursorMirrorSettings.DwmPredictionModelLeastSquares;
                 return true;
             }
 
-            if (normalized == "constant" || normalized == "constant-velocity" || normalized == "constant_velocity")
+            if (normalized == "constant" || normalized == "constantvelocity" || normalized == "constant-velocity" || normalized == "constant_velocity")
             {
                 model = CursorMirrorSettings.DwmPredictionModelConstantVelocity;
                 return true;

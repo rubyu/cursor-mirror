@@ -31,7 +31,7 @@ namespace CursorMirror
         public const int DefaultDwmAdaptiveOscillationLatchMilliseconds = 0;
         public const int DwmPredictionModelConstantVelocity = 0;
         public const int DwmPredictionModelLeastSquares = 1;
-        public const int DefaultDwmPredictionModel = DwmPredictionModelConstantVelocity;
+        public const int DefaultDwmPredictionModel = DwmPredictionModelLeastSquares;
 
         public const int MinimumMovingOpacityPercent = 1;
         public const int MaximumMovingOpacityPercent = 100;

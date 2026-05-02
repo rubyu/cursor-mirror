@@ -350,7 +350,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 #### A.4.S Settings UI and Persistence
 ##### Unit
 - COT-MSU-1 - Settings defaults
-  Verify documented default settings: movement translucency enabled, predictive overlay positioning enabled, prediction gain `100%`, idle fade enabled, moving opacity `70%`, fade duration `80ms`, movement idle delay `120ms`, idle fade delay `3s`, and idle opacity `0%`.
+  Verify documented default settings: movement translucency enabled, predictive overlay positioning enabled, prediction model `LeastSquares`, prediction gain `100%`, idle fade enabled, moving opacity `70%`, fade duration `80ms`, movement idle delay `120ms`, idle fade delay `3s`, and idle opacity `0%`.
   Refs: Sections 4.4.1, 4.4.1.1, 4.4.2, 4.5.1.
 
 - COT-MSU-2 - Moving opacity validation
@@ -407,6 +407,10 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 
 - COT-MSU-15 - Prediction gain dependent control
   Verify that disabling predictive overlay positioning in the settings window disables the prediction gain control, and that re-enabling prediction re-enables the control.
+  Refs: Sections 4.4.2, 4.5.1, 6.1.
+
+- COT-MSU-16 - Prediction model selection
+  Verify that the settings window exposes `ConstantVelocity` and `LeastSquares (default)`, selects `LeastSquares` by default, applies model changes immediately, and disables the prediction model control when prediction is disabled.
   Refs: Sections 4.4.2, 4.5.1, 6.1.
 
 #### A.4.D DPI and Multi-Monitor Coordinates
@@ -759,5 +763,5 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Sections 4.5.1, 6.3.
 
 - COT-BVM-9 - Prediction settings manual pass
-  Verify that predictive overlay positioning is enabled by default, can be disabled from the settings window, and returns to exact pointer positioning when disabled.
+  Verify that predictive overlay positioning is enabled by default, `LeastSquares (default)` and `ConstantVelocity` can be selected from the settings window, and disabling prediction returns to exact pointer positioning.
   Refs: Sections 2.3, 4.4.2, 4.5.1, 6.3.

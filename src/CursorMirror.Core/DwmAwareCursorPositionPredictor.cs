@@ -12,6 +12,7 @@ namespace CursorMirror
         private const double FastLinearOverrideMinimumEfficiencyPercent = 75.0;
         private const double FastLinearOverrideMinimumNetPixels = 160.0;
         private const int HistoryCapacity = 64;
+        private const int LeastSquaresDefaultHorizonCapMilliseconds = 8;
         private const int LeastSquaresWindowMilliseconds = 72;
         private const int LeastSquaresMinimumSamples = 4;
         private const double LeastSquaresMinimumEfficiencyPercent = 75.0;
@@ -210,6 +211,7 @@ namespace CursorMirror
                 adaptiveMinimumSpeedPixelsPerSecond,
                 adaptiveMaximumAccelerationPixelsPerSecondSquared,
                 adaptiveReversalCooldownSamples);
+            ApplyPredictionModel(CursorMirrorSettings.DefaultDwmPredictionModel);
         }
 
         public void ApplyIdleResetMilliseconds(int idleResetMilliseconds)
@@ -389,6 +391,7 @@ namespace CursorMirror
             horizonTicks = ApplyHorizonCap(horizonTicks, sample.StopwatchFrequency);
             if (_predictionModel == CursorMirrorSettings.DwmPredictionModelLeastSquares)
             {
+                horizonTicks = ApplyLeastSquaresDefaultHorizonCap(horizonTicks, sample.StopwatchFrequency);
                 PointF leastSquaresPrediction;
                 if (TryPredictLeastSquares(sample, horizonTicks, out leastSquaresPrediction))
                 {
@@ -990,6 +993,22 @@ namespace CursorMirror
             }
 
             long capTicks = (long)Math.Round((_horizonCapMilliseconds * stopwatchFrequency) / 1000.0);
+            if (capTicks <= 0)
+            {
+                return horizonTicks;
+            }
+
+            return Math.Min(horizonTicks, capTicks);
+        }
+
+        private long ApplyLeastSquaresDefaultHorizonCap(long horizonTicks, long stopwatchFrequency)
+        {
+            if (_horizonCapMilliseconds > 0 || stopwatchFrequency <= 0)
+            {
+                return horizonTicks;
+            }
+
+            long capTicks = MillisecondsToTicks(LeastSquaresDefaultHorizonCapMilliseconds, stopwatchFrequency);
             if (capTicks <= 0)
             {
                 return horizonTicks;

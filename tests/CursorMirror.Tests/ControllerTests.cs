@@ -164,6 +164,7 @@ namespace CursorMirror.Tests
             FakeClock clock = new FakeClock();
             FakeCursorPoller poller = new FakeCursorPoller();
             CursorMirrorSettings settings = CursorMirrorSettings.Default();
+            settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelConstantVelocity;
             provider.EnqueueCapture(new CursorCapture(new IntPtr(1), new Bitmap(16, 16), new Point(0, 0)));
             CursorMirrorController controller = new CursorMirrorController(provider, overlay, new ImmediateDispatcher(), settings, clock, poller);
 
@@ -281,6 +282,7 @@ namespace CursorMirror.Tests
             FakeClock clock = new FakeClock();
             FakeCursorPoller poller = new FakeCursorPoller();
             CursorMirrorSettings settings = CursorMirrorSettings.Default();
+            settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelConstantVelocity;
             settings.PredictionGainPercent = 75;
             provider.EnqueueCapture(new CursorCapture(new IntPtr(1), new Bitmap(16, 16), new Point(0, 0)));
             CursorMirrorController controller = new CursorMirrorController(provider, overlay, new ImmediateDispatcher(), settings, clock, poller);
@@ -305,6 +307,7 @@ namespace CursorMirror.Tests
             FakeClock clock = new FakeClock();
             FakeCursorPoller poller = new FakeCursorPoller();
             CursorMirrorSettings settings = CursorMirrorSettings.Default();
+            settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelConstantVelocity;
             settings.DwmPredictionHorizonCapMilliseconds = 8;
             provider.EnqueueCapture(new CursorCapture(new IntPtr(1), new Bitmap(16, 16), new Point(0, 0)));
             CursorMirrorController controller = new CursorMirrorController(provider, overlay, new ImmediateDispatcher(), settings, clock, poller);
@@ -328,6 +331,7 @@ namespace CursorMirror.Tests
             FakeClock clock = new FakeClock();
             FakeCursorPoller poller = new FakeCursorPoller();
             CursorMirrorSettings settings = CursorMirrorSettings.Default();
+            settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelConstantVelocity;
             settings.DwmAdaptiveGainEnabled = true;
             settings.DwmAdaptiveGainPercent = 75;
             settings.DwmAdaptiveMinimumSpeedPixelsPerSecond = 1000;
@@ -356,6 +360,7 @@ namespace CursorMirror.Tests
             FakeClock clock = new FakeClock();
             FakeCursorPoller poller = new FakeCursorPoller();
             CursorMirrorSettings settings = CursorMirrorSettings.Default();
+            settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelConstantVelocity;
             settings.DwmAdaptiveGainEnabled = true;
             settings.DwmAdaptiveGainPercent = 75;
             settings.DwmAdaptiveMinimumSpeedPixelsPerSecond = 1000;
@@ -389,6 +394,7 @@ namespace CursorMirror.Tests
             FakeClock clock = new FakeClock();
             FakeCursorPoller poller = new FakeCursorPoller();
             CursorMirrorSettings settings = CursorMirrorSettings.Default();
+            settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelConstantVelocity;
             settings.DwmAdaptiveGainEnabled = true;
             settings.DwmAdaptiveGainPercent = 75;
             settings.DwmAdaptiveMinimumSpeedPixelsPerSecond = 1000;
@@ -430,6 +436,7 @@ namespace CursorMirror.Tests
             FakeClock clock = new FakeClock();
             FakeCursorPoller poller = new FakeCursorPoller();
             CursorMirrorSettings settings = CursorMirrorSettings.Default();
+            settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelConstantVelocity;
             settings.DwmAdaptiveGainEnabled = true;
             settings.DwmAdaptiveGainPercent = 75;
             settings.DwmAdaptiveMinimumSpeedPixelsPerSecond = 1000;
@@ -494,7 +501,7 @@ namespace CursorMirror.Tests
             controller.Tick();
             controller.Tick();
 
-            TestAssert.Equal(new Point(60, 0), overlay.LastLocation, "least-squares model predicts linear motion");
+            TestAssert.Equal(new Point(58, 0), overlay.LastLocation, "least-squares model predicts linear motion with its default horizon cap");
             controller.Dispose();
         }
 
