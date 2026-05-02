@@ -22,6 +22,7 @@ namespace CursorMirror.Tests
             TestAssert.Equal(0, settings.SpeedIndex, "default speed is normal");
             TestAssert.True(settings.MirrorCursorEnabled, "default mirror cursor enabled");
             TestAssert.True(settings.CursorSettings.PredictionEnabled, "default prediction enabled");
+            TestAssert.True(settings.CursorSettings.IdleFadeEnabled, "default idle fade enabled");
 
             settings.Language = "bad";
             settings.DisplayModeIndex = 99;
@@ -50,6 +51,9 @@ namespace CursorMirror.Tests
                 settings.MirrorCursorEnabled = false;
                 settings.CursorSettings.PredictionEnabled = false;
                 settings.CursorSettings.MovingOpacityPercent = 42;
+                settings.CursorSettings.IdleFadeEnabled = false;
+                settings.CursorSettings.IdleFadeDelayMilliseconds = 5000;
+                settings.CursorSettings.IdleOpacityPercent = 15;
 
                 store.Save(settings);
                 DemoSettings loaded = store.Load();
@@ -60,6 +64,9 @@ namespace CursorMirror.Tests
                 TestAssert.False(loaded.MirrorCursorEnabled, "loaded mirror cursor flag");
                 TestAssert.False(loaded.CursorSettings.PredictionEnabled, "loaded prediction flag");
                 TestAssert.Equal(42, loaded.CursorSettings.MovingOpacityPercent, "loaded moving opacity");
+                TestAssert.False(loaded.CursorSettings.IdleFadeEnabled, "loaded idle fade flag");
+                TestAssert.Equal(5000, loaded.CursorSettings.IdleFadeDelayMilliseconds, "loaded idle fade delay");
+                TestAssert.Equal(15, loaded.CursorSettings.IdleOpacityPercent, "loaded idle opacity");
 
                 string missingFailureMessage;
                 DemoSettings missing = new DemoSettingsStore(Path.Combine(directory, "missing.json")).Load(out missingFailureMessage);

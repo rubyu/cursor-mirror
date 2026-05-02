@@ -7,7 +7,7 @@ namespace CursorMirror.Demo
 {
     public sealed class DemoForm : Form
     {
-        private static readonly Size StartupClientSize = new Size(540, 440);
+        private static readonly Size StartupClientSize = new Size(560, 540);
         private readonly DemoSettingsStore _settingsStore;
         private readonly Panel _startPanel;
         private readonly DemoSceneControl _scene;
@@ -17,15 +17,20 @@ namespace CursorMirror.Demo
         private readonly Label _movingOpacityLabel;
         private readonly Label _fadeDurationLabel;
         private readonly Label _idleDelayLabel;
+        private readonly Label _idleFadeOpacityLabel;
+        private readonly Label _idleFadeDelayLabel;
         private readonly ComboBox _languageInput;
         private readonly ComboBox _displayModeInput;
         private readonly ComboBox _speedInput;
         private readonly CheckBox _mirrorCursorCheckBox;
         private readonly CheckBox _predictionCheckBox;
         private readonly CheckBox _movementTranslucencyCheckBox;
+        private readonly CheckBox _idleFadeCheckBox;
         private readonly NumericUpDown _movingOpacityInput;
         private readonly NumericUpDown _fadeDurationInput;
         private readonly NumericUpDown _idleDelayInput;
+        private readonly NumericUpDown _idleFadeOpacityInput;
+        private readonly NumericUpDown _idleFadeDelaySecondsInput;
         private readonly Label _noteLabel;
         private readonly Button _exitButton;
         private readonly Button _startButton;
@@ -74,7 +79,7 @@ namespace CursorMirror.Demo
             layout.Dock = DockStyle.Fill;
             layout.Padding = new Padding(14);
             layout.ColumnCount = 2;
-            layout.RowCount = 11;
+            layout.RowCount = 14;
             layout.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
             layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 45));
             layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 55));
@@ -105,19 +110,30 @@ namespace CursorMirror.Demo
             _idleDelayInput = AddNumberRow(layout, 8, string.Empty, CursorMirrorSettings.MinimumIdleDelayMilliseconds, CursorMirrorSettings.MaximumIdleDelayMilliseconds, out _idleDelayLabel);
             _idleDelayInput.ValueChanged += delegate { SaveCurrentSettings(); };
 
+            _idleFadeCheckBox = AddCheckBox(layout, 9, string.Empty);
+            _idleFadeCheckBox.CheckedChanged += delegate
+            {
+                UpdateMirrorDependentControls();
+                SaveCurrentSettings();
+            };
+            _idleFadeOpacityInput = AddNumberRow(layout, 10, string.Empty, CursorMirrorSettings.MinimumIdleOpacityPercent, CursorMirrorSettings.MaximumIdleOpacityPercent, out _idleFadeOpacityLabel);
+            _idleFadeOpacityInput.ValueChanged += delegate { SaveCurrentSettings(); };
+            _idleFadeDelaySecondsInput = AddNumberRow(layout, 11, string.Empty, CursorMirrorSettings.MinimumIdleFadeDelayMilliseconds / 1000, CursorMirrorSettings.MaximumIdleFadeDelayMilliseconds / 1000, out _idleFadeDelayLabel);
+            _idleFadeDelaySecondsInput.ValueChanged += delegate { SaveCurrentSettings(); };
+
             _noteLabel = new Label();
             _noteLabel.AutoSize = false;
             _noteLabel.Dock = DockStyle.Fill;
             _noteLabel.Padding = new Padding(0, 8, 0, 0);
             _noteLabel.TextAlign = ContentAlignment.TopLeft;
-            layout.Controls.Add(_noteLabel, 0, 9);
+            layout.Controls.Add(_noteLabel, 0, 12);
             layout.SetColumnSpan(_noteLabel, 2);
 
             FlowLayoutPanel buttons = new FlowLayoutPanel();
             buttons.Dock = DockStyle.Fill;
             buttons.FlowDirection = FlowDirection.RightToLeft;
             buttons.WrapContents = false;
-            layout.Controls.Add(buttons, 0, 10);
+            layout.Controls.Add(buttons, 0, 13);
             layout.SetColumnSpan(buttons, 2);
 
             _exitButton = new Button();
@@ -136,9 +152,20 @@ namespace CursorMirror.Demo
             LoadSettings(initialSettings);
         }
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (_demoRunning)
+            {
+                StopDemo();
+                return true;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            if (_demoRunning && e.KeyCode == Keys.Escape)
+            if (_demoRunning)
             {
                 StopDemo();
                 e.Handled = true;
@@ -184,7 +211,7 @@ namespace CursorMirror.Demo
         private static void ConfigureRows(TableLayoutPanel layout)
         {
             layout.RowStyles.Clear();
-            for (int row = 0; row < 9; row++)
+            for (int row = 0; row < 12; row++)
             {
                 layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
             }
@@ -237,6 +264,9 @@ namespace CursorMirror.Demo
                 _movingOpacityInput.Value = cursorSettings.MovingOpacityPercent;
                 _fadeDurationInput.Value = cursorSettings.FadeDurationMilliseconds;
                 _idleDelayInput.Value = cursorSettings.IdleDelayMilliseconds;
+                _idleFadeCheckBox.Checked = cursorSettings.IdleFadeEnabled;
+                _idleFadeOpacityInput.Value = cursorSettings.IdleOpacityPercent;
+                _idleFadeDelaySecondsInput.Value = cursorSettings.IdleFadeDelayMilliseconds / 1000;
             }
             finally
             {
@@ -257,12 +287,7 @@ namespace CursorMirror.Demo
                     return;
                 }
 
-                CursorMirrorSettings settings = CursorMirrorSettings.Default();
-                settings.PredictionEnabled = _predictionCheckBox.Checked;
-                settings.MovementTranslucencyEnabled = _movementTranslucencyCheckBox.Checked;
-                settings.MovingOpacityPercent = (int)_movingOpacityInput.Value;
-                settings.FadeDurationMilliseconds = (int)_fadeDurationInput.Value;
-                settings.IdleDelayMilliseconds = (int)_idleDelayInput.Value;
+                CursorMirrorSettings settings = BuildCursorSettingsFromControls();
 
                 ApplyDisplayMode();
                 _startPanel.Visible = false;
@@ -344,6 +369,11 @@ namespace CursorMirror.Demo
             _movingOpacityInput.Enabled = enabled;
             _fadeDurationInput.Enabled = enabled;
             _idleDelayInput.Enabled = enabled;
+            _idleFadeCheckBox.Enabled = enabled;
+
+            bool idleFadeEnabled = enabled && _idleFadeCheckBox.Checked;
+            _idleFadeOpacityInput.Enabled = idleFadeEnabled;
+            _idleFadeDelaySecondsInput.Enabled = idleFadeEnabled;
         }
 
         private void LanguageSelectionChanged()
@@ -374,6 +404,9 @@ namespace CursorMirror.Demo
                 _movingOpacityLabel.Text = LocalizedStrings.MovingOpacityLabel;
                 _fadeDurationLabel.Text = LocalizedStrings.FadeDurationLabel;
                 _idleDelayLabel.Text = LocalizedStrings.IdleDelayLabel;
+                _idleFadeCheckBox.Text = LocalizedStrings.IdleFadeLabel;
+                _idleFadeOpacityLabel.Text = LocalizedStrings.IdleOpacityLabel;
+                _idleFadeDelayLabel.Text = LocalizedStrings.IdleFadeDelayLabel;
                 _noteLabel.Text = LocalizedStrings.DemoRealCursorNote;
                 _exitButton.Text = LocalizedStrings.ExitCommand;
                 _startButton.Text = LocalizedStrings.DemoStartCommand;
@@ -444,12 +477,7 @@ namespace CursorMirror.Demo
 
         private DemoSettings BuildDemoSettingsFromControls()
         {
-            CursorMirrorSettings cursorSettings = CursorMirrorSettings.Default();
-            cursorSettings.PredictionEnabled = _predictionCheckBox.Checked;
-            cursorSettings.MovementTranslucencyEnabled = _movementTranslucencyCheckBox.Checked;
-            cursorSettings.MovingOpacityPercent = (int)_movingOpacityInput.Value;
-            cursorSettings.FadeDurationMilliseconds = (int)_fadeDurationInput.Value;
-            cursorSettings.IdleDelayMilliseconds = (int)_idleDelayInput.Value;
+            CursorMirrorSettings cursorSettings = BuildCursorSettingsFromControls();
 
             DemoSettings settings = DemoSettings.Default();
             settings.Language = SelectedLanguage();
@@ -458,6 +486,20 @@ namespace CursorMirror.Demo
             settings.MirrorCursorEnabled = _mirrorCursorCheckBox.Checked;
             settings.CursorSettings = cursorSettings;
             return settings.Normalize();
+        }
+
+        private CursorMirrorSettings BuildCursorSettingsFromControls()
+        {
+            CursorMirrorSettings cursorSettings = CursorMirrorSettings.Default();
+            cursorSettings.PredictionEnabled = _predictionCheckBox.Checked;
+            cursorSettings.MovementTranslucencyEnabled = _movementTranslucencyCheckBox.Checked;
+            cursorSettings.MovingOpacityPercent = (int)_movingOpacityInput.Value;
+            cursorSettings.FadeDurationMilliseconds = (int)_fadeDurationInput.Value;
+            cursorSettings.IdleDelayMilliseconds = (int)_idleDelayInput.Value;
+            cursorSettings.IdleFadeEnabled = _idleFadeCheckBox.Checked;
+            cursorSettings.IdleOpacityPercent = (int)_idleFadeOpacityInput.Value;
+            cursorSettings.IdleFadeDelayMilliseconds = (int)_idleFadeDelaySecondsInput.Value * 1000;
+            return cursorSettings.Normalize();
         }
 
         private string SelectedLanguage()

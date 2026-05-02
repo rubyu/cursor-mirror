@@ -4,9 +4,10 @@
 - Hook lifetime tests MUST cover inactive, activate, double activate, unhook, double unhook, and dispose paths.
 - Coordinate calculation tests MUST cover hot spot alignment, negative coordinates, large cursor images, and monitor-edge positions.
 - Cursor image conversion tests MUST cover successful image creation, invalid handle behavior, and resource disposal behavior.
-- Movement translucency tests MUST cover default settings, disabled behavior, movement entry, movement continuation, idle exit, linear enter easing, linear exit easing, and zero-duration transitions.
+- Movement translucency and idle-fade tests MUST cover default settings, disabled behavior, movement entry, movement continuation, idle exit, idle fade after a stopped pointer, movement recovery from idle fade, linear enter easing, linear exit easing, and zero-duration transitions.
 - Predictive overlay positioning tests MUST cover default settings, disabled behavior, first sample behavior, valid constant-velocity prediction, invalid timestamps, idle reset, reset behavior, negative coordinates, and hot spot placement after prediction.
-- Settings tests MUST cover defaults, validation, range clamping or rejection, serialization, deserialization, missing settings, corrupt settings, reset behavior, and immediate application of changed values.
+- Settings tests MUST cover defaults, validation, range clamping or rejection, serialization, deserialization, missing settings, corrupt settings, reset behavior, immediate application of changed values, and idle-fade setting persistence.
+- Version freshness tests MUST cover stable up-to-date status, stable behind counts, development snapshot status, and invalid release-tag filtering without performing network access.
 - Tray controller tests SHOULD cover exit command dispatch and cleanup idempotence.
 - Settings UI controller tests SHOULD cover settings command dispatch, duplicate-window prevention, close-without-exit behavior, and settings-window exit dispatch.
 - Window style tests SHOULD verify that the overlay sets the expected extended styles.
@@ -32,6 +33,7 @@ Manual validation MUST include:
 
 - normal startup with no visible main window;
 - tray icon appears;
+- tray context menu shows the embedded version and either release freshness or an unknown update status;
 - tray `Exit` terminates the process and removes the tray icon;
 - cursor overlay follows pointer movement;
 - overlay does not intercept clicks;
@@ -40,7 +42,8 @@ Manual validation MUST include:
 - predictive overlay positioning is enabled by default;
 - disabling predictive overlay positioning in settings returns the overlay to exact pointer positioning;
 - movement translucency is visible during pointer movement;
-- movement translucency returns to normal opacity after idle;
+- movement translucency returns to normal opacity after the movement idle delay;
+- idle fade reduces overlay opacity after the configured stopped-pointer delay and restores visibility on the next movement;
 - movement translucency remains readable through the target remote-control environment at default settings;
 - settings window opens from the tray icon and from the tray context menu;
 - settings changes apply without restarting the application;

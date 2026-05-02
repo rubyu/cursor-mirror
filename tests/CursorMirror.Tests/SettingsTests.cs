@@ -32,6 +32,9 @@ namespace CursorMirror.Tests
             TestAssert.Equal(70, settings.MovingOpacityPercent, "default moving opacity");
             TestAssert.Equal(80, settings.FadeDurationMilliseconds, "default fade duration");
             TestAssert.Equal(120, settings.IdleDelayMilliseconds, "default idle delay");
+            TestAssert.True(settings.IdleFadeEnabled, "default idle fade enabled");
+            TestAssert.Equal(3000, settings.IdleFadeDelayMilliseconds, "default idle fade delay");
+            TestAssert.Equal(0, settings.IdleOpacityPercent, "default idle opacity");
             TestAssert.Equal(8, settings.PredictionHorizonMilliseconds, "default prediction horizon");
             TestAssert.Equal(100, settings.PredictionIdleResetMilliseconds, "default prediction idle reset");
         }
@@ -54,22 +57,30 @@ namespace CursorMirror.Tests
             CursorMirrorSettings settings = CursorMirrorSettings.Default();
             settings.FadeDurationMilliseconds = -10;
             settings.IdleDelayMilliseconds = 5;
+            settings.IdleFadeDelayMilliseconds = -1;
+            settings.IdleOpacityPercent = -1;
             settings.PredictionHorizonMilliseconds = -1;
             settings.PredictionIdleResetMilliseconds = 0;
             CursorMirrorSettings low = settings.Normalize();
 
             settings.FadeDurationMilliseconds = 999;
             settings.IdleDelayMilliseconds = 999;
+            settings.IdleFadeDelayMilliseconds = 999999;
+            settings.IdleOpacityPercent = 999;
             settings.PredictionHorizonMilliseconds = 999;
             settings.PredictionIdleResetMilliseconds = 9999;
             CursorMirrorSettings high = settings.Normalize();
 
             TestAssert.Equal(0, low.FadeDurationMilliseconds, "fade duration lower clamp");
             TestAssert.Equal(50, low.IdleDelayMilliseconds, "idle delay lower clamp");
+            TestAssert.Equal(0, low.IdleFadeDelayMilliseconds, "idle fade delay lower clamp");
+            TestAssert.Equal(0, low.IdleOpacityPercent, "idle opacity lower clamp");
             TestAssert.Equal(0, low.PredictionHorizonMilliseconds, "prediction horizon lower clamp");
             TestAssert.Equal(1, low.PredictionIdleResetMilliseconds, "prediction idle reset lower clamp");
             TestAssert.Equal(300, high.FadeDurationMilliseconds, "fade duration upper clamp");
             TestAssert.Equal(500, high.IdleDelayMilliseconds, "idle delay upper clamp");
+            TestAssert.Equal(60000, high.IdleFadeDelayMilliseconds, "idle fade delay upper clamp");
+            TestAssert.Equal(99, high.IdleOpacityPercent, "idle opacity upper clamp");
             TestAssert.Equal(16, high.PredictionHorizonMilliseconds, "prediction horizon upper clamp");
             TestAssert.Equal(1000, high.PredictionIdleResetMilliseconds, "prediction idle reset upper clamp");
         }
@@ -90,6 +101,9 @@ namespace CursorMirror.Tests
                 settings.IdleDelayMilliseconds = 450;
                 settings.PredictionHorizonMilliseconds = 12;
                 settings.PredictionIdleResetMilliseconds = 250;
+                settings.IdleFadeEnabled = false;
+                settings.IdleFadeDelayMilliseconds = 4000;
+                settings.IdleOpacityPercent = 12;
 
                 store.Save(settings);
                 CursorMirrorSettings loaded = store.Load();
@@ -101,6 +115,9 @@ namespace CursorMirror.Tests
                 TestAssert.Equal(450, loaded.IdleDelayMilliseconds, "loaded idle delay");
                 TestAssert.Equal(12, loaded.PredictionHorizonMilliseconds, "loaded prediction horizon");
                 TestAssert.Equal(250, loaded.PredictionIdleResetMilliseconds, "loaded prediction idle reset");
+                TestAssert.False(loaded.IdleFadeEnabled, "loaded idle fade flag");
+                TestAssert.Equal(4000, loaded.IdleFadeDelayMilliseconds, "loaded idle fade delay");
+                TestAssert.Equal(12, loaded.IdleOpacityPercent, "loaded idle opacity");
             }
             finally
             {
@@ -354,6 +371,8 @@ namespace CursorMirror.Tests
             settings.MovingOpacityPercent = 90;
             settings.FadeDurationMilliseconds = 160;
             settings.IdleDelayMilliseconds = 300;
+            settings.IdleOpacityPercent = 20;
+            settings.IdleFadeDelayMilliseconds = 5000;
             return settings;
         }
 

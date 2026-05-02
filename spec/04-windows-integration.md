@@ -71,6 +71,18 @@ Recommended extended window styles:
 - If movement translucency mode is disabled, the overlay MUST remain at normal opacity.
 - The implementation SHOULD apply the opacity multiplier through layered-window alpha, such as `BLENDFUNCTION.SourceConstantAlpha`, or an equivalent mechanism.
 
+#### 4.4.1.1 Idle Fade Mode
+- Idle fade mode MUST be enabled by default.
+- Idle fade mode MUST be independent from movement translucency mode.
+- After no pointer movement has been observed for the configured idle fade delay, the overlay MUST transition from its current opacity to the configured idle opacity.
+- The idle fade transition MUST use the same linear easing behavior as movement translucency transitions.
+- The default idle fade delay SHOULD be `3s`.
+- The default idle opacity SHOULD be `0%`.
+- Idle opacity MUST be configurable within `0%` to `99%`.
+- Idle fade delay MUST be configurable within `0s` to `60s`.
+- Any new pointer movement after idle fade starts MUST transition the overlay back toward the appropriate active opacity for the current movement-translucency settings.
+- Values outside supported ranges MUST be rejected or clamped consistently at the settings boundary.
+
 #### 4.4.2 Predictive Overlay Positioning
 - Predictive overlay positioning MUST be enabled by default.
 - The settings UI MUST allow the user to disable predictive overlay positioning.
@@ -111,6 +123,14 @@ Recommended extended window styles:
 - The tray icon MUST remain available until shutdown begins.
 - Primary-button activation of the tray icon SHOULD show the settings window.
 - The tray context menu MUST provide `Settings`.
+- The tray context menu MUST show the embedded application version.
+- The tray context menu SHOULD show release freshness when GitHub Releases can be reached:
+  - up to date when the current stable package version matches the latest stable release tag;
+  - the number of newer stable releases when the current stable package version is behind;
+  - development build status when the current package version is a development snapshot;
+  - unknown status when the update check fails or no stable release data is available.
+- The update check MUST NOT block the tray menu from opening.
+- The update check MUST ignore release tags that do not match `vMAJOR.MINOR.PATCH`.
 - The tray context menu MUST provide `Exit`.
 - Selecting `Settings` MUST show the settings window or bring the existing settings window to the foreground.
 - Selecting `Exit` MUST unhook and dispose resources before process termination.
@@ -121,7 +141,8 @@ Recommended extended window styles:
 - The settings window MUST provide a control for enabling or disabling movement translucency mode.
 - The settings window MUST provide a control for enabling or disabling predictive overlay positioning.
 - The settings window MUST provide controls for moving opacity, fade duration, and idle delay.
-- Settings controls MUST expose values in user-understandable units: percent for opacity and milliseconds for timing.
+- The settings window MUST provide controls for idle fade enablement, idle opacity, and idle fade delay.
+- Settings controls MUST expose values in user-understandable units: percent for opacity, milliseconds for short movement timing, and seconds for long idle-fade timing.
 - The settings window MUST provide `Reset`, `Close`, and `Exit Cursor Mirror` commands.
 - The `Reset` command MUST restore documented default settings.
 - The `Close` command MUST close or hide the settings window without shutting down Cursor Mirror.

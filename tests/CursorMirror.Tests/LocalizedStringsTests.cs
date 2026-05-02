@@ -25,6 +25,13 @@ namespace CursorMirror.Tests
                 TestAssert.Equal("Settings", LocalizedStrings.SettingsCommand, "English settings command");
                 TestAssert.Equal("Exit Cursor Mirror", LocalizedStrings.ExitCursorMirrorCommand, "English settings exit command");
                 TestAssert.Equal("Predict cursor position", LocalizedStrings.PredictiveOverlayPositioningLabel, "English prediction label");
+                TestAssert.Equal("Fade when idle", LocalizedStrings.IdleFadeLabel, "English idle fade label");
+                TestAssert.Equal("Idle opacity (%)", LocalizedStrings.IdleOpacityLabel, "English idle opacity label");
+                TestAssert.Equal("Idle fade delay (s)", LocalizedStrings.IdleFadeDelayLabel, "English idle fade delay label");
+                TestAssert.Equal("Version: v1.2.0+20260501.abcdef123456", LocalizedStrings.VersionMenuText("v1.2.0+20260501.abcdef123456"), "English version menu text");
+                TestAssert.Equal("Update: up to date (v1.2.0)", LocalizedStrings.UpdateStatusUpToDate("v1.2.0"), "English up-to-date status");
+                TestAssert.Equal("Update: 2 release(s) behind (v1.3.0)", LocalizedStrings.UpdateStatusBehind(2, "v1.3.0"), "English behind status");
+                TestAssert.Equal("Update: development build; latest v1.3.0", LocalizedStrings.UpdateStatusDevelopmentBuild("v1.3.0"), "English development status");
                 TestAssert.Equal("Start Recording", LocalizedStrings.TraceStartRecordingCommand, "English trace start command");
                 TestAssert.Equal("Stop Recording", LocalizedStrings.TraceStopRecordingCommand, "English trace stop command");
                 TestAssert.Equal("Total samples", LocalizedStrings.TraceTotalSampleCountLabel, "English trace total samples label");
@@ -40,7 +47,8 @@ namespace CursorMirror.Tests
                 TestAssert.Equal("Show mirrored cursor", LocalizedStrings.DemoMirrorCursorLabel, "English demo mirror cursor label");
                 TestAssert.Equal("Mirrored cursor: On", LocalizedStrings.DemoMirrorCursorStatus(LocalizedStrings.DemoEnabledLabel), "English demo mirror status");
                 TestAssert.Equal("640 x 480", LocalizedStrings.DemoWindowPresetVga, "English demo VGA preset");
-                TestAssert.Equal("Press Esc to stop", LocalizedStrings.DemoEscHint, "English demo key hint");
+                TestAssert.Equal("Press any key to stop", LocalizedStrings.DemoEscHint, "English demo key hint");
+                TestAssert.Equal("Press any key to stop", LocalizedStrings.DemoAnyKeyHint, "English demo any key hint");
                 TestAssert.Equal("Free", LocalizedStrings.DemoFreeModeLabel, "English demo free mode");
                 TestAssert.Equal("3.0s", LocalizedStrings.DemoResumeCountdown(3000), "English demo resume countdown");
                 TestAssert.True(
@@ -63,6 +71,13 @@ namespace CursorMirror.Tests
                 TestAssert.Equal("設定", LocalizedStrings.SettingsCommand, "Japanese settings command");
                 TestAssert.Equal("Cursor Mirror を終了", LocalizedStrings.ExitCursorMirrorCommand, "Japanese settings exit command");
                 TestAssert.Equal("カーソル位置を予測する", LocalizedStrings.PredictiveOverlayPositioningLabel, "Japanese prediction label");
+                TestAssert.Equal("停止後にフェードする", LocalizedStrings.IdleFadeLabel, "Japanese idle fade label");
+                TestAssert.Equal("停止後の不透明度 (%)", LocalizedStrings.IdleOpacityLabel, "Japanese idle opacity label");
+                TestAssert.Equal("停止後フェード待機 (秒)", LocalizedStrings.IdleFadeDelayLabel, "Japanese idle fade delay label");
+                TestAssert.Equal("バージョン: v1.2.0+20260501.abcdef123456", LocalizedStrings.VersionMenuText("v1.2.0+20260501.abcdef123456"), "Japanese version menu text");
+                TestAssert.Equal("更新: 最新です (v1.2.0)", LocalizedStrings.UpdateStatusUpToDate("v1.2.0"), "Japanese up-to-date status");
+                TestAssert.Equal("更新: 2 リリース遅れ (v1.3.0)", LocalizedStrings.UpdateStatusBehind(2, "v1.3.0"), "Japanese behind status");
+                TestAssert.Equal("更新: 開発版です。最新 v1.3.0", LocalizedStrings.UpdateStatusDevelopmentBuild("v1.3.0"), "Japanese development status");
                 TestAssert.Equal("記録開始", LocalizedStrings.TraceStartRecordingCommand, "Japanese trace start command");
                 TestAssert.Equal("記録終了", LocalizedStrings.TraceStopRecordingCommand, "Japanese trace stop command");
                 TestAssert.Equal("総サンプル数", LocalizedStrings.TraceTotalSampleCountLabel, "Japanese trace total samples label");
@@ -78,7 +93,8 @@ namespace CursorMirror.Tests
                 TestAssert.Equal("ミラーカーソルを表示する", LocalizedStrings.DemoMirrorCursorLabel, "Japanese demo mirror cursor label");
                 TestAssert.Equal("ミラーカーソル: オン", LocalizedStrings.DemoMirrorCursorStatus(LocalizedStrings.DemoEnabledLabel), "Japanese demo mirror status");
                 TestAssert.Equal("640 x 480", LocalizedStrings.DemoWindowPresetVga, "Japanese demo VGA preset");
-                TestAssert.Equal("Esc で停止", LocalizedStrings.DemoEscHint, "Japanese demo key hint");
+                TestAssert.Equal("いずれかのキーで停止", LocalizedStrings.DemoEscHint, "Japanese demo key hint");
+                TestAssert.Equal("いずれかのキーで停止", LocalizedStrings.DemoAnyKeyHint, "Japanese demo any key hint");
                 TestAssert.Equal("Free", LocalizedStrings.DemoFreeModeLabel, "Japanese demo free mode");
                 TestAssert.Equal("3.0s", LocalizedStrings.DemoResumeCountdown(3000), "Japanese demo resume countdown");
                 TestAssert.True(

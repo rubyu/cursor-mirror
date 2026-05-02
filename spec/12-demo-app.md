@@ -15,7 +15,7 @@
 - The demo application MUST be included in the release package.
 - The demo application MUST start as a normal visible Windows app.
 - The startup view MUST provide a command to start the demo and a command to exit the application.
-- When the demo is running, pressing `Esc` MUST stop the demo and return to the startup view.
+- When the demo is running, pressing any keyboard key MUST stop the demo and return to the startup view.
 - Stopping the demo MUST unhook any demo-only hook and stop injecting cursor movement.
 
 ### 12.3 Startup Controls
@@ -25,6 +25,7 @@
 - The startup view MUST allow selecting the demo display language.
 - The startup view MUST include a setting that controls whether the demo-owned mirrored cursor overlay is enabled.
 - The startup view MUST expose the same user-facing movement translucency and predictive positioning controls as the main settings window.
+- The startup view MUST expose idle-fade enablement, idle opacity, and idle-fade delay when the demo-owned mirrored cursor overlay is enabled.
 - The startup view MUST allow selecting one of three pointer speeds: slow, normal, and fast.
 - The demo application MUST persist startup selections per user and restore them on the next launch.
 - Demo settings writes MUST follow the durable settings write requirements in Section 5.6.
@@ -73,4 +74,4 @@
 ### 12.8 Testing
 - Unit tests MUST cover deterministic path generation and Free mode timeout behavior.
 - Normal automated tests MUST NOT install real Windows hooks or move the real cursor.
-- Manual validation SHOULD cover startup controls, mirrored cursor enable and disable behavior, display-language selection, selection persistence after restart, non-clipped startup explanatory text, fullscreen mode, all window presets, `Esc` exit, lower-right status visibility, mirrored cursor status visibility, Auto mode cursor movement from the left endpoint, Free mode entry, 3-second Auto mode resumption from the left endpoint, and release-package launch.
+- Manual validation SHOULD cover startup controls, mirrored cursor enable and disable behavior, idle-fade settings, display-language selection, selection persistence after restart, non-clipped startup explanatory text, fullscreen mode, all window presets, keyboard-key demo exit, lower-right status visibility, mirrored cursor status visibility, Auto mode cursor movement from the left endpoint, Free mode entry, 3-second Auto mode resumption from the left endpoint, and release-package launch.

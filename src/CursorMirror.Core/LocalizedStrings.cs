@@ -50,6 +50,36 @@ namespace CursorMirror
             get { return Get("IdleDelayLabel"); }
         }
 
+        public static string IdleFadeLabel
+        {
+            get { return Get("IdleFadeLabel"); }
+        }
+
+        public static string IdleOpacityLabel
+        {
+            get { return Get("IdleOpacityLabel"); }
+        }
+
+        public static string IdleFadeDelayLabel
+        {
+            get { return Get("IdleFadeDelayLabel"); }
+        }
+
+        public static string VersionMenuLabel
+        {
+            get { return Get("VersionMenuLabel"); }
+        }
+
+        public static string UpdateStatusChecking
+        {
+            get { return Get("UpdateStatusChecking"); }
+        }
+
+        public static string UpdateStatusUnknown
+        {
+            get { return Get("UpdateStatusUnknown"); }
+        }
+
         public static string ResetCommand
         {
             get { return Get("ResetCommand"); }
@@ -324,6 +354,31 @@ namespace CursorMirror
             return string.Format(CultureInfo.CurrentUICulture, Get("DemoResumeCountdownFormat"), seconds);
         }
 
+        public static string VersionMenuText(string version)
+        {
+            return string.Format(CultureInfo.CurrentUICulture, Get("VersionMenuFormat"), version);
+        }
+
+        public static string UpdateStatusUpToDate(string latestVersion)
+        {
+            return string.Format(CultureInfo.CurrentUICulture, Get("UpdateStatusUpToDateFormat"), latestVersion);
+        }
+
+        public static string UpdateStatusBehind(int versionsBehind, string latestVersion)
+        {
+            return string.Format(CultureInfo.CurrentUICulture, Get("UpdateStatusBehindFormat"), versionsBehind, latestVersion);
+        }
+
+        public static string UpdateStatusDevelopmentBuild(string latestVersion)
+        {
+            return string.Format(CultureInfo.CurrentUICulture, Get("UpdateStatusDevelopmentBuildFormat"), latestVersion);
+        }
+
+        public static string UpdateStatusAheadOfLatest(string latestVersion)
+        {
+            return string.Format(CultureInfo.CurrentUICulture, Get("UpdateStatusAheadOfLatestFormat"), latestVersion);
+        }
+
         public static string StartupFailureTitle
         {
             get { return ProductName; }
@@ -387,6 +442,18 @@ namespace CursorMirror
                     return "Fade duration (ms)";
                 case "IdleDelayLabel":
                     return "Idle delay (ms)";
+                case "IdleFadeLabel":
+                    return "Fade when idle";
+                case "IdleOpacityLabel":
+                    return "Idle opacity (%)";
+                case "IdleFadeDelayLabel":
+                    return "Idle fade delay (s)";
+                case "VersionMenuLabel":
+                    return "Version";
+                case "UpdateStatusChecking":
+                    return "Update: checking...";
+                case "UpdateStatusUnknown":
+                    return "Update: unknown";
                 case "ResetCommand":
                     return "Reset";
                 case "CloseCommand":
@@ -462,7 +529,7 @@ namespace CursorMirror
                 case "DemoAnyKeyHint":
                     return "Press any key to stop";
                 case "DemoEscHint":
-                    return "Press Esc to stop";
+                    return "Press any key to stop";
                 case "DemoRealCursorNote":
                     return "The demo moves the real Windows cursor.\r\nWhen mirrored cursor is enabled, it shows its own Cursor Mirror overlay.\r\nManual mouse input switches to Free mode; Auto mode resumes after 3 seconds without input.";
                 case "DemoMainAppRunningMessage":
@@ -497,6 +564,16 @@ namespace CursorMirror
                     return "{0}";
                 case "TraceDwmTimingSampleCountFormat":
                     return "{0} / {1} ({2:0.0}%)";
+                case "VersionMenuFormat":
+                    return "Version: {0}";
+                case "UpdateStatusUpToDateFormat":
+                    return "Update: up to date ({0})";
+                case "UpdateStatusBehindFormat":
+                    return "Update: {0} release(s) behind ({1})";
+                case "UpdateStatusDevelopmentBuildFormat":
+                    return "Update: development build; latest {0}";
+                case "UpdateStatusAheadOfLatestFormat":
+                    return "Update: ahead of latest ({0})";
                 case "StartupFailureMessageFormat":
                     return "Cursor Mirror failed to start.\r\n\r\n{0}";
                 case "SettingsRestoreFailureMessageFormat":
@@ -528,6 +605,18 @@ namespace CursorMirror
                     return "フェード時間 (ms)";
                 case "IdleDelayLabel":
                     return "待機時間 (ms)";
+                case "IdleFadeLabel":
+                    return "停止後にフェードする";
+                case "IdleOpacityLabel":
+                    return "停止後の不透明度 (%)";
+                case "IdleFadeDelayLabel":
+                    return "停止後フェード待機 (秒)";
+                case "VersionMenuLabel":
+                    return "バージョン";
+                case "UpdateStatusChecking":
+                    return "更新: 確認中...";
+                case "UpdateStatusUnknown":
+                    return "更新: 不明";
                 case "ResetCommand":
                     return "リセット";
                 case "CloseCommand":
@@ -603,7 +692,7 @@ namespace CursorMirror
                 case "DemoAnyKeyHint":
                     return "いずれかのキーで停止";
                 case "DemoEscHint":
-                    return "Esc で停止";
+                    return "いずれかのキーで停止";
                 case "DemoRealCursorNote":
                     return "デモは実際の Windows カーソルを動かします。\r\nミラーカーソルが有効な場合はオーバーレイも表示します。\r\nマウス操作で Free mode、3 秒間入力がなければ Auto mode に戻ります。";
                 case "DemoMainAppRunningMessage":
@@ -638,6 +727,16 @@ namespace CursorMirror
                     return "{0}";
                 case "TraceDwmTimingSampleCountFormat":
                     return "{0} / {1} ({2:0.0}%)";
+                case "VersionMenuFormat":
+                    return "バージョン: {0}";
+                case "UpdateStatusUpToDateFormat":
+                    return "更新: 最新です ({0})";
+                case "UpdateStatusBehindFormat":
+                    return "更新: {0} リリース遅れ ({1})";
+                case "UpdateStatusDevelopmentBuildFormat":
+                    return "更新: 開発版です。最新 {0}";
+                case "UpdateStatusAheadOfLatestFormat":
+                    return "更新: 最新より新しいビルドです ({0})";
                 case "StartupFailureMessageFormat":
                     return "Cursor Mirror の起動に失敗しました。\r\n\r\n{0}";
                 case "SettingsRestoreFailureMessageFormat":

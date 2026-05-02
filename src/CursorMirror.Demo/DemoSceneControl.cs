@@ -293,7 +293,7 @@ namespace CursorMirror.Demo
                 mode,
                 SpeedLabel(_speed),
                 resumeText,
-                _sentMoveCount) + "\r\n" + LocalizedStrings.DemoEscHint;
+                _sentMoveCount) + "\r\n" + LocalizedStrings.DemoAnyKeyHint;
         }
 
         private long CurrentMilliseconds()

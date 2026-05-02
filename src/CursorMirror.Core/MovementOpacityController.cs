@@ -11,6 +11,7 @@ namespace CursorMirror
         private long _lastMovementMilliseconds;
         private bool _hasMovement;
         private bool _exitStarted;
+        private bool _idleFadeStarted;
 
         public MovementOpacityController(CursorMirrorSettings settings)
         {
@@ -41,6 +42,7 @@ namespace CursorMirror
             _lastMovementMilliseconds = 0;
             _hasMovement = false;
             _exitStarted = false;
+            _idleFadeStarted = false;
         }
 
         public void RecordMovement(long nowMilliseconds)
@@ -49,6 +51,7 @@ namespace CursorMirror
             _lastMovementMilliseconds = nowMilliseconds;
             _hasMovement = true;
             _exitStarted = false;
+            _idleFadeStarted = false;
 
             if (!_settings.MovementTranslucencyEnabled)
             {
@@ -64,12 +67,12 @@ namespace CursorMirror
 
         public int GetOpacityPercent(long nowMilliseconds)
         {
-            if (!_settings.MovementTranslucencyEnabled)
+            if (!_hasMovement)
             {
                 return 100;
             }
 
-            if (_hasMovement && !_exitStarted)
+            if (_settings.MovementTranslucencyEnabled && !_exitStarted && !_idleFadeStarted)
             {
                 long idleStart = _lastMovementMilliseconds + _settings.IdleDelayMilliseconds;
                 if (nowMilliseconds >= idleStart)
@@ -77,6 +80,17 @@ namespace CursorMirror
                     int exitStartOpacity = CalculateOpacityPercent(idleStart);
                     StartTransition(exitStartOpacity, 100, idleStart);
                     _exitStarted = true;
+                }
+            }
+
+            if (_settings.IdleFadeEnabled && !_idleFadeStarted)
+            {
+                long idleFadeStart = _lastMovementMilliseconds + _settings.IdleFadeDelayMilliseconds;
+                if (nowMilliseconds >= idleFadeStart)
+                {
+                    int idleFadeStartOpacity = CalculateOpacityPercent(idleFadeStart);
+                    StartTransition(idleFadeStartOpacity, _settings.IdleOpacityPercent, idleFadeStart);
+                    _idleFadeStarted = true;
                 }
             }
 

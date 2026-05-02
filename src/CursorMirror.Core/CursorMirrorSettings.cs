@@ -8,9 +8,12 @@ namespace CursorMirror
     {
         public const bool DefaultMovementTranslucencyEnabled = true;
         public const bool DefaultPredictionEnabled = true;
+        public const bool DefaultIdleFadeEnabled = true;
         public const int DefaultMovingOpacityPercent = 70;
         public const int DefaultFadeDurationMilliseconds = 80;
         public const int DefaultIdleDelayMilliseconds = 120;
+        public const int DefaultIdleFadeDelayMilliseconds = 3000;
+        public const int DefaultIdleOpacityPercent = 0;
         public const int DefaultPredictionHorizonMilliseconds = 8;
         public const int DefaultPredictionIdleResetMilliseconds = 100;
 
@@ -20,6 +23,10 @@ namespace CursorMirror
         public const int MaximumFadeDurationMilliseconds = 300;
         public const int MinimumIdleDelayMilliseconds = 50;
         public const int MaximumIdleDelayMilliseconds = 500;
+        public const int MinimumIdleFadeDelayMilliseconds = 0;
+        public const int MaximumIdleFadeDelayMilliseconds = 60000;
+        public const int MinimumIdleOpacityPercent = 0;
+        public const int MaximumIdleOpacityPercent = 99;
         public const int MinimumPredictionHorizonMilliseconds = 0;
         public const int MaximumPredictionHorizonMilliseconds = 16;
         public const int MinimumPredictionIdleResetMilliseconds = 1;
@@ -51,6 +58,15 @@ namespace CursorMirror
         [DataMember(Order = 7)]
         public int PredictionIdleResetMilliseconds { get; set; }
 
+        [DataMember(Order = 8)]
+        public bool IdleFadeEnabled { get; set; }
+
+        [DataMember(Order = 9)]
+        public int IdleFadeDelayMilliseconds { get; set; }
+
+        [DataMember(Order = 10)]
+        public int IdleOpacityPercent { get; set; }
+
         public static CursorMirrorSettings Default()
         {
             return new CursorMirrorSettings();
@@ -66,7 +82,10 @@ namespace CursorMirror
                 FadeDurationMilliseconds = FadeDurationMilliseconds,
                 IdleDelayMilliseconds = IdleDelayMilliseconds,
                 PredictionHorizonMilliseconds = PredictionHorizonMilliseconds,
-                PredictionIdleResetMilliseconds = PredictionIdleResetMilliseconds
+                PredictionIdleResetMilliseconds = PredictionIdleResetMilliseconds,
+                IdleFadeEnabled = IdleFadeEnabled,
+                IdleFadeDelayMilliseconds = IdleFadeDelayMilliseconds,
+                IdleOpacityPercent = IdleOpacityPercent
             };
         }
 
@@ -80,7 +99,10 @@ namespace CursorMirror
                 FadeDurationMilliseconds = Clamp(FadeDurationMilliseconds, MinimumFadeDurationMilliseconds, MaximumFadeDurationMilliseconds),
                 IdleDelayMilliseconds = Clamp(IdleDelayMilliseconds, MinimumIdleDelayMilliseconds, MaximumIdleDelayMilliseconds),
                 PredictionHorizonMilliseconds = Clamp(PredictionHorizonMilliseconds, MinimumPredictionHorizonMilliseconds, MaximumPredictionHorizonMilliseconds),
-                PredictionIdleResetMilliseconds = Clamp(PredictionIdleResetMilliseconds, MinimumPredictionIdleResetMilliseconds, MaximumPredictionIdleResetMilliseconds)
+                PredictionIdleResetMilliseconds = Clamp(PredictionIdleResetMilliseconds, MinimumPredictionIdleResetMilliseconds, MaximumPredictionIdleResetMilliseconds),
+                IdleFadeEnabled = IdleFadeEnabled,
+                IdleFadeDelayMilliseconds = Clamp(IdleFadeDelayMilliseconds, MinimumIdleFadeDelayMilliseconds, MaximumIdleFadeDelayMilliseconds),
+                IdleOpacityPercent = Clamp(IdleOpacityPercent, MinimumIdleOpacityPercent, MaximumIdleOpacityPercent)
             };
         }
 
@@ -99,6 +121,9 @@ namespace CursorMirror
             IdleDelayMilliseconds = DefaultIdleDelayMilliseconds;
             PredictionHorizonMilliseconds = DefaultPredictionHorizonMilliseconds;
             PredictionIdleResetMilliseconds = DefaultPredictionIdleResetMilliseconds;
+            IdleFadeEnabled = DefaultIdleFadeEnabled;
+            IdleFadeDelayMilliseconds = DefaultIdleFadeDelayMilliseconds;
+            IdleOpacityPercent = DefaultIdleOpacityPercent;
         }
 
         private static int Clamp(int value, int minimum, int maximum)

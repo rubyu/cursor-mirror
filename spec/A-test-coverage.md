@@ -221,6 +221,14 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that invalid synthetic DWM timing is reported as unusable and selects the documented fallback delay without requiring a real compositor query.
   Refs: Sections 4.4.2, 6.2.
 
+- COT-MOU-26 - Idle fade after stopped pointer
+  Verify that idle fade starts after the configured stopped-pointer delay and reaches the configured idle opacity using linear easing.
+  Refs: Sections 4.4.1.1, 6.1.
+
+- COT-MOU-27 - Movement restores opacity from idle fade
+  Verify that new pointer movement after idle fade starts transitions the overlay back toward the active movement opacity.
+  Refs: Section 4.4.1.1.
+
 #### A.4.T Tray and Application Lifetime
 ##### Unit
 - COT-MTU-1 - Tray icon created
@@ -262,19 +270,19 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 #### A.4.S Settings UI and Persistence
 ##### Unit
 - COT-MSU-1 - Settings defaults
-  Verify documented default settings: movement translucency enabled, predictive overlay positioning enabled, moving opacity `70%`, fade duration `80ms`, and idle delay `120ms`.
-  Refs: Sections 4.4.1, 4.4.2, 4.5.1.
+  Verify documented default settings: movement translucency enabled, predictive overlay positioning enabled, idle fade enabled, moving opacity `70%`, fade duration `80ms`, movement idle delay `120ms`, idle fade delay `3s`, and idle opacity `0%`.
+  Refs: Sections 4.4.1, 4.4.1.1, 4.4.2, 4.5.1.
 
 - COT-MSU-2 - Moving opacity validation
   Verify that moving opacity values outside `1%` to `100%` are rejected or clamped consistently at the settings boundary.
   Refs: Section 4.4.1.
 
 - COT-MSU-3 - Timing validation
-  Verify that fade duration and idle delay values outside their documented ranges are rejected or clamped consistently at the settings boundary.
-  Refs: Section 4.4.1.
+  Verify that fade duration, movement idle delay, idle fade delay, idle opacity, and prediction timing values outside their documented ranges are rejected or clamped consistently at the settings boundary.
+  Refs: Sections 4.4.1, 4.4.1.1, 4.4.2.
 
 - COT-MSU-4 - Settings serialization round trip
-  Verify that settings saved to the structured settings format load back to equivalent runtime settings.
+  Verify that settings saved to the structured settings format, including idle-fade settings, load back to equivalent runtime settings.
   Refs: Section 5.5.
 
 - COT-MSU-5 - Missing settings fallback
@@ -332,6 +340,22 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 - COT-MPU-2 - Numeric assembly version shape
   Verify that the embedded assembly and file versions use the numeric `MAJOR.MINOR.PATCH.0` form required by .NET metadata.
   Refs: Section 10.3.
+
+- COT-MPU-3 - Up-to-date stable release status
+  Verify that a stable package version matching the latest stable release tag reports up-to-date status.
+  Refs: Sections 4.5, 10.6.
+
+- COT-MPU-4 - Counts stable releases behind
+  Verify that a stable package version older than multiple stable release tags reports the latest stable tag and the number of newer releases.
+  Refs: Sections 4.5, 10.6.
+
+- COT-MPU-5 - Development build status
+  Verify that a development package version reports development-build status instead of stable up-to-date status.
+  Refs: Section 10.6.
+
+- COT-MPU-6 - Invalid release tags ignored
+  Verify that malformed and pre-release-like tags are ignored by freshness evaluation.
+  Refs: Section 10.6.
 
 #### A.4.L Mouse Trace Tooling
 ##### Unit
@@ -560,8 +584,8 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Sections 5.2, 12.2.
 
 ##### Manual
-- COT-BEM-1 - Demo startup and Esc stop
-  Start the demo from the startup view, press `Esc`, and verify that the startup view returns and demo input injection stops.
+- COT-BEM-1 - Demo startup and keyboard stop
+  Start the demo from the startup view, press a keyboard key, and verify that the startup view returns and demo input injection stops.
   Refs: Sections 12.2, 12.3.
 
 - COT-BEM-2 - Demo display modes and status

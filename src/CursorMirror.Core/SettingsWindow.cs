@@ -9,9 +9,12 @@ namespace CursorMirror
         private readonly SettingsController _controller;
         private readonly CheckBox _predictionCheckBox;
         private readonly CheckBox _movementTranslucencyCheckBox;
+        private readonly CheckBox _idleFadeCheckBox;
         private readonly NumericUpDown _movingOpacityInput;
         private readonly NumericUpDown _fadeDurationInput;
         private readonly NumericUpDown _idleDelayInput;
+        private readonly NumericUpDown _idleFadeOpacityInput;
+        private readonly NumericUpDown _idleFadeDelaySecondsInput;
         private bool _loading;
 
         public SettingsWindow(SettingsController controller)
@@ -29,13 +32,13 @@ namespace CursorMirror
             MinimizeBox = false;
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterScreen;
-            ClientSize = new Size(360, 240);
+            ClientSize = new Size(380, 340);
 
             TableLayoutPanel layout = new TableLayoutPanel();
             layout.Dock = DockStyle.Fill;
             layout.Padding = new Padding(12);
             layout.ColumnCount = 2;
-            layout.RowCount = 7;
+            layout.RowCount = 9;
             layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 55));
             layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 45));
             Controls.Add(layout);
@@ -58,11 +61,25 @@ namespace CursorMirror
             _fadeDurationInput = AddNumberRow(layout, 3, LocalizedStrings.FadeDurationLabel, CursorMirrorSettings.MinimumFadeDurationMilliseconds, CursorMirrorSettings.MaximumFadeDurationMilliseconds);
             _idleDelayInput = AddNumberRow(layout, 4, LocalizedStrings.IdleDelayLabel, CursorMirrorSettings.MinimumIdleDelayMilliseconds, CursorMirrorSettings.MaximumIdleDelayMilliseconds);
 
+            _idleFadeCheckBox = new CheckBox();
+            _idleFadeCheckBox.Text = LocalizedStrings.IdleFadeLabel;
+            _idleFadeCheckBox.AutoSize = true;
+            _idleFadeCheckBox.CheckedChanged += delegate
+            {
+                UpdateIdleFadeInputState();
+                ApplyFromControls();
+            };
+            layout.Controls.Add(_idleFadeCheckBox, 0, 5);
+            layout.SetColumnSpan(_idleFadeCheckBox, 2);
+
+            _idleFadeOpacityInput = AddNumberRow(layout, 6, LocalizedStrings.IdleOpacityLabel, CursorMirrorSettings.MinimumIdleOpacityPercent, CursorMirrorSettings.MaximumIdleOpacityPercent);
+            _idleFadeDelaySecondsInput = AddNumberRow(layout, 7, LocalizedStrings.IdleFadeDelayLabel, CursorMirrorSettings.MinimumIdleFadeDelayMilliseconds / 1000, CursorMirrorSettings.MaximumIdleFadeDelayMilliseconds / 1000);
+
             FlowLayoutPanel buttons = new FlowLayoutPanel();
             buttons.Dock = DockStyle.Fill;
             buttons.FlowDirection = FlowDirection.RightToLeft;
             buttons.WrapContents = false;
-            layout.Controls.Add(buttons, 0, 6);
+            layout.Controls.Add(buttons, 0, 8);
             layout.SetColumnSpan(buttons, 2);
 
             Button exitButton = new Button();
@@ -144,11 +161,16 @@ namespace CursorMirror
                 _movingOpacityInput.Value = normalized.MovingOpacityPercent;
                 _fadeDurationInput.Value = normalized.FadeDurationMilliseconds;
                 _idleDelayInput.Value = normalized.IdleDelayMilliseconds;
+                _idleFadeCheckBox.Checked = normalized.IdleFadeEnabled;
+                _idleFadeOpacityInput.Value = normalized.IdleOpacityPercent;
+                _idleFadeDelaySecondsInput.Value = normalized.IdleFadeDelayMilliseconds / 1000;
             }
             finally
             {
                 _loading = false;
             }
+
+            UpdateIdleFadeInputState();
         }
 
         private void ApplyFromControls()
@@ -164,7 +186,17 @@ namespace CursorMirror
             settings.MovingOpacityPercent = (int)_movingOpacityInput.Value;
             settings.FadeDurationMilliseconds = (int)_fadeDurationInput.Value;
             settings.IdleDelayMilliseconds = (int)_idleDelayInput.Value;
+            settings.IdleFadeEnabled = _idleFadeCheckBox.Checked;
+            settings.IdleOpacityPercent = (int)_idleFadeOpacityInput.Value;
+            settings.IdleFadeDelayMilliseconds = (int)_idleFadeDelaySecondsInput.Value * 1000;
             _controller.UpdateSettings(settings);
+        }
+
+        private void UpdateIdleFadeInputState()
+        {
+            bool enabled = _idleFadeCheckBox.Checked;
+            _idleFadeOpacityInput.Enabled = enabled;
+            _idleFadeDelaySecondsInput.Enabled = enabled;
         }
     }
 }

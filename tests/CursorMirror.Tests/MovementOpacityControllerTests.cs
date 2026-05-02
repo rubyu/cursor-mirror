@@ -15,6 +15,8 @@ namespace CursorMirror.Tests
             suite.Add("COT-MOU-10", LinearEasing);
             suite.Add("COT-MOU-11", ZeroDurationTransition);
             suite.Add("COT-MOU-12", OpacityDoesNotAffectPlacement);
+            suite.Add("COT-MOU-26", IdleFadeAfterStop);
+            suite.Add("COT-MOU-27", MovementRestoresOpacityFromIdleFade);
         }
 
         // Movement translucency default enabled [COT-MOU-5]
@@ -128,12 +130,49 @@ namespace CursorMirror.Tests
             controller.Dispose();
         }
 
+        // Idle fade after stopped pointer [COT-MOU-26]
+        private static void IdleFadeAfterStop()
+        {
+            CursorMirrorSettings settings = TestSettings();
+            settings.IdleFadeEnabled = true;
+            settings.IdleFadeDelayMilliseconds = 3000;
+            settings.IdleOpacityPercent = 0;
+            MovementOpacityController controller = new MovementOpacityController(settings);
+
+            controller.RecordMovement(0);
+
+            TestAssert.Equal(100, controller.GetOpacityPercent(2999), "before idle fade");
+            TestAssert.Equal(100, controller.GetOpacityPercent(3000), "idle fade start opacity");
+            TestAssert.Equal(50, controller.GetOpacityPercent(3050), "idle fade half opacity");
+            TestAssert.Equal(0, controller.GetOpacityPercent(3100), "idle fade target opacity");
+        }
+
+        // Movement restores opacity from idle fade [COT-MOU-27]
+        private static void MovementRestoresOpacityFromIdleFade()
+        {
+            CursorMirrorSettings settings = TestSettings();
+            settings.IdleFadeEnabled = true;
+            settings.IdleFadeDelayMilliseconds = 3000;
+            settings.IdleOpacityPercent = 0;
+            MovementOpacityController controller = new MovementOpacityController(settings);
+
+            controller.RecordMovement(0);
+            TestAssert.Equal(0, controller.GetOpacityPercent(3100), "idle fade target before movement");
+
+            controller.RecordMovement(3200);
+
+            TestAssert.Equal(0, controller.GetOpacityPercent(3200), "restore start opacity");
+            TestAssert.Equal(25, controller.GetOpacityPercent(3250), "restore half opacity");
+            TestAssert.Equal(50, controller.GetOpacityPercent(3300), "restore moving opacity");
+        }
+
         private static CursorMirrorSettings TestSettings()
         {
             CursorMirrorSettings settings = CursorMirrorSettings.Default();
             settings.MovingOpacityPercent = 50;
             settings.FadeDurationMilliseconds = 100;
             settings.IdleDelayMilliseconds = 100;
+            settings.IdleFadeEnabled = false;
             return settings;
         }
     }
