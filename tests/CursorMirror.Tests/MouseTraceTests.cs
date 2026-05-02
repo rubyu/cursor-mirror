@@ -4,7 +4,9 @@ using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Threading;
+using System.Windows.Forms;
 using CursorMirror.MouseTrace;
+using CursorMirror.TraceTool;
 
 namespace CursorMirror.Tests
 {
@@ -30,6 +32,7 @@ namespace CursorMirror.Tests
             suite.Add("COT-MLU-16", TraceRuntimeSchedulerDedicatedStaDispatcher);
             suite.Add("COT-MLU-17", TraceRuntimeSchedulerLoopFields);
             suite.Add("COT-MLU-18", TraceRuntimeSchedulerLatencyProfileMetadata);
+            suite.Add("COT-MLU-19", TraceToolWindowChromeAndLabelLayout);
         }
 
         // Trace session starts empty [COT-MLU-1]
@@ -573,6 +576,111 @@ namespace CursorMirror.Tests
             finally
             {
                 DeleteDirectory(directory);
+            }
+        }
+
+        // Trace tool window chrome and label layout [COT-MLU-19]
+        private static void TraceToolWindowChromeAndLabelLayout()
+        {
+            RunOnStaThread(delegate
+            {
+                using (TraceToolForm form = new TraceToolForm(new FakeTraceNativeMethods()))
+                {
+                    form.CreateControl();
+                    form.PerformLayout();
+                    TableLayoutPanel layout = FindChild<TableLayoutPanel>(form);
+                    layout.PerformLayout();
+
+                    TestAssert.True(form.Icon != null, "trace tool window icon must be set");
+                    TestAssert.True(form.ShowIcon, "trace tool should show its icon");
+                    TestAssert.True(form.ClientSize.Width >= 680, "trace tool client width should fit localized labels");
+                    TestAssert.Equal(SizeType.Absolute, layout.ColumnStyles[0].SizeType, "trace label column fixed");
+                    TestAssert.True(layout.ColumnStyles[0].Width >= 300, "trace label column width");
+
+                    int[] columnWidths = layout.GetColumnWidths();
+                    TestAssert.True(columnWidths.Length >= 2, "trace layout columns");
+                    TestAssert.True(columnWidths[0] >= 300, "trace realized label column width");
+
+                    for (int row = 0; row < 9; row++)
+                    {
+                        Label label = layout.GetControlFromPosition(0, row) as Label;
+                        TestAssert.True(label != null, "trace label row " + row);
+                        TestAssert.False(label.AutoSize, "trace labels must not resize rows");
+                        TestAssert.True(label.AutoEllipsis, "trace labels should elide instead of wrapping");
+                        TestAssert.Equal(ContentAlignment.MiddleLeft, label.TextAlign, "trace label alignment");
+                        TestAssert.True(label.Height <= 26, "trace label height should remain single-line");
+                    }
+                }
+            });
+        }
+
+        private static T FindChild<T>(Control parent)
+            where T : Control
+        {
+            foreach (Control child in parent.Controls)
+            {
+                T direct = child as T;
+                if (direct != null)
+                {
+                    return direct;
+                }
+
+                T nested = FindChild<T>(child);
+                if (nested != null)
+                {
+                    return nested;
+                }
+            }
+
+            return null;
+        }
+
+        private static void RunOnStaThread(Action action)
+        {
+            Exception failure = null;
+            Thread thread = new Thread(new ThreadStart(delegate
+            {
+                try
+                {
+                    action();
+                }
+                catch (Exception ex)
+                {
+                    failure = ex;
+                }
+            }));
+
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+            thread.Join();
+
+            if (failure != null)
+            {
+                throw new Exception("STA trace-tool test failed.", failure);
+            }
+        }
+
+        private sealed class FakeTraceNativeMethods : ITraceNativeMethods
+        {
+            public bool GetCursorPos(out NativePoint point)
+            {
+                point = new NativePoint();
+                return true;
+            }
+
+            public bool TryGetDwmTimingInfo(out DwmTimingInfo timingInfo)
+            {
+                timingInfo = new DwmTimingInfo();
+                return false;
+            }
+
+            public bool TryBeginTimerResolution(int milliseconds)
+            {
+                return true;
+            }
+
+            public void EndTimerResolution(int milliseconds)
+            {
             }
         }
 

@@ -12,6 +12,7 @@
 - The trace tool MUST be built as a separate executable.
 - The trace tool MUST be included in the release package as `CursorMirror.TraceTool.exe`.
 - The trace tool MUST provide a normal visible Windows window.
+- The trace tool window MUST use the Cursor Mirror application icon rather than the default Windows Forms icon.
 - The trace tool SHOULD use WinForms.
 - The trace tool MUST NOT run as a hidden tray-resident application.
 - The trace tool MUST use the same low-level hook wrapper pattern as Cursor Mirror where practical.
@@ -45,6 +46,7 @@
 - `Exit` SHOULD close the application immediately when no unsaved samples exist.
 - `Exit` SHOULD confirm when unsaved samples exist.
 - UI text SHOULD be clear enough for users who are not comfortable with command-line tools.
+- The main window SHOULD keep status labels readable without clipping or wrapping at the default dialog size in supported UI languages.
 - The DWM timing display SHOULD show both available timing samples and the product-plus-runtime scheduler sample denominator.
 
 ### 11.4 Recording State Model

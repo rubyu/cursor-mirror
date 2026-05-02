@@ -527,6 +527,10 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that trace metadata preserves runtime scheduler and runtime scheduler capture-thread latency profile summaries without launching the visible trace tool or requiring real priority elevation or MMCSS activation.
   Refs: Sections 11.5, 11.8.
 
+- COT-MLU-19 - Trace tool window chrome and label layout
+  Verify that the trace tool form uses the application icon and keeps status labels single-line in the default layout without installing a real hook.
+  Refs: Sections 11.2, 11.3, 11.8.
+
 #### A.4.E Demo Application and Virtual Pointer Stream
 ##### Unit
 - COT-MEU-1 - Deterministic demo pointer stream

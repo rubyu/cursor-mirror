@@ -13,6 +13,9 @@ namespace CursorMirror.TraceTool
         private const int ProductPollIntervalMilliseconds = 8;
         private const int ReferencePollIntervalMilliseconds = 2;
         private const int TimerResolutionMilliseconds = 1;
+        private const int LabelColumnWidth = 300;
+        private const int RowHeight = 24;
+        private const int ButtonRowHeight = 38;
 
         private readonly MouseTraceSession _session = new MouseTraceSession();
         private readonly MouseTracePackageWriter _writer = new MouseTracePackageWriter();
@@ -61,18 +64,22 @@ namespace CursorMirror.TraceTool
 
             Text = LocalizedStrings.TraceToolTitle;
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Icon = AppIcon.Load();
             MaximizeBox = false;
             MinimizeBox = false;
             StartPosition = FormStartPosition.CenterScreen;
-            ClientSize = new Size(560, 350);
+            ClientSize = new Size(680, 350);
+            MinimumSize = new Size(680, 390);
 
             TableLayoutPanel layout = new TableLayoutPanel();
             layout.Dock = DockStyle.Fill;
             layout.Padding = new Padding(12);
             layout.ColumnCount = 2;
-            layout.RowCount = 10;
-            layout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 210));
+            layout.RowCount = 11;
+            layout.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
+            layout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, LabelColumnWidth));
             layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+            ConfigureRows(layout);
             Controls.Add(layout);
 
             _statusValue = AddValueRow(layout, 0, LocalizedStrings.TraceStatusLabel);
@@ -91,6 +98,10 @@ namespace CursorMirror.TraceTool
             buttons.WrapContents = false;
             layout.Controls.Add(buttons, 0, 9);
             layout.SetColumnSpan(buttons, 2);
+            Panel spacer = new Panel();
+            spacer.Dock = DockStyle.Fill;
+            layout.Controls.Add(spacer, 0, 10);
+            layout.SetColumnSpan(spacer, 2);
 
             _startButton = AddButton(buttons, LocalizedStrings.TraceStartRecordingCommand, StartRecording);
             _stopButton = AddButton(buttons, LocalizedStrings.TraceStopRecordingCommand, StopRecording);
@@ -156,17 +167,35 @@ namespace CursorMirror.TraceTool
             base.Dispose(disposing);
         }
 
+        private static void ConfigureRows(TableLayoutPanel layout)
+        {
+            layout.RowStyles.Clear();
+            for (int row = 0; row < 9; row++)
+            {
+                layout.RowStyles.Add(new RowStyle(SizeType.Absolute, RowHeight));
+            }
+
+            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, ButtonRowHeight));
+            layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
+        }
+
         private static Label AddValueRow(TableLayoutPanel layout, int row, string labelText)
         {
             Label label = new Label();
             label.Text = labelText;
-            label.AutoSize = true;
-            label.Anchor = AnchorStyles.Left;
+            label.AutoSize = false;
+            label.AutoEllipsis = true;
+            label.Dock = DockStyle.Fill;
+            label.TextAlign = ContentAlignment.MiddleLeft;
+            label.Margin = new Padding(0, 0, 12, 0);
             layout.Controls.Add(label, 0, row);
 
             Label value = new Label();
-            value.AutoSize = true;
-            value.Anchor = AnchorStyles.Left;
+            value.AutoSize = false;
+            value.AutoEllipsis = true;
+            value.Dock = DockStyle.Fill;
+            value.TextAlign = ContentAlignment.MiddleLeft;
+            value.Margin = new Padding(0);
             layout.Controls.Add(value, 1, row);
             return value;
         }
@@ -176,6 +205,7 @@ namespace CursorMirror.TraceTool
             Button button = new Button();
             button.Text = text;
             button.AutoSize = true;
+            button.Margin = new Padding(0, 4, 8, 4);
             button.Click += handler;
             panel.Controls.Add(button);
             return button;

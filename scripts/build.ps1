@@ -163,7 +163,7 @@ if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 & $csc /nologo /target:winexe /warn:4 $debugFlag $optimizeFlag /out:$calibratorOut "/win32manifest:$calibratorManifest" "/win32icon:$icon" /reference:System.dll /reference:System.Core.dll /reference:System.Drawing.dll /reference:System.IO.Compression.dll /reference:System.Runtime.Serialization.dll /reference:System.Windows.Forms.dll /reference:$windowsRuntimeRef /reference:$windowsRuntimeInteropRef /reference:$systemRuntimeRef /reference:$windowsWinmd /reference:$coreOut $calibratorSources
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
-& $csc /nologo /target:exe /warn:4 $debugFlag $optimizeFlag /out:$testsOut /reference:System.dll /reference:System.Core.dll /reference:System.Drawing.dll /reference:System.IO.Compression.dll /reference:System.Runtime.Serialization.dll /reference:System.Windows.Forms.dll /reference:$coreOut $testSources
+& $csc /nologo /target:exe /warn:4 $debugFlag $optimizeFlag /out:$testsOut /reference:System.dll /reference:System.Core.dll /reference:System.Drawing.dll /reference:System.IO.Compression.dll /reference:System.Runtime.Serialization.dll /reference:System.Windows.Forms.dll /reference:$coreOut /reference:$traceToolOut $testSources
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
 Write-Host "Built ($Configuration):"
