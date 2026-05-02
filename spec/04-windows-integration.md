@@ -111,12 +111,15 @@ Recommended extended window styles:
 - If DWM timing is available, Cursor Mirror SHOULD choose a next-vblank prediction horizon from DWM composition timing.
 - If DWM timing is available, Cursor Mirror SHOULD schedule its normal runtime polling and overlay movement tick near the upcoming DWM vblank instead of relying only on a general-purpose UI timer.
 - The DWM-synchronized runtime scheduler SHOULD wake slightly before the target vblank, then dispatch `GetCursorPos` polling and overlay movement onto the dedicated overlay runtime thread.
+- The scheduler SHOULD cap DWM-timed sleeps to a short cadence, default `2ms`, so it re-checks compositor timing frequently instead of sleeping through multiple frames.
+- The scheduler SHOULD use a high-resolution waitable timer for short DWM-timed waits when the operating system supports it, falling back to a normal waitable timer or `Thread.Sleep` when unavailable.
 - The normal overlay hot path SHOULD avoid dispatching through the tray or settings UI thread.
 - The overlay runtime thread SHOULD own the overlay window, cursor polling, prediction, opacity updates, and layered-window movement.
 - The scheduler SHOULD request a `1ms` timer resolution while active and release that request during shutdown.
 - The high-frequency latest-position sampler SHOULD also request a `1ms` timer resolution while active and release that request during shutdown.
 - Runtime scheduler and latest-position sampler threads SHOULD use a priority appropriate for latency-sensitive cursor display work without requiring administrator privileges.
 - The scheduler MUST avoid overlapping queued runtime ticks.
+- After the scheduler requests a tick for a target vblank, it MUST keep that target pending until the target vblank time has passed rather than advancing to a later vblank early.
 - The controller MUST ignore stale or out-of-order poll samples and SHOULD expose a diagnostic counter for ignored stale samples.
 - If DWM timing is unavailable or invalid, the scheduler MUST fall back to a documented high-resolution interval loop.
 - Invalid, late, stale, or excessive DWM horizons MUST fall back to exact pointer positioning or a documented fixed-horizon fallback.
@@ -145,10 +148,13 @@ Recommended extended window styles:
 
 #### 4.5.1 Settings Window
 - The settings window MUST be a small utility UI, not a primary application workspace.
+- The settings window MUST use the Cursor Mirror application icon rather than the default Windows Forms icon.
 - The settings window MUST provide a control for enabling or disabling movement translucency mode.
 - The settings window MUST provide a control for enabling or disabling predictive overlay positioning.
 - The settings window MUST provide controls for moving opacity, fade duration, and idle delay.
+- When movement translucency mode is disabled in the settings window, moving opacity, fade duration, and idle delay controls MUST be disabled visually and functionally.
 - The settings window MUST provide controls for idle fade enablement, idle opacity, and idle fade delay.
+- When idle fade mode is disabled in the settings window, idle opacity and idle fade delay controls MUST be disabled visually and functionally.
 - Settings controls MUST expose values in user-understandable units: percent for opacity, milliseconds for short movement timing, and seconds for long idle-fade timing.
 - The settings window MUST provide `Reset`, `Close`, and `Exit Cursor Mirror` commands.
 - The `Reset` command MUST restore documented default settings.

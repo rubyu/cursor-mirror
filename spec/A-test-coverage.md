@@ -210,7 +210,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Section 4.4.2.
 
 - COT-MOU-23 - DWM scheduler waits until vblank lead
-  Verify that a synthetic DWM timing sample before the configured wake lead produces a bounded wait rather than an immediate runtime tick.
+  Verify that a synthetic DWM timing sample before the configured wake lead produces a wait bounded by the documented short scheduler cadence rather than an immediate runtime tick.
   Refs: Sections 4.4.2, 6.2.
 
 - COT-MOU-24 - DWM scheduler one tick per vblank
@@ -236,6 +236,18 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 - COT-MOU-29 - Polling ignores stale samples
   Verify that stale or out-of-order polling samples do not move the overlay, do not advance prediction state, and increment the stale-sample diagnostic counter.
   Refs: Sections 3.3, 4.4.2, 6.1.
+
+- COT-MOU-30 - DWM scheduler holds requested vblank
+  Verify that after a tick has been requested for a target vblank, scheduler evaluation before that target time keeps the same target pending instead of advancing to a later vblank.
+  Refs: Sections 4.4.2, 6.2.
+
+- COT-MOU-31 - DWM scheduler advances after requested vblank
+  Verify that scheduler evaluation advances to the next target only after the previously requested target vblank has passed and caps longer waits to the documented short scheduler cadence.
+  Refs: Sections 4.4.2, 6.2.
+
+- COT-MOU-32 - High-resolution wait timer fallback
+  Verify that the runtime wait timer can be created through the best-effort high-resolution waitable timer path or its normal waitable timer fallback, and that it reports the selected wait method.
+  Refs: Sections 4.4.2, 6.2.
 
 #### A.4.T Tray and Application Lifetime
 ##### Unit
@@ -325,6 +337,14 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that a failed temporary-file validation or replacement failure leaves the previous active settings readable when possible.
   Refs: Section 5.6.
 
+- COT-MSU-13 - Movement translucency dependent controls
+  Verify that disabling movement translucency in the settings window disables its moving opacity, fade duration, and idle delay controls, and that re-enabling movement translucency re-enables those controls.
+  Refs: Sections 4.5.1, 6.1.
+
+- COT-MSU-14 - Settings window application icon
+  Verify that the settings window has an application icon assigned and does not fall back to an unset form icon.
+  Refs: Sections 4.5.1, 6.1.
+
 #### A.4.D DPI and Multi-Monitor Coordinates
 ##### Unit
 - COT-MDU-1 - Negative coordinates
@@ -408,7 +428,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Sections 11.5, 11.6.
 
 - COT-MLU-11 - Trace sample count breakdown
-  Verify that total, hook movement, product-equivalent cursor polling, reference polling, runtime scheduler polling, and DWM timing sample counts are reported separately.
+  Verify that total, hook movement, product-equivalent cursor polling, reference polling, runtime scheduler polling, runtime scheduler loop, and DWM timing sample counts are reported separately.
   Refs: Sections 11.3, 11.5.
 
 - COT-MLU-12 - Trace reference poll fields
@@ -416,7 +436,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Section 11.5.
 
 - COT-MLU-13 - Trace metadata quality fields
-  Verify that trace metadata includes interval statistics, runtime scheduler capture settings, DWM availability, environment metadata, monitor metadata, and quality warning fields.
+  Verify that trace metadata includes interval statistics, runtime scheduler capture settings including maximum DWM sleep interval, runtime scheduler loop counts, DWM availability, environment metadata, monitor metadata, and quality warning fields.
   Refs: Sections 11.5, 11.6.
 
 - COT-MLU-14 - Trace runtime scheduler poll fields
@@ -424,8 +444,16 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Section 11.5.
 
 - COT-MLU-15 - Trace runtime scheduler coalesced ticks
-  Verify that runtime scheduler ticks coalesced behind an already pending UI-thread capture are counted in trace metadata.
+  Verify that runtime scheduler ticks coalesced behind an already pending capture-thread callback are counted in trace metadata.
   Refs: Sections 11.5, 11.7.
+
+- COT-MLU-16 - Trace runtime scheduler dedicated STA dispatcher
+  Verify that trace runtime scheduler capture work can be dispatched to a dedicated STA message-pump thread rather than the visible trace tool UI thread.
+  Refs: Sections 11.2, 11.7, 11.8.
+
+- COT-MLU-17 - Trace runtime scheduler loop fields
+  Verify that runtime scheduler loop diagnostic samples preserve loop iteration, timing-read start/completion, decision-completion, tick-requested, sleep-requested, wait method, wait target, sleep-started, and sleep-completed fields.
+  Refs: Sections 11.5, 11.8.
 
 #### A.4.E Demo Application and Virtual Pointer Stream
 ##### Unit

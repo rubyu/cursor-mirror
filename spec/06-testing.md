@@ -9,7 +9,7 @@
 - Settings tests MUST cover defaults, validation, range clamping or rejection, serialization, deserialization, missing settings, corrupt settings, reset behavior, immediate application of changed values, and idle-fade setting persistence.
 - Version freshness tests MUST cover stable up-to-date status, stable behind counts, development snapshot status, and invalid release-tag filtering without performing network access.
 - Tray controller tests SHOULD cover exit command dispatch and cleanup idempotence.
-- Settings UI controller tests SHOULD cover settings command dispatch, duplicate-window prevention, close-without-exit behavior, and settings-window exit dispatch.
+- Settings UI controller tests SHOULD cover settings command dispatch, duplicate-window prevention, close-without-exit behavior, dependent-control enablement, and settings-window exit dispatch.
 - Window style tests SHOULD verify that the overlay sets the expected extended styles.
 
 ### 6.2 Windows API Boundary Tests
@@ -21,7 +21,7 @@
 - DWM-synchronized runtime scheduler tests MUST use synthetic DWM timing inputs for normal unit and CI coverage.
 - Normal unit and CI tests MUST NOT require a real DWM compositor timing query to succeed.
 - Dedicated overlay runtime tests SHOULD isolate thread ownership and dispatch behavior without installing a real hook or requiring real pointer movement.
-- Performance and latency comparisons for overlay runtime changes SHOULD be based on trace packages captured through the trace tool, with DWM timing, split runtime scheduler timing, coalesced runtime tick counts, and reference polling streams enabled.
+- Performance and latency comparisons for overlay runtime changes SHOULD be based on trace packages captured through the trace tool, with DWM timing, split runtime scheduler timing, runtime scheduler loop diagnostics, coalesced runtime tick counts, and reference polling streams enabled.
 - Integration tests MAY exercise real Windows APIs.
 - Integration tests that install a real low-level hook MUST be opt-in and MUST be excluded from normal CI unless the CI environment is explicitly known to support interactive desktop hooks.
 - Opt-in interactive tests SHOULD require an explicit signal such as `CURSOR_MIRROR_RUN_INTERACTIVE_TESTS=1`.

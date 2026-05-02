@@ -21,7 +21,8 @@
 - The trace tool SHOULD record a product-equivalent cursor polling stream and a separate high-precision reference cursor polling stream.
 - The high-precision reference stream SHOULD target a shorter interval than the product-equivalent stream and MUST be clearly distinguishable in the trace data.
 - The trace tool SHOULD record a DWM-synchronized runtime scheduler polling stream that mirrors Cursor Mirror's normal runtime scheduler.
-- The runtime scheduler stream SHOULD decide its wake timing on a background thread and capture the cursor position on the UI thread, matching the main application dispatch shape.
+- The runtime scheduler stream SHOULD decide its wake timing on a background thread and capture the cursor position on a dedicated STA message-pump thread, matching the main application's overlay runtime dispatch shape without sharing the trace tool's visible UI thread.
+- The runtime scheduler background thread SHOULD use the same latency-sensitive priority as Cursor Mirror's normal runtime scheduler.
 - The trace tool SHOULD record Desktop Window Manager timing information while recording when the operating system exposes it.
 
 ### 11.3 UI Requirements
@@ -34,6 +35,7 @@
   - cursor polling sample count display;
   - high-precision reference polling sample count display;
   - runtime scheduler polling sample count display;
+  - runtime scheduler loop sample count display;
   - DWM timing available sample count display;
   - recording duration display;
   - status display;
@@ -43,7 +45,7 @@
 - `Exit` SHOULD close the application immediately when no unsaved samples exist.
 - `Exit` SHOULD confirm when unsaved samples exist.
 - UI text SHOULD be clear enough for users who are not comfortable with command-line tools.
-- The DWM timing display SHOULD show both available timing samples and the product-plus-runtime scheduler polling sample denominator.
+- The DWM timing display SHOULD show both available timing samples and the product-plus-runtime scheduler sample denominator.
 
 ### 11.4 Recording State Model
 The trace tool MUST use an explicit state model with these states:
@@ -78,7 +80,8 @@ The initial event types SHOULD include:
 - `move` for low-level hook movement events;
 - `poll` for product-equivalent periodic `GetCursorPos` samples;
 - `referencePoll` for high-precision reference `GetCursorPos` samples;
-- `runtimeSchedulerPoll` for DWM-synchronized runtime scheduler `GetCursorPos` samples.
+- `runtimeSchedulerPoll` for DWM-synchronized runtime scheduler `GetCursorPos` samples;
+- `runtimeSchedulerLoop` for DWM-synchronized runtime scheduler loop diagnostics, including iterations that do not request a cursor sample.
 
 For `move` samples, the trace SHOULD include:
 
@@ -100,16 +103,30 @@ For `referencePoll` samples, the trace SHOULD include:
 
 For `runtimeSchedulerPoll` samples, the trace SHOULD include:
 
-- current `GetCursorPos` `x` and `y` screen coordinates captured on the UI thread;
+- current `GetCursorPos` `x` and `y` screen coordinates captured on the dedicated runtime scheduler capture thread;
 - whether DWM timing was usable for the scheduler decision;
 - target vblank QPC ticks when available;
 - planned tick QPC ticks when available;
 - actual tick QPC ticks used as the runtime dispatch timestamp;
-- queued tick QPC ticks captured before posting work to the UI thread;
-- dispatch-started QPC ticks captured at the beginning of the UI-thread callback;
+- queued tick QPC ticks captured before posting work to the dedicated runtime scheduler capture thread;
+- dispatch-started QPC ticks captured at the beginning of the capture-thread callback;
 - cursor-read-started and cursor-read-completed QPC ticks captured around the native cursor read;
 - sample-recorded QPC ticks captured immediately before appending the trace sample;
 - lead time from the actual tick to the target vblank in microseconds when available.
+
+For `runtimeSchedulerLoop` samples, the trace SHOULD include:
+
+- monotonically increasing scheduler loop iteration number;
+- loop-started QPC ticks;
+- timing-read-started and timing-read-completed QPC ticks around the DWM timing query;
+- decision-completed QPC ticks after scheduler evaluation;
+- whether the loop requested a runtime scheduler tick;
+- requested sleep duration in milliseconds;
+- wait method used for the scheduler wait, such as high-resolution waitable timer, normal waitable timer, or thread sleep fallback;
+- wait target QPC ticks derived from the requested sleep duration;
+- sleep-started and sleep-completed QPC ticks;
+- whether DWM timing was usable for the scheduler decision;
+- target vblank, planned tick, and vblank lead values when available.
 
 The product-equivalent `poll` stream SHOULD remain the legacy model input proxy. The `runtimeSchedulerPoll` stream SHOULD be treated as the current product runtime input proxy. The `referencePoll` stream SHOULD be treated as a higher-resolution reference stream for analysis and target reconstruction, not as product-available runtime input.
 
@@ -138,10 +155,10 @@ Trace metadata SHOULD include:
 - Cursor Mirror version and build metadata;
 - requested product-equivalent polling interval;
 - requested high-precision reference polling interval;
-- requested runtime scheduler wake lead and fallback interval;
+- requested runtime scheduler wake lead, maximum DWM sleep interval, and fallback interval;
 - requested high-resolution timer period and whether it was acquired;
-- product-equivalent poll, reference poll, runtime scheduler poll, hook move, DWM timing sample counts, and coalesced runtime scheduler tick count;
-- observed interval statistics for hook move, product-equivalent poll, reference poll, and runtime scheduler streams;
+- product-equivalent poll, reference poll, runtime scheduler poll, runtime scheduler loop, hook move, DWM timing sample counts, and coalesced runtime scheduler tick count;
+- observed interval statistics for hook move, product-equivalent poll, reference poll, runtime scheduler poll, and runtime scheduler loop streams;
 - DWM timing availability percentage;
 - operating system, runtime, bitness, and processor-count metadata;
 - virtual-screen bounds;
@@ -160,12 +177,12 @@ Trace metadata SHOULD include:
 - The default package filename SHOULD use the form `cursor-mirror-trace-YYYYMMDD-HHMMSS.zip`.
 - Saving an empty trace MUST fail clearly or be disabled by UI state.
 
-The trace format version for the fields below MUST be `5`.
+The trace format version for the fields below MUST be `7`.
 
 Example `trace.csv` header:
 
 ```csv
-sequence,stopwatchTicks,elapsedMicroseconds,x,y,event,hookX,hookY,cursorX,cursorY,hookMouseData,hookFlags,hookTimeMilliseconds,hookExtraInfo,dwmTimingAvailable,dwmRateRefreshNumerator,dwmRateRefreshDenominator,dwmQpcRefreshPeriod,dwmQpcVBlank,dwmRefreshCount,dwmQpcCompose,dwmFrame,dwmRefreshFrame,dwmFrameDisplayed,dwmQpcFrameDisplayed,dwmRefreshFrameDisplayed,dwmFrameComplete,dwmQpcFrameComplete,dwmFramePending,dwmQpcFramePending,dwmRefreshNextDisplayed,dwmRefreshNextPresented,dwmFramesDisplayed,dwmFramesDropped,dwmFramesMissed,runtimeSchedulerTimingUsable,runtimeSchedulerTargetVBlankTicks,runtimeSchedulerPlannedTickTicks,runtimeSchedulerActualTickTicks,runtimeSchedulerVBlankLeadMicroseconds,runtimeSchedulerQueuedTickTicks,runtimeSchedulerDispatchStartedTicks,runtimeSchedulerCursorReadStartedTicks,runtimeSchedulerCursorReadCompletedTicks,runtimeSchedulerSampleRecordedTicks
+sequence,stopwatchTicks,elapsedMicroseconds,x,y,event,hookX,hookY,cursorX,cursorY,hookMouseData,hookFlags,hookTimeMilliseconds,hookExtraInfo,dwmTimingAvailable,dwmRateRefreshNumerator,dwmRateRefreshDenominator,dwmQpcRefreshPeriod,dwmQpcVBlank,dwmRefreshCount,dwmQpcCompose,dwmFrame,dwmRefreshFrame,dwmFrameDisplayed,dwmQpcFrameDisplayed,dwmRefreshFrameDisplayed,dwmFrameComplete,dwmQpcFrameComplete,dwmFramePending,dwmQpcFramePending,dwmRefreshNextDisplayed,dwmRefreshNextPresented,dwmFramesDisplayed,dwmFramesDropped,dwmFramesMissed,runtimeSchedulerTimingUsable,runtimeSchedulerTargetVBlankTicks,runtimeSchedulerPlannedTickTicks,runtimeSchedulerActualTickTicks,runtimeSchedulerVBlankLeadMicroseconds,runtimeSchedulerQueuedTickTicks,runtimeSchedulerDispatchStartedTicks,runtimeSchedulerCursorReadStartedTicks,runtimeSchedulerCursorReadCompletedTicks,runtimeSchedulerSampleRecordedTicks,runtimeSchedulerLoopIteration,runtimeSchedulerLoopStartedTicks,runtimeSchedulerTimingReadStartedTicks,runtimeSchedulerTimingReadCompletedTicks,runtimeSchedulerDecisionCompletedTicks,runtimeSchedulerTickRequested,runtimeSchedulerSleepRequestedMilliseconds,runtimeSchedulerWaitMethod,runtimeSchedulerWaitTargetTicks,runtimeSchedulerSleepStartedTicks,runtimeSchedulerSleepCompletedTicks
 ```
 
 Example package:
@@ -183,8 +200,9 @@ cursor-mirror-trace-20260430-153012.zip
 - High-precision reference polling SHOULD run only while recording is active.
 - High-precision reference polling SHOULD use bounded work per sample and SHOULD stop promptly when recording stops or the tool exits.
 - Runtime scheduler polling SHOULD run only while recording is active.
-- Runtime scheduler polling MUST avoid overlapping queued UI-thread captures.
-- Runtime scheduler polling SHOULD count scheduler ticks that are coalesced because a previous UI-thread capture is still pending.
+- Runtime scheduler loop diagnostics SHOULD run only while recording is active and SHOULD include loop iterations that do not request cursor capture.
+- Runtime scheduler polling MUST avoid overlapping queued capture-thread callbacks.
+- Runtime scheduler polling SHOULD count scheduler ticks that are coalesced because a previous capture-thread callback is still pending.
 - Runtime scheduler polling SHOULD stop promptly when recording stops or the tool exits.
 - If the tool requests a shorter Windows timer period for recording quality, it MUST release that request when recording stops or the tool exits.
 - DWM timing capture failure MUST NOT stop recording.
@@ -197,5 +215,5 @@ cursor-mirror-trace-20260430-153012.zip
 
 ### 11.8 Testing
 - Normal CI MUST NOT launch the trace tool or install a real Windows hook.
-- Unit tests MUST cover trace session state transitions, button enabled state derivation, total and per-source sample counting, duration formatting, output package writing, reference polling sample fields, runtime scheduler polling split timing fields, runtime scheduler coalesced tick metadata, metadata quality fields, and empty-save behavior.
+- Unit tests MUST cover trace session state transitions, button enabled state derivation, total and per-source sample counting, duration formatting, output package writing, reference polling sample fields, runtime scheduler polling split timing fields, runtime scheduler loop timing fields, runtime scheduler coalesced tick metadata, dedicated STA dispatch behavior, metadata quality fields, and empty-save behavior.
 - Manual validation MUST cover visible-window startup, real hook recording, start/stop/save behavior, unsaved exit confirmation, real hook cleanup, and saved package readability.
