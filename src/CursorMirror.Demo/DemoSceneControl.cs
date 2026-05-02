@@ -240,11 +240,8 @@ namespace CursorMirror.Demo
 
             int centerY = bounds.Top + (bounds.Height / 2);
             using (Pen linePen = new Pen(Color.FromArgb(190, 20, 100, 190), 3))
-            using (Pen guidePen = new Pen(Color.FromArgb(100, 120, 130, 145), 1))
             using (Brush endpointBrush = new SolidBrush(Color.FromArgb(230, 255, 183, 77)))
             {
-                guidePen.DashStyle = DashStyle.Dot;
-                graphics.DrawRectangle(guidePen, bounds);
                 graphics.DrawLine(linePen, bounds.Left, centerY, bounds.Right, centerY);
                 graphics.FillEllipse(endpointBrush, bounds.Left - 7, centerY - 7, 14, 14);
                 graphics.FillEllipse(endpointBrush, bounds.Right - 7, centerY - 7, 14, 14);
