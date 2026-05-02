@@ -110,10 +110,12 @@ Recommended extended window styles:
 - The default fixed prediction horizon SHOULD be `8ms`.
 - If DWM timing is available, Cursor Mirror SHOULD choose a next-vblank prediction horizon from DWM composition timing.
 - If DWM timing is available, Cursor Mirror SHOULD schedule its normal runtime polling and overlay movement tick near the upcoming DWM vblank instead of relying only on a general-purpose UI timer.
-- The DWM-synchronized runtime scheduler SHOULD wake slightly before the target vblank, then dispatch `GetCursorPos` polling and overlay movement onto the dedicated overlay runtime thread.
-- The scheduler SHOULD cap DWM-timed sleeps to a short cadence, default `2ms`, so it re-checks compositor timing frequently instead of sleeping through multiple frames.
-- The scheduler SHOULD use a high-resolution waitable timer for short DWM-timed waits when the operating system supports it, falling back to a normal waitable timer or `Thread.Sleep` when unavailable.
-- The scheduler SHOULD calculate an absolute wait target for each scheduler loop. If the DWM-derived wake or hold target is farther away than the capped cadence, the loop target SHOULD remain the capped short re-check time.
+- The DWM-synchronized runtime scheduler SHOULD select the next distinct target vblank and use a one-shot wait until the configured lead time before that target, then dispatch `GetCursorPos` polling and overlay movement onto the dedicated overlay runtime thread.
+- After a target vblank has been requested, DWM reports that are still within the same-frame neighborhood of that target SHOULD be treated as the same target and MUST NOT generate an additional runtime tick.
+- The same-frame neighborhood SHOULD be defined conservatively, for example as less than half of the reported refresh period after the previous requested target.
+- If the DWM-derived one-shot wait target is already due or late, the scheduler SHOULD dispatch immediately for that target and then advance to a later distinct target on the next iteration.
+- The scheduler SHOULD use a high-resolution waitable timer for DWM-timed waits when the operating system supports it, falling back to a normal waitable timer or `Thread.Sleep` when unavailable.
+- The scheduler SHOULD calculate an absolute wait target for each DWM one-shot wait.
 - When an absolute loop wait target is available, the scheduler SHOULD use the waitable timer until slightly before that target and then use a bounded yield/spin fine wait for the final sub-millisecond segment.
 - The bounded fine wait MUST be short enough to avoid sustained CPU load and MUST preserve the normal waitable timer and `Thread.Sleep` fallback behavior.
 - The normal overlay hot path SHOULD avoid dispatching through the tray or settings UI thread.
@@ -121,8 +123,11 @@ Recommended extended window styles:
 - The scheduler SHOULD request a `1ms` timer resolution while active and release that request during shutdown.
 - The high-frequency latest-position sampler SHOULD also request a `1ms` timer resolution while active and release that request during shutdown.
 - Runtime scheduler and latest-position sampler threads SHOULD use a priority appropriate for latency-sensitive cursor display work without requiring administrator privileges.
+- The DWM scheduler thread, overlay runtime thread, and high-frequency latest-position sampler SHOULD NOT request managed `Highest` thread priority by default.
+- Cursor display threads SHOULD NOT request MMCSS by default. MMCSS and managed-priority experiments MAY be implemented as opt-in diagnostics, but the default runtime SHOULD avoid competing with other desktop latency-sensitive workloads.
+- Any optional MMCSS or elevated managed-priority request MUST be best-effort: failure MUST NOT prevent startup, MUST NOT require administrator privileges, and MUST fall back to the existing scheduler behavior.
 - The scheduler MUST avoid overlapping queued runtime ticks.
-- After the scheduler requests a tick for a target vblank, it MUST keep that target pending until the target vblank time has passed rather than advancing to a later vblank early.
+- After the scheduler requests a tick for a target vblank, it MUST suppress duplicate ticks for that target. It MAY schedule the following distinct target before the prior target has passed when the next one-shot wait target is unambiguous.
 - The controller MUST ignore stale or out-of-order poll samples and SHOULD expose a diagnostic counter for ignored stale samples.
 - If DWM timing is unavailable or invalid, the scheduler MUST fall back to a documented high-resolution interval loop.
 - Invalid, late, stale, or excessive DWM horizons MUST fall back to exact pointer positioning or a documented fixed-horizon fallback.

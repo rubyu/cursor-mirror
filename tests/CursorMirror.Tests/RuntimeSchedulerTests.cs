@@ -12,6 +12,9 @@ namespace CursorMirror.Tests
             suite.Add("COT-MOU-30", DwmSchedulerHoldsRequestedVBlankUntilItPasses);
             suite.Add("COT-MOU-31", DwmSchedulerAdvancesAfterRequestedVBlankPasses);
             suite.Add("COT-MOU-32", HighResolutionWaitTimerBestEffortWaits);
+            suite.Add("COT-MOU-33", ThreadLatencyProfileSummary);
+            suite.Add("COT-MOU-34", DwmOneShotSchedulerWaitsUntilAbsoluteWake);
+            suite.Add("COT-MOU-35", DwmOneShotSchedulerSkipsNearDuplicateVBlank);
         }
 
         // DWM scheduler waits until the configured vblank lead time [COT-MOU-23]
@@ -147,6 +150,65 @@ namespace CursorMirror.Tests
         private static long StopwatchTicksPerSecond()
         {
             return System.Diagnostics.Stopwatch.Frequency;
+        }
+
+        // DWM one-shot scheduler waits directly until the selected vblank lead [COT-MOU-34]
+        private static void DwmOneShotSchedulerWaitsUntilAbsoluteWake()
+        {
+            DwmSynchronizedRuntimeScheduleDecision decision =
+                DwmSynchronizedRuntimeScheduler.EvaluateOneShotDwmTiming(
+                    1010,
+                    1000,
+                    1000,
+                    17,
+                    0,
+                    DwmSynchronizedRuntimeScheduler.WakeAdvanceMilliseconds,
+                    DwmSynchronizedRuntimeScheduler.FallbackIntervalMilliseconds);
+
+            TestAssert.True(decision.IsDwmTimingUsable, "DWM timing should be usable");
+            TestAssert.False(decision.ShouldTick, "one-shot scheduler must wait before the lead window");
+            TestAssert.Equal(1017L, decision.TargetVBlankTicks, "target vblank");
+            TestAssert.Equal(1015L, decision.WaitUntilTicks, "wait target should be the absolute vblank lead");
+        }
+
+        // DWM one-shot scheduler skips near-duplicate reports for the already requested vblank [COT-MOU-35]
+        private static void DwmOneShotSchedulerSkipsNearDuplicateVBlank()
+        {
+            DwmSynchronizedRuntimeScheduleDecision decision =
+                DwmSynchronizedRuntimeScheduler.EvaluateOneShotDwmTiming(
+                    1015,
+                    1000,
+                    1001,
+                    17,
+                    1017,
+                    DwmSynchronizedRuntimeScheduler.WakeAdvanceMilliseconds,
+                    DwmSynchronizedRuntimeScheduler.FallbackIntervalMilliseconds);
+
+            TestAssert.True(decision.IsDwmTimingUsable, "DWM timing should be usable");
+            TestAssert.False(decision.ShouldTick, "near-duplicate target should be advanced to a later frame");
+            TestAssert.Equal(1035L, decision.TargetVBlankTicks, "next distinct target vblank");
+            TestAssert.Equal(1033L, decision.WaitUntilTicks, "next distinct wait target");
+        }
+
+        // Latency-sensitive thread profile summary [COT-MOU-33]
+        private static void ThreadLatencyProfileSummary()
+        {
+            TestAssert.Equal(
+                "managed=Highest;mmcss=Games:High",
+                CursorMirror.ThreadLatencyProfile.FormatSummary(true, true, true, null),
+                "fully applied latency profile summary");
+            TestAssert.Equal(
+                "managed=Highest;mmcss=unavailable",
+                CursorMirror.ThreadLatencyProfile.FormatSummary(true, false, false, null),
+                "managed-only latency profile summary");
+            TestAssert.Equal(
+                "managed=Highest;mmcss=Games:priorityUnavailable;reason=mmcssPriorityFailed:1",
+                CursorMirror.ThreadLatencyProfile.FormatSummary(true, true, false, "mmcssPriorityFailed:1"),
+                "partial latency profile summary");
+            TestAssert.Equal(
+                "managed=unavailable;mmcss=unavailable;reason=avrtUnavailable",
+                CursorMirror.ThreadLatencyProfile.FormatSummary(false, false, false, "avrtUnavailable"),
+                "unavailable latency profile summary");
         }
     }
 }

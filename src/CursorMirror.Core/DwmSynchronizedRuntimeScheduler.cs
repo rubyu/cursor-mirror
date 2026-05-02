@@ -152,6 +152,36 @@ namespace CursorMirror
             return new DwmSynchronizedRuntimeScheduleDecision(true, false, delayMilliseconds, targetVBlankTicks, currentWaitUntilTicks);
         }
 
+        public static DwmSynchronizedRuntimeScheduleDecision EvaluateOneShotDwmTiming(
+            long nowTicks,
+            long stopwatchFrequency,
+            long lastDwmVBlankTicks,
+            long refreshPeriodTicks,
+            long lastRequestedVBlankTicks,
+            int wakeAdvanceMilliseconds,
+            int fallbackMilliseconds)
+        {
+            int fallbackDelay = NormalizeDelayMilliseconds(fallbackMilliseconds);
+            if (nowTicks <= 0 || stopwatchFrequency <= 0 || lastDwmVBlankTicks <= 0 || refreshPeriodTicks <= 0)
+            {
+                long fallbackWaitUntilTicks = CalculateCurrentWaitTargetTicks(nowTicks, fallbackDelay, 0, stopwatchFrequency);
+                return new DwmSynchronizedRuntimeScheduleDecision(false, false, fallbackDelay, 0, fallbackWaitUntilTicks);
+            }
+
+            long targetVBlankTicks = SelectNextVBlank(nowTicks, lastDwmVBlankTicks, refreshPeriodTicks);
+            targetVBlankTicks = AdvancePastNearRequestedVBlank(targetVBlankTicks, lastRequestedVBlankTicks, refreshPeriodTicks);
+
+            long wakeAdvanceTicks = MillisecondsToTicks(Math.Max(0, wakeAdvanceMilliseconds), stopwatchFrequency);
+            long wakeTicks = targetVBlankTicks - wakeAdvanceTicks;
+            if (nowTicks >= wakeTicks)
+            {
+                return new DwmSynchronizedRuntimeScheduleDecision(true, true, 0, targetVBlankTicks, nowTicks);
+            }
+
+            int delayMilliseconds = TicksToDelayMilliseconds(wakeTicks - nowTicks, stopwatchFrequency, fallbackDelay);
+            return new DwmSynchronizedRuntimeScheduleDecision(true, false, delayMilliseconds, targetVBlankTicks, wakeTicks);
+        }
+
         private void Run()
         {
             while (_running)
@@ -161,25 +191,27 @@ namespace CursorMirror
                 if (TryGetDwmTiming(out lastDwmVBlankTicks, out refreshPeriodTicks))
                 {
                     long nowTicks = Stopwatch.GetTimestamp();
-                    DwmSynchronizedRuntimeScheduleDecision decision = EvaluateDwmTiming(
+                    DwmSynchronizedRuntimeScheduleDecision decision = EvaluateOneShotDwmTiming(
                         nowTicks,
                         Stopwatch.Frequency,
                         lastDwmVBlankTicks,
                         refreshPeriodTicks,
                         _lastRequestedVBlankTicks,
                         WakeAdvanceMilliseconds,
-                        MaximumDwmSleepMilliseconds);
+                        FallbackIntervalMilliseconds);
 
-                    if (decision.ShouldTick)
+                    if (!decision.ShouldTick && decision.WaitUntilTicks > 0)
                     {
-                        _lastRequestedVBlankTicks = decision.TargetVBlankTicks;
-                        RequestTick();
-                        WaitWhileRunning(1, 0);
+                        WaitUntilWhileRunning(decision.WaitUntilTicks, FallbackIntervalMilliseconds);
                     }
-                    else
+
+                    if (!_running)
                     {
-                        WaitWhileRunning(decision.DelayMilliseconds, decision.WaitUntilTicks);
+                        break;
                     }
+
+                    _lastRequestedVBlankTicks = decision.TargetVBlankTicks;
+                    RequestTick();
                 }
                 else
                 {
@@ -273,6 +305,25 @@ namespace CursorMirror
             }
 
             return startTicks + offset;
+        }
+
+        private static long AdvancePastNearRequestedVBlank(long targetVBlankTicks, long lastRequestedVBlankTicks, long refreshPeriodTicks)
+        {
+            if (targetVBlankTicks <= 0 || lastRequestedVBlankTicks <= 0 || refreshPeriodTicks <= 0)
+            {
+                return targetVBlankTicks;
+            }
+
+            long minimumSeparationTicks = Math.Max(1, refreshPeriodTicks / 2);
+            long minimumNextTargetTicks = AddTicks(lastRequestedVBlankTicks, minimumSeparationTicks);
+            if (targetVBlankTicks >= minimumNextTargetTicks)
+            {
+                return targetVBlankTicks;
+            }
+
+            long requiredTicks = minimumNextTargetTicks - targetVBlankTicks;
+            long periods = (requiredTicks + refreshPeriodTicks - 1) / refreshPeriodTicks;
+            return AddPeriods(targetVBlankTicks, refreshPeriodTicks, periods);
         }
 
         private static long MillisecondsToTicks(int milliseconds, long stopwatchFrequency)

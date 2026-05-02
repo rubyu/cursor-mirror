@@ -249,6 +249,18 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that the runtime wait timer can be created through the best-effort high-resolution waitable timer path or its normal waitable timer fallback, can wait using millisecond or stopwatch-tick durations, and reports the selected wait method.
   Refs: Sections 4.4.2, 6.2.
 
+- COT-MOU-33 - Latency profile summary
+  Verify that the latency-sensitive thread profile reports managed-only, MMCSS, partial-failure, and unavailable states using a stable diagnostic summary without requiring real MMCSS activation.
+  Refs: Sections 4.4.2, 6.2.
+
+- COT-MOU-34 - One-shot DWM scheduler absolute wake
+  Verify that the one-shot DWM scheduler selects the absolute vblank-lead wait target instead of using the legacy short re-check cadence when DWM timing is usable.
+  Refs: Sections 4.4.2, 6.2.
+
+- COT-MOU-35 - One-shot DWM scheduler duplicate target suppression
+  Verify that the one-shot DWM scheduler advances past near-duplicate DWM vblank reports for an already requested frame and waits for the next distinct target.
+  Refs: Sections 4.4.2, 6.2.
+
 #### A.4.T Tray and Application Lifetime
 ##### Unit
 - COT-MTU-1 - Tray icon created
