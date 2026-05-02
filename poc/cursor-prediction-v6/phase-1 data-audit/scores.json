@@ -1,0 +1,242 @@
+{
+  "generated_at_utc": "2026-05-02T10:13:45.316Z",
+  "phase": "phase-1 data-audit",
+  "input_zips": [
+    "cursor-mirror-trace-20260502-175951.zip",
+    "cursor-mirror-trace-20260502-184947.zip"
+  ],
+  "config": {
+    "anchor_stream": "runtimeSelfSchedulerPoll",
+    "label_stream": "referencePoll",
+    "target_policy": "DWM next-vblank recomputed from runtimeSelfSchedulerPoll sample time and DWM timing fields.",
+    "zip_policy": "Read-only ZIP entry parsing; no extraction and no mutation."
+  },
+  "sessions": [
+    {
+      "session_id": "175951",
+      "source_zip": "cursor-mirror-trace-20260502-175951.zip",
+      "trace_format_version": 9,
+      "created_utc": "2026-05-02T08:59:55.9772580Z",
+      "product_version": "v1.3.0-dev+20260502.3e8d5dd09bcd.dirty",
+      "csv_rows": 260359,
+      "duration_ms": 270849.357,
+      "zip_entries": [
+        {
+          "name": "trace.csv",
+          "compressedSize": 6728019,
+          "uncompressedSize": 55402936,
+          "method": 8
+        },
+        {
+          "name": "metadata.json",
+          "compressedSize": 1146,
+          "uncompressedSize": 3486,
+          "method": 8
+        }
+      ],
+      "metadata_counts": {
+        "SampleCount": 260359,
+        "RuntimeSelfSchedulerPollSampleCount": 15829,
+        "ReferencePollSampleCount": 122812,
+        "RuntimeSchedulerPollSampleCount": 15838,
+        "SchedulerExperimentSampleCount": 47506
+      },
+      "event_counts": {
+        "move": 12271,
+        "poll": 14434,
+        "referencePoll": 122812,
+        "runtimeSchedulerLoop": 15839,
+        "runtimeSchedulerPoll": 15838,
+        "runtimeSelfSchedulerLoop": 15830,
+        "runtimeSelfSchedulerPoll": 15829,
+        "schedulerExperiment": 47506
+      },
+      "runtime_self_scheduler_interval_ms": {
+        "count": 15828,
+        "min": 9.516,
+        "mean": 17.10823041445594,
+        "p50": 16.668,
+        "p90": 16.776,
+        "p95": 16.969,
+        "p99": 33.36173,
+        "max": 50.145
+      },
+      "runtime_scheduler_interval_ms": {
+        "count": 15837,
+        "min": 1.452,
+        "mean": 17.09743745658904,
+        "p50": 16.669,
+        "p90": 16.94,
+        "p95": 17.2674,
+        "p99": 33.52192,
+        "max": 50.784
+      },
+      "product_poll_interval_ms": {
+        "count": 14433,
+        "min": 0.12,
+        "mean": 18.757497678930182,
+        "p50": 15.652,
+        "p90": 36.44120000000001,
+        "p95": 48.0988,
+        "p99": 62.52300000000001,
+        "max": 95.401
+      },
+      "reference_poll_interval_ms": {
+        "count": 122811,
+        "min": 0,
+        "mean": 2.205112888910254,
+        "p50": 2,
+        "p90": 2,
+        "p95": 2.001,
+        "p99": 12.825,
+        "max": 42.5
+      },
+      "scheduler_lead_us": {
+        "count": 15829,
+        "min": -5214,
+        "mean": 1964.041885147514,
+        "p50": 1999,
+        "p90": 1999,
+        "p95": 1999,
+        "p99": 2000,
+        "max": 2000
+      },
+      "scheduler_actual_minus_planned_us": {
+        "count": 15829,
+        "min": 0.1,
+        "mean": 35.928144544822814,
+        "p50": 1.4000000000000001,
+        "p90": 65.62000000000008,
+        "p95": 161.71999999999971,
+        "p99": 545.2239999999989,
+        "max": 7213.8
+      },
+      "predictor_target_horizon_ms": {
+        "count": 15829,
+        "min": 0.000699999988079071,
+        "mean": 1.979073605407889,
+        "p50": 1.9949000000059605,
+        "p90": 1.99739999999851,
+        "p95": 1.9976000000014902,
+        "p99": 1.998199999988079,
+        "max": 16.649800000000745
+      },
+      "metadata_quality_warnings": [
+        "product_poll_interval_p95_exceeds_requested_interval"
+      ]
+    },
+    {
+      "session_id": "184947",
+      "source_zip": "cursor-mirror-trace-20260502-184947.zip",
+      "trace_format_version": 9,
+      "created_utc": "2026-05-02T09:49:50.7516196Z",
+      "product_version": "v1.3.0-dev+20260502.3e8d5dd09bcd.dirty",
+      "csv_rows": 208139,
+      "duration_ms": 198742.456,
+      "zip_entries": [
+        {
+          "name": "trace.csv",
+          "compressedSize": 5316009,
+          "uncompressedSize": 43150579,
+          "method": 8
+        },
+        {
+          "name": "metadata.json",
+          "compressedSize": 1135,
+          "uncompressedSize": 3451,
+          "method": 8
+        }
+      ],
+      "metadata_counts": {
+        "SampleCount": 208139,
+        "RuntimeSelfSchedulerPollSampleCount": 11911,
+        "ReferencePollSampleCount": 97907,
+        "RuntimeSchedulerPollSampleCount": 11912,
+        "SchedulerExperimentSampleCount": 35743
+      },
+      "event_counts": {
+        "move": 14682,
+        "poll": 12159,
+        "referencePoll": 97907,
+        "runtimeSchedulerLoop": 11913,
+        "runtimeSchedulerPoll": 11912,
+        "runtimeSelfSchedulerLoop": 11912,
+        "runtimeSelfSchedulerPoll": 11911,
+        "schedulerExperiment": 35743
+      },
+      "runtime_self_scheduler_interval_ms": {
+        "count": 11910,
+        "min": 13.578,
+        "mean": 16.681942569270433,
+        "p50": 16.668,
+        "p90": 16.716,
+        "p95": 16.77655,
+        "p99": 17.03091,
+        "max": 33.382
+      },
+      "runtime_scheduler_interval_ms": {
+        "count": 11911,
+        "min": 7.226,
+        "mean": 16.67902611031783,
+        "p50": 16.668,
+        "p90": 16.819,
+        "p95": 16.948,
+        "p99": 17.32,
+        "max": 33.526
+      },
+      "product_poll_interval_ms": {
+        "count": 12158,
+        "min": 0.066,
+        "mean": 16.34192383615727,
+        "p50": 15.675,
+        "p90": 25.94450000000001,
+        "p95": 30.1913,
+        "p99": 41.70566000000002,
+        "max": 80.869
+      },
+      "reference_poll_interval_ms": {
+        "count": 97906,
+        "min": 0,
+        "mean": 2.0295799235987007,
+        "p50": 2,
+        "p90": 2.001,
+        "p95": 2.001,
+        "p99": 3.296099999999948,
+        "max": 24.672
+      },
+      "scheduler_lead_us": {
+        "count": 11911,
+        "min": -1060,
+        "mean": 1980.797917891025,
+        "p50": 1999,
+        "p90": 1999,
+        "p95": 1999,
+        "p99": 2000,
+        "max": 2000
+      },
+      "scheduler_actual_minus_planned_us": {
+        "count": 11911,
+        "min": 0.2,
+        "mean": 19.188775081857138,
+        "p50": 1.2000000000000002,
+        "p90": 32.300000000000004,
+        "p95": 87.60000000000001,
+        "p99": 338.8099999999997,
+        "max": 3059.8
+      },
+      "predictor_target_horizon_ms": {
+        "count": 11911,
+        "min": 0.052300000000745056,
+        "mean": 1.9853332381831854,
+        "p50": 1.9962000000029803,
+        "p90": 1.9975,
+        "p95": 1.9977999999970197,
+        "p99": 1.9984000000059607,
+        "max": 16.544200000000185
+      },
+      "metadata_quality_warnings": [
+        "product_poll_interval_p95_exceeds_requested_interval"
+      ]
+    }
+  ]
+}

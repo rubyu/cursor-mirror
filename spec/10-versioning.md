@@ -46,7 +46,16 @@ Constraints:
 - Development packages SHOULD use the package version `MAJOR.MINOR.PATCH-dev.DATE.SHA[.dirty]`.
 - Package naming MUST be derived from the same resolved version metadata embedded into the binary.
 
-### 10.6 Informative Examples
+### 10.6 Runtime Freshness Display
+- Runtime freshness checks MUST compare the embedded package version with stable GitHub Release tags only.
+- Stable release tags considered by the runtime checker MUST match `vMAJOR.MINOR.PATCH`.
+- Draft, pre-release, malformed, or non-stable tags MUST NOT count as newer releases.
+- The runtime checker SHOULD count how many stable release tags are newer than the embedded stable package version.
+- The runtime checker MUST treat development package versions as development builds rather than claiming they are stable up to date.
+- Freshness checks MUST be best-effort and MUST fall back to an unknown status when the network request or response parsing fails.
+- Freshness checks MUST NOT affect cursor mirroring, application startup, or release metadata embedded at build time.
+
+### 10.7 Informative Examples
 - Tagged `main` release: `v1.2.3+20260430.abcdef123456`
 - Untagged `main` build after `v1.2.3`: `v1.2.4-dev+20260430.abcdef123456`
 - `develop` build after `v1.2.3`: `v1.3.0-dev+20260430.abcdef123456`

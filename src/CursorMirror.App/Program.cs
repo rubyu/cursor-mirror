@@ -15,7 +15,20 @@ namespace CursorMirror
 
             try
             {
-                Application.Run(new CursorMirrorApplicationContext());
+                SettingsStore settingsStore = new SettingsStore();
+                string restoreFailureMessage;
+                CursorMirrorSettings settings = settingsStore.Load(out restoreFailureMessage);
+                if (restoreFailureMessage != null)
+                {
+                    TryResetSettingsFile(settingsStore, settings);
+                    MessageBox.Show(
+                        LocalizedStrings.SettingsRestoreFailureMessage(settingsStore.Path, restoreFailureMessage),
+                        LocalizedStrings.ProductName,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                }
+
+                Application.Run(new CursorMirrorApplicationContext(settingsStore, settings));
             }
             catch (Win32Exception ex)
             {
@@ -32,6 +45,17 @@ namespace CursorMirror
                     LocalizedStrings.StartupFailureTitle,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
+            }
+        }
+
+        private static void TryResetSettingsFile(SettingsStore settingsStore, CursorMirrorSettings settings)
+        {
+            try
+            {
+                settingsStore.Save(settings);
+            }
+            catch
+            {
             }
         }
     }

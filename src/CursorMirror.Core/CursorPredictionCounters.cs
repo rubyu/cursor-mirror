@@ -12,6 +12,8 @@ namespace CursorMirror
 
         public long PredictionResetDueToInvalidDtOrIdleGap { get; set; }
 
+        public long StalePollSamples { get; set; }
+
         public void Reset()
         {
             InvalidDwmHorizon = 0;
@@ -19,6 +21,7 @@ namespace CursorMirror
             HorizonOver125xRefreshPeriod = 0;
             FallbackToHold = 0;
             PredictionResetDueToInvalidDtOrIdleGap = 0;
+            StalePollSamples = 0;
         }
     }
 }

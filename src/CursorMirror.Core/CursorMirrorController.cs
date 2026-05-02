@@ -5,6 +5,7 @@ namespace CursorMirror
 {
     public sealed class CursorMirrorController : IDisposable
     {
+        private const int SameCursorHandleRefreshMilliseconds = 100;
         private readonly ICursorImageProvider _cursorImageProvider;
         private readonly IOverlayPresenter _overlayPresenter;
         private readonly IUiDispatcher _dispatcher;
@@ -16,9 +17,13 @@ namespace CursorMirror
         private readonly CursorPredictionCounters _predictionCounters = new CursorPredictionCounters();
         private CursorMirrorSettings _settings;
         private bool _hasLastImage;
+        private IntPtr _lastCursorHandle;
+        private long _lastCursorImageRefreshMilliseconds;
         private Point _lastHotSpot;
         private bool _hasLastPointer;
         private Point _lastPointer;
+        private bool _hasLastPollSample;
+        private long _lastPollSampleTimestampTicks;
         private bool _hasLastDisplayPointer;
         private Point _lastDisplayPointer;
         private bool _disposed;
@@ -70,8 +75,9 @@ namespace CursorMirror
             _dispatcher = dispatcher;
             _settings = settings.Normalize();
             _opacityController = new MovementOpacityController(_settings);
-            _positionPredictor = new CursorPositionPredictor(_settings.PredictionIdleResetMilliseconds);
+            _positionPredictor = new CursorPositionPredictor(_settings.PredictionIdleResetMilliseconds, _settings.PredictionGainPercent);
             _pollPositionPredictor = new DwmAwareCursorPositionPredictor(_settings.PredictionIdleResetMilliseconds);
+            _pollPositionPredictor.ApplySettings(_settings);
             _cursorPoller = cursorPoller;
             _clock = clock;
         }
@@ -102,6 +108,8 @@ namespace CursorMirror
                 {
                     Point location = OverlayPlacement.FromPointerAndHotSpot(displayPointer, capture.HotSpot);
                     _overlayPresenter.ShowCursor(capture.Bitmap, location);
+                    _lastCursorHandle = capture.CursorHandle;
+                    _lastCursorImageRefreshMilliseconds = now;
                     _lastHotSpot = capture.HotSpot;
                     _hasLastImage = true;
                     StoreLastDisplayPointer(displayPointer);
@@ -126,14 +134,28 @@ namespace CursorMirror
             bool predictionChanged =
                 _settings.PredictionEnabled != normalized.PredictionEnabled ||
                 _settings.PredictionHorizonMilliseconds != normalized.PredictionHorizonMilliseconds ||
-                _settings.PredictionIdleResetMilliseconds != normalized.PredictionIdleResetMilliseconds;
+                _settings.PredictionIdleResetMilliseconds != normalized.PredictionIdleResetMilliseconds ||
+                _settings.PredictionGainPercent != normalized.PredictionGainPercent ||
+                _settings.DwmPredictionHorizonCapMilliseconds != normalized.DwmPredictionHorizonCapMilliseconds ||
+                _settings.DwmAdaptiveGainEnabled != normalized.DwmAdaptiveGainEnabled ||
+                _settings.DwmAdaptiveGainPercent != normalized.DwmAdaptiveGainPercent ||
+                _settings.DwmAdaptiveMinimumSpeedPixelsPerSecond != normalized.DwmAdaptiveMinimumSpeedPixelsPerSecond ||
+                _settings.DwmAdaptiveMaximumAccelerationPixelsPerSecondSquared != normalized.DwmAdaptiveMaximumAccelerationPixelsPerSecondSquared ||
+                _settings.DwmAdaptiveReversalCooldownSamples != normalized.DwmAdaptiveReversalCooldownSamples ||
+                _settings.DwmAdaptiveStableDirectionSamples != normalized.DwmAdaptiveStableDirectionSamples ||
+                _settings.DwmAdaptiveOscillationWindowSamples != normalized.DwmAdaptiveOscillationWindowSamples ||
+                _settings.DwmAdaptiveOscillationMinimumReversals != normalized.DwmAdaptiveOscillationMinimumReversals ||
+                _settings.DwmAdaptiveOscillationMaximumSpanPixels != normalized.DwmAdaptiveOscillationMaximumSpanPixels ||
+                _settings.DwmAdaptiveOscillationMaximumEfficiencyPercent != normalized.DwmAdaptiveOscillationMaximumEfficiencyPercent ||
+                _settings.DwmAdaptiveOscillationLatchMilliseconds != normalized.DwmAdaptiveOscillationLatchMilliseconds ||
+                _settings.DwmPredictionModel != normalized.DwmPredictionModel;
 
             _settings = normalized;
             _opacityController.ApplySettings(_settings);
             if (predictionChanged)
             {
-                _positionPredictor.ApplyIdleResetMilliseconds(_settings.PredictionIdleResetMilliseconds);
-                _pollPositionPredictor.ApplyIdleResetMilliseconds(_settings.PredictionIdleResetMilliseconds);
+                _positionPredictor.ApplySettings(_settings.PredictionIdleResetMilliseconds, _settings.PredictionGainPercent);
+                _pollPositionPredictor.ApplySettings(_settings);
             }
 
             ApplyOpacity(_clock.Milliseconds);
@@ -152,7 +174,10 @@ namespace CursorMirror
             ThrowIfDisposed();
             _overlayPresenter.HideOverlay();
             _hasLastImage = false;
+            _lastCursorHandle = IntPtr.Zero;
+            _lastCursorImageRefreshMilliseconds = 0;
             _hasLastPointer = false;
+            _hasLastPollSample = false;
             _hasLastDisplayPointer = false;
             _opacityController.Reset();
             _positionPredictor.Reset();
@@ -210,10 +235,14 @@ namespace CursorMirror
         private void UpdateCursorImageAt(Point pointer)
         {
             long now = _clock.Milliseconds;
-            RecordMovementIfPointerChanged(pointer, now);
             ApplyOpacity(now);
 
             Point displayPointer = _hasLastDisplayPointer ? _lastDisplayPointer : pointer;
+            if (ShouldSkipCursorImageCapture(now, displayPointer))
+            {
+                return;
+            }
+
             CursorCapture capture;
             if (_cursorImageProvider.TryCapture(out capture))
             {
@@ -221,6 +250,8 @@ namespace CursorMirror
                 {
                     Point location = OverlayPlacement.FromPointerAndHotSpot(displayPointer, capture.HotSpot);
                     _overlayPresenter.ShowCursor(capture.Bitmap, location);
+                    _lastCursorHandle = capture.CursorHandle;
+                    _lastCursorImageRefreshMilliseconds = now;
                     _lastHotSpot = capture.HotSpot;
                     _hasLastImage = true;
                     StoreLastDisplayPointer(displayPointer);
@@ -240,6 +271,14 @@ namespace CursorMirror
                 return;
             }
 
+            if (IsStalePollSample(sample))
+            {
+                _predictionCounters.StalePollSamples++;
+                return;
+            }
+
+            _lastPollSampleTimestampTicks = sample.TimestampTicks;
+            _hasLastPollSample = true;
             RecordMovementIfPointerChanged(sample.Position, now);
 
             Point displayPointer;
@@ -270,6 +309,11 @@ namespace CursorMirror
             }
         }
 
+        private bool IsStalePollSample(CursorPollSample sample)
+        {
+            return _hasLastPollSample && sample.TimestampTicks <= _lastPollSampleTimestampTicks;
+        }
+
         private void StoreLastDisplayPointer(Point displayPointer)
         {
             _lastDisplayPointer = displayPointer;
@@ -279,6 +323,33 @@ namespace CursorMirror
         private void ApplyOpacity(long now)
         {
             _overlayPresenter.SetOpacity(_opacityController.GetOpacityByte(now));
+        }
+
+        private bool ShouldSkipCursorImageCapture(long nowMilliseconds, Point displayPointer)
+        {
+            if (!_hasLastImage)
+            {
+                return false;
+            }
+
+            IntPtr cursorHandle;
+            if (!_cursorImageProvider.TryGetCurrentCursorHandle(out cursorHandle))
+            {
+                return false;
+            }
+
+            if (cursorHandle != _lastCursorHandle)
+            {
+                return false;
+            }
+
+            if (nowMilliseconds - _lastCursorImageRefreshMilliseconds >= SameCursorHandleRefreshMilliseconds)
+            {
+                return false;
+            }
+
+            StoreLastDisplayPointer(displayPointer);
+            return true;
         }
 
         private Point GetDisplayPointer(Point pointer, long now)

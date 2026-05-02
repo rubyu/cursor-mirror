@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cursor-prediction-v7-initial-plan.schema.json",
+  "title": "Cursor Prediction v7 Initial Plan",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "createdDate",
+    "status",
+    "pocRoot",
+    "constraints",
+    "calibratorOutputContract",
+    "objective",
+    "phases",
+    "proposedNextMeasurementCommand"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "cursor-prediction-v7-initial-plan/1"
+    },
+    "createdDate": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "repositoryRoot": {
+      "type": "string"
+    },
+    "pocRoot": {
+      "type": "string"
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "boolean",
+          "string",
+          "number"
+        ]
+      }
+    },
+    "calibratorOutputContract": {
+      "$ref": "calibrator-package.schema.json"
+    },
+    "objective": {
+      "type": "object"
+    },
+    "patternWeights": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number",
+        "exclusiveMinimum": 0
+      }
+    },
+    "phases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "deliverables": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "plannedRuns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "durationSeconds": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "initialCandidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "role"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "measurementRequired": {
+            "type": "boolean"
+          },
+          "requiresCandidateBuild": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "proposedNextMeasurementCommand": {
+      "type": "string"
+    },
+    "proposedNextScoringCommand": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

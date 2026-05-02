@@ -57,6 +57,21 @@ The key words `MUST`, `MUST NOT`, `SHOULD`, and `MAY` are to be interpreted as d
   - 11.6 Output Package Format
   - 11.7 Performance and Safety
   - 11.8 Testing
+- 12. Demo Application - [12-demo-app.md](12-demo-app.md)
+  - 12.1 Purpose and Scope
+  - 12.2 Application Shape
+  - 12.3 Startup Controls
+  - 12.4 Demo Scene
+  - 12.5 Real Cursor Driving and Free Mode
+  - 12.6 Safety
+  - 12.7 Main Application Shutdown Request
+  - 12.8 Testing
+- 13. Calibrator Application - [13-calibrator.md](13-calibrator.md)
+  - 13.1 Purpose and Scope
+  - 13.2 Capture Scene
+  - 13.3 Input Safety
+  - 13.4 Output
+  - 13.5 Testing
 - Appendix A. Test Coverage Checklist - [A-test-coverage.md](A-test-coverage.md)
   - A.1 Overview
   - A.2 Identifiers and Conventions

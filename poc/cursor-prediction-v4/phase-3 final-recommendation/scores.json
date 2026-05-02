@@ -1,0 +1,189 @@
+{
+  "generated_at": "2026-05-01",
+  "phase": "phase-3 final-recommendation",
+  "decision": {
+    "final_recommendation": "do_not_implement_default_on_predictor_change_now",
+    "keep_default_predictor": "product_baseline_dwm_last2_gain_0_75",
+    "default_on_candidate_clears_rule": false,
+    "reason": "The best product-feasible p99 candidate improves p99 and high-risk slices but creates meaningful pointwise visible regressions, including low-speed regressions.",
+    "next_primary_work": [
+      "TraceTool predictor-anchor instrumentation",
+      "runtime timer and product poll cadence measurement/improvement",
+      "hook/poll fusion instrumentation",
+      "replay test budgets",
+      "additional instrumented traces",
+      "learned residual timing only after runtime anchors stabilize"
+    ]
+  },
+  "trace": {
+    "trace_format_version": 3,
+    "csv_rows": 975443,
+    "duration_sec": 2110.246,
+    "hook_moves": 51541,
+    "product_polls": 99624,
+    "reference_polls": 824278,
+    "dwm_timing_samples": 99624,
+    "requested_product_poll_interval_ms": 8,
+    "product_poll_interval_ms": {
+      "p50": 15.923,
+      "p95": 63.081,
+      "p99": 77.656,
+      "max": 149.838
+    },
+    "reference_poll_interval_ms": {
+      "p50": 2.0,
+      "p95": 2.001
+    },
+    "reference_label_quality": {
+      "dominant_bracket": "0-2.1ms",
+      "dominant_bracket_count": 98244,
+      "scored_anchor_count": 99622,
+      "assessment": "good"
+    }
+  },
+  "baseline": {
+    "id": "product_baseline_dwm_last2_gain_0_75",
+    "feasibility": "product_feasible",
+    "overall": {
+      "n": 99622,
+      "mean_px": 1.695,
+      "p50_px": 0.0,
+      "p90_px": 2.348,
+      "p95_px": 6.771,
+      "p99_px": 36.245,
+      "max_px": 682.467
+    },
+    "high_risk_slices": {
+      "speed_ge_2000_px_s": {
+        "n": 3462,
+        "p95_px": 88.444,
+        "p99_px": 161.659
+      },
+      "acceleration_ge_100k_px_s2": {
+        "n": 3765,
+        "p95_px": 84.6,
+        "p99_px": 165.261
+      },
+      "hook_poll_disagreement_ge_32_px": {
+        "n": 175,
+        "p95_px": 212.847,
+        "p99_px": 320.169
+      },
+      "pre_stop_0_16ms": {
+        "n": 22716,
+        "p95_px": 28.565,
+        "p99_px": 87.138
+      },
+      "stop_entry_0_16ms": {
+        "n": 5946,
+        "p95_px": 13.205,
+        "p99_px": 52.878
+      }
+    }
+  },
+  "best_product_feasible_candidate": {
+    "id": "mixed_hook_when_disagree_ge2_age16",
+    "feasibility": "product_feasible",
+    "overall": {
+      "n": 99622,
+      "mean_px": 1.603,
+      "p50_px": 0.0,
+      "p90_px": 2.236,
+      "p95_px": 6.385,
+      "p99_px": 34.2,
+      "max_px": 682.467
+    },
+    "delta_vs_baseline": {
+      "mean_px": -0.092,
+      "p95_px": -0.386,
+      "p99_px": -2.045,
+      "max_px": 0.0
+    },
+    "regressions_vs_baseline": {
+      "worse_gt_1px": 278,
+      "worse_gt_3px": 198,
+      "worse_gt_5px": 160,
+      "better_gt_1px": 940,
+      "better_gt_3px": 667,
+      "better_gt_5px": 509
+    },
+    "low_speed_le_25_px_s": {
+      "n": 76723,
+      "p95_px": 0.0,
+      "p99_px": 3.326,
+      "worse_gt_5px": 15
+    },
+    "high_risk_slices": {
+      "speed_ge_2000_px_s": {
+        "n": 3462,
+        "p95_px": 84.396,
+        "p99_px": 154.38,
+        "worse_gt_5px": 103
+      },
+      "acceleration_ge_100k_px_s2": {
+        "n": 3765,
+        "p95_px": 80.526,
+        "p99_px": 158.389,
+        "worse_gt_5px": 82
+      }
+    },
+    "decision_rule_result": "fail"
+  },
+  "v3_comparison": {
+    "v3_final_recommendation": "do_not_enable_new_learned_predictor_by_default_yet",
+    "v3_best_accuracy_safety_candidate": "distilled_linear_score_exact_gate",
+    "v3_best_candidate_test_p99_px": 25.728,
+    "v3_baseline_test_p99_px": 29.282,
+    "v3_visible_gt_5px_regressions": 16,
+    "what_changed_in_v4": [
+      "referencePoll provides higher-quality labels",
+      "product poll cadence is now clearly separated from label quality",
+      "deterministic product-feasible candidates fail the visible-regression guard",
+      "learned residual work should wait for runtime anchor and cadence instrumentation"
+    ]
+  },
+  "recommended_next_steps": {
+    "trace_tool": [
+      "record poll timestamp and actual poll interval",
+      "record latest hook timestamp, hook age, hook position, and hook/poll disagreement",
+      "record DWM target horizon and validity",
+      "record chosen predictor anchor source, velocity source, and fallback reason"
+    ],
+    "runtime_timer_cadence": [
+      "measure actual wakeup intervals under load",
+      "test high-resolution timer/wait strategy",
+      "align sampling closer to DWM composition where feasible"
+    ],
+    "hook_poll_fusion": [
+      "instrument eligibility before changing prediction",
+      "replay mixed anchor rules with stale/invalid fallbacks",
+      "inspect pointwise visible regressions"
+    ],
+    "learned_residual": [
+      "defer until runtime anchors stabilize",
+      "train only with replay budgets that include low-speed and pointwise regression gates"
+    ],
+    "replay_tests": [
+      "overall p99",
+      "high-speed p95/p99",
+      "high-acceleration p95/p99",
+      "low-speed p95",
+      "overall and low-speed >5px regression counts"
+    ],
+    "more_traces": [
+      "high-speed flick",
+      "abrupt stop",
+      "reversal",
+      "drag",
+      "low-speed precision",
+      "CPU and compositor load",
+      "multi-monitor/DPI/refresh-rate variants",
+      "pointer-device variants"
+    ]
+  },
+  "files": {
+    "final_recommendation": "final-recommendation.md",
+    "report": "report.md",
+    "scores": "scores.json"
+  }
+}

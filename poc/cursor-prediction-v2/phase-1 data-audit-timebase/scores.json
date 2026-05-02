@@ -1,0 +1,357 @@
+﻿{
+    "phase":  "phase-1 data-audit-timebase",
+    "generated_utc":  "2026-05-01T00:31:06.7193541Z",
+    "input":  {
+                  "zip_path":  "C:\\Users\\seigl\\OneDrive\\my\\ドキュメント\\projects\\cursor\\cursor-mirror-trace-20260501-091537.zip",
+                  "zip_size_bytes":  5516072,
+                  "metadata":  {
+                                   "TraceFormatVersion":  2,
+                                   "ProductName":  "Cursor Mirror トレースツール",
+                                   "ProductVersion":  "v1.2.0-dev+20260430.64acccfdb4fe.dirty",
+                                   "CreatedUtc":  "2026-05-01T00:15:42.9280668Z",
+                                   "SampleCount":  218146,
+                                   "HookSampleCount":  57704,
+                                   "PollSampleCount":  160442,
+                                   "DwmTimingSampleCount":  160442,
+                                   "PollIntervalMilliseconds":  8,
+                                   "DurationMicroseconds":  2524306478,
+                                   "StopwatchFrequency":  "10000000"
+                               }
+              },
+    "row_counts":  {
+                       "trace_csv_rows":  218146,
+                       "metadata_sample_count":  218146,
+                       "count_matches_metadata":  true,
+                       "event_type_counts":  {
+                                                 "move":  57704,
+                                                 "poll":  160442
+                                             }
+                   },
+    "monotonicity":  {
+                         "first_sequence":  0,
+                         "last_sequence":  218145,
+                         "sequence_non_monotonic_count":  0,
+                         "sequence_gap_count":  0,
+                         "stopwatch_non_increasing_count":  0,
+                         "elapsed_decreasing_count":  0,
+                         "all_event_interval_ms":  {
+                                                       "count":  218145,
+                                                       "min":  0.008,
+                                                       "max":  70.593,
+                                                       "mean":  11.57162754589827,
+                                                       "stdev":  6.3193994740396411,
+                                                       "p50":  11.593,
+                                                       "p90":  19.755,
+                                                       "p95":  21.099000000000004,
+                                                       "p99":  25.672559999999997
+                                                   }
+                     },
+    "elapsed_vs_stopwatch":  {
+                                 "first_stopwatch_ticks":  14401287941713,
+                                 "last_stopwatch_ticks":  14426530868623,
+                                 "first_elapsed_us":  9807,
+                                 "last_elapsed_us":  2524302498,
+                                 "metadata_duration_us":  2524306478,
+                                 "observed_elapsed_span_us":  2524292691,
+                                 "metadata_minus_observed_span_us":  13787,
+                                 "elapsed_minus_stopwatch_expected_us":  {
+                                                                             "count":  218146,
+                                                                             "min":  -0.10000002384185791,
+                                                                             "max":  0.90000009536743164,
+                                                                             "mean":  0.39842995071219406,
+                                                                             "stdev":  0.29157104085258417,
+                                                                             "p50":  0.40000009536743164,
+                                                                             "p90":  0.79999995231628418,
+                                                                             "p95":  0.80000019073486328,
+                                                                             "p99":  0.90000009536743164
+                                                                         },
+                                 "elapsed_minus_stopwatch_expected_abs_us":  {
+                                                                                 "count":  218146,
+                                                                                 "min":  0,
+                                                                                 "max":  0.90000009536743164,
+                                                                                 "mean":  0.40853602158053542,
+                                                                                 "stdev":  0.27723350547783537,
+                                                                                 "p50":  0.40000009536743164,
+                                                                                 "p90":  0.79999995231628418,
+                                                                                 "p95":  0.80000019073486328,
+                                                                                 "p99":  0.90000009536743164
+                                                                             }
+                             },
+    "positions":  {
+                      "duplicate_consecutive_positions_all":  162047,
+                      "movement_samples_all":  56098,
+                      "duplicate_consecutive_positions_poll":  128823,
+                      "movement_samples_poll":  31618,
+                      "duplicate_consecutive_positions_hook":  3757,
+                      "movement_samples_hook":  53946,
+                      "poll_idle_periods":  {
+                                                "durations_ms":  {
+                                                                     "count":  31619,
+                                                                     "min":  0,
+                                                                     "max":  46703.61,
+                                                                     "mean":  63.561855529902957,
+                                                                     "stdev":  604.51897261727436,
+                                                                     "p50":  0,
+                                                                     "p90":  61.133600000000008,
+                                                                     "p95":  204.6351999999998,
+                                                                     "p99":  1253.7862599999999
+                                                                 },
+                                                "count_at_least_100ms":  2556,
+                                                "count_at_least_500ms":  776,
+                                                "count_at_least_1000ms":  409
+                                            }
+                  },
+    "sampling":  {
+                     "poll_interval_ms":  {
+                                              "count":  160441,
+                                              "min":  0.019,
+                                              "max":  70.593,
+                                              "mean":  15.733463958713706,
+                                              "stdev":  4.5359482106509041,
+                                              "p50":  15.684000000000001,
+                                              "p90":  20.89,
+                                              "p95":  23.212,
+                                              "p99":  28.088600000000007
+                                          },
+                     "hook_interval_ms":  {
+                                              "count":  57703,
+                                              "min":  0.34500000000000003,
+                                              "max":  46720.644,
+                                              "mean":  43.741727587820726,
+                                              "stdev":  442.38097401054642,
+                                              "p50":  8.0080000000000009,
+                                              "p90":  24.063600000000008,
+                                              "p95":  96.15749999999997,
+                                              "p99":  712.07633999999985
+                                          }
+                 },
+    "dwm":  {
+                "timing_available_counts":  {
+                                                "true":  160442
+                                            },
+                "refresh_rate_counts":  {
+                                            "10000000/166615":  1,
+                                            "10000000/166617":  1,
+                                            "10000000/166624":  1,
+                                            "10000000/166634":  2,
+                                            "10000000/166657":  2,
+                                            "10000000/166662":  1,
+                                            "10000000/166666":  73,
+                                            "10000000/166668":  1,
+                                            "10000000/166669":  2,
+                                            "10000000/166670":  1,
+                                            "10000000/166672":  1,
+                                            "10000000/166674":  2,
+                                            "10000000/166675":  1,
+                                            "10000000/166676":  1,
+                                            "10000000/166677":  20,
+                                            "10000000/166678":  9,
+                                            "10000000/166679":  118,
+                                            "10000000/166680":  60274,
+                                            "10000000/166681":  98149,
+                                            "10000000/166682":  1765,
+                                            "10000000/166683":  15,
+                                            "10000000/166696":  1,
+                                            "10000000/166706":  1
+                                        },
+                "qpc_refresh_period_tick_counts":  {
+                                                       "166615":  1,
+                                                       "166617":  1,
+                                                       "166624":  1,
+                                                       "166634":  2,
+                                                       "166657":  2,
+                                                       "166662":  1,
+                                                       "166666":  73,
+                                                       "166668":  1,
+                                                       "166669":  2,
+                                                       "166670":  1,
+                                                       "166672":  1,
+                                                       "166674":  2,
+                                                       "166675":  1,
+                                                       "166676":  1,
+                                                       "166677":  20,
+                                                       "166678":  9,
+                                                       "166679":  118,
+                                                       "166680":  60274,
+                                                       "166681":  98149,
+                                                       "166682":  1765,
+                                                       "166683":  15,
+                                                       "166696":  1,
+                                                       "166706":  1
+                                                   },
+                "qpc_refresh_period_ms":  {
+                                              "count":  160442,
+                                              "min":  16.6615,
+                                              "max":  16.6706,
+                                              "mean":  16.6680624119179,
+                                              "stdev":  7.7385837617899091E-05,
+                                              "p50":  16.6681,
+                                              "p90":  16.6681,
+                                              "p95":  16.6681,
+                                              "p99":  16.6682
+                                          },
+                "qpc_vblank_changed_delta_ms":  {
+                                                    "count":  111410,
+                                                    "min":  16.5978,
+                                                    "max":  116.6784,
+                                                    "mean":  22.657553882049623,
+                                                    "stdev":  14.178618103599625,
+                                                    "p50":  16.6681,
+                                                    "p90":  33.3366,
+                                                    "p95":  50.0048,
+                                                    "p99":  83.3404
+                                                },
+                "qpc_vblank_repeated_sample_count":  49031,
+                "qpc_vblank_non_monotonic_count":  0,
+                "refresh_count_delta":  {
+                                            "count":  160441,
+                                            "min":  1,
+                                            "max":  1,
+                                            "mean":  1,
+                                            "stdev":  0,
+                                            "p50":  1,
+                                            "p90":  1,
+                                            "p95":  1,
+                                            "p99":  1
+                                        },
+                "refresh_count_non_monotonic_count":  0,
+                "refresh_count_jump_count":  0,
+                "qpc_vblank_continuity_abs_error_ms":  {
+                                                           "count":  111410,
+                                                           "min":  0,
+                                                           "max":  0.0688,
+                                                           "mean":  0.00027869221793351084,
+                                                           "stdev":  0.00051271637876789257,
+                                                           "p50":  0.0002,
+                                                           "p90":  0.0005,
+                                                           "p95":  0.0007,
+                                                           "p99":  0.0012000000000000001
+                                                       },
+                "qpc_vblank_continuity_anomaly_count":  0,
+                "poll_timestamp_to_dwm_vblank_ms":  {
+                                                        "count":  160442,
+                                                        "min":  -95.7928,
+                                                        "max":  16.5892,
+                                                        "mean":  0.85168782488374206,
+                                                        "stdev":  15.714415241153734,
+                                                        "p50":  5.22415,
+                                                        "p90":  14.12238,
+                                                        "p95":  15.31657499999999,
+                                                        "p99":  16.190036
+                                                    }
+            },
+    "hook_vs_nearest_poll":  {
+                                 "matched_hook_count":  57704,
+                                 "signed_time_delta_ms":  {
+                                                              "count":  57704,
+                                                              "min":  -23.034,
+                                                              "max":  22.331,
+                                                              "mean":  0.1069183592125332,
+                                                              "stdev":  5.1079922466368712,
+                                                              "p50":  0.106,
+                                                              "p90":  6.757,
+                                                              "p95":  8.033,
+                                                              "p99":  10.967880000000005
+                                                          },
+                                 "absolute_time_delta_ms":  {
+                                                                "count":  57704,
+                                                                "min":  0.008,
+                                                                "max":  23.034,
+                                                                "mean":  4.2525988666297341,
+                                                                "stdev":  2.8316813392008995,
+                                                                "p50":  3.844,
+                                                                "p90":  7.8497000000000039,
+                                                                "p95":  9.4398499999999981,
+                                                                "p99":  12.09097
+                                                            },
+                                 "distance_px_all_matches":  {
+                                                                 "count":  57704,
+                                                                 "min":  0,
+                                                                 "max":  489.00920236739921,
+                                                                 "mean":  5.5730884252507247,
+                                                                 "stdev":  16.851360809404177,
+                                                                 "p50":  1,
+                                                                 "p90":  13.892443989449804,
+                                                                 "p95":  24.758836806279895,
+                                                                 "p99":  82.488966616918944
+                                                             },
+                                 "distance_px_within_4ms":  {
+                                                                "count":  29931,
+                                                                "min":  0,
+                                                                "max":  312.77467928206721,
+                                                                "mean":  4.7935994680119194,
+                                                                "stdev":  14.15447956001211,
+                                                                "p50":  1,
+                                                                "p90":  12.083045973594572,
+                                                                "p95":  20.615528128088304,
+                                                                "p99":  72.050670923709987
+                                                            },
+                                 "distance_px_within_8ms":  {
+                                                                "count":  52209,
+                                                                "min":  0,
+                                                                "max":  414.90360326225175,
+                                                                "mean":  4.8326845077914,
+                                                                "stdev":  14.81167714614331,
+                                                                "p50":  1,
+                                                                "p90":  12.041594578792296,
+                                                                "p95":  21,
+                                                                "p99":  72.192237082829436
+                                                            },
+                                 "distance_px_within_16ms":  {
+                                                                 "count":  57649,
+                                                                 "min":  0,
+                                                                 "max":  489.00920236739921,
+                                                                 "mean":  5.5535807644073785,
+                                                                 "stdev":  16.780384500403422,
+                                                                 "p50":  1,
+                                                                 "p90":  13.601470508735444,
+                                                                 "p95":  24.722451480406292,
+                                                                 "p99":  82.30427839585667
+                                                             }
+                             },
+    "recommended_split":  {
+                              "clock":  "elapsedMicroseconds aligned to poll samples",
+                              "recommended_gap_us":  1000000,
+                              "rationale":  "Chronological 70/15/15 poll-time split with 1s gaps; this is much larger than the 24ms initial target horizon and leaves room for Phase 2 history windows without adjacent-window leakage.",
+                              "train":  {
+                                            "start_elapsed_us":  9807,
+                                            "end_elapsed_us":  1766997033,
+                                            "duration_s":  1766.987226,
+                                            "row_count":  154684,
+                                            "poll_count":  112637,
+                                            "hook_count":  42047
+                                        },
+                              "train_validation_gap":  {
+                                                           "start_elapsed_us":  1766997034,
+                                                           "end_elapsed_us":  1768001403,
+                                                           "duration_s":  1.004371
+                                                       },
+                              "validation":  {
+                                                 "start_elapsed_us":  1768001404,
+                                                 "end_elapsed_us":  2145647570,
+                                                 "duration_s":  377.646166,
+                                                 "row_count":  30830,
+                                                 "poll_count":  23852,
+                                                 "hook_count":  6978
+                                             },
+                              "validation_test_gap":  {
+                                                          "start_elapsed_us":  2145647571,
+                                                          "end_elapsed_us":  2146657101,
+                                                          "duration_s":  1.009532
+                                                      },
+                              "test":  {
+                                           "start_elapsed_us":  2146657102,
+                                           "end_elapsed_us":  2524302498,
+                                           "duration_s":  377.645396,
+                                           "row_count":  32506,
+                                           "poll_count":  23827,
+                                           "hook_count":  8679
+                                       }
+                          },
+    "recommendations":  {
+                            "ground_truth_clock":  "Use poll elapsedMicroseconds as the Phase 2 label clock and interpolate between poll positions when fixed horizons fall between samples.",
+                            "dwm_usage":  "DWM timing is complete and cadence-stable enough to evaluate display-relative horizons, but use it for target horizon/phase selection rather than as a direct position source.",
+                            "split":  "Use the recommended chronological split in recommended_split with 1s exclusion gaps.",
+                            "caution":  "Poll jitter has a wide tail, so labels should be timestamp-based, not sample-index-based."
+                        }
+}

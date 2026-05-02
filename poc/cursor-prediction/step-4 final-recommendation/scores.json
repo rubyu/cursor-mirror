@@ -1,0 +1,103 @@
+{
+  "experiment": {
+    "name": "step-4 final-recommendation",
+    "type": "supervisory synthesis",
+    "ran_new_cpu_search": false,
+    "source_steps": [
+      "poc/cursor-prediction/step-1 data-audit-baselines",
+      "poc/cursor-prediction/step-2 adaptive-refinements",
+      "poc/cursor-prediction/step-3 implementation-shape"
+    ],
+    "trace_source": "cursor-mirror-trace-20260501-000443.zip"
+  },
+  "final_selection": {
+    "model": "constant-velocity-last2",
+    "gain": 1.0,
+    "normal_offset_cap_px": null,
+    "idle_reset_gap_ms": 100,
+    "fixed_fallback_horizon_ms": 8,
+    "automatic_horizon_policy": {
+      "basis": "estimated display frame period",
+      "minimum_ms": 4,
+      "maximum_ms": 16,
+      "reason": "4ms, 8ms, 12ms, and 16ms were evaluated directly; 24ms and above showed large visible tail risk."
+    },
+    "rollout_posture": "opt-in first",
+    "default_ui_exposure": [
+      "PredictionEnabled",
+      "PredictionHorizonMode"
+    ]
+  },
+  "reference_scores_test_latter_30pct": {
+    "constant_velocity_last2_gain_1_no_cap": [
+      {
+        "horizon_ms": 4,
+        "mean_px": 1.698,
+        "p95_px": 6.472,
+        "p99_px": 12.892,
+        "max_px": 48.518
+      },
+      {
+        "horizon_ms": 8,
+        "mean_px": 3.367,
+        "p95_px": 12.602,
+        "p99_px": 25.549,
+        "max_px": 97.036
+      },
+      {
+        "horizon_ms": 12,
+        "mean_px": 5.481,
+        "p95_px": 22.41,
+        "p99_px": 43.655,
+        "max_px": 152.802
+      },
+      {
+        "horizon_ms": 16,
+        "mean_px": 7.809,
+        "p95_px": 31.851,
+        "p99_px": 62.94,
+        "max_px": 208.772
+      }
+    ]
+  },
+  "rejected_as_default": [
+    {
+      "candidate": "online expert selection",
+      "reason": "No future leakage, but p99 and max errors worsened around regime changes."
+    },
+    {
+      "candidate": "constant acceleration",
+      "reason": "Short-horizon gain was too small and long-horizon tails were risky without clamps."
+    },
+    {
+      "candidate": "EMA or velocity blend",
+      "reason": "Smoothing delay outweighed noise reduction on this trace."
+    },
+    {
+      "candidate": "fixed offset cap",
+      "reason": "Caps clipped legitimate fast movement and worsened Step 1 accuracy."
+    },
+    {
+      "candidate": "neural network",
+      "reason": "Not justified by current evidence; would add training, model loading, and tail-risk complexity before beating O(1) last2."
+    }
+  ],
+  "performance_assessment": {
+    "hot_path_complexity": "O(1)",
+    "hot_path_allocations_expected": 0,
+    "state_size_estimate_bytes": "64-80",
+    "step_3_microbenchmark": {
+      "iterations": 2000000,
+      "elapsed_ms": 43.2596,
+      "nanoseconds_per_update_and_prediction": 21.6298,
+      "interpretation": "Noisy synthetic sanity check only; predictor is much smaller than the expected UI/rendering costs."
+    }
+  },
+  "implementation_readiness": {
+    "ready_for_core_predictor": true,
+    "ready_for_controller_integration": true,
+    "ready_for_default_on": false,
+    "needs_more_traces_for_default_on": true,
+    "tests_must_avoid_real_hooks": true
+  }
+}

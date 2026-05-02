@@ -13,10 +13,22 @@ namespace CursorMirror
         private double _velocityXPerMillisecond;
         private double _velocityYPerMillisecond;
         private int _idleResetMilliseconds;
+        private double _gain;
 
         public CursorPositionPredictor(int idleResetMilliseconds)
+            : this(idleResetMilliseconds, 100)
+        {
+        }
+
+        public CursorPositionPredictor(int idleResetMilliseconds, int predictionGainPercent)
+        {
+            ApplySettings(idleResetMilliseconds, predictionGainPercent);
+        }
+
+        public void ApplySettings(int idleResetMilliseconds, int predictionGainPercent)
         {
             ApplyIdleResetMilliseconds(idleResetMilliseconds);
+            ApplyPredictionGainPercent(predictionGainPercent);
         }
 
         public int IdleResetMilliseconds
@@ -38,6 +50,13 @@ namespace CursorMirror
         {
             _idleResetMilliseconds = Math.Max(1, idleResetMilliseconds);
             Reset();
+        }
+
+        public void ApplyPredictionGainPercent(int predictionGainPercent)
+        {
+            _gain = Math.Max(
+                CursorMirrorSettings.MinimumPredictionGainPercent,
+                Math.Min(CursorMirrorSettings.MaximumPredictionGainPercent, predictionGainPercent)) / 100.0;
         }
 
         public void Reset()
@@ -91,8 +110,8 @@ namespace CursorMirror
                 return new PointF((float)_lastX, (float)_lastY);
             }
 
-            double predictedX = _lastX + (_velocityXPerMillisecond * horizonMilliseconds);
-            double predictedY = _lastY + (_velocityYPerMillisecond * horizonMilliseconds);
+            double predictedX = _lastX + (_velocityXPerMillisecond * horizonMilliseconds * _gain);
+            double predictedY = _lastY + (_velocityYPerMillisecond * horizonMilliseconds * _gain);
             return new PointF((float)predictedX, (float)predictedY);
         }
 

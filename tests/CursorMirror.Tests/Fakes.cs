@@ -124,6 +124,9 @@ namespace CursorMirror.Tests
     {
         private readonly Queue<object> _results = new Queue<object>();
         public int CaptureCallCount;
+        public int TryGetCurrentCursorHandleCallCount;
+        public bool TryGetCurrentCursorHandleResult = true;
+        public IntPtr CurrentCursorHandle = IntPtr.Zero;
 
         public void EnqueueCapture(CursorCapture capture)
         {
@@ -157,7 +160,19 @@ namespace CursorMirror.Tests
             }
 
             capture = result as CursorCapture;
+            if (capture != null)
+            {
+                CurrentCursorHandle = capture.CursorHandle;
+            }
+
             return capture != null;
+        }
+
+        public bool TryGetCurrentCursorHandle(out IntPtr cursorHandle)
+        {
+            TryGetCurrentCursorHandleCallCount++;
+            cursorHandle = CurrentCursorHandle;
+            return TryGetCurrentCursorHandleResult && cursorHandle != IntPtr.Zero;
         }
     }
 

@@ -1,0 +1,903 @@
+{
+  "schemaVersion": "cursor-prediction-v7-score/1",
+  "generatedAt": "2026-05-02T14:48:17.353Z",
+  "baselineCandidate": "current-default",
+  "objective": {
+    "sourceColumn": "estimatedSeparationPixels",
+    "darkFramesOnly": true,
+    "lowerIsBetter": true,
+    "patternScoreFormula": "0.50*p95 + 0.35*p99 + 0.15*max",
+    "candidateScore": "weighted mean of pattern scores",
+    "patternWeights": {
+      "linear-slow": 1,
+      "hold-right": 0.75,
+      "linear-fast": 1.4,
+      "hold-left": 0.75,
+      "quadratic-ease-in": 1.2,
+      "quadratic-ease-out": 1.2,
+      "cubic-smoothstep": 1.2,
+      "cubic-in-out": 1.25,
+      "rapid-reversal": 1.6,
+      "sine-sweep": 1.4,
+      "short-jitter": 1.4
+    }
+  },
+  "requiredColumns": [
+    "frameIndex",
+    "timestampTicks",
+    "elapsedMilliseconds",
+    "patternName",
+    "phaseName",
+    "expectedX",
+    "expectedY",
+    "expectedVelocityPixelsPerSecond",
+    "width",
+    "height",
+    "darkPixelCount",
+    "hasDarkPixels",
+    "darkBoundsX",
+    "darkBoundsY",
+    "darkBoundsWidth",
+    "darkBoundsHeight",
+    "estimatedSeparationPixels"
+  ],
+  "defaultPatterns": [
+    "linear-slow",
+    "hold-right",
+    "linear-fast",
+    "hold-left",
+    "quadratic-ease-in",
+    "quadratic-ease-out",
+    "cubic-smoothstep",
+    "cubic-in-out",
+    "rapid-reversal",
+    "sine-sweep",
+    "short-jitter"
+  ],
+  "runs": [
+    {
+      "candidateId": "current-default",
+      "packagePath": "C:\\Users\\seigl\\OneDrive\\my\\ドキュメント\\projects\\cursor\\poc\\cursor-prediction-v7\\runs\\raw\\current-default\\calibration-current-default-001.zip",
+      "entries": [
+        "frames.csv",
+        "metrics.json"
+      ],
+      "metricsJson": {
+        "frameCount": 938,
+        "darkFrameCount": 938,
+        "captureSource": "Windows Graphics Capture",
+        "averageEstimatedSeparationPixels": 4.770788912579957,
+        "p95EstimatedSeparationPixels": 12,
+        "maximumEstimatedSeparationPixels": 44
+      },
+      "qualityWarnings": [],
+      "overall": {
+        "scorePx": 16.799999999999997,
+        "stats": {
+          "frameCount": 938,
+          "darkFrameCount": 938,
+          "meanPx": 4.770788912579957,
+          "p50Px": 0,
+          "p90Px": 12,
+          "p95Px": 12,
+          "p99Px": 12,
+          "maxPx": 44
+        }
+      },
+      "patterns": [
+        {
+          "patternName": "linear-slow",
+          "weight": 1,
+          "scorePx": 13.95,
+          "stats": {
+            "frameCount": 162,
+            "darkFrameCount": 162,
+            "meanPx": 6.54320987654321,
+            "p50Px": 7,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 25
+          }
+        },
+        {
+          "patternName": "hold-right",
+          "weight": 0.75,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 24,
+            "darkFrameCount": 24,
+            "meanPx": 10.166666666666666,
+            "p50Px": 12,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "linear-fast",
+          "weight": 1.4,
+          "scorePx": 38,
+          "stats": {
+            "frameCount": 62,
+            "darkFrameCount": 62,
+            "meanPx": 4.241935483870968,
+            "p50Px": 0,
+            "p90Px": 12,
+            "p95Px": 32,
+            "p99Px": 44,
+            "maxPx": 44
+          }
+        },
+        {
+          "patternName": "hold-left",
+          "weight": 0.75,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 24,
+            "darkFrameCount": 24,
+            "meanPx": 9.333333333333334,
+            "p50Px": 12,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "quadratic-ease-in",
+          "weight": 1.2,
+          "scorePx": 12.65,
+          "stats": {
+            "frameCount": 112,
+            "darkFrameCount": 112,
+            "meanPx": 5.75,
+            "p50Px": 7,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 13,
+            "maxPx": 14
+          }
+        },
+        {
+          "patternName": "quadratic-ease-out",
+          "weight": 1.2,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 111,
+            "darkFrameCount": 111,
+            "meanPx": 2.7027027027027026,
+            "p50Px": 0,
+            "p90Px": 10,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "cubic-smoothstep",
+          "weight": 1.2,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 132,
+            "darkFrameCount": 132,
+            "meanPx": 5.606060606060606,
+            "p50Px": 7,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "cubic-in-out",
+          "weight": 1.25,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 94,
+            "darkFrameCount": 94,
+            "meanPx": 4.819148936170213,
+            "p50Px": 5,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "rapid-reversal",
+          "weight": 1.6,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 63,
+            "darkFrameCount": 63,
+            "meanPx": 2.6984126984126986,
+            "p50Px": 0,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "sine-sweep",
+          "weight": 1.4,
+          "scorePx": 11.5,
+          "stats": {
+            "frameCount": 90,
+            "darkFrameCount": 90,
+            "meanPx": 2.5,
+            "p50Px": 0,
+            "p90Px": 9,
+            "p95Px": 11,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "short-jitter",
+          "weight": 1.4,
+          "scorePx": 11,
+          "stats": {
+            "frameCount": 64,
+            "darkFrameCount": 64,
+            "meanPx": 2.375,
+            "p50Px": 0,
+            "p90Px": 9,
+            "p95Px": 10,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        }
+      ]
+    },
+    {
+      "candidateId": "current-default",
+      "packagePath": "C:\\Users\\seigl\\OneDrive\\my\\ドキュメント\\projects\\cursor\\poc\\cursor-prediction-v7\\runs\\raw\\current-default\\calibration-current-default-002.zip",
+      "entries": [
+        "frames.csv",
+        "metrics.json"
+      ],
+      "metricsJson": {
+        "frameCount": 935,
+        "darkFrameCount": 935,
+        "captureSource": "Windows Graphics Capture",
+        "averageEstimatedSeparationPixels": 4.6983957219251336,
+        "p95EstimatedSeparationPixels": 12,
+        "maximumEstimatedSeparationPixels": 47
+      },
+      "qualityWarnings": [],
+      "overall": {
+        "scorePx": 17.25,
+        "stats": {
+          "frameCount": 935,
+          "darkFrameCount": 935,
+          "meanPx": 4.6983957219251336,
+          "p50Px": 0,
+          "p90Px": 12,
+          "p95Px": 12,
+          "p99Px": 12,
+          "maxPx": 47
+        }
+      },
+      "patterns": [
+        {
+          "patternName": "linear-slow",
+          "weight": 1,
+          "scorePx": 12.149999999999999,
+          "stats": {
+            "frameCount": 161,
+            "darkFrameCount": 161,
+            "meanPx": 6.503105590062112,
+            "p50Px": 7,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 13
+          }
+        },
+        {
+          "patternName": "hold-right",
+          "weight": 0.75,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 24,
+            "darkFrameCount": 24,
+            "meanPx": 10.583333333333334,
+            "p50Px": 12,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "linear-fast",
+          "weight": 1.4,
+          "scorePx": 29.5,
+          "stats": {
+            "frameCount": 62,
+            "darkFrameCount": 62,
+            "meanPx": 2.693548387096774,
+            "p50Px": 0,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 47,
+            "maxPx": 47
+          }
+        },
+        {
+          "patternName": "hold-left",
+          "weight": 0.75,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 24,
+            "darkFrameCount": 24,
+            "meanPx": 8.875,
+            "p50Px": 12,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "quadratic-ease-in",
+          "weight": 1.2,
+          "scorePx": 12.5,
+          "stats": {
+            "frameCount": 113,
+            "darkFrameCount": 113,
+            "meanPx": 6.3097345132743365,
+            "p50Px": 7,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 13,
+            "maxPx": 13
+          }
+        },
+        {
+          "patternName": "quadratic-ease-out",
+          "weight": 1.2,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 112,
+            "darkFrameCount": 112,
+            "meanPx": 2.6875,
+            "p50Px": 0,
+            "p90Px": 11,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "cubic-smoothstep",
+          "weight": 1.2,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 134,
+            "darkFrameCount": 134,
+            "meanPx": 5.962686567164179,
+            "p50Px": 7,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "cubic-in-out",
+          "weight": 1.25,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 92,
+            "darkFrameCount": 92,
+            "meanPx": 4.054347826086956,
+            "p50Px": 0,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "rapid-reversal",
+          "weight": 1.6,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 64,
+            "darkFrameCount": 64,
+            "meanPx": 2.515625,
+            "p50Px": 0,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "sine-sweep",
+          "weight": 1.4,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 86,
+            "darkFrameCount": 86,
+            "meanPx": 2.302325581395349,
+            "p50Px": 0,
+            "p90Px": 11,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "short-jitter",
+          "weight": 1.4,
+          "scorePx": 11.5,
+          "stats": {
+            "frameCount": 63,
+            "darkFrameCount": 63,
+            "meanPx": 2.6507936507936507,
+            "p50Px": 0,
+            "p90Px": 10,
+            "p95Px": 11,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        }
+      ]
+    },
+    {
+      "candidateId": "current-default",
+      "packagePath": "C:\\Users\\seigl\\OneDrive\\my\\ドキュメント\\projects\\cursor\\poc\\cursor-prediction-v7\\runs\\raw\\current-default\\calibration-current-default-003.zip",
+      "entries": [
+        "frames.csv",
+        "metrics.json"
+      ],
+      "metricsJson": {
+        "frameCount": 922,
+        "darkFrameCount": 922,
+        "captureSource": "Windows Graphics Capture",
+        "averageEstimatedSeparationPixels": 5.425162689804773,
+        "p95EstimatedSeparationPixels": 12,
+        "maximumEstimatedSeparationPixels": 539
+      },
+      "qualityWarnings": [],
+      "overall": {
+        "scorePx": 91.05,
+        "stats": {
+          "frameCount": 922,
+          "darkFrameCount": 922,
+          "meanPx": 5.425162689804773,
+          "p50Px": 5,
+          "p90Px": 12,
+          "p95Px": 12,
+          "p99Px": 12,
+          "maxPx": 539
+        }
+      },
+      "patterns": [
+        {
+          "patternName": "linear-slow",
+          "weight": 1,
+          "scorePx": 91.75,
+          "stats": {
+            "frameCount": 158,
+            "darkFrameCount": 158,
+            "meanPx": 10.284810126582279,
+            "p50Px": 7,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 14,
+            "maxPx": 539
+          }
+        },
+        {
+          "patternName": "hold-right",
+          "weight": 0.75,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 24,
+            "darkFrameCount": 24,
+            "meanPx": 9.666666666666666,
+            "p50Px": 12,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "linear-fast",
+          "weight": 1.4,
+          "scorePx": 23.5,
+          "stats": {
+            "frameCount": 61,
+            "darkFrameCount": 61,
+            "meanPx": 3.1639344262295084,
+            "p50Px": 0,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 35,
+            "maxPx": 35
+          }
+        },
+        {
+          "patternName": "hold-left",
+          "weight": 0.75,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 22,
+            "darkFrameCount": 22,
+            "meanPx": 8.181818181818182,
+            "p50Px": 12,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "quadratic-ease-in",
+          "weight": 1.2,
+          "scorePx": 12.65,
+          "stats": {
+            "frameCount": 112,
+            "darkFrameCount": 112,
+            "meanPx": 6.133928571428571,
+            "p50Px": 7,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 13,
+            "maxPx": 14
+          }
+        },
+        {
+          "patternName": "quadratic-ease-out",
+          "weight": 1.2,
+          "scorePx": 11.5,
+          "stats": {
+            "frameCount": 111,
+            "darkFrameCount": 111,
+            "meanPx": 3.2432432432432434,
+            "p50Px": 0,
+            "p90Px": 11,
+            "p95Px": 11,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "cubic-smoothstep",
+          "weight": 1.2,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 128,
+            "darkFrameCount": 128,
+            "meanPx": 6.2734375,
+            "p50Px": 7,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "cubic-in-out",
+          "weight": 1.25,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 94,
+            "darkFrameCount": 94,
+            "meanPx": 4.319148936170213,
+            "p50Px": 0,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "rapid-reversal",
+          "weight": 1.6,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 62,
+            "darkFrameCount": 62,
+            "meanPx": 2.193548387096774,
+            "p50Px": 0,
+            "p90Px": 11,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "sine-sweep",
+          "weight": 1.4,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 86,
+            "darkFrameCount": 86,
+            "meanPx": 2.6744186046511627,
+            "p50Px": 0,
+            "p90Px": 11,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "short-jitter",
+          "weight": 1.4,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 64,
+            "darkFrameCount": 64,
+            "meanPx": 2.34375,
+            "p50Px": 0,
+            "p90Px": 10,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "candidateId": "current-default",
+      "runCount": 3,
+      "visualScorePx": 19.768821292775666,
+      "qualityWarnings": [],
+      "patterns": [
+        {
+          "patternName": "linear-slow",
+          "weight": 1,
+          "scorePx": 91.05,
+          "stats": {
+            "frameCount": 481,
+            "darkFrameCount": 481,
+            "meanPx": 7.758835758835759,
+            "p50Px": 7,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 539
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": 0,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "hold-right",
+          "weight": 0.75,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 72,
+            "darkFrameCount": 72,
+            "meanPx": 10.13888888888889,
+            "p50Px": 12,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": 0,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "linear-fast",
+          "weight": 1.4,
+          "scorePx": 28.45,
+          "stats": {
+            "frameCount": 185,
+            "darkFrameCount": 185,
+            "meanPx": 3.3675675675675674,
+            "p50Px": 0,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 44,
+            "maxPx": 47
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": 0,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "hold-left",
+          "weight": 0.75,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 70,
+            "darkFrameCount": 70,
+            "meanPx": 8.814285714285715,
+            "p50Px": 12,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": 0,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "quadratic-ease-in",
+          "weight": 1.2,
+          "scorePx": 12.65,
+          "stats": {
+            "frameCount": 337,
+            "darkFrameCount": 337,
+            "meanPx": 6.0652818991097925,
+            "p50Px": 7,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 13,
+            "maxPx": 14
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": 0,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "quadratic-ease-out",
+          "weight": 1.2,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 334,
+            "darkFrameCount": 334,
+            "meanPx": 2.877245508982036,
+            "p50Px": 0,
+            "p90Px": 10,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": 0,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "cubic-smoothstep",
+          "weight": 1.2,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 394,
+            "darkFrameCount": 394,
+            "meanPx": 5.944162436548224,
+            "p50Px": 7,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": 0,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "cubic-in-out",
+          "weight": 1.25,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 280,
+            "darkFrameCount": 280,
+            "meanPx": 4.4,
+            "p50Px": 0,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": 0,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "rapid-reversal",
+          "weight": 1.6,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 189,
+            "darkFrameCount": 189,
+            "meanPx": 2.4708994708994707,
+            "p50Px": 0,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": 0,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "sine-sweep",
+          "weight": 1.4,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 262,
+            "darkFrameCount": 262,
+            "meanPx": 2.4923664122137406,
+            "p50Px": 0,
+            "p90Px": 10,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": 0,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "short-jitter",
+          "weight": 1.4,
+          "scorePx": 11.5,
+          "stats": {
+            "frameCount": 191,
+            "darkFrameCount": 191,
+            "meanPx": 2.4554973821989527,
+            "p50Px": 0,
+            "p90Px": 9,
+            "p95Px": 11,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": 0,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        }
+      ],
+      "deltaToBaselineScorePx": 0
+    }
+  ]
+}

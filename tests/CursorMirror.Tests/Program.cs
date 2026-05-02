@@ -8,12 +8,19 @@ namespace CursorMirror.Tests
             HookTests.AddTo(suite);
             CursorImageProviderTests.AddTo(suite);
             CursorPositionPredictorTests.AddTo(suite);
+            CalibrationTests.AddTo(suite);
             ControllerTests.AddTo(suite);
             LocalizedStringsTests.AddTo(suite);
             BuildVersionTests.AddTo(suite);
+            VersionUpdateTests.AddTo(suite);
             MovementOpacityControllerTests.AddTo(suite);
+            RuntimeSchedulerTests.AddTo(suite);
             SettingsTests.AddTo(suite);
+            SettingsWindowTests.AddTo(suite);
             MouseTraceTests.AddTo(suite);
+            DemoPointerStreamTests.AddTo(suite);
+            DemoFreeModeControllerTests.AddTo(suite);
+            DemoSettingsTests.AddTo(suite);
             return suite.Run();
         }
     }

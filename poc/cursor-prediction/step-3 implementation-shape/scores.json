@@ -1,0 +1,190 @@
+{
+  "experiment": {
+    "name": "step-3 implementation-shape",
+    "purpose": "Translate the selected Cursor Mirror prediction model into an O(1), allocation-free product implementation shape.",
+    "source_steps": [
+      "poc/cursor-prediction/step-1 data-audit-baselines",
+      "poc/cursor-prediction/step-2 adaptive-refinements"
+    ],
+    "trace_source": "cursor-mirror-trace-20260501-000443.zip",
+    "trace_read_in_step_3": false,
+    "generated_by": "manual Step 3 implementation-shape review plus run_microbenchmark.ps1"
+  },
+  "selected_model": {
+    "name": "constant-velocity-last2",
+    "family": "last2",
+    "gain": 1.0,
+    "offset_cap_px": null,
+    "default_offset_cap_policy": "disabled",
+    "formula": {
+      "velocity": "(current_position - previous_position) / (current_timestamp_ms - previous_timestamp_ms)",
+      "prediction": "current_position + velocity * horizon_ms * gain"
+    },
+    "reason": "Step 1 selected constant-velocity-last2 with no cap for every nonzero tested horizon on the latter 30% split. Step 2 found damping improves some longer-horizon means but does not consistently improve p95/p99/max, and online expert selection worsened tail behavior."
+  },
+  "reference_scores_test_latter_30pct": [
+    {
+      "horizon_ms": 4,
+      "mean_px": 1.698281974110184,
+      "p95_px": 6.472145871542837,
+      "p99_px": 12.892078497766965,
+      "max_px": 48.51798802341477
+    },
+    {
+      "horizon_ms": 8,
+      "mean_px": 3.366685239822474,
+      "p95_px": 12.60176367266762,
+      "p99_px": 25.549158150373934,
+      "max_px": 97.03597604682957
+    },
+    {
+      "horizon_ms": 12,
+      "mean_px": 5.480803209810633,
+      "p95_px": 22.41022104836119,
+      "p99_px": 43.65526381524004,
+      "max_px": 152.80239587223957
+    },
+    {
+      "horizon_ms": 16,
+      "mean_px": 7.809426354876187,
+      "p95_px": 31.851341513476537,
+      "p99_px": 62.940409247141844,
+      "max_px": 208.77155449277288
+    },
+    {
+      "horizon_ms": 24,
+      "mean_px": 14.038393745721125,
+      "p95_px": 58.578323970058634,
+      "p99_px": 111.83699951708977,
+      "max_px": 319.5918769947875
+    },
+    {
+      "horizon_ms": 32,
+      "mean_px": 21.6984701703731,
+      "p95_px": 91.2116642967315,
+      "p99_px": 175.09635105776042,
+      "max_px": 445.73770835318277
+    },
+    {
+      "horizon_ms": 48,
+      "mean_px": 40.78924408067184,
+      "p95_px": 173.6753405121625,
+      "p99_px": 334.80738575607376,
+      "max_px": 720.6284937578891
+    }
+  ],
+  "operation_count_estimates": {
+    "add_sample_first_or_invalid": {
+      "time_complexity": "O(1)",
+      "floating_point_divisions": 0,
+      "allocations": 0,
+      "notes": "Stores current sample and clears velocity when history is unavailable or interval is invalid."
+    },
+    "add_sample_valid_pair": {
+      "time_complexity": "O(1)",
+      "timestamp_subtractions": 1,
+      "interval_comparisons": 2,
+      "position_subtractions": 2,
+      "floating_point_divisions": 2,
+      "allocations": 0
+    },
+    "predict_without_cap": {
+      "time_complexity": "O(1)",
+      "velocity_multiplications": 2,
+      "position_additions": 2,
+      "branches": "enabled/history/horizon checks",
+      "allocations": 0
+    },
+    "optional_cap_extra_cost": {
+      "enabled_by_default": false,
+      "extra_operations": "offset length squared, comparison, optional sqrt and rescale",
+      "reason_disabled": "Step 1 fixed caps worsened mean and tail metrics by clipping legitimate fast movement."
+    }
+  },
+  "memory_allocation_expectations": {
+    "state_fields": [
+      "bool hasSample",
+      "bool hasVelocity",
+      "double lastX",
+      "double lastY",
+      "long lastTimestampMs",
+      "double velocityXPerMs",
+      "double velocityYPerMs"
+    ],
+    "estimated_state_bytes": "approximately 64-80 bytes depending on runtime layout",
+    "hot_path_allocations": 0,
+    "requires_arrays_or_queues": false,
+    "requires_external_model_file": false
+  },
+  "recommended_defaults": {
+    "prediction_model": "constant-velocity-last2",
+    "gain": 1.0,
+    "idle_gap_ms": 100,
+    "horizon_mode": "display-frame-clamped",
+    "fallback_horizon_ms": 8,
+    "min_display_frame_horizon_ms": 8,
+    "max_display_frame_horizon_ms": 16,
+    "offset_cap_px": null,
+    "failsafe_max_offset_px": null,
+    "advanced_horizon_dependent_gain": {
+      "enabled": false,
+      "candidate_values": [
+        {
+          "horizon_range_ms": "12-32",
+          "gain": 0.875
+        },
+        {
+          "horizon_ms": 48,
+          "gain": 0.75
+        }
+      ],
+      "warning": "Mean improves at longer horizons but p95/p99/max do not consistently improve."
+    }
+  },
+  "risk_flags": [
+    {
+      "id": "single-trace",
+      "severity": "medium",
+      "description": "Model ranking is based on one captured trace. More users/devices/display setups may shift results."
+    },
+    {
+      "id": "long-horizon-tail",
+      "severity": "medium",
+      "description": "Prediction remains visibly risky at 24ms and above; default horizon should stay in the 8-16ms band."
+    },
+    {
+      "id": "fixed-cap-regression",
+      "severity": "medium",
+      "description": "Fixed offset caps worsened Step 1 accuracy; any cap should be disabled by default or treated as a high failsafe."
+    },
+    {
+      "id": "timestamp-timebase",
+      "severity": "medium",
+      "description": "Mixing hook timestamps, Environment.TickCount, and wall-clock time can produce invalid intervals."
+    },
+    {
+      "id": "click-visual-overshoot",
+      "severity": "low",
+      "description": "Prediction must not affect click targets, but visual overshoot around button transitions may require exact-position sync."
+    }
+  ],
+  "measured_timing": {
+    "ran": true,
+    "script": "poc/cursor-prediction/step-3 implementation-shape/run_microbenchmark.ps1",
+    "measurement_type": "single local noisy synthetic .NET update-plus-predict loop",
+    "iterations": 2000000,
+    "warmup_iterations": 100000,
+    "horizon_ms": 12.0,
+    "idle_gap_ms": 100.0,
+    "elapsed_ms": 43.2596,
+    "updates_and_predictions_per_second": 46232512.55212715,
+    "nanoseconds_per_update_and_prediction": 21.6298,
+    "checksum": 1903.778151259967,
+    "interpretation": "Sanity check only. The measured loop is far below a typical UI frame budget, but production timing should be measured after integration."
+  },
+  "implementation_readiness": {
+    "hot_path_shape": "O(1), allocation-free after construction",
+    "unit_testability": "Can be tested with synthetic timestamp and position streams; no real Windows hook required.",
+    "product_recommendation": "Implement behind a setting or feature flag, default to last2/gain 1/no cap, and keep damping/caps experimental."
+  }
+}

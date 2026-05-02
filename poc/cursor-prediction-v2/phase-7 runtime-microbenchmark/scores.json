@@ -1,0 +1,262 @@
+{
+  "phase": "phase-7 runtime-microbenchmark",
+  "generated_utc_start": "2026-05-01T01:25:20Z",
+  "generated_utc_end": "2026-05-01T01:25:20Z",
+  "input": {
+    "trace_zip_path": "C:\\Users\\seigl\\OneDrive\\my\\\u30C9\u30AD\u30E5\u30E1\u30F3\u30C8\\projects\\cursor\\cursor-mirror-trace-20260501-091537.zip",
+    "trace_read_in_place": true,
+    "total_trace_rows": 218146,
+    "poll_rows": 160442,
+    "move_rows": 57704,
+    "stopwatch_frequency": 10000000,
+    "accepted_candidate": "baseline \u002B DWM-aware next-vblank horizon, gained last2 velocity with gain 0.75",
+    "learned_correction_productized": false
+  },
+  "runtime": {
+    "process_architecture": "X64",
+    "framework_description": ".NET 9.0.10",
+    "os_description": "Microsoft Windows 10.0.26200",
+    "stopwatch_frequency": 10000000,
+    "stopwatch_is_high_resolution": true,
+    "benchmark_mode": "serial single-process compiled C# via PowerShell Add-Type",
+    "noise_note": "CPU timing only; GPU is not product-relevant. Background OS scheduling and OneDrive filesystem activity can add tail noise."
+  },
+  "benchmark_design": {
+    "warmup_iterations": 200000,
+    "measurement_iterations_per_repeat": 2000000,
+    "batch_size": 256,
+    "repeats": 9,
+    "gain": 0.75,
+    "idle_gap_seconds": 0.1,
+    "percentile_method": "batch timing; each batch records elapsed Stopwatch ticks divided by batch size"
+  },
+  "hot_path_latency": {
+    "best_repeat_by_p50": 1,
+    "best_repeat_mean_us_per_call": 0.023827,
+    "best_repeat_p50_us_per_call": 0.023047,
+    "best_repeat_p90_us_per_call": 0.023828,
+    "best_repeat_p95_us_per_call": 0.029297,
+    "best_repeat_p99_us_per_call": 0.033594,
+    "mean_us_per_call_range": [
+      0.023701,
+      0.027777
+    ],
+    "p50_us_per_call_range": [
+      0.023047,
+      0.023047
+    ],
+    "p99_us_per_call_range": [
+      0.033203,
+      0.039266
+    ],
+    "worst_repeat_p99_us_per_call": 0.039266,
+    "repeat_count": 9,
+    "repeats": [
+      {
+        "repeat": 1,
+        "mean_us_per_call": 0.023827,
+        "p50_us_per_call_batch": 0.023047,
+        "p90_us_per_call_batch": 0.023828,
+        "p95_us_per_call_batch": 0.029297,
+        "p99_us_per_call_batch": 0.033594,
+        "max_batch_us_per_call": 0.414063,
+        "invalid_dwm_horizon": 0,
+        "late_dwm_horizon": 504765,
+        "horizon_over_1_25x_refresh_period": 0,
+        "fallback_to_hold": 0,
+        "reset_invalid_dt_or_idle_gap": 0,
+        "checksum": -1838.039
+      },
+      {
+        "repeat": 2,
+        "mean_us_per_call": 0.023701,
+        "p50_us_per_call_batch": 0.023047,
+        "p90_us_per_call_batch": 0.023828,
+        "p95_us_per_call_batch": 0.023828,
+        "p99_us_per_call_batch": 0.033203,
+        "max_batch_us_per_call": 0.360938,
+        "invalid_dwm_horizon": 0,
+        "late_dwm_horizon": 504765,
+        "horizon_over_1_25x_refresh_period": 0,
+        "fallback_to_hold": 0,
+        "reset_invalid_dt_or_idle_gap": 0,
+        "checksum": -1838.039
+      },
+      {
+        "repeat": 3,
+        "mean_us_per_call": 0.023727,
+        "p50_us_per_call_batch": 0.023047,
+        "p90_us_per_call_batch": 0.023438,
+        "p95_us_per_call_batch": 0.027734,
+        "p99_us_per_call_batch": 0.035156,
+        "max_batch_us_per_call": 0.159766,
+        "invalid_dwm_horizon": 0,
+        "late_dwm_horizon": 504765,
+        "horizon_over_1_25x_refresh_period": 0,
+        "fallback_to_hold": 0,
+        "reset_invalid_dt_or_idle_gap": 0,
+        "checksum": -1838.039
+      },
+      {
+        "repeat": 4,
+        "mean_us_per_call": 0.023849,
+        "p50_us_per_call_batch": 0.023047,
+        "p90_us_per_call_batch": 0.023828,
+        "p95_us_per_call_batch": 0.025,
+        "p99_us_per_call_batch": 0.034328,
+        "max_batch_us_per_call": 0.120313,
+        "invalid_dwm_horizon": 0,
+        "late_dwm_horizon": 504765,
+        "horizon_over_1_25x_refresh_period": 0,
+        "fallback_to_hold": 0,
+        "reset_invalid_dt_or_idle_gap": 0,
+        "checksum": -1838.039
+      },
+      {
+        "repeat": 5,
+        "mean_us_per_call": 0.024683,
+        "p50_us_per_call_batch": 0.023047,
+        "p90_us_per_call_batch": 0.023438,
+        "p95_us_per_call_batch": 0.023828,
+        "p99_us_per_call_batch": 0.033594,
+        "max_batch_us_per_call": 3.313281,
+        "invalid_dwm_horizon": 0,
+        "late_dwm_horizon": 504765,
+        "horizon_over_1_25x_refresh_period": 0,
+        "fallback_to_hold": 0,
+        "reset_invalid_dt_or_idle_gap": 0,
+        "checksum": -1838.039
+      },
+      {
+        "repeat": 6,
+        "mean_us_per_call": 0.027121,
+        "p50_us_per_call_batch": 0.023047,
+        "p90_us_per_call_batch": 0.032813,
+        "p95_us_per_call_batch": 0.033594,
+        "p99_us_per_call_batch": 0.035938,
+        "max_batch_us_per_call": 3.467578,
+        "invalid_dwm_horizon": 0,
+        "late_dwm_horizon": 504765,
+        "horizon_over_1_25x_refresh_period": 0,
+        "fallback_to_hold": 0,
+        "reset_invalid_dt_or_idle_gap": 0,
+        "checksum": -1838.039
+      },
+      {
+        "repeat": 7,
+        "mean_us_per_call": 0.027777,
+        "p50_us_per_call_batch": 0.023047,
+        "p90_us_per_call_batch": 0.031641,
+        "p95_us_per_call_batch": 0.032422,
+        "p99_us_per_call_batch": 0.039266,
+        "max_batch_us_per_call": 4.916016,
+        "invalid_dwm_horizon": 0,
+        "late_dwm_horizon": 504765,
+        "horizon_over_1_25x_refresh_period": 0,
+        "fallback_to_hold": 0,
+        "reset_invalid_dt_or_idle_gap": 0,
+        "checksum": -1838.039
+      },
+      {
+        "repeat": 8,
+        "mean_us_per_call": 0.02459,
+        "p50_us_per_call_batch": 0.023047,
+        "p90_us_per_call_batch": 0.031641,
+        "p95_us_per_call_batch": 0.034375,
+        "p99_us_per_call_batch": 0.0375,
+        "max_batch_us_per_call": 0.395313,
+        "invalid_dwm_horizon": 0,
+        "late_dwm_horizon": 504765,
+        "horizon_over_1_25x_refresh_period": 0,
+        "fallback_to_hold": 0,
+        "reset_invalid_dt_or_idle_gap": 0,
+        "checksum": -1838.039
+      },
+      {
+        "repeat": 9,
+        "mean_us_per_call": 0.02539,
+        "p50_us_per_call_batch": 0.023047,
+        "p90_us_per_call_batch": 0.033203,
+        "p95_us_per_call_batch": 0.034375,
+        "p99_us_per_call_batch": 0.0375,
+        "max_batch_us_per_call": 0.182422,
+        "invalid_dwm_horizon": 0,
+        "late_dwm_horizon": 504765,
+        "horizon_over_1_25x_refresh_period": 0,
+        "fallback_to_hold": 0,
+        "reset_invalid_dt_or_idle_gap": 0,
+        "checksum": -1838.039
+      }
+    ]
+  },
+  "allocation_check": {
+    "iterations": 2000000,
+    "allocated_bytes": 0,
+    "bytes_per_prediction": 0,
+    "gc_collection_count_gen0": 12,
+    "invalid_dwm_horizon": 0,
+    "late_dwm_horizon": 504765,
+    "horizon_over_1_25x_refresh_period": 0,
+    "fallback_to_hold": 0,
+    "reset_invalid_dt_or_idle_gap": 0
+  },
+  "replay_numerical_parity": {
+    "poll_predictions_checked": 160441,
+    "reference": "same scalar formula as Phase 6 sketch: x/y \u002B last2 velocity * 0.75 * selected next-vblank horizon",
+    "max_abs_coordinate_difference_px": 0,
+    "max_difference_poll_index": 18279,
+    "tolerance_px": 0.01,
+    "within_tolerance": true,
+    "instrumentation_counts_on_replay": {
+      "invalid_dwm_horizon": 0,
+      "late_dwm_horizon": 39993,
+      "horizon_over_1_25x_refresh_period": 0,
+      "fallback_to_hold": 0,
+      "reset_invalid_dt_or_idle_gap": 0
+    }
+  },
+  "implementation_cost_estimate": {
+    "predictor_state_bytes_estimate": 56,
+    "counter_state_bytes_estimate": 48,
+    "steady_state_heap_allocations_per_prediction": 0,
+    "operation_count_estimate": "about 30 scalar integer/floating-point operations on the common future-vblank path; late-DWM repair adds one integer division",
+    "state_fields": [
+      "last poll x/y",
+      "last poll QPC",
+      "stopwatch frequency and reciprocal",
+      "latest DWM vblank QPC",
+      "latest DWM refresh period QPC"
+    ]
+  },
+  "end_to_end_budget_estimate": {
+    "estimated_poll_to_prediction_p99_us": 0.039266,
+    "budget_us": 50,
+    "status": "met",
+    "scope": "prediction call including state update, DWM horizon validation/roll-forward, and counter increments; excludes OS cursor polling and any DWM API call outside this hot path"
+  },
+  "dwm_horizon_instrumentation_design": {
+    "invalid_dwm_horizon": "increment when DWM vblank QPC or refresh period is non-positive; predictor falls back to hold",
+    "late_dwm_horizon": "increment when the reported DWM vblank is at or before the poll QPC; product code rolls forward by refresh periods when possible",
+    "horizon_over_1_25x_refresh_period": "increment when selected horizon is more than 1.25x the refresh period; predictor falls back to hold",
+    "fallback_to_hold": "increment for invalid DWM data, excessive selected horizon, invalid dt, or idle-gap reset",
+    "prediction_reset_due_to_invalid_dt_or_idle_gap": "increment when dt \u003C= 0 or dt exceeds 100ms before updating the last-poll state"
+  },
+  "targets": {
+    "hot_path_p50_under_0_5us": true,
+    "hot_path_p99_under_2us": true,
+    "zero_allocations_after_warmup": true,
+    "poll_to_prediction_budget_under_50us_p99_estimate": true,
+    "numerical_parity_within_0_01px": true
+  },
+  "phase8_product_recommendation_input": {
+    "recommendation": "Proceed with baseline \u002B DWM-aware next-vblank horizon using gained last2 velocity at gain 0.75.",
+    "productize_learned_correction": false,
+    "required_runtime_counters": [
+      "invalid_dwm_horizon",
+      "late_dwm_horizon",
+      "horizon_over_1_25x_refresh_period",
+      "fallback_to_hold",
+      "prediction_reset_due_to_invalid_dt_or_idle_gap"
+    ]
+  }
+}
