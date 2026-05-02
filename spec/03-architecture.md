@@ -5,7 +5,7 @@ The implementation SHOULD use the following components:
 
 - `Program`: Application entry point and process-wide initialization.
 - `TrayController`: Notification-area icon, context menu, and shutdown command.
-- `OverlayRuntimeThread`: Dedicated STA message-pump thread that owns the overlay window, controller, cursor polling, and DWM-synchronized runtime scheduler.
+- `OverlayRuntimeThread`: Dedicated STA message-pump thread that owns the overlay window, controller, cursor polling, and DWM-synchronized runtime loop.
 - `LowLevelMouseHook`: Thin wrapper around `SetWindowsHookEx(WH_MOUSE_LL)`, modeled after the CreviceApp hook structure.
 - `CursorImageProvider`: Reads the current cursor handle and produces a copied image plus hot spot metadata.
 - `HighFrequencyCursorPoller`: Dedicated latest-position sampler that polls `GetCursorPos` at a short interval for the runtime movement path.
@@ -25,7 +25,7 @@ The normal event flow is:
 2. `Program` starts the WinForms message loop.
 3. `TrayController` creates the tray icon and context menu.
 4. `OverlayRuntimeThread` starts a dedicated STA thread and message pump.
-5. `OverlayWindow`, `CursorMirrorController`, the high-frequency cursor poller, and the DWM-synchronized runtime scheduler are created on the overlay runtime thread.
+5. `OverlayWindow`, `CursorMirrorController`, the high-frequency cursor poller, and the DWM-synchronized runtime loop are created on the overlay runtime thread.
 6. `LowLevelMouseHook` installs a `WH_MOUSE_LL` hook.
 7. Windows invokes the hook callback for mouse events.
 8. On `WM_MOUSEMOVE`, the hook callback posts the event to the overlay runtime thread and returns a pass-through hook result.
@@ -37,7 +37,7 @@ The normal event flow is:
 ### 3.3 Threading and Message Pump
 - The application MUST run a Windows message pump for the tray icon, overlay window, and hook lifetime.
 - The tray and settings UI MAY run on the main UI thread.
-- The overlay window, overlay controller, high-frequency cursor polling boundary, and DWM-synchronized runtime scheduler SHOULD run on a dedicated STA overlay runtime thread.
+- The overlay window, overlay controller, high-frequency cursor polling boundary, and DWM-synchronized runtime loop SHOULD run on a dedicated STA overlay runtime thread.
 - Overlay UI objects MUST be created and mutated on the overlay runtime thread.
 - Tray and settings UI objects MUST be created and mutated on their owning UI thread.
 - The low-level mouse hook callback MUST do minimal work.

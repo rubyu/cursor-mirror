@@ -25,6 +25,11 @@ namespace CursorMirror
             get { return _waitMethod; }
         }
 
+        public IntPtr Handle
+        {
+            get { return _handle; }
+        }
+
         public static HighResolutionWaitTimer CreateBestEffort()
         {
             IntPtr handle = TryCreate(CreateWaitableTimerHighResolution);
@@ -62,8 +67,24 @@ namespace CursorMirror
                 return true;
             }
 
+            if (!SetTicks(ticks, stopwatchFrequency))
+            {
+                return false;
+            }
+
+            return WaitForSingleObjectNative(_handle, WaitInfinite) == WaitObject0;
+        }
+
+        public bool SetTicks(long ticks, long stopwatchFrequency)
+        {
+            ThrowIfDisposed();
+            if (ticks <= 0)
+            {
+                return true;
+            }
+
             long dueTime = -TicksToHundredNanoseconds(ticks, stopwatchFrequency);
-            return WaitHundredNanoseconds(dueTime);
+            return SetRelativeHundredNanoseconds(dueTime);
         }
 
         private bool WaitHundredNanoseconds(long dueTime)
@@ -73,12 +94,22 @@ namespace CursorMirror
                 return true;
             }
 
-            if (!SetWaitableTimerNative(_handle, ref dueTime, 0, IntPtr.Zero, IntPtr.Zero, false))
+            if (!SetRelativeHundredNanoseconds(dueTime))
             {
                 return false;
             }
 
             return WaitForSingleObjectNative(_handle, WaitInfinite) == WaitObject0;
+        }
+
+        private bool SetRelativeHundredNanoseconds(long dueTime)
+        {
+            if (dueTime == 0)
+            {
+                return true;
+            }
+
+            return SetWaitableTimerNative(_handle, ref dueTime, 0, IntPtr.Zero, IntPtr.Zero, false);
         }
 
         public void Dispose()

@@ -122,10 +122,12 @@ Recommended extended window styles:
 - The bounded fine wait MUST be short enough to avoid sustained CPU load and MUST preserve the normal waitable timer and `Thread.Sleep` fallback behavior.
 - The normal overlay hot path SHOULD avoid dispatching through the tray or settings UI thread.
 - The overlay runtime thread SHOULD own the overlay window, cursor polling, prediction, opacity updates, and layered-window movement.
+- The overlay runtime thread SHOULD run the normal DWM-synchronized scheduler tick itself, using a message-aware wait, rather than posting every scheduler tick from a separate scheduler thread to the overlay runtime thread.
+- The message-aware scheduler wait SHOULD continue to process queued Windows messages for settings, hook-triggered image refresh, and shutdown while waiting for the next DWM target.
 - The scheduler SHOULD request a `1ms` timer resolution while active and release that request during shutdown.
 - The high-frequency latest-position sampler SHOULD also request a `1ms` timer resolution while active and release that request during shutdown.
 - Runtime scheduler and latest-position sampler threads SHOULD use a priority appropriate for latency-sensitive cursor display work without requiring administrator privileges.
-- The DWM scheduler thread, overlay runtime thread, and high-frequency latest-position sampler SHOULD NOT request managed `Highest` thread priority by default.
+- The overlay runtime thread and high-frequency latest-position sampler SHOULD NOT request managed `Highest` thread priority by default.
 - Cursor display threads SHOULD NOT request MMCSS by default. MMCSS and managed-priority experiments MAY be implemented as opt-in diagnostics, but the default runtime SHOULD avoid competing with other desktop latency-sensitive workloads.
 - Any optional MMCSS or elevated managed-priority request MUST be best-effort: failure MUST NOT prevent startup, MUST NOT require administrator privileges, and MUST fall back to the existing scheduler behavior.
 - The scheduler MUST avoid overlapping queued runtime ticks.

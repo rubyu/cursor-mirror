@@ -1,12 +1,10 @@
 using System;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Threading;
 using CursorMirror.MouseTrace;
 
 namespace CursorMirror
 {
-    public sealed class DwmSynchronizedRuntimeScheduler : IDisposable
+    public static class DwmSynchronizedRuntimeScheduler
     {
         public const int TimerResolutionMilliseconds = 1;
         public const int WakeAdvanceMilliseconds = 2;
@@ -14,101 +12,9 @@ namespace CursorMirror
         public const int MaximumDwmSleepMilliseconds = 2;
         public const int FineWaitAdvanceMicroseconds = 500;
         public const int FineWaitYieldThresholdMicroseconds = 200;
-        private const int FineWaitSpinIterations = 64;
-
-        private readonly IUiDispatcher _dispatcher;
-        private readonly Action _tick;
-        private readonly Action _runTickOnUiThread;
-        private Thread _thread;
-        private HighResolutionWaitTimer _waitTimer;
-        private volatile bool _running;
-        private bool _disposed;
-        private bool _timerResolutionActive;
-        private long _lastRequestedVBlankTicks;
-        private int _tickPending;
 
         [DllImport("dwmapi.dll", EntryPoint = "DwmGetCompositionTimingInfo", PreserveSig = true)]
         private static extern int DwmGetCompositionTimingInfoNative(IntPtr hwnd, ref DwmTimingInfo timingInfo);
-
-        [DllImport("winmm.dll", EntryPoint = "timeBeginPeriod", PreserveSig = true)]
-        private static extern uint TimeBeginPeriodNative(uint milliseconds);
-
-        [DllImport("winmm.dll", EntryPoint = "timeEndPeriod", PreserveSig = true)]
-        private static extern uint TimeEndPeriodNative(uint milliseconds);
-
-        public DwmSynchronizedRuntimeScheduler(IUiDispatcher dispatcher, Action tick)
-        {
-            if (dispatcher == null)
-            {
-                throw new ArgumentNullException("dispatcher");
-            }
-
-            if (tick == null)
-            {
-                throw new ArgumentNullException("tick");
-            }
-
-            _dispatcher = dispatcher;
-            _tick = tick;
-            _runTickOnUiThread = RunTickOnUiThread;
-        }
-
-        public void Start()
-        {
-            ThrowIfDisposed();
-            if (_running)
-            {
-                return;
-            }
-
-            _lastRequestedVBlankTicks = 0;
-            _running = true;
-            _timerResolutionActive = TimeBeginPeriodNative(TimerResolutionMilliseconds) == 0;
-            _waitTimer = HighResolutionWaitTimer.CreateBestEffort();
-            _thread = new Thread(Run);
-            _thread.IsBackground = true;
-            _thread.Name = "Cursor Mirror DWM runtime scheduler";
-            _thread.Priority = ThreadPriority.AboveNormal;
-            _thread.Start();
-        }
-
-        public void Stop()
-        {
-            if (!_running && _thread == null)
-            {
-                return;
-            }
-
-            _running = false;
-            Thread thread = _thread;
-            if (thread != null && thread != Thread.CurrentThread)
-            {
-                thread.Join(250);
-            }
-
-            _thread = null;
-            if (_waitTimer != null)
-            {
-                _waitTimer.Dispose();
-                _waitTimer = null;
-            }
-
-            Interlocked.Exchange(ref _tickPending, 0);
-            if (_timerResolutionActive)
-            {
-                TimeEndPeriodNative(TimerResolutionMilliseconds);
-                _timerResolutionActive = false;
-            }
-        }
-
-        public void Dispose()
-        {
-            if (!_disposed)
-            {
-                Stop();
-                _disposed = true;
-            }
-        }
 
         public static DwmSynchronizedRuntimeScheduleDecision EvaluateDwmTiming(
             long nowTicks,
@@ -182,83 +88,7 @@ namespace CursorMirror
             return new DwmSynchronizedRuntimeScheduleDecision(true, false, delayMilliseconds, targetVBlankTicks, wakeTicks);
         }
 
-        private void Run()
-        {
-            while (_running)
-            {
-                long lastDwmVBlankTicks;
-                long refreshPeriodTicks;
-                if (TryGetDwmTiming(out lastDwmVBlankTicks, out refreshPeriodTicks))
-                {
-                    long nowTicks = Stopwatch.GetTimestamp();
-                    DwmSynchronizedRuntimeScheduleDecision decision = EvaluateOneShotDwmTiming(
-                        nowTicks,
-                        Stopwatch.Frequency,
-                        lastDwmVBlankTicks,
-                        refreshPeriodTicks,
-                        _lastRequestedVBlankTicks,
-                        WakeAdvanceMilliseconds,
-                        FallbackIntervalMilliseconds);
-
-                    if (!decision.ShouldTick && decision.WaitUntilTicks > 0)
-                    {
-                        WaitUntilWhileRunning(decision.WaitUntilTicks, FallbackIntervalMilliseconds);
-                    }
-
-                    if (!_running)
-                    {
-                        break;
-                    }
-
-                    _lastRequestedVBlankTicks = decision.TargetVBlankTicks;
-                    RequestTick();
-                }
-                else
-                {
-                    RequestTick();
-                    WaitWhileRunning(FallbackIntervalMilliseconds, 0);
-                }
-            }
-        }
-
-        private void RequestTick()
-        {
-            if (!_running || _disposed)
-            {
-                return;
-            }
-
-            if (Interlocked.Exchange(ref _tickPending, 1) != 0)
-            {
-                return;
-            }
-
-            try
-            {
-                _dispatcher.BeginInvoke(_runTickOnUiThread);
-            }
-            catch (ObjectDisposedException)
-            {
-                Interlocked.Exchange(ref _tickPending, 0);
-            }
-            catch (InvalidOperationException)
-            {
-                Interlocked.Exchange(ref _tickPending, 0);
-            }
-        }
-
-        private void RunTickOnUiThread()
-        {
-            Interlocked.Exchange(ref _tickPending, 0);
-            if (!_running || _disposed)
-            {
-                return;
-            }
-
-            _tick();
-        }
-
-        private static bool TryGetDwmTiming(out long lastDwmVBlankTicks, out long refreshPeriodTicks)
+        public static bool TryGetDwmTiming(out long lastDwmVBlankTicks, out long refreshPeriodTicks)
         {
             DwmTimingInfo timingInfo = new DwmTimingInfo();
             timingInfo.Size = (uint)Marshal.SizeOf(typeof(DwmTimingInfo));
@@ -395,22 +225,6 @@ namespace CursorMirror
             return Math.Max(1, milliseconds);
         }
 
-        private static long MicrosecondsToTicks(int microseconds, long stopwatchFrequency)
-        {
-            if (microseconds <= 0 || stopwatchFrequency <= 0)
-            {
-                return 0;
-            }
-
-            double ticks = microseconds * (double)stopwatchFrequency / 1000000.0;
-            if (ticks >= long.MaxValue)
-            {
-                return long.MaxValue;
-            }
-
-            return (long)Math.Round(ticks);
-        }
-
         private static long AddTicks(long startTicks, long ticks)
         {
             if (ticks <= 0)
@@ -434,115 +248,6 @@ namespace CursorMirror
             }
 
             return (long)value;
-        }
-
-        private void WaitWhileRunning(int milliseconds, long waitUntilTicks)
-        {
-            if (!_running)
-            {
-                return;
-            }
-
-            int normalizedMilliseconds = NormalizeDelayMilliseconds(milliseconds);
-            long targetTicks = CalculateCurrentWaitTargetTicks(
-                Stopwatch.GetTimestamp(),
-                normalizedMilliseconds,
-                waitUntilTicks,
-                Stopwatch.Frequency);
-            if (targetTicks <= 0)
-            {
-                WaitCoarseWhileRunning(normalizedMilliseconds);
-                return;
-            }
-
-            WaitUntilWhileRunning(targetTicks, normalizedMilliseconds);
-        }
-
-        private void WaitCoarseWhileRunning(int milliseconds)
-        {
-            if (!_running)
-            {
-                return;
-            }
-
-            int normalizedMilliseconds = NormalizeDelayMilliseconds(milliseconds);
-            HighResolutionWaitTimer waitTimer = _waitTimer;
-            if (waitTimer != null && waitTimer.Wait(normalizedMilliseconds))
-            {
-                return;
-            }
-
-            Thread.Sleep(normalizedMilliseconds);
-        }
-
-        private void WaitUntilWhileRunning(long targetTicks, int fallbackMilliseconds)
-        {
-            long nowTicks = Stopwatch.GetTimestamp();
-            if (targetTicks <= nowTicks)
-            {
-                return;
-            }
-
-            long fineWaitTicks = MicrosecondsToTicks(FineWaitAdvanceMicroseconds, Stopwatch.Frequency);
-            long coarseTargetTicks = targetTicks - fineWaitTicks;
-            if (coarseTargetTicks > nowTicks)
-            {
-                long coarseTicks = coarseTargetTicks - nowTicks;
-                HighResolutionWaitTimer waitTimer = _waitTimer;
-                if (waitTimer == null || !waitTimer.WaitTicks(coarseTicks, Stopwatch.Frequency))
-                {
-                    SleepForTicks(coarseTicks, fallbackMilliseconds);
-                }
-            }
-
-            FineWaitUntilRunning(targetTicks);
-        }
-
-        private void SleepForTicks(long ticks, int fallbackMilliseconds)
-        {
-            if (ticks <= 0)
-            {
-                return;
-            }
-
-            int milliseconds = (int)Math.Floor(ticks * 1000.0 / Stopwatch.Frequency);
-            if (milliseconds <= 0)
-            {
-                Thread.Sleep(0);
-                return;
-            }
-
-            Thread.Sleep(Math.Min(milliseconds, NormalizeDelayMilliseconds(fallbackMilliseconds)));
-        }
-
-        private void FineWaitUntilRunning(long targetTicks)
-        {
-            long yieldThresholdTicks = MicrosecondsToTicks(FineWaitYieldThresholdMicroseconds, Stopwatch.Frequency);
-            while (_running)
-            {
-                long remainingTicks = targetTicks - Stopwatch.GetTimestamp();
-                if (remainingTicks <= 0)
-                {
-                    return;
-                }
-
-                if (remainingTicks > yieldThresholdTicks)
-                {
-                    Thread.Sleep(0);
-                }
-                else
-                {
-                    Thread.SpinWait(FineWaitSpinIterations);
-                }
-            }
-        }
-
-        private void ThrowIfDisposed()
-        {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException(GetType().Name);
-            }
         }
     }
 
