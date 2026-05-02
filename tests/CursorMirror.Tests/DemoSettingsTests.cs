@@ -10,6 +10,7 @@ namespace CursorMirror.Tests
             suite.Add("COT-MEU-8", DemoSettingsDefaults);
             suite.Add("COT-MEU-9", DemoSettingsPersistence);
             suite.Add("COT-MEU-10", DurableDemoSettingsSave);
+            suite.Add("COT-MEU-12", DemoOverlayControlStateDependencies);
         }
 
         // Demo settings defaults [COT-MEU-8]
@@ -121,6 +122,27 @@ namespace CursorMirror.Tests
             {
                 DeleteDirectory(directory);
             }
+        }
+
+        // Demo overlay control state dependencies [COT-MEU-12]
+        private static void DemoOverlayControlStateDependencies()
+        {
+            DemoOverlayControlState mirrorDisabled = DemoOverlayControlState.From(false, true, true, true);
+            TestAssert.False(mirrorDisabled.OverlaySettingsEnabled, "mirror disabled overlay settings");
+            TestAssert.False(mirrorDisabled.PredictionGainEnabled, "mirror disabled prediction gain");
+            TestAssert.False(mirrorDisabled.MovementTranslucencyInputsEnabled, "mirror disabled movement inputs");
+            TestAssert.False(mirrorDisabled.IdleFadeInputsEnabled, "mirror disabled idle fade inputs");
+
+            DemoOverlayControlState featureDisabled = DemoOverlayControlState.From(true, false, false, false);
+            TestAssert.True(featureDisabled.OverlaySettingsEnabled, "mirror enabled overlay settings");
+            TestAssert.False(featureDisabled.PredictionGainEnabled, "prediction disabled gain");
+            TestAssert.False(featureDisabled.MovementTranslucencyInputsEnabled, "movement disabled inputs");
+            TestAssert.False(featureDisabled.IdleFadeInputsEnabled, "idle fade disabled inputs");
+
+            DemoOverlayControlState featureEnabled = DemoOverlayControlState.From(true, true, true, true);
+            TestAssert.True(featureEnabled.PredictionGainEnabled, "prediction enabled gain");
+            TestAssert.True(featureEnabled.MovementTranslucencyInputsEnabled, "movement enabled inputs");
+            TestAssert.True(featureEnabled.IdleFadeInputsEnabled, "idle fade enabled inputs");
         }
 
         private static string NewTestDirectory()

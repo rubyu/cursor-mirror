@@ -529,6 +529,10 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that demo cursor alignment reports the cursor X coordinate relative to the demo path's left start endpoint as an integer.
   Refs: Section 12.4.
 
+- COT-MEU-12 - Demo overlay control state dependencies
+  Verify that demo overlay setting controls are disabled when their parent setting or the demo-owned mirrored cursor overlay is disabled.
+  Refs: Section 12.3.
+
 #### A.4.R Resource Management and Failure Handling
 ##### Unit
 - COT-MRU-1 - Hook callback exception containment

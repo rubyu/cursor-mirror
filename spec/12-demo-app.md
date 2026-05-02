@@ -26,6 +26,8 @@
 - The startup view MUST include a setting that controls whether the demo-owned mirrored cursor overlay is enabled.
 - The startup view MUST expose the same user-facing movement translucency and predictive positioning controls as the main settings window.
 - The startup view MUST expose idle-fade enablement, idle opacity, and idle-fade delay when the demo-owned mirrored cursor overlay is enabled.
+- The startup view MUST disable mirrored-cursor parameter controls when their parent setting is disabled: prediction gain when prediction is off, moving opacity/fade duration/idle delay when movement translucency is off, and idle opacity/idle-fade delay when idle fade is off.
+- The startup view MUST disable all mirrored-cursor parameter controls when the demo-owned mirrored cursor overlay is disabled.
 - The startup view MUST allow selecting one of three pointer speeds: slow, normal, and fast.
 - The demo application MUST persist startup selections per user and restore them on the next launch.
 - Demo settings writes MUST follow the durable settings write requirements in Section 5.6.

@@ -110,7 +110,11 @@ namespace CursorMirror.Demo
             _predictionGainInput = AddNumberRow(layout, 5, string.Empty, CursorMirrorSettings.MinimumPredictionGainPercent, CursorMirrorSettings.MaximumPredictionGainPercent, out _predictionGainLabel);
             _predictionGainInput.ValueChanged += delegate { SaveCurrentSettings(); };
             _movementTranslucencyCheckBox = AddCheckBox(layout, 6, string.Empty);
-            _movementTranslucencyCheckBox.CheckedChanged += delegate { SaveCurrentSettings(); };
+            _movementTranslucencyCheckBox.CheckedChanged += delegate
+            {
+                UpdateMirrorDependentControls();
+                SaveCurrentSettings();
+            };
             _movingOpacityInput = AddNumberRow(layout, 7, string.Empty, CursorMirrorSettings.MinimumMovingOpacityPercent, CursorMirrorSettings.MaximumMovingOpacityPercent, out _movingOpacityLabel);
             _movingOpacityInput.ValueChanged += delegate { SaveCurrentSettings(); };
             _fadeDurationInput = AddNumberRow(layout, 8, string.Empty, CursorMirrorSettings.MinimumFadeDurationMilliseconds, CursorMirrorSettings.MaximumFadeDurationMilliseconds, out _fadeDurationLabel);
@@ -372,20 +376,29 @@ namespace CursorMirror.Demo
 
         private void UpdateMirrorDependentControls()
         {
-            bool enabled = _mirrorCursorCheckBox.Checked;
-            _predictionCheckBox.Enabled = enabled;
-            bool predictionGainEnabled = enabled && _predictionCheckBox.Checked;
-            _predictionGainLabel.Enabled = predictionGainEnabled;
-            _predictionGainInput.Enabled = predictionGainEnabled;
-            _movementTranslucencyCheckBox.Enabled = enabled;
-            _movingOpacityInput.Enabled = enabled;
-            _fadeDurationInput.Enabled = enabled;
-            _idleDelayInput.Enabled = enabled;
-            _idleFadeCheckBox.Enabled = enabled;
+            DemoOverlayControlState state = DemoOverlayControlState.From(
+                _mirrorCursorCheckBox.Checked,
+                _predictionCheckBox.Checked,
+                _movementTranslucencyCheckBox.Checked,
+                _idleFadeCheckBox.Checked);
 
-            bool idleFadeEnabled = enabled && _idleFadeCheckBox.Checked;
-            _idleFadeOpacityInput.Enabled = idleFadeEnabled;
-            _idleFadeDelaySecondsInput.Enabled = idleFadeEnabled;
+            _predictionCheckBox.Enabled = state.OverlaySettingsEnabled;
+            _predictionGainLabel.Enabled = state.PredictionGainEnabled;
+            _predictionGainInput.Enabled = state.PredictionGainEnabled;
+
+            _movementTranslucencyCheckBox.Enabled = state.OverlaySettingsEnabled;
+            _movingOpacityLabel.Enabled = state.MovementTranslucencyInputsEnabled;
+            _movingOpacityInput.Enabled = state.MovementTranslucencyInputsEnabled;
+            _fadeDurationLabel.Enabled = state.MovementTranslucencyInputsEnabled;
+            _fadeDurationInput.Enabled = state.MovementTranslucencyInputsEnabled;
+            _idleDelayLabel.Enabled = state.MovementTranslucencyInputsEnabled;
+            _idleDelayInput.Enabled = state.MovementTranslucencyInputsEnabled;
+
+            _idleFadeCheckBox.Enabled = state.OverlaySettingsEnabled;
+            _idleFadeOpacityLabel.Enabled = state.IdleFadeInputsEnabled;
+            _idleFadeOpacityInput.Enabled = state.IdleFadeInputsEnabled;
+            _idleFadeDelayLabel.Enabled = state.IdleFadeInputsEnabled;
+            _idleFadeDelaySecondsInput.Enabled = state.IdleFadeInputsEnabled;
         }
 
         private void LanguageSelectionChanged()
