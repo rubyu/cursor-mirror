@@ -229,6 +229,14 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that new pointer movement after idle fade starts transitions the overlay back toward the active movement opacity.
   Refs: Section 4.4.1.1.
 
+- COT-MOU-28 - Hook image refresh skips unchanged cursor handles
+  Verify that a hook movement event with the same current cursor handle inside the short refresh interval does not recapture or redraw the cursor image.
+  Refs: Sections 4.3, 4.4.2, 6.1.
+
+- COT-MOU-29 - Polling ignores stale samples
+  Verify that stale or out-of-order polling samples do not move the overlay, do not advance prediction state, and increment the stale-sample diagnostic counter.
+  Refs: Sections 3.3, 4.4.2, 6.1.
+
 #### A.4.T Tray and Application Lifetime
 ##### Unit
 - COT-MTU-1 - Tray icon created
@@ -412,8 +420,12 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Sections 11.5, 11.6.
 
 - COT-MLU-14 - Trace runtime scheduler poll fields
-  Verify that runtime scheduler polling samples preserve cursor coordinates, scheduler timing usability, target vblank, planned tick, actual tick, and vblank lead fields.
+  Verify that runtime scheduler polling samples preserve cursor coordinates, scheduler timing usability, target vblank, planned tick, actual tick, vblank lead, queued tick, dispatch-started tick, cursor-read-started tick, cursor-read-completed tick, and sample-recorded tick fields.
   Refs: Section 11.5.
+
+- COT-MLU-15 - Trace runtime scheduler coalesced ticks
+  Verify that runtime scheduler ticks coalesced behind an already pending UI-thread capture are counted in trace metadata.
+  Refs: Sections 11.5, 11.7.
 
 #### A.4.E Demo Application and Virtual Pointer Stream
 ##### Unit

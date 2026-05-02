@@ -8,6 +8,7 @@ The implementation SHOULD use the following components:
 - `OverlayRuntimeThread`: Dedicated STA message-pump thread that owns the overlay window, controller, cursor polling, and DWM-synchronized runtime scheduler.
 - `LowLevelMouseHook`: Thin wrapper around `SetWindowsHookEx(WH_MOUSE_LL)`, modeled after the CreviceApp hook structure.
 - `CursorImageProvider`: Reads the current cursor handle and produces a copied image plus hot spot metadata.
+- `HighFrequencyCursorPoller`: Dedicated latest-position sampler that polls `GetCursorPos` at a short interval for the runtime movement path.
 - `OverlayWindow`: Displays the cursor image using a transparent, layered, click-through window.
 - `CursorMirrorController`: Coordinates hook events, cursor capture, overlay image updates, and overlay movement.
 - `CursorPositionPredictor`: Computes a display-only predicted pointer position from recent movement samples.
@@ -24,11 +25,11 @@ The normal event flow is:
 2. `Program` starts the WinForms message loop.
 3. `TrayController` creates the tray icon and context menu.
 4. `OverlayRuntimeThread` starts a dedicated STA thread and message pump.
-5. `OverlayWindow`, `CursorMirrorController`, cursor polling, and the DWM-synchronized runtime scheduler are created on the overlay runtime thread.
+5. `OverlayWindow`, `CursorMirrorController`, the high-frequency cursor poller, and the DWM-synchronized runtime scheduler are created on the overlay runtime thread.
 6. `LowLevelMouseHook` installs a `WH_MOUSE_LL` hook.
 7. Windows invokes the hook callback for mouse events.
 8. On `WM_MOUSEMOVE`, the hook callback posts the event to the overlay runtime thread and returns a pass-through hook result.
-9. On the overlay runtime thread, `CursorMirrorController` reads the pointer position, records it in `CursorPositionPredictor`, updates movement opacity state, and updates the overlay at the configured exact or predicted display position.
+9. On the overlay runtime thread, `CursorMirrorController` uses hook events primarily to refresh the cursor image, while scheduled runtime ticks use the latest high-frequency `GetCursorPos` sample to update movement state, prediction, opacity, and overlay position.
 10. On tray `Settings` or primary tray icon activation, the settings window is shown or brought to the foreground on the tray UI thread.
 11. On settings changes, the settings controller validates, persists, and posts the new settings to the overlay runtime thread without restarting the application.
 12. On tray `Exit` or settings-window exit, the application unhooks first, stops the overlay runtime thread, disposes resources, removes the tray icon, and exits the message loops.
@@ -36,7 +37,7 @@ The normal event flow is:
 ### 3.3 Threading and Message Pump
 - The application MUST run a Windows message pump for the tray icon, overlay window, and hook lifetime.
 - The tray and settings UI MAY run on the main UI thread.
-- The overlay window, overlay controller, cursor polling, and DWM-synchronized runtime scheduler SHOULD run on a dedicated STA overlay runtime thread.
+- The overlay window, overlay controller, high-frequency cursor polling boundary, and DWM-synchronized runtime scheduler SHOULD run on a dedicated STA overlay runtime thread.
 - Overlay UI objects MUST be created and mutated on the overlay runtime thread.
 - Tray and settings UI objects MUST be created and mutated on their owning UI thread.
 - The low-level mouse hook callback MUST do minimal work.
@@ -49,6 +50,7 @@ The normal event flow is:
 - Cursor prediction calculations SHOULD be deterministic and testable with injected timestamps and synthetic movement samples.
 - Cursor prediction MUST NOT call Windows hook, cursor capture, settings persistence, or UI APIs directly.
 - Implementations SHOULD coalesce redundant move events when the pointer coordinate and cursor handle have not changed.
+- Implementations SHOULD avoid using stale or out-of-order position samples to advance movement state or prediction.
 
 ### 3.4 Failure Policy
 - Failure to install the low-level mouse hook is fatal for normal operation.

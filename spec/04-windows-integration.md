@@ -30,6 +30,8 @@
 - The implementation MUST extract and apply hot spot metadata.
 - The implementation SHOULD support color cursors and monochrome cursors.
 - The implementation SHOULD support animated cursor frames to the extent that `GetCursorInfo` exposes the current cursor handle.
+- If a valid cursor image is already available and `GetCursorInfo` reports the same cursor handle, the implementation SHOULD skip redundant image capture for a short refresh interval.
+- The implementation SHOULD periodically allow same-handle image refresh so animated cursors or handle-reused cursor changes are not permanently frozen.
 
 ### 4.4 Overlay Window
 - The overlay window MUST be top-level and borderless.
@@ -88,9 +90,11 @@ Recommended extended window styles:
 - The settings UI MUST allow the user to disable predictive overlay positioning.
 - Prediction MUST affect only the displayed overlay position.
 - Prediction MUST NOT move the real system cursor, cancel input, remap input, or change click targets.
-- The low-level hook path SHOULD trigger cursor image refresh and movement-state handling.
-- The polling path SHOULD drive the normal overlay position update using `GetCursorPos`.
-- When prediction is disabled, the overlay MUST use exact current pointer coordinates from polling or the low-level hook fallback path.
+- The low-level hook path SHOULD trigger cursor image refresh.
+- The low-level hook path SHOULD NOT advance prediction or movement state from hook coordinates when a polling sample path is available.
+- The polling path SHOULD drive normal movement-state updates and overlay position updates using `GetCursorPos`.
+- The product runtime SHOULD keep a high-frequency latest-position sampler and let the DWM-synchronized runtime tick consume the newest fresh sample rather than performing the only cursor read after the tick has already reached the overlay runtime thread.
+- When prediction is disabled, the overlay MUST use exact current pointer coordinates from polling, with the low-level hook path acting only as a fallback before polling has established a usable image and position.
 - The default product prediction model SHOULD use the latest valid pair of polling samples with constant velocity:
   - `velocity = (currentPosition - previousPosition) / dt`;
   - `predictedPosition = currentPosition + velocity * horizonMs * gain`.
@@ -110,7 +114,10 @@ Recommended extended window styles:
 - The normal overlay hot path SHOULD avoid dispatching through the tray or settings UI thread.
 - The overlay runtime thread SHOULD own the overlay window, cursor polling, prediction, opacity updates, and layered-window movement.
 - The scheduler SHOULD request a `1ms` timer resolution while active and release that request during shutdown.
+- The high-frequency latest-position sampler SHOULD also request a `1ms` timer resolution while active and release that request during shutdown.
+- Runtime scheduler and latest-position sampler threads SHOULD use a priority appropriate for latency-sensitive cursor display work without requiring administrator privileges.
 - The scheduler MUST avoid overlapping queued runtime ticks.
+- The controller MUST ignore stale or out-of-order poll samples and SHOULD expose a diagnostic counter for ignored stale samples.
 - If DWM timing is unavailable or invalid, the scheduler MUST fall back to a documented high-resolution interval loop.
 - Invalid, late, stale, or excessive DWM horizons MUST fall back to exact pointer positioning or a documented fixed-horizon fallback.
 - The implementation SHOULD expose diagnostic counters for invalid DWM horizon, late DWM horizon, excessive horizon, fallback-to-hold, and prediction reset due to invalid `dt` or idle gaps.
