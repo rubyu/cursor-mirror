@@ -25,6 +25,7 @@ namespace CursorMirror.Tests
                 TestAssert.Equal("Settings", LocalizedStrings.SettingsCommand, "English settings command");
                 TestAssert.Equal("Exit Cursor Mirror", LocalizedStrings.ExitCursorMirrorCommand, "English settings exit command");
                 TestAssert.Equal("Predict cursor position", LocalizedStrings.PredictiveOverlayPositioningLabel, "English prediction label");
+                TestAssert.Equal("Prediction gain (%)", LocalizedStrings.PredictionGainLabel, "English prediction gain label");
                 TestAssert.Equal("Fade when idle", LocalizedStrings.IdleFadeLabel, "English idle fade label");
                 TestAssert.Equal("Idle opacity (%)", LocalizedStrings.IdleOpacityLabel, "English idle opacity label");
                 TestAssert.Equal("Idle fade delay (s)", LocalizedStrings.IdleFadeDelayLabel, "English idle fade delay label");
@@ -72,6 +73,7 @@ namespace CursorMirror.Tests
                 TestAssert.Equal("設定", LocalizedStrings.SettingsCommand, "Japanese settings command");
                 TestAssert.Equal("Cursor Mirror を終了", LocalizedStrings.ExitCursorMirrorCommand, "Japanese settings exit command");
                 TestAssert.Equal("カーソル位置を予測する", LocalizedStrings.PredictiveOverlayPositioningLabel, "Japanese prediction label");
+                TestAssert.Equal("予測ゲイン (%)", LocalizedStrings.PredictionGainLabel, "Japanese prediction gain label");
                 TestAssert.Equal("停止後にフェードする", LocalizedStrings.IdleFadeLabel, "Japanese idle fade label");
                 TestAssert.Equal("停止後の不透明度 (%)", LocalizedStrings.IdleOpacityLabel, "Japanese idle opacity label");
                 TestAssert.Equal("停止後フェード待機 (秒)", LocalizedStrings.IdleFadeDelayLabel, "Japanese idle fade delay label");

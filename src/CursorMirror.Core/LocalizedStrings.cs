@@ -35,6 +35,11 @@ namespace CursorMirror
             get { return Get("PredictiveOverlayPositioningLabel"); }
         }
 
+        public static string PredictionGainLabel
+        {
+            get { return Get("PredictionGainLabel"); }
+        }
+
         public static string MovingOpacityLabel
         {
             get { return Get("MovingOpacityLabel"); }
@@ -456,6 +461,8 @@ namespace CursorMirror
                 case "VersionMenuLabel":
                     return "Version";
                 case "UpdateStatusChecking":
+                case "PredictionGainLabel":
+                    return "Prediction gain (%)";
                     return "Update: checking...";
                 case "UpdateStatusUnknown":
                     return "Update: unknown";
@@ -627,6 +634,8 @@ namespace CursorMirror
                 case "ResetCommand":
                     return "リセット";
                 case "CloseCommand":
+                case "PredictionGainLabel":
+                    return "予測ゲイン (%)";
                     return "閉じる";
                 case "ExitCursorMirrorCommand":
                     return "Cursor Mirror を終了";

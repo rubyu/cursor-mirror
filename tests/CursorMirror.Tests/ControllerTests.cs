@@ -19,6 +19,8 @@ namespace CursorMirror.Tests
             suite.Add("COT-MOU-22", PollingNoDwmFallsBackToExactPosition);
             suite.Add("COT-MOU-28", HookImageRefreshSkipsSameCursorHandle);
             suite.Add("COT-MOU-29", PollingIgnoresStaleSamples);
+            suite.Add("COT-MOU-36", PredictionGainSettingControlsProjection);
+            suite.Add("COT-MOU-37", PredictionGainSettingControlsDwmProjection);
             suite.Add("COT-MRU-1", HookCallbackExceptionContainment);
             suite.Add("COT-MDU-3", DispatcherMarshalsToUiThread);
         }
@@ -167,7 +169,7 @@ namespace CursorMirror.Tests
             clock.Now = 20;
             controller.Tick();
 
-            TestAssert.Equal(new Point(78, 0), overlay.LastLocation, "DWM next-vblank predicted placement");
+            TestAssert.Equal(new Point(100, 0), overlay.LastLocation, "DWM next-vblank predicted placement");
             TestAssert.Equal(1L, controller.PredictionCounters.LateDwmHorizon, "late DWM horizon counter");
             controller.Dispose();
         }
@@ -241,6 +243,51 @@ namespace CursorMirror.Tests
 
             TestAssert.Equal(new Point(10, 0), overlay.LastLocation, "stale poll sample must not move overlay");
             TestAssert.Equal(1L, controller.PredictionCounters.StalePollSamples, "stale sample counter");
+            controller.Dispose();
+        }
+
+        // Prediction gain setting controls projection [COT-MOU-36]
+        private static void PredictionGainSettingControlsProjection()
+        {
+            FakeCursorImageProvider provider = new FakeCursorImageProvider();
+            FakeOverlayPresenter overlay = new FakeOverlayPresenter();
+            FakeClock clock = new FakeClock();
+            CursorMirrorSettings settings = CursorMirrorSettings.Default();
+            settings.PredictionGainPercent = 75;
+            provider.EnqueueCapture(new CursorCapture(new IntPtr(1), new Bitmap(16, 16), new Point(2, 3)));
+            provider.EnqueueCapture(new CursorCapture(new IntPtr(2), new Bitmap(16, 16), new Point(2, 3)));
+            CursorMirrorController controller = new CursorMirrorController(provider, overlay, new ImmediateDispatcher(), settings, clock);
+
+            clock.Now = 0;
+            controller.UpdateAt(new Point(10, 10));
+            clock.Now = 10;
+            controller.UpdateAt(new Point(20, 10));
+
+            TestAssert.Equal(new Point(24, 7), overlay.LastLocation, "75 percent gain scales the fixed-horizon projection");
+            controller.Dispose();
+        }
+
+        // Prediction gain setting controls DWM projection [COT-MOU-37]
+        private static void PredictionGainSettingControlsDwmProjection()
+        {
+            FakeCursorImageProvider provider = new FakeCursorImageProvider();
+            FakeOverlayPresenter overlay = new FakeOverlayPresenter();
+            FakeClock clock = new FakeClock();
+            FakeCursorPoller poller = new FakeCursorPoller();
+            CursorMirrorSettings settings = CursorMirrorSettings.Default();
+            settings.PredictionGainPercent = 75;
+            provider.EnqueueCapture(new CursorCapture(new IntPtr(1), new Bitmap(16, 16), new Point(0, 0)));
+            CursorMirrorController controller = new CursorMirrorController(provider, overlay, new ImmediateDispatcher(), settings, clock, poller);
+
+            controller.UpdateAt(new Point(0, 0));
+            poller.EnqueueSample(PollSample(new Point(0, 0), 100, true, 100, 100));
+            poller.EnqueueSample(PollSample(new Point(10, 0), 110, true, 100, 100));
+            clock.Now = 10;
+            controller.Tick();
+            clock.Now = 20;
+            controller.Tick();
+
+            TestAssert.Equal(new Point(78, 0), overlay.LastLocation, "75 percent gain scales the DWM horizon projection");
             controller.Dispose();
         }
 

@@ -7,13 +7,14 @@ namespace CursorMirror.Demo
 {
     public sealed class DemoForm : Form
     {
-        private static readonly Size StartupClientSize = new Size(560, 540);
+        private static readonly Size StartupClientSize = new Size(560, 572);
         private readonly DemoSettingsStore _settingsStore;
         private readonly Panel _startPanel;
         private readonly DemoSceneControl _scene;
         private readonly Label _languageLabel;
         private readonly Label _displayModeLabel;
         private readonly Label _speedLabel;
+        private readonly Label _predictionGainLabel;
         private readonly Label _movingOpacityLabel;
         private readonly Label _fadeDurationLabel;
         private readonly Label _idleDelayLabel;
@@ -26,6 +27,7 @@ namespace CursorMirror.Demo
         private readonly CheckBox _predictionCheckBox;
         private readonly CheckBox _movementTranslucencyCheckBox;
         private readonly CheckBox _idleFadeCheckBox;
+        private readonly NumericUpDown _predictionGainInput;
         private readonly NumericUpDown _movingOpacityInput;
         private readonly NumericUpDown _fadeDurationInput;
         private readonly NumericUpDown _idleDelayInput;
@@ -79,7 +81,7 @@ namespace CursorMirror.Demo
             layout.Dock = DockStyle.Fill;
             layout.Padding = new Padding(14);
             layout.ColumnCount = 2;
-            layout.RowCount = 14;
+            layout.RowCount = 15;
             layout.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
             layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 45));
             layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 55));
@@ -100,25 +102,31 @@ namespace CursorMirror.Demo
                 SaveCurrentSettings();
             };
             _predictionCheckBox = AddCheckBox(layout, 4, string.Empty);
-            _predictionCheckBox.CheckedChanged += delegate { SaveCurrentSettings(); };
-            _movementTranslucencyCheckBox = AddCheckBox(layout, 5, string.Empty);
+            _predictionCheckBox.CheckedChanged += delegate
+            {
+                UpdateMirrorDependentControls();
+                SaveCurrentSettings();
+            };
+            _predictionGainInput = AddNumberRow(layout, 5, string.Empty, CursorMirrorSettings.MinimumPredictionGainPercent, CursorMirrorSettings.MaximumPredictionGainPercent, out _predictionGainLabel);
+            _predictionGainInput.ValueChanged += delegate { SaveCurrentSettings(); };
+            _movementTranslucencyCheckBox = AddCheckBox(layout, 6, string.Empty);
             _movementTranslucencyCheckBox.CheckedChanged += delegate { SaveCurrentSettings(); };
-            _movingOpacityInput = AddNumberRow(layout, 6, string.Empty, CursorMirrorSettings.MinimumMovingOpacityPercent, CursorMirrorSettings.MaximumMovingOpacityPercent, out _movingOpacityLabel);
+            _movingOpacityInput = AddNumberRow(layout, 7, string.Empty, CursorMirrorSettings.MinimumMovingOpacityPercent, CursorMirrorSettings.MaximumMovingOpacityPercent, out _movingOpacityLabel);
             _movingOpacityInput.ValueChanged += delegate { SaveCurrentSettings(); };
-            _fadeDurationInput = AddNumberRow(layout, 7, string.Empty, CursorMirrorSettings.MinimumFadeDurationMilliseconds, CursorMirrorSettings.MaximumFadeDurationMilliseconds, out _fadeDurationLabel);
+            _fadeDurationInput = AddNumberRow(layout, 8, string.Empty, CursorMirrorSettings.MinimumFadeDurationMilliseconds, CursorMirrorSettings.MaximumFadeDurationMilliseconds, out _fadeDurationLabel);
             _fadeDurationInput.ValueChanged += delegate { SaveCurrentSettings(); };
-            _idleDelayInput = AddNumberRow(layout, 8, string.Empty, CursorMirrorSettings.MinimumIdleDelayMilliseconds, CursorMirrorSettings.MaximumIdleDelayMilliseconds, out _idleDelayLabel);
+            _idleDelayInput = AddNumberRow(layout, 9, string.Empty, CursorMirrorSettings.MinimumIdleDelayMilliseconds, CursorMirrorSettings.MaximumIdleDelayMilliseconds, out _idleDelayLabel);
             _idleDelayInput.ValueChanged += delegate { SaveCurrentSettings(); };
 
-            _idleFadeCheckBox = AddCheckBox(layout, 9, string.Empty);
+            _idleFadeCheckBox = AddCheckBox(layout, 10, string.Empty);
             _idleFadeCheckBox.CheckedChanged += delegate
             {
                 UpdateMirrorDependentControls();
                 SaveCurrentSettings();
             };
-            _idleFadeOpacityInput = AddNumberRow(layout, 10, string.Empty, CursorMirrorSettings.MinimumIdleOpacityPercent, CursorMirrorSettings.MaximumIdleOpacityPercent, out _idleFadeOpacityLabel);
+            _idleFadeOpacityInput = AddNumberRow(layout, 11, string.Empty, CursorMirrorSettings.MinimumIdleOpacityPercent, CursorMirrorSettings.MaximumIdleOpacityPercent, out _idleFadeOpacityLabel);
             _idleFadeOpacityInput.ValueChanged += delegate { SaveCurrentSettings(); };
-            _idleFadeDelaySecondsInput = AddNumberRow(layout, 11, string.Empty, CursorMirrorSettings.MinimumIdleFadeDelayMilliseconds / 1000, CursorMirrorSettings.MaximumIdleFadeDelayMilliseconds / 1000, out _idleFadeDelayLabel);
+            _idleFadeDelaySecondsInput = AddNumberRow(layout, 12, string.Empty, CursorMirrorSettings.MinimumIdleFadeDelayMilliseconds / 1000, CursorMirrorSettings.MaximumIdleFadeDelayMilliseconds / 1000, out _idleFadeDelayLabel);
             _idleFadeDelaySecondsInput.ValueChanged += delegate { SaveCurrentSettings(); };
 
             _noteLabel = new Label();
@@ -126,14 +134,14 @@ namespace CursorMirror.Demo
             _noteLabel.Dock = DockStyle.Fill;
             _noteLabel.Padding = new Padding(0, 8, 0, 0);
             _noteLabel.TextAlign = ContentAlignment.TopLeft;
-            layout.Controls.Add(_noteLabel, 0, 12);
+            layout.Controls.Add(_noteLabel, 0, 13);
             layout.SetColumnSpan(_noteLabel, 2);
 
             FlowLayoutPanel buttons = new FlowLayoutPanel();
             buttons.Dock = DockStyle.Fill;
             buttons.FlowDirection = FlowDirection.RightToLeft;
             buttons.WrapContents = false;
-            layout.Controls.Add(buttons, 0, 13);
+            layout.Controls.Add(buttons, 0, 14);
             layout.SetColumnSpan(buttons, 2);
 
             _exitButton = new Button();
@@ -211,7 +219,7 @@ namespace CursorMirror.Demo
         private static void ConfigureRows(TableLayoutPanel layout)
         {
             layout.RowStyles.Clear();
-            for (int row = 0; row < 12; row++)
+            for (int row = 0; row < 13; row++)
             {
                 layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
             }
@@ -260,6 +268,7 @@ namespace CursorMirror.Demo
                 _speedInput.SelectedIndex = normalized.SpeedIndex;
                 _mirrorCursorCheckBox.Checked = normalized.MirrorCursorEnabled;
                 _predictionCheckBox.Checked = cursorSettings.PredictionEnabled;
+                _predictionGainInput.Value = cursorSettings.PredictionGainPercent;
                 _movementTranslucencyCheckBox.Checked = cursorSettings.MovementTranslucencyEnabled;
                 _movingOpacityInput.Value = cursorSettings.MovingOpacityPercent;
                 _fadeDurationInput.Value = cursorSettings.FadeDurationMilliseconds;
@@ -365,6 +374,9 @@ namespace CursorMirror.Demo
         {
             bool enabled = _mirrorCursorCheckBox.Checked;
             _predictionCheckBox.Enabled = enabled;
+            bool predictionGainEnabled = enabled && _predictionCheckBox.Checked;
+            _predictionGainLabel.Enabled = predictionGainEnabled;
+            _predictionGainInput.Enabled = predictionGainEnabled;
             _movementTranslucencyCheckBox.Enabled = enabled;
             _movingOpacityInput.Enabled = enabled;
             _fadeDurationInput.Enabled = enabled;
@@ -400,6 +412,7 @@ namespace CursorMirror.Demo
                 _speedLabel.Text = LocalizedStrings.DemoSpeedLabel;
                 _mirrorCursorCheckBox.Text = LocalizedStrings.DemoMirrorCursorLabel;
                 _predictionCheckBox.Text = LocalizedStrings.PredictiveOverlayPositioningLabel;
+                _predictionGainLabel.Text = LocalizedStrings.PredictionGainLabel;
                 _movementTranslucencyCheckBox.Text = LocalizedStrings.MovementTranslucencyLabel;
                 _movingOpacityLabel.Text = LocalizedStrings.MovingOpacityLabel;
                 _fadeDurationLabel.Text = LocalizedStrings.FadeDurationLabel;
@@ -492,6 +505,7 @@ namespace CursorMirror.Demo
         {
             CursorMirrorSettings cursorSettings = CursorMirrorSettings.Default();
             cursorSettings.PredictionEnabled = _predictionCheckBox.Checked;
+            cursorSettings.PredictionGainPercent = (int)_predictionGainInput.Value;
             cursorSettings.MovementTranslucencyEnabled = _movementTranslucencyCheckBox.Checked;
             cursorSettings.MovingOpacityPercent = (int)_movingOpacityInput.Value;
             cursorSettings.FadeDurationMilliseconds = (int)_fadeDurationInput.Value;

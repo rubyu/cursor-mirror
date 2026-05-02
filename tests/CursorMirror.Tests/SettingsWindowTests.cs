@@ -13,6 +13,7 @@ namespace CursorMirror.Tests
         {
             suite.Add("COT-MSU-13", MovementTranslucencyDependentControlsDisabled);
             suite.Add("COT-MSU-14", SettingsWindowUsesApplicationIcon);
+            suite.Add("COT-MSU-15", PredictionGainDependentControlDisabled);
         }
 
         // Movement translucency dependent controls [COT-MSU-13]
@@ -88,6 +89,48 @@ namespace CursorMirror.Tests
                     {
                         TestAssert.True(window.Icon != null, "settings window icon must be set");
                         TestAssert.True(window.ShowIcon, "settings window should show its icon");
+                    }
+                }
+                finally
+                {
+                    DeleteDirectory(directory);
+                }
+            });
+        }
+
+        // Prediction gain dependent control [COT-MSU-15]
+        private static void PredictionGainDependentControlDisabled()
+        {
+            RunOnStaThread(delegate
+            {
+                string directory = NewTestDirectory();
+                try
+                {
+                    SettingsController controller = new SettingsController(
+                        new SettingsStore(Path.Combine(directory, "settings.json")),
+                        CursorMirrorSettings.Default(),
+                        delegate { },
+                        delegate { });
+
+                    using (SettingsWindow window = new SettingsWindow(controller))
+                    {
+                        CheckBox predictionCheckBox = GetField<CheckBox>(window, "_predictionCheckBox");
+                        Label predictionGainLabel = GetField<Label>(window, "_predictionGainLabel");
+                        NumericUpDown predictionGainInput = GetField<NumericUpDown>(window, "_predictionGainInput");
+
+                        TestAssert.True(predictionGainLabel.Enabled, "prediction gain label initially enabled");
+                        TestAssert.True(predictionGainInput.Enabled, "prediction gain input initially enabled");
+
+                        predictionCheckBox.Checked = false;
+
+                        TestAssert.False(predictionGainLabel.Enabled, "prediction gain label disabled");
+                        TestAssert.False(predictionGainInput.Enabled, "prediction gain input disabled");
+                        TestAssert.False(controller.CurrentSettings.PredictionEnabled, "prediction setting updated");
+
+                        predictionCheckBox.Checked = true;
+
+                        TestAssert.True(predictionGainLabel.Enabled, "prediction gain label re-enabled");
+                        TestAssert.True(predictionGainInput.Enabled, "prediction gain input re-enabled");
                     }
                 }
                 finally

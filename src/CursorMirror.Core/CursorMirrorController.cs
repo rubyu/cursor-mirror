@@ -75,8 +75,8 @@ namespace CursorMirror
             _dispatcher = dispatcher;
             _settings = settings.Normalize();
             _opacityController = new MovementOpacityController(_settings);
-            _positionPredictor = new CursorPositionPredictor(_settings.PredictionIdleResetMilliseconds);
-            _pollPositionPredictor = new DwmAwareCursorPositionPredictor(_settings.PredictionIdleResetMilliseconds);
+            _positionPredictor = new CursorPositionPredictor(_settings.PredictionIdleResetMilliseconds, _settings.PredictionGainPercent);
+            _pollPositionPredictor = new DwmAwareCursorPositionPredictor(_settings.PredictionIdleResetMilliseconds, _settings.PredictionGainPercent);
             _cursorPoller = cursorPoller;
             _clock = clock;
         }
@@ -133,14 +133,15 @@ namespace CursorMirror
             bool predictionChanged =
                 _settings.PredictionEnabled != normalized.PredictionEnabled ||
                 _settings.PredictionHorizonMilliseconds != normalized.PredictionHorizonMilliseconds ||
-                _settings.PredictionIdleResetMilliseconds != normalized.PredictionIdleResetMilliseconds;
+                _settings.PredictionIdleResetMilliseconds != normalized.PredictionIdleResetMilliseconds ||
+                _settings.PredictionGainPercent != normalized.PredictionGainPercent;
 
             _settings = normalized;
             _opacityController.ApplySettings(_settings);
             if (predictionChanged)
             {
-                _positionPredictor.ApplyIdleResetMilliseconds(_settings.PredictionIdleResetMilliseconds);
-                _pollPositionPredictor.ApplyIdleResetMilliseconds(_settings.PredictionIdleResetMilliseconds);
+                _positionPredictor.ApplySettings(_settings.PredictionIdleResetMilliseconds, _settings.PredictionGainPercent);
+                _pollPositionPredictor.ApplySettings(_settings.PredictionIdleResetMilliseconds, _settings.PredictionGainPercent);
             }
 
             ApplyOpacity(_clock.Milliseconds);

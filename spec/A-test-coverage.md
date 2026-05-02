@@ -261,6 +261,14 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that the one-shot DWM scheduler advances past near-duplicate DWM vblank reports for an already requested frame and waits for the next distinct target.
   Refs: Sections 4.4.2, 6.2.
 
+- COT-MOU-36 - Prediction gain controls fixed-horizon projection
+  Verify that the configured prediction gain is applied to fixed-horizon prediction before hot spot placement.
+  Refs: Sections 4.4, 4.4.2.
+
+- COT-MOU-37 - Prediction gain controls DWM projection
+  Verify that the configured prediction gain is applied to DWM-aware next-vblank prediction.
+  Refs: Sections 4.4, 4.4.2.
+
 #### A.4.T Tray and Application Lifetime
 ##### Unit
 - COT-MTU-1 - Tray icon created
@@ -302,7 +310,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 #### A.4.S Settings UI and Persistence
 ##### Unit
 - COT-MSU-1 - Settings defaults
-  Verify documented default settings: movement translucency enabled, predictive overlay positioning enabled, idle fade enabled, moving opacity `70%`, fade duration `80ms`, movement idle delay `120ms`, idle fade delay `3s`, and idle opacity `0%`.
+  Verify documented default settings: movement translucency enabled, predictive overlay positioning enabled, prediction gain `100%`, idle fade enabled, moving opacity `70%`, fade duration `80ms`, movement idle delay `120ms`, idle fade delay `3s`, and idle opacity `0%`.
   Refs: Sections 4.4.1, 4.4.1.1, 4.4.2, 4.5.1.
 
 - COT-MSU-2 - Moving opacity validation
@@ -310,7 +318,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Section 4.4.1.
 
 - COT-MSU-3 - Timing validation
-  Verify that fade duration, movement idle delay, idle fade delay, idle opacity, and prediction timing values outside their documented ranges are rejected or clamped consistently at the settings boundary.
+  Verify that fade duration, movement idle delay, idle fade delay, idle opacity, prediction gain, and prediction timing values outside their documented ranges are rejected or clamped consistently at the settings boundary.
   Refs: Sections 4.4.1, 4.4.1.1, 4.4.2.
 
 - COT-MSU-4 - Settings serialization round trip
@@ -356,6 +364,10 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 - COT-MSU-14 - Settings window application icon
   Verify that the settings window has an application icon assigned and does not fall back to an unset form icon.
   Refs: Sections 4.5.1, 6.1.
+
+- COT-MSU-15 - Prediction gain dependent control
+  Verify that disabling predictive overlay positioning in the settings window disables the prediction gain control, and that re-enabling prediction re-enables the control.
+  Refs: Sections 4.4.2, 4.5.1, 6.1.
 
 #### A.4.D DPI and Multi-Monitor Coordinates
 ##### Unit

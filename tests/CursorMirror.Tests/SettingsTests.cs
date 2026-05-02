@@ -37,6 +37,7 @@ namespace CursorMirror.Tests
             TestAssert.Equal(0, settings.IdleOpacityPercent, "default idle opacity");
             TestAssert.Equal(8, settings.PredictionHorizonMilliseconds, "default prediction horizon");
             TestAssert.Equal(100, settings.PredictionIdleResetMilliseconds, "default prediction idle reset");
+            TestAssert.Equal(100, settings.PredictionGainPercent, "default prediction gain");
         }
 
         // Moving opacity validation [COT-MSU-2]
@@ -61,6 +62,7 @@ namespace CursorMirror.Tests
             settings.IdleOpacityPercent = -1;
             settings.PredictionHorizonMilliseconds = -1;
             settings.PredictionIdleResetMilliseconds = 0;
+            settings.PredictionGainPercent = 1;
             CursorMirrorSettings low = settings.Normalize();
 
             settings.FadeDurationMilliseconds = 999;
@@ -69,6 +71,7 @@ namespace CursorMirror.Tests
             settings.IdleOpacityPercent = 999;
             settings.PredictionHorizonMilliseconds = 999;
             settings.PredictionIdleResetMilliseconds = 9999;
+            settings.PredictionGainPercent = 999;
             CursorMirrorSettings high = settings.Normalize();
 
             TestAssert.Equal(0, low.FadeDurationMilliseconds, "fade duration lower clamp");
@@ -77,12 +80,14 @@ namespace CursorMirror.Tests
             TestAssert.Equal(0, low.IdleOpacityPercent, "idle opacity lower clamp");
             TestAssert.Equal(0, low.PredictionHorizonMilliseconds, "prediction horizon lower clamp");
             TestAssert.Equal(1, low.PredictionIdleResetMilliseconds, "prediction idle reset lower clamp");
+            TestAssert.Equal(50, low.PredictionGainPercent, "prediction gain lower clamp");
             TestAssert.Equal(300, high.FadeDurationMilliseconds, "fade duration upper clamp");
             TestAssert.Equal(500, high.IdleDelayMilliseconds, "idle delay upper clamp");
             TestAssert.Equal(60000, high.IdleFadeDelayMilliseconds, "idle fade delay upper clamp");
             TestAssert.Equal(99, high.IdleOpacityPercent, "idle opacity upper clamp");
             TestAssert.Equal(16, high.PredictionHorizonMilliseconds, "prediction horizon upper clamp");
             TestAssert.Equal(1000, high.PredictionIdleResetMilliseconds, "prediction idle reset upper clamp");
+            TestAssert.Equal(150, high.PredictionGainPercent, "prediction gain upper clamp");
         }
 
         // Settings serialization round trip [COT-MSU-4]
@@ -101,6 +106,7 @@ namespace CursorMirror.Tests
                 settings.IdleDelayMilliseconds = 450;
                 settings.PredictionHorizonMilliseconds = 12;
                 settings.PredictionIdleResetMilliseconds = 250;
+                settings.PredictionGainPercent = 85;
                 settings.IdleFadeEnabled = false;
                 settings.IdleFadeDelayMilliseconds = 4000;
                 settings.IdleOpacityPercent = 12;
@@ -115,6 +121,7 @@ namespace CursorMirror.Tests
                 TestAssert.Equal(450, loaded.IdleDelayMilliseconds, "loaded idle delay");
                 TestAssert.Equal(12, loaded.PredictionHorizonMilliseconds, "loaded prediction horizon");
                 TestAssert.Equal(250, loaded.PredictionIdleResetMilliseconds, "loaded prediction idle reset");
+                TestAssert.Equal(85, loaded.PredictionGainPercent, "loaded prediction gain");
                 TestAssert.False(loaded.IdleFadeEnabled, "loaded idle fade flag");
                 TestAssert.Equal(4000, loaded.IdleFadeDelayMilliseconds, "loaded idle fade delay");
                 TestAssert.Equal(12, loaded.IdleOpacityPercent, "loaded idle opacity");
@@ -223,8 +230,10 @@ namespace CursorMirror.Tests
                 TestAssert.Equal(2, applyCount, "settings apply count");
                 TestAssert.Equal(90, applied.MovingOpacityPercent, "applied updated opacity");
                 TestAssert.False(applied.PredictionEnabled, "applied updated prediction");
+                TestAssert.Equal(85, applied.PredictionGainPercent, "applied updated prediction gain");
                 TestAssert.Equal(90, controller.CurrentSettings.MovingOpacityPercent, "current updated opacity");
                 TestAssert.False(controller.CurrentSettings.PredictionEnabled, "current updated prediction");
+                TestAssert.Equal(85, controller.CurrentSettings.PredictionGainPercent, "current updated prediction gain");
             }
             finally
             {
@@ -255,6 +264,7 @@ namespace CursorMirror.Tests
                 CursorMirrorSettings oldFormat = store.Load();
 
                 TestAssert.True(oldFormat.PredictionEnabled, "old settings must use prediction default");
+                TestAssert.Equal(100, oldFormat.PredictionGainPercent, "old settings must use prediction gain default");
 
                 SettingsController controller = new SettingsController(store, loaded, delegate { }, delegate { });
                 controller.ResetToDefaults();
@@ -368,6 +378,7 @@ namespace CursorMirror.Tests
         {
             CursorMirrorSettings settings = CursorMirrorSettings.Default();
             settings.PredictionEnabled = false;
+            settings.PredictionGainPercent = 85;
             settings.MovingOpacityPercent = 90;
             settings.FadeDurationMilliseconds = 160;
             settings.IdleDelayMilliseconds = 300;

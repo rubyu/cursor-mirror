@@ -5,22 +5,41 @@ namespace CursorMirror
 {
     public sealed class DwmAwareCursorPositionPredictor
     {
-        public const double DefaultGain = 0.75;
+        public const double DefaultGain = CursorMirrorSettings.DefaultPredictionGainPercent / 100.0;
         private bool _hasSample;
         private double _lastX;
         private double _lastY;
         private long _lastTimestampTicks;
         private int _idleResetMilliseconds;
+        private double _gain;
 
         public DwmAwareCursorPositionPredictor(int idleResetMilliseconds)
+            : this(idleResetMilliseconds, CursorMirrorSettings.DefaultPredictionGainPercent)
+        {
+        }
+
+        public DwmAwareCursorPositionPredictor(int idleResetMilliseconds, int predictionGainPercent)
+        {
+            ApplySettings(idleResetMilliseconds, predictionGainPercent);
+        }
+
+        public void ApplySettings(int idleResetMilliseconds, int predictionGainPercent)
         {
             ApplyIdleResetMilliseconds(idleResetMilliseconds);
+            ApplyPredictionGainPercent(predictionGainPercent);
         }
 
         public void ApplyIdleResetMilliseconds(int idleResetMilliseconds)
         {
             _idleResetMilliseconds = Math.Max(1, idleResetMilliseconds);
             Reset();
+        }
+
+        public void ApplyPredictionGainPercent(int predictionGainPercent)
+        {
+            _gain = Math.Max(
+                CursorMirrorSettings.MinimumPredictionGainPercent,
+                Math.Min(CursorMirrorSettings.MaximumPredictionGainPercent, predictionGainPercent)) / 100.0;
         }
 
         public void Reset()
@@ -78,7 +97,7 @@ namespace CursorMirror
                 return new PointF(sample.Position.X, sample.Position.Y);
             }
 
-            double scale = DefaultGain * horizonTicks / deltaTicks;
+            double scale = _gain * horizonTicks / deltaTicks;
             double predictedX = sample.Position.X + ((sample.Position.X - _lastX) * scale);
             double predictedY = sample.Position.Y + ((sample.Position.Y - _lastY) * scale);
             StoreSample(sample);

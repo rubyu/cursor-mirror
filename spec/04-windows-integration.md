@@ -88,6 +88,7 @@ Recommended extended window styles:
 #### 4.4.2 Predictive Overlay Positioning
 - Predictive overlay positioning MUST be enabled by default.
 - The settings UI MUST allow the user to disable predictive overlay positioning.
+- The settings UI MUST allow the user to tune the prediction gain as a percentage.
 - Prediction MUST affect only the displayed overlay position.
 - Prediction MUST NOT move the real system cursor, cancel input, remap input, or change click targets.
 - The low-level hook path SHOULD trigger cursor image refresh.
@@ -98,8 +99,9 @@ Recommended extended window styles:
 - The default product prediction model SHOULD use the latest valid pair of polling samples with constant velocity:
   - `velocity = (currentPosition - previousPosition) / dt`;
   - `predictedPosition = currentPosition + velocity * horizonMs * gain`.
-- The DWM-aware prediction gain SHOULD be `0.75`.
-- The fixed-horizon fallback prediction gain MAY remain `1.0` for compatibility.
+- The default prediction gain SHOULD be `100%`.
+- Prediction gain MUST be configurable within `50%` to `150%`.
+- The configured prediction gain SHOULD apply to both the DWM-aware polling predictor and the fixed-horizon fallback predictor.
 - The predictor MUST use a single monotonic timebase for each predictor instance.
 - The predictor MUST treat non-positive `dt` as invalid and fall back to exact pointer positioning until a new valid movement pair is available.
 - The predictor MUST reset velocity across idle gaps.
@@ -159,6 +161,8 @@ Recommended extended window styles:
 - The settings window MUST use the Cursor Mirror application icon rather than the default Windows Forms icon.
 - The settings window MUST provide a control for enabling or disabling movement translucency mode.
 - The settings window MUST provide a control for enabling or disabling predictive overlay positioning.
+- The settings window MUST provide a control for prediction gain.
+- When predictive overlay positioning is disabled in the settings window, the prediction gain control MUST be disabled visually and functionally.
 - The settings window MUST provide controls for moving opacity, fade duration, and idle delay.
 - When movement translucency mode is disabled in the settings window, moving opacity, fade duration, and idle delay controls MUST be disabled visually and functionally.
 - The settings window MUST provide controls for idle fade enablement, idle opacity, and idle fade delay.
