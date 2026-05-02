@@ -201,6 +201,7 @@ cursor-mirror-trace-20260430-153012.zip
 - High-precision reference polling SHOULD use bounded work per sample and SHOULD stop promptly when recording stops or the tool exits.
 - Runtime scheduler polling SHOULD run only while recording is active.
 - Runtime scheduler loop diagnostics SHOULD run only while recording is active and SHOULD include loop iterations that do not request cursor capture.
+- Runtime scheduler loop diagnostics SHOULD record the absolute wait target used by the current loop and SHOULD distinguish waitable-timer waits that include final fine-wait alignment.
 - Runtime scheduler polling MUST avoid overlapping queued capture-thread callbacks.
 - Runtime scheduler polling SHOULD count scheduler ticks that are coalesced because a previous capture-thread callback is still pending.
 - Runtime scheduler polling SHOULD stop promptly when recording stops or the tool exits.

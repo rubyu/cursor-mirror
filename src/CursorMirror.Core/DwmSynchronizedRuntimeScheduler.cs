@@ -12,6 +12,9 @@ namespace CursorMirror
         public const int WakeAdvanceMilliseconds = 2;
         public const int FallbackIntervalMilliseconds = 8;
         public const int MaximumDwmSleepMilliseconds = 2;
+        public const int FineWaitAdvanceMicroseconds = 500;
+        public const int FineWaitYieldThresholdMicroseconds = 200;
+        private const int FineWaitSpinIterations = 64;
 
         private readonly IUiDispatcher _dispatcher;
         private readonly Action _tick;
@@ -119,7 +122,8 @@ namespace CursorMirror
             int maximumSleep = NormalizeDelayMilliseconds(maximumSleepMilliseconds);
             if (nowTicks <= 0 || stopwatchFrequency <= 0 || lastDwmVBlankTicks <= 0 || refreshPeriodTicks <= 0)
             {
-                return new DwmSynchronizedRuntimeScheduleDecision(false, false, maximumSleep, 0);
+                long fallbackWaitUntilTicks = CalculateCurrentWaitTargetTicks(nowTicks, maximumSleep, 0, stopwatchFrequency);
+                return new DwmSynchronizedRuntimeScheduleDecision(false, false, maximumSleep, 0, fallbackWaitUntilTicks);
             }
 
             long targetVBlankTicks = SelectNextVBlank(nowTicks, lastDwmVBlankTicks, refreshPeriodTicks);
@@ -128,7 +132,8 @@ namespace CursorMirror
                 if (nowTicks < lastRequestedVBlankTicks)
                 {
                     int delayUntilRequestedVBlank = TicksToDelayMilliseconds(lastRequestedVBlankTicks - nowTicks, stopwatchFrequency, maximumSleep);
-                    return new DwmSynchronizedRuntimeScheduleDecision(true, false, delayUntilRequestedVBlank, lastRequestedVBlankTicks);
+                    long waitUntilTicks = CalculateCurrentWaitTargetTicks(nowTicks, delayUntilRequestedVBlank, lastRequestedVBlankTicks, stopwatchFrequency);
+                    return new DwmSynchronizedRuntimeScheduleDecision(true, false, delayUntilRequestedVBlank, lastRequestedVBlankTicks, waitUntilTicks);
                 }
 
                 long periodsAfterLastRequest = ((lastRequestedVBlankTicks - targetVBlankTicks) / refreshPeriodTicks) + 1L;
@@ -139,11 +144,12 @@ namespace CursorMirror
             long wakeTicks = targetVBlankTicks - wakeAdvanceTicks;
             if (nowTicks >= wakeTicks)
             {
-                return new DwmSynchronizedRuntimeScheduleDecision(true, true, 0, targetVBlankTicks);
+                return new DwmSynchronizedRuntimeScheduleDecision(true, true, 0, targetVBlankTicks, nowTicks);
             }
 
             int delayMilliseconds = TicksToDelayMilliseconds(wakeTicks - nowTicks, stopwatchFrequency, maximumSleep);
-            return new DwmSynchronizedRuntimeScheduleDecision(true, false, delayMilliseconds, targetVBlankTicks);
+            long currentWaitUntilTicks = CalculateCurrentWaitTargetTicks(nowTicks, delayMilliseconds, wakeTicks, stopwatchFrequency);
+            return new DwmSynchronizedRuntimeScheduleDecision(true, false, delayMilliseconds, targetVBlankTicks, currentWaitUntilTicks);
         }
 
         private void Run()
@@ -168,17 +174,17 @@ namespace CursorMirror
                     {
                         _lastRequestedVBlankTicks = decision.TargetVBlankTicks;
                         RequestTick();
-                        SleepWhileRunning(1);
+                        WaitWhileRunning(1, 0);
                     }
                     else
                     {
-                        SleepWhileRunning(decision.DelayMilliseconds);
+                        WaitWhileRunning(decision.DelayMilliseconds, decision.WaitUntilTicks);
                     }
                 }
                 else
                 {
                     RequestTick();
-                    SleepWhileRunning(FallbackIntervalMilliseconds);
+                    WaitWhileRunning(FallbackIntervalMilliseconds, 0);
                 }
             }
         }
@@ -285,6 +291,32 @@ namespace CursorMirror
             return (long)Math.Round(ticks);
         }
 
+        public static long CalculateCurrentWaitTargetTicks(long nowTicks, int delayMilliseconds, long preferredWaitUntilTicks, long stopwatchFrequency)
+        {
+            if (nowTicks <= 0 || stopwatchFrequency <= 0)
+            {
+                return 0;
+            }
+
+            int normalizedDelayMilliseconds = NormalizeDelayMilliseconds(delayMilliseconds);
+            long delayTicks = MillisecondsToTicks(normalizedDelayMilliseconds, stopwatchFrequency);
+            long cappedWaitUntilTicks = AddTicks(nowTicks, delayTicks);
+            if (preferredWaitUntilTicks > 0)
+            {
+                if (preferredWaitUntilTicks <= nowTicks)
+                {
+                    return nowTicks;
+                }
+
+                if (preferredWaitUntilTicks < cappedWaitUntilTicks)
+                {
+                    return preferredWaitUntilTicks;
+                }
+            }
+
+            return cappedWaitUntilTicks;
+        }
+
         private static int TicksToDelayMilliseconds(long ticks, long stopwatchFrequency, int maximumSleepMilliseconds)
         {
             if (ticks <= 0 || stopwatchFrequency <= 0)
@@ -312,6 +344,37 @@ namespace CursorMirror
             return Math.Max(1, milliseconds);
         }
 
+        private static long MicrosecondsToTicks(int microseconds, long stopwatchFrequency)
+        {
+            if (microseconds <= 0 || stopwatchFrequency <= 0)
+            {
+                return 0;
+            }
+
+            double ticks = microseconds * (double)stopwatchFrequency / 1000000.0;
+            if (ticks >= long.MaxValue)
+            {
+                return long.MaxValue;
+            }
+
+            return (long)Math.Round(ticks);
+        }
+
+        private static long AddTicks(long startTicks, long ticks)
+        {
+            if (ticks <= 0)
+            {
+                return startTicks;
+            }
+
+            if (startTicks > long.MaxValue - ticks)
+            {
+                return long.MaxValue;
+            }
+
+            return startTicks + ticks;
+        }
+
         private static long ToSignedTicks(ulong value)
         {
             if (value > long.MaxValue)
@@ -322,7 +385,29 @@ namespace CursorMirror
             return (long)value;
         }
 
-        private void SleepWhileRunning(int milliseconds)
+        private void WaitWhileRunning(int milliseconds, long waitUntilTicks)
+        {
+            if (!_running)
+            {
+                return;
+            }
+
+            int normalizedMilliseconds = NormalizeDelayMilliseconds(milliseconds);
+            long targetTicks = CalculateCurrentWaitTargetTicks(
+                Stopwatch.GetTimestamp(),
+                normalizedMilliseconds,
+                waitUntilTicks,
+                Stopwatch.Frequency);
+            if (targetTicks <= 0)
+            {
+                WaitCoarseWhileRunning(normalizedMilliseconds);
+                return;
+            }
+
+            WaitUntilWhileRunning(targetTicks, normalizedMilliseconds);
+        }
+
+        private void WaitCoarseWhileRunning(int milliseconds)
         {
             if (!_running)
             {
@@ -339,6 +424,68 @@ namespace CursorMirror
             Thread.Sleep(normalizedMilliseconds);
         }
 
+        private void WaitUntilWhileRunning(long targetTicks, int fallbackMilliseconds)
+        {
+            long nowTicks = Stopwatch.GetTimestamp();
+            if (targetTicks <= nowTicks)
+            {
+                return;
+            }
+
+            long fineWaitTicks = MicrosecondsToTicks(FineWaitAdvanceMicroseconds, Stopwatch.Frequency);
+            long coarseTargetTicks = targetTicks - fineWaitTicks;
+            if (coarseTargetTicks > nowTicks)
+            {
+                long coarseTicks = coarseTargetTicks - nowTicks;
+                HighResolutionWaitTimer waitTimer = _waitTimer;
+                if (waitTimer == null || !waitTimer.WaitTicks(coarseTicks, Stopwatch.Frequency))
+                {
+                    SleepForTicks(coarseTicks, fallbackMilliseconds);
+                }
+            }
+
+            FineWaitUntilRunning(targetTicks);
+        }
+
+        private void SleepForTicks(long ticks, int fallbackMilliseconds)
+        {
+            if (ticks <= 0)
+            {
+                return;
+            }
+
+            int milliseconds = (int)Math.Floor(ticks * 1000.0 / Stopwatch.Frequency);
+            if (milliseconds <= 0)
+            {
+                Thread.Sleep(0);
+                return;
+            }
+
+            Thread.Sleep(Math.Min(milliseconds, NormalizeDelayMilliseconds(fallbackMilliseconds)));
+        }
+
+        private void FineWaitUntilRunning(long targetTicks)
+        {
+            long yieldThresholdTicks = MicrosecondsToTicks(FineWaitYieldThresholdMicroseconds, Stopwatch.Frequency);
+            while (_running)
+            {
+                long remainingTicks = targetTicks - Stopwatch.GetTimestamp();
+                if (remainingTicks <= 0)
+                {
+                    return;
+                }
+
+                if (remainingTicks > yieldThresholdTicks)
+                {
+                    Thread.Sleep(0);
+                }
+                else
+                {
+                    Thread.SpinWait(FineWaitSpinIterations);
+                }
+            }
+        }
+
         private void ThrowIfDisposed()
         {
             if (_disposed)
@@ -351,17 +498,24 @@ namespace CursorMirror
     public struct DwmSynchronizedRuntimeScheduleDecision
     {
         public DwmSynchronizedRuntimeScheduleDecision(bool isDwmTimingUsable, bool shouldTick, int delayMilliseconds, long targetVBlankTicks)
+            : this(isDwmTimingUsable, shouldTick, delayMilliseconds, targetVBlankTicks, 0)
+        {
+        }
+
+        public DwmSynchronizedRuntimeScheduleDecision(bool isDwmTimingUsable, bool shouldTick, int delayMilliseconds, long targetVBlankTicks, long waitUntilTicks)
             : this()
         {
             IsDwmTimingUsable = isDwmTimingUsable;
             ShouldTick = shouldTick;
             DelayMilliseconds = delayMilliseconds;
             TargetVBlankTicks = targetVBlankTicks;
+            WaitUntilTicks = waitUntilTicks;
         }
 
         public bool IsDwmTimingUsable { get; private set; }
         public bool ShouldTick { get; private set; }
         public int DelayMilliseconds { get; private set; }
         public long TargetVBlankTicks { get; private set; }
+        public long WaitUntilTicks { get; private set; }
     }
 }

@@ -31,6 +31,7 @@ namespace CursorMirror.Tests
             TestAssert.False(decision.ShouldTick, "scheduler must wait before the lead window");
             TestAssert.Equal(2, decision.DelayMilliseconds, "delay to wake lead is capped to the short scheduler cadence");
             TestAssert.Equal(1017L, decision.TargetVBlankTicks, "target vblank");
+            TestAssert.Equal(1012L, decision.WaitUntilTicks, "wait target follows capped scheduler cadence");
         }
 
         // DWM scheduler requests one tick per target vblank [COT-MOU-24]
@@ -57,9 +58,11 @@ namespace CursorMirror.Tests
 
             TestAssert.True(first.ShouldTick, "scheduler should tick inside the lead window");
             TestAssert.Equal(1017L, first.TargetVBlankTicks, "first target vblank");
+            TestAssert.Equal(1015L, first.WaitUntilTicks, "first tick wait target is immediate");
             TestAssert.False(second.ShouldTick, "scheduler must not repeat the same vblank");
             TestAssert.Equal(1017L, second.TargetVBlankTicks, "requested target vblank must be held until it passes");
             TestAssert.Equal(1, second.DelayMilliseconds, "wait until requested vblank passes");
+            TestAssert.Equal(1017L, second.WaitUntilTicks, "wait target holds until requested vblank passes");
         }
 
         // DWM scheduler invalid timing falls back to the fallback loop [COT-MOU-25]
@@ -79,6 +82,7 @@ namespace CursorMirror.Tests
             TestAssert.False(decision.ShouldTick, "invalid DWM timing should not trigger a DWM tick");
             TestAssert.Equal(8, decision.DelayMilliseconds, "fallback delay");
             TestAssert.Equal(0L, decision.TargetVBlankTicks, "no target vblank");
+            TestAssert.Equal(1008L, decision.WaitUntilTicks, "fallback wait target");
         }
 
         // DWM scheduler holds a requested vblank until that vblank has passed [COT-MOU-30]
@@ -98,6 +102,7 @@ namespace CursorMirror.Tests
             TestAssert.False(decision.ShouldTick, "scheduler must not tick twice for a requested vblank");
             TestAssert.Equal(1017L, decision.TargetVBlankTicks, "pending requested vblank");
             TestAssert.Equal(1, decision.DelayMilliseconds, "short wait until requested vblank");
+            TestAssert.Equal(1017L, decision.WaitUntilTicks, "wait target holds requested vblank");
         }
 
         // DWM scheduler advances after the requested vblank has passed [COT-MOU-31]
@@ -117,6 +122,7 @@ namespace CursorMirror.Tests
             TestAssert.False(decision.ShouldTick, "next vblank lead window is not reached yet");
             TestAssert.Equal(1034L, decision.TargetVBlankTicks, "next target vblank after requested vblank passes");
             TestAssert.Equal(2, decision.DelayMilliseconds, "long waits should be capped to the short scheduler cadence");
+            TestAssert.Equal(1019L, decision.WaitUntilTicks, "wait target remains capped while far from wake lead");
         }
 
         // High-resolution wait timer waits with best-effort fallback [COT-MOU-32]
@@ -126,10 +132,21 @@ namespace CursorMirror.Tests
             {
                 TestAssert.True(timer != null, "wait timer should be available on Windows");
                 TestAssert.True(timer.Wait(1), "wait timer should complete");
+                TestAssert.True(timer.WaitTicks(StopwatchTicksForOneMillisecond(), StopwatchTicksPerSecond()), "wait timer ticks should complete");
                 TestAssert.True(
                     timer.WaitMethod == "highResolutionWaitableTimer" || timer.WaitMethod == "waitableTimer",
                     "wait timer method should be reported");
             }
+        }
+
+        private static long StopwatchTicksForOneMillisecond()
+        {
+            return System.Diagnostics.Stopwatch.Frequency / 1000;
+        }
+
+        private static long StopwatchTicksPerSecond()
+        {
+            return System.Diagnostics.Stopwatch.Frequency;
         }
     }
 }

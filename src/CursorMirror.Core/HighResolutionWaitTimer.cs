@@ -51,6 +51,28 @@ namespace CursorMirror
             }
 
             long dueTime = -MillisecondsToHundredNanoseconds(milliseconds);
+            return WaitHundredNanoseconds(dueTime);
+        }
+
+        public bool WaitTicks(long ticks, long stopwatchFrequency)
+        {
+            ThrowIfDisposed();
+            if (ticks <= 0)
+            {
+                return true;
+            }
+
+            long dueTime = -TicksToHundredNanoseconds(ticks, stopwatchFrequency);
+            return WaitHundredNanoseconds(dueTime);
+        }
+
+        private bool WaitHundredNanoseconds(long dueTime)
+        {
+            if (dueTime == 0)
+            {
+                return true;
+            }
+
             if (!SetWaitableTimerNative(_handle, ref dueTime, 0, IntPtr.Zero, IntPtr.Zero, false))
             {
                 return false;
@@ -101,6 +123,28 @@ namespace CursorMirror
             }
 
             return milliseconds * 10000L;
+        }
+
+        private static long TicksToHundredNanoseconds(long ticks, long stopwatchFrequency)
+        {
+            if (ticks <= 0 || stopwatchFrequency <= 0)
+            {
+                return 0;
+            }
+
+            double hundredNanoseconds = ticks * 10000000.0 / stopwatchFrequency;
+            if (hundredNanoseconds >= long.MaxValue)
+            {
+                return long.MaxValue;
+            }
+
+            long result = (long)Math.Ceiling(hundredNanoseconds);
+            if (result < 1)
+            {
+                return 1;
+            }
+
+            return result;
         }
 
         private void ThrowIfDisposed()

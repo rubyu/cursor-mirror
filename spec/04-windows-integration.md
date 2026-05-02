@@ -113,6 +113,9 @@ Recommended extended window styles:
 - The DWM-synchronized runtime scheduler SHOULD wake slightly before the target vblank, then dispatch `GetCursorPos` polling and overlay movement onto the dedicated overlay runtime thread.
 - The scheduler SHOULD cap DWM-timed sleeps to a short cadence, default `2ms`, so it re-checks compositor timing frequently instead of sleeping through multiple frames.
 - The scheduler SHOULD use a high-resolution waitable timer for short DWM-timed waits when the operating system supports it, falling back to a normal waitable timer or `Thread.Sleep` when unavailable.
+- The scheduler SHOULD calculate an absolute wait target for each scheduler loop. If the DWM-derived wake or hold target is farther away than the capped cadence, the loop target SHOULD remain the capped short re-check time.
+- When an absolute loop wait target is available, the scheduler SHOULD use the waitable timer until slightly before that target and then use a bounded yield/spin fine wait for the final sub-millisecond segment.
+- The bounded fine wait MUST be short enough to avoid sustained CPU load and MUST preserve the normal waitable timer and `Thread.Sleep` fallback behavior.
 - The normal overlay hot path SHOULD avoid dispatching through the tray or settings UI thread.
 - The overlay runtime thread SHOULD own the overlay window, cursor polling, prediction, opacity updates, and layered-window movement.
 - The scheduler SHOULD request a `1ms` timer resolution while active and release that request during shutdown.

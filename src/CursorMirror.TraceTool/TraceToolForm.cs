@@ -442,6 +442,7 @@ namespace CursorMirror.TraceTool
                 long? vBlankLeadMicroseconds = null;
                 bool tickRequested = false;
                 int sleepMilliseconds;
+                long preferredWaitUntilTicks = 0;
                 long decisionCompletedTicks;
 
                 if (hasTiming)
@@ -474,6 +475,7 @@ namespace CursorMirror.TraceTool
                     else
                     {
                         sleepMilliseconds = decision.DelayMilliseconds;
+                        preferredWaitUntilTicks = decision.WaitUntilTicks;
                     }
                 }
                 else
@@ -485,8 +487,12 @@ namespace CursorMirror.TraceTool
                 }
 
                 long sleepStartedTicks = Stopwatch.GetTimestamp();
-                long waitTargetTicks = sleepStartedTicks + MillisecondsToTicks(sleepMilliseconds);
-                string waitMethod = SleepRuntimeSchedulerLoop(sleepMilliseconds);
+                long waitTargetTicks = DwmSynchronizedRuntimeScheduler.CalculateCurrentWaitTargetTicks(
+                    sleepStartedTicks,
+                    sleepMilliseconds,
+                    preferredWaitUntilTicks,
+                    Stopwatch.Frequency);
+                string waitMethod = SleepRuntimeSchedulerLoop(sleepMilliseconds, waitTargetTicks);
                 long sleepCompletedTicks = Stopwatch.GetTimestamp();
                 _session.AddRuntimeSchedulerLoop(
                     loopStartedTicks,
@@ -602,7 +608,7 @@ namespace CursorMirror.TraceTool
                 sampleRecordedTicks);
         }
 
-        private string SleepRuntimeSchedulerLoop(int milliseconds)
+        private string SleepRuntimeSchedulerLoop(int milliseconds, long waitTargetTicks)
         {
             if (!_runtimeSchedulerPollActive)
             {
@@ -610,6 +616,11 @@ namespace CursorMirror.TraceTool
             }
 
             int normalizedMilliseconds = Math.Max(1, milliseconds);
+            if (waitTargetTicks > 0)
+            {
+                return WaitRuntimeSchedulerLoopUntil(waitTargetTicks, normalizedMilliseconds);
+            }
+
             HighResolutionWaitTimer waitTimer = _runtimeSchedulerWaitTimer;
             if (waitTimer != null && waitTimer.Wait(normalizedMilliseconds))
             {
@@ -618,6 +629,75 @@ namespace CursorMirror.TraceTool
 
             Thread.Sleep(normalizedMilliseconds);
             return "threadSleep";
+        }
+
+        private string WaitRuntimeSchedulerLoopUntil(long targetTicks, int fallbackMilliseconds)
+        {
+            long nowTicks = Stopwatch.GetTimestamp();
+            if (targetTicks <= nowTicks)
+            {
+                return "none";
+            }
+
+            long fineWaitTicks = MicrosecondsToTicks(DwmSynchronizedRuntimeScheduler.FineWaitAdvanceMicroseconds);
+            long coarseTargetTicks = targetTicks - fineWaitTicks;
+            string waitMethod = "fineWait";
+            if (coarseTargetTicks > nowTicks)
+            {
+                long coarseTicks = coarseTargetTicks - nowTicks;
+                HighResolutionWaitTimer waitTimer = _runtimeSchedulerWaitTimer;
+                if (waitTimer != null && waitTimer.WaitTicks(coarseTicks, Stopwatch.Frequency))
+                {
+                    waitMethod = waitTimer.WaitMethod + "+fineWait";
+                }
+                else
+                {
+                    SleepRuntimeSchedulerLoopForTicks(coarseTicks, fallbackMilliseconds);
+                    waitMethod = "threadSleep+fineWait";
+                }
+            }
+
+            FineWaitRuntimeSchedulerLoopUntil(targetTicks);
+            return waitMethod;
+        }
+
+        private static void SleepRuntimeSchedulerLoopForTicks(long ticks, int fallbackMilliseconds)
+        {
+            if (ticks <= 0)
+            {
+                return;
+            }
+
+            int milliseconds = (int)Math.Floor(ticks * 1000.0 / Stopwatch.Frequency);
+            if (milliseconds <= 0)
+            {
+                Thread.Sleep(0);
+                return;
+            }
+
+            Thread.Sleep(Math.Min(milliseconds, Math.Max(1, fallbackMilliseconds)));
+        }
+
+        private static void FineWaitRuntimeSchedulerLoopUntil(long targetTicks)
+        {
+            long yieldThresholdTicks = MicrosecondsToTicks(DwmSynchronizedRuntimeScheduler.FineWaitYieldThresholdMicroseconds);
+            while (true)
+            {
+                long remainingTicks = targetTicks - Stopwatch.GetTimestamp();
+                if (remainingTicks <= 0)
+                {
+                    return;
+                }
+
+                if (remainingTicks > yieldThresholdTicks)
+                {
+                    Thread.Sleep(0);
+                }
+                else
+                {
+                    Thread.SpinWait(64);
+                }
+            }
         }
 
         private Point? TryGetCursorPoint()
@@ -639,6 +719,22 @@ namespace CursorMirror.TraceTool
             }
 
             double ticks = milliseconds * (double)Stopwatch.Frequency / 1000.0;
+            if (ticks >= long.MaxValue)
+            {
+                return long.MaxValue;
+            }
+
+            return (long)Math.Round(ticks);
+        }
+
+        private static long MicrosecondsToTicks(int microseconds)
+        {
+            if (microseconds <= 0)
+            {
+                return 0;
+            }
+
+            double ticks = microseconds * (double)Stopwatch.Frequency / 1000000.0;
             if (ticks >= long.MaxValue)
             {
                 return long.MaxValue;

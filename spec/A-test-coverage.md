@@ -210,7 +210,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Section 4.4.2.
 
 - COT-MOU-23 - DWM scheduler waits until vblank lead
-  Verify that a synthetic DWM timing sample before the configured wake lead produces a wait bounded by the documented short scheduler cadence rather than an immediate runtime tick.
+  Verify that a synthetic DWM timing sample before the configured wake lead produces a wait bounded by the documented short scheduler cadence, including the absolute current-loop wait target, rather than an immediate runtime tick.
   Refs: Sections 4.4.2, 6.2.
 
 - COT-MOU-24 - DWM scheduler one tick per vblank
@@ -238,15 +238,15 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Sections 3.3, 4.4.2, 6.1.
 
 - COT-MOU-30 - DWM scheduler holds requested vblank
-  Verify that after a tick has been requested for a target vblank, scheduler evaluation before that target time keeps the same target pending instead of advancing to a later vblank.
+  Verify that after a tick has been requested for a target vblank, scheduler evaluation before that target time keeps the same target pending instead of advancing to a later vblank, and exposes a wait target that holds until the requested vblank or the capped current-loop wait target.
   Refs: Sections 4.4.2, 6.2.
 
 - COT-MOU-31 - DWM scheduler advances after requested vblank
-  Verify that scheduler evaluation advances to the next target only after the previously requested target vblank has passed and caps longer waits to the documented short scheduler cadence.
+  Verify that scheduler evaluation advances to the next target only after the previously requested target vblank has passed and caps longer waits, including the current-loop wait target, to the documented short scheduler cadence.
   Refs: Sections 4.4.2, 6.2.
 
 - COT-MOU-32 - High-resolution wait timer fallback
-  Verify that the runtime wait timer can be created through the best-effort high-resolution waitable timer path or its normal waitable timer fallback, and that it reports the selected wait method.
+  Verify that the runtime wait timer can be created through the best-effort high-resolution waitable timer path or its normal waitable timer fallback, can wait using millisecond or stopwatch-tick durations, and reports the selected wait method.
   Refs: Sections 4.4.2, 6.2.
 
 #### A.4.T Tray and Application Lifetime
@@ -452,7 +452,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Sections 11.2, 11.7, 11.8.
 
 - COT-MLU-17 - Trace runtime scheduler loop fields
-  Verify that runtime scheduler loop diagnostic samples preserve loop iteration, timing-read start/completion, decision-completion, tick-requested, sleep-requested, wait method, wait target, sleep-started, and sleep-completed fields.
+  Verify that runtime scheduler loop diagnostic samples preserve loop iteration, timing-read start/completion, decision-completion, tick-requested, sleep-requested, wait method, absolute current-loop wait target, sleep-started, and sleep-completed fields.
   Refs: Sections 11.5, 11.8.
 
 #### A.4.E Demo Application and Virtual Pointer Stream
