@@ -741,7 +741,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Sections 12.2, 12.3.
 
 - COT-BEM-2 - Demo display modes and status
-  Run the demo in every window preset and fullscreen, verify real cursor horizontal motion with eased endpoint stops, verify that lower-right status remains visible and readable, verify that mirrored cursor enabled or disabled status appears above the other status fields, and verify that startup explanatory text is not clipped at the default dialog size.
+  Run the demo in every window preset and fullscreen, verify real cursor horizontal motion with eased endpoint stops, verify that status remains visible and readable outside the cursor movement region, verify that the keyboard-stop hint is in a separate panel, verify that mirrored cursor enabled or disabled status appears above the other status fields without a blank line before the next field, and verify that startup explanatory text is not clipped at the default dialog size.
   Refs: Sections 12.3, 12.4.
 
 - COT-BEM-3 - Demo Free mode and resume
