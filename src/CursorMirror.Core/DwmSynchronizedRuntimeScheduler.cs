@@ -7,11 +7,12 @@ namespace CursorMirror
     public static class DwmSynchronizedRuntimeScheduler
     {
         public const int TimerResolutionMilliseconds = 1;
-        public const int WakeAdvanceMilliseconds = 2;
+        public const int WakeAdvanceMilliseconds = 4;
         public const int FallbackIntervalMilliseconds = 8;
         public const int MaximumDwmSleepMilliseconds = 2;
         public const int FineWaitAdvanceMicroseconds = 500;
         public const int FineWaitYieldThresholdMicroseconds = 200;
+        public const int DisplayDeadlineGuardMicroseconds = 500;
 
         [DllImport("dwmapi.dll", EntryPoint = "DwmGetCompositionTimingInfo", PreserveSig = true)]
         private static extern int DwmGetCompositionTimingInfoNative(IntPtr hwnd, ref DwmTimingInfo timingInfo);

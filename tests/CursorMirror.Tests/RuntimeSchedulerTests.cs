@@ -168,7 +168,7 @@ namespace CursorMirror.Tests
             TestAssert.True(decision.IsDwmTimingUsable, "DWM timing should be usable");
             TestAssert.False(decision.ShouldTick, "one-shot scheduler must wait before the lead window");
             TestAssert.Equal(1017L, decision.TargetVBlankTicks, "target vblank");
-            TestAssert.Equal(1015L, decision.WaitUntilTicks, "wait target should be the absolute vblank lead");
+            TestAssert.Equal(1013L, decision.WaitUntilTicks, "wait target should be the absolute vblank lead");
         }
 
         // DWM one-shot scheduler skips near-duplicate reports for the already requested vblank [COT-MOU-35]
@@ -187,7 +187,7 @@ namespace CursorMirror.Tests
             TestAssert.True(decision.IsDwmTimingUsable, "DWM timing should be usable");
             TestAssert.False(decision.ShouldTick, "near-duplicate target should be advanced to a later frame");
             TestAssert.Equal(1035L, decision.TargetVBlankTicks, "next distinct target vblank");
-            TestAssert.Equal(1033L, decision.WaitUntilTicks, "next distinct wait target");
+            TestAssert.Equal(1031L, decision.WaitUntilTicks, "next distinct wait target");
         }
 
         // Latency-sensitive thread profile summary [COT-MOU-33]

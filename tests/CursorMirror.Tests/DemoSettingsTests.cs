@@ -23,7 +23,7 @@ namespace CursorMirror.Tests
             TestAssert.Equal(0, settings.SpeedIndex, "default speed is normal");
             TestAssert.True(settings.MirrorCursorEnabled, "default mirror cursor enabled");
             TestAssert.True(settings.CursorSettings.PredictionEnabled, "default prediction enabled");
-            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelLeastSquares, settings.CursorSettings.DwmPredictionModel, "default prediction model");
+            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, settings.CursorSettings.DwmPredictionModel, "default prediction model");
             TestAssert.Equal(100, settings.CursorSettings.PredictionGainPercent, "default prediction gain");
             TestAssert.True(settings.CursorSettings.IdleFadeEnabled, "default idle fade enabled");
 

@@ -38,7 +38,7 @@ namespace CursorMirror.Tests
             TestAssert.Equal(8, settings.PredictionHorizonMilliseconds, "default prediction horizon");
             TestAssert.Equal(100, settings.PredictionIdleResetMilliseconds, "default prediction idle reset");
             TestAssert.Equal(100, settings.PredictionGainPercent, "default prediction gain");
-            TestAssert.Equal(0, settings.DwmPredictionHorizonCapMilliseconds, "default DWM prediction horizon cap");
+            TestAssert.Equal(10, settings.DwmPredictionHorizonCapMilliseconds, "default DWM prediction horizon cap");
             TestAssert.False(settings.DwmAdaptiveGainEnabled, "default DWM adaptive gain disabled");
             TestAssert.Equal(100, settings.DwmAdaptiveGainPercent, "default DWM adaptive gain");
             TestAssert.Equal(1500, settings.DwmAdaptiveMinimumSpeedPixelsPerSecond, "default DWM adaptive minimum speed");
@@ -50,7 +50,8 @@ namespace CursorMirror.Tests
             TestAssert.Equal(450, settings.DwmAdaptiveOscillationMaximumSpanPixels, "default DWM adaptive oscillation span");
             TestAssert.Equal(55, settings.DwmAdaptiveOscillationMaximumEfficiencyPercent, "default DWM adaptive oscillation efficiency");
             TestAssert.Equal(0, settings.DwmAdaptiveOscillationLatchMilliseconds, "default DWM adaptive oscillation latch");
-            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelLeastSquares, settings.DwmPredictionModel, "default DWM prediction model");
+            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, settings.DwmPredictionModel, "default DWM prediction model");
+            TestAssert.Equal(2, settings.DwmPredictionTargetOffsetMilliseconds, "default DWM prediction target offset");
         }
 
         // Moving opacity validation [COT-MSU-2]
@@ -88,6 +89,7 @@ namespace CursorMirror.Tests
             settings.DwmAdaptiveOscillationMaximumEfficiencyPercent = -1;
             settings.DwmAdaptiveOscillationLatchMilliseconds = -1;
             settings.DwmPredictionModel = -1;
+            settings.DwmPredictionTargetOffsetMilliseconds = -999;
             CursorMirrorSettings low = settings.Normalize();
 
             settings.FadeDurationMilliseconds = 999;
@@ -109,6 +111,7 @@ namespace CursorMirror.Tests
             settings.DwmAdaptiveOscillationMaximumEfficiencyPercent = 999;
             settings.DwmAdaptiveOscillationLatchMilliseconds = 999999;
             settings.DwmPredictionModel = 999;
+            settings.DwmPredictionTargetOffsetMilliseconds = 999;
             CursorMirrorSettings high = settings.Normalize();
 
             TestAssert.Equal(0, low.FadeDurationMilliseconds, "fade duration lower clamp");
@@ -130,6 +133,7 @@ namespace CursorMirror.Tests
             TestAssert.Equal(0, low.DwmAdaptiveOscillationMaximumEfficiencyPercent, "DWM adaptive oscillation efficiency lower clamp");
             TestAssert.Equal(0, low.DwmAdaptiveOscillationLatchMilliseconds, "DWM adaptive oscillation latch lower clamp");
             TestAssert.Equal(0, low.DwmPredictionModel, "DWM prediction model lower clamp");
+            TestAssert.Equal(-8, low.DwmPredictionTargetOffsetMilliseconds, "DWM prediction target offset lower clamp");
             TestAssert.Equal(300, high.FadeDurationMilliseconds, "fade duration upper clamp");
             TestAssert.Equal(500, high.IdleDelayMilliseconds, "idle delay upper clamp");
             TestAssert.Equal(60000, high.IdleFadeDelayMilliseconds, "idle fade delay upper clamp");
@@ -149,6 +153,7 @@ namespace CursorMirror.Tests
             TestAssert.Equal(100, high.DwmAdaptiveOscillationMaximumEfficiencyPercent, "DWM adaptive oscillation efficiency upper clamp");
             TestAssert.Equal(1000, high.DwmAdaptiveOscillationLatchMilliseconds, "DWM adaptive oscillation latch upper clamp");
             TestAssert.Equal(1, high.DwmPredictionModel, "DWM prediction model upper clamp");
+            TestAssert.Equal(8, high.DwmPredictionTargetOffsetMilliseconds, "DWM prediction target offset upper clamp");
         }
 
         // Settings serialization round trip [COT-MSU-4]
@@ -181,6 +186,7 @@ namespace CursorMirror.Tests
                 settings.DwmAdaptiveOscillationMaximumEfficiencyPercent = 55;
                 settings.DwmAdaptiveOscillationLatchMilliseconds = 300;
                 settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelLeastSquares;
+                settings.DwmPredictionTargetOffsetMilliseconds = 3;
                 settings.IdleFadeEnabled = false;
                 settings.IdleFadeDelayMilliseconds = 4000;
                 settings.IdleOpacityPercent = 12;
@@ -209,6 +215,7 @@ namespace CursorMirror.Tests
                 TestAssert.Equal(55, loaded.DwmAdaptiveOscillationMaximumEfficiencyPercent, "loaded DWM adaptive oscillation efficiency");
                 TestAssert.Equal(300, loaded.DwmAdaptiveOscillationLatchMilliseconds, "loaded DWM adaptive oscillation latch");
                 TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelLeastSquares, loaded.DwmPredictionModel, "loaded DWM prediction model");
+                TestAssert.Equal(3, loaded.DwmPredictionTargetOffsetMilliseconds, "loaded DWM prediction target offset");
                 TestAssert.False(loaded.IdleFadeEnabled, "loaded idle fade flag");
                 TestAssert.Equal(4000, loaded.IdleFadeDelayMilliseconds, "loaded idle fade delay");
                 TestAssert.Equal(12, loaded.IdleOpacityPercent, "loaded idle opacity");
@@ -352,11 +359,12 @@ namespace CursorMirror.Tests
 
                 TestAssert.True(oldFormat.PredictionEnabled, "old settings must use prediction default");
                 TestAssert.Equal(100, oldFormat.PredictionGainPercent, "old settings must use prediction gain default");
-                TestAssert.Equal(0, oldFormat.DwmPredictionHorizonCapMilliseconds, "old settings must use DWM horizon cap default");
+                TestAssert.Equal(10, oldFormat.DwmPredictionHorizonCapMilliseconds, "old settings must use DWM horizon cap default");
                 TestAssert.False(oldFormat.DwmAdaptiveGainEnabled, "old settings must use DWM adaptive gain default");
                 TestAssert.Equal(0, oldFormat.DwmAdaptiveReversalCooldownSamples, "old settings must use DWM adaptive reversal cooldown default");
                 TestAssert.Equal(0, oldFormat.DwmAdaptiveOscillationWindowSamples, "old settings must use DWM adaptive oscillation window default");
-                TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelLeastSquares, oldFormat.DwmPredictionModel, "old settings must use DWM prediction model default");
+                TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, oldFormat.DwmPredictionModel, "old settings must use DWM prediction model default");
+                TestAssert.Equal(2, oldFormat.DwmPredictionTargetOffsetMilliseconds, "old settings must use DWM prediction target offset default");
 
                 SettingsController controller = new SettingsController(store, loaded, delegate { }, delegate { });
                 controller.ResetToDefaults();

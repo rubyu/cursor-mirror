@@ -102,8 +102,8 @@ Recommended extended window styles:
 - The `ConstantVelocity` prediction model SHOULD use the latest valid pair of polling samples with constant velocity and remain available as the baseline model:
   - `velocity = (currentPosition - previousPosition) / dt`;
   - `predictedPosition = currentPosition + velocity * horizonMs * gain`.
-- The default product prediction model SHOULD be `LeastSquares`.
-- The `LeastSquares` prediction model SHOULD fit velocity from a bounded recent sample window, remain allocation-free after construction, fall back to exact positioning when the fit is low-confidence, reset stale history after discontinuous cursor samples, and use the tuned default DWM horizon cap from the current calibration POC.
+- The default product prediction model SHOULD be `ConstantVelocity`.
+- The `LeastSquares` prediction model SHOULD fit velocity from a bounded recent sample window, remain allocation-free after construction, fall back to exact positioning when the fit is low-confidence, reset stale history after discontinuous cursor samples, and honor the configured DWM horizon cap.
 - The default prediction gain SHOULD be `100%`.
 - Prediction gain MUST be configurable within `50%` to `150%`.
 - The configured prediction gain SHOULD apply to both the DWM-aware polling predictor and the fixed-horizon fallback predictor.
@@ -112,11 +112,17 @@ Recommended extended window styles:
 - The predictor MUST reset velocity across idle gaps.
 - The default prediction idle reset gap SHOULD be `100ms`.
 - The prediction hot path SHOULD be `O(1)` and allocation-free after construction.
-- The normal prediction path MUST NOT apply a low fixed offset cap.
-- A failsafe offset cap MAY be implemented for corrupted input or timestamp bugs, but it MUST be disabled by default or set high enough that normal fast movement is not clipped.
+- The `ConstantVelocity` prediction path MAY apply a bounded displacement cap when calibration shows that it reduces rare overshoot outliers without increasing average lag.
+- The `ConstantVelocity` prediction path MAY use a wider displacement cap for high-speed, high-efficiency, one-directional motion to reduce visible lag during fast linear movement.
 - The default fixed prediction horizon SHOULD be `8ms`.
 - If DWM timing is available, Cursor Mirror SHOULD choose a next-vblank prediction horizon from DWM composition timing.
+- When the DWM-synchronized runtime scheduler has selected a concrete target vblank for the current tick, the controller SHOULD pass that target to the DWM-aware polling predictor, and the predictor SHOULD use that scheduled target instead of independently selecting another next-vblank target.
 - If an experimental DWM prediction horizon cap is configured, the DWM-aware polling predictor SHOULD clamp the next-vblank horizon to that cap after validating the DWM horizon.
+- The DWM-aware polling predictor MAY apply a small signed target-time offset after selecting the scheduler target vblank, to compensate for measured capture/composition phase mismatch.
+- The default DWM prediction horizon cap SHOULD be `10ms`.
+- The default DWM prediction target offset SHOULD be `2ms`.
+- The DWM prediction target offset MUST be normalized within `-8ms` to `8ms`.
+- The DWM prediction target offset MUST affect only the prediction horizon; it MUST NOT change the scheduler's overlay update deadline counters.
 - If experimental DWM adaptive gain is enabled, the DWM-aware polling predictor SHOULD apply the alternate gain only when recent motion exceeds the configured speed threshold, direction remains consistent, and acceleration remains within the configured acceleration threshold.
 - If experimental DWM adaptive gain is enabled with a reversal cooldown, the DWM-aware polling predictor SHOULD keep using the normal gain for the configured number of samples after a direction reversal.
 - If experimental DWM adaptive gain is enabled with oscillation suppression, the DWM-aware polling predictor SHOULD keep using the normal gain while recent motion stays within the configured span, contains repeated direction reversals, and has low net-displacement efficiency.
@@ -144,10 +150,11 @@ Recommended extended window styles:
 - Any optional MMCSS or elevated managed-priority request MUST be best-effort: failure MUST NOT prevent startup, MUST NOT require administrator privileges, and MUST fall back to the existing scheduler behavior.
 - The scheduler MUST avoid overlapping queued runtime ticks.
 - After the scheduler requests a tick for a target vblank, it MUST suppress duplicate ticks for that target. It MAY schedule the following distinct target before the prior target has passed when the next one-shot wait target is unambiguous.
+- If the current target vblank is already too close to the overlay update deadline, the controller SHOULD predict for a later distinct vblank instead of knowingly submitting a stale current-frame prediction.
 - The controller MUST ignore stale or out-of-order poll samples and SHOULD expose a diagnostic counter for ignored stale samples.
 - If DWM timing is unavailable or invalid, the scheduler MUST fall back to a documented high-resolution interval loop.
 - Invalid, late, stale, or excessive DWM horizons MUST fall back to exact pointer positioning or a documented fixed-horizon fallback.
-- The implementation SHOULD expose diagnostic counters for invalid DWM horizon, late DWM horizon, excessive horizon, fallback-to-hold, and prediction reset due to invalid `dt` or idle gaps.
+- The implementation SHOULD expose diagnostic counters for invalid DWM horizon, late DWM horizon, excessive horizon, fallback-to-hold, prediction reset due to invalid `dt` or idle gaps, scheduled-target use, scheduled-target adjustment, and overlay updates that complete after or near the target vblank.
 - The overlay MUST apply hot spot placement after choosing the exact or predicted pointer position.
 - Prediction reset MUST occur when the overlay is hidden, the controller is disposed, prediction is disabled, or prediction-related settings change.
 - Cursor capture failure MUST preserve current fallback behavior: if the previous image is still available, the overlay SHOULD move using the current exact or predicted display position.

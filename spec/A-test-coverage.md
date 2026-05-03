@@ -317,6 +317,26 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that the high-frequency cursor poller fallback uses a blocking wait interval instead of yielding in a tight loop for positive remaining time.
   Refs: Sections 3.3, 4.4.2.
 
+- COT-MOU-45 - Scheduled DWM target controls prediction horizon
+  Verify that the controller passes the scheduler-selected target vblank to the DWM-aware predictor and that the scheduled target defines the prediction horizon.
+  Refs: Section 4.4.2.
+
+- COT-MOU-46 - Near scheduled DWM target shifts to next vblank
+  Verify that a scheduled target that is already inside the display-deadline guard is advanced to a later distinct vblank before prediction.
+  Refs: Section 4.4.2.
+
+- COT-MOU-47 - Overlay update timing counters deadline miss
+  Verify that the controller records a diagnostic counter when an overlay update completes after the target vblank.
+  Refs: Section 4.4.2.
+
+- COT-MOU-48 - DWM prediction target offset controls projection horizon
+  Verify that the configured DWM prediction target offset changes the DWM-aware predictor horizon without changing the scheduler target used for overlay deadline accounting.
+  Refs: Section 4.4.2.
+
+- COT-MOU-49 - ConstantVelocity high-speed linear motion uses wider cap
+  Verify that high-speed, high-efficiency, one-directional `ConstantVelocity` motion can use a wider prediction displacement cap while ordinary motion remains bounded by the conservative cap.
+  Refs: Section 4.4.2.
+
 #### A.4.T Tray and Application Lifetime
 ##### Unit
 - COT-MTU-1 - Tray icon created
@@ -358,7 +378,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 #### A.4.S Settings UI and Persistence
 ##### Unit
 - COT-MSU-1 - Settings defaults
-  Verify documented default settings: movement translucency enabled, predictive overlay positioning enabled, prediction model `LeastSquares`, prediction gain `100%`, idle fade enabled, moving opacity `70%`, fade duration `80ms`, movement idle delay `120ms`, idle fade delay `3s`, and idle opacity `0%`.
+  Verify documented default settings: movement translucency enabled, predictive overlay positioning enabled, prediction model `ConstantVelocity`, prediction gain `100%`, DWM horizon cap `10ms`, DWM prediction target offset `2ms`, idle fade enabled, moving opacity `70%`, fade duration `80ms`, movement idle delay `120ms`, idle fade delay `3s`, and idle opacity `0%`.
   Refs: Sections 4.4.1, 4.4.1.1, 4.4.2, 4.5.1.
 
 - COT-MSU-2 - Moving opacity validation
@@ -366,7 +386,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Section 4.4.1.
 
 - COT-MSU-3 - Timing validation
-  Verify that fade duration, movement idle delay, idle fade delay, idle opacity, prediction gain, prediction timing, and experimental DWM adaptive prediction values outside their documented ranges are rejected or clamped consistently at the settings boundary.
+  Verify that fade duration, movement idle delay, idle fade delay, idle opacity, prediction gain, prediction timing, DWM target offset, and experimental DWM adaptive prediction values outside their documented ranges are rejected or clamped consistently at the settings boundary.
   Refs: Sections 4.4.1, 4.4.1.1, 4.4.2.
 
 - COT-MSU-4 - Settings serialization round trip
@@ -418,7 +438,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Sections 4.4.2, 4.5.1, 6.1.
 
 - COT-MSU-16 - Prediction model selection
-  Verify that the settings window exposes `ConstantVelocity` and `LeastSquares (default)`, selects `LeastSquares` by default, applies model changes immediately, and disables the prediction model control when prediction is disabled.
+  Verify that the settings window exposes `ConstantVelocity (default)` and `LeastSquares`, selects `ConstantVelocity` by default, applies model changes immediately, and disables the prediction model control when prediction is disabled.
   Refs: Sections 4.4.2, 4.5.1, 6.1.
 
 #### A.4.D DPI and Multi-Monitor Coordinates
@@ -775,5 +795,5 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Sections 4.5.1, 6.3.
 
 - COT-BVM-9 - Prediction settings manual pass
-  Verify that predictive overlay positioning is enabled by default, `LeastSquares (default)` and `ConstantVelocity` can be selected from the settings window, and disabling prediction returns to exact pointer positioning.
+  Verify that predictive overlay positioning is enabled by default, `ConstantVelocity (default)` and `LeastSquares` can be selected from the settings window, and disabling prediction returns to exact pointer positioning.
   Refs: Sections 2.3, 4.4.2, 4.5.1, 6.3.

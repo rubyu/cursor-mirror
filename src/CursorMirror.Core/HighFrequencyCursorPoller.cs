@@ -10,7 +10,7 @@ namespace CursorMirror
     public sealed class HighFrequencyCursorPoller : ICursorPoller, IDisposable
     {
         public const int DefaultIntervalMilliseconds = 1;
-        public const int DefaultMaximumSampleAgeMilliseconds = 50;
+        public const int DefaultMaximumSampleAgeMilliseconds = 4;
         private const int TimerResolutionMilliseconds = 1;
 
         private readonly object _sync = new object();

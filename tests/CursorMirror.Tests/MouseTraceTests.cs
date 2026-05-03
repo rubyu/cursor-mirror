@@ -246,7 +246,7 @@ namespace CursorMirror.Tests
                 timing.FramesDropped = 16;
                 timing.FramesMissed = 17;
 
-                session.Start(start, 8, 2, 1, true, 2, 8, 2);
+                session.Start(start, 8, 2, 1, true, DwmSynchronizedRuntimeScheduler.WakeAdvanceMilliseconds, 8, 2);
                 session.AddPoll(start + 20, new Point(12, 22), true, timing);
                 session.AddReferencePoll(start + 30, new Point(13, 23));
                 session.Stop(start + 30);
@@ -347,7 +347,7 @@ namespace CursorMirror.Tests
                 MouseTraceSession session = new MouseTraceSession();
                 long start = 1000;
                 long oneMillisecond = Stopwatch.Frequency / 1000;
-                session.Start(start, 8, 2, 1, true, 2, 8, 2);
+                session.Start(start, 8, 2, 1, true, DwmSynchronizedRuntimeScheduler.WakeAdvanceMilliseconds, 8, 2);
                 session.AddHookMove(start + oneMillisecond, new Point(1, 1), 0, 0, 0, IntPtr.Zero, new Point(1, 1));
                 session.AddHookMove(start + (2 * oneMillisecond), new Point(2, 2), 0, 0, 0, IntPtr.Zero, new Point(2, 2));
                 session.AddPoll(start + (8 * oneMillisecond), new Point(3, 3), true, new DwmTimingInfo());
@@ -376,7 +376,7 @@ namespace CursorMirror.Tests
                     TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerPollSampleCount\":2"), "metadata runtime scheduler poll sample count");
                     TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerLoopSampleCount\":2"), "metadata runtime scheduler loop sample count");
                     TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerCoalescedTickCount\":1"), "metadata runtime scheduler coalesced tick count");
-                    TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerWakeAdvanceMilliseconds\":2"), "metadata runtime scheduler wake advance");
+                    TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerWakeAdvanceMilliseconds\":" + DwmSynchronizedRuntimeScheduler.WakeAdvanceMilliseconds.ToString()), "metadata runtime scheduler wake advance");
                     TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerFallbackIntervalMilliseconds\":8"), "metadata runtime scheduler fallback interval");
                     TestAssert.True(metadataJson.Contains("\"RuntimeSchedulerMaximumDwmSleepMilliseconds\":2"), "metadata runtime scheduler maximum DWM sleep");
                     TestAssert.True(metadataJson.Contains("\"DwmTimingAvailabilityPercent\":50"), "metadata dwm availability percent");
@@ -399,7 +399,7 @@ namespace CursorMirror.Tests
             DwmTimingInfo timing = new DwmTimingInfo();
             timing.QpcRefreshPeriod = 100;
             timing.QpcVBlank = 2000;
-            session.Start(start, 8, 2, 1, true, 2, 8, 2);
+            session.Start(start, 8, 2, 1, true, DwmSynchronizedRuntimeScheduler.WakeAdvanceMilliseconds, 8, 2);
 
             session.AddRuntimeSchedulerPoll(
                 start + 10,
@@ -418,7 +418,7 @@ namespace CursorMirror.Tests
                 start + 5);
             MouseTraceSnapshot snapshot = session.Snapshot();
 
-            TestAssert.Equal(2, snapshot.RuntimeSchedulerWakeAdvanceMilliseconds, "runtime scheduler wake advance");
+            TestAssert.Equal(DwmSynchronizedRuntimeScheduler.WakeAdvanceMilliseconds, snapshot.RuntimeSchedulerWakeAdvanceMilliseconds, "runtime scheduler wake advance");
             TestAssert.Equal(8, snapshot.RuntimeSchedulerFallbackIntervalMilliseconds, "runtime scheduler fallback interval");
             TestAssert.Equal(2, snapshot.RuntimeSchedulerMaximumDwmSleepMilliseconds, "runtime scheduler maximum DWM sleep");
             TestAssert.Equal("runtimeSchedulerPoll", snapshot.Samples[0].EventType, "runtime scheduler event type");

@@ -23,6 +23,7 @@ namespace CursorMirror.Calibrator
         public int? DwmAdaptiveOscillationMaximumEfficiencyPercent { get; set; }
         public int? DwmAdaptiveOscillationLatchMilliseconds { get; set; }
         public int? DwmPredictionModel { get; set; }
+        public int? DwmPredictionTargetOffsetMilliseconds { get; set; }
         public int RuntimeMode { get; set; }
 
         public static CalibratorRunOptions FromArguments(string[] args)
@@ -233,6 +234,16 @@ namespace CursorMirror.Calibrator
                     if (TryParsePredictionModel(args[i + 1], out model))
                     {
                         options.DwmPredictionModel = model;
+                    }
+
+                    i++;
+                }
+                else if ((argument == "--dwm-target-offset-ms" || argument == "--dwm-prediction-target-offset-ms") && i + 1 < args.Length)
+                {
+                    int offsetMilliseconds;
+                    if (int.TryParse(args[i + 1], out offsetMilliseconds))
+                    {
+                        options.DwmPredictionTargetOffsetMilliseconds = offsetMilliseconds;
                     }
 
                     i++;
