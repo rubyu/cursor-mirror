@@ -120,6 +120,12 @@ namespace CursorMirror
             });
         }
 
+        public CursorPredictionCounters SnapshotPredictionCounters()
+        {
+            CursorMirrorController controller = GetController();
+            return controller == null ? new CursorPredictionCounters() : controller.PredictionCounters.Clone();
+        }
+
         public void Dispose()
         {
             if (!_disposed)
@@ -336,7 +342,7 @@ namespace CursorMirror
                     }
 
                     lastRequestedVBlankTicks = decision.TargetVBlankTicks;
-                    controller.Tick();
+                    controller.Tick(decision.TargetVBlankTicks, refreshPeriodTicks);
                 }
                 else
                 {

@@ -168,17 +168,17 @@ namespace CursorMirror.Tests
                         ComboBox predictionModelInput = GetField<ComboBox>(window, "_predictionModelInput");
 
                         TestAssert.Equal(2, predictionModelInput.Items.Count, "prediction model option count");
-                        TestAssert.Equal("ConstantVelocity", predictionModelInput.Items[0].ToString(), "constant velocity option");
-                        TestAssert.Equal("LeastSquares (default)", predictionModelInput.Items[1].ToString(), "least-squares default option");
-                        TestAssert.Equal(1, predictionModelInput.SelectedIndex, "least-squares selected by default");
-
-                        predictionModelInput.SelectedIndex = 0;
-
-                        TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, controller.CurrentSettings.DwmPredictionModel, "constant velocity selection applied");
+                        TestAssert.Equal("ConstantVelocity (default)", predictionModelInput.Items[0].ToString(), "constant velocity default option");
+                        TestAssert.Equal("LeastSquares", predictionModelInput.Items[1].ToString(), "least-squares option");
+                        TestAssert.Equal(0, predictionModelInput.SelectedIndex, "constant velocity selected by default");
 
                         predictionModelInput.SelectedIndex = 1;
 
                         TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelLeastSquares, controller.CurrentSettings.DwmPredictionModel, "least-squares selection applied");
+
+                        predictionModelInput.SelectedIndex = 0;
+
+                        TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, controller.CurrentSettings.DwmPredictionModel, "constant velocity selection applied");
                     }
                 }
                 finally

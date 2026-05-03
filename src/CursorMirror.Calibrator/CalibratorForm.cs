@@ -37,6 +37,8 @@ namespace CursorMirror.Calibrator
         private CalibrationMotionPatternSuite _motionSuite;
         private long _calibrationStartTicks;
         private int _activeRuntimeMode = CalibrationRuntimeMode.Default;
+        private CursorMirrorSettings _activeCursorSettings;
+        private CursorPredictionCounters _predictionCountersSnapshot = new CursorPredictionCounters();
         private bool _running;
         private bool _savedSinceStop;
 
@@ -214,6 +216,7 @@ namespace CursorMirror.Calibrator
                 }
 
                 _frames.Clear();
+                _predictionCountersSnapshot = new CursorPredictionCounters();
                 _savedSinceStop = false;
                 _resultLabel.Text = string.Empty;
                 RefreshUi();
@@ -223,6 +226,7 @@ namespace CursorMirror.Calibrator
                 _cursorDriver = new CalibratorCursorDriver();
 
                 CursorMirrorSettings settings = BuildCursorSettings();
+                _activeCursorSettings = settings.Clone();
                 _activeRuntimeMode = GetSelectedRuntimeMode();
                 StartOverlayRuntime(settings, _activeRuntimeMode);
 
@@ -343,6 +347,8 @@ namespace CursorMirror.Calibrator
                 _capture = null;
             }
 
+            _predictionCountersSnapshot = CapturePredictionCounters();
+
             if (_mouseHook != null)
             {
                 try
@@ -456,10 +462,52 @@ namespace CursorMirror.Calibrator
 
             CalibrationSummary summary = CalibrationRunAnalyzer.Summarize(snapshot, "Windows Graphics Capture");
             summary.RuntimeMode = CalibrationRuntimeMode.ToExternalName(_activeRuntimeMode);
+            if (_activeCursorSettings != null)
+            {
+                summary.DwmPredictionTargetOffsetMilliseconds = _activeCursorSettings.DwmPredictionTargetOffsetMilliseconds;
+                summary.DwmPredictionHorizonCapMilliseconds = _activeCursorSettings.DwmPredictionHorizonCapMilliseconds;
+                summary.DwmPredictionModel = _activeCursorSettings.DwmPredictionModel;
+            }
+
+            ApplyPredictionCounters(summary, _predictionCountersSnapshot);
             new CalibrationPackageWriter().Write(path, snapshot, summary);
             _savedSinceStop = true;
             _resultLabel.Text = "Saved " + summary.FrameCount.ToString() + " frames: " + path;
             RefreshUi();
+        }
+
+        private CursorPredictionCounters CapturePredictionCounters()
+        {
+            if (_mirrorController != null)
+            {
+                return _mirrorController.PredictionCounters.Clone();
+            }
+
+            if (_overlayRuntime != null)
+            {
+                return _overlayRuntime.SnapshotPredictionCounters();
+            }
+
+            return new CursorPredictionCounters();
+        }
+
+        private static void ApplyPredictionCounters(CalibrationSummary summary, CursorPredictionCounters counters)
+        {
+            if (summary == null || counters == null)
+            {
+                return;
+            }
+
+            summary.PredictionInvalidDwmHorizon = counters.InvalidDwmHorizon;
+            summary.PredictionLateDwmHorizon = counters.LateDwmHorizon;
+            summary.PredictionHorizonOver125xRefreshPeriod = counters.HorizonOver125xRefreshPeriod;
+            summary.PredictionFallbackToHold = counters.FallbackToHold;
+            summary.PredictionResetDueToInvalidDtOrIdleGap = counters.PredictionResetDueToInvalidDtOrIdleGap;
+            summary.PredictionStalePollSamples = counters.StalePollSamples;
+            summary.PredictionScheduledDwmTargetUsed = counters.ScheduledDwmTargetUsed;
+            summary.PredictionScheduledDwmTargetAdjustedToNextVBlank = counters.ScheduledDwmTargetAdjustedToNextVBlank;
+            summary.PredictionOverlayUpdateCompletedAfterTargetVBlank = counters.OverlayUpdateCompletedAfterTargetVBlank;
+            summary.PredictionOverlayUpdateCompletedNearTargetVBlank = counters.OverlayUpdateCompletedNearTargetVBlank;
         }
 
         private void EnterFullScreen()
@@ -577,6 +625,11 @@ namespace CursorMirror.Calibrator
             if (_options.DwmPredictionModel.HasValue)
             {
                 settings.DwmPredictionModel = _options.DwmPredictionModel.Value;
+            }
+
+            if (_options.DwmPredictionTargetOffsetMilliseconds.HasValue)
+            {
+                settings.DwmPredictionTargetOffsetMilliseconds = _options.DwmPredictionTargetOffsetMilliseconds.Value;
             }
 
             return settings.Normalize();

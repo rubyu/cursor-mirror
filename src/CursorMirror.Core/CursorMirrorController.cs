@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Drawing;
 
 namespace CursorMirror
@@ -163,9 +164,14 @@ namespace CursorMirror
 
         public void Tick()
         {
+            Tick(0, 0);
+        }
+
+        public void Tick(long targetVBlankTicks, long refreshPeriodTicks)
+        {
             ThrowIfDisposed();
             long now = _clock.Milliseconds;
-            PollAndMove(now);
+            PollAndMove(now, targetVBlankTicks, refreshPeriodTicks);
             ApplyOpacity(now);
         }
 
@@ -263,7 +269,7 @@ namespace CursorMirror
             }
         }
 
-        private void PollAndMove(long now)
+        private void PollAndMove(long now, long targetVBlankTicks, long refreshPeriodTicks)
         {
             CursorPollSample sample;
             if (!_cursorPoller.TryGetSample(out sample))
@@ -280,11 +286,13 @@ namespace CursorMirror
             _lastPollSampleTimestampTicks = sample.TimestampTicks;
             _hasLastPollSample = true;
             RecordMovementIfPointerChanged(sample.Position, now);
+            long effectiveTargetVBlankTicks = SelectEffectiveTargetVBlank(sample, targetVBlankTicks, refreshPeriodTicks);
+            long effectiveRefreshPeriodTicks = ResolveRefreshPeriodTicks(sample, refreshPeriodTicks);
 
             Point displayPointer;
             if (_settings.PredictionEnabled)
             {
-                displayPointer = _pollPositionPredictor.PredictRounded(sample, _predictionCounters);
+                displayPointer = _pollPositionPredictor.PredictRounded(sample, _predictionCounters, effectiveTargetVBlankTicks, effectiveRefreshPeriodTicks);
             }
             else
             {
@@ -295,8 +303,94 @@ namespace CursorMirror
             StoreLastDisplayPointer(displayPointer);
             if (_hasLastImage)
             {
-                _overlayPresenter.Move(OverlayPlacement.FromPointerAndHotSpot(displayPointer, _lastHotSpot));
+                MoveOverlay(OverlayPlacement.FromPointerAndHotSpot(displayPointer, _lastHotSpot), effectiveTargetVBlankTicks);
             }
+        }
+
+        private long SelectEffectiveTargetVBlank(CursorPollSample sample, long targetVBlankTicks, long refreshPeriodTicks)
+        {
+            if (targetVBlankTicks <= 0)
+            {
+                return 0;
+            }
+
+            long effectiveRefreshPeriodTicks = ResolveRefreshPeriodTicks(sample, refreshPeriodTicks);
+            if (effectiveRefreshPeriodTicks <= 0)
+            {
+                return targetVBlankTicks;
+            }
+
+            long nowTicks = Stopwatch.GetTimestamp();
+            long guardTicks = MicrosecondsToTicks(DwmSynchronizedRuntimeScheduler.DisplayDeadlineGuardMicroseconds, Stopwatch.Frequency);
+            long safeTargetTicks = nowTicks + guardTicks;
+            if (targetVBlankTicks > safeTargetTicks)
+            {
+                return targetVBlankTicks;
+            }
+
+            _predictionCounters.ScheduledDwmTargetAdjustedToNextVBlank++;
+            long adjustedTargetTicks = targetVBlankTicks;
+            long requiredTicks = safeTargetTicks - adjustedTargetTicks;
+            long periods = (requiredTicks / effectiveRefreshPeriodTicks) + 1L;
+            if (periods > 0)
+            {
+                adjustedTargetTicks += periods * effectiveRefreshPeriodTicks;
+            }
+
+            return adjustedTargetTicks;
+        }
+
+        private void MoveOverlay(Point location, long targetVBlankTicks)
+        {
+            _overlayPresenter.Move(location);
+            RecordOverlayUpdateTiming(targetVBlankTicks);
+        }
+
+        private void RecordOverlayUpdateTiming(long targetVBlankTicks)
+        {
+            if (targetVBlankTicks <= 0)
+            {
+                return;
+            }
+
+            long completedTicks = Stopwatch.GetTimestamp();
+            if (completedTicks >= targetVBlankTicks)
+            {
+                _predictionCounters.OverlayUpdateCompletedAfterTargetVBlank++;
+                return;
+            }
+
+            long guardTicks = MicrosecondsToTicks(DwmSynchronizedRuntimeScheduler.DisplayDeadlineGuardMicroseconds, Stopwatch.Frequency);
+            if (targetVBlankTicks - completedTicks <= guardTicks)
+            {
+                _predictionCounters.OverlayUpdateCompletedNearTargetVBlank++;
+            }
+        }
+
+        private static long ResolveRefreshPeriodTicks(CursorPollSample sample, long refreshPeriodTicks)
+        {
+            if (refreshPeriodTicks > 0)
+            {
+                return refreshPeriodTicks;
+            }
+
+            return sample.DwmRefreshPeriodTicks;
+        }
+
+        private static long MicrosecondsToTicks(int microseconds, long stopwatchFrequency)
+        {
+            if (microseconds <= 0 || stopwatchFrequency <= 0)
+            {
+                return 0;
+            }
+
+            double ticks = microseconds * (double)stopwatchFrequency / 1000000.0;
+            if (ticks >= long.MaxValue)
+            {
+                return long.MaxValue;
+            }
+
+            return (long)Math.Round(ticks);
         }
 
         private void RecordMovementIfPointerChanged(Point pointer, long now)

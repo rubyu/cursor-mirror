@@ -165,6 +165,9 @@ namespace CursorMirror.Tests
 
             CalibratorRunOptions productOptions = CalibratorRunOptions.FromArguments(new[] { "--simple-runtime", "--product-runtime" });
             TestAssert.Equal(CalibrationRuntimeMode.ProductRuntime, productOptions.RuntimeMode, "product runtime switch");
+
+            CalibratorRunOptions predictionOptions = CalibratorRunOptions.FromArguments(new[] { "--dwm-target-offset-ms", "3" });
+            TestAssert.Equal(3, predictionOptions.DwmPredictionTargetOffsetMilliseconds.Value, "DWM prediction target offset option");
         }
     }
 }

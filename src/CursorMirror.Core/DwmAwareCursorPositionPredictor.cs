@@ -11,6 +11,12 @@ namespace CursorMirror
         private const int FastLinearOverrideWindowSamples = 18;
         private const double FastLinearOverrideMinimumEfficiencyPercent = 75.0;
         private const double FastLinearOverrideMinimumNetPixels = 160.0;
+        private const double ConstantVelocityMaximumPredictionPixels = 12.0;
+        private const double ConstantVelocityHighSpeedMaximumPredictionPixels = 24.0;
+        private const double ConstantVelocityHighSpeedMinimumPixelsPerSecond = 2400.0;
+        private const int ConstantVelocityHighSpeedWindowSamples = 18;
+        private const double ConstantVelocityHighSpeedMinimumEfficiencyPercent = 75.0;
+        private const double ConstantVelocityHighSpeedMinimumNetPixels = 160.0;
         private const int HistoryCapacity = 64;
         private const int LeastSquaresDefaultHorizonCapMilliseconds = 8;
         private const int LeastSquaresWindowMilliseconds = 72;
@@ -57,6 +63,7 @@ namespace CursorMirror
         private int _adaptiveOscillationMaximumEfficiencyPercent;
         private int _adaptiveOscillationLatchMilliseconds;
         private int _predictionModel;
+        private int _targetOffsetMilliseconds;
         private int _historyCount;
         private int _historyNextIndex;
         private long _oscillationLatchUntilTicks;
@@ -157,6 +164,7 @@ namespace CursorMirror
                 normalized.DwmAdaptiveOscillationMaximumEfficiencyPercent,
                 normalized.DwmAdaptiveOscillationLatchMilliseconds);
             ApplyPredictionModel(normalized.DwmPredictionModel);
+            ApplyPredictionTargetOffsetMilliseconds(normalized.DwmPredictionTargetOffsetMilliseconds);
         }
 
         public void ApplySettings(int idleResetMilliseconds, int predictionGainPercent, int horizonCapMilliseconds)
@@ -275,6 +283,7 @@ namespace CursorMirror
                 CursorMirrorSettings.DefaultDwmAdaptiveOscillationMaximumSpanPixels,
                 CursorMirrorSettings.DefaultDwmAdaptiveOscillationMaximumEfficiencyPercent,
                 CursorMirrorSettings.DefaultDwmAdaptiveOscillationLatchMilliseconds);
+            ApplyPredictionTargetOffsetMilliseconds(CursorMirrorSettings.DefaultDwmPredictionTargetOffsetMilliseconds);
         }
 
         public void ApplyAdaptiveOscillationSettings(
@@ -312,6 +321,13 @@ namespace CursorMirror
                 Math.Min(CursorMirrorSettings.MaximumDwmPredictionModel, predictionModel));
         }
 
+        public void ApplyPredictionTargetOffsetMilliseconds(int targetOffsetMilliseconds)
+        {
+            _targetOffsetMilliseconds = Math.Max(
+                CursorMirrorSettings.MinimumDwmPredictionTargetOffsetMilliseconds,
+                Math.Min(CursorMirrorSettings.MaximumDwmPredictionTargetOffsetMilliseconds, targetOffsetMilliseconds));
+        }
+
         public void Reset()
         {
             _hasSample = false;
@@ -332,13 +348,23 @@ namespace CursorMirror
 
         public Point PredictRounded(CursorPollSample sample, CursorPredictionCounters counters)
         {
-            PointF predicted = Predict(sample, counters);
+            return PredictRounded(sample, counters, 0, 0);
+        }
+
+        public Point PredictRounded(CursorPollSample sample, CursorPredictionCounters counters, long targetVBlankTicks, long refreshPeriodTicks)
+        {
+            PointF predicted = Predict(sample, counters, targetVBlankTicks, refreshPeriodTicks);
             return new Point(
                 (int)Math.Round(predicted.X),
                 (int)Math.Round(predicted.Y));
         }
 
         public PointF Predict(CursorPollSample sample, CursorPredictionCounters counters)
+        {
+            return Predict(sample, counters, 0, 0);
+        }
+
+        public PointF Predict(CursorPollSample sample, CursorPredictionCounters counters, long targetVBlankTicks, long refreshPeriodTicks)
         {
             if (counters == null)
             {
@@ -371,7 +397,8 @@ namespace CursorMirror
 
             double velocityXPerSecond = (sample.Position.X - _lastX) / deltaSeconds;
             double velocityYPerSecond = (sample.Position.Y - _lastY) / deltaSeconds;
-            long nextVBlankTicks = SelectNextVBlank(sample, counters);
+            long nextVBlankTicks = SelectPredictionTargetVBlank(sample, counters, targetVBlankTicks, refreshPeriodTicks);
+            nextVBlankTicks = ApplyTargetOffset(nextVBlankTicks, sample.StopwatchFrequency);
             if (nextVBlankTicks <= 0)
             {
                 counters.FallbackToHold++;
@@ -380,7 +407,8 @@ namespace CursorMirror
             }
 
             long horizonTicks = nextVBlankTicks - sample.TimestampTicks;
-            if (horizonTicks <= 0 || (double)horizonTicks > sample.DwmRefreshPeriodTicks * 1.25)
+            long effectiveRefreshPeriodTicks = ResolveRefreshPeriodTicks(sample, refreshPeriodTicks);
+            if (horizonTicks <= 0 || effectiveRefreshPeriodTicks <= 0 || (double)horizonTicks > effectiveRefreshPeriodTicks * 1.25)
             {
                 counters.HorizonOver125xRefreshPeriod++;
                 counters.FallbackToHold++;
@@ -405,9 +433,14 @@ namespace CursorMirror
             }
 
             double effectiveGain = SelectGain(sample, velocityXPerSecond, velocityYPerSecond, deltaSeconds);
+            bool useHighSpeedLinearCap = ShouldUseHighSpeedConstantVelocityCap(sample, velocityXPerSecond, velocityYPerSecond);
             double scale = effectiveGain * horizonTicks / deltaTicks;
-            double predictedX = sample.Position.X + ((sample.Position.X - _lastX) * scale);
-            double predictedY = sample.Position.Y + ((sample.Position.Y - _lastY) * scale);
+            double dxConstantVelocity = (sample.Position.X - _lastX) * scale;
+            double dyConstantVelocity = (sample.Position.Y - _lastY) * scale;
+            double maximumPredictionPixels = useHighSpeedLinearCap ? ConstantVelocityHighSpeedMaximumPredictionPixels : ConstantVelocityMaximumPredictionPixels;
+            ClampVector(ref dxConstantVelocity, ref dyConstantVelocity, maximumPredictionPixels);
+            double predictedX = sample.Position.X + dxConstantVelocity;
+            double predictedY = sample.Position.Y + dyConstantVelocity;
             StoreSample(sample, velocityXPerSecond, velocityYPerSecond);
             return new PointF((float)predictedX, (float)predictedY);
         }
@@ -841,6 +874,30 @@ namespace CursorMirror
             return true;
         }
 
+        private bool ShouldUseHighSpeedConstantVelocityCap(CursorPollSample sample, double velocityXPerSecond, double velocityYPerSecond)
+        {
+            double speed = Magnitude(velocityXPerSecond, velocityYPerSecond);
+            if (speed < ConstantVelocityHighSpeedMinimumPixelsPerSecond || _historyCount < 3)
+            {
+                return false;
+            }
+
+            double span;
+            double path;
+            double net;
+            int reversals;
+            double efficiencyPercent;
+            int priorCount = Math.Min(_historyCount, ConstantVelocityHighSpeedWindowSamples - 1);
+            if (!TryAnalyzeRecentPath(sample, priorCount, out span, out path, out net, out reversals, out efficiencyPercent))
+            {
+                return false;
+            }
+
+            return reversals == 0 &&
+                efficiencyPercent >= ConstantVelocityHighSpeedMinimumEfficiencyPercent &&
+                net >= ConstantVelocityHighSpeedMinimumNetPixels;
+        }
+
         private bool TryAnalyzeTimedPath(CursorPollSample sample, int windowMilliseconds, out PathAnalysis analysis)
         {
             analysis = new PathAnalysis();
@@ -1017,6 +1074,27 @@ namespace CursorMirror
             return Math.Min(horizonTicks, capTicks);
         }
 
+        private long ApplyTargetOffset(long targetTicks, long stopwatchFrequency)
+        {
+            if (targetTicks <= 0 || stopwatchFrequency <= 0 || _targetOffsetMilliseconds == 0)
+            {
+                return targetTicks;
+            }
+
+            long offsetTicks = (long)Math.Round(_targetOffsetMilliseconds * stopwatchFrequency / 1000.0);
+            if (offsetTicks > 0 && targetTicks > long.MaxValue - offsetTicks)
+            {
+                return long.MaxValue;
+            }
+
+            if (offsetTicks < 0 && targetTicks < long.MinValue - offsetTicks)
+            {
+                return long.MinValue;
+            }
+
+            return targetTicks + offsetTicks;
+        }
+
         private bool IsIdleGap(long deltaTicks, long stopwatchFrequency)
         {
             if (stopwatchFrequency <= 0)
@@ -1045,6 +1123,42 @@ namespace CursorMirror
             }
 
             return next;
+        }
+
+        private static long SelectPredictionTargetVBlank(CursorPollSample sample, CursorPredictionCounters counters, long targetVBlankTicks, long refreshPeriodTicks)
+        {
+            if (targetVBlankTicks <= 0)
+            {
+                return SelectNextVBlank(sample, counters);
+            }
+
+            long effectiveRefreshPeriodTicks = ResolveRefreshPeriodTicks(sample, refreshPeriodTicks);
+            if (effectiveRefreshPeriodTicks <= 0)
+            {
+                counters.InvalidDwmHorizon++;
+                return 0;
+            }
+
+            counters.ScheduledDwmTargetUsed++;
+            long target = targetVBlankTicks;
+            if (target <= sample.TimestampTicks)
+            {
+                counters.LateDwmHorizon++;
+                long periodsLate = ((sample.TimestampTicks - target) / effectiveRefreshPeriodTicks) + 1L;
+                target += periodsLate * effectiveRefreshPeriodTicks;
+            }
+
+            return target;
+        }
+
+        private static long ResolveRefreshPeriodTicks(CursorPollSample sample, long refreshPeriodTicks)
+        {
+            if (refreshPeriodTicks > 0)
+            {
+                return refreshPeriodTicks;
+            }
+
+            return sample.DwmRefreshPeriodTicks;
         }
 
         private void StoreSample(CursorPollSample sample)

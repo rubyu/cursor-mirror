@@ -58,6 +58,7 @@ Copy-Item -LiteralPath (Join-Path $bin "CursorMirror.TraceTool.exe") -Destinatio
 Copy-Item -LiteralPath (Join-Path $bin "CursorMirror.Demo.exe") -Destination $stage
 Copy-Item -LiteralPath (Join-Path $bin "CursorMirror.Calibrator.exe") -Destination $stage
 Copy-Item -LiteralPath (Join-Path $root "README.md") -Destination $stage
+Copy-Item -LiteralPath (Join-Path $root "CONTRIBUTING.md") -Destination $stage
 Copy-Item -LiteralPath (Join-Path $root "LICENSE") -Destination $stage
 
 if (Test-Path $zip) {

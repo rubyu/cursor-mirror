@@ -34,13 +34,13 @@
 - After an interactive calibration run stops, the calibrator MUST keep the captured measurements in memory and enable an explicit Save command.
 - The interactive Save command SHOULD use a standard save-file dialog with a timestamped default filename.
 - The calibrator MAY support an explicit command-line output path for automation. When that output path is provided, an auto-run calibration MAY save to that path without showing the save-file dialog.
-- The calibrator MAY support command-line prediction setting overrides for controlled experiments, including prediction enabled state, prediction model, prediction gain, prediction horizon, DWM prediction horizon cap, DWM adaptive gain parameters, DWM adaptive reversal cooldown, DWM adaptive oscillation suppression, and prediction idle reset.
+- The calibrator MAY support command-line prediction setting overrides for controlled experiments, including prediction enabled state, prediction model, prediction gain, prediction horizon, DWM prediction horizon cap, DWM prediction target offset, DWM adaptive gain parameters, DWM adaptive reversal cooldown, DWM adaptive oscillation suppression, and prediction idle reset.
 - Command-line prediction model names SHOULD accept the same external model names as the UI: `ConstantVelocity` and `LeastSquares`.
 - The calibrator MAY support command-line runtime mode overrides. Runtime mode names SHOULD accept `ProductRuntime` and `SimpleTimer`.
 - Command-line prediction setting overrides MUST be normalized through the same settings bounds as normal Cursor Mirror settings.
 - The calibrator MUST save a compressed `.zip` package containing `frames.csv` and `metrics.json` only after an explicit user save command or an explicit command-line output path.
 - The frame CSV SHOULD include per-frame motion pattern name, phase name, expected position, expected velocity, dark-pixel bounding boxes, and estimated separation values.
-- The metrics JSON SHOULD include frame count, dark-frame count, baseline dark bounds, average estimated separation, p95 estimated separation, maximum estimated separation, capture source, runtime mode, and per-pattern separation summaries.
+- The metrics JSON SHOULD include frame count, dark-frame count, baseline dark bounds, average estimated separation, p95 estimated separation, maximum estimated separation, capture source, runtime mode, per-pattern separation summaries, active experimental prediction timing settings, and product prediction diagnostic counters when a Cursor Mirror overlay runtime is measured.
 - Dark-pixel analysis SHOULD use a documented threshold and SHOULD operate in memory before writing aggregate results.
 
 ### 13.5 Testing

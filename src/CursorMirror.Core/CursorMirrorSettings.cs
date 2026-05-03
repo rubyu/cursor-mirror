@@ -17,7 +17,7 @@ namespace CursorMirror
         public const int DefaultPredictionHorizonMilliseconds = 8;
         public const int DefaultPredictionIdleResetMilliseconds = 100;
         public const int DefaultPredictionGainPercent = 100;
-        public const int DefaultDwmPredictionHorizonCapMilliseconds = 0;
+        public const int DefaultDwmPredictionHorizonCapMilliseconds = 10;
         public const bool DefaultDwmAdaptiveGainEnabled = false;
         public const int DefaultDwmAdaptiveGainPercent = 100;
         public const int DefaultDwmAdaptiveMinimumSpeedPixelsPerSecond = 1500;
@@ -31,7 +31,8 @@ namespace CursorMirror
         public const int DefaultDwmAdaptiveOscillationLatchMilliseconds = 0;
         public const int DwmPredictionModelConstantVelocity = 0;
         public const int DwmPredictionModelLeastSquares = 1;
-        public const int DefaultDwmPredictionModel = DwmPredictionModelLeastSquares;
+        public const int DefaultDwmPredictionModel = DwmPredictionModelConstantVelocity;
+        public const int DefaultDwmPredictionTargetOffsetMilliseconds = 2;
 
         public const int MinimumMovingOpacityPercent = 1;
         public const int MaximumMovingOpacityPercent = 100;
@@ -73,6 +74,8 @@ namespace CursorMirror
         public const int MaximumDwmAdaptiveOscillationLatchMilliseconds = 1000;
         public const int MinimumDwmPredictionModel = DwmPredictionModelConstantVelocity;
         public const int MaximumDwmPredictionModel = DwmPredictionModelLeastSquares;
+        public const int MinimumDwmPredictionTargetOffsetMilliseconds = -8;
+        public const int MaximumDwmPredictionTargetOffsetMilliseconds = 8;
 
         public CursorMirrorSettings()
         {
@@ -151,6 +154,9 @@ namespace CursorMirror
         [DataMember(Order = 24)]
         public int DwmPredictionModel { get; set; }
 
+        [DataMember(Order = 25)]
+        public int DwmPredictionTargetOffsetMilliseconds { get; set; }
+
         public static CursorMirrorSettings Default()
         {
             return new CursorMirrorSettings();
@@ -183,7 +189,8 @@ namespace CursorMirror
                 DwmAdaptiveOscillationMaximumSpanPixels = DwmAdaptiveOscillationMaximumSpanPixels,
                 DwmAdaptiveOscillationMaximumEfficiencyPercent = DwmAdaptiveOscillationMaximumEfficiencyPercent,
                 DwmAdaptiveOscillationLatchMilliseconds = DwmAdaptiveOscillationLatchMilliseconds,
-                DwmPredictionModel = DwmPredictionModel
+                DwmPredictionModel = DwmPredictionModel,
+                DwmPredictionTargetOffsetMilliseconds = DwmPredictionTargetOffsetMilliseconds
             };
         }
 
@@ -214,7 +221,8 @@ namespace CursorMirror
                 DwmAdaptiveOscillationMaximumSpanPixels = Clamp(DwmAdaptiveOscillationMaximumSpanPixels, MinimumDwmAdaptiveOscillationMaximumSpanPixels, MaximumDwmAdaptiveOscillationMaximumSpanPixels),
                 DwmAdaptiveOscillationMaximumEfficiencyPercent = Clamp(DwmAdaptiveOscillationMaximumEfficiencyPercent, MinimumDwmAdaptiveOscillationMaximumEfficiencyPercent, MaximumDwmAdaptiveOscillationMaximumEfficiencyPercent),
                 DwmAdaptiveOscillationLatchMilliseconds = Clamp(DwmAdaptiveOscillationLatchMilliseconds, MinimumDwmAdaptiveOscillationLatchMilliseconds, MaximumDwmAdaptiveOscillationLatchMilliseconds),
-                DwmPredictionModel = Clamp(DwmPredictionModel, MinimumDwmPredictionModel, MaximumDwmPredictionModel)
+                DwmPredictionModel = Clamp(DwmPredictionModel, MinimumDwmPredictionModel, MaximumDwmPredictionModel),
+                DwmPredictionTargetOffsetMilliseconds = Clamp(DwmPredictionTargetOffsetMilliseconds, MinimumDwmPredictionTargetOffsetMilliseconds, MaximumDwmPredictionTargetOffsetMilliseconds)
             };
         }
 
@@ -250,6 +258,7 @@ namespace CursorMirror
             DwmAdaptiveOscillationMaximumEfficiencyPercent = DefaultDwmAdaptiveOscillationMaximumEfficiencyPercent;
             DwmAdaptiveOscillationLatchMilliseconds = DefaultDwmAdaptiveOscillationLatchMilliseconds;
             DwmPredictionModel = DefaultDwmPredictionModel;
+            DwmPredictionTargetOffsetMilliseconds = DefaultDwmPredictionTargetOffsetMilliseconds;
         }
 
         private static int Clamp(int value, int minimum, int maximum)
