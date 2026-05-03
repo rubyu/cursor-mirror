@@ -45,10 +45,12 @@
 - Each Auto-mode run MUST start the deterministic cursor path at the left endpoint.
 - The cursor path MUST include a stop at both horizontal endpoints.
 - Endpoint entry and exit MUST use deterministic easing so the cursor starts and stops smoothly.
-- The demo scene MUST display current status in the lower-right area.
+- The demo scene MUST display current status away from the cursor movement region.
 - The status SHOULD include mode, speed, resume state, and injected movement count.
 - The status MUST show whether the demo-owned mirrored cursor overlay is enabled as a separate top item above the other status fields.
+- The status MUST NOT insert a blank line between the mirrored-cursor state and the next status field.
 - The status MUST show the current real cursor X coordinate after mode, speed, and resume state as an integer relative to the demo path's left start endpoint, using a clear `X coordinate` label so separate recordings can be aligned.
+- The demo scene MUST display the keyboard-stop hint in a separate panel from the status panel.
 
 ### 12.5 Real Cursor Driving and Free Mode
 - Auto mode MUST move the real Windows cursor using injected mouse movement.
@@ -77,4 +79,4 @@
 ### 12.8 Testing
 - Unit tests MUST cover deterministic path generation and Free mode timeout behavior.
 - Normal automated tests MUST NOT install real Windows hooks or move the real cursor.
-- Manual validation SHOULD cover startup controls, mirrored cursor enable and disable behavior, idle-fade settings, display-language selection, selection persistence after restart, non-clipped startup explanatory text, fullscreen mode, all window presets, keyboard-key demo exit, lower-right status visibility, mirrored cursor status visibility, Auto mode cursor movement from the left endpoint, Free mode entry, 3-second Auto mode resumption from the left endpoint, and release-package launch.
+- Manual validation SHOULD cover startup controls, mirrored cursor enable and disable behavior, idle-fade settings, display-language selection, selection persistence after restart, non-clipped startup explanatory text, fullscreen mode, all window presets, keyboard-key demo exit, status visibility outside the cursor movement region, separate keyboard-stop hint visibility, mirrored cursor status visibility, Auto mode cursor movement from the left endpoint, Free mode entry, 3-second Auto mode resumption from the left endpoint, and release-package launch.

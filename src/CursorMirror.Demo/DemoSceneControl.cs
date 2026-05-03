@@ -251,23 +251,37 @@ namespace CursorMirror.Demo
         private void DrawStatus(Graphics graphics)
         {
             string status = BuildStatusText();
+            if (status.Length == 0)
+            {
+                return;
+            }
+
+            string hint = LocalizedStrings.DemoAnyKeyHint;
             using (Font font = new Font(Font.FontFamily, 9.5f))
             {
-                SizeF measured = graphics.MeasureString(status, font);
-                int padding = 12;
-                RectangleF panel = new RectangleF(
-                    Math.Max(12, ClientSize.Width - measured.Width - (padding * 2) - 20),
-                    Math.Max(12, ClientSize.Height - measured.Height - (padding * 2) - 20),
-                    measured.Width + (padding * 2),
-                    measured.Height + (padding * 2));
+                DrawTextPanel(graphics, font, status, true);
+                DrawTextPanel(graphics, font, hint, false);
+            }
+        }
 
-                using (Brush panelBrush = new SolidBrush(Color.FromArgb(235, 244, 246, 250)))
-                using (Brush textBrush = new SolidBrush(ForeColor))
-                {
-                    graphics.FillRectangle(panelBrush, panel);
-                    graphics.DrawRectangle(Pens.LightGray, panel.X, panel.Y, panel.Width, panel.Height);
-                    graphics.DrawString(status, font, textBrush, panel.Left + padding, panel.Top + padding);
-                }
+        private void DrawTextPanel(Graphics graphics, Font font, string text, bool topAligned)
+        {
+            SizeF measured = graphics.MeasureString(text, font);
+            int padding = 12;
+            float panelWidth = measured.Width + (padding * 2);
+            float panelHeight = measured.Height + (padding * 2);
+            RectangleF panel = new RectangleF(
+                Math.Max(12, ClientSize.Width - panelWidth - 20),
+                topAligned ? 20 : Math.Max(12, ClientSize.Height - panelHeight - 20),
+                panelWidth,
+                panelHeight);
+
+            using (Brush panelBrush = new SolidBrush(Color.FromArgb(235, 244, 246, 250)))
+            using (Brush textBrush = new SolidBrush(ForeColor))
+            {
+                graphics.FillRectangle(panelBrush, panel);
+                graphics.DrawRectangle(Pens.LightGray, panel.X, panel.Y, panel.Width, panel.Height);
+                graphics.DrawString(text, font, textBrush, panel.Left + padding, panel.Top + padding);
             }
         }
 
@@ -288,12 +302,12 @@ namespace CursorMirror.Demo
             string cursorXText = LocalizedStrings.DemoRelativeCursorX(
                 DemoCursorAlignment.RelativeXFromStart(Cursor.Position, _movementBoundsScreen));
 
-            return mirrorText + "\r\n\r\n" + LocalizedStrings.DemoStatus(
+            return mirrorText + "\r\n" + LocalizedStrings.DemoStatus(
                 mode,
                 SpeedLabel(_speed),
                 resumeText,
                 cursorXText,
-                _sentMoveCount) + "\r\n\r\n" + LocalizedStrings.DemoAnyKeyHint;
+                _sentMoveCount);
         }
 
         private long CurrentMilliseconds()
