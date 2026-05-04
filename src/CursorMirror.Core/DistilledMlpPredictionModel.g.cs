@@ -1,19 +1,19 @@
 // Generated from poc/cursor-prediction-v16/runtime/selected-candidate.json.
-// Model: mlp_fsmn_h8_hardtanh_label_q0p125_lag0p5
+// Model: mlp_fsmn_h8_hardtanh_label_q0p125_lag0
 using System;
 
 namespace CursorMirror
 {
     internal sealed class DistilledMlpPredictionModel
     {
-        public const string ModelId = "mlp_fsmn_h8_hardtanh_label_q0p125_lag0p5";
+        public const string ModelId = "mlp_fsmn_h8_hardtanh_label_q0p125_lag0";
         public const int ScalarFeatureCount = 25;
         public const int SequenceLength = 16;
         public const int SequenceFeatureCount = 9;
         public const int FeatureCount = 79;
         public const int Hidden = 8;
         public const float QuantizationStep = 0.125f;
-        public const float LagCompensationPixels = 0.5f;
+        public const float LagCompensationPixels = 0.0f;
         public const int EstimatedMacs = 712;
         public const int ParameterCount = 730;
 

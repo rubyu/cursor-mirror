@@ -33,8 +33,12 @@ namespace CursorMirror
         public const int DwmPredictionModelLeastSquares = 1;
         public const int DwmPredictionModelExperimentalMlp = 2;
         public const int DwmPredictionModelDistilledMlp = 3;
+        public const int DwmPredictionModelRuntimeEventSafeMlp = 4;
         public const int DefaultDwmPredictionModel = DwmPredictionModelConstantVelocity;
         public const int DefaultDwmPredictionTargetOffsetMilliseconds = 2;
+        public const int RecommendedDistilledMlpPredictionTargetOffsetMilliseconds = -4;
+        public const int RecommendedRuntimeEventSafeMlpPredictionTargetOffsetMilliseconds = -4;
+        public const bool DefaultDistilledMlpPostStopBrakeEnabled = false;
 
         public const int MinimumMovingOpacityPercent = 1;
         public const int MaximumMovingOpacityPercent = 100;
@@ -75,7 +79,7 @@ namespace CursorMirror
         public const int MinimumDwmAdaptiveOscillationLatchMilliseconds = 0;
         public const int MaximumDwmAdaptiveOscillationLatchMilliseconds = 1000;
         public const int MinimumDwmPredictionModel = DwmPredictionModelConstantVelocity;
-        public const int MaximumDwmPredictionModel = DwmPredictionModelDistilledMlp;
+        public const int MaximumDwmPredictionModel = DwmPredictionModelRuntimeEventSafeMlp;
         public const int MinimumDwmPredictionTargetOffsetMilliseconds = -8;
         public const int MaximumDwmPredictionTargetOffsetMilliseconds = 8;
 
@@ -159,6 +163,9 @@ namespace CursorMirror
         [DataMember(Order = 25)]
         public int DwmPredictionTargetOffsetMilliseconds { get; set; }
 
+        [DataMember(Order = 26)]
+        public bool DistilledMlpPostStopBrakeEnabled { get; set; }
+
         public static CursorMirrorSettings Default()
         {
             return new CursorMirrorSettings();
@@ -192,7 +199,8 @@ namespace CursorMirror
                 DwmAdaptiveOscillationMaximumEfficiencyPercent = DwmAdaptiveOscillationMaximumEfficiencyPercent,
                 DwmAdaptiveOscillationLatchMilliseconds = DwmAdaptiveOscillationLatchMilliseconds,
                 DwmPredictionModel = DwmPredictionModel,
-                DwmPredictionTargetOffsetMilliseconds = DwmPredictionTargetOffsetMilliseconds
+                DwmPredictionTargetOffsetMilliseconds = DwmPredictionTargetOffsetMilliseconds,
+                DistilledMlpPostStopBrakeEnabled = DistilledMlpPostStopBrakeEnabled
             };
         }
 
@@ -224,7 +232,8 @@ namespace CursorMirror
                 DwmAdaptiveOscillationMaximumEfficiencyPercent = Clamp(DwmAdaptiveOscillationMaximumEfficiencyPercent, MinimumDwmAdaptiveOscillationMaximumEfficiencyPercent, MaximumDwmAdaptiveOscillationMaximumEfficiencyPercent),
                 DwmAdaptiveOscillationLatchMilliseconds = Clamp(DwmAdaptiveOscillationLatchMilliseconds, MinimumDwmAdaptiveOscillationLatchMilliseconds, MaximumDwmAdaptiveOscillationLatchMilliseconds),
                 DwmPredictionModel = Clamp(DwmPredictionModel, MinimumDwmPredictionModel, MaximumDwmPredictionModel),
-                DwmPredictionTargetOffsetMilliseconds = Clamp(DwmPredictionTargetOffsetMilliseconds, MinimumDwmPredictionTargetOffsetMilliseconds, MaximumDwmPredictionTargetOffsetMilliseconds)
+                DwmPredictionTargetOffsetMilliseconds = Clamp(DwmPredictionTargetOffsetMilliseconds, MinimumDwmPredictionTargetOffsetMilliseconds, MaximumDwmPredictionTargetOffsetMilliseconds),
+                DistilledMlpPostStopBrakeEnabled = DistilledMlpPostStopBrakeEnabled
             };
         }
 
@@ -261,6 +270,7 @@ namespace CursorMirror
             DwmAdaptiveOscillationLatchMilliseconds = DefaultDwmAdaptiveOscillationLatchMilliseconds;
             DwmPredictionModel = DefaultDwmPredictionModel;
             DwmPredictionTargetOffsetMilliseconds = DefaultDwmPredictionTargetOffsetMilliseconds;
+            DistilledMlpPostStopBrakeEnabled = DefaultDistilledMlpPostStopBrakeEnabled;
         }
 
         private static int Clamp(int value, int minimum, int maximum)

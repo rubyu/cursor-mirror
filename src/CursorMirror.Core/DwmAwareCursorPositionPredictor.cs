@@ -49,6 +49,29 @@ namespace CursorMirror
         private const double DistilledMlpStationaryMaximumSpeedPixelsPerSecond = 25.0;
         private const double DistilledMlpStationaryMaximumNetPixels = 0.75;
         private const double DistilledMlpStationaryMaximumPathPixels = 1.5;
+        private const int DistilledMlpPostStopBrakeLatchFrames = 10;
+        private const int DistilledMlpPostStopBrakeRecentSegmentSamples = 6;
+        private const double DistilledMlpPostStopBrakeStartVelocity2MaximumPixelsPerSecond = 0.0;
+        private const double DistilledMlpPostStopBrakeStartTargetMaximumPixels = 0.1;
+        private const double DistilledMlpPostStopBrakeRecentHighMinimumPixelsPerSecond = 400.0;
+        private const double DistilledMlpPostStopBrakeReleaseVelocity2MinimumPixelsPerSecond = 50.0;
+        private const double DistilledMlpPostStopBrakeReleaseTargetMinimumPixels = 0.25;
+        private const double RuntimeEventSafeMlpMinimumRefreshMilliseconds = 14.0;
+        private const double RuntimeEventSafeMlpMaximumRefreshMilliseconds = 19.5;
+        private const double RuntimeEventSafeMlpMaximumPredictionPixels = 48.0;
+        private const int RuntimeEventSafeMlpStopLatchFrames = 10;
+        private const double RuntimeEventSafeMlpStopCapPixels = 0.35;
+        private const int RuntimeEventSafeMlpRecentSegmentSamples = 6;
+        private const double RuntimeEventSafeMlpStopStartRecentHighMinimumPixelsPerSecond = 400.0;
+        private const double RuntimeEventSafeMlpStopStartVelocity2MaximumPixelsPerSecond = 140.0;
+        private const double RuntimeEventSafeMlpStopStartLatestDeltaMaximumPixels = 2.5;
+        private const double RuntimeEventSafeMlpStopStartRuntimeTargetMaximumPixels = 1.25;
+        private const double RuntimeEventSafeMlpStopReleaseVelocity2MinimumPixelsPerSecond = 220.0;
+        private const double RuntimeEventSafeMlpStopReleaseLatestDeltaMinimumPixels = 3.0;
+        private const double RuntimeEventSafeMlpStopReleaseRuntimeTargetMinimumPixels = 1.5;
+        private const double RuntimeEventSafeMlpStaticVelocity12MaximumPixelsPerSecond = 100.0;
+        private const double RuntimeEventSafeMlpStaticLatestDeltaMaximumPixels = 1.25;
+        private const double RuntimeEventSafeMlpStaticRuntimeTargetMaximumPixels = 0.75;
         private readonly double[] _historyX = new double[HistoryCapacity + 1];
         private readonly double[] _historyY = new double[HistoryCapacity + 1];
         private readonly long[] _historyTimestampTicks = new long[HistoryCapacity + 1];
@@ -57,6 +80,8 @@ namespace CursorMirror
         private readonly DistilledMlpPredictionModel _distilledMlpPredictionModel = new DistilledMlpPredictionModel();
         private readonly float[] _distilledMlpScalarInput = new float[DistilledMlpPredictionModel.ScalarFeatureCount];
         private readonly float[] _distilledMlpSequenceInput = new float[DistilledMlpPredictionModel.SequenceLength * DistilledMlpPredictionModel.SequenceFeatureCount];
+        private readonly RuntimeEventSafeMlpPredictionModel _runtimeEventSafeMlpPredictionModel = new RuntimeEventSafeMlpPredictionModel();
+        private readonly float[] _runtimeEventSafeMlpInput = new float[RuntimeEventSafeMlpPredictionModel.FeatureCount];
         private bool _hasSample;
         private double _lastX;
         private double _lastY;
@@ -82,6 +107,9 @@ namespace CursorMirror
         private int _adaptiveOscillationLatchMilliseconds;
         private int _predictionModel;
         private int _targetOffsetMilliseconds;
+        private bool _distilledMlpPostStopBrakeEnabled;
+        private int _distilledMlpPostStopBrakeRemainingFrames;
+        private int _runtimeEventSafeMlpStopLatchRemainingFrames;
         private int _historyCount;
         private int _historyNextIndex;
         private long _oscillationLatchUntilTicks;
@@ -183,6 +211,7 @@ namespace CursorMirror
                 normalized.DwmAdaptiveOscillationLatchMilliseconds);
             ApplyPredictionModel(normalized.DwmPredictionModel);
             ApplyPredictionTargetOffsetMilliseconds(normalized.DwmPredictionTargetOffsetMilliseconds);
+            ApplyDistilledMlpPostStopBrakeEnabled(normalized.DistilledMlpPostStopBrakeEnabled);
         }
 
         public void ApplySettings(int idleResetMilliseconds, int predictionGainPercent, int horizonCapMilliseconds)
@@ -238,6 +267,8 @@ namespace CursorMirror
                 adaptiveMaximumAccelerationPixelsPerSecondSquared,
                 adaptiveReversalCooldownSamples);
             ApplyPredictionModel(CursorMirrorSettings.DefaultDwmPredictionModel);
+            ApplyPredictionTargetOffsetMilliseconds(CursorMirrorSettings.DefaultDwmPredictionTargetOffsetMilliseconds);
+            ApplyDistilledMlpPostStopBrakeEnabled(CursorMirrorSettings.DefaultDistilledMlpPostStopBrakeEnabled);
         }
 
         public void ApplyIdleResetMilliseconds(int idleResetMilliseconds)
@@ -334,9 +365,15 @@ namespace CursorMirror
 
         public void ApplyPredictionModel(int predictionModel)
         {
-            _predictionModel = Math.Max(
+            int normalized = Math.Max(
                 CursorMirrorSettings.MinimumDwmPredictionModel,
                 Math.Min(CursorMirrorSettings.MaximumDwmPredictionModel, predictionModel));
+            if (_predictionModel != normalized)
+            {
+                _runtimeEventSafeMlpStopLatchRemainingFrames = 0;
+            }
+
+            _predictionModel = normalized;
         }
 
         public void ApplyPredictionTargetOffsetMilliseconds(int targetOffsetMilliseconds)
@@ -344,6 +381,15 @@ namespace CursorMirror
             _targetOffsetMilliseconds = Math.Max(
                 CursorMirrorSettings.MinimumDwmPredictionTargetOffsetMilliseconds,
                 Math.Min(CursorMirrorSettings.MaximumDwmPredictionTargetOffsetMilliseconds, targetOffsetMilliseconds));
+        }
+
+        public void ApplyDistilledMlpPostStopBrakeEnabled(bool enabled)
+        {
+            _distilledMlpPostStopBrakeEnabled = enabled;
+            if (!enabled)
+            {
+                _distilledMlpPostStopBrakeRemainingFrames = 0;
+            }
         }
 
         public void Reset()
@@ -362,6 +408,8 @@ namespace CursorMirror
             _oscillationLatchUntilTicks = 0;
             _leastSquaresFreshSampleCount = 0;
             _leastSquaresLowHorizonUntilTicks = 0;
+            _distilledMlpPostStopBrakeRemainingFrames = 0;
+            _runtimeEventSafeMlpStopLatchRemainingFrames = 0;
         }
 
         public Point PredictRounded(CursorPollSample sample, CursorPredictionCounters counters)
@@ -472,6 +520,21 @@ namespace CursorMirror
                 {
                     predictedX = sample.Position.X + distilledDx;
                     predictedY = sample.Position.Y + distilledDy;
+                }
+            }
+            else if (_predictionModel == CursorMirrorSettings.DwmPredictionModelRuntimeEventSafeMlp)
+            {
+                float runtimeEventSafeDx;
+                float runtimeEventSafeDy;
+                if (TryEvaluateRuntimeEventSafeMlpPrediction(
+                    sample,
+                    horizonTicks,
+                    effectiveRefreshPeriodTicks,
+                    out runtimeEventSafeDx,
+                    out runtimeEventSafeDy))
+                {
+                    predictedX = sample.Position.X + runtimeEventSafeDx;
+                    predictedY = sample.Position.Y + runtimeEventSafeDy;
                 }
             }
             else if (_predictionModel == CursorMirrorSettings.DwmPredictionModelExperimentalMlp)
@@ -730,9 +793,15 @@ namespace CursorMirror
             }
 
             double horizonMilliseconds = horizonTicks * 1000.0 / sample.StopwatchFrequency;
-            if (!FillDistilledMlpInputs(sample, horizonMilliseconds))
+            DistilledMlpRuntimeSignals signals;
+            if (!FillDistilledMlpInputs(sample, horizonMilliseconds, out signals))
             {
                 return false;
+            }
+
+            if (TryApplyDistilledMlpPostStopBrake(signals, out displacementX, out displacementY))
+            {
+                return true;
             }
 
             if (!_distilledMlpPredictionModel.TryEvaluate(
@@ -752,8 +821,9 @@ namespace CursorMirror
             return true;
         }
 
-        private bool FillDistilledMlpInputs(CursorPollSample sample, double horizonMilliseconds)
+        private bool FillDistilledMlpInputs(CursorPollSample sample, double horizonMilliseconds, out DistilledMlpRuntimeSignals signals)
         {
+            signals = new DistilledMlpRuntimeSignals();
             DistilledMlpVelocity velocity2;
             DistilledMlpVelocity velocity3;
             DistilledMlpVelocity velocity5;
@@ -773,6 +843,20 @@ namespace CursorMirror
             if (IsDistilledMlpStationary(velocity2, velocity5, velocity12, pathAnalysis))
             {
                 return false;
+            }
+
+            signals.Velocity2Speed = velocity2.Speed;
+            signals.TargetDisplacement = velocity2.Speed * Math.Max(0.0, horizonMilliseconds) / 1000.0;
+            signals.RecentHighSpeed = Math.Max(
+                Math.Max(velocity5.Speed, velocity8.Speed),
+                velocity12.Speed);
+            double recentSegmentMaxSpeed;
+            if (TryComputeDistilledMlpRecentSegmentMaxSpeed(
+                sample,
+                DistilledMlpPostStopBrakeRecentSegmentSamples,
+                out recentSegmentMaxSpeed))
+            {
+                signals.RecentHighSpeed = Math.Max(signals.RecentHighSpeed, recentSegmentMaxSpeed);
             }
 
             Array.Clear(_distilledMlpScalarInput, 0, _distilledMlpScalarInput.Length);
@@ -815,6 +899,377 @@ namespace CursorMirror
 
             FillDistilledMlpSequence(sample, horizonMilliseconds);
             return true;
+        }
+
+        private bool TryApplyDistilledMlpPostStopBrake(
+            DistilledMlpRuntimeSignals signals,
+            out float displacementX,
+            out float displacementY)
+        {
+            displacementX = 0.0f;
+            displacementY = 0.0f;
+            if (!_distilledMlpPostStopBrakeEnabled)
+            {
+                return false;
+            }
+
+            bool release =
+                signals.Velocity2Speed > DistilledMlpPostStopBrakeReleaseVelocity2MinimumPixelsPerSecond ||
+                signals.TargetDisplacement > DistilledMlpPostStopBrakeReleaseTargetMinimumPixels;
+            if (release)
+            {
+                _distilledMlpPostStopBrakeRemainingFrames = 0;
+                return false;
+            }
+
+            bool start =
+                signals.Velocity2Speed <= DistilledMlpPostStopBrakeStartVelocity2MaximumPixelsPerSecond &&
+                signals.TargetDisplacement <= DistilledMlpPostStopBrakeStartTargetMaximumPixels &&
+                signals.RecentHighSpeed >= DistilledMlpPostStopBrakeRecentHighMinimumPixelsPerSecond;
+            if (start)
+            {
+                _distilledMlpPostStopBrakeRemainingFrames = DistilledMlpPostStopBrakeLatchFrames;
+            }
+
+            if (_distilledMlpPostStopBrakeRemainingFrames <= 0)
+            {
+                return false;
+            }
+
+            _distilledMlpPostStopBrakeRemainingFrames--;
+            return true;
+        }
+
+        private bool TryEvaluateRuntimeEventSafeMlpPrediction(
+            CursorPollSample sample,
+            long horizonTicks,
+            long refreshPeriodTicks,
+            out float displacementX,
+            out float displacementY)
+        {
+            displacementX = 0.0f;
+            displacementY = 0.0f;
+            if (sample.StopwatchFrequency <= 0 ||
+                horizonTicks <= 0 ||
+                refreshPeriodTicks <= 0 ||
+                _historyCount <= 0)
+            {
+                return false;
+            }
+
+            double refreshMilliseconds = refreshPeriodTicks * 1000.0 / sample.StopwatchFrequency;
+            if (refreshMilliseconds < RuntimeEventSafeMlpMinimumRefreshMilliseconds ||
+                refreshMilliseconds > RuntimeEventSafeMlpMaximumRefreshMilliseconds)
+            {
+                return false;
+            }
+
+            double horizonMilliseconds = horizonTicks * 1000.0 / sample.StopwatchFrequency;
+            RuntimeEventSafeMlpRuntimeSignals signals;
+            if (!FillRuntimeEventSafeMlpInputs(sample, horizonMilliseconds, out signals))
+            {
+                return false;
+            }
+
+            if (!_runtimeEventSafeMlpPredictionModel.TryEvaluate(_runtimeEventSafeMlpInput, out displacementX, out displacementY))
+            {
+                return false;
+            }
+
+            double dx = displacementX * _gain;
+            double dy = displacementY * _gain;
+            ClampVector(ref dx, ref dy, RuntimeEventSafeMlpMaximumPredictionPixels);
+            ApplyRuntimeEventSafeMlpGuard(signals, ref dx, ref dy);
+            displacementX = (float)dx;
+            displacementY = (float)dy;
+            return true;
+        }
+
+        private bool FillRuntimeEventSafeMlpInputs(
+            CursorPollSample sample,
+            double horizonMilliseconds,
+            out RuntimeEventSafeMlpRuntimeSignals signals)
+        {
+            signals = new RuntimeEventSafeMlpRuntimeSignals();
+            RuntimeEventSafeMlpVelocity velocity2;
+            RuntimeEventSafeMlpVelocity velocity3;
+            RuntimeEventSafeMlpVelocity velocity5;
+            RuntimeEventSafeMlpVelocity velocity8;
+            RuntimeEventSafeMlpVelocity velocity12;
+            RuntimeEventSafeMlpPathAnalysis pathAnalysis;
+            if (!TryComputeRuntimeEventSafeMlpVelocity(sample, horizonMilliseconds, 2, out velocity2) ||
+                !TryComputeRuntimeEventSafeMlpVelocity(sample, horizonMilliseconds, 3, out velocity3) ||
+                !TryComputeRuntimeEventSafeMlpVelocity(sample, horizonMilliseconds, 5, out velocity5) ||
+                !TryComputeRuntimeEventSafeMlpVelocity(sample, horizonMilliseconds, 8, out velocity8) ||
+                !TryComputeRuntimeEventSafeMlpVelocity(sample, horizonMilliseconds, 12, out velocity12) ||
+                !TryBuildRuntimeEventSafeMlpPathAnalysis(sample, out pathAnalysis))
+            {
+                return false;
+            }
+
+            double latestDelta = 0.0;
+            if (_historyCount > 0)
+            {
+                int latestIndex = PriorHistoryIndex(_historyCount - 1, _historyCount);
+                latestDelta = Magnitude(sample.Position.X - _historyX[latestIndex], sample.Position.Y - _historyY[latestIndex]);
+            }
+
+            double recentSegmentMaxSpeed;
+            double recentHighSpeed = Math.Max(
+                Math.Max(velocity5.Speed, velocity8.Speed),
+                velocity12.Speed);
+            if (TryComputeRuntimeEventSafeMlpRecentSegmentMaxSpeed(
+                sample,
+                RuntimeEventSafeMlpRecentSegmentSamples,
+                out recentSegmentMaxSpeed))
+            {
+                recentHighSpeed = Math.Max(recentHighSpeed, recentSegmentMaxSpeed);
+            }
+
+            double directionX = velocity12.DisplacementX;
+            double directionY = velocity12.DisplacementY;
+            double directionMagnitude = Magnitude(directionX, directionY);
+            if (directionMagnitude > 0.000001)
+            {
+                directionX /= directionMagnitude;
+                directionY /= directionMagnitude;
+            }
+            else
+            {
+                directionX = 1.0;
+                directionY = 0.0;
+            }
+
+            double runtimeTargetDisplacement = velocity2.Speed * Math.Max(0.0, horizonMilliseconds) / 1000.0;
+            signals.Velocity2Speed = velocity2.Speed;
+            signals.Velocity12Speed = velocity12.Speed;
+            signals.RecentHighSpeed = recentHighSpeed;
+            signals.LatestDelta = latestDelta;
+            signals.RuntimeTargetDisplacement = runtimeTargetDisplacement;
+            signals.DirectionX = directionX;
+            signals.DirectionY = directionY;
+
+            Array.Clear(_runtimeEventSafeMlpInput, 0, _runtimeEventSafeMlpInput.Length);
+            _runtimeEventSafeMlpInput[0] = (float)(horizonMilliseconds / 16.67);
+            SetRuntimeEventSafeMlpVelocityFeatures(_runtimeEventSafeMlpInput, 1, velocity2);
+            SetRuntimeEventSafeMlpVelocityFeatures(_runtimeEventSafeMlpInput, 4, velocity3);
+            SetRuntimeEventSafeMlpVelocityFeatures(_runtimeEventSafeMlpInput, 7, velocity5);
+            SetRuntimeEventSafeMlpVelocityFeatures(_runtimeEventSafeMlpInput, 10, velocity8);
+            SetRuntimeEventSafeMlpVelocityFeatures(_runtimeEventSafeMlpInput, 13, velocity12);
+            _runtimeEventSafeMlpInput[16] = (float)(recentHighSpeed / 3000.0);
+            _runtimeEventSafeMlpInput[17] = (float)(latestDelta / 8.0);
+            _runtimeEventSafeMlpInput[18] = (float)(pathAnalysis.Net / 80.0);
+            _runtimeEventSafeMlpInput[19] = (float)(pathAnalysis.Path / 100.0);
+            _runtimeEventSafeMlpInput[20] = (float)pathAnalysis.Efficiency;
+            _runtimeEventSafeMlpInput[21] = (float)(runtimeTargetDisplacement / 8.0);
+            _runtimeEventSafeMlpInput[22] = (float)(velocity2.Speed / 3000.0);
+            _runtimeEventSafeMlpInput[23] = (float)directionX;
+            _runtimeEventSafeMlpInput[24] = (float)directionY;
+            return true;
+        }
+
+        private void ApplyRuntimeEventSafeMlpGuard(
+            RuntimeEventSafeMlpRuntimeSignals signals,
+            ref double displacementX,
+            ref double displacementY)
+        {
+            bool start =
+                signals.RecentHighSpeed >= RuntimeEventSafeMlpStopStartRecentHighMinimumPixelsPerSecond &&
+                signals.Velocity2Speed <= RuntimeEventSafeMlpStopStartVelocity2MaximumPixelsPerSecond &&
+                signals.LatestDelta <= RuntimeEventSafeMlpStopStartLatestDeltaMaximumPixels &&
+                signals.RuntimeTargetDisplacement <= RuntimeEventSafeMlpStopStartRuntimeTargetMaximumPixels;
+            if (start)
+            {
+                _runtimeEventSafeMlpStopLatchRemainingFrames = RuntimeEventSafeMlpStopLatchFrames;
+            }
+
+            bool release =
+                signals.Velocity2Speed > RuntimeEventSafeMlpStopReleaseVelocity2MinimumPixelsPerSecond ||
+                signals.LatestDelta > RuntimeEventSafeMlpStopReleaseLatestDeltaMinimumPixels ||
+                signals.RuntimeTargetDisplacement > RuntimeEventSafeMlpStopReleaseRuntimeTargetMinimumPixels;
+            if (release)
+            {
+                _runtimeEventSafeMlpStopLatchRemainingFrames = 0;
+            }
+
+            if (IsRuntimeEventSafeMlpStaticHold(signals))
+            {
+                displacementX = 0.0;
+                displacementY = 0.0;
+                return;
+            }
+
+            if (_runtimeEventSafeMlpStopLatchRemainingFrames <= 0)
+            {
+                return;
+            }
+
+            displacementX = 0.0;
+            displacementY = 0.0;
+            ClampVector(ref displacementX, ref displacementY, RuntimeEventSafeMlpStopCapPixels);
+            double lead = (displacementX * signals.DirectionX) + (displacementY * signals.DirectionY);
+            if (lead > RuntimeEventSafeMlpStopCapPixels)
+            {
+                displacementX -= (lead - RuntimeEventSafeMlpStopCapPixels) * signals.DirectionX;
+                displacementY -= (lead - RuntimeEventSafeMlpStopCapPixels) * signals.DirectionY;
+            }
+
+            _runtimeEventSafeMlpStopLatchRemainingFrames--;
+        }
+
+        private static bool IsRuntimeEventSafeMlpStaticHold(RuntimeEventSafeMlpRuntimeSignals signals)
+        {
+            return signals.Velocity12Speed <= RuntimeEventSafeMlpStaticVelocity12MaximumPixelsPerSecond &&
+                signals.LatestDelta <= RuntimeEventSafeMlpStaticLatestDeltaMaximumPixels &&
+                signals.RuntimeTargetDisplacement <= RuntimeEventSafeMlpStaticRuntimeTargetMaximumPixels;
+        }
+
+        private static void SetRuntimeEventSafeMlpVelocityFeatures(
+            float[] input,
+            int offset,
+            RuntimeEventSafeMlpVelocity velocity)
+        {
+            input[offset] = (float)(velocity.DisplacementX / 8.0);
+            input[offset + 1] = (float)(velocity.DisplacementY / 8.0);
+            input[offset + 2] = (float)(velocity.Speed / 2000.0);
+        }
+
+        private bool TryComputeRuntimeEventSafeMlpVelocity(
+            CursorPollSample sample,
+            double horizonMilliseconds,
+            int sampleCount,
+            out RuntimeEventSafeMlpVelocity velocity)
+        {
+            velocity = new RuntimeEventSafeMlpVelocity();
+            if (sampleCount < 2 || sample.StopwatchFrequency <= 0)
+            {
+                return false;
+            }
+
+            int back = Math.Min(sampleCount - 1, _historyCount);
+            if (back <= 0)
+            {
+                return true;
+            }
+
+            int oldestIndex = PriorHistoryIndex(_historyCount - back, _historyCount);
+            long deltaTicks = sample.TimestampTicks - _historyTimestampTicks[oldestIndex];
+            if (deltaTicks <= 0)
+            {
+                return true;
+            }
+
+            double deltaSeconds = deltaTicks / (double)sample.StopwatchFrequency;
+            if (deltaSeconds <= 0.0)
+            {
+                return true;
+            }
+
+            double velocityX = (sample.Position.X - _historyX[oldestIndex]) / deltaSeconds;
+            double velocityY = (sample.Position.Y - _historyY[oldestIndex]) / deltaSeconds;
+            double horizonSeconds = Math.Max(0.0, horizonMilliseconds) / 1000.0;
+            velocity.DisplacementX = velocityX * horizonSeconds;
+            velocity.DisplacementY = velocityY * horizonSeconds;
+            velocity.Speed = Magnitude(velocityX, velocityY);
+            return true;
+        }
+
+        private bool TryBuildRuntimeEventSafeMlpPathAnalysis(CursorPollSample sample, out RuntimeEventSafeMlpPathAnalysis analysis)
+        {
+            analysis = new RuntimeEventSafeMlpPathAnalysis();
+            int take = Math.Min(11, _historyCount);
+            if (take <= 0)
+            {
+                return true;
+            }
+
+            int firstIndex = PriorHistoryIndex(_historyCount - take, _historyCount);
+            double firstX = _historyX[firstIndex];
+            double firstY = _historyY[firstIndex];
+            double previousX = firstX;
+            double previousY = firstY;
+            for (int i = 1; i < take; i++)
+            {
+                int index = PriorHistoryIndex(_historyCount - take + i, _historyCount);
+                double currentX = _historyX[index];
+                double currentY = _historyY[index];
+                analysis.Path += Magnitude(currentX - previousX, currentY - previousY);
+                previousX = currentX;
+                previousY = currentY;
+            }
+
+            analysis.Path += Magnitude(sample.Position.X - previousX, sample.Position.Y - previousY);
+            analysis.Net = Magnitude(sample.Position.X - firstX, sample.Position.Y - firstY);
+            analysis.Efficiency = analysis.Path > 0.000001 ? analysis.Net / analysis.Path : 0.0;
+            return true;
+        }
+
+        private bool TryComputeRuntimeEventSafeMlpRecentSegmentMaxSpeed(
+            CursorPollSample sample,
+            int sampleCount,
+            out double maximumSpeedPixelsPerSecond)
+        {
+            maximumSpeedPixelsPerSecond = 0.0;
+            int take = Math.Min(sampleCount - 1, _historyCount);
+            if (take <= 0 || sample.StopwatchFrequency <= 0)
+            {
+                return true;
+            }
+
+            int firstIndex = PriorHistoryIndex(_historyCount - take, _historyCount);
+            double previousX = _historyX[firstIndex];
+            double previousY = _historyY[firstIndex];
+            long previousTicks = _historyTimestampTicks[firstIndex];
+            for (int i = 1; i < take; i++)
+            {
+                int index = PriorHistoryIndex(_historyCount - take + i, _historyCount);
+                AccumulateRuntimeEventSafeMlpSegmentSpeed(
+                    _historyX[index],
+                    _historyY[index],
+                    _historyTimestampTicks[index],
+                    sample.StopwatchFrequency,
+                    ref previousX,
+                    ref previousY,
+                    ref previousTicks,
+                    ref maximumSpeedPixelsPerSecond);
+            }
+
+            AccumulateRuntimeEventSafeMlpSegmentSpeed(
+                sample.Position.X,
+                sample.Position.Y,
+                sample.TimestampTicks,
+                sample.StopwatchFrequency,
+                ref previousX,
+                ref previousY,
+                ref previousTicks,
+                ref maximumSpeedPixelsPerSecond);
+            return true;
+        }
+
+        private static void AccumulateRuntimeEventSafeMlpSegmentSpeed(
+            double x,
+            double y,
+            long timestampTicks,
+            long stopwatchFrequency,
+            ref double previousX,
+            ref double previousY,
+            ref long previousTicks,
+            ref double maximumSpeedPixelsPerSecond)
+        {
+            long deltaTicks = timestampTicks - previousTicks;
+            if (deltaTicks > 0)
+            {
+                double deltaSeconds = deltaTicks / (double)stopwatchFrequency;
+                if (deltaSeconds > 0.0)
+                {
+                    double speed = Magnitude(x - previousX, y - previousY) / deltaSeconds;
+                    maximumSpeedPixelsPerSecond = Math.Max(maximumSpeedPixelsPerSecond, speed);
+                }
+            }
+
+            previousX = x;
+            previousY = y;
+            previousTicks = timestampTicks;
         }
 
         private static bool IsDistilledMlpStationary(
@@ -950,6 +1405,52 @@ namespace CursorMirror
 
             analysis.Net = Magnitude(sample.Position.X - firstX, sample.Position.Y - firstY);
             analysis.Efficiency = analysis.Path > 0.0 ? analysis.Net / analysis.Path : 0.0;
+            return true;
+        }
+
+        private bool TryComputeDistilledMlpRecentSegmentMaxSpeed(
+            CursorPollSample sample,
+            int sampleCount,
+            out double maximumSpeedPixelsPerSecond)
+        {
+            maximumSpeedPixelsPerSecond = 0.0;
+            int resolvedSampleCount = Math.Min(sampleCount, _historyCount + 1);
+            if (resolvedSampleCount < 2 || sample.StopwatchFrequency <= 0)
+            {
+                return false;
+            }
+
+            double previousX;
+            double previousY;
+            long previousTicks;
+            if (!TryResolveDistilledMlpPoint(sample, 0, resolvedSampleCount, out previousX, out previousY, out previousTicks))
+            {
+                return false;
+            }
+
+            for (int i = 1; i < resolvedSampleCount; i++)
+            {
+                double x;
+                double y;
+                long ticks;
+                if (!TryResolveDistilledMlpPoint(sample, i, resolvedSampleCount, out x, out y, out ticks))
+                {
+                    return false;
+                }
+
+                long deltaTicks = ticks - previousTicks;
+                if (deltaTicks > 0)
+                {
+                    double deltaSeconds = deltaTicks / (double)sample.StopwatchFrequency;
+                    double speed = Magnitude(x - previousX, y - previousY) / deltaSeconds;
+                    maximumSpeedPixelsPerSecond = Math.Max(maximumSpeedPixelsPerSecond, speed);
+                }
+
+                previousX = x;
+                previousY = y;
+                previousTicks = ticks;
+            }
+
             return true;
         }
 
@@ -1810,6 +2311,38 @@ namespace CursorMirror
             public double Net;
             public int Reversals;
             public double Efficiency;
+        }
+
+        private struct DistilledMlpRuntimeSignals
+        {
+            public double Velocity2Speed;
+            public double TargetDisplacement;
+            public double RecentHighSpeed;
+        }
+
+        private struct RuntimeEventSafeMlpVelocity
+        {
+            public double DisplacementX;
+            public double DisplacementY;
+            public double Speed;
+        }
+
+        private struct RuntimeEventSafeMlpPathAnalysis
+        {
+            public double Path;
+            public double Net;
+            public double Efficiency;
+        }
+
+        private struct RuntimeEventSafeMlpRuntimeSignals
+        {
+            public double Velocity2Speed;
+            public double Velocity12Speed;
+            public double RecentHighSpeed;
+            public double LatestDelta;
+            public double RuntimeTargetDisplacement;
+            public double DirectionX;
+            public double DirectionY;
         }
 
         private int PriorHistoryIndex(int offsetFromOldest, int priorCount)

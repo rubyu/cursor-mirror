@@ -28,6 +28,8 @@ namespace CursorMirror
         private long _lastPollSampleTimestampTicks;
         private bool _hasLastDisplayPointer;
         private Point _lastDisplayPointer;
+        private bool _hasLastOverlayLocation;
+        private Point _lastOverlayLocation;
         private bool _disposed;
         private long _lastTickPollDurationTicks;
         private long _lastTickSelectTargetDurationTicks;
@@ -36,6 +38,7 @@ namespace CursorMirror
         private bool _lastTickPollSampleAvailable;
         private bool _lastTickStalePollSample;
         private bool _lastTickPredictionEnabled;
+        private bool _lastTickOverlayMoveSkipped;
         private Point _lastTickRawPointer;
         private Point _lastTickDisplayPointer;
 
@@ -119,6 +122,7 @@ namespace CursorMirror
                 {
                     Point location = OverlayPlacement.FromPointerAndHotSpot(displayPointer, capture.HotSpot);
                     _overlayPresenter.ShowCursor(capture.Bitmap, location);
+                    StoreLastOverlayLocation(location);
                     _lastCursorHandle = capture.CursorHandle;
                     _lastCursorImageRefreshMilliseconds = now;
                     _lastHotSpot = capture.HotSpot;
@@ -128,7 +132,9 @@ namespace CursorMirror
             }
             else if (_hasLastImage)
             {
-                _overlayPresenter.Move(OverlayPlacement.FromPointerAndHotSpot(displayPointer, _lastHotSpot));
+                Point location = OverlayPlacement.FromPointerAndHotSpot(displayPointer, _lastHotSpot);
+                _overlayPresenter.Move(location);
+                StoreLastOverlayLocation(location);
                 StoreLastDisplayPointer(displayPointer);
             }
         }
@@ -159,7 +165,9 @@ namespace CursorMirror
                 _settings.DwmAdaptiveOscillationMaximumSpanPixels != normalized.DwmAdaptiveOscillationMaximumSpanPixels ||
                 _settings.DwmAdaptiveOscillationMaximumEfficiencyPercent != normalized.DwmAdaptiveOscillationMaximumEfficiencyPercent ||
                 _settings.DwmAdaptiveOscillationLatchMilliseconds != normalized.DwmAdaptiveOscillationLatchMilliseconds ||
-                _settings.DwmPredictionModel != normalized.DwmPredictionModel;
+                _settings.DwmPredictionModel != normalized.DwmPredictionModel ||
+                _settings.DwmPredictionTargetOffsetMilliseconds != normalized.DwmPredictionTargetOffsetMilliseconds ||
+                _settings.DistilledMlpPostStopBrakeEnabled != normalized.DistilledMlpPostStopBrakeEnabled;
 
             _settings = normalized;
             _opacityController.ApplySettings(_settings);
@@ -232,6 +240,7 @@ namespace CursorMirror
             _hasLastPointer = false;
             _hasLastPollSample = false;
             _hasLastDisplayPointer = false;
+            _hasLastOverlayLocation = false;
             _opacityController.Reset();
             _positionPredictor.Reset();
             _pollPositionPredictor.Reset();
@@ -303,6 +312,7 @@ namespace CursorMirror
                 {
                     Point location = OverlayPlacement.FromPointerAndHotSpot(displayPointer, capture.HotSpot);
                     _overlayPresenter.ShowCursor(capture.Bitmap, location);
+                    StoreLastOverlayLocation(location);
                     _lastCursorHandle = capture.CursorHandle;
                     _lastCursorImageRefreshMilliseconds = now;
                     _lastHotSpot = capture.HotSpot;
@@ -312,7 +322,9 @@ namespace CursorMirror
             }
             else if (_hasLastImage)
             {
-                _overlayPresenter.Move(OverlayPlacement.FromPointerAndHotSpot(displayPointer, _lastHotSpot));
+                Point location = OverlayPlacement.FromPointerAndHotSpot(displayPointer, _lastHotSpot);
+                _overlayPresenter.Move(location);
+                StoreLastOverlayLocation(location);
             }
         }
 
@@ -432,7 +444,19 @@ namespace CursorMirror
         {
             bool telemetryEnabled = ProductRuntimeOutlierRecorder.Current.IsEnabled;
             long startedTicks = telemetryEnabled ? Stopwatch.GetTimestamp() : 0;
+            if (_hasLastOverlayLocation && _lastOverlayLocation == location)
+            {
+                if (telemetryEnabled)
+                {
+                    _lastTickMoveOverlayDurationTicks = Stopwatch.GetTimestamp() - startedTicks;
+                    _lastTickOverlayMoveSkipped = true;
+                }
+
+                return;
+            }
+
             _overlayPresenter.Move(location);
+            StoreLastOverlayLocation(location);
             if (telemetryEnabled)
             {
                 _lastTickMoveOverlayDurationTicks = Stopwatch.GetTimestamp() - startedTicks;
@@ -497,6 +521,7 @@ namespace CursorMirror
             _lastTickPollSampleAvailable = false;
             _lastTickStalePollSample = false;
             _lastTickPredictionEnabled = false;
+            _lastTickOverlayMoveSkipped = false;
             _lastTickRawPointer = Point.Empty;
             _lastTickDisplayPointer = Point.Empty;
         }
@@ -527,6 +552,7 @@ namespace CursorMirror
             runtimeEvent.PollSampleAvailable = _lastTickPollSampleAvailable ? 1 : 0;
             runtimeEvent.StalePollSample = _lastTickStalePollSample ? 1 : 0;
             runtimeEvent.PredictionEnabled = _lastTickPredictionEnabled ? 1 : 0;
+            runtimeEvent.OverlayMoveSkipped = _lastTickOverlayMoveSkipped ? 1 : 0;
             runtimeEvent.RawX = _lastTickRawPointer.X;
             runtimeEvent.RawY = _lastTickRawPointer.Y;
             runtimeEvent.DisplayX = _lastTickDisplayPointer.X;
@@ -564,6 +590,12 @@ namespace CursorMirror
         {
             _lastDisplayPointer = displayPointer;
             _hasLastDisplayPointer = true;
+        }
+
+        private void StoreLastOverlayLocation(Point location)
+        {
+            _lastOverlayLocation = location;
+            _hasLastOverlayLocation = true;
         }
 
         private void ApplyOpacity(long now)

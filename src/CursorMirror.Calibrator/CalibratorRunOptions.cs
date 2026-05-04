@@ -7,6 +7,7 @@ namespace CursorMirror.Calibrator
         public int DurationSeconds { get; set; }
         public string OutputPath { get; set; }
         public string ProductRuntimeOutlierOutputPath { get; set; }
+        public bool DisableDisplayCapture { get; set; }
         public bool? PredictionEnabled { get; set; }
         public int? PredictionGainPercent { get; set; }
         public int? PredictionHorizonMilliseconds { get; set; }
@@ -68,6 +69,10 @@ namespace CursorMirror.Calibrator
                 {
                     options.ProductRuntimeOutlierOutputPath = args[i + 1];
                     i++;
+                }
+                else if (argument == "--no-display-capture")
+                {
+                    options.DisableDisplayCapture = true;
                 }
                 else if (argument == "--prediction-enabled" && i + 1 < args.Length)
                 {
@@ -334,6 +339,17 @@ namespace CursorMirror.Calibrator
             if (normalized == "distilledmlp" || normalized == "distilled-mlp" || normalized == "distilled_mlp" || normalized == "distilled" || normalized == "v16")
             {
                 model = CursorMirrorSettings.DwmPredictionModelDistilledMlp;
+                return true;
+            }
+
+            if (normalized == "runtimeeventsafemlp" ||
+                normalized == "runtime-event-safe-mlp" ||
+                normalized == "runtime_event_safe_mlp" ||
+                normalized == "event-safe-mlp" ||
+                normalized == "event_safe_mlp" ||
+                normalized == "v21")
+            {
+                model = CursorMirrorSettings.DwmPredictionModelRuntimeEventSafeMlp;
                 return true;
             }
 

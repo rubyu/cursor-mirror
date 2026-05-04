@@ -52,6 +52,7 @@ namespace CursorMirror.Tests
             TestAssert.Equal(0, settings.DwmAdaptiveOscillationLatchMilliseconds, "default DWM adaptive oscillation latch");
             TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, settings.DwmPredictionModel, "default DWM prediction model");
             TestAssert.Equal(2, settings.DwmPredictionTargetOffsetMilliseconds, "default DWM prediction target offset");
+            TestAssert.False(settings.DistilledMlpPostStopBrakeEnabled, "default distilled MLP post-stop brake disabled");
         }
 
         // Moving opacity validation [COT-MSU-2]
@@ -152,7 +153,7 @@ namespace CursorMirror.Tests
             TestAssert.Equal(10000, high.DwmAdaptiveOscillationMaximumSpanPixels, "DWM adaptive oscillation span upper clamp");
             TestAssert.Equal(100, high.DwmAdaptiveOscillationMaximumEfficiencyPercent, "DWM adaptive oscillation efficiency upper clamp");
             TestAssert.Equal(1000, high.DwmAdaptiveOscillationLatchMilliseconds, "DWM adaptive oscillation latch upper clamp");
-            TestAssert.Equal(3, high.DwmPredictionModel, "DWM prediction model upper clamp");
+            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelRuntimeEventSafeMlp, high.DwmPredictionModel, "DWM prediction model upper clamp");
             TestAssert.Equal(8, high.DwmPredictionTargetOffsetMilliseconds, "DWM prediction target offset upper clamp");
         }
 
@@ -187,6 +188,7 @@ namespace CursorMirror.Tests
                 settings.DwmAdaptiveOscillationLatchMilliseconds = 300;
                 settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelLeastSquares;
                 settings.DwmPredictionTargetOffsetMilliseconds = 3;
+                settings.DistilledMlpPostStopBrakeEnabled = true;
                 settings.IdleFadeEnabled = false;
                 settings.IdleFadeDelayMilliseconds = 4000;
                 settings.IdleOpacityPercent = 12;
@@ -216,6 +218,7 @@ namespace CursorMirror.Tests
                 TestAssert.Equal(300, loaded.DwmAdaptiveOscillationLatchMilliseconds, "loaded DWM adaptive oscillation latch");
                 TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelLeastSquares, loaded.DwmPredictionModel, "loaded DWM prediction model");
                 TestAssert.Equal(3, loaded.DwmPredictionTargetOffsetMilliseconds, "loaded DWM prediction target offset");
+                TestAssert.True(loaded.DistilledMlpPostStopBrakeEnabled, "loaded distilled MLP post-stop brake");
                 TestAssert.False(loaded.IdleFadeEnabled, "loaded idle fade flag");
                 TestAssert.Equal(4000, loaded.IdleFadeDelayMilliseconds, "loaded idle fade delay");
                 TestAssert.Equal(12, loaded.IdleOpacityPercent, "loaded idle opacity");
@@ -365,6 +368,7 @@ namespace CursorMirror.Tests
                 TestAssert.Equal(0, oldFormat.DwmAdaptiveOscillationWindowSamples, "old settings must use DWM adaptive oscillation window default");
                 TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, oldFormat.DwmPredictionModel, "old settings must use DWM prediction model default");
                 TestAssert.Equal(2, oldFormat.DwmPredictionTargetOffsetMilliseconds, "old settings must use DWM prediction target offset default");
+                TestAssert.False(oldFormat.DistilledMlpPostStopBrakeEnabled, "old settings must use distilled MLP post-stop brake default");
 
                 SettingsController controller = new SettingsController(store, loaded, delegate { }, delegate { });
                 controller.ResetToDefaults();

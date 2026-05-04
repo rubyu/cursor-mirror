@@ -45,6 +45,16 @@ namespace CursorMirror
             get { return Get("PredictionModelLabel"); }
         }
 
+        public static string PredictionTargetOffsetLabel
+        {
+            get { return Get("PredictionTargetOffsetLabel"); }
+        }
+
+        public static string DistilledMlpPostStopBrakeLabel
+        {
+            get { return Get("DistilledMlpPostStopBrakeLabel"); }
+        }
+
         public static string MovingOpacityLabel
         {
             get { return Get("MovingOpacityLabel"); }
@@ -429,6 +439,11 @@ namespace CursorMirror
                 return "DistilledMLP";
             }
 
+            if (predictionModel == CursorMirrorSettings.DwmPredictionModelRuntimeEventSafeMlp)
+            {
+                return "RuntimeEventSafeMLP";
+            }
+
             return "ConstantVelocity";
         }
 
@@ -493,6 +508,10 @@ namespace CursorMirror
                     return "Prediction gain (%)";
                 case "PredictionModelLabel":
                     return "Prediction model";
+                case "PredictionTargetOffsetLabel":
+                    return "Target offset (ms)";
+                case "DistilledMlpPostStopBrakeLabel":
+                    return "Post-stop brake (experimental)";
                 case "MovingOpacityLabel":
                     return "Moving opacity (%)";
                 case "FadeDurationLabel":
@@ -664,6 +683,10 @@ namespace CursorMirror
                     return "予測ゲイン (%)";
                 case "PredictionModelLabel":
                     return "予測モデル";
+                case "PredictionTargetOffsetLabel":
+                    return "ターゲット補正 (ms)";
+                case "DistilledMlpPostStopBrakeLabel":
+                    return "停止直後ブレーキ（実験）";
                 case "MovingOpacityLabel":
                     return "移動中の不透明度 (%)";
                 case "FadeDurationLabel":

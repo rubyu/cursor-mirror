@@ -8,10 +8,12 @@ namespace CursorMirror
     {
         private readonly SettingsController _controller;
         private readonly CheckBox _predictionCheckBox;
+        private readonly CheckBox _distilledMlpPostStopBrakeCheckBox;
         private readonly CheckBox _movementTranslucencyCheckBox;
         private readonly CheckBox _idleFadeCheckBox;
         private Label _predictionModelLabel;
         private Label _predictionGainLabel;
+        private Label _predictionTargetOffsetLabel;
         private Label _movingOpacityLabel;
         private Label _fadeDurationLabel;
         private Label _idleDelayLabel;
@@ -19,6 +21,7 @@ namespace CursorMirror
         private Label _idleFadeDelaySecondsLabel;
         private readonly ComboBox _predictionModelInput;
         private readonly NumericUpDown _predictionGainInput;
+        private readonly NumericUpDown _predictionTargetOffsetInput;
         private readonly NumericUpDown _movingOpacityInput;
         private readonly NumericUpDown _fadeDurationInput;
         private readonly NumericUpDown _idleDelayInput;
@@ -42,13 +45,13 @@ namespace CursorMirror
             MinimizeBox = false;
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterScreen;
-            ClientSize = new Size(420, 404);
+            ClientSize = new Size(420, 464);
 
             TableLayoutPanel layout = new TableLayoutPanel();
             layout.Dock = DockStyle.Fill;
             layout.Padding = new Padding(12);
             layout.ColumnCount = 2;
-            layout.RowCount = 11;
+            layout.RowCount = 13;
             layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 55));
             layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 45));
             Controls.Add(layout);
@@ -65,9 +68,17 @@ namespace CursorMirror
             layout.SetColumnSpan(_predictionCheckBox, 2);
 
             _predictionModelInput = AddComboRow(layout, 1, LocalizedStrings.PredictionModelLabel, out _predictionModelLabel);
-            _predictionModelInput.SelectedIndexChanged += delegate { ApplyFromControls(); };
+            _predictionModelInput.SelectedIndexChanged += delegate { PredictionModelSelectionChanged(); };
 
             _predictionGainInput = AddNumberRow(layout, 2, LocalizedStrings.PredictionGainLabel, CursorMirrorSettings.MinimumPredictionGainPercent, CursorMirrorSettings.MaximumPredictionGainPercent, out _predictionGainLabel);
+            _predictionTargetOffsetInput = AddNumberRow(layout, 3, LocalizedStrings.PredictionTargetOffsetLabel, CursorMirrorSettings.MinimumDwmPredictionTargetOffsetMilliseconds, CursorMirrorSettings.MaximumDwmPredictionTargetOffsetMilliseconds, out _predictionTargetOffsetLabel);
+
+            _distilledMlpPostStopBrakeCheckBox = new CheckBox();
+            _distilledMlpPostStopBrakeCheckBox.Text = LocalizedStrings.DistilledMlpPostStopBrakeLabel;
+            _distilledMlpPostStopBrakeCheckBox.AutoSize = true;
+            _distilledMlpPostStopBrakeCheckBox.CheckedChanged += delegate { ApplyFromControls(); };
+            layout.Controls.Add(_distilledMlpPostStopBrakeCheckBox, 0, 4);
+            layout.SetColumnSpan(_distilledMlpPostStopBrakeCheckBox, 2);
 
             _movementTranslucencyCheckBox = new CheckBox();
             _movementTranslucencyCheckBox.Text = LocalizedStrings.MovementTranslucencyLabel;
@@ -77,12 +88,12 @@ namespace CursorMirror
                 UpdateMovementTranslucencyInputState();
                 ApplyFromControls();
             };
-            layout.Controls.Add(_movementTranslucencyCheckBox, 0, 3);
+            layout.Controls.Add(_movementTranslucencyCheckBox, 0, 5);
             layout.SetColumnSpan(_movementTranslucencyCheckBox, 2);
 
-            _movingOpacityInput = AddNumberRow(layout, 4, LocalizedStrings.MovingOpacityLabel, CursorMirrorSettings.MinimumMovingOpacityPercent, CursorMirrorSettings.MaximumMovingOpacityPercent, out _movingOpacityLabel);
-            _fadeDurationInput = AddNumberRow(layout, 5, LocalizedStrings.FadeDurationLabel, CursorMirrorSettings.MinimumFadeDurationMilliseconds, CursorMirrorSettings.MaximumFadeDurationMilliseconds, out _fadeDurationLabel);
-            _idleDelayInput = AddNumberRow(layout, 6, LocalizedStrings.IdleDelayLabel, CursorMirrorSettings.MinimumIdleDelayMilliseconds, CursorMirrorSettings.MaximumIdleDelayMilliseconds, out _idleDelayLabel);
+            _movingOpacityInput = AddNumberRow(layout, 6, LocalizedStrings.MovingOpacityLabel, CursorMirrorSettings.MinimumMovingOpacityPercent, CursorMirrorSettings.MaximumMovingOpacityPercent, out _movingOpacityLabel);
+            _fadeDurationInput = AddNumberRow(layout, 7, LocalizedStrings.FadeDurationLabel, CursorMirrorSettings.MinimumFadeDurationMilliseconds, CursorMirrorSettings.MaximumFadeDurationMilliseconds, out _fadeDurationLabel);
+            _idleDelayInput = AddNumberRow(layout, 8, LocalizedStrings.IdleDelayLabel, CursorMirrorSettings.MinimumIdleDelayMilliseconds, CursorMirrorSettings.MaximumIdleDelayMilliseconds, out _idleDelayLabel);
 
             _idleFadeCheckBox = new CheckBox();
             _idleFadeCheckBox.Text = LocalizedStrings.IdleFadeLabel;
@@ -92,17 +103,17 @@ namespace CursorMirror
                 UpdateIdleFadeInputState();
                 ApplyFromControls();
             };
-            layout.Controls.Add(_idleFadeCheckBox, 0, 7);
+            layout.Controls.Add(_idleFadeCheckBox, 0, 9);
             layout.SetColumnSpan(_idleFadeCheckBox, 2);
 
-            _idleFadeOpacityInput = AddNumberRow(layout, 8, LocalizedStrings.IdleOpacityLabel, CursorMirrorSettings.MinimumIdleOpacityPercent, CursorMirrorSettings.MaximumIdleOpacityPercent, out _idleFadeOpacityLabel);
-            _idleFadeDelaySecondsInput = AddNumberRow(layout, 9, LocalizedStrings.IdleFadeDelayLabel, CursorMirrorSettings.MinimumIdleFadeDelayMilliseconds / 1000, CursorMirrorSettings.MaximumIdleFadeDelayMilliseconds / 1000, out _idleFadeDelaySecondsLabel);
+            _idleFadeOpacityInput = AddNumberRow(layout, 10, LocalizedStrings.IdleOpacityLabel, CursorMirrorSettings.MinimumIdleOpacityPercent, CursorMirrorSettings.MaximumIdleOpacityPercent, out _idleFadeOpacityLabel);
+            _idleFadeDelaySecondsInput = AddNumberRow(layout, 11, LocalizedStrings.IdleFadeDelayLabel, CursorMirrorSettings.MinimumIdleFadeDelayMilliseconds / 1000, CursorMirrorSettings.MaximumIdleFadeDelayMilliseconds / 1000, out _idleFadeDelaySecondsLabel);
 
             FlowLayoutPanel buttons = new FlowLayoutPanel();
             buttons.Dock = DockStyle.Fill;
             buttons.FlowDirection = FlowDirection.RightToLeft;
             buttons.WrapContents = false;
-            layout.Controls.Add(buttons, 0, 10);
+            layout.Controls.Add(buttons, 0, 12);
             layout.SetColumnSpan(buttons, 2);
 
             Button exitButton = new Button();
@@ -197,6 +208,8 @@ namespace CursorMirror
                 _predictionCheckBox.Checked = normalized.PredictionEnabled;
                 ReplacePredictionModelItems(_predictionModelInput, normalized.DwmPredictionModel);
                 _predictionGainInput.Value = normalized.PredictionGainPercent;
+                _predictionTargetOffsetInput.Value = normalized.DwmPredictionTargetOffsetMilliseconds;
+                _distilledMlpPostStopBrakeCheckBox.Checked = normalized.DistilledMlpPostStopBrakeEnabled;
                 _movementTranslucencyCheckBox.Checked = normalized.MovementTranslucencyEnabled;
                 _movingOpacityInput.Value = normalized.MovingOpacityPercent;
                 _fadeDurationInput.Value = normalized.FadeDurationMilliseconds;
@@ -226,6 +239,8 @@ namespace CursorMirror
             settings.PredictionEnabled = _predictionCheckBox.Checked;
             settings.DwmPredictionModel = PredictionModelFromSelection(_predictionModelInput);
             settings.PredictionGainPercent = (int)_predictionGainInput.Value;
+            settings.DwmPredictionTargetOffsetMilliseconds = (int)_predictionTargetOffsetInput.Value;
+            settings.DistilledMlpPostStopBrakeEnabled = _distilledMlpPostStopBrakeCheckBox.Checked;
             settings.MovementTranslucencyEnabled = _movementTranslucencyCheckBox.Checked;
             settings.MovingOpacityPercent = (int)_movingOpacityInput.Value;
             settings.FadeDurationMilliseconds = (int)_fadeDurationInput.Value;
@@ -236,6 +251,22 @@ namespace CursorMirror
             _controller.UpdateSettings(settings);
         }
 
+        private void PredictionModelSelectionChanged()
+        {
+            int predictionModel = PredictionModelFromSelection(_predictionModelInput);
+            if (!_loading &&
+                IsRecommendedNegativeOffsetPredictionModel(predictionModel) &&
+                _predictionTargetOffsetInput.Value == CursorMirrorSettings.DefaultDwmPredictionTargetOffsetMilliseconds)
+            {
+                _predictionTargetOffsetInput.Value = RecommendedPredictionTargetOffsetMilliseconds(predictionModel);
+                UpdatePredictionInputState();
+                return;
+            }
+
+            UpdatePredictionInputState();
+            ApplyFromControls();
+        }
+
         private void UpdatePredictionInputState()
         {
             bool enabled = _predictionCheckBox.Checked;
@@ -243,6 +274,11 @@ namespace CursorMirror
             _predictionModelInput.Enabled = enabled;
             _predictionGainLabel.Enabled = enabled;
             _predictionGainInput.Enabled = enabled;
+            _predictionTargetOffsetLabel.Enabled = enabled;
+            _predictionTargetOffsetInput.Enabled = enabled;
+            _distilledMlpPostStopBrakeCheckBox.Enabled =
+                enabled &&
+                PredictionModelFromSelection(_predictionModelInput) == CursorMirrorSettings.DwmPredictionModelDistilledMlp;
         }
 
         private static void ReplacePredictionModelItems(ComboBox comboBox, int selectedModel)
@@ -255,6 +291,7 @@ namespace CursorMirror
                 comboBox.Items.Add(LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelLeastSquares));
                 comboBox.Items.Add(LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelExperimentalMlp));
                 comboBox.Items.Add(LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelDistilledMlp));
+                comboBox.Items.Add(LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelRuntimeEventSafeMlp));
                 comboBox.SelectedIndex = PredictionModelIndex(selectedModel);
             }
             finally
@@ -280,6 +317,11 @@ namespace CursorMirror
                 return CursorMirrorSettings.DwmPredictionModelDistilledMlp;
             }
 
+            if (comboBox.SelectedIndex == 4)
+            {
+                return CursorMirrorSettings.DwmPredictionModelRuntimeEventSafeMlp;
+            }
+
             return CursorMirrorSettings.DwmPredictionModelConstantVelocity;
         }
 
@@ -300,7 +342,28 @@ namespace CursorMirror
                 return 3;
             }
 
+            if (model == CursorMirrorSettings.DwmPredictionModelRuntimeEventSafeMlp)
+            {
+                return 4;
+            }
+
             return 0;
+        }
+
+        private static bool IsRecommendedNegativeOffsetPredictionModel(int model)
+        {
+            return model == CursorMirrorSettings.DwmPredictionModelDistilledMlp ||
+                model == CursorMirrorSettings.DwmPredictionModelRuntimeEventSafeMlp;
+        }
+
+        private static int RecommendedPredictionTargetOffsetMilliseconds(int model)
+        {
+            if (model == CursorMirrorSettings.DwmPredictionModelRuntimeEventSafeMlp)
+            {
+                return CursorMirrorSettings.RecommendedRuntimeEventSafeMlpPredictionTargetOffsetMilliseconds;
+            }
+
+            return CursorMirrorSettings.RecommendedDistilledMlpPredictionTargetOffsetMilliseconds;
         }
 
         private void UpdateIdleFadeInputState()

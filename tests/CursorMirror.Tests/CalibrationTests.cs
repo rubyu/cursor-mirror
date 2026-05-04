@@ -182,8 +182,14 @@ namespace CursorMirror.Tests
             CalibratorRunOptions predictionOptions = CalibratorRunOptions.FromArguments(new[] { "--dwm-target-offset-ms", "3" });
             TestAssert.Equal(3, predictionOptions.DwmPredictionTargetOffsetMilliseconds.Value, "DWM prediction target offset option");
 
+            CalibratorRunOptions runtimeEventSafeOptions = CalibratorRunOptions.FromArguments(new[] { "--dwm-prediction-model", "RuntimeEventSafeMLP" });
+            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelRuntimeEventSafeMlp, runtimeEventSafeOptions.DwmPredictionModel.Value, "runtime event-safe MLP prediction model option");
+
             CalibratorRunOptions outlierOptions = CalibratorRunOptions.FromArguments(new[] { "--product-runtime-outlier-output", "product-runtime.zip" });
             TestAssert.Equal("product-runtime.zip", outlierOptions.ProductRuntimeOutlierOutputPath, "product runtime outlier output option");
+
+            CalibratorRunOptions noDisplayCaptureOptions = CalibratorRunOptions.FromArguments(new[] { "--no-display-capture" });
+            TestAssert.True(noDisplayCaptureOptions.DisableDisplayCapture, "no display capture option");
         }
     }
 }

@@ -346,6 +346,18 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that `DistilledMLP` does not emit model-biased displacement for stationary cursor history and instead returns the exact cursor position.
   Refs: Section 4.4.2.
 
+- COT-MOU-52 - DistilledMLP post-stop brake snaps after abrupt stop
+  Verify that the off-by-default experimental `DistilledMLP` post-stop brake snaps the displayed overlay to the exact current cursor position immediately after a high-speed abrupt stop when the option is enabled.
+  Refs: Section 4.4.2.
+
+- COT-MOU-53 - RuntimeEventSafeMLP prediction model is selectable
+  Verify that `RuntimeEventSafeMLP` can be selected as the DWM prediction model and produces a deterministic fixed-weight prediction with runtime-only features after 60Hz history is available.
+  Refs: Section 4.4.2.
+
+- COT-MOU-54 - RuntimeEventSafeMLP static and stop guards snap to exact position
+  Verify that `RuntimeEventSafeMLP` snaps to the exact current cursor position for stationary input and immediately after a detected abrupt stop without requiring training-only labels.
+  Refs: Section 4.4.2.
+
 #### A.4.T Tray and Application Lifetime
 ##### Unit
 - COT-MTU-1 - Tray icon created
@@ -387,7 +399,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 #### A.4.S Settings UI and Persistence
 ##### Unit
 - COT-MSU-1 - Settings defaults
-  Verify documented default settings: movement translucency enabled, predictive overlay positioning enabled, prediction model `ConstantVelocity`, prediction gain `100%`, DWM horizon cap `10ms`, DWM prediction target offset `2ms`, idle fade enabled, moving opacity `70%`, fade duration `80ms`, movement idle delay `120ms`, idle fade delay `3s`, and idle opacity `0%`.
+  Verify documented default settings: movement translucency enabled, predictive overlay positioning enabled, prediction model `ConstantVelocity`, prediction gain `100%`, DWM horizon cap `10ms`, DWM prediction target offset `2ms`, experimental `DistilledMLP` post-stop brake disabled, idle fade enabled, moving opacity `70%`, fade duration `80ms`, movement idle delay `120ms`, idle fade delay `3s`, and idle opacity `0%`.
   Refs: Sections 4.4.1, 4.4.1.1, 4.4.2, 4.5.1.
 
 - COT-MSU-2 - Moving opacity validation
@@ -447,7 +459,15 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Sections 4.4.2, 4.5.1, 6.1.
 
 - COT-MSU-16 - Prediction model selection
-  Verify that the settings window exposes `ConstantVelocity (default)`, `LeastSquares`, `ExperimentalMLP`, and `DistilledMLP`, selects `ConstantVelocity` by default, applies model changes immediately, and disables the prediction model control when prediction is disabled.
+  Verify that the settings window exposes `ConstantVelocity (default)`, `LeastSquares`, `ExperimentalMLP`, `DistilledMLP`, and `RuntimeEventSafeMLP`, selects `ConstantVelocity` by default, applies model changes immediately, and disables the prediction model control when prediction is disabled.
+  Refs: Sections 4.4.2, 4.5.1, 6.1.
+
+- COT-MSU-17 - Prediction target offset control
+  Verify that the settings window exposes the DWM prediction target offset, applies edited values immediately, disables the control when prediction is disabled, and switches to the validated `-4ms` recommendation when `DistilledMLP` or `RuntimeEventSafeMLP` is selected from the default target offset.
+  Refs: Sections 4.4.2, 4.5.1, 6.1.
+
+- COT-MSU-18 - DistilledMLP post-stop brake control
+  Verify that the settings window exposes the off-by-default experimental `DistilledMLP` post-stop brake, enables it only when predictive positioning uses `DistilledMLP`, applies edited values immediately, and preserves its value while unavailable.
   Refs: Sections 4.4.2, 4.5.1, 6.1.
 
 #### A.4.D DPI and Multi-Monitor Coordinates
@@ -669,7 +689,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Section 12.4.
 
 - COT-MEU-12 - Demo overlay control state dependencies
-  Verify that demo overlay setting controls are disabled when their parent setting or the demo-owned mirrored cursor overlay is disabled.
+  Verify that demo overlay setting controls are disabled when their parent setting or the demo-owned mirrored cursor overlay is disabled, including `DistilledMLP`-only controls when another prediction model is selected.
   Refs: Section 12.3.
 
 #### A.4.R Resource Management and Failure Handling
@@ -858,5 +878,5 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Sections 4.5.1, 6.3.
 
 - COT-BVM-9 - Prediction settings manual pass
-  Verify that predictive overlay positioning is enabled by default, `ConstantVelocity (default)`, `LeastSquares`, `ExperimentalMLP`, and `DistilledMLP` can be selected from the settings window, and disabling prediction returns to exact pointer positioning.
+  Verify that predictive overlay positioning is enabled by default, `ConstantVelocity (default)`, `LeastSquares`, `ExperimentalMLP`, `DistilledMLP`, and `RuntimeEventSafeMLP` can be selected from the settings window, and disabling prediction returns to exact pointer positioning.
   Refs: Sections 2.3, 4.4.2, 4.5.1, 6.3.
