@@ -319,6 +319,18 @@ namespace CursorMirror.Calibrator
                 return true;
             }
 
+            if (normalized == "experimentalmlp" || normalized == "experimental-mlp" || normalized == "experimental_mlp" || normalized == "mlp")
+            {
+                model = CursorMirrorSettings.DwmPredictionModelExperimentalMlp;
+                return true;
+            }
+
+            if (normalized == "distilledmlp" || normalized == "distilled-mlp" || normalized == "distilled_mlp" || normalized == "distilled" || normalized == "v16")
+            {
+                model = CursorMirrorSettings.DwmPredictionModelDistilledMlp;
+                return true;
+            }
+
             if (normalized == "constant" || normalized == "constantvelocity" || normalized == "constant-velocity" || normalized == "constant_velocity")
             {
                 model = CursorMirrorSettings.DwmPredictionModelConstantVelocity;

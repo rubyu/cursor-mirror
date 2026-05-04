@@ -419,6 +419,16 @@ namespace CursorMirror
                 return "LeastSquares";
             }
 
+            if (predictionModel == CursorMirrorSettings.DwmPredictionModelExperimentalMlp)
+            {
+                return "ExperimentalMLP";
+            }
+
+            if (predictionModel == CursorMirrorSettings.DwmPredictionModelDistilledMlp)
+            {
+                return "DistilledMLP";
+            }
+
             return "ConstantVelocity";
         }
 

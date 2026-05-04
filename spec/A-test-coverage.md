@@ -67,6 +67,7 @@ This section defines the scope and intent of each test family. Code definitions 
 - S: Settings UI and persistence - Settings defaults, validation, persistence, reset, immediate application, and settings-window command behavior.
 - D: DPI and multi-monitor coordinates - DPI awareness, virtual screen coordinates, negative coordinates, and scaling behavior.
 - L: Mouse trace tooling - Trace session state, sample collection, UI state derivation, package writing, and manual trace capture.
+- N: Motion Lab tooling - Bezier motion generation, speed-profile sampling, CPU-load helper parsing, kernel benchmark feature detection, and package writing.
 - E: Demo application and virtual pointer stream - Demo startup controls, deterministic synthetic signal generation, and demo-scene behavior.
 - P: Packaging and runtime dependencies - Target runtime, artifact shape, and no-install expectations.
 - R: Resource management and failure handling - Native handle disposal, exception containment, and cleanup under failure.
@@ -337,6 +338,14 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that high-speed, high-efficiency, one-directional `ConstantVelocity` motion can use a wider prediction displacement cap while ordinary motion remains bounded by the conservative cap.
   Refs: Section 4.4.2.
 
+- COT-MOU-50 - DistilledMLP prediction model is selectable
+  Verify that `DistilledMLP` can be selected as the DWM prediction model and produces a deterministic fixed-weight prediction after sufficient 60Hz history is available.
+  Refs: Section 4.4.2.
+
+- COT-MOU-51 - DistilledMLP stationary input falls back to exact position
+  Verify that `DistilledMLP` does not emit model-biased displacement for stationary cursor history and instead returns the exact cursor position.
+  Refs: Section 4.4.2.
+
 #### A.4.T Tray and Application Lifetime
 ##### Unit
 - COT-MTU-1 - Tray icon created
@@ -438,7 +447,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Sections 4.4.2, 4.5.1, 6.1.
 
 - COT-MSU-16 - Prediction model selection
-  Verify that the settings window exposes `ConstantVelocity (default)` and `LeastSquares`, selects `ConstantVelocity` by default, applies model changes immediately, and disables the prediction model control when prediction is disabled.
+  Verify that the settings window exposes `ConstantVelocity (default)`, `LeastSquares`, `ExperimentalMLP`, and `DistilledMLP`, selects `ConstantVelocity` by default, applies model changes immediately, and disables the prediction model control when prediction is disabled.
   Refs: Sections 4.4.2, 4.5.1, 6.1.
 
 #### A.4.D DPI and Multi-Monitor Coordinates
@@ -558,6 +567,60 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 - COT-MLU-19 - Trace tool window chrome and label layout
   Verify that the trace tool form uses the application icon and keeps status labels single-line in the default layout without installing a real hook.
   Refs: Sections 11.2, 11.3, 11.8.
+
+- COT-MLU-20 - Trace derived telemetry fields
+  Verify that trace packages include derived warm-up, prediction target, present reference, scheduler provenance, sample-recorded delta, runtime scheduler missing fields, and warm-up metadata.
+  Refs: Sections 11.5, 11.6, 11.8.
+
+#### A.4.N Motion Lab Tooling
+##### Unit
+- COT-MNU-1 - Deterministic Bezier generation
+  Verify that generating a motion script with the same seed, bounds, start point, point count, speed-point count, duration, and sample rate produces identical control points and speed points.
+  Refs: Section 14.2.
+
+- COT-MNU-2 - Generation clips to bounds
+  Verify that the generated start point and all generated control points are clipped into the requested recording bounds.
+  Refs: Section 14.2.
+
+- COT-MNU-3 - Speed profile influences sampling
+  Verify that a speed profile changes elapsed-time-to-curve-progress mapping while keeping deterministic start and end samples.
+  Refs: Section 14.2.
+
+- COT-MNU-4 - Motion package contents
+  Verify that saving a motion package writes `motion-script.json`, `motion-samples.csv`, and `metadata.json`.
+  Refs: Sections 14.2, 14.6.
+
+- COT-MNU-5 - Real-trace weighted generation profile
+  Verify that the real-trace-weighted generation profile emits low-speed-biased speed points and explicit hold segments deterministically.
+  Refs: Section 14.2.
+
+- COT-MNU-6 - Motion package with trace contents
+  Verify that saving a Motion Lab package with a trace writes motion script, motion samples, trace CSV, trace-compatible metadata, and Motion Lab metadata.
+  Refs: Sections 14.3, 14.6.
+
+- COT-MNU-7 - Scenario set generation and sampling
+  Verify that generated scenario sets preserve scenario count, per-scenario duration, total duration, and scenario selection during sampling.
+  Refs: Section 14.2.
+
+- COT-MNU-8 - Scenario set package contents
+  Verify that scenario-set packages contain scenario metadata and sampled rows with scenario-local timing.
+  Refs: Sections 14.2, 14.6.
+
+- COT-MNU-9 - Scenario set seed splitting is deterministic
+  Verify that scenario seeds are distinct and deterministic for a fixed root seed.
+  Refs: Section 14.2.
+
+- COT-MNU-10 - Hold segments pause sampling
+  Verify that hold segments pause progress, report zero velocity while held, and resume motion with transition telemetry.
+  Refs: Section 14.2.
+
+- COT-MNU-11 - Motion samples include transition telemetry
+  Verify that Motion Lab sampled CSV output includes movement phase, hold index, phase elapsed time, and motion sample format metadata.
+  Refs: Sections 14.2, 14.6.
+
+- COT-MNU-12 - Motion Lab input blocker allows only generated mouse input
+  Verify that the Play and Record input blocker passes Motion Lab-generated mouse input and cancels external user mouse input without calling the next hook.
+  Refs: Sections 14.3, 14.7.
 
 #### A.4.E Demo Application and Virtual Pointer Stream
 ##### Unit
@@ -795,5 +858,5 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Sections 4.5.1, 6.3.
 
 - COT-BVM-9 - Prediction settings manual pass
-  Verify that predictive overlay positioning is enabled by default, `ConstantVelocity (default)` and `LeastSquares` can be selected from the settings window, and disabling prediction returns to exact pointer positioning.
+  Verify that predictive overlay positioning is enabled by default, `ConstantVelocity (default)`, `LeastSquares`, `ExperimentalMLP`, and `DistilledMLP` can be selected from the settings window, and disabling prediction returns to exact pointer positioning.
   Refs: Sections 2.3, 4.4.2, 4.5.1, 6.3.

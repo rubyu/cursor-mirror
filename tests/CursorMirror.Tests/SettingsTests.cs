@@ -152,7 +152,7 @@ namespace CursorMirror.Tests
             TestAssert.Equal(10000, high.DwmAdaptiveOscillationMaximumSpanPixels, "DWM adaptive oscillation span upper clamp");
             TestAssert.Equal(100, high.DwmAdaptiveOscillationMaximumEfficiencyPercent, "DWM adaptive oscillation efficiency upper clamp");
             TestAssert.Equal(1000, high.DwmAdaptiveOscillationLatchMilliseconds, "DWM adaptive oscillation latch upper clamp");
-            TestAssert.Equal(1, high.DwmPredictionModel, "DWM prediction model upper clamp");
+            TestAssert.Equal(3, high.DwmPredictionModel, "DWM prediction model upper clamp");
             TestAssert.Equal(8, high.DwmPredictionTargetOffsetMilliseconds, "DWM prediction target offset upper clamp");
         }
 

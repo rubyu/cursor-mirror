@@ -33,6 +33,8 @@ namespace CursorMirror.Tests
             suite.Add("COT-MOU-47", OverlayUpdateTimingCountersDeadlineMiss);
             suite.Add("COT-MOU-48", DwmPredictionTargetOffsetControlsProjection);
             suite.Add("COT-MOU-49", ConstantVelocityHighSpeedLinearMotionUsesWiderCap);
+            suite.Add("COT-MOU-50", DwmDistilledMlpPredictionIsSelectable);
+            suite.Add("COT-MOU-51", DwmDistilledMlpStationaryFallsBackToExactPosition);
             suite.Add("COT-MRU-1", HookCallbackExceptionContainment);
             suite.Add("COT-MDU-3", DispatcherMarshalsToUiThread);
         }
@@ -656,6 +658,50 @@ namespace CursorMirror.Tests
 
             TestAssert.Equal(new Point(204, 0), overlay.LastLocation, "high-speed one-directional motion should use the wider ConstantVelocity cap");
             controller.Dispose();
+        }
+
+        // DWM distilled MLP prediction [COT-MOU-50]
+        private static void DwmDistilledMlpPredictionIsSelectable()
+        {
+            CursorMirrorSettings settings = CursorMirrorSettings.Default();
+            settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelDistilledMlp;
+            settings.DwmPredictionHorizonCapMilliseconds = 0;
+            settings.DwmPredictionTargetOffsetMilliseconds = 0;
+            DwmAwareCursorPositionPredictor predictor = new DwmAwareCursorPositionPredictor(100);
+            predictor.ApplySettings(settings);
+            CursorPredictionCounters counters = new CursorPredictionCounters();
+            Point predicted = Point.Empty;
+
+            for (int i = 0; i <= 15; i++)
+            {
+                long timestamp = 100 + (i * 10);
+                CursorPollSample sample = PollSample(new Point(i * 3, 0), timestamp, true, timestamp + 16, 16);
+                predicted = predictor.PredictRounded(sample, counters, timestamp + 16, 16);
+            }
+
+            TestAssert.Equal(new Point(48, 0), predicted, "distilled MLP model should be selectable and produce its fixed-weight prediction");
+        }
+
+        // DWM distilled MLP stationary fallback [COT-MOU-51]
+        private static void DwmDistilledMlpStationaryFallsBackToExactPosition()
+        {
+            CursorMirrorSettings settings = CursorMirrorSettings.Default();
+            settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelDistilledMlp;
+            settings.DwmPredictionHorizonCapMilliseconds = 0;
+            settings.DwmPredictionTargetOffsetMilliseconds = 0;
+            DwmAwareCursorPositionPredictor predictor = new DwmAwareCursorPositionPredictor(100);
+            predictor.ApplySettings(settings);
+            CursorPredictionCounters counters = new CursorPredictionCounters();
+            Point predicted = Point.Empty;
+
+            for (int i = 0; i <= 15; i++)
+            {
+                long timestamp = 100 + (i * 10);
+                CursorPollSample sample = PollSample(new Point(40, 20), timestamp, true, timestamp + 16, 16);
+                predicted = predictor.PredictRounded(sample, counters, timestamp + 16, 16);
+            }
+
+            TestAssert.Equal(new Point(40, 20), predicted, "stationary distilled MLP input must fall back to exact position");
         }
 
         // Hook callback exception containment [COT-MRU-1]

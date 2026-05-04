@@ -25,6 +25,8 @@
 ### 13.3 Input Safety
 - During calibration, the calibrator MUST install a low-level mouse hook that blocks user-generated mouse input.
 - Mouse input injected by the calibrator itself MUST be allowed through.
+- Real cursor movement MUST use the shared `RealCursorDriver` SendInput path with the calibrator-specific injection marker.
+- The calibrator MUST NOT maintain a separate cursor movement implementation from Motion Lab or the demo app.
 - Pressing any keyboard key during calibration MUST stop calibration and release the mouse hook.
 - Calibration shutdown MUST release the mouse hook even when capture startup or saving fails.
 
@@ -35,7 +37,7 @@
 - The interactive Save command SHOULD use a standard save-file dialog with a timestamped default filename.
 - The calibrator MAY support an explicit command-line output path for automation. When that output path is provided, an auto-run calibration MAY save to that path without showing the save-file dialog.
 - The calibrator MAY support command-line prediction setting overrides for controlled experiments, including prediction enabled state, prediction model, prediction gain, prediction horizon, DWM prediction horizon cap, DWM prediction target offset, DWM adaptive gain parameters, DWM adaptive reversal cooldown, DWM adaptive oscillation suppression, and prediction idle reset.
-- Command-line prediction model names SHOULD accept the same external model names as the UI: `ConstantVelocity` and `LeastSquares`.
+- Command-line prediction model names SHOULD accept the same external model names as the UI: `ConstantVelocity`, `LeastSquares`, `ExperimentalMLP`, and `DistilledMLP`.
 - The calibrator MAY support command-line runtime mode overrides. Runtime mode names SHOULD accept `ProductRuntime` and `SimpleTimer`.
 - Command-line prediction setting overrides MUST be normalized through the same settings bounds as normal Cursor Mirror settings.
 - The calibrator MUST save a compressed `.zip` package containing `frames.csv` and `metrics.json` only after an explicit user save command or an explicit command-line output path.

@@ -89,7 +89,7 @@ Recommended extended window styles:
 - Predictive overlay positioning MUST be enabled by default.
 - The settings UI MUST allow the user to disable predictive overlay positioning.
 - The settings UI MUST allow the user to choose the prediction model.
-- User-facing prediction model names MUST be `ConstantVelocity` and `LeastSquares`.
+- User-facing prediction model names MUST include `ConstantVelocity`, `LeastSquares`, `ExperimentalMLP`, and `DistilledMLP`.
 - The user-facing prediction model option for the default model MUST append ` (default)` to the model name.
 - The settings UI MUST allow the user to tune the prediction gain as a percentage.
 - Prediction MUST affect only the displayed overlay position.
@@ -104,6 +104,13 @@ Recommended extended window styles:
   - `predictedPosition = currentPosition + velocity * horizonMs * gain`.
 - The default product prediction model SHOULD be `ConstantVelocity`.
 - The `LeastSquares` prediction model SHOULD fit velocity from a bounded recent sample window, remain allocation-free after construction, fall back to exact positioning when the fit is low-confidence, reset stale history after discontinuous cursor samples, and honor the configured DWM horizon cap.
+- The `ExperimentalMLP` prediction model MAY apply a fixed-weight CPU-only residual correction on top of the `ConstantVelocity` baseline when its confidence gate indicates a low-risk improvement.
+- The `ExperimentalMLP` prediction model MUST NOT require GPU acceleration, runtime model training, network access, or optional machine-learning runtimes in the installed application.
+- The `ExperimentalMLP` prediction model SHOULD reuse preallocated buffers during prediction and MAY use SIMD or other CPU-only acceleration when available.
+- The `DistilledMLP` prediction model MAY apply the fixed-weight v16 distilled 60Hz CPU-only model as a full cursor displacement prediction while keeping `ConstantVelocity`, `LeastSquares`, and `ExperimentalMLP` selectable.
+- The `DistilledMLP` prediction model MUST fall back to the existing baseline behavior when the refresh cadence is outside the model's supported 60Hz range, when history is insufficient, or when model evaluation fails.
+- The `DistilledMLP` prediction model MUST fall back to exact/baseline positioning for stationary or near-stationary cursor history so model bias cannot create visible mirror-cursor jitter while the real cursor is stopped.
+- The `DistilledMLP` prediction model MUST NOT require GPU acceleration, runtime model training, network access, or optional machine-learning runtimes in the installed application.
 - The default prediction gain SHOULD be `100%`.
 - Prediction gain MUST be configurable within `50%` to `150%`.
 - The configured prediction gain SHOULD apply to both the DWM-aware polling predictor and the fixed-horizon fallback predictor.
@@ -154,7 +161,7 @@ Recommended extended window styles:
 - The controller MUST ignore stale or out-of-order poll samples and SHOULD expose a diagnostic counter for ignored stale samples.
 - If DWM timing is unavailable or invalid, the scheduler MUST fall back to a documented high-resolution interval loop.
 - Invalid, late, stale, or excessive DWM horizons MUST fall back to exact pointer positioning or a documented fixed-horizon fallback.
-- The implementation SHOULD expose diagnostic counters for invalid DWM horizon, late DWM horizon, excessive horizon, fallback-to-hold, prediction reset due to invalid `dt` or idle gaps, scheduled-target use, scheduled-target adjustment, and overlay updates that complete after or near the target vblank.
+- The implementation SHOULD expose diagnostic counters for invalid DWM horizon, late DWM horizon, excessive horizon, fallback-to-hold, prediction reset due to invalid `dt` or idle gaps, scheduled-target use, scheduled-target adjustment, overlay updates that complete after or near the target vblank, and `ExperimentalMLP` skip/evaluate/apply decisions.
 - The overlay MUST apply hot spot placement after choosing the exact or predicted pointer position.
 - Prediction reset MUST occur when the overlay is hidden, the controller is disposed, prediction is disabled, or prediction-related settings change.
 - Cursor capture failure MUST preserve current fallback behavior: if the previous image is still available, the overlay SHOULD move using the current exact or predicted display position.

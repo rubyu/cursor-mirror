@@ -578,6 +578,8 @@ namespace CursorMirror.Demo
                 comboBox.Items.Clear();
                 comboBox.Items.Add(LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelConstantVelocity));
                 comboBox.Items.Add(LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelLeastSquares));
+                comboBox.Items.Add(LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelExperimentalMlp));
+                comboBox.Items.Add(LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelDistilledMlp));
                 comboBox.SelectedIndex = PredictionModelIndex(selectedModel);
             }
             finally
@@ -588,14 +590,42 @@ namespace CursorMirror.Demo
 
         private static int PredictionModelFromSelection(ComboBox comboBox)
         {
-            return comboBox.SelectedIndex == 1
-                ? CursorMirrorSettings.DwmPredictionModelLeastSquares
-                : CursorMirrorSettings.DwmPredictionModelConstantVelocity;
+            if (comboBox.SelectedIndex == 1)
+            {
+                return CursorMirrorSettings.DwmPredictionModelLeastSquares;
+            }
+
+            if (comboBox.SelectedIndex == 2)
+            {
+                return CursorMirrorSettings.DwmPredictionModelExperimentalMlp;
+            }
+
+            if (comboBox.SelectedIndex == 3)
+            {
+                return CursorMirrorSettings.DwmPredictionModelDistilledMlp;
+            }
+
+            return CursorMirrorSettings.DwmPredictionModelConstantVelocity;
         }
 
         private static int PredictionModelIndex(int model)
         {
-            return model == CursorMirrorSettings.DwmPredictionModelLeastSquares ? 1 : 0;
+            if (model == CursorMirrorSettings.DwmPredictionModelLeastSquares)
+            {
+                return 1;
+            }
+
+            if (model == CursorMirrorSettings.DwmPredictionModelExperimentalMlp)
+            {
+                return 2;
+            }
+
+            if (model == CursorMirrorSettings.DwmPredictionModelDistilledMlp)
+            {
+                return 3;
+            }
+
+            return 0;
         }
 
         private void ApplyDisplayMode()

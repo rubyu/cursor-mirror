@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using CursorMirror.Calibrator;
@@ -13,6 +14,7 @@ namespace CursorMirror.Tests
             suite.Add("COT-MCU-7", CalibrationMotionPatternCoverage);
             suite.Add("COT-MCU-8", CalibrationPatternSummarySeparation);
             suite.Add("COT-MCU-9", CalibrationRuntimeModeParsing);
+            suite.Add("COT-MCU-10", RealCursorDriverMarkersAreDistinct);
         }
 
         // Dark pixel bounds detection [COT-MCU-5]
@@ -105,6 +107,17 @@ namespace CursorMirror.Tests
             TestAssert.Equal(2.0, summary.PatternSummaries[0].MaximumEstimatedSeparationPixels, "first pattern maximum separation");
             TestAssert.Equal("rapid-reversal", summary.PatternSummaries[1].PatternName, "second pattern");
             TestAssert.Equal(15.0, summary.PatternSummaries[1].MaximumEstimatedSeparationPixels, "second pattern maximum separation");
+        }
+
+        // Real cursor driver marker separation [COT-MCU-10]
+        private static void RealCursorDriverMarkersAreDistinct()
+        {
+            TestAssert.False(RealCursorDriver.CalibratorInjectionExtraInfo == IntPtr.Zero, "calibrator marker");
+            TestAssert.False(RealCursorDriver.DemoInjectionExtraInfo == IntPtr.Zero, "demo marker");
+            TestAssert.False(RealCursorDriver.MotionLabInjectionExtraInfo == IntPtr.Zero, "motion lab marker");
+            TestAssert.False(RealCursorDriver.CalibratorInjectionExtraInfo == RealCursorDriver.DemoInjectionExtraInfo, "calibrator/demo marker distinct");
+            TestAssert.False(RealCursorDriver.CalibratorInjectionExtraInfo == RealCursorDriver.MotionLabInjectionExtraInfo, "calibrator/motion lab marker distinct");
+            TestAssert.False(RealCursorDriver.DemoInjectionExtraInfo == RealCursorDriver.MotionLabInjectionExtraInfo, "demo/motion lab marker distinct");
         }
 
         private static byte[] WhiteBgra(int width, int height)

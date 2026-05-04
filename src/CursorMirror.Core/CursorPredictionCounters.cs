@@ -22,6 +22,16 @@ namespace CursorMirror
 
         public long OverlayUpdateCompletedNearTargetVBlank { get; set; }
 
+        public long ExperimentalMlpSkippedByRecentSpeed { get; set; }
+
+        public long ExperimentalMlpSkippedByPathSpeed { get; set; }
+
+        public long ExperimentalMlpEvaluated { get; set; }
+
+        public long ExperimentalMlpRejected { get; set; }
+
+        public long ExperimentalMlpApplied { get; set; }
+
         public CursorPredictionCounters Clone()
         {
             return new CursorPredictionCounters
@@ -35,7 +45,12 @@ namespace CursorMirror
                 ScheduledDwmTargetUsed = ScheduledDwmTargetUsed,
                 ScheduledDwmTargetAdjustedToNextVBlank = ScheduledDwmTargetAdjustedToNextVBlank,
                 OverlayUpdateCompletedAfterTargetVBlank = OverlayUpdateCompletedAfterTargetVBlank,
-                OverlayUpdateCompletedNearTargetVBlank = OverlayUpdateCompletedNearTargetVBlank
+                OverlayUpdateCompletedNearTargetVBlank = OverlayUpdateCompletedNearTargetVBlank,
+                ExperimentalMlpSkippedByRecentSpeed = ExperimentalMlpSkippedByRecentSpeed,
+                ExperimentalMlpSkippedByPathSpeed = ExperimentalMlpSkippedByPathSpeed,
+                ExperimentalMlpEvaluated = ExperimentalMlpEvaluated,
+                ExperimentalMlpRejected = ExperimentalMlpRejected,
+                ExperimentalMlpApplied = ExperimentalMlpApplied
             };
         }
 
@@ -51,6 +66,11 @@ namespace CursorMirror
             ScheduledDwmTargetAdjustedToNextVBlank = 0;
             OverlayUpdateCompletedAfterTargetVBlank = 0;
             OverlayUpdateCompletedNearTargetVBlank = 0;
+            ExperimentalMlpSkippedByRecentSpeed = 0;
+            ExperimentalMlpSkippedByPathSpeed = 0;
+            ExperimentalMlpEvaluated = 0;
+            ExperimentalMlpRejected = 0;
+            ExperimentalMlpApplied = 0;
         }
     }
 }

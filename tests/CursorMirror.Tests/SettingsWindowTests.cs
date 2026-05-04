@@ -167,14 +167,24 @@ namespace CursorMirror.Tests
                     {
                         ComboBox predictionModelInput = GetField<ComboBox>(window, "_predictionModelInput");
 
-                        TestAssert.Equal(2, predictionModelInput.Items.Count, "prediction model option count");
+                        TestAssert.Equal(4, predictionModelInput.Items.Count, "prediction model option count");
                         TestAssert.Equal("ConstantVelocity (default)", predictionModelInput.Items[0].ToString(), "constant velocity default option");
                         TestAssert.Equal("LeastSquares", predictionModelInput.Items[1].ToString(), "least-squares option");
+                        TestAssert.Equal("ExperimentalMLP", predictionModelInput.Items[2].ToString(), "experimental MLP option");
+                        TestAssert.Equal("DistilledMLP", predictionModelInput.Items[3].ToString(), "distilled MLP option");
                         TestAssert.Equal(0, predictionModelInput.SelectedIndex, "constant velocity selected by default");
 
                         predictionModelInput.SelectedIndex = 1;
 
                         TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelLeastSquares, controller.CurrentSettings.DwmPredictionModel, "least-squares selection applied");
+
+                        predictionModelInput.SelectedIndex = 2;
+
+                        TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelExperimentalMlp, controller.CurrentSettings.DwmPredictionModel, "experimental MLP selection applied");
+
+                        predictionModelInput.SelectedIndex = 3;
+
+                        TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelDistilledMlp, controller.CurrentSettings.DwmPredictionModel, "distilled MLP selection applied");
 
                         predictionModelInput.SelectedIndex = 0;
 

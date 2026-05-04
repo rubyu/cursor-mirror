@@ -26,7 +26,7 @@ namespace CursorMirror.Calibrator
         private readonly List<CalibrationFrameAnalysis> _frames = new List<CalibrationFrameAnalysis>();
         private readonly CalibratorRunOptions _options;
 
-        private CalibratorCursorDriver _cursorDriver;
+        private RealCursorDriver _cursorDriver;
         private LowLevelMouseHook _mouseHook;
         private OverlayRuntimeThread _overlayRuntime;
         private OverlayWindow _overlayWindow;
@@ -223,7 +223,7 @@ namespace CursorMirror.Calibrator
                 _primaryBounds = Screen.PrimaryScreen.Bounds;
                 _pathBounds = BuildPathBounds(_primaryBounds);
                 _motionSuite = CalibrationMotionPatternSuite.CreateDefault(_pathBounds);
-                _cursorDriver = new CalibratorCursorDriver();
+                _cursorDriver = new RealCursorDriver(RealCursorDriver.CalibratorInjectionExtraInfo);
 
                 CursorMirrorSettings settings = BuildCursorSettings();
                 _activeCursorSettings = settings.Clone();
@@ -256,7 +256,7 @@ namespace CursorMirror.Calibrator
 
         private HookResult HandleMouseEvent(LowLevelMouseHook.MouseEvent mouseEvent, LowLevelMouseHook.MSLLHOOKSTRUCT data)
         {
-            bool isInjected = data.dwExtraInfo == CalibratorCursorDriver.InjectionExtraInfo;
+            bool isInjected = data.dwExtraInfo == RealCursorDriver.CalibratorInjectionExtraInfo;
             if (isInjected)
             {
                 if (_overlayRuntime != null)
@@ -508,6 +508,11 @@ namespace CursorMirror.Calibrator
             summary.PredictionScheduledDwmTargetAdjustedToNextVBlank = counters.ScheduledDwmTargetAdjustedToNextVBlank;
             summary.PredictionOverlayUpdateCompletedAfterTargetVBlank = counters.OverlayUpdateCompletedAfterTargetVBlank;
             summary.PredictionOverlayUpdateCompletedNearTargetVBlank = counters.OverlayUpdateCompletedNearTargetVBlank;
+            summary.PredictionExperimentalMlpSkippedByRecentSpeed = counters.ExperimentalMlpSkippedByRecentSpeed;
+            summary.PredictionExperimentalMlpSkippedByPathSpeed = counters.ExperimentalMlpSkippedByPathSpeed;
+            summary.PredictionExperimentalMlpEvaluated = counters.ExperimentalMlpEvaluated;
+            summary.PredictionExperimentalMlpRejected = counters.ExperimentalMlpRejected;
+            summary.PredictionExperimentalMlpApplied = counters.ExperimentalMlpApplied;
         }
 
         private void EnterFullScreen()

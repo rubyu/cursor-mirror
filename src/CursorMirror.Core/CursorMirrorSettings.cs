@@ -31,6 +31,8 @@ namespace CursorMirror
         public const int DefaultDwmAdaptiveOscillationLatchMilliseconds = 0;
         public const int DwmPredictionModelConstantVelocity = 0;
         public const int DwmPredictionModelLeastSquares = 1;
+        public const int DwmPredictionModelExperimentalMlp = 2;
+        public const int DwmPredictionModelDistilledMlp = 3;
         public const int DefaultDwmPredictionModel = DwmPredictionModelConstantVelocity;
         public const int DefaultDwmPredictionTargetOffsetMilliseconds = 2;
 
@@ -73,7 +75,7 @@ namespace CursorMirror
         public const int MinimumDwmAdaptiveOscillationLatchMilliseconds = 0;
         public const int MaximumDwmAdaptiveOscillationLatchMilliseconds = 1000;
         public const int MinimumDwmPredictionModel = DwmPredictionModelConstantVelocity;
-        public const int MaximumDwmPredictionModel = DwmPredictionModelLeastSquares;
+        public const int MaximumDwmPredictionModel = DwmPredictionModelDistilledMlp;
         public const int MinimumDwmPredictionTargetOffsetMilliseconds = -8;
         public const int MaximumDwmPredictionTargetOffsetMilliseconds = 8;
 
