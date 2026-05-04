@@ -35,10 +35,14 @@ namespace CursorMirror.Calibrator
         private WgcDisplayCapture _capture;
         private Rectangle _primaryBounds;
         private Rectangle _pathBounds;
-        private CalibrationMotionPatternSuite _motionSuite;
+        private ICalibrationMotionSource _motionSource;
         private long _calibrationStartTicks;
         private int _activeRuntimeMode = CalibrationRuntimeMode.Default;
         private CursorMirrorSettings _activeCursorSettings;
+        private string _activeMotionSourceName = string.Empty;
+        private string _activeMotionGenerationProfile = string.Empty;
+        private int _activeMotionScenarioCount;
+        private double _activeMotionDurationMilliseconds;
         private CursorPredictionCounters _predictionCountersSnapshot = new CursorPredictionCounters();
         private ProductRuntimeOutlierRecorder _previousProductRuntimeOutlierRecorder;
         private bool _overrodeProductRuntimeOutlierRecorder;
@@ -226,7 +230,9 @@ namespace CursorMirror.Calibrator
                 RefreshUi();
                 _primaryBounds = Screen.PrimaryScreen.Bounds;
                 _pathBounds = BuildPathBounds(_primaryBounds);
-                _motionSuite = CalibrationMotionPatternSuite.CreateDefault(_pathBounds);
+                _motionSource = CreateMotionSource(_pathBounds);
+                ApplyMotionSourceDurationIfNeeded(_motionSource);
+                StoreActiveMotionSourceMetadata(_motionSource);
                 _cursorDriver = new RealCursorDriver(RealCursorDriver.CalibratorInjectionExtraInfo);
 
                 CursorMirrorSettings settings = BuildCursorSettings();
@@ -307,9 +313,9 @@ namespace CursorMirror.Calibrator
 
         private void MoveCursorForElapsed(long elapsedMilliseconds)
         {
-            if (_cursorDriver != null && _motionSuite != null)
+            if (_cursorDriver != null && _motionSource != null)
             {
-                CalibrationMotionSample sample = _motionSuite.GetSample(elapsedMilliseconds);
+                CalibrationMotionSample sample = _motionSource.GetSample(elapsedMilliseconds);
                 _cursorDriver.MoveTo(new Point(sample.ExpectedX, sample.ExpectedY));
                 FeedProductRuntimeMouseMove(sample);
             }
@@ -337,7 +343,7 @@ namespace CursorMirror.Calibrator
             }
 
             CalibrationFrameAnalysis frame = e;
-            if (_motionSuite != null)
+            if (_motionSource != null)
             {
                 double elapsedMilliseconds = _stopwatch.ElapsedMilliseconds;
                 if (_calibrationStartTicks > 0 && e.TimestampTicks >= _calibrationStartTicks)
@@ -345,7 +351,7 @@ namespace CursorMirror.Calibrator
                     elapsedMilliseconds = ((e.TimestampTicks - _calibrationStartTicks) * 1000.0) / Stopwatch.Frequency;
                 }
 
-                frame = e.WithMotion(_motionSuite.GetSample(elapsedMilliseconds));
+                frame = e.WithMotion(_motionSource.GetSample(elapsedMilliseconds));
             }
 
             lock (_frames)
@@ -412,7 +418,7 @@ namespace CursorMirror.Calibrator
 
             _overlayWindow = null;
             _cursorDriver = null;
-            _motionSuite = null;
+            _motionSource = null;
             _calibrationStartTicks = 0;
             RestoreProductRuntimeOutlierRecorder();
             LeaveFullScreen();
@@ -490,6 +496,10 @@ namespace CursorMirror.Calibrator
 
             CalibrationSummary summary = CalibrationRunAnalyzer.Summarize(snapshot, "Windows Graphics Capture");
             summary.RuntimeMode = CalibrationRuntimeMode.ToExternalName(_activeRuntimeMode);
+            summary.MotionSourceName = _activeMotionSourceName;
+            summary.MotionGenerationProfile = _activeMotionGenerationProfile;
+            summary.MotionScenarioCount = _activeMotionScenarioCount;
+            summary.MotionDurationMilliseconds = _activeMotionDurationMilliseconds;
             if (_activeCursorSettings != null)
             {
                 summary.DwmPredictionTargetOffsetMilliseconds = _activeCursorSettings.DwmPredictionTargetOffsetMilliseconds;
@@ -614,6 +624,45 @@ namespace CursorMirror.Calibrator
             int height = Math.Max(120, displayBounds.Height / 3);
             int top = displayBounds.Top + ((displayBounds.Height - height) / 2);
             return new Rectangle(displayBounds.Left + margin, top, Math.Max(1, displayBounds.Width - (margin * 2)), height);
+        }
+
+        private ICalibrationMotionSource CreateMotionSource(Rectangle pathBounds)
+        {
+            if (!string.IsNullOrWhiteSpace(_options.MotionPackagePath))
+            {
+                return MotionLabCalibrationMotionSource.LoadPackage(_options.MotionPackagePath);
+            }
+
+            return CalibrationMotionPatternSuite.CreateDefault(pathBounds);
+        }
+
+        private void ApplyMotionSourceDurationIfNeeded(ICalibrationMotionSource source)
+        {
+            if (source == null || _options.DurationSecondsSpecified || string.IsNullOrWhiteSpace(_options.MotionPackagePath))
+            {
+                return;
+            }
+
+            int seconds = (int)Math.Ceiling(Math.Max(1.0, source.TotalDurationMilliseconds) / 1000.0);
+            seconds = Math.Max((int)_durationInput.Minimum, Math.Min((int)_durationInput.Maximum, seconds));
+            _durationInput.Value = seconds;
+        }
+
+        private void StoreActiveMotionSourceMetadata(ICalibrationMotionSource source)
+        {
+            if (source == null)
+            {
+                _activeMotionSourceName = string.Empty;
+                _activeMotionGenerationProfile = string.Empty;
+                _activeMotionScenarioCount = 0;
+                _activeMotionDurationMilliseconds = 0;
+                return;
+            }
+
+            _activeMotionSourceName = source.SourceName ?? string.Empty;
+            _activeMotionGenerationProfile = source.GenerationProfile ?? string.Empty;
+            _activeMotionScenarioCount = source.ScenarioCount;
+            _activeMotionDurationMilliseconds = source.TotalDurationMilliseconds;
         }
 
         private CursorMirrorSettings BuildCursorSettings()

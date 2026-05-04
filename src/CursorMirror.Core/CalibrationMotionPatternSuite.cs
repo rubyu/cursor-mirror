@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace CursorMirror
 {
-    public sealed class CalibrationMotionPatternSuite
+    public sealed class CalibrationMotionPatternSuite : ICalibrationMotionSource
     {
         private readonly Segment[] _segments;
         private readonly double _totalDurationMilliseconds;
@@ -18,6 +18,21 @@ namespace CursorMirror
         public double TotalDurationMilliseconds
         {
             get { return _totalDurationMilliseconds; }
+        }
+
+        public string SourceName
+        {
+            get { return "calibrator-default"; }
+        }
+
+        public string GenerationProfile
+        {
+            get { return "calibrator-default"; }
+        }
+
+        public int ScenarioCount
+        {
+            get { return 0; }
         }
 
         public static CalibrationMotionPatternSuite CreateDefault(Rectangle pathBounds)
@@ -84,7 +99,14 @@ namespace CursorMirror
                 segment.PhaseName,
                 (int)Math.Round(x),
                 segment.Y,
-                velocity);
+                velocity,
+                SourceName,
+                GenerationProfile,
+                -1,
+                segmentElapsed,
+                segment.DurationMilliseconds <= 0 ? 0 : segmentElapsed / segment.DurationMilliseconds,
+                -1,
+                segmentElapsed);
         }
 
         private Segment FindSegment(double elapsedMilliseconds)

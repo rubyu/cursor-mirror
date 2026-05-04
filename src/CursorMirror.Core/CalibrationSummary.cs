@@ -88,5 +88,20 @@ namespace CursorMirror
 
         [DataMember(Order = 28)]
         public long PredictionExperimentalMlpApplied { get; set; }
+
+        [DataMember(Order = 29)]
+        public string MotionSourceName { get; set; }
+
+        [DataMember(Order = 30)]
+        public string MotionGenerationProfile { get; set; }
+
+        [DataMember(Order = 31)]
+        public int MotionScenarioCount { get; set; }
+
+        [DataMember(Order = 32)]
+        public double MotionDurationMilliseconds { get; set; }
+
+        [DataMember(Order = 33)]
+        public CalibrationPatternSummary[] PhaseSummaries { get; set; }
     }
 }

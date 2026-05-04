@@ -8,7 +8,7 @@ using System.Text;
 
 namespace CursorMirror.Calibrator
 {
-    internal sealed class CalibrationPackageWriter
+    public sealed class CalibrationPackageWriter
     {
         private static readonly Encoding Utf8NoBom = new UTF8Encoding(false);
 
@@ -64,7 +64,7 @@ namespace CursorMirror.Calibrator
             using (Stream stream = entry.Open())
             using (StreamWriter writer = new StreamWriter(stream, Utf8NoBom))
             {
-                writer.WriteLine("frameIndex,timestampTicks,elapsedMilliseconds,patternName,phaseName,expectedX,expectedY,expectedVelocityPixelsPerSecond,width,height,darkPixelCount,hasDarkPixels,darkBoundsX,darkBoundsY,darkBoundsWidth,darkBoundsHeight,estimatedSeparationPixels");
+                writer.WriteLine("frameIndex,timestampTicks,elapsedMilliseconds,motionSourceName,generationProfile,patternName,phaseName,scenarioIndex,scenarioElapsedMilliseconds,progress,holdIndex,phaseElapsedMilliseconds,expectedX,expectedY,expectedVelocityPixelsPerSecond,width,height,darkPixelCount,hasDarkPixels,darkBoundsX,darkBoundsY,darkBoundsWidth,darkBoundsHeight,estimatedSeparationPixels");
                 for (int i = 0; i < frames.Count; i++)
                 {
                     CalibrationFrameAnalysis frame = frames[i];
@@ -82,9 +82,23 @@ namespace CursorMirror.Calibrator
                     writer.Write(",");
                     writer.Write(frame.ElapsedMilliseconds.ToString("0.###", CultureInfo.InvariantCulture));
                     writer.Write(",");
+                    WriteCsvString(writer, frame.MotionSourceName);
+                    writer.Write(",");
+                    WriteCsvString(writer, frame.GenerationProfile);
+                    writer.Write(",");
                     WriteCsvString(writer, frame.PatternName);
                     writer.Write(",");
                     WriteCsvString(writer, frame.PhaseName);
+                    writer.Write(",");
+                    writer.Write(frame.ScenarioIndex.ToString(CultureInfo.InvariantCulture));
+                    writer.Write(",");
+                    writer.Write(frame.ScenarioElapsedMilliseconds.ToString("0.###", CultureInfo.InvariantCulture));
+                    writer.Write(",");
+                    writer.Write(frame.Progress.ToString("0.######", CultureInfo.InvariantCulture));
+                    writer.Write(",");
+                    writer.Write(frame.HoldIndex.ToString(CultureInfo.InvariantCulture));
+                    writer.Write(",");
+                    writer.Write(frame.PhaseElapsedMilliseconds.ToString("0.###", CultureInfo.InvariantCulture));
                     writer.Write(",");
                     writer.Write(frame.ExpectedX.ToString(CultureInfo.InvariantCulture));
                     writer.Write(",");

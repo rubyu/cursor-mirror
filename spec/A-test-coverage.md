@@ -133,12 +133,24 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Section 13.2.
 
 - COT-MCU-8 - Calibration pattern summary separation
-  Verify that calibration summary calculation includes per-pattern frame counts and estimated separation metrics from synthetic frame measurements.
+  Verify that calibration summary calculation includes per-pattern and per-phase frame counts and estimated separation metrics from synthetic frame measurements.
   Refs: Section 13.4.
 
 - COT-MCU-9 - Calibration runtime mode parsing
   Verify that calibrator runtime mode names parse and normalize to `ProductRuntime` by default while keeping `SimpleTimer` available for diagnostics.
   Refs: Sections 13.2, 13.4.
+
+- COT-MCU-10 - Real cursor driver marker separation
+  Verify that the shared real cursor driver exposes distinct injection markers for the calibrator, demo, and Motion Lab.
+  Refs: Sections 12.5, 13.3, 14.
+
+- COT-MCU-11 - Motion Lab package-backed calibration source
+  Verify that the calibrator can load a Motion Lab package, sample the compact scenario definition without using precomputed frames, and preserve scenario index and generation profile context.
+  Refs: Sections 13.2, 13.4.
+
+- COT-MCU-12 - Calibration package Motion Lab context
+  Verify that calibration output packages include Motion Lab source, generation profile, scenario, phase, progress, and motion summary fields in `frames.csv` and `metrics.json`.
+  Refs: Section 13.4.
 
 #### A.4.O Overlay Window Behavior
 ##### Unit

@@ -5,8 +5,10 @@ namespace CursorMirror.Calibrator
         public bool AutoRun { get; set; }
         public bool ExitAfterRun { get; set; }
         public int DurationSeconds { get; set; }
+        public bool DurationSecondsSpecified { get; set; }
         public string OutputPath { get; set; }
         public string ProductRuntimeOutlierOutputPath { get; set; }
+        public string MotionPackagePath { get; set; }
         public bool DisableDisplayCapture { get; set; }
         public bool? PredictionEnabled { get; set; }
         public int? PredictionGainPercent { get; set; }
@@ -56,6 +58,7 @@ namespace CursorMirror.Calibrator
                     if (int.TryParse(args[i + 1], out seconds))
                     {
                         options.DurationSeconds = seconds;
+                        options.DurationSecondsSpecified = true;
                     }
 
                     i++;
@@ -68,6 +71,11 @@ namespace CursorMirror.Calibrator
                 else if ((argument == "--product-runtime-outlier-output" || argument == "--product-runtime-outlier-output-path") && i + 1 < args.Length)
                 {
                     options.ProductRuntimeOutlierOutputPath = args[i + 1];
+                    i++;
+                }
+                else if ((argument == "--motion-package" || argument == "--motion-package-path") && i + 1 < args.Length)
+                {
+                    options.MotionPackagePath = args[i + 1];
                     i++;
                 }
                 else if (argument == "--no-display-capture")
