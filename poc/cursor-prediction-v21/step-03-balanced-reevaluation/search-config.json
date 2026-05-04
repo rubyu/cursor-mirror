@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "cursor-prediction-v21-step-03-search-config/1",
+  "generatedAtUtc": "2026-05-04T12:00:00Z",
+  "inputs": {
+    "manifest": "../step-02-balanced-evaluation/split-manifest.json",
+    "metricPolicy": "../step-02-balanced-evaluation/metric-policy.json",
+    "v20HarnessReference": "../../cursor-prediction-v20/step-01-asymmetric-loss-validation/harness/Program.cs",
+    "zipSource": "repo-root package paths from split-manifest.json"
+  },
+  "loader": {
+    "zipExtraction": false,
+    "entriesRead": [
+      "trace.csv",
+      "motion-trace-alignment.csv"
+    ],
+    "primaryRows": "motion-trace-alignment.csv joined to trace.csv by traceSequence",
+    "predictionRows": "traceEvent == runtimeSchedulerPoll",
+    "targetRows": "trace.csv referencePoll/cursorPoll/rawInput rows",
+    "warmupMilliseconds": 1500,
+    "scenarioWindow": "row-level scenarioElapsedMilliseconds; no fixed 12000 ms assumption"
+  },
+  "learnedSearch": {
+    "seed": 2103,
+    "trainSplitOnly": true,
+    "trainSampleCap": 80000,
+    "hidden": 32,
+    "maxEpochs": 60,
+    "learningRate": 0.003,
+    "candidates": [
+      {
+        "id": "mlp_h32_event_safe_sampled",
+        "loss": "eventSafe"
+      },
+      {
+        "id": "mlp_h32_asymmetric_lead_sampled",
+        "loss": "asymmetricLead",
+        "leadWeight": 8,
+        "eventLeadMultiplier": 2,
+        "lagWeight": 0.5
+      }
+    ]
+  },
+  "fixedCandidates": [
+    "product_distilled_lag0_offset_minus4_brake",
+    "rule_hybrid_latch_v5_300_high400_latest2p5",
+    "rule_hybrid_cap0p5_v2_150_high400_latest2p0"
+  ]
+}

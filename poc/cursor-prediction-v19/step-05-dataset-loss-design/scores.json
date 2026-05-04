@@ -1,0 +1,104 @@
+{
+  "schemaVersion": "cursor-prediction-v19-step-05-dataset-loss-design/1",
+  "generatedAtUtc": "2026-05-04T09:07:49.761Z",
+  "reproductionBasis": {
+    "originalStep03ScenarioPath": "C:/Users/seigl/OneDrive/my/ドキュメント/projects/cursor/poc/cursor-prediction-v19/step-03-motionlab-abrupt-stop-scenarios/abrupt-stop-scenarios.json",
+    "revisedStep04bScenarioPath": "C:/Users/seigl/OneDrive/my/ドキュメント/projects/cursor/poc/cursor-prediction-v19/step-04b-generator-revision/abrupt-stop-scenarios-revised.json",
+    "revisedProductBrakePeakLeadMax": 5.327858902184062,
+    "revisedProductBrakeOtrGt1": 0.24242424242424243,
+    "revisedNoBrakeOtrGt1": 0.30303030303030304
+  },
+  "proposedDatasets": {
+    "real60HzLatest": {
+      "include": true,
+      "source": "latest cursor-mirror-motion-recording ZIPs used by v18/v19 Step 01",
+      "splitUnit": "file/package",
+      "role": "anchor real runtime timing and prevent synthetic overfit"
+    },
+    "motionLabStep03Original": {
+      "include": true,
+      "splitUnit": "scenario family",
+      "role": "negative/coverage set; does not reproduce event leak but covers smooth holds"
+    },
+    "motionLabStep04bRevised": {
+      "include": true,
+      "splitUnit": "scenario id and family",
+      "role": "positive abrupt-stop reproduction set"
+    },
+    "futureCalibratorLoadData": {
+      "includeIfAvailable": true,
+      "splitUnit": "recording session",
+      "role": "load/no-load and display phase validation"
+    }
+  },
+  "proposedSplits": {
+    "train": 0.7,
+    "validation": 0.15,
+    "test": 0.15,
+    "leakageRule": "Split by file/session/scenario id; keep variants of the same generated stop family out of opposite splits when measuring generalization.",
+    "syntheticHoldout": "Reserve at least one high-speed, one near-zero-creep, one curved, and one phase-crossing family entirely for test."
+  },
+  "lossDesign": {
+    "runtimeInputsOnly": [
+      "recent positions/timestamps",
+      "target horizon",
+      "path efficiency",
+      "recent velocity windows"
+    ],
+    "trainingEvaluationOnly": [
+      "future current position labels",
+      "stop event windows",
+      "peakLead over post-stop windows",
+      "returnMotion after peak",
+      "overshootThenReturn event labels"
+    ],
+    "objectiveTerms": [
+      {
+        "name": "normalVisualHuber",
+        "weightHint": 1,
+        "target": "candidate shifted target visual error",
+        "appliesTo": "all non-stop rows"
+      },
+      {
+        "name": "eventPeakLeadHinge",
+        "weightHint": 3,
+        "target": "max lead over stop window above 0.25/0.5px",
+        "appliesTo": "stop events"
+      },
+      {
+        "name": "returnMotionPenalty",
+        "weightHint": 2,
+        "target": "distance returned after overshoot peak",
+        "appliesTo": "overshootThenReturn events"
+      },
+      {
+        "name": "stationaryJitterPenalty",
+        "weightHint": 1.5,
+        "target": "mirror-current distance during hold/static windows",
+        "appliesTo": "static/post-stop rows"
+      },
+      {
+        "name": "normalLatencyGuard",
+        "weightHint": 0.75,
+        "target": "avoid signed lag drift in normal/high-speed movement",
+        "appliesTo": "normal and high-speed rows"
+      }
+    ]
+  },
+  "evaluationMetrics": [
+    "overall MAE/RMSE/p95/p99",
+    "event count",
+    "peakLead p95/p99/max",
+    "overshootThenReturn >0.5/>1/>2px",
+    "returnMotion p95/p99/max",
+    "settleFrames/settleMs",
+    "stationary jitter p95/p99",
+    "normalMove/highSpeed visual p95/p99 guardrails",
+    "runtime microseconds per prediction"
+  ],
+  "nextImplementationOptions": [
+    "Train high-accuracy temporal teacher with event-window penalties, then distill to small MLP/FSMN.",
+    "Search rule-hybrid brake features using Step04b positive set plus real traces as guardrails.",
+    "Add data logging fields for exact stop-onset runtime state if product-brake leakage cannot be explained from existing traces."
+  ]
+}

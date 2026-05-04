@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "cursor-prediction-v21-step-07-runtime-only-correction/search-config/1",
+  "goal": "Reevaluate the step06 event-safe candidate family after removing oracle-only runtime features and guard inputs.",
+  "writeScope": "poc/cursor-prediction-v21/step-07-runtime-only-correction/",
+  "sourceHarness": "poc/cursor-prediction-v21/step-06-deployment-gate-analysis/harness/",
+  "inputs": {
+    "manifest": "poc/cursor-prediction-v21/step-02-balanced-evaluation/split-manifest.json",
+    "metricPolicy": "poc/cursor-prediction-v21/step-02-balanced-evaluation/metric-policy.json",
+    "packages": "split-manifest.json packages array",
+    "zipEntriesRead": [
+      "trace.csv",
+      "motion-trace-alignment.csv"
+    ]
+  },
+  "runtimeOnlyCorrections": {
+    "futureTargetDistance": "Kept as DataRow.FutureTargetDistance for training labels and evaluation metrics only.",
+    "runtimeTargetDisplacementEstimate": "Computed as max(0, horizonMs / 1000) * v2 speed from current/past samples.",
+    "featureVectorChange": "Replaced f.TargetDistance / 8 with f.RuntimeTargetDisplacementEstimate / 8.",
+    "speedFeatureChange": "Replaced future/reference target speed / 3000 with runtime v2 speed / 3000.",
+    "runtimeGuardInputs": [
+      "V2",
+      "V5",
+      "V12",
+      "RecentHigh",
+      "LatestDelta",
+      "PathEfficiency",
+      "HorizonMs",
+      "RuntimeTargetDisplacementEstimate"
+    ],
+    "forbiddenRuntimeInputs": [
+      "EventWindowLabel",
+      "StaticLabel",
+      "MovementPhase",
+      "GeneratedVelocity",
+      "generated movement phase",
+      "FutureTargetDistance",
+      "future/reference/generated target distance"
+    ]
+  },
+  "training": {
+    "seeds": [
+      2105,
+      2205,
+      2305
+    ],
+    "trainSampleCap": 120000,
+    "maxEpochs": 60,
+    "learningRate": 0.003,
+    "execution": "CPU-only serialized"
+  },
+  "candidates": [
+    "product_distilled_lag0_offset_minus4_brake",
+    "mlp_h32_event_safe_runtime_features_fulltrain",
+    "mlp_h32_event_safe_runtime_latch_cap0p35",
+    "mlp_h32_event_safe_runtime_latch_cap0p35_gain1p08",
+    "mlp_h32_event_safe_runtime_latch_cap0p25_gain1p08",
+    "mlp_h32_event_safe_runtime_latch_cap0p35_productblend0p25"
+  ],
+  "deploymentGate": "Same step06 deployment gate: product-relative held-out test normal visual p95/p99, held-out test normal-moving futureLag p95/p99 with subpixel tolerance, robustness stop-event checks, overall futureLead p99, and held-out stationary jitter p95."
+}

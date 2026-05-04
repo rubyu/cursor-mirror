@@ -1,0 +1,26 @@
+{
+  "outputPath": "poc/cursor-prediction-v19/step-01-baseline-audit/baseline-audit-output.json",
+  "horizonCapMs": 0,
+  "packages": [
+    {
+      "packageId": "m070248",
+      "zipPath": "cursor-mirror-motion-recording-20260504-070248.zip",
+      "warmupMs": 1500.0,
+      "excludeMs": [
+        {
+          "startMs": 0.0,
+          "endMs": 795.648
+        }
+      ]
+    },
+    {
+      "packageId": "m070307",
+      "zipPath": "cursor-mirror-motion-recording-20260504-070307.zip",
+      "warmupMs": 1500.0,
+      "excludeMs": []
+    }
+  ]
+}
+
+
+

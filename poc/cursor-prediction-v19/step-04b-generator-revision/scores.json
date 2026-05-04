@@ -1,0 +1,190 @@
+{
+  "schemaVersion": "cursor-prediction-v19-step-04b-generator-revision/1",
+  "generatedAtUtc": "2026-05-04T09:05:41.596Z",
+  "scenarioSet": "abrupt-stop-scenarios-revised.json",
+  "scenarioMetadata": "scenario-metadata-revised.json",
+  "scenarioCount": 24,
+  "familyCounts": {
+    "very-high-one-frame-hold": 3,
+    "very-high-two-frame-hold": 3,
+    "near-zero-creep-after-high": 3,
+    "curved-near-zero-creep": 3,
+    "phase-crossing-hard-stop": 3,
+    "short-hold-release": 3,
+    "stale-sample-proxy": 3,
+    "missed-poll-proxy": 3
+  },
+  "dimensions": {
+    "speeds": [
+      2.5,
+      3.5,
+      4.6
+    ],
+    "decelWidths": [
+      0.0025,
+      0.005,
+      0.009
+    ],
+    "stopDurations": [
+      34,
+      50,
+      84,
+      134,
+      200
+    ],
+    "stopProgresses": [
+      0.61,
+      0.635,
+      0.662,
+      0.694
+    ],
+    "includesVeryHighSpeed": true,
+    "includesOneToThreeFrameDecelProxy": true,
+    "includesPhaseCrossingProxy": true,
+    "includesStaleLatestSampleProxy": true,
+    "includesMissedPollProxy": true,
+    "includesNearZeroLastVelocity": true,
+    "includesCurvedApproach": true
+  },
+  "verificationStatus": "pending-step-04-replay",
+  "replay": {
+    "schemaVersion": "cursor-prediction-v19-step-04-reproduction/1",
+    "inputs": {
+      "ScenarioPath": "C:/Users/seigl/OneDrive/my/ドキュメント/projects/cursor/poc/cursor-prediction-v19/step-04b-generator-revision/abrupt-stop-scenarios-revised.json",
+      "scenarioPathExists": true,
+      "scenarioBytes": 35182,
+      "MetadataPath": "C:/Users/seigl/OneDrive/my/ドキュメント/projects/cursor/poc/cursor-prediction-v19/step-04b-generator-revision/scenario-metadata-revised.json",
+      "metadataPathExists": true,
+      "scenarioCount": 24,
+      "GenerationProfile": "v19-step04b-abrupt-stop-revision-high-speed-creep-phase",
+      "DurationMilliseconds": 29820,
+      "ScenarioDurationMilliseconds": 1320,
+      "SampleRateHz": 240,
+      "CallRateHz": 60,
+      "RefreshMs": 16.6666667,
+      "PhaseOffsetsMs": [
+        0,
+        4.1666667,
+        8.3333333,
+        12.5
+      ]
+    },
+    "reproduction": {
+      "noBrakeReproducesLeak": true,
+      "productBrakeReproducesLeak": true,
+      "noBrakeCriterion": "peakLead max > 0.5 px or overshootThenReturn >1px rate > 0",
+      "productBrakeCriterion": "same criterion; true means the current product brake leaks on this scenario set",
+      "proceedToDatasetLossDesign": true
+    },
+    "candidateSummary": [
+      {
+        "id": "constant_velocity_default_offset2",
+        "rows": 7212,
+        "events": 50,
+        "visualP95": 9.185404540121613,
+        "visualP99": 20.938088264527618,
+        "peakLeadP95": 10.156468133602857,
+        "peakLeadP99": 10.651871715165578,
+        "peakLeadMax": 11.12784770529447,
+        "otrGt1": 0.18,
+        "returnP99": 9.69656671357643,
+        "returnMax": 9.69656671357643,
+        "jitterP95": 1.9500731481250622,
+        "jitterP99": 7.315532207031197
+      },
+      {
+        "id": "least_squares_default_offset2",
+        "rows": 7212,
+        "events": 50,
+        "visualP95": 13.557487526821618,
+        "visualP99": 25.11487831514747,
+        "peakLeadP95": 8.153816678997828,
+        "peakLeadP99": 10.181476932223585,
+        "peakLeadMax": 10.653343404100724,
+        "otrGt1": 0.18,
+        "returnP99": 6.826098789457092,
+        "returnMax": 6.826098789457092,
+        "jitterP95": 6.252845519575424,
+        "jitterP99": 9.633294682209518
+      },
+      {
+        "id": "distilled_mlp_lag0_offset_minus4",
+        "rows": 7212,
+        "events": 66,
+        "visualP95": 9.102698567493656,
+        "visualP99": 16.83164188125252,
+        "peakLeadP95": 5.1763037607190086,
+        "peakLeadP99": 5.2957827679312,
+        "peakLeadMax": 5.327858902184062,
+        "otrGt1": 0.30303030303030304,
+        "returnP99": 5.09980475757031,
+        "returnMax": 5.148784263591456,
+        "jitterP95": 4.9335021342836995,
+        "jitterP99": 5.21762534193566
+      },
+      {
+        "id": "distilled_mlp_lag0_offset_minus4_post_stop_brake",
+        "rows": 7212,
+        "events": 66,
+        "visualP95": 9.102698567493656,
+        "visualP99": 16.83164188125252,
+        "peakLeadP95": 4.938127813401537,
+        "peakLeadP99": 5.2957827679312,
+        "peakLeadMax": 5.327858902184062,
+        "otrGt1": 0.24242424242424243,
+        "returnP99": 4.672054088283427,
+        "returnMax": 4.82848041564651,
+        "jitterP95": 2.78343477377139,
+        "jitterP99": 3.5984222189972868
+      }
+    ],
+    "ranking": [
+      {
+        "id": "distilled_mlp_lag0_offset_minus4_post_stop_brake",
+        "score": {
+          "totalObjective": 165.90007267946223,
+          "peakLeadP99": 5.2957827679312,
+          "peakLeadMax": 5.327858902184062,
+          "overshootThenReturnRateGt1": 0.24242424242424243,
+          "visualP95": 9.102698567493656
+        }
+      },
+      {
+        "id": "distilled_mlp_lag0_offset_minus4",
+        "score": {
+          "totalObjective": 171.9606787400683,
+          "peakLeadP99": 5.2957827679312,
+          "peakLeadMax": 5.327858902184062,
+          "overshootThenReturnRateGt1": 0.30303030303030304,
+          "visualP95": 9.102698567493656
+        }
+      },
+      {
+        "id": "least_squares_default_offset2",
+        "score": {
+          "totalObjective": 288.45374319179695,
+          "peakLeadP99": 10.181476932223585,
+          "peakLeadMax": 10.653343404100724,
+          "overshootThenReturnRateGt1": 0.18,
+          "visualP95": 13.557487526821618
+        }
+      },
+      {
+        "id": "constant_velocity_default_offset2",
+        "score": {
+          "totalObjective": 295.86207736990553,
+          "peakLeadP99": 10.651871715165578,
+          "peakLeadMax": 11.12784770529447,
+          "overshootThenReturnRateGt1": 0.18,
+          "visualP95": 9.185404540121613
+        }
+      }
+    ]
+  },
+  "conclusion": {
+    "originalStep03Reproduced": false,
+    "revisedGeneratorReproducedNoBrake": true,
+    "revisedGeneratorReproducedProductBrake": true,
+    "next": "Use revised abrupt-stop family in dataset/loss design, then validate against real traces and holdout synthetic scenarios."
+  }
+}

@@ -1,0 +1,5305 @@
+{
+  "schemaVersion": "cursor-prediction-v21-step-07-runtime-only-correction/1",
+  "generatedAtUtc": "2026-05-04T13:03:51.374192+00:00",
+  "environment": {
+    "runtime": ".NET 10.0.7",
+    "execution": "CPU-only serialized multi-seed training/evaluation",
+    "elapsedMilliseconds": 70291.5296
+  },
+  "inputs": {
+    "manifest": "poc/cursor-prediction-v21/step-02-balanced-evaluation/split-manifest.json",
+    "metricPolicy": "poc/cursor-prediction-v21/step-02-balanced-evaluation/metric-policy.json",
+    "warmupMilliseconds": 1500,
+    "fixed12000msScenarioWindowAssumption": false,
+    "packageSourceOfTruth": "split-manifest.json packages array",
+    "zipEntriesRead": [
+      "trace.csv",
+      "motion-trace-alignment.csv"
+    ],
+    "referenceTargetSource": "trace.csv referencePoll/cursorPoll/rawInput rows",
+    "rowSource": "motion-trace-alignment.csv rows joined to trace.csv by traceSequence",
+    "runtimeOnlyCorrection": {
+      "featureVector": "replaced future/reference target distance / 8 with runtimeTargetDisplacementEstimate / 8; replaced future/reference target speed / 3000 with runtime v2 speed / 3000",
+      "runtimeTargetDisplacementEstimate": "max(0, horizonMs / 1000) * v2 speed from current/past samples",
+      "runtimeGuard": "does not read EventWindowLabel, StaticLabel, MovementPhase, generated velocity/phase, or future target distance"
+    }
+  },
+  "training": {
+    "seeds": [
+      2105,
+      2205,
+      2305
+    ],
+    "trainRowsBeforeCap": 91215,
+    "trainSampleCap": 120000,
+    "capBehavior": "full train split used for every seed",
+    "maxEpochs": 60,
+    "learningRate": 0.003,
+    "futureLagRegressionEpsilonPx": 0.005,
+    "specs": [
+      {
+        "Id": "mlp_h32_event_safe_runtime_features_fulltrain",
+        "Family": "MLP",
+        "FeatureKind": "temporal",
+        "Hidden": 32,
+        "TrainingTarget": "event-safe target; post-stop and stationary labels pull to zero displacement; runtime-only feature vector; full train split multi-seed validation",
+        "RuntimeShape": "one hidden tanh MLP, hidden=32, runtime-only temporal features, CPU multi-seed focused validation",
+        "LossKind": "eventSafe",
+        "LeadWeight": 0,
+        "EventLeadMultiplier": 1,
+        "LagWeight": 1,
+        "EventWeight": 12,
+        "StaticWeight": 2.5,
+        "PeakLeadCap": 0.35,
+        "PeakLeadHingeWeight": 0,
+        "ReturnMotionWeight": 0,
+        "LagGuardWeight": 0,
+        "LagGuardPx": 0.75,
+        "JitterWeight": 0,
+        "StopCapPx": 0.5
+      }
+    ],
+    "perSeed": [
+      {
+        "seed": 2105,
+        "trainRowsBeforeCap": 91215,
+        "trainSampleCap": 120000,
+        "trainRowsUsed": 91215,
+        "stratification": {
+          "normalMoving": 920,
+          "eventOrStopSafety": 6177,
+          "staticRows": 62028,
+          "other": 24054
+        }
+      },
+      {
+        "seed": 2205,
+        "trainRowsBeforeCap": 91215,
+        "trainSampleCap": 120000,
+        "trainRowsUsed": 91215,
+        "stratification": {
+          "normalMoving": 920,
+          "eventOrStopSafety": 6177,
+          "staticRows": 62028,
+          "other": 24054
+        }
+      },
+      {
+        "seed": 2305,
+        "trainRowsBeforeCap": 91215,
+        "trainSampleCap": 120000,
+        "trainRowsUsed": 91215,
+        "stratification": {
+          "normalMoving": 920,
+          "eventOrStopSafety": 6177,
+          "staticRows": 62028,
+          "other": 24054
+        }
+      }
+    ]
+  },
+  "datasetSummary": {
+    "rows": 252180,
+    "packages": 10,
+    "scenarios": 640,
+    "manifestPackages": [
+      {
+        "PackageId": "m191827",
+        "Split": "train",
+        "QualityBucket": "poll-delayed",
+        "DurationBucket": "12s",
+        "ScenarioDurationMilliseconds": 12000,
+        "ScenarioCount": 64,
+        "AlignmentRows": 558923
+      },
+      {
+        "PackageId": "m192020",
+        "Split": "validation",
+        "QualityBucket": "poll-delayed",
+        "DurationBucket": "12s",
+        "ScenarioDurationMilliseconds": 12000,
+        "ScenarioCount": 64,
+        "AlignmentRows": 567051
+      },
+      {
+        "PackageId": "m192107",
+        "Split": "robustness",
+        "QualityBucket": "poll-delayed",
+        "DurationBucket": "12s",
+        "ScenarioDurationMilliseconds": 12000,
+        "ScenarioCount": 64,
+        "AlignmentRows": 500785
+      },
+      {
+        "PackageId": "m193433",
+        "Split": "robustness",
+        "QualityBucket": "poll-delayed",
+        "DurationBucket": "8s",
+        "ScenarioDurationMilliseconds": 8000,
+        "ScenarioCount": 64,
+        "AlignmentRows": 443361
+      },
+      {
+        "PackageId": "m193508",
+        "Split": "train",
+        "QualityBucket": "poll-delayed",
+        "DurationBucket": "6s",
+        "ScenarioDurationMilliseconds": 6000,
+        "ScenarioCount": 64,
+        "AlignmentRows": 320451
+      },
+      {
+        "PackageId": "m194149",
+        "Split": "train",
+        "QualityBucket": "poll-delayed",
+        "DurationBucket": "4s",
+        "ScenarioDurationMilliseconds": 4000,
+        "ScenarioCount": 64,
+        "AlignmentRows": 239096
+      },
+      {
+        "PackageId": "m194623",
+        "Split": "robustness",
+        "QualityBucket": "poll-delayed",
+        "DurationBucket": "10s",
+        "ScenarioDurationMilliseconds": 10000,
+        "ScenarioCount": 64,
+        "AlignmentRows": 508234
+      },
+      {
+        "PackageId": "m194657",
+        "Split": "robustness",
+        "QualityBucket": "poll-delayed",
+        "DurationBucket": "6s",
+        "ScenarioDurationMilliseconds": 6000,
+        "ScenarioCount": 64,
+        "AlignmentRows": 362328
+      },
+      {
+        "PackageId": "m195438",
+        "Split": "test",
+        "QualityBucket": "normal",
+        "DurationBucket": "4s",
+        "ScenarioDurationMilliseconds": 4000,
+        "ScenarioCount": 64,
+        "AlignmentRows": 252111
+      },
+      {
+        "PackageId": "m195750",
+        "Split": "train",
+        "QualityBucket": "poll-delayed",
+        "DurationBucket": "8s",
+        "ScenarioDurationMilliseconds": 8000,
+        "ScenarioCount": 64,
+        "AlignmentRows": 429963
+      }
+    ],
+    "bySplit": {
+      "train": {
+        "rows": 91215,
+        "packages": 4,
+        "scenarios": 256
+      },
+      "validation": {
+        "rows": 39449,
+        "packages": 1,
+        "scenarios": 64
+      },
+      "robustness": {
+        "rows": 111916,
+        "packages": 4,
+        "scenarios": 256
+      },
+      "test": {
+        "rows": 9600,
+        "packages": 1,
+        "scenarios": 64
+      }
+    },
+    "byDurationBucket": {
+      "12s": 115991,
+      "8s": 49911,
+      "6s": 34485,
+      "4s": 19196,
+      "10s": 32597
+    },
+    "byQualityBucket": {
+      "poll-delayed": 242580,
+      "normal": 9600
+    },
+    "eventWindowRows": 9645,
+    "stationaryRows": 183459
+  },
+  "productBaseline": {
+    "metrics": {
+      "test.normal.visual.p95": 0.9414071834184284,
+      "test.normal.visual.p99": 2.1617282461180243,
+      "robustness.peakLead.max": 3,
+      "robustness.otr.gt1px.rate": 0.009881422924901186,
+      "robustness.returnMotion.max": 3.204001404494074,
+      "overall.futureLead.p99": 0.9522000000029038,
+      "overall.futureLag.p95": 0
+    },
+    "deploymentMetrics": {
+      "test.normal.visual.p95": 0.9414071834184284,
+      "test.normal.visual.p99": 2.1617282461180243,
+      "test.normalMoving.futureLag.p95": 0.9312880324469006,
+      "test.normalMoving.futureLag.p99": 2.5709999999999127,
+      "robustness.peakLead.max": 3,
+      "robustness.otr.gt1px.rate": 0.009881422924901186,
+      "robustness.returnMotion.max": 3.204001404494074,
+      "overall.futureLead.p99": 0.9522000000029038,
+      "heldout.stationaryJitter.p95": 0
+    },
+    "objective": 3250.3491696298856,
+    "futureLagDiagnostics": {
+      "rowWeightedP95": 0,
+      "scenarioBalancedP95": 0.8945082166387889,
+      "fileBalancedP95": 0.5450868182382124,
+      "durationBucketBalancedP95": 0.2953829864939962,
+      "qualityBucketBalancedP95": 0.4656440162234503,
+      "eligibleRowCount": 136929,
+      "bySplit": {
+        "train": {
+          "p95": 0,
+          "sourceCount": 91215
+        },
+        "validation": {
+          "p95": 0,
+          "sourceCount": 39449
+        },
+        "robustness": {
+          "p95": 0.9356999999954496,
+          "sourceCount": 3938
+        },
+        "test": {
+          "p95": 0.9312880324469006,
+          "sourceCount": 2327
+        }
+      },
+      "normalQualityAllRows": {
+        "count": 9600,
+        "mean": 0.06612379981037778,
+        "p50": 0,
+        "p95": 0.4433499999995547,
+        "p99": 1.2438000000006468,
+        "max": 14.859899999946379
+      },
+      "pollDelayedAllRows": {
+        "count": 242580,
+        "mean": 0.03242135201908953,
+        "p50": 0,
+        "p95": 0,
+        "p99": 0.875,
+        "max": 45.36040203991206
+      },
+      "sliceAnalysis": {
+        "deployment": {
+          "testNormalVisual": {
+            "count": 9600,
+            "mean": 0.18146744072864873,
+            "p50": 0,
+            "p95": 0.9414071834184284,
+            "p99": 2.1617282461180243,
+            "max": 21.216348684713456
+          },
+          "testNormalMovingFutureLag": {
+            "count": 2327,
+            "mean": 0.1744987444796268,
+            "p50": 0,
+            "p95": 0.9312880324469006,
+            "p99": 2.5709999999999127,
+            "max": 14.859899999946379
+          },
+          "robustnessNormalMovingFutureLag": {
+            "count": 3938,
+            "mean": 0.23177323710726128,
+            "p50": 0,
+            "p95": 0.9356999999954496,
+            "p99": 4.1847499999962565,
+            "max": 45.36040203991206
+          },
+          "heldoutNormalMovingFutureLag": {
+            "count": 6265,
+            "mean": 0.21049985413128278,
+            "p50": 0,
+            "p95": 0.9314326499842309,
+            "p99": 3.5670000000000073,
+            "max": 45.36040203991206
+          },
+          "heldoutStationaryJitter": {
+            "count": 85290,
+            "mean": 0.004082213673469894,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 3.4118360159890453
+          },
+          "robustnessStopEvents": {
+            "count": 506,
+            "peakLead": {
+              "count": 506,
+              "mean": 0.03409090909090909,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0.875,
+              "max": 3
+            },
+            "returnMotion": {
+              "count": 506,
+              "mean": 0.052648644524561486,
+              "p50": 0,
+              "p95": 0,
+              "p99": 2.752839443193155,
+              "max": 3.204001404494074
+            },
+            "otrGt1pxRate": 0.009881422924901186
+          }
+        },
+        "diagnostic": {
+          "legacyFutureLagEligibleRows": {
+            "p95": 0,
+            "sourceCount": 136929
+          },
+          "allRowFutureLag": {
+            "count": 252180,
+            "mean": 0.03370433837326653,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0.8980509745127847,
+            "max": 45.36040203991206
+          },
+          "allRowFutureLagBySplit": {
+            "robustness": {
+              "count": 111916,
+              "mean": 0.03176268190377596,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0.865049999996927,
+              "max": 45.36040203991206
+            },
+            "test": {
+              "count": 9600,
+              "mean": 0.06612379981037778,
+              "p50": 0,
+              "p95": 0.4433499999995547,
+              "p99": 1.2438000000006468,
+              "max": 14.859899999946379
+            },
+            "train": {
+              "count": 91215,
+              "mean": 0.03846018035675014,
+              "p50": 0,
+              "p95": 0,
+              "p99": 1.018299999996998,
+              "max": 41.83679999971389
+            },
+            "validation": {
+              "count": 39449,
+              "mean": 0.020326850201697864,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0.5836081959080275,
+              "max": 19.862400000572165
+            }
+          },
+          "allRowFutureLagByQualityBucket": {
+            "normal": {
+              "count": 9600,
+              "mean": 0.06612379981037778,
+              "p50": 0,
+              "p95": 0.4433499999995547,
+              "p99": 1.2438000000006468,
+              "max": 14.859899999946379
+            },
+            "poll-delayed": {
+              "count": 242580,
+              "mean": 0.03242135201908953,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0.875,
+              "max": 45.36040203991206
+            }
+          },
+          "normalMovingFutureLagBySplit": {
+            "robustness": {
+              "count": 3938,
+              "mean": 0.23177323710726128,
+              "p50": 0,
+              "p95": 0.9356999999954496,
+              "p99": 4.1847499999962565,
+              "max": 45.36040203991206
+            },
+            "test": {
+              "count": 2327,
+              "mean": 0.1744987444796268,
+              "p50": 0,
+              "p95": 0.9312880324469006,
+              "p99": 2.5709999999999127,
+              "max": 14.859899999946379
+            },
+            "train": {
+              "count": 6251,
+              "mean": 0.20077573442548519,
+              "p50": 0,
+              "p95": 0.9933999999761909,
+              "p99": 4.1060000000148875,
+              "max": 41.83679999971389
+            },
+            "validation": {
+              "count": 763,
+              "mean": 0.16169148067763411,
+              "p50": 0,
+              "p95": 0.6220610305152832,
+              "p99": 3.3130000001192457,
+              "max": 19.862400000572165
+            }
+          }
+        }
+      }
+    }
+  },
+  "perSeed": [
+    {
+      "Seed": 2105,
+      "Id": "mlp_h32_event_safe_runtime_features_fulltrain",
+      "Objective": 1262.7930466195055,
+      "Metrics": {
+        "test.normal.visual.p95": 0.9346764755905835,
+        "test.normal.visual.p99": 2.159666970294423,
+        "robustness.peakLead.max": 0.15809979629636123,
+        "robustness.otr.gt1px.rate": 0,
+        "robustness.returnMotion.max": 0.1989204573701601,
+        "overall.futureLead.p99": 0.9092152494926986,
+        "overall.futureLag.p95": 0.03682664451550742
+      },
+      "BeatsProductStrict": {
+        "test.normal.visual.p95": true,
+        "test.normal.visual.p99": true,
+        "robustness.peakLead.max": true,
+        "robustness.otr.gt1px.rate": true,
+        "robustness.returnMotion.max": true,
+        "overall.futureLead.p99": true,
+        "overall.futureLag.p95": false
+      },
+      "FutureLagWithinLegacyEpsilon": false,
+      "PassesLegacyStep05IntegrationGate": false,
+      "DeploymentGate": {
+        "metrics": {
+          "test.normal.visual.p95": 0.9346764755905835,
+          "test.normal.visual.p99": 2.159666970294423,
+          "test.normalMoving.futureLag.p95": 0.9362502019590486,
+          "test.normalMoving.futureLag.p99": 2.60314419900721,
+          "robustness.peakLead.max": 0.15809979629636123,
+          "robustness.otr.gt1px.rate": 0,
+          "robustness.returnMotion.max": 0.1989204573701601,
+          "overall.futureLead.p99": 0.9092152494926986,
+          "heldout.stationaryJitter.p95": 0.014209694874123534
+        },
+        "productReferences": {
+          "testNormalVisualP95": 0.9414071834184284,
+          "testNormalVisualP99": 2.1617282461180243,
+          "testNormalMovingFutureLagP95": 0.9312880324469006,
+          "testNormalMovingFutureLagP99": 2.5709999999999127,
+          "robustnessPeakLeadMax": 3,
+          "robustnessOtrGt1pxRate": 0.009881422924901186,
+          "robustnessReturnMotionMax": 3.204001404494074,
+          "overallFutureLeadP99": 0.9522000000029038,
+          "heldoutStationaryJitterP95": 0
+        },
+        "deltas": {
+          "test.normal.visual.p95": -0.006730707827844906,
+          "test.normal.visual.p99": -0.002061275823601161,
+          "test.normalMoving.futureLag.p95": 0.004962169512148007,
+          "test.normalMoving.futureLag.p99": 0.03214419900729748,
+          "robustness.peakLead.max": -2.8419002037036387,
+          "robustness.otr.gt1px.rate": -0.009881422924901186,
+          "robustness.returnMotion.max": -3.005080947123914,
+          "overall.futureLead.p99": -0.04298475051020523,
+          "heldout.stationaryJitter.p95": 0.014209694874123534
+        },
+        "checks": {
+          "normalVisualOk": true,
+          "testNormalMovingFutureLagP95Ok": true,
+          "testNormalMovingFutureLagP99Ok": true,
+          "robustnessOk": true,
+          "futureLeadOk": true,
+          "heldoutStationaryJitterOk": true
+        },
+        "passes": true
+      },
+      "FutureLagDiagnostics": {
+        "rowWeightedP95": 0.03682664451550742,
+        "scenarioBalancedP95": 0.9103156052040227,
+        "fileBalancedP95": 0.5485903016920847,
+        "durationBucketBalancedP95": 0.30204136367342954,
+        "qualityBucketBalancedP95": 0.4827330395636532,
+        "eligibleRowCount": 136929,
+        "bySplit": {
+          "train": {
+            "p95": 0.031938439108347615,
+            "sourceCount": 91215
+          },
+          "validation": {
+            "p95": 0.00892193928594144,
+            "sourceCount": 39449
+          },
+          "robustness": {
+            "p95": 0.9524751294905558,
+            "sourceCount": 3938
+          },
+          "test": {
+            "p95": 0.9362502019590486,
+            "sourceCount": 2327
+          }
+        },
+        "normalQualityAllRows": {
+          "count": 9600,
+          "mean": 0.06947913243611564,
+          "p50": 0.0015847623311699998,
+          "p95": 0.44342383055194246,
+          "p99": 1.2502031931553543,
+          "max": 14.829859097001306
+        },
+        "pollDelayedAllRows": {
+          "count": 242580,
+          "mean": 0.033979677897042856,
+          "p50": 0.00046382804706720767,
+          "p95": 0.024705089515392815,
+          "p99": 0.8668923497576707,
+          "max": 45.34463221489589
+        },
+        "sliceAnalysis": {
+          "deployment": {
+            "testNormalVisual": {
+              "count": 9600,
+              "mean": 0.18831034408662353,
+              "p50": 0.009672666939385908,
+              "p95": 0.9346764755905835,
+              "p99": 2.159666970294423,
+              "max": 21.2417849459513
+            },
+            "testNormalMovingFutureLag": {
+              "count": 2327,
+              "mean": 0.17912822944882292,
+              "p50": 0.0036103470794731202,
+              "p95": 0.9362502019590486,
+              "p99": 2.60314419900721,
+              "max": 14.829859097001306
+            },
+            "robustnessNormalMovingFutureLag": {
+              "count": 3938,
+              "mean": 0.23979635066450403,
+              "p50": 0.0007635090226328701,
+              "p95": 0.9524751294905558,
+              "p99": 4.1914370269654135,
+              "max": 45.34463221489589
+            },
+            "heldoutNormalMovingFutureLag": {
+              "count": 6265,
+              "mean": 0.21726247707010818,
+              "p50": 0.002371438836264617,
+              "p95": 0.9445696234599812,
+              "p99": 3.5622043461603834,
+              "max": 45.34463221489589
+            },
+            "heldoutStationaryJitter": {
+              "count": 85290,
+              "mean": 0.00525793588075042,
+              "p50": 0.0036551854234527664,
+              "p95": 0.014209694874123534,
+              "p99": 0.03290600793383301,
+              "max": 0.33801809204467526
+            },
+            "robustnessStopEvents": {
+              "count": 506,
+              "peakLead": {
+                "count": 506,
+                "mean": 0.03512744415726002,
+                "p50": 0.029500826461079967,
+                "p95": 0.08786717505320518,
+                "p99": 0.13188331601673622,
+                "max": 0.15809979629636123
+              },
+              "returnMotion": {
+                "count": 506,
+                "mean": 0.03888722989483319,
+                "p50": 0.0314531970610952,
+                "p95": 0.09617763414291493,
+                "p99": 0.14417510029950328,
+                "max": 0.1989204573701601
+              },
+              "otrGt1pxRate": 0
+            }
+          },
+          "diagnostic": {
+            "legacyFutureLagEligibleRows": {
+              "p95": 0.03682664451550742,
+              "sourceCount": 136929
+            },
+            "allRowFutureLag": {
+              "count": 252180,
+              "mean": 0.03533107278789502,
+              "p50": 0.000495595776590652,
+              "p95": 0.03034162151993427,
+              "p99": 0.891334796473841,
+              "max": 45.34463221489589
+            },
+            "allRowFutureLagBySplit": {
+              "robustness": {
+                "count": 111916,
+                "mean": 0.03336097157110409,
+                "p50": 0.0004995447978101914,
+                "p95": 0.02853090067021805,
+                "p99": 0.8556613742391239,
+                "max": 45.34463221489589
+              },
+              "test": {
+                "count": 9600,
+                "mean": 0.06947913243611564,
+                "p50": 0.0015847623311699998,
+                "p95": 0.44342383055194246,
+                "p99": 1.2502031931553543,
+                "max": 14.829859097001306
+              },
+              "train": {
+                "count": 91215,
+                "mean": 0.04031918764626763,
+                "p50": 0.0005641487453054565,
+                "p95": 0.031938439108347615,
+                "p99": 1.0188623520956959,
+                "max": 41.81106070139182
+              },
+              "validation": {
+                "count": 39449,
+                "mean": 0.0210765562817477,
+                "p50": 0.00017853072155762473,
+                "p95": 0.00892193928594144,
+                "p99": 0.5725902269063807,
+                "max": 19.83701492007435
+              }
+            },
+            "allRowFutureLagByQualityBucket": {
+              "normal": {
+                "count": 9600,
+                "mean": 0.06947913243611564,
+                "p50": 0.0015847623311699998,
+                "p95": 0.44342383055194246,
+                "p99": 1.2502031931553543,
+                "max": 14.829859097001306
+              },
+              "poll-delayed": {
+                "count": 242580,
+                "mean": 0.033979677897042856,
+                "p50": 0.00046382804706720767,
+                "p95": 0.024705089515392815,
+                "p99": 0.8668923497576707,
+                "max": 45.34463221489589
+              }
+            },
+            "normalMovingFutureLagBySplit": {
+              "robustness": {
+                "count": 3938,
+                "mean": 0.23979635066450403,
+                "p50": 0.0007635090226328701,
+                "p95": 0.9524751294905558,
+                "p99": 4.1914370269654135,
+                "max": 45.34463221489589
+              },
+              "test": {
+                "count": 2327,
+                "mean": 0.17912822944882292,
+                "p50": 0.0036103470794731202,
+                "p95": 0.9362502019590486,
+                "p99": 2.60314419900721,
+                "max": 14.829859097001306
+              },
+              "train": {
+                "count": 6251,
+                "mean": 0.2055692074467324,
+                "p50": 0.0006800124328097622,
+                "p95": 1.0006693738587766,
+                "p99": 4.06887279466552,
+                "max": 41.81106070139182
+              },
+              "validation": {
+                "count": 763,
+                "mean": 0.1671412139778214,
+                "p50": 0,
+                "p95": 0.6461580979259796,
+                "p99": 3.306239501720836,
+                "max": 19.83701492007435
+              }
+            }
+          }
+        }
+      },
+      "TrainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 0.457577418739859
+        },
+        {
+          "epoch": 20,
+          "loss": 0.3096795535405347
+        },
+        {
+          "epoch": 40,
+          "loss": 0.30404385523656996
+        },
+        {
+          "epoch": 60,
+          "loss": 0.3030414450715924
+        }
+      ],
+      "RuntimeCost": {
+        "estimatedMacs": 864,
+        "parameters": 898,
+        "inputFeatures": 25,
+        "hidden": 32,
+        "allocationFreeAtRuntime": false
+      }
+    },
+    {
+      "Seed": 2105,
+      "Id": "mlp_h32_event_safe_runtime_latch_cap0p35",
+      "Objective": 1228.7626219118074,
+      "Metrics": {
+        "test.normal.visual.p95": 0.9346764755905835,
+        "test.normal.visual.p99": 2.159666970294423,
+        "robustness.peakLead.max": 0.13289021909026552,
+        "robustness.otr.gt1px.rate": 0,
+        "robustness.returnMotion.max": 0.23299200075907384,
+        "overall.futureLead.p99": 0.9089854221980833,
+        "overall.futureLag.p95": 0.035877272972174384
+      },
+      "BeatsProductStrict": {
+        "test.normal.visual.p95": true,
+        "test.normal.visual.p99": true,
+        "robustness.peakLead.max": true,
+        "robustness.otr.gt1px.rate": true,
+        "robustness.returnMotion.max": true,
+        "overall.futureLead.p99": true,
+        "overall.futureLag.p95": false
+      },
+      "FutureLagWithinLegacyEpsilon": false,
+      "PassesLegacyStep05IntegrationGate": false,
+      "DeploymentGate": {
+        "metrics": {
+          "test.normal.visual.p95": 0.9346764755905835,
+          "test.normal.visual.p99": 2.159666970294423,
+          "test.normalMoving.futureLag.p95": 0.9362502019590486,
+          "test.normalMoving.futureLag.p99": 2.60314419900721,
+          "robustness.peakLead.max": 0.13289021909026552,
+          "robustness.otr.gt1px.rate": 0,
+          "robustness.returnMotion.max": 0.23299200075907384,
+          "overall.futureLead.p99": 0.9089854221980833,
+          "heldout.stationaryJitter.p95": 0.008294231020560922
+        },
+        "productReferences": {
+          "testNormalVisualP95": 0.9414071834184284,
+          "testNormalVisualP99": 2.1617282461180243,
+          "testNormalMovingFutureLagP95": 0.9312880324469006,
+          "testNormalMovingFutureLagP99": 2.5709999999999127,
+          "robustnessPeakLeadMax": 3,
+          "robustnessOtrGt1pxRate": 0.009881422924901186,
+          "robustnessReturnMotionMax": 3.204001404494074,
+          "overallFutureLeadP99": 0.9522000000029038,
+          "heldoutStationaryJitterP95": 0
+        },
+        "deltas": {
+          "test.normal.visual.p95": -0.006730707827844906,
+          "test.normal.visual.p99": -0.002061275823601161,
+          "test.normalMoving.futureLag.p95": 0.004962169512148007,
+          "test.normalMoving.futureLag.p99": 0.03214419900729748,
+          "robustness.peakLead.max": -2.8671097809097343,
+          "robustness.otr.gt1px.rate": -0.009881422924901186,
+          "robustness.returnMotion.max": -2.971009403735,
+          "overall.futureLead.p99": -0.04321457780482052,
+          "heldout.stationaryJitter.p95": 0.008294231020560922
+        },
+        "checks": {
+          "normalVisualOk": true,
+          "testNormalMovingFutureLagP95Ok": true,
+          "testNormalMovingFutureLagP99Ok": true,
+          "robustnessOk": true,
+          "futureLeadOk": true,
+          "heldoutStationaryJitterOk": true
+        },
+        "passes": true
+      },
+      "FutureLagDiagnostics": {
+        "rowWeightedP95": 0.035877272972174384,
+        "scenarioBalancedP95": 0.9094029460177894,
+        "fileBalancedP95": 0.5479831261770927,
+        "durationBucketBalancedP95": 0.30139420501176983,
+        "qualityBucketBalancedP95": 0.481957016940488,
+        "eligibleRowCount": 136929,
+        "bySplit": {
+          "train": {
+            "p95": 0.030036385003032146,
+            "sourceCount": 91215
+          },
+          "validation": {
+            "p95": 0.006396588506665244,
+            "sourceCount": 39449
+          },
+          "robustness": {
+            "p95": 0.9524751294905558,
+            "sourceCount": 3938
+          },
+          "test": {
+            "p95": 0.9362502019590486,
+            "sourceCount": 2327
+          }
+        },
+        "normalQualityAllRows": {
+          "count": 9600,
+          "mean": 0.068866362154091,
+          "p50": 0.00013711045864033347,
+          "p95": 0.4433499999995547,
+          "p99": 1.2502031931553543,
+          "max": 14.829859097001306
+        },
+        "pollDelayedAllRows": {
+          "count": 242580,
+          "mean": 0.03312157823951997,
+          "p50": 0,
+          "p95": 0.0227326700862928,
+          "p99": 0.8679988808781116,
+          "max": 45.34463221489589
+        },
+        "sliceAnalysis": {
+          "deployment": {
+            "testNormalVisual": {
+              "count": 9600,
+              "mean": 0.18639282117119918,
+              "p50": 0.008640955131905543,
+              "p95": 0.9346764755905835,
+              "p99": 2.159666970294423,
+              "max": 21.2417849459513
+            },
+            "testNormalMovingFutureLag": {
+              "count": 2327,
+              "mean": 0.17908122778950158,
+              "p50": 0.0034800384858284165,
+              "p95": 0.9362502019590486,
+              "p99": 2.60314419900721,
+              "max": 14.829859097001306
+            },
+            "robustnessNormalMovingFutureLag": {
+              "count": 3938,
+              "mean": 0.23933380314109387,
+              "p50": 0,
+              "p95": 0.9524751294905558,
+              "p99": 4.1914370269654135,
+              "max": 45.34463221489589
+            },
+            "heldoutNormalMovingFutureLag": {
+              "count": 6265,
+              "mean": 0.2169542751533596,
+              "p50": 0.0015328179596337324,
+              "p95": 0.9445696234599812,
+              "p99": 3.5622043461603834,
+              "max": 45.34463221489589
+            },
+            "heldoutStationaryJitter": {
+              "count": 85290,
+              "mean": 0.001712686371459275,
+              "p50": 0,
+              "p95": 0.008294231020560922,
+              "p99": 0.01994029879154112,
+              "max": 0.33801809204467526
+            },
+            "robustnessStopEvents": {
+              "count": 506,
+              "peakLead": {
+                "count": 506,
+                "mean": 0.015421136636852049,
+                "p50": 0.005560420797475805,
+                "p95": 0.06505487236894138,
+                "p99": 0.09115023911781052,
+                "max": 0.13289021909026552
+              },
+              "returnMotion": {
+                "count": 506,
+                "mean": 0.02752766036437784,
+                "p50": 0.014804608879147743,
+                "p95": 0.09644561166853646,
+                "p99": 0.1370459876395276,
+                "max": 0.23299200075907384
+              },
+              "otrGt1pxRate": 0
+            }
+          },
+          "diagnostic": {
+            "legacyFutureLagEligibleRows": {
+              "p95": 0.035877272972174384,
+              "sourceCount": 136929
+            },
+            "allRowFutureLag": {
+              "count": 252180,
+              "mean": 0.034482312340479146,
+              "p50": 0,
+              "p95": 0.028849999994008613,
+              "p99": 0.8912999999522526,
+              "max": 45.34463221489589
+            },
+            "allRowFutureLagBySplit": {
+              "robustness": {
+                "count": 111916,
+                "mean": 0.03253811488074862,
+                "p50": 0,
+                "p95": 0.027252522893951782,
+                "p99": 0.8556613742391239,
+                "max": 45.34463221489589
+              },
+              "test": {
+                "count": 9600,
+                "mean": 0.068866362154091,
+                "p50": 0.00013711045864033347,
+                "p95": 0.4433499999995547,
+                "p99": 1.2502031931553543,
+                "max": 14.829859097001306
+              },
+              "train": {
+                "count": 91215,
+                "mean": 0.0394419584247701,
+                "p50": 0,
+                "p95": 0.030036385003032146,
+                "p99": 1.0169250493813602,
+                "max": 41.81106070139182
+              },
+              "validation": {
+                "count": 39449,
+                "mean": 0.020162704926195887,
+                "p50": 0,
+                "p95": 0.006396588506665244,
+                "p99": 0.572656822385475,
+                "max": 19.83701492007435
+              }
+            },
+            "allRowFutureLagByQualityBucket": {
+              "normal": {
+                "count": 9600,
+                "mean": 0.068866362154091,
+                "p50": 0.00013711045864033347,
+                "p95": 0.4433499999995547,
+                "p99": 1.2502031931553543,
+                "max": 14.829859097001306
+              },
+              "poll-delayed": {
+                "count": 242580,
+                "mean": 0.03312157823951997,
+                "p50": 0,
+                "p95": 0.0227326700862928,
+                "p99": 0.8679988808781116,
+                "max": 45.34463221489589
+              }
+            },
+            "normalMovingFutureLagBySplit": {
+              "robustness": {
+                "count": 3938,
+                "mean": 0.23933380314109387,
+                "p50": 0,
+                "p95": 0.9524751294905558,
+                "p99": 4.1914370269654135,
+                "max": 45.34463221489589
+              },
+              "test": {
+                "count": 2327,
+                "mean": 0.17908122778950158,
+                "p50": 0.0034800384858284165,
+                "p95": 0.9362502019590486,
+                "p99": 2.60314419900721,
+                "max": 14.829859097001306
+              },
+              "train": {
+                "count": 6251,
+                "mean": 0.20530682496851613,
+                "p50": 0,
+                "p95": 1.0006693738587766,
+                "p99": 4.06887279466552,
+                "max": 41.81106070139182
+              },
+              "validation": {
+                "count": 763,
+                "mean": 0.16686128042575535,
+                "p50": 0,
+                "p95": 0.6461580979259796,
+                "p99": 3.306239501720836,
+                "max": 19.83701492007435
+              }
+            }
+          }
+        }
+      },
+      "TrainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 0.457577418739859
+        },
+        {
+          "epoch": 20,
+          "loss": 0.3096795535405347
+        },
+        {
+          "epoch": 40,
+          "loss": 0.30404385523656996
+        },
+        {
+          "epoch": 60,
+          "loss": 0.3030414450715924
+        }
+      ],
+      "RuntimeCost": {
+        "estimatedMacs": 884,
+        "parameters": 898,
+        "inputFeatures": 25,
+        "hidden": 32,
+        "guard": "runtime-only per-scenario stop latch, static zero target, cap, and lead-side clamp",
+        "stopBlend": 0,
+        "normalGain": 1,
+        "productBlend": 0,
+        "StopCapPx": 0.35
+      }
+    },
+    {
+      "Seed": 2105,
+      "Id": "mlp_h32_event_safe_runtime_latch_cap0p35_gain1p08",
+      "Objective": 1228.7626219118074,
+      "Metrics": {
+        "test.normal.visual.p95": 0.9346764755905835,
+        "test.normal.visual.p99": 2.159666970294423,
+        "robustness.peakLead.max": 0.13289021909026552,
+        "robustness.otr.gt1px.rate": 0,
+        "robustness.returnMotion.max": 0.23299200075907384,
+        "overall.futureLead.p99": 0.9089854221980833,
+        "overall.futureLag.p95": 0.035877272972174384
+      },
+      "BeatsProductStrict": {
+        "test.normal.visual.p95": true,
+        "test.normal.visual.p99": true,
+        "robustness.peakLead.max": true,
+        "robustness.otr.gt1px.rate": true,
+        "robustness.returnMotion.max": true,
+        "overall.futureLead.p99": true,
+        "overall.futureLag.p95": false
+      },
+      "FutureLagWithinLegacyEpsilon": false,
+      "PassesLegacyStep05IntegrationGate": false,
+      "DeploymentGate": {
+        "metrics": {
+          "test.normal.visual.p95": 0.9346764755905835,
+          "test.normal.visual.p99": 2.159666970294423,
+          "test.normalMoving.futureLag.p95": 0.9362502019590486,
+          "test.normalMoving.futureLag.p99": 2.60314419900721,
+          "robustness.peakLead.max": 0.13289021909026552,
+          "robustness.otr.gt1px.rate": 0,
+          "robustness.returnMotion.max": 0.23299200075907384,
+          "overall.futureLead.p99": 0.9089854221980833,
+          "heldout.stationaryJitter.p95": 0.008294231020560922
+        },
+        "productReferences": {
+          "testNormalVisualP95": 0.9414071834184284,
+          "testNormalVisualP99": 2.1617282461180243,
+          "testNormalMovingFutureLagP95": 0.9312880324469006,
+          "testNormalMovingFutureLagP99": 2.5709999999999127,
+          "robustnessPeakLeadMax": 3,
+          "robustnessOtrGt1pxRate": 0.009881422924901186,
+          "robustnessReturnMotionMax": 3.204001404494074,
+          "overallFutureLeadP99": 0.9522000000029038,
+          "heldoutStationaryJitterP95": 0
+        },
+        "deltas": {
+          "test.normal.visual.p95": -0.006730707827844906,
+          "test.normal.visual.p99": -0.002061275823601161,
+          "test.normalMoving.futureLag.p95": 0.004962169512148007,
+          "test.normalMoving.futureLag.p99": 0.03214419900729748,
+          "robustness.peakLead.max": -2.8671097809097343,
+          "robustness.otr.gt1px.rate": -0.009881422924901186,
+          "robustness.returnMotion.max": -2.971009403735,
+          "overall.futureLead.p99": -0.04321457780482052,
+          "heldout.stationaryJitter.p95": 0.008294231020560922
+        },
+        "checks": {
+          "normalVisualOk": true,
+          "testNormalMovingFutureLagP95Ok": true,
+          "testNormalMovingFutureLagP99Ok": true,
+          "robustnessOk": true,
+          "futureLeadOk": true,
+          "heldoutStationaryJitterOk": true
+        },
+        "passes": true
+      },
+      "FutureLagDiagnostics": {
+        "rowWeightedP95": 0.035877272972174384,
+        "scenarioBalancedP95": 0.9094029460177894,
+        "fileBalancedP95": 0.5479831261770927,
+        "durationBucketBalancedP95": 0.30139420501176983,
+        "qualityBucketBalancedP95": 0.481957016940488,
+        "eligibleRowCount": 136929,
+        "bySplit": {
+          "train": {
+            "p95": 0.030036385003032146,
+            "sourceCount": 91215
+          },
+          "validation": {
+            "p95": 0.006396588506665244,
+            "sourceCount": 39449
+          },
+          "robustness": {
+            "p95": 0.9524751294905558,
+            "sourceCount": 3938
+          },
+          "test": {
+            "p95": 0.9362502019590486,
+            "sourceCount": 2327
+          }
+        },
+        "normalQualityAllRows": {
+          "count": 9600,
+          "mean": 0.068866362154091,
+          "p50": 0.00013711045864033347,
+          "p95": 0.4433499999995547,
+          "p99": 1.2502031931553543,
+          "max": 14.829859097001306
+        },
+        "pollDelayedAllRows": {
+          "count": 242580,
+          "mean": 0.03312157823951997,
+          "p50": 0,
+          "p95": 0.0227326700862928,
+          "p99": 0.8679988808781116,
+          "max": 45.34463221489589
+        },
+        "sliceAnalysis": {
+          "deployment": {
+            "testNormalVisual": {
+              "count": 9600,
+              "mean": 0.18639282117119918,
+              "p50": 0.008640955131905543,
+              "p95": 0.9346764755905835,
+              "p99": 2.159666970294423,
+              "max": 21.2417849459513
+            },
+            "testNormalMovingFutureLag": {
+              "count": 2327,
+              "mean": 0.17908122778950158,
+              "p50": 0.0034800384858284165,
+              "p95": 0.9362502019590486,
+              "p99": 2.60314419900721,
+              "max": 14.829859097001306
+            },
+            "robustnessNormalMovingFutureLag": {
+              "count": 3938,
+              "mean": 0.23933380314109387,
+              "p50": 0,
+              "p95": 0.9524751294905558,
+              "p99": 4.1914370269654135,
+              "max": 45.34463221489589
+            },
+            "heldoutNormalMovingFutureLag": {
+              "count": 6265,
+              "mean": 0.2169542751533596,
+              "p50": 0.0015328179596337324,
+              "p95": 0.9445696234599812,
+              "p99": 3.5622043461603834,
+              "max": 45.34463221489589
+            },
+            "heldoutStationaryJitter": {
+              "count": 85290,
+              "mean": 0.001712686371459275,
+              "p50": 0,
+              "p95": 0.008294231020560922,
+              "p99": 0.01994029879154112,
+              "max": 0.33801809204467526
+            },
+            "robustnessStopEvents": {
+              "count": 506,
+              "peakLead": {
+                "count": 506,
+                "mean": 0.015421136636852049,
+                "p50": 0.005560420797475805,
+                "p95": 0.06505487236894138,
+                "p99": 0.09115023911781052,
+                "max": 0.13289021909026552
+              },
+              "returnMotion": {
+                "count": 506,
+                "mean": 0.02752766036437784,
+                "p50": 0.014804608879147743,
+                "p95": 0.09644561166853646,
+                "p99": 0.1370459876395276,
+                "max": 0.23299200075907384
+              },
+              "otrGt1pxRate": 0
+            }
+          },
+          "diagnostic": {
+            "legacyFutureLagEligibleRows": {
+              "p95": 0.035877272972174384,
+              "sourceCount": 136929
+            },
+            "allRowFutureLag": {
+              "count": 252180,
+              "mean": 0.034482312340479146,
+              "p50": 0,
+              "p95": 0.028849999994008613,
+              "p99": 0.8912999999522526,
+              "max": 45.34463221489589
+            },
+            "allRowFutureLagBySplit": {
+              "robustness": {
+                "count": 111916,
+                "mean": 0.03253811488074862,
+                "p50": 0,
+                "p95": 0.027252522893951782,
+                "p99": 0.8556613742391239,
+                "max": 45.34463221489589
+              },
+              "test": {
+                "count": 9600,
+                "mean": 0.068866362154091,
+                "p50": 0.00013711045864033347,
+                "p95": 0.4433499999995547,
+                "p99": 1.2502031931553543,
+                "max": 14.829859097001306
+              },
+              "train": {
+                "count": 91215,
+                "mean": 0.0394419584247701,
+                "p50": 0,
+                "p95": 0.030036385003032146,
+                "p99": 1.0169250493813602,
+                "max": 41.81106070139182
+              },
+              "validation": {
+                "count": 39449,
+                "mean": 0.020162704926195887,
+                "p50": 0,
+                "p95": 0.006396588506665244,
+                "p99": 0.572656822385475,
+                "max": 19.83701492007435
+              }
+            },
+            "allRowFutureLagByQualityBucket": {
+              "normal": {
+                "count": 9600,
+                "mean": 0.068866362154091,
+                "p50": 0.00013711045864033347,
+                "p95": 0.4433499999995547,
+                "p99": 1.2502031931553543,
+                "max": 14.829859097001306
+              },
+              "poll-delayed": {
+                "count": 242580,
+                "mean": 0.03312157823951997,
+                "p50": 0,
+                "p95": 0.0227326700862928,
+                "p99": 0.8679988808781116,
+                "max": 45.34463221489589
+              }
+            },
+            "normalMovingFutureLagBySplit": {
+              "robustness": {
+                "count": 3938,
+                "mean": 0.23933380314109387,
+                "p50": 0,
+                "p95": 0.9524751294905558,
+                "p99": 4.1914370269654135,
+                "max": 45.34463221489589
+              },
+              "test": {
+                "count": 2327,
+                "mean": 0.17908122778950158,
+                "p50": 0.0034800384858284165,
+                "p95": 0.9362502019590486,
+                "p99": 2.60314419900721,
+                "max": 14.829859097001306
+              },
+              "train": {
+                "count": 6251,
+                "mean": 0.20530682496851613,
+                "p50": 0,
+                "p95": 1.0006693738587766,
+                "p99": 4.06887279466552,
+                "max": 41.81106070139182
+              },
+              "validation": {
+                "count": 763,
+                "mean": 0.16686128042575535,
+                "p50": 0,
+                "p95": 0.6461580979259796,
+                "p99": 3.306239501720836,
+                "max": 19.83701492007435
+              }
+            }
+          }
+        }
+      },
+      "TrainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 0.457577418739859
+        },
+        {
+          "epoch": 20,
+          "loss": 0.3096795535405347
+        },
+        {
+          "epoch": 40,
+          "loss": 0.30404385523656996
+        },
+        {
+          "epoch": 60,
+          "loss": 0.3030414450715924
+        }
+      ],
+      "RuntimeCost": {
+        "estimatedMacs": 884,
+        "parameters": 898,
+        "inputFeatures": 25,
+        "hidden": 32,
+        "guard": "runtime-only per-scenario stop latch, static zero target, cap, and lead-side clamp",
+        "stopBlend": 0,
+        "normalGain": 1.08,
+        "productBlend": 0,
+        "StopCapPx": 0.35
+      }
+    },
+    {
+      "Seed": 2105,
+      "Id": "mlp_h32_event_safe_runtime_latch_cap0p25_gain1p08",
+      "Objective": 1228.7626219118074,
+      "Metrics": {
+        "test.normal.visual.p95": 0.9346764755905835,
+        "test.normal.visual.p99": 2.159666970294423,
+        "robustness.peakLead.max": 0.13289021909026552,
+        "robustness.otr.gt1px.rate": 0,
+        "robustness.returnMotion.max": 0.23299200075907384,
+        "overall.futureLead.p99": 0.9089854221980833,
+        "overall.futureLag.p95": 0.035877272972174384
+      },
+      "BeatsProductStrict": {
+        "test.normal.visual.p95": true,
+        "test.normal.visual.p99": true,
+        "robustness.peakLead.max": true,
+        "robustness.otr.gt1px.rate": true,
+        "robustness.returnMotion.max": true,
+        "overall.futureLead.p99": true,
+        "overall.futureLag.p95": false
+      },
+      "FutureLagWithinLegacyEpsilon": false,
+      "PassesLegacyStep05IntegrationGate": false,
+      "DeploymentGate": {
+        "metrics": {
+          "test.normal.visual.p95": 0.9346764755905835,
+          "test.normal.visual.p99": 2.159666970294423,
+          "test.normalMoving.futureLag.p95": 0.9362502019590486,
+          "test.normalMoving.futureLag.p99": 2.60314419900721,
+          "robustness.peakLead.max": 0.13289021909026552,
+          "robustness.otr.gt1px.rate": 0,
+          "robustness.returnMotion.max": 0.23299200075907384,
+          "overall.futureLead.p99": 0.9089854221980833,
+          "heldout.stationaryJitter.p95": 0.008294231020560922
+        },
+        "productReferences": {
+          "testNormalVisualP95": 0.9414071834184284,
+          "testNormalVisualP99": 2.1617282461180243,
+          "testNormalMovingFutureLagP95": 0.9312880324469006,
+          "testNormalMovingFutureLagP99": 2.5709999999999127,
+          "robustnessPeakLeadMax": 3,
+          "robustnessOtrGt1pxRate": 0.009881422924901186,
+          "robustnessReturnMotionMax": 3.204001404494074,
+          "overallFutureLeadP99": 0.9522000000029038,
+          "heldoutStationaryJitterP95": 0
+        },
+        "deltas": {
+          "test.normal.visual.p95": -0.006730707827844906,
+          "test.normal.visual.p99": -0.002061275823601161,
+          "test.normalMoving.futureLag.p95": 0.004962169512148007,
+          "test.normalMoving.futureLag.p99": 0.03214419900729748,
+          "robustness.peakLead.max": -2.8671097809097343,
+          "robustness.otr.gt1px.rate": -0.009881422924901186,
+          "robustness.returnMotion.max": -2.971009403735,
+          "overall.futureLead.p99": -0.04321457780482052,
+          "heldout.stationaryJitter.p95": 0.008294231020560922
+        },
+        "checks": {
+          "normalVisualOk": true,
+          "testNormalMovingFutureLagP95Ok": true,
+          "testNormalMovingFutureLagP99Ok": true,
+          "robustnessOk": true,
+          "futureLeadOk": true,
+          "heldoutStationaryJitterOk": true
+        },
+        "passes": true
+      },
+      "FutureLagDiagnostics": {
+        "rowWeightedP95": 0.035877272972174384,
+        "scenarioBalancedP95": 0.9094029460177894,
+        "fileBalancedP95": 0.5479831261770927,
+        "durationBucketBalancedP95": 0.30139420501176983,
+        "qualityBucketBalancedP95": 0.481957016940488,
+        "eligibleRowCount": 136929,
+        "bySplit": {
+          "train": {
+            "p95": 0.030036385003032146,
+            "sourceCount": 91215
+          },
+          "validation": {
+            "p95": 0.006396588506665244,
+            "sourceCount": 39449
+          },
+          "robustness": {
+            "p95": 0.9524751294905558,
+            "sourceCount": 3938
+          },
+          "test": {
+            "p95": 0.9362502019590486,
+            "sourceCount": 2327
+          }
+        },
+        "normalQualityAllRows": {
+          "count": 9600,
+          "mean": 0.068866362154091,
+          "p50": 0.00013711045864033347,
+          "p95": 0.4433499999995547,
+          "p99": 1.2502031931553543,
+          "max": 14.829859097001306
+        },
+        "pollDelayedAllRows": {
+          "count": 242580,
+          "mean": 0.03312157823951997,
+          "p50": 0,
+          "p95": 0.0227326700862928,
+          "p99": 0.8679988808781116,
+          "max": 45.34463221489589
+        },
+        "sliceAnalysis": {
+          "deployment": {
+            "testNormalVisual": {
+              "count": 9600,
+              "mean": 0.18639282117119918,
+              "p50": 0.008640955131905543,
+              "p95": 0.9346764755905835,
+              "p99": 2.159666970294423,
+              "max": 21.2417849459513
+            },
+            "testNormalMovingFutureLag": {
+              "count": 2327,
+              "mean": 0.17908122778950158,
+              "p50": 0.0034800384858284165,
+              "p95": 0.9362502019590486,
+              "p99": 2.60314419900721,
+              "max": 14.829859097001306
+            },
+            "robustnessNormalMovingFutureLag": {
+              "count": 3938,
+              "mean": 0.23933380314109387,
+              "p50": 0,
+              "p95": 0.9524751294905558,
+              "p99": 4.1914370269654135,
+              "max": 45.34463221489589
+            },
+            "heldoutNormalMovingFutureLag": {
+              "count": 6265,
+              "mean": 0.2169542751533596,
+              "p50": 0.0015328179596337324,
+              "p95": 0.9445696234599812,
+              "p99": 3.5622043461603834,
+              "max": 45.34463221489589
+            },
+            "heldoutStationaryJitter": {
+              "count": 85290,
+              "mean": 0.001712686371459275,
+              "p50": 0,
+              "p95": 0.008294231020560922,
+              "p99": 0.01994029879154112,
+              "max": 0.33801809204467526
+            },
+            "robustnessStopEvents": {
+              "count": 506,
+              "peakLead": {
+                "count": 506,
+                "mean": 0.015421136636852049,
+                "p50": 0.005560420797475805,
+                "p95": 0.06505487236894138,
+                "p99": 0.09115023911781052,
+                "max": 0.13289021909026552
+              },
+              "returnMotion": {
+                "count": 506,
+                "mean": 0.02752766036437784,
+                "p50": 0.014804608879147743,
+                "p95": 0.09644561166853646,
+                "p99": 0.1370459876395276,
+                "max": 0.23299200075907384
+              },
+              "otrGt1pxRate": 0
+            }
+          },
+          "diagnostic": {
+            "legacyFutureLagEligibleRows": {
+              "p95": 0.035877272972174384,
+              "sourceCount": 136929
+            },
+            "allRowFutureLag": {
+              "count": 252180,
+              "mean": 0.034482312340479146,
+              "p50": 0,
+              "p95": 0.028849999994008613,
+              "p99": 0.8912999999522526,
+              "max": 45.34463221489589
+            },
+            "allRowFutureLagBySplit": {
+              "robustness": {
+                "count": 111916,
+                "mean": 0.03253811488074862,
+                "p50": 0,
+                "p95": 0.027252522893951782,
+                "p99": 0.8556613742391239,
+                "max": 45.34463221489589
+              },
+              "test": {
+                "count": 9600,
+                "mean": 0.068866362154091,
+                "p50": 0.00013711045864033347,
+                "p95": 0.4433499999995547,
+                "p99": 1.2502031931553543,
+                "max": 14.829859097001306
+              },
+              "train": {
+                "count": 91215,
+                "mean": 0.0394419584247701,
+                "p50": 0,
+                "p95": 0.030036385003032146,
+                "p99": 1.0169250493813602,
+                "max": 41.81106070139182
+              },
+              "validation": {
+                "count": 39449,
+                "mean": 0.020162704926195887,
+                "p50": 0,
+                "p95": 0.006396588506665244,
+                "p99": 0.572656822385475,
+                "max": 19.83701492007435
+              }
+            },
+            "allRowFutureLagByQualityBucket": {
+              "normal": {
+                "count": 9600,
+                "mean": 0.068866362154091,
+                "p50": 0.00013711045864033347,
+                "p95": 0.4433499999995547,
+                "p99": 1.2502031931553543,
+                "max": 14.829859097001306
+              },
+              "poll-delayed": {
+                "count": 242580,
+                "mean": 0.03312157823951997,
+                "p50": 0,
+                "p95": 0.0227326700862928,
+                "p99": 0.8679988808781116,
+                "max": 45.34463221489589
+              }
+            },
+            "normalMovingFutureLagBySplit": {
+              "robustness": {
+                "count": 3938,
+                "mean": 0.23933380314109387,
+                "p50": 0,
+                "p95": 0.9524751294905558,
+                "p99": 4.1914370269654135,
+                "max": 45.34463221489589
+              },
+              "test": {
+                "count": 2327,
+                "mean": 0.17908122778950158,
+                "p50": 0.0034800384858284165,
+                "p95": 0.9362502019590486,
+                "p99": 2.60314419900721,
+                "max": 14.829859097001306
+              },
+              "train": {
+                "count": 6251,
+                "mean": 0.20530682496851613,
+                "p50": 0,
+                "p95": 1.0006693738587766,
+                "p99": 4.06887279466552,
+                "max": 41.81106070139182
+              },
+              "validation": {
+                "count": 763,
+                "mean": 0.16686128042575535,
+                "p50": 0,
+                "p95": 0.6461580979259796,
+                "p99": 3.306239501720836,
+                "max": 19.83701492007435
+              }
+            }
+          }
+        }
+      },
+      "TrainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 0.457577418739859
+        },
+        {
+          "epoch": 20,
+          "loss": 0.3096795535405347
+        },
+        {
+          "epoch": 40,
+          "loss": 0.30404385523656996
+        },
+        {
+          "epoch": 60,
+          "loss": 0.3030414450715924
+        }
+      ],
+      "RuntimeCost": {
+        "estimatedMacs": 884,
+        "parameters": 898,
+        "inputFeatures": 25,
+        "hidden": 32,
+        "guard": "runtime-only per-scenario stop latch, static zero target, cap, and lead-side clamp",
+        "stopBlend": 0,
+        "normalGain": 1.08,
+        "productBlend": 0,
+        "StopCapPx": 0.25
+      }
+    },
+    {
+      "Seed": 2105,
+      "Id": "mlp_h32_event_safe_runtime_latch_cap0p35_productblend0p25",
+      "Objective": 1228.7626219118074,
+      "Metrics": {
+        "test.normal.visual.p95": 0.9346764755905835,
+        "test.normal.visual.p99": 2.159666970294423,
+        "robustness.peakLead.max": 0.13289021909026552,
+        "robustness.otr.gt1px.rate": 0,
+        "robustness.returnMotion.max": 0.23299200075907384,
+        "overall.futureLead.p99": 0.9089854221980833,
+        "overall.futureLag.p95": 0.035877272972174384
+      },
+      "BeatsProductStrict": {
+        "test.normal.visual.p95": true,
+        "test.normal.visual.p99": true,
+        "robustness.peakLead.max": true,
+        "robustness.otr.gt1px.rate": true,
+        "robustness.returnMotion.max": true,
+        "overall.futureLead.p99": true,
+        "overall.futureLag.p95": false
+      },
+      "FutureLagWithinLegacyEpsilon": false,
+      "PassesLegacyStep05IntegrationGate": false,
+      "DeploymentGate": {
+        "metrics": {
+          "test.normal.visual.p95": 0.9346764755905835,
+          "test.normal.visual.p99": 2.159666970294423,
+          "test.normalMoving.futureLag.p95": 0.9362502019590486,
+          "test.normalMoving.futureLag.p99": 2.60314419900721,
+          "robustness.peakLead.max": 0.13289021909026552,
+          "robustness.otr.gt1px.rate": 0,
+          "robustness.returnMotion.max": 0.23299200075907384,
+          "overall.futureLead.p99": 0.9089854221980833,
+          "heldout.stationaryJitter.p95": 0.008294231020560922
+        },
+        "productReferences": {
+          "testNormalVisualP95": 0.9414071834184284,
+          "testNormalVisualP99": 2.1617282461180243,
+          "testNormalMovingFutureLagP95": 0.9312880324469006,
+          "testNormalMovingFutureLagP99": 2.5709999999999127,
+          "robustnessPeakLeadMax": 3,
+          "robustnessOtrGt1pxRate": 0.009881422924901186,
+          "robustnessReturnMotionMax": 3.204001404494074,
+          "overallFutureLeadP99": 0.9522000000029038,
+          "heldoutStationaryJitterP95": 0
+        },
+        "deltas": {
+          "test.normal.visual.p95": -0.006730707827844906,
+          "test.normal.visual.p99": -0.002061275823601161,
+          "test.normalMoving.futureLag.p95": 0.004962169512148007,
+          "test.normalMoving.futureLag.p99": 0.03214419900729748,
+          "robustness.peakLead.max": -2.8671097809097343,
+          "robustness.otr.gt1px.rate": -0.009881422924901186,
+          "robustness.returnMotion.max": -2.971009403735,
+          "overall.futureLead.p99": -0.04321457780482052,
+          "heldout.stationaryJitter.p95": 0.008294231020560922
+        },
+        "checks": {
+          "normalVisualOk": true,
+          "testNormalMovingFutureLagP95Ok": true,
+          "testNormalMovingFutureLagP99Ok": true,
+          "robustnessOk": true,
+          "futureLeadOk": true,
+          "heldoutStationaryJitterOk": true
+        },
+        "passes": true
+      },
+      "FutureLagDiagnostics": {
+        "rowWeightedP95": 0.035877272972174384,
+        "scenarioBalancedP95": 0.9094029460177894,
+        "fileBalancedP95": 0.5479831261770927,
+        "durationBucketBalancedP95": 0.30139420501176983,
+        "qualityBucketBalancedP95": 0.481957016940488,
+        "eligibleRowCount": 136929,
+        "bySplit": {
+          "train": {
+            "p95": 0.030036385003032146,
+            "sourceCount": 91215
+          },
+          "validation": {
+            "p95": 0.006396588506665244,
+            "sourceCount": 39449
+          },
+          "robustness": {
+            "p95": 0.9524751294905558,
+            "sourceCount": 3938
+          },
+          "test": {
+            "p95": 0.9362502019590486,
+            "sourceCount": 2327
+          }
+        },
+        "normalQualityAllRows": {
+          "count": 9600,
+          "mean": 0.068866362154091,
+          "p50": 0.00013711045864033347,
+          "p95": 0.4433499999995547,
+          "p99": 1.2502031931553543,
+          "max": 14.829859097001306
+        },
+        "pollDelayedAllRows": {
+          "count": 242580,
+          "mean": 0.03312157823951997,
+          "p50": 0,
+          "p95": 0.0227326700862928,
+          "p99": 0.8679988808781116,
+          "max": 45.34463221489589
+        },
+        "sliceAnalysis": {
+          "deployment": {
+            "testNormalVisual": {
+              "count": 9600,
+              "mean": 0.18639282117119918,
+              "p50": 0.008640955131905543,
+              "p95": 0.9346764755905835,
+              "p99": 2.159666970294423,
+              "max": 21.2417849459513
+            },
+            "testNormalMovingFutureLag": {
+              "count": 2327,
+              "mean": 0.17908122778950158,
+              "p50": 0.0034800384858284165,
+              "p95": 0.9362502019590486,
+              "p99": 2.60314419900721,
+              "max": 14.829859097001306
+            },
+            "robustnessNormalMovingFutureLag": {
+              "count": 3938,
+              "mean": 0.23933380314109387,
+              "p50": 0,
+              "p95": 0.9524751294905558,
+              "p99": 4.1914370269654135,
+              "max": 45.34463221489589
+            },
+            "heldoutNormalMovingFutureLag": {
+              "count": 6265,
+              "mean": 0.2169542751533596,
+              "p50": 0.0015328179596337324,
+              "p95": 0.9445696234599812,
+              "p99": 3.5622043461603834,
+              "max": 45.34463221489589
+            },
+            "heldoutStationaryJitter": {
+              "count": 85290,
+              "mean": 0.001712686371459275,
+              "p50": 0,
+              "p95": 0.008294231020560922,
+              "p99": 0.01994029879154112,
+              "max": 0.33801809204467526
+            },
+            "robustnessStopEvents": {
+              "count": 506,
+              "peakLead": {
+                "count": 506,
+                "mean": 0.015421136636852049,
+                "p50": 0.005560420797475805,
+                "p95": 0.06505487236894138,
+                "p99": 0.09115023911781052,
+                "max": 0.13289021909026552
+              },
+              "returnMotion": {
+                "count": 506,
+                "mean": 0.02752766036437784,
+                "p50": 0.014804608879147743,
+                "p95": 0.09644561166853646,
+                "p99": 0.1370459876395276,
+                "max": 0.23299200075907384
+              },
+              "otrGt1pxRate": 0
+            }
+          },
+          "diagnostic": {
+            "legacyFutureLagEligibleRows": {
+              "p95": 0.035877272972174384,
+              "sourceCount": 136929
+            },
+            "allRowFutureLag": {
+              "count": 252180,
+              "mean": 0.034482312340479146,
+              "p50": 0,
+              "p95": 0.028849999994008613,
+              "p99": 0.8912999999522526,
+              "max": 45.34463221489589
+            },
+            "allRowFutureLagBySplit": {
+              "robustness": {
+                "count": 111916,
+                "mean": 0.03253811488074862,
+                "p50": 0,
+                "p95": 0.027252522893951782,
+                "p99": 0.8556613742391239,
+                "max": 45.34463221489589
+              },
+              "test": {
+                "count": 9600,
+                "mean": 0.068866362154091,
+                "p50": 0.00013711045864033347,
+                "p95": 0.4433499999995547,
+                "p99": 1.2502031931553543,
+                "max": 14.829859097001306
+              },
+              "train": {
+                "count": 91215,
+                "mean": 0.0394419584247701,
+                "p50": 0,
+                "p95": 0.030036385003032146,
+                "p99": 1.0169250493813602,
+                "max": 41.81106070139182
+              },
+              "validation": {
+                "count": 39449,
+                "mean": 0.020162704926195887,
+                "p50": 0,
+                "p95": 0.006396588506665244,
+                "p99": 0.572656822385475,
+                "max": 19.83701492007435
+              }
+            },
+            "allRowFutureLagByQualityBucket": {
+              "normal": {
+                "count": 9600,
+                "mean": 0.068866362154091,
+                "p50": 0.00013711045864033347,
+                "p95": 0.4433499999995547,
+                "p99": 1.2502031931553543,
+                "max": 14.829859097001306
+              },
+              "poll-delayed": {
+                "count": 242580,
+                "mean": 0.03312157823951997,
+                "p50": 0,
+                "p95": 0.0227326700862928,
+                "p99": 0.8679988808781116,
+                "max": 45.34463221489589
+              }
+            },
+            "normalMovingFutureLagBySplit": {
+              "robustness": {
+                "count": 3938,
+                "mean": 0.23933380314109387,
+                "p50": 0,
+                "p95": 0.9524751294905558,
+                "p99": 4.1914370269654135,
+                "max": 45.34463221489589
+              },
+              "test": {
+                "count": 2327,
+                "mean": 0.17908122778950158,
+                "p50": 0.0034800384858284165,
+                "p95": 0.9362502019590486,
+                "p99": 2.60314419900721,
+                "max": 14.829859097001306
+              },
+              "train": {
+                "count": 6251,
+                "mean": 0.20530682496851613,
+                "p50": 0,
+                "p95": 1.0006693738587766,
+                "p99": 4.06887279466552,
+                "max": 41.81106070139182
+              },
+              "validation": {
+                "count": 763,
+                "mean": 0.16686128042575535,
+                "p50": 0,
+                "p95": 0.6461580979259796,
+                "p99": 3.306239501720836,
+                "max": 19.83701492007435
+              }
+            }
+          }
+        }
+      },
+      "TrainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 0.457577418739859
+        },
+        {
+          "epoch": 20,
+          "loss": 0.3096795535405347
+        },
+        {
+          "epoch": 40,
+          "loss": 0.30404385523656996
+        },
+        {
+          "epoch": 60,
+          "loss": 0.3030414450715924
+        }
+      ],
+      "RuntimeCost": {
+        "estimatedMacs": 884,
+        "parameters": 898,
+        "inputFeatures": 25,
+        "hidden": 32,
+        "guard": "runtime-only per-scenario stop latch, static zero target, cap, and lead-side clamp",
+        "stopBlend": 0,
+        "normalGain": 1,
+        "productBlend": 0.25,
+        "StopCapPx": 0.35
+      }
+    },
+    {
+      "Seed": 2205,
+      "Id": "mlp_h32_event_safe_runtime_features_fulltrain",
+      "Objective": 1347.246424648221,
+      "Metrics": {
+        "test.normal.visual.p95": 0.9322023013456093,
+        "test.normal.visual.p99": 2.1325644811227056,
+        "robustness.peakLead.max": 0.31120806798429734,
+        "robustness.otr.gt1px.rate": 0,
+        "robustness.returnMotion.max": 0.42153629202705384,
+        "overall.futureLead.p99": 0.9149152108556727,
+        "overall.futureLag.p95": 0.02203298244470228
+      },
+      "BeatsProductStrict": {
+        "test.normal.visual.p95": true,
+        "test.normal.visual.p99": true,
+        "robustness.peakLead.max": true,
+        "robustness.otr.gt1px.rate": true,
+        "robustness.returnMotion.max": true,
+        "overall.futureLead.p99": true,
+        "overall.futureLag.p95": false
+      },
+      "FutureLagWithinLegacyEpsilon": false,
+      "PassesLegacyStep05IntegrationGate": false,
+      "DeploymentGate": {
+        "metrics": {
+          "test.normal.visual.p95": 0.9322023013456093,
+          "test.normal.visual.p99": 2.1325644811227056,
+          "test.normalMoving.futureLag.p95": 0.917919426725048,
+          "test.normalMoving.futureLag.p99": 2.5482921298255876,
+          "robustness.peakLead.max": 0.31120806798429734,
+          "robustness.otr.gt1px.rate": 0,
+          "robustness.returnMotion.max": 0.42153629202705384,
+          "overall.futureLead.p99": 0.9149152108556727,
+          "heldout.stationaryJitter.p95": 0.012552023511838503
+        },
+        "productReferences": {
+          "testNormalVisualP95": 0.9414071834184284,
+          "testNormalVisualP99": 2.1617282461180243,
+          "testNormalMovingFutureLagP95": 0.9312880324469006,
+          "testNormalMovingFutureLagP99": 2.5709999999999127,
+          "robustnessPeakLeadMax": 3,
+          "robustnessOtrGt1pxRate": 0.009881422924901186,
+          "robustnessReturnMotionMax": 3.204001404494074,
+          "overallFutureLeadP99": 0.9522000000029038,
+          "heldoutStationaryJitterP95": 0
+        },
+        "deltas": {
+          "test.normal.visual.p95": -0.00920488207281911,
+          "test.normal.visual.p99": -0.029163764995318697,
+          "test.normalMoving.futureLag.p95": -0.013368605721852611,
+          "test.normalMoving.futureLag.p99": -0.022707870174325073,
+          "robustness.peakLead.max": -2.6887919320157025,
+          "robustness.otr.gt1px.rate": -0.009881422924901186,
+          "robustness.returnMotion.max": -2.7824651124670203,
+          "overall.futureLead.p99": -0.0372847891472311,
+          "heldout.stationaryJitter.p95": 0.012552023511838503
+        },
+        "checks": {
+          "normalVisualOk": true,
+          "testNormalMovingFutureLagP95Ok": true,
+          "testNormalMovingFutureLagP99Ok": true,
+          "robustnessOk": true,
+          "futureLeadOk": true,
+          "heldoutStationaryJitterOk": true
+        },
+        "passes": true
+      },
+      "FutureLagDiagnostics": {
+        "rowWeightedP95": 0.02203298244470228,
+        "scenarioBalancedP95": 0.8948847487933186,
+        "fileBalancedP95": 0.533909355715612,
+        "durationBucketBalancedP95": 0.2924814203850852,
+        "qualityBucketBalancedP95": 0.46807807212973557,
+        "eligibleRowCount": 136929,
+        "bySplit": {
+          "train": {
+            "p95": 0.02217193786347644,
+            "sourceCount": 91215
+          },
+          "validation": {
+            "p95": 0.01138354694724628,
+            "sourceCount": 39449
+          },
+          "robustness": {
+            "p95": 0.9432563085746496,
+            "sourceCount": 3938
+          },
+          "test": {
+            "p95": 0.917919426725048,
+            "sourceCount": 2327
+          }
+        },
+        "normalQualityAllRows": {
+          "count": 9600,
+          "mean": 0.06530778402567268,
+          "p50": 0,
+          "p95": 0.43077072945700956,
+          "p99": 1.2217981386379366,
+          "max": 14.930561181923784
+        },
+        "pollDelayedAllRows": {
+          "count": 242580,
+          "mean": 0.03351713638249356,
+          "p50": 0,
+          "p95": 0.0164575986282215,
+          "p99": 0.8656906152912054,
+          "max": 45.302540202084764
+        },
+        "sliceAnalysis": {
+          "deployment": {
+            "testNormalVisual": {
+              "count": 9600,
+              "mean": 0.18784020172977556,
+              "p50": 0.01099704884624587,
+              "p95": 0.9322023013456093,
+              "p99": 2.1325644811227056,
+              "max": 21.172792182450532
+            },
+            "testNormalMovingFutureLag": {
+              "count": 2327,
+              "mean": 0.1712567013405495,
+              "p50": 0,
+              "p95": 0.917919426725048,
+              "p99": 2.5482921298255876,
+              "max": 14.930561181923784
+            },
+            "robustnessNormalMovingFutureLag": {
+              "count": 3938,
+              "mean": 0.23011930082624374,
+              "p50": 0,
+              "p95": 0.9432563085746496,
+              "p99": 4.171396929502632,
+              "max": 45.302540202084764
+            },
+            "heldoutNormalMovingFutureLag": {
+              "count": 6265,
+              "mean": 0.20825604958870017,
+              "p50": 0,
+              "p95": 0.9223243748386171,
+              "p99": 3.471458754459198,
+              "max": 45.302540202084764
+            },
+            "heldoutStationaryJitter": {
+              "count": 85290,
+              "mean": 0.004876328006654003,
+              "p50": 0.003246551337294134,
+              "p95": 0.012552023511838503,
+              "p99": 0.02553028128410193,
+              "max": 0.43171685337209526
+            },
+            "robustnessStopEvents": {
+              "count": 506,
+              "peakLead": {
+                "count": 506,
+                "mean": 0.029745215221524395,
+                "p50": 0.018916787985574557,
+                "p95": 0.08834484328625075,
+                "p99": 0.1741977449110505,
+                "max": 0.31120806798429734
+              },
+              "returnMotion": {
+                "count": 506,
+                "mean": 0.035494617099936364,
+                "p50": 0.020586819771276018,
+                "p95": 0.10731875332026514,
+                "p99": 0.2392756623398299,
+                "max": 0.42153629202705384
+              },
+              "otrGt1pxRate": 0
+            }
+          },
+          "diagnostic": {
+            "legacyFutureLagEligibleRows": {
+              "p95": 0.02203298244470228,
+              "sourceCount": 136929
+            },
+            "allRowFutureLag": {
+              "count": 252180,
+              "mean": 0.03472734423947877,
+              "p50": 0,
+              "p95": 0.018530031051320922,
+              "p99": 0.8921058362994061,
+              "max": 45.302540202084764
+            },
+            "allRowFutureLagBySplit": {
+              "robustness": {
+                "count": 111916,
+                "mean": 0.03276833965399165,
+                "p50": 0,
+                "p95": 0.0166012055588299,
+                "p99": 0.8524307877275004,
+                "max": 45.302540202084764
+              },
+              "test": {
+                "count": 9600,
+                "mean": 0.06530778402567268,
+                "p50": 0,
+                "p95": 0.43077072945700956,
+                "p99": 1.2217981386379366,
+                "max": 14.930561181923784
+              },
+              "train": {
+                "count": 91215,
+                "mean": 0.03972945589588665,
+                "p50": 0,
+                "p95": 0.02217193786347644,
+                "p99": 1.0158132621481806,
+                "max": 41.709525292847104
+              },
+              "validation": {
+                "count": 39449,
+                "mean": 0.021277171117286497,
+                "p50": 0.00018791225494382298,
+                "p95": 0.01138354694724628,
+                "p99": 0.5773881415394526,
+                "max": 20.050476666250415
+              }
+            },
+            "allRowFutureLagByQualityBucket": {
+              "normal": {
+                "count": 9600,
+                "mean": 0.06530778402567268,
+                "p50": 0,
+                "p95": 0.43077072945700956,
+                "p99": 1.2217981386379366,
+                "max": 14.930561181923784
+              },
+              "poll-delayed": {
+                "count": 242580,
+                "mean": 0.03351713638249356,
+                "p50": 0,
+                "p95": 0.0164575986282215,
+                "p99": 0.8656906152912054,
+                "max": 45.302540202084764
+              }
+            },
+            "normalMovingFutureLagBySplit": {
+              "robustness": {
+                "count": 3938,
+                "mean": 0.23011930082624374,
+                "p50": 0,
+                "p95": 0.9432563085746496,
+                "p99": 4.171396929502632,
+                "max": 45.302540202084764
+              },
+              "test": {
+                "count": 2327,
+                "mean": 0.1712567013405495,
+                "p50": 0,
+                "p95": 0.917919426725048,
+                "p99": 2.5482921298255876,
+                "max": 14.930561181923784
+              },
+              "train": {
+                "count": 6251,
+                "mean": 0.201355862032648,
+                "p50": 0,
+                "p95": 0.9912100431920379,
+                "p99": 3.9922080769053814,
+                "max": 41.709525292847104
+              },
+              "validation": {
+                "count": 763,
+                "mean": 0.16222758985325306,
+                "p50": 0,
+                "p95": 0.6212128157004071,
+                "p99": 3.281279071707906,
+                "max": 20.050476666250415
+              }
+            }
+          }
+        }
+      },
+      "TrainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 0.4559405086649561
+        },
+        {
+          "epoch": 20,
+          "loss": 0.31054841230686026
+        },
+        {
+          "epoch": 40,
+          "loss": 0.3037756187731538
+        },
+        {
+          "epoch": 60,
+          "loss": 0.3028910702884582
+        }
+      ],
+      "RuntimeCost": {
+        "estimatedMacs": 864,
+        "parameters": 898,
+        "inputFeatures": 25,
+        "hidden": 32,
+        "allocationFreeAtRuntime": false
+      }
+    },
+    {
+      "Seed": 2205,
+      "Id": "mlp_h32_event_safe_runtime_latch_cap0p35",
+      "Objective": 1319.1681422346949,
+      "Metrics": {
+        "test.normal.visual.p95": 0.9322023013456093,
+        "test.normal.visual.p99": 2.1325644811227056,
+        "robustness.peakLead.max": 0.31120806798429734,
+        "robustness.otr.gt1px.rate": 0,
+        "robustness.returnMotion.max": 0.40302394095322475,
+        "overall.futureLead.p99": 0.9149152108556727,
+        "overall.futureLag.p95": 0.018071858545114287
+      },
+      "BeatsProductStrict": {
+        "test.normal.visual.p95": true,
+        "test.normal.visual.p99": true,
+        "robustness.peakLead.max": true,
+        "robustness.otr.gt1px.rate": true,
+        "robustness.returnMotion.max": true,
+        "overall.futureLead.p99": true,
+        "overall.futureLag.p95": false
+      },
+      "FutureLagWithinLegacyEpsilon": false,
+      "PassesLegacyStep05IntegrationGate": false,
+      "DeploymentGate": {
+        "metrics": {
+          "test.normal.visual.p95": 0.9322023013456093,
+          "test.normal.visual.p99": 2.1325644811227056,
+          "test.normalMoving.futureLag.p95": 0.917919426725048,
+          "test.normalMoving.futureLag.p99": 2.5482921298255876,
+          "robustness.peakLead.max": 0.31120806798429734,
+          "robustness.otr.gt1px.rate": 0,
+          "robustness.returnMotion.max": 0.40302394095322475,
+          "overall.futureLead.p99": 0.9149152108556727,
+          "heldout.stationaryJitter.p95": 0.007284558711089497
+        },
+        "productReferences": {
+          "testNormalVisualP95": 0.9414071834184284,
+          "testNormalVisualP99": 2.1617282461180243,
+          "testNormalMovingFutureLagP95": 0.9312880324469006,
+          "testNormalMovingFutureLagP99": 2.5709999999999127,
+          "robustnessPeakLeadMax": 3,
+          "robustnessOtrGt1pxRate": 0.009881422924901186,
+          "robustnessReturnMotionMax": 3.204001404494074,
+          "overallFutureLeadP99": 0.9522000000029038,
+          "heldoutStationaryJitterP95": 0
+        },
+        "deltas": {
+          "test.normal.visual.p95": -0.00920488207281911,
+          "test.normal.visual.p99": -0.029163764995318697,
+          "test.normalMoving.futureLag.p95": -0.013368605721852611,
+          "test.normalMoving.futureLag.p99": -0.022707870174325073,
+          "robustness.peakLead.max": -2.6887919320157025,
+          "robustness.otr.gt1px.rate": -0.009881422924901186,
+          "robustness.returnMotion.max": -2.8009774635408493,
+          "overall.futureLead.p99": -0.0372847891472311,
+          "heldout.stationaryJitter.p95": 0.007284558711089497
+        },
+        "checks": {
+          "normalVisualOk": true,
+          "testNormalMovingFutureLagP95Ok": true,
+          "testNormalMovingFutureLagP99Ok": true,
+          "robustnessOk": true,
+          "futureLeadOk": true,
+          "heldoutStationaryJitterOk": true
+        },
+        "passes": true
+      },
+      "FutureLagDiagnostics": {
+        "rowWeightedP95": 0.018071858545114287,
+        "scenarioBalancedP95": 0.892830351885692,
+        "fileBalancedP95": 0.5323238559597461,
+        "durationBucketBalancedP95": 0.2904784462150667,
+        "qualityBucketBalancedP95": 0.4661718647342599,
+        "eligibleRowCount": 136929,
+        "bySplit": {
+          "train": {
+            "p95": 0.01834485811648196,
+            "sourceCount": 91215
+          },
+          "validation": {
+            "p95": 0.005072598913072987,
+            "sourceCount": 39449
+          },
+          "robustness": {
+            "p95": 0.9432563085746496,
+            "sourceCount": 3938
+          },
+          "test": {
+            "p95": 0.917919426725048,
+            "sourceCount": 2327
+          }
+        },
+        "normalQualityAllRows": {
+          "count": 9600,
+          "mean": 0.06495863899342398,
+          "p50": 0,
+          "p95": 0.43077072945700956,
+          "p99": 1.2217981386379366,
+          "max": 14.930561181923784
+        },
+        "pollDelayedAllRows": {
+          "count": 242580,
+          "mean": 0.032447635525541856,
+          "p50": 0,
+          "p95": 0.01248088319351007,
+          "p99": 0.8653266471818228,
+          "max": 45.302540202084764
+        },
+        "sliceAnalysis": {
+          "deployment": {
+            "testNormalVisual": {
+              "count": 9600,
+              "mean": 0.18643744317025154,
+              "p50": 0.010164016418795966,
+              "p95": 0.9322023013456093,
+              "p99": 2.1325644811227056,
+              "max": 21.172792182450532
+            },
+            "testNormalMovingFutureLag": {
+              "count": 2327,
+              "mean": 0.17117111963965223,
+              "p50": 0,
+              "p95": 0.917919426725048,
+              "p99": 2.5482921298255876,
+              "max": 14.930561181923784
+            },
+            "robustnessNormalMovingFutureLag": {
+              "count": 3938,
+              "mean": 0.22996524661210851,
+              "p50": 0,
+              "p95": 0.9432563085746496,
+              "p99": 4.171396929502632,
+              "max": 45.302540202084764
+            },
+            "heldoutNormalMovingFutureLag": {
+              "count": 6265,
+              "mean": 0.2081274280223391,
+              "p50": 0,
+              "p95": 0.9223243748386171,
+              "p99": 3.471458754459198,
+              "max": 45.302540202084764
+            },
+            "heldoutStationaryJitter": {
+              "count": 85290,
+              "mean": 0.0016100951857714574,
+              "p50": 0,
+              "p95": 0.007284558711089497,
+              "p99": 0.014162327142686705,
+              "max": 0.43171685337209526
+            },
+            "robustnessStopEvents": {
+              "count": 506,
+              "peakLead": {
+                "count": 506,
+                "mean": 0.015231172429104144,
+                "p50": 0.005970124245272423,
+                "p95": 0.0651370155096134,
+                "p99": 0.13594419008498793,
+                "max": 0.31120806798429734
+              },
+              "returnMotion": {
+                "count": 506,
+                "mean": 0.025667095913586627,
+                "p50": 0.01024891119491818,
+                "p95": 0.1038514095300342,
+                "p99": 0.16910499549941602,
+                "max": 0.40302394095322475
+              },
+              "otrGt1pxRate": 0
+            }
+          },
+          "diagnostic": {
+            "legacyFutureLagEligibleRows": {
+              "p95": 0.018071858545114287,
+              "sourceCount": 136929
+            },
+            "allRowFutureLag": {
+              "count": 252180,
+              "mean": 0.03368526592165445,
+              "p50": 0,
+              "p95": 0.014025236623672692,
+              "p99": 0.8918000000119264,
+              "max": 45.302540202084764
+            },
+            "allRowFutureLagBySplit": {
+              "robustness": {
+                "count": 111916,
+                "mean": 0.031644589907334035,
+                "p50": 0,
+                "p95": 0.012269402554370682,
+                "p99": 0.8513386812066541,
+                "max": 45.302540202084764
+              },
+              "test": {
+                "count": 9600,
+                "mean": 0.06495863899342398,
+                "p50": 0,
+                "p95": 0.43077072945700956,
+                "p99": 1.2217981386379366,
+                "max": 14.930561181923784
+              },
+              "train": {
+                "count": 91215,
+                "mean": 0.03884065269892162,
+                "p50": 0,
+                "p95": 0.01834485811648196,
+                "p99": 1.0131468106013588,
+                "max": 41.709525292847104
+              },
+              "validation": {
+                "count": 39449,
+                "mean": 0.019943759430774075,
+                "p50": 0,
+                "p95": 0.005072598913072987,
+                "p99": 0.5734867433598083,
+                "max": 20.050476666250415
+              }
+            },
+            "allRowFutureLagByQualityBucket": {
+              "normal": {
+                "count": 9600,
+                "mean": 0.06495863899342398,
+                "p50": 0,
+                "p95": 0.43077072945700956,
+                "p99": 1.2217981386379366,
+                "max": 14.930561181923784
+              },
+              "poll-delayed": {
+                "count": 242580,
+                "mean": 0.032447635525541856,
+                "p50": 0,
+                "p95": 0.01248088319351007,
+                "p99": 0.8653266471818228,
+                "max": 45.302540202084764
+              }
+            },
+            "normalMovingFutureLagBySplit": {
+              "robustness": {
+                "count": 3938,
+                "mean": 0.22996524661210851,
+                "p50": 0,
+                "p95": 0.9432563085746496,
+                "p99": 4.171396929502632,
+                "max": 45.302540202084764
+              },
+              "test": {
+                "count": 2327,
+                "mean": 0.17117111963965223,
+                "p50": 0,
+                "p95": 0.917919426725048,
+                "p99": 2.5482921298255876,
+                "max": 14.930561181923784
+              },
+              "train": {
+                "count": 6251,
+                "mean": 0.20117805670263833,
+                "p50": 0,
+                "p95": 0.9926806577165445,
+                "p99": 3.9922080769053814,
+                "max": 41.709525292847104
+              },
+              "validation": {
+                "count": 763,
+                "mean": 0.1621928962584737,
+                "p50": 0,
+                "p95": 0.6212128157004071,
+                "p99": 3.281279071707906,
+                "max": 20.050476666250415
+              }
+            }
+          }
+        }
+      },
+      "TrainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 0.4559405086649561
+        },
+        {
+          "epoch": 20,
+          "loss": 0.31054841230686026
+        },
+        {
+          "epoch": 40,
+          "loss": 0.3037756187731538
+        },
+        {
+          "epoch": 60,
+          "loss": 0.3028910702884582
+        }
+      ],
+      "RuntimeCost": {
+        "estimatedMacs": 884,
+        "parameters": 898,
+        "inputFeatures": 25,
+        "hidden": 32,
+        "guard": "runtime-only per-scenario stop latch, static zero target, cap, and lead-side clamp",
+        "stopBlend": 0,
+        "normalGain": 1,
+        "productBlend": 0,
+        "StopCapPx": 0.35
+      }
+    },
+    {
+      "Seed": 2205,
+      "Id": "mlp_h32_event_safe_runtime_latch_cap0p35_gain1p08",
+      "Objective": 1319.1681422346949,
+      "Metrics": {
+        "test.normal.visual.p95": 0.9322023013456093,
+        "test.normal.visual.p99": 2.1325644811227056,
+        "robustness.peakLead.max": 0.31120806798429734,
+        "robustness.otr.gt1px.rate": 0,
+        "robustness.returnMotion.max": 0.40302394095322475,
+        "overall.futureLead.p99": 0.9149152108556727,
+        "overall.futureLag.p95": 0.018071858545114287
+      },
+      "BeatsProductStrict": {
+        "test.normal.visual.p95": true,
+        "test.normal.visual.p99": true,
+        "robustness.peakLead.max": true,
+        "robustness.otr.gt1px.rate": true,
+        "robustness.returnMotion.max": true,
+        "overall.futureLead.p99": true,
+        "overall.futureLag.p95": false
+      },
+      "FutureLagWithinLegacyEpsilon": false,
+      "PassesLegacyStep05IntegrationGate": false,
+      "DeploymentGate": {
+        "metrics": {
+          "test.normal.visual.p95": 0.9322023013456093,
+          "test.normal.visual.p99": 2.1325644811227056,
+          "test.normalMoving.futureLag.p95": 0.917919426725048,
+          "test.normalMoving.futureLag.p99": 2.5482921298255876,
+          "robustness.peakLead.max": 0.31120806798429734,
+          "robustness.otr.gt1px.rate": 0,
+          "robustness.returnMotion.max": 0.40302394095322475,
+          "overall.futureLead.p99": 0.9149152108556727,
+          "heldout.stationaryJitter.p95": 0.007284558711089497
+        },
+        "productReferences": {
+          "testNormalVisualP95": 0.9414071834184284,
+          "testNormalVisualP99": 2.1617282461180243,
+          "testNormalMovingFutureLagP95": 0.9312880324469006,
+          "testNormalMovingFutureLagP99": 2.5709999999999127,
+          "robustnessPeakLeadMax": 3,
+          "robustnessOtrGt1pxRate": 0.009881422924901186,
+          "robustnessReturnMotionMax": 3.204001404494074,
+          "overallFutureLeadP99": 0.9522000000029038,
+          "heldoutStationaryJitterP95": 0
+        },
+        "deltas": {
+          "test.normal.visual.p95": -0.00920488207281911,
+          "test.normal.visual.p99": -0.029163764995318697,
+          "test.normalMoving.futureLag.p95": -0.013368605721852611,
+          "test.normalMoving.futureLag.p99": -0.022707870174325073,
+          "robustness.peakLead.max": -2.6887919320157025,
+          "robustness.otr.gt1px.rate": -0.009881422924901186,
+          "robustness.returnMotion.max": -2.8009774635408493,
+          "overall.futureLead.p99": -0.0372847891472311,
+          "heldout.stationaryJitter.p95": 0.007284558711089497
+        },
+        "checks": {
+          "normalVisualOk": true,
+          "testNormalMovingFutureLagP95Ok": true,
+          "testNormalMovingFutureLagP99Ok": true,
+          "robustnessOk": true,
+          "futureLeadOk": true,
+          "heldoutStationaryJitterOk": true
+        },
+        "passes": true
+      },
+      "FutureLagDiagnostics": {
+        "rowWeightedP95": 0.018071858545114287,
+        "scenarioBalancedP95": 0.892830351885692,
+        "fileBalancedP95": 0.5323238559597461,
+        "durationBucketBalancedP95": 0.2904784462150667,
+        "qualityBucketBalancedP95": 0.4661718647342599,
+        "eligibleRowCount": 136929,
+        "bySplit": {
+          "train": {
+            "p95": 0.01834485811648196,
+            "sourceCount": 91215
+          },
+          "validation": {
+            "p95": 0.005072598913072987,
+            "sourceCount": 39449
+          },
+          "robustness": {
+            "p95": 0.9432563085746496,
+            "sourceCount": 3938
+          },
+          "test": {
+            "p95": 0.917919426725048,
+            "sourceCount": 2327
+          }
+        },
+        "normalQualityAllRows": {
+          "count": 9600,
+          "mean": 0.06495863899342398,
+          "p50": 0,
+          "p95": 0.43077072945700956,
+          "p99": 1.2217981386379366,
+          "max": 14.930561181923784
+        },
+        "pollDelayedAllRows": {
+          "count": 242580,
+          "mean": 0.032447635525541856,
+          "p50": 0,
+          "p95": 0.01248088319351007,
+          "p99": 0.8653266471818228,
+          "max": 45.302540202084764
+        },
+        "sliceAnalysis": {
+          "deployment": {
+            "testNormalVisual": {
+              "count": 9600,
+              "mean": 0.18643744317025154,
+              "p50": 0.010164016418795966,
+              "p95": 0.9322023013456093,
+              "p99": 2.1325644811227056,
+              "max": 21.172792182450532
+            },
+            "testNormalMovingFutureLag": {
+              "count": 2327,
+              "mean": 0.17117111963965223,
+              "p50": 0,
+              "p95": 0.917919426725048,
+              "p99": 2.5482921298255876,
+              "max": 14.930561181923784
+            },
+            "robustnessNormalMovingFutureLag": {
+              "count": 3938,
+              "mean": 0.22996524661210851,
+              "p50": 0,
+              "p95": 0.9432563085746496,
+              "p99": 4.171396929502632,
+              "max": 45.302540202084764
+            },
+            "heldoutNormalMovingFutureLag": {
+              "count": 6265,
+              "mean": 0.2081274280223391,
+              "p50": 0,
+              "p95": 0.9223243748386171,
+              "p99": 3.471458754459198,
+              "max": 45.302540202084764
+            },
+            "heldoutStationaryJitter": {
+              "count": 85290,
+              "mean": 0.0016100951857714574,
+              "p50": 0,
+              "p95": 0.007284558711089497,
+              "p99": 0.014162327142686705,
+              "max": 0.43171685337209526
+            },
+            "robustnessStopEvents": {
+              "count": 506,
+              "peakLead": {
+                "count": 506,
+                "mean": 0.015231172429104144,
+                "p50": 0.005970124245272423,
+                "p95": 0.0651370155096134,
+                "p99": 0.13594419008498793,
+                "max": 0.31120806798429734
+              },
+              "returnMotion": {
+                "count": 506,
+                "mean": 0.025667095913586627,
+                "p50": 0.01024891119491818,
+                "p95": 0.1038514095300342,
+                "p99": 0.16910499549941602,
+                "max": 0.40302394095322475
+              },
+              "otrGt1pxRate": 0
+            }
+          },
+          "diagnostic": {
+            "legacyFutureLagEligibleRows": {
+              "p95": 0.018071858545114287,
+              "sourceCount": 136929
+            },
+            "allRowFutureLag": {
+              "count": 252180,
+              "mean": 0.03368526592165445,
+              "p50": 0,
+              "p95": 0.014025236623672692,
+              "p99": 0.8918000000119264,
+              "max": 45.302540202084764
+            },
+            "allRowFutureLagBySplit": {
+              "robustness": {
+                "count": 111916,
+                "mean": 0.031644589907334035,
+                "p50": 0,
+                "p95": 0.012269402554370682,
+                "p99": 0.8513386812066541,
+                "max": 45.302540202084764
+              },
+              "test": {
+                "count": 9600,
+                "mean": 0.06495863899342398,
+                "p50": 0,
+                "p95": 0.43077072945700956,
+                "p99": 1.2217981386379366,
+                "max": 14.930561181923784
+              },
+              "train": {
+                "count": 91215,
+                "mean": 0.03884065269892162,
+                "p50": 0,
+                "p95": 0.01834485811648196,
+                "p99": 1.0131468106013588,
+                "max": 41.709525292847104
+              },
+              "validation": {
+                "count": 39449,
+                "mean": 0.019943759430774075,
+                "p50": 0,
+                "p95": 0.005072598913072987,
+                "p99": 0.5734867433598083,
+                "max": 20.050476666250415
+              }
+            },
+            "allRowFutureLagByQualityBucket": {
+              "normal": {
+                "count": 9600,
+                "mean": 0.06495863899342398,
+                "p50": 0,
+                "p95": 0.43077072945700956,
+                "p99": 1.2217981386379366,
+                "max": 14.930561181923784
+              },
+              "poll-delayed": {
+                "count": 242580,
+                "mean": 0.032447635525541856,
+                "p50": 0,
+                "p95": 0.01248088319351007,
+                "p99": 0.8653266471818228,
+                "max": 45.302540202084764
+              }
+            },
+            "normalMovingFutureLagBySplit": {
+              "robustness": {
+                "count": 3938,
+                "mean": 0.22996524661210851,
+                "p50": 0,
+                "p95": 0.9432563085746496,
+                "p99": 4.171396929502632,
+                "max": 45.302540202084764
+              },
+              "test": {
+                "count": 2327,
+                "mean": 0.17117111963965223,
+                "p50": 0,
+                "p95": 0.917919426725048,
+                "p99": 2.5482921298255876,
+                "max": 14.930561181923784
+              },
+              "train": {
+                "count": 6251,
+                "mean": 0.20117805670263833,
+                "p50": 0,
+                "p95": 0.9926806577165445,
+                "p99": 3.9922080769053814,
+                "max": 41.709525292847104
+              },
+              "validation": {
+                "count": 763,
+                "mean": 0.1621928962584737,
+                "p50": 0,
+                "p95": 0.6212128157004071,
+                "p99": 3.281279071707906,
+                "max": 20.050476666250415
+              }
+            }
+          }
+        }
+      },
+      "TrainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 0.4559405086649561
+        },
+        {
+          "epoch": 20,
+          "loss": 0.31054841230686026
+        },
+        {
+          "epoch": 40,
+          "loss": 0.3037756187731538
+        },
+        {
+          "epoch": 60,
+          "loss": 0.3028910702884582
+        }
+      ],
+      "RuntimeCost": {
+        "estimatedMacs": 884,
+        "parameters": 898,
+        "inputFeatures": 25,
+        "hidden": 32,
+        "guard": "runtime-only per-scenario stop latch, static zero target, cap, and lead-side clamp",
+        "stopBlend": 0,
+        "normalGain": 1.08,
+        "productBlend": 0,
+        "StopCapPx": 0.35
+      }
+    },
+    {
+      "Seed": 2205,
+      "Id": "mlp_h32_event_safe_runtime_latch_cap0p25_gain1p08",
+      "Objective": 1319.1681422346949,
+      "Metrics": {
+        "test.normal.visual.p95": 0.9322023013456093,
+        "test.normal.visual.p99": 2.1325644811227056,
+        "robustness.peakLead.max": 0.31120806798429734,
+        "robustness.otr.gt1px.rate": 0,
+        "robustness.returnMotion.max": 0.40302394095322475,
+        "overall.futureLead.p99": 0.9149152108556727,
+        "overall.futureLag.p95": 0.018071858545114287
+      },
+      "BeatsProductStrict": {
+        "test.normal.visual.p95": true,
+        "test.normal.visual.p99": true,
+        "robustness.peakLead.max": true,
+        "robustness.otr.gt1px.rate": true,
+        "robustness.returnMotion.max": true,
+        "overall.futureLead.p99": true,
+        "overall.futureLag.p95": false
+      },
+      "FutureLagWithinLegacyEpsilon": false,
+      "PassesLegacyStep05IntegrationGate": false,
+      "DeploymentGate": {
+        "metrics": {
+          "test.normal.visual.p95": 0.9322023013456093,
+          "test.normal.visual.p99": 2.1325644811227056,
+          "test.normalMoving.futureLag.p95": 0.917919426725048,
+          "test.normalMoving.futureLag.p99": 2.5482921298255876,
+          "robustness.peakLead.max": 0.31120806798429734,
+          "robustness.otr.gt1px.rate": 0,
+          "robustness.returnMotion.max": 0.40302394095322475,
+          "overall.futureLead.p99": 0.9149152108556727,
+          "heldout.stationaryJitter.p95": 0.007284558711089497
+        },
+        "productReferences": {
+          "testNormalVisualP95": 0.9414071834184284,
+          "testNormalVisualP99": 2.1617282461180243,
+          "testNormalMovingFutureLagP95": 0.9312880324469006,
+          "testNormalMovingFutureLagP99": 2.5709999999999127,
+          "robustnessPeakLeadMax": 3,
+          "robustnessOtrGt1pxRate": 0.009881422924901186,
+          "robustnessReturnMotionMax": 3.204001404494074,
+          "overallFutureLeadP99": 0.9522000000029038,
+          "heldoutStationaryJitterP95": 0
+        },
+        "deltas": {
+          "test.normal.visual.p95": -0.00920488207281911,
+          "test.normal.visual.p99": -0.029163764995318697,
+          "test.normalMoving.futureLag.p95": -0.013368605721852611,
+          "test.normalMoving.futureLag.p99": -0.022707870174325073,
+          "robustness.peakLead.max": -2.6887919320157025,
+          "robustness.otr.gt1px.rate": -0.009881422924901186,
+          "robustness.returnMotion.max": -2.8009774635408493,
+          "overall.futureLead.p99": -0.0372847891472311,
+          "heldout.stationaryJitter.p95": 0.007284558711089497
+        },
+        "checks": {
+          "normalVisualOk": true,
+          "testNormalMovingFutureLagP95Ok": true,
+          "testNormalMovingFutureLagP99Ok": true,
+          "robustnessOk": true,
+          "futureLeadOk": true,
+          "heldoutStationaryJitterOk": true
+        },
+        "passes": true
+      },
+      "FutureLagDiagnostics": {
+        "rowWeightedP95": 0.018071858545114287,
+        "scenarioBalancedP95": 0.892830351885692,
+        "fileBalancedP95": 0.5323238559597461,
+        "durationBucketBalancedP95": 0.2904784462150667,
+        "qualityBucketBalancedP95": 0.4661718647342599,
+        "eligibleRowCount": 136929,
+        "bySplit": {
+          "train": {
+            "p95": 0.01834485811648196,
+            "sourceCount": 91215
+          },
+          "validation": {
+            "p95": 0.005072598913072987,
+            "sourceCount": 39449
+          },
+          "robustness": {
+            "p95": 0.9432563085746496,
+            "sourceCount": 3938
+          },
+          "test": {
+            "p95": 0.917919426725048,
+            "sourceCount": 2327
+          }
+        },
+        "normalQualityAllRows": {
+          "count": 9600,
+          "mean": 0.06495863899342398,
+          "p50": 0,
+          "p95": 0.43077072945700956,
+          "p99": 1.2217981386379366,
+          "max": 14.930561181923784
+        },
+        "pollDelayedAllRows": {
+          "count": 242580,
+          "mean": 0.032447635525541856,
+          "p50": 0,
+          "p95": 0.01248088319351007,
+          "p99": 0.8653266471818228,
+          "max": 45.302540202084764
+        },
+        "sliceAnalysis": {
+          "deployment": {
+            "testNormalVisual": {
+              "count": 9600,
+              "mean": 0.18643744317025154,
+              "p50": 0.010164016418795966,
+              "p95": 0.9322023013456093,
+              "p99": 2.1325644811227056,
+              "max": 21.172792182450532
+            },
+            "testNormalMovingFutureLag": {
+              "count": 2327,
+              "mean": 0.17117111963965223,
+              "p50": 0,
+              "p95": 0.917919426725048,
+              "p99": 2.5482921298255876,
+              "max": 14.930561181923784
+            },
+            "robustnessNormalMovingFutureLag": {
+              "count": 3938,
+              "mean": 0.22996524661210851,
+              "p50": 0,
+              "p95": 0.9432563085746496,
+              "p99": 4.171396929502632,
+              "max": 45.302540202084764
+            },
+            "heldoutNormalMovingFutureLag": {
+              "count": 6265,
+              "mean": 0.2081274280223391,
+              "p50": 0,
+              "p95": 0.9223243748386171,
+              "p99": 3.471458754459198,
+              "max": 45.302540202084764
+            },
+            "heldoutStationaryJitter": {
+              "count": 85290,
+              "mean": 0.0016100951857714574,
+              "p50": 0,
+              "p95": 0.007284558711089497,
+              "p99": 0.014162327142686705,
+              "max": 0.43171685337209526
+            },
+            "robustnessStopEvents": {
+              "count": 506,
+              "peakLead": {
+                "count": 506,
+                "mean": 0.015231172429104144,
+                "p50": 0.005970124245272423,
+                "p95": 0.0651370155096134,
+                "p99": 0.13594419008498793,
+                "max": 0.31120806798429734
+              },
+              "returnMotion": {
+                "count": 506,
+                "mean": 0.025667095913586627,
+                "p50": 0.01024891119491818,
+                "p95": 0.1038514095300342,
+                "p99": 0.16910499549941602,
+                "max": 0.40302394095322475
+              },
+              "otrGt1pxRate": 0
+            }
+          },
+          "diagnostic": {
+            "legacyFutureLagEligibleRows": {
+              "p95": 0.018071858545114287,
+              "sourceCount": 136929
+            },
+            "allRowFutureLag": {
+              "count": 252180,
+              "mean": 0.03368526592165445,
+              "p50": 0,
+              "p95": 0.014025236623672692,
+              "p99": 0.8918000000119264,
+              "max": 45.302540202084764
+            },
+            "allRowFutureLagBySplit": {
+              "robustness": {
+                "count": 111916,
+                "mean": 0.031644589907334035,
+                "p50": 0,
+                "p95": 0.012269402554370682,
+                "p99": 0.8513386812066541,
+                "max": 45.302540202084764
+              },
+              "test": {
+                "count": 9600,
+                "mean": 0.06495863899342398,
+                "p50": 0,
+                "p95": 0.43077072945700956,
+                "p99": 1.2217981386379366,
+                "max": 14.930561181923784
+              },
+              "train": {
+                "count": 91215,
+                "mean": 0.03884065269892162,
+                "p50": 0,
+                "p95": 0.01834485811648196,
+                "p99": 1.0131468106013588,
+                "max": 41.709525292847104
+              },
+              "validation": {
+                "count": 39449,
+                "mean": 0.019943759430774075,
+                "p50": 0,
+                "p95": 0.005072598913072987,
+                "p99": 0.5734867433598083,
+                "max": 20.050476666250415
+              }
+            },
+            "allRowFutureLagByQualityBucket": {
+              "normal": {
+                "count": 9600,
+                "mean": 0.06495863899342398,
+                "p50": 0,
+                "p95": 0.43077072945700956,
+                "p99": 1.2217981386379366,
+                "max": 14.930561181923784
+              },
+              "poll-delayed": {
+                "count": 242580,
+                "mean": 0.032447635525541856,
+                "p50": 0,
+                "p95": 0.01248088319351007,
+                "p99": 0.8653266471818228,
+                "max": 45.302540202084764
+              }
+            },
+            "normalMovingFutureLagBySplit": {
+              "robustness": {
+                "count": 3938,
+                "mean": 0.22996524661210851,
+                "p50": 0,
+                "p95": 0.9432563085746496,
+                "p99": 4.171396929502632,
+                "max": 45.302540202084764
+              },
+              "test": {
+                "count": 2327,
+                "mean": 0.17117111963965223,
+                "p50": 0,
+                "p95": 0.917919426725048,
+                "p99": 2.5482921298255876,
+                "max": 14.930561181923784
+              },
+              "train": {
+                "count": 6251,
+                "mean": 0.20117805670263833,
+                "p50": 0,
+                "p95": 0.9926806577165445,
+                "p99": 3.9922080769053814,
+                "max": 41.709525292847104
+              },
+              "validation": {
+                "count": 763,
+                "mean": 0.1621928962584737,
+                "p50": 0,
+                "p95": 0.6212128157004071,
+                "p99": 3.281279071707906,
+                "max": 20.050476666250415
+              }
+            }
+          }
+        }
+      },
+      "TrainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 0.4559405086649561
+        },
+        {
+          "epoch": 20,
+          "loss": 0.31054841230686026
+        },
+        {
+          "epoch": 40,
+          "loss": 0.3037756187731538
+        },
+        {
+          "epoch": 60,
+          "loss": 0.3028910702884582
+        }
+      ],
+      "RuntimeCost": {
+        "estimatedMacs": 884,
+        "parameters": 898,
+        "inputFeatures": 25,
+        "hidden": 32,
+        "guard": "runtime-only per-scenario stop latch, static zero target, cap, and lead-side clamp",
+        "stopBlend": 0,
+        "normalGain": 1.08,
+        "productBlend": 0,
+        "StopCapPx": 0.25
+      }
+    },
+    {
+      "Seed": 2205,
+      "Id": "mlp_h32_event_safe_runtime_latch_cap0p35_productblend0p25",
+      "Objective": 1319.1681422346949,
+      "Metrics": {
+        "test.normal.visual.p95": 0.9322023013456093,
+        "test.normal.visual.p99": 2.1325644811227056,
+        "robustness.peakLead.max": 0.31120806798429734,
+        "robustness.otr.gt1px.rate": 0,
+        "robustness.returnMotion.max": 0.40302394095322475,
+        "overall.futureLead.p99": 0.9149152108556727,
+        "overall.futureLag.p95": 0.018071858545114287
+      },
+      "BeatsProductStrict": {
+        "test.normal.visual.p95": true,
+        "test.normal.visual.p99": true,
+        "robustness.peakLead.max": true,
+        "robustness.otr.gt1px.rate": true,
+        "robustness.returnMotion.max": true,
+        "overall.futureLead.p99": true,
+        "overall.futureLag.p95": false
+      },
+      "FutureLagWithinLegacyEpsilon": false,
+      "PassesLegacyStep05IntegrationGate": false,
+      "DeploymentGate": {
+        "metrics": {
+          "test.normal.visual.p95": 0.9322023013456093,
+          "test.normal.visual.p99": 2.1325644811227056,
+          "test.normalMoving.futureLag.p95": 0.917919426725048,
+          "test.normalMoving.futureLag.p99": 2.5482921298255876,
+          "robustness.peakLead.max": 0.31120806798429734,
+          "robustness.otr.gt1px.rate": 0,
+          "robustness.returnMotion.max": 0.40302394095322475,
+          "overall.futureLead.p99": 0.9149152108556727,
+          "heldout.stationaryJitter.p95": 0.007284558711089497
+        },
+        "productReferences": {
+          "testNormalVisualP95": 0.9414071834184284,
+          "testNormalVisualP99": 2.1617282461180243,
+          "testNormalMovingFutureLagP95": 0.9312880324469006,
+          "testNormalMovingFutureLagP99": 2.5709999999999127,
+          "robustnessPeakLeadMax": 3,
+          "robustnessOtrGt1pxRate": 0.009881422924901186,
+          "robustnessReturnMotionMax": 3.204001404494074,
+          "overallFutureLeadP99": 0.9522000000029038,
+          "heldoutStationaryJitterP95": 0
+        },
+        "deltas": {
+          "test.normal.visual.p95": -0.00920488207281911,
+          "test.normal.visual.p99": -0.029163764995318697,
+          "test.normalMoving.futureLag.p95": -0.013368605721852611,
+          "test.normalMoving.futureLag.p99": -0.022707870174325073,
+          "robustness.peakLead.max": -2.6887919320157025,
+          "robustness.otr.gt1px.rate": -0.009881422924901186,
+          "robustness.returnMotion.max": -2.8009774635408493,
+          "overall.futureLead.p99": -0.0372847891472311,
+          "heldout.stationaryJitter.p95": 0.007284558711089497
+        },
+        "checks": {
+          "normalVisualOk": true,
+          "testNormalMovingFutureLagP95Ok": true,
+          "testNormalMovingFutureLagP99Ok": true,
+          "robustnessOk": true,
+          "futureLeadOk": true,
+          "heldoutStationaryJitterOk": true
+        },
+        "passes": true
+      },
+      "FutureLagDiagnostics": {
+        "rowWeightedP95": 0.018071858545114287,
+        "scenarioBalancedP95": 0.892830351885692,
+        "fileBalancedP95": 0.5323238559597461,
+        "durationBucketBalancedP95": 0.2904784462150667,
+        "qualityBucketBalancedP95": 0.4661718647342599,
+        "eligibleRowCount": 136929,
+        "bySplit": {
+          "train": {
+            "p95": 0.01834485811648196,
+            "sourceCount": 91215
+          },
+          "validation": {
+            "p95": 0.005072598913072987,
+            "sourceCount": 39449
+          },
+          "robustness": {
+            "p95": 0.9432563085746496,
+            "sourceCount": 3938
+          },
+          "test": {
+            "p95": 0.917919426725048,
+            "sourceCount": 2327
+          }
+        },
+        "normalQualityAllRows": {
+          "count": 9600,
+          "mean": 0.06495863899342398,
+          "p50": 0,
+          "p95": 0.43077072945700956,
+          "p99": 1.2217981386379366,
+          "max": 14.930561181923784
+        },
+        "pollDelayedAllRows": {
+          "count": 242580,
+          "mean": 0.032447635525541856,
+          "p50": 0,
+          "p95": 0.01248088319351007,
+          "p99": 0.8653266471818228,
+          "max": 45.302540202084764
+        },
+        "sliceAnalysis": {
+          "deployment": {
+            "testNormalVisual": {
+              "count": 9600,
+              "mean": 0.18643744317025154,
+              "p50": 0.010164016418795966,
+              "p95": 0.9322023013456093,
+              "p99": 2.1325644811227056,
+              "max": 21.172792182450532
+            },
+            "testNormalMovingFutureLag": {
+              "count": 2327,
+              "mean": 0.17117111963965223,
+              "p50": 0,
+              "p95": 0.917919426725048,
+              "p99": 2.5482921298255876,
+              "max": 14.930561181923784
+            },
+            "robustnessNormalMovingFutureLag": {
+              "count": 3938,
+              "mean": 0.22996524661210851,
+              "p50": 0,
+              "p95": 0.9432563085746496,
+              "p99": 4.171396929502632,
+              "max": 45.302540202084764
+            },
+            "heldoutNormalMovingFutureLag": {
+              "count": 6265,
+              "mean": 0.2081274280223391,
+              "p50": 0,
+              "p95": 0.9223243748386171,
+              "p99": 3.471458754459198,
+              "max": 45.302540202084764
+            },
+            "heldoutStationaryJitter": {
+              "count": 85290,
+              "mean": 0.0016100951857714574,
+              "p50": 0,
+              "p95": 0.007284558711089497,
+              "p99": 0.014162327142686705,
+              "max": 0.43171685337209526
+            },
+            "robustnessStopEvents": {
+              "count": 506,
+              "peakLead": {
+                "count": 506,
+                "mean": 0.015231172429104144,
+                "p50": 0.005970124245272423,
+                "p95": 0.0651370155096134,
+                "p99": 0.13594419008498793,
+                "max": 0.31120806798429734
+              },
+              "returnMotion": {
+                "count": 506,
+                "mean": 0.025667095913586627,
+                "p50": 0.01024891119491818,
+                "p95": 0.1038514095300342,
+                "p99": 0.16910499549941602,
+                "max": 0.40302394095322475
+              },
+              "otrGt1pxRate": 0
+            }
+          },
+          "diagnostic": {
+            "legacyFutureLagEligibleRows": {
+              "p95": 0.018071858545114287,
+              "sourceCount": 136929
+            },
+            "allRowFutureLag": {
+              "count": 252180,
+              "mean": 0.03368526592165445,
+              "p50": 0,
+              "p95": 0.014025236623672692,
+              "p99": 0.8918000000119264,
+              "max": 45.302540202084764
+            },
+            "allRowFutureLagBySplit": {
+              "robustness": {
+                "count": 111916,
+                "mean": 0.031644589907334035,
+                "p50": 0,
+                "p95": 0.012269402554370682,
+                "p99": 0.8513386812066541,
+                "max": 45.302540202084764
+              },
+              "test": {
+                "count": 9600,
+                "mean": 0.06495863899342398,
+                "p50": 0,
+                "p95": 0.43077072945700956,
+                "p99": 1.2217981386379366,
+                "max": 14.930561181923784
+              },
+              "train": {
+                "count": 91215,
+                "mean": 0.03884065269892162,
+                "p50": 0,
+                "p95": 0.01834485811648196,
+                "p99": 1.0131468106013588,
+                "max": 41.709525292847104
+              },
+              "validation": {
+                "count": 39449,
+                "mean": 0.019943759430774075,
+                "p50": 0,
+                "p95": 0.005072598913072987,
+                "p99": 0.5734867433598083,
+                "max": 20.050476666250415
+              }
+            },
+            "allRowFutureLagByQualityBucket": {
+              "normal": {
+                "count": 9600,
+                "mean": 0.06495863899342398,
+                "p50": 0,
+                "p95": 0.43077072945700956,
+                "p99": 1.2217981386379366,
+                "max": 14.930561181923784
+              },
+              "poll-delayed": {
+                "count": 242580,
+                "mean": 0.032447635525541856,
+                "p50": 0,
+                "p95": 0.01248088319351007,
+                "p99": 0.8653266471818228,
+                "max": 45.302540202084764
+              }
+            },
+            "normalMovingFutureLagBySplit": {
+              "robustness": {
+                "count": 3938,
+                "mean": 0.22996524661210851,
+                "p50": 0,
+                "p95": 0.9432563085746496,
+                "p99": 4.171396929502632,
+                "max": 45.302540202084764
+              },
+              "test": {
+                "count": 2327,
+                "mean": 0.17117111963965223,
+                "p50": 0,
+                "p95": 0.917919426725048,
+                "p99": 2.5482921298255876,
+                "max": 14.930561181923784
+              },
+              "train": {
+                "count": 6251,
+                "mean": 0.20117805670263833,
+                "p50": 0,
+                "p95": 0.9926806577165445,
+                "p99": 3.9922080769053814,
+                "max": 41.709525292847104
+              },
+              "validation": {
+                "count": 763,
+                "mean": 0.1621928962584737,
+                "p50": 0,
+                "p95": 0.6212128157004071,
+                "p99": 3.281279071707906,
+                "max": 20.050476666250415
+              }
+            }
+          }
+        }
+      },
+      "TrainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 0.4559405086649561
+        },
+        {
+          "epoch": 20,
+          "loss": 0.31054841230686026
+        },
+        {
+          "epoch": 40,
+          "loss": 0.3037756187731538
+        },
+        {
+          "epoch": 60,
+          "loss": 0.3028910702884582
+        }
+      ],
+      "RuntimeCost": {
+        "estimatedMacs": 884,
+        "parameters": 898,
+        "inputFeatures": 25,
+        "hidden": 32,
+        "guard": "runtime-only per-scenario stop latch, static zero target, cap, and lead-side clamp",
+        "stopBlend": 0,
+        "normalGain": 1,
+        "productBlend": 0.25,
+        "StopCapPx": 0.35
+      }
+    },
+    {
+      "Seed": 2305,
+      "Id": "mlp_h32_event_safe_runtime_features_fulltrain",
+      "Objective": 1260.0188882597047,
+      "Metrics": {
+        "test.normal.visual.p95": 0.9363798098112345,
+        "test.normal.visual.p99": 2.130964200551953,
+        "robustness.peakLead.max": 0.208356513078145,
+        "robustness.otr.gt1px.rate": 0,
+        "robustness.returnMotion.max": 0.25893558304289477,
+        "overall.futureLead.p99": 0.9108613765870556,
+        "overall.futureLag.p95": 0.026178657304246337
+      },
+      "BeatsProductStrict": {
+        "test.normal.visual.p95": true,
+        "test.normal.visual.p99": true,
+        "robustness.peakLead.max": true,
+        "robustness.otr.gt1px.rate": true,
+        "robustness.returnMotion.max": true,
+        "overall.futureLead.p99": true,
+        "overall.futureLag.p95": false
+      },
+      "FutureLagWithinLegacyEpsilon": false,
+      "PassesLegacyStep05IntegrationGate": false,
+      "DeploymentGate": {
+        "metrics": {
+          "test.normal.visual.p95": 0.9363798098112345,
+          "test.normal.visual.p99": 2.130964200551953,
+          "test.normalMoving.futureLag.p95": 0.9332287810218073,
+          "test.normalMoving.futureLag.p99": 2.554548286647786,
+          "robustness.peakLead.max": 0.208356513078145,
+          "robustness.otr.gt1px.rate": 0,
+          "robustness.returnMotion.max": 0.25893558304289477,
+          "overall.futureLead.p99": 0.9108613765870556,
+          "heldout.stationaryJitter.p95": 0.012578602350163368
+        },
+        "productReferences": {
+          "testNormalVisualP95": 0.9414071834184284,
+          "testNormalVisualP99": 2.1617282461180243,
+          "testNormalMovingFutureLagP95": 0.9312880324469006,
+          "testNormalMovingFutureLagP99": 2.5709999999999127,
+          "robustnessPeakLeadMax": 3,
+          "robustnessOtrGt1pxRate": 0.009881422924901186,
+          "robustnessReturnMotionMax": 3.204001404494074,
+          "overallFutureLeadP99": 0.9522000000029038,
+          "heldoutStationaryJitterP95": 0
+        },
+        "deltas": {
+          "test.normal.visual.p95": -0.005027373607193963,
+          "test.normal.visual.p99": -0.030764045566071374,
+          "test.normalMoving.futureLag.p95": 0.00194074857490667,
+          "test.normalMoving.futureLag.p99": -0.016451713352126696,
+          "robustness.peakLead.max": -2.791643486921855,
+          "robustness.otr.gt1px.rate": -0.009881422924901186,
+          "robustness.returnMotion.max": -2.9450658214511796,
+          "overall.futureLead.p99": -0.041338623415848263,
+          "heldout.stationaryJitter.p95": 0.012578602350163368
+        },
+        "checks": {
+          "normalVisualOk": true,
+          "testNormalMovingFutureLagP95Ok": true,
+          "testNormalMovingFutureLagP99Ok": true,
+          "robustnessOk": true,
+          "futureLeadOk": true,
+          "heldoutStationaryJitterOk": true
+        },
+        "passes": true
+      },
+      "FutureLagDiagnostics": {
+        "rowWeightedP95": 0.026178657304246337,
+        "scenarioBalancedP95": 0.9025189584907851,
+        "fileBalancedP95": 0.5414016242657216,
+        "durationBucketBalancedP95": 0.29931407553389494,
+        "qualityBucketBalancedP95": 0.47816059980074005,
+        "eligibleRowCount": 136929,
+        "bySplit": {
+          "train": {
+            "p95": 0.025412979457845666,
+            "sourceCount": 91215
+          },
+          "validation": {
+            "p95": 0.011707719199182773,
+            "sourceCount": 39449
+          },
+          "robustness": {
+            "p95": 0.9399664240409625,
+            "sourceCount": 3938
+          },
+          "test": {
+            "p95": 0.9332287810218073,
+            "sourceCount": 2327
+          }
+        },
+        "normalQualityAllRows": {
+          "count": 9600,
+          "mean": 0.06814097511750392,
+          "p50": 0.0004149376645102426,
+          "p95": 0.4447684514809116,
+          "p99": 1.2402066929568816,
+          "max": 14.872821116947355
+        },
+        "pollDelayedAllRows": {
+          "count": 242580,
+          "mean": 0.0340468740916194,
+          "p50": 0.0004456333579925739,
+          "p95": 0.021161300212244844,
+          "p99": 0.869518158865296,
+          "max": 45.30539121795657
+        },
+        "sliceAnalysis": {
+          "deployment": {
+            "testNormalVisual": {
+              "count": 9600,
+              "mean": 0.1853004300056817,
+              "p50": 0.005291068040702141,
+              "p95": 0.9363798098112345,
+              "p99": 2.130964200551953,
+              "max": 21.155276009934852
+            },
+            "testNormalMovingFutureLag": {
+              "count": 2327,
+              "mean": 0.1766163019033118,
+              "p50": 0.0003950254132398662,
+              "p95": 0.9332287810218073,
+              "p99": 2.554548286647786,
+              "max": 14.872821116947355
+            },
+            "robustnessNormalMovingFutureLag": {
+              "count": 3938,
+              "mean": 0.23521370418837156,
+              "p50": 0.002430180252339653,
+              "p95": 0.9399664240409625,
+              "p99": 4.188120193545619,
+              "max": 45.30539121795657
+            },
+            "heldoutNormalMovingFutureLag": {
+              "count": 6265,
+              "mean": 0.21344895476820666,
+              "p50": 0.0014281863917155677,
+              "p95": 0.9332287810218073,
+              "p99": 3.502888866552609,
+              "max": 45.30539121795657
+            },
+            "heldoutStationaryJitter": {
+              "count": 85290,
+              "mean": 0.004524881347673934,
+              "p50": 0.003122552751873097,
+              "p95": 0.012578602350163368,
+              "p99": 0.025150094422123258,
+              "max": 0.2534422072662123
+            },
+            "robustnessStopEvents": {
+              "count": 506,
+              "peakLead": {
+                "count": 506,
+                "mean": 0.02086454936422829,
+                "p50": 0.010784893814907257,
+                "p95": 0.07632178716223151,
+                "p99": 0.12981252517696976,
+                "max": 0.208356513078145
+              },
+              "returnMotion": {
+                "count": 506,
+                "mean": 0.032567059458950345,
+                "p50": 0.024121368111991486,
+                "p95": 0.09131243645938152,
+                "p99": 0.14144676750898066,
+                "max": 0.25893558304289477
+              },
+              "otrGt1pxRate": 0
+            }
+          },
+          "diagnostic": {
+            "legacyFutureLagEligibleRows": {
+              "p95": 0.026178657304246337,
+              "sourceCount": 136929
+            },
+            "allRowFutureLag": {
+              "count": 252180,
+              "mean": 0.035344769919395155,
+              "p50": 0.00044390361090689695,
+              "p95": 0.023366496445071015,
+              "p99": 0.8952681491294044,
+              "max": 45.30539121795657
+            },
+            "allRowFutureLagBySplit": {
+              "robustness": {
+                "count": 111916,
+                "mean": 0.033266089633005085,
+                "p50": 0.00044416976609478603,
+                "p95": 0.021128071924918765,
+                "p99": 0.8576014888966259,
+                "max": 45.30539121795657
+              },
+              "test": {
+                "count": 9600,
+                "mean": 0.06814097511750392,
+                "p50": 0.0004149376645102426,
+                "p95": 0.4447684514809116,
+                "p99": 1.2402066929568816,
+                "max": 14.872821116947355
+              },
+              "train": {
+                "count": 91215,
+                "mean": 0.040567722176404065,
+                "p50": 0.00045931656056956427,
+                "p95": 0.025412979457845666,
+                "p99": 1.0202911736367155,
+                "max": 41.731630997668184
+              },
+              "validation": {
+                "count": 39449,
+                "mean": 0.021184269600165877,
+                "p50": 0.00034618739680072723,
+                "p95": 0.011707719199182773,
+                "p99": 0.5772250379735437,
+                "max": 19.96700862671536
+              }
+            },
+            "allRowFutureLagByQualityBucket": {
+              "normal": {
+                "count": 9600,
+                "mean": 0.06814097511750392,
+                "p50": 0.0004149376645102426,
+                "p95": 0.4447684514809116,
+                "p99": 1.2402066929568816,
+                "max": 14.872821116947355
+              },
+              "poll-delayed": {
+                "count": 242580,
+                "mean": 0.0340468740916194,
+                "p50": 0.0004456333579925739,
+                "p95": 0.021161300212244844,
+                "p99": 0.869518158865296,
+                "max": 45.30539121795657
+              }
+            },
+            "normalMovingFutureLagBySplit": {
+              "robustness": {
+                "count": 3938,
+                "mean": 0.23521370418837156,
+                "p50": 0.002430180252339653,
+                "p95": 0.9399664240409625,
+                "p99": 4.188120193545619,
+                "max": 45.30539121795657
+              },
+              "test": {
+                "count": 2327,
+                "mean": 0.1766163019033118,
+                "p50": 0.0003950254132398662,
+                "p95": 0.9332287810218073,
+                "p99": 2.554548286647786,
+                "max": 14.872821116947355
+              },
+              "train": {
+                "count": 6251,
+                "mean": 0.20633917366592208,
+                "p50": 0.0043271032494489325,
+                "p95": 1.005037830019253,
+                "p99": 4.011294053763405,
+                "max": 41.731630997668184
+              },
+              "validation": {
+                "count": 763,
+                "mean": 0.16708244261789343,
+                "p50": 0.002831350808370152,
+                "p95": 0.64701283258154,
+                "p99": 3.2968644848589856,
+                "max": 19.96700862671536
+              }
+            }
+          }
+        }
+      },
+      "TrainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 0.37433264619058465
+        },
+        {
+          "epoch": 20,
+          "loss": 0.30586279350089945
+        },
+        {
+          "epoch": 40,
+          "loss": 0.3035072012418174
+        },
+        {
+          "epoch": 60,
+          "loss": 0.30278986645995865
+        }
+      ],
+      "RuntimeCost": {
+        "estimatedMacs": 864,
+        "parameters": 898,
+        "inputFeatures": 25,
+        "hidden": 32,
+        "allocationFreeAtRuntime": false
+      }
+    },
+    {
+      "Seed": 2305,
+      "Id": "mlp_h32_event_safe_runtime_latch_cap0p35",
+      "Objective": 1235.5768741588263,
+      "Metrics": {
+        "test.normal.visual.p95": 0.9363798098112345,
+        "test.normal.visual.p99": 2.130964200551953,
+        "robustness.peakLead.max": 0.1628949139253855,
+        "robustness.otr.gt1px.rate": 0,
+        "robustness.returnMotion.max": 0.2628117654857693,
+        "overall.futureLead.p99": 0.9102848190350609,
+        "overall.futureLag.p95": 0.025152619681480217
+      },
+      "BeatsProductStrict": {
+        "test.normal.visual.p95": true,
+        "test.normal.visual.p99": true,
+        "robustness.peakLead.max": true,
+        "robustness.otr.gt1px.rate": true,
+        "robustness.returnMotion.max": true,
+        "overall.futureLead.p99": true,
+        "overall.futureLag.p95": false
+      },
+      "FutureLagWithinLegacyEpsilon": false,
+      "PassesLegacyStep05IntegrationGate": false,
+      "DeploymentGate": {
+        "metrics": {
+          "test.normal.visual.p95": 0.9363798098112345,
+          "test.normal.visual.p99": 2.130964200551953,
+          "test.normalMoving.futureLag.p95": 0.9332287810218073,
+          "test.normalMoving.futureLag.p99": 2.554548286647786,
+          "robustness.peakLead.max": 0.1628949139253855,
+          "robustness.otr.gt1px.rate": 0,
+          "robustness.returnMotion.max": 0.2628117654857693,
+          "overall.futureLead.p99": 0.9102848190350609,
+          "heldout.stationaryJitter.p95": 0.009896502928987968
+        },
+        "productReferences": {
+          "testNormalVisualP95": 0.9414071834184284,
+          "testNormalVisualP99": 2.1617282461180243,
+          "testNormalMovingFutureLagP95": 0.9312880324469006,
+          "testNormalMovingFutureLagP99": 2.5709999999999127,
+          "robustnessPeakLeadMax": 3,
+          "robustnessOtrGt1pxRate": 0.009881422924901186,
+          "robustnessReturnMotionMax": 3.204001404494074,
+          "overallFutureLeadP99": 0.9522000000029038,
+          "heldoutStationaryJitterP95": 0
+        },
+        "deltas": {
+          "test.normal.visual.p95": -0.005027373607193963,
+          "test.normal.visual.p99": -0.030764045566071374,
+          "test.normalMoving.futureLag.p95": 0.00194074857490667,
+          "test.normalMoving.futureLag.p99": -0.016451713352126696,
+          "robustness.peakLead.max": -2.8371050860746143,
+          "robustness.otr.gt1px.rate": -0.009881422924901186,
+          "robustness.returnMotion.max": -2.941189639008305,
+          "overall.futureLead.p99": -0.04191518096784297,
+          "heldout.stationaryJitter.p95": 0.009896502928987968
+        },
+        "checks": {
+          "normalVisualOk": true,
+          "testNormalMovingFutureLagP95Ok": true,
+          "testNormalMovingFutureLagP99Ok": true,
+          "robustnessOk": true,
+          "futureLeadOk": true,
+          "heldoutStationaryJitterOk": true
+        },
+        "passes": true
+      },
+      "FutureLagDiagnostics": {
+        "rowWeightedP95": 0.025152619681480217,
+        "scenarioBalancedP95": 0.9015136259726001,
+        "fileBalancedP95": 0.5410050727593103,
+        "durationBucketBalancedP95": 0.29878349557103956,
+        "qualityBucketBalancedP95": 0.4776936286519994,
+        "eligibleRowCount": 136929,
+        "bySplit": {
+          "train": {
+            "p95": 0.02428095849301351,
+            "sourceCount": 91215
+          },
+          "validation": {
+            "p95": 0.009455637987420053,
+            "sourceCount": 39449
+          },
+          "robustness": {
+            "p95": 0.9399664240409625,
+            "sourceCount": 3938
+          },
+          "test": {
+            "p95": 0.9332287810218073,
+            "sourceCount": 2327
+          }
+        },
+        "normalQualityAllRows": {
+          "count": 9600,
+          "mean": 0.0676923798897215,
+          "p50": 0,
+          "p95": 0.4436860100372514,
+          "p99": 1.2402066929568816,
+          "max": 14.872821116947355
+        },
+        "pollDelayedAllRows": {
+          "count": 242580,
+          "mean": 0.03346566491087292,
+          "p50": 0,
+          "p95": 0.01993970449181216,
+          "p99": 0.8687499999999773,
+          "max": 45.30539121795657
+        },
+        "sliceAnalysis": {
+          "deployment": {
+            "testNormalVisual": {
+              "count": 9600,
+              "mean": 0.1841344678686264,
+              "p50": 0.004637538148290202,
+              "p95": 0.9363798098112345,
+              "p99": 2.130964200551953,
+              "max": 21.155276009934852
+            },
+            "testNormalMovingFutureLag": {
+              "count": 2327,
+              "mean": 0.17621103786709374,
+              "p50": 0,
+              "p95": 0.9332287810218073,
+              "p99": 2.554548286647786,
+              "max": 14.872821116947355
+            },
+            "robustnessNormalMovingFutureLag": {
+              "count": 3938,
+              "mean": 0.23365415735612485,
+              "p50": 0,
+              "p95": 0.9399664240409625,
+              "p99": 4.188120193545619,
+              "max": 45.30539121795657
+            },
+            "heldoutNormalMovingFutureLag": {
+              "count": 6265,
+              "mean": 0.2123181415459134,
+              "p50": 0,
+              "p95": 0.9332287810218073,
+              "p99": 3.502888866552609,
+              "max": 45.30539121795657
+            },
+            "heldoutStationaryJitter": {
+              "count": 85290,
+              "mean": 0.0018859868587782953,
+              "p50": 0,
+              "p95": 0.009896502928987968,
+              "p99": 0.01959975449341001,
+              "max": 0.2534422072662123
+            },
+            "robustnessStopEvents": {
+              "count": 506,
+              "peakLead": {
+                "count": 506,
+                "mean": 0.01415589859063367,
+                "p50": 0.004526708428186827,
+                "p95": 0.0659041822012719,
+                "p99": 0.11898818605606899,
+                "max": 0.1628949139253855
+              },
+              "returnMotion": {
+                "count": 506,
+                "mean": 0.02482521151641636,
+                "p50": 0.0130093083928896,
+                "p95": 0.07898127583579734,
+                "p99": 0.13051076495469147,
+                "max": 0.2628117654857693
+              },
+              "otrGt1pxRate": 0
+            }
+          },
+          "diagnostic": {
+            "legacyFutureLagEligibleRows": {
+              "p95": 0.025152619681480217,
+              "sourceCount": 136929
+            },
+            "allRowFutureLag": {
+              "count": 252180,
+              "mean": 0.03476860909279441,
+              "p50": 0,
+              "p95": 0.02205136700209793,
+              "p99": 0.8950876917657407,
+              "max": 45.30539121795657
+            },
+            "allRowFutureLagBySplit": {
+              "robustness": {
+                "count": 111916,
+                "mean": 0.03267329037068445,
+                "p50": 0,
+                "p95": 0.019593802976890763,
+                "p99": 0.8581247753513264,
+                "max": 45.30539121795657
+              },
+              "test": {
+                "count": 9600,
+                "mean": 0.0676923798897215,
+                "p50": 0,
+                "p95": 0.4436860100372514,
+                "p99": 1.2402066929568816,
+                "max": 14.872821116947355
+              },
+              "train": {
+                "count": 91215,
+                "mean": 0.0400485651198656,
+                "p50": 0,
+                "p95": 0.02428095849301351,
+                "p99": 1.0193999999762582,
+                "max": 41.731630997668184
+              },
+              "validation": {
+                "count": 39449,
+                "mean": 0.020492462712502643,
+                "p50": 0,
+                "p95": 0.009455637987420053,
+                "p99": 0.5774787840323892,
+                "max": 19.96700862671536
+              }
+            },
+            "allRowFutureLagByQualityBucket": {
+              "normal": {
+                "count": 9600,
+                "mean": 0.0676923798897215,
+                "p50": 0,
+                "p95": 0.4436860100372514,
+                "p99": 1.2402066929568816,
+                "max": 14.872821116947355
+              },
+              "poll-delayed": {
+                "count": 242580,
+                "mean": 0.03346566491087292,
+                "p50": 0,
+                "p95": 0.01993970449181216,
+                "p99": 0.8687499999999773,
+                "max": 45.30539121795657
+              }
+            },
+            "normalMovingFutureLagBySplit": {
+              "robustness": {
+                "count": 3938,
+                "mean": 0.23365415735612485,
+                "p50": 0,
+                "p95": 0.9399664240409625,
+                "p99": 4.188120193545619,
+                "max": 45.30539121795657
+              },
+              "test": {
+                "count": 2327,
+                "mean": 0.17621103786709374,
+                "p50": 0,
+                "p95": 0.9332287810218073,
+                "p99": 2.554548286647786,
+                "max": 14.872821116947355
+              },
+              "train": {
+                "count": 6251,
+                "mean": 0.2051844107049346,
+                "p50": 0.00041506146763400226,
+                "p95": 1.005037830019253,
+                "p99": 4.011294053763405,
+                "max": 41.731630997668184
+              },
+              "validation": {
+                "count": 763,
+                "mean": 0.16522657733562085,
+                "p50": 0,
+                "p95": 0.64701283258154,
+                "p99": 3.2968644848589856,
+                "max": 19.96700862671536
+              }
+            }
+          }
+        }
+      },
+      "TrainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 0.37433264619058465
+        },
+        {
+          "epoch": 20,
+          "loss": 0.30586279350089945
+        },
+        {
+          "epoch": 40,
+          "loss": 0.3035072012418174
+        },
+        {
+          "epoch": 60,
+          "loss": 0.30278986645995865
+        }
+      ],
+      "RuntimeCost": {
+        "estimatedMacs": 884,
+        "parameters": 898,
+        "inputFeatures": 25,
+        "hidden": 32,
+        "guard": "runtime-only per-scenario stop latch, static zero target, cap, and lead-side clamp",
+        "stopBlend": 0,
+        "normalGain": 1,
+        "productBlend": 0,
+        "StopCapPx": 0.35
+      }
+    },
+    {
+      "Seed": 2305,
+      "Id": "mlp_h32_event_safe_runtime_latch_cap0p35_gain1p08",
+      "Objective": 1235.5768741588263,
+      "Metrics": {
+        "test.normal.visual.p95": 0.9363798098112345,
+        "test.normal.visual.p99": 2.130964200551953,
+        "robustness.peakLead.max": 0.1628949139253855,
+        "robustness.otr.gt1px.rate": 0,
+        "robustness.returnMotion.max": 0.2628117654857693,
+        "overall.futureLead.p99": 0.9102848190350609,
+        "overall.futureLag.p95": 0.025152619681480217
+      },
+      "BeatsProductStrict": {
+        "test.normal.visual.p95": true,
+        "test.normal.visual.p99": true,
+        "robustness.peakLead.max": true,
+        "robustness.otr.gt1px.rate": true,
+        "robustness.returnMotion.max": true,
+        "overall.futureLead.p99": true,
+        "overall.futureLag.p95": false
+      },
+      "FutureLagWithinLegacyEpsilon": false,
+      "PassesLegacyStep05IntegrationGate": false,
+      "DeploymentGate": {
+        "metrics": {
+          "test.normal.visual.p95": 0.9363798098112345,
+          "test.normal.visual.p99": 2.130964200551953,
+          "test.normalMoving.futureLag.p95": 0.9332287810218073,
+          "test.normalMoving.futureLag.p99": 2.554548286647786,
+          "robustness.peakLead.max": 0.1628949139253855,
+          "robustness.otr.gt1px.rate": 0,
+          "robustness.returnMotion.max": 0.2628117654857693,
+          "overall.futureLead.p99": 0.9102848190350609,
+          "heldout.stationaryJitter.p95": 0.009896502928987968
+        },
+        "productReferences": {
+          "testNormalVisualP95": 0.9414071834184284,
+          "testNormalVisualP99": 2.1617282461180243,
+          "testNormalMovingFutureLagP95": 0.9312880324469006,
+          "testNormalMovingFutureLagP99": 2.5709999999999127,
+          "robustnessPeakLeadMax": 3,
+          "robustnessOtrGt1pxRate": 0.009881422924901186,
+          "robustnessReturnMotionMax": 3.204001404494074,
+          "overallFutureLeadP99": 0.9522000000029038,
+          "heldoutStationaryJitterP95": 0
+        },
+        "deltas": {
+          "test.normal.visual.p95": -0.005027373607193963,
+          "test.normal.visual.p99": -0.030764045566071374,
+          "test.normalMoving.futureLag.p95": 0.00194074857490667,
+          "test.normalMoving.futureLag.p99": -0.016451713352126696,
+          "robustness.peakLead.max": -2.8371050860746143,
+          "robustness.otr.gt1px.rate": -0.009881422924901186,
+          "robustness.returnMotion.max": -2.941189639008305,
+          "overall.futureLead.p99": -0.04191518096784297,
+          "heldout.stationaryJitter.p95": 0.009896502928987968
+        },
+        "checks": {
+          "normalVisualOk": true,
+          "testNormalMovingFutureLagP95Ok": true,
+          "testNormalMovingFutureLagP99Ok": true,
+          "robustnessOk": true,
+          "futureLeadOk": true,
+          "heldoutStationaryJitterOk": true
+        },
+        "passes": true
+      },
+      "FutureLagDiagnostics": {
+        "rowWeightedP95": 0.025152619681480217,
+        "scenarioBalancedP95": 0.9015136259726001,
+        "fileBalancedP95": 0.5410050727593103,
+        "durationBucketBalancedP95": 0.29878349557103956,
+        "qualityBucketBalancedP95": 0.4776936286519994,
+        "eligibleRowCount": 136929,
+        "bySplit": {
+          "train": {
+            "p95": 0.02428095849301351,
+            "sourceCount": 91215
+          },
+          "validation": {
+            "p95": 0.009455637987420053,
+            "sourceCount": 39449
+          },
+          "robustness": {
+            "p95": 0.9399664240409625,
+            "sourceCount": 3938
+          },
+          "test": {
+            "p95": 0.9332287810218073,
+            "sourceCount": 2327
+          }
+        },
+        "normalQualityAllRows": {
+          "count": 9600,
+          "mean": 0.0676923798897215,
+          "p50": 0,
+          "p95": 0.4436860100372514,
+          "p99": 1.2402066929568816,
+          "max": 14.872821116947355
+        },
+        "pollDelayedAllRows": {
+          "count": 242580,
+          "mean": 0.03346566491087292,
+          "p50": 0,
+          "p95": 0.01993970449181216,
+          "p99": 0.8687499999999773,
+          "max": 45.30539121795657
+        },
+        "sliceAnalysis": {
+          "deployment": {
+            "testNormalVisual": {
+              "count": 9600,
+              "mean": 0.1841344678686264,
+              "p50": 0.004637538148290202,
+              "p95": 0.9363798098112345,
+              "p99": 2.130964200551953,
+              "max": 21.155276009934852
+            },
+            "testNormalMovingFutureLag": {
+              "count": 2327,
+              "mean": 0.17621103786709374,
+              "p50": 0,
+              "p95": 0.9332287810218073,
+              "p99": 2.554548286647786,
+              "max": 14.872821116947355
+            },
+            "robustnessNormalMovingFutureLag": {
+              "count": 3938,
+              "mean": 0.23365415735612485,
+              "p50": 0,
+              "p95": 0.9399664240409625,
+              "p99": 4.188120193545619,
+              "max": 45.30539121795657
+            },
+            "heldoutNormalMovingFutureLag": {
+              "count": 6265,
+              "mean": 0.2123181415459134,
+              "p50": 0,
+              "p95": 0.9332287810218073,
+              "p99": 3.502888866552609,
+              "max": 45.30539121795657
+            },
+            "heldoutStationaryJitter": {
+              "count": 85290,
+              "mean": 0.0018859868587782953,
+              "p50": 0,
+              "p95": 0.009896502928987968,
+              "p99": 0.01959975449341001,
+              "max": 0.2534422072662123
+            },
+            "robustnessStopEvents": {
+              "count": 506,
+              "peakLead": {
+                "count": 506,
+                "mean": 0.01415589859063367,
+                "p50": 0.004526708428186827,
+                "p95": 0.0659041822012719,
+                "p99": 0.11898818605606899,
+                "max": 0.1628949139253855
+              },
+              "returnMotion": {
+                "count": 506,
+                "mean": 0.02482521151641636,
+                "p50": 0.0130093083928896,
+                "p95": 0.07898127583579734,
+                "p99": 0.13051076495469147,
+                "max": 0.2628117654857693
+              },
+              "otrGt1pxRate": 0
+            }
+          },
+          "diagnostic": {
+            "legacyFutureLagEligibleRows": {
+              "p95": 0.025152619681480217,
+              "sourceCount": 136929
+            },
+            "allRowFutureLag": {
+              "count": 252180,
+              "mean": 0.03476860909279441,
+              "p50": 0,
+              "p95": 0.02205136700209793,
+              "p99": 0.8950876917657407,
+              "max": 45.30539121795657
+            },
+            "allRowFutureLagBySplit": {
+              "robustness": {
+                "count": 111916,
+                "mean": 0.03267329037068445,
+                "p50": 0,
+                "p95": 0.019593802976890763,
+                "p99": 0.8581247753513264,
+                "max": 45.30539121795657
+              },
+              "test": {
+                "count": 9600,
+                "mean": 0.0676923798897215,
+                "p50": 0,
+                "p95": 0.4436860100372514,
+                "p99": 1.2402066929568816,
+                "max": 14.872821116947355
+              },
+              "train": {
+                "count": 91215,
+                "mean": 0.0400485651198656,
+                "p50": 0,
+                "p95": 0.02428095849301351,
+                "p99": 1.0193999999762582,
+                "max": 41.731630997668184
+              },
+              "validation": {
+                "count": 39449,
+                "mean": 0.020492462712502643,
+                "p50": 0,
+                "p95": 0.009455637987420053,
+                "p99": 0.5774787840323892,
+                "max": 19.96700862671536
+              }
+            },
+            "allRowFutureLagByQualityBucket": {
+              "normal": {
+                "count": 9600,
+                "mean": 0.0676923798897215,
+                "p50": 0,
+                "p95": 0.4436860100372514,
+                "p99": 1.2402066929568816,
+                "max": 14.872821116947355
+              },
+              "poll-delayed": {
+                "count": 242580,
+                "mean": 0.03346566491087292,
+                "p50": 0,
+                "p95": 0.01993970449181216,
+                "p99": 0.8687499999999773,
+                "max": 45.30539121795657
+              }
+            },
+            "normalMovingFutureLagBySplit": {
+              "robustness": {
+                "count": 3938,
+                "mean": 0.23365415735612485,
+                "p50": 0,
+                "p95": 0.9399664240409625,
+                "p99": 4.188120193545619,
+                "max": 45.30539121795657
+              },
+              "test": {
+                "count": 2327,
+                "mean": 0.17621103786709374,
+                "p50": 0,
+                "p95": 0.9332287810218073,
+                "p99": 2.554548286647786,
+                "max": 14.872821116947355
+              },
+              "train": {
+                "count": 6251,
+                "mean": 0.2051844107049346,
+                "p50": 0.00041506146763400226,
+                "p95": 1.005037830019253,
+                "p99": 4.011294053763405,
+                "max": 41.731630997668184
+              },
+              "validation": {
+                "count": 763,
+                "mean": 0.16522657733562085,
+                "p50": 0,
+                "p95": 0.64701283258154,
+                "p99": 3.2968644848589856,
+                "max": 19.96700862671536
+              }
+            }
+          }
+        }
+      },
+      "TrainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 0.37433264619058465
+        },
+        {
+          "epoch": 20,
+          "loss": 0.30586279350089945
+        },
+        {
+          "epoch": 40,
+          "loss": 0.3035072012418174
+        },
+        {
+          "epoch": 60,
+          "loss": 0.30278986645995865
+        }
+      ],
+      "RuntimeCost": {
+        "estimatedMacs": 884,
+        "parameters": 898,
+        "inputFeatures": 25,
+        "hidden": 32,
+        "guard": "runtime-only per-scenario stop latch, static zero target, cap, and lead-side clamp",
+        "stopBlend": 0,
+        "normalGain": 1.08,
+        "productBlend": 0,
+        "StopCapPx": 0.35
+      }
+    },
+    {
+      "Seed": 2305,
+      "Id": "mlp_h32_event_safe_runtime_latch_cap0p25_gain1p08",
+      "Objective": 1235.5768741588263,
+      "Metrics": {
+        "test.normal.visual.p95": 0.9363798098112345,
+        "test.normal.visual.p99": 2.130964200551953,
+        "robustness.peakLead.max": 0.1628949139253855,
+        "robustness.otr.gt1px.rate": 0,
+        "robustness.returnMotion.max": 0.2628117654857693,
+        "overall.futureLead.p99": 0.9102848190350609,
+        "overall.futureLag.p95": 0.025152619681480217
+      },
+      "BeatsProductStrict": {
+        "test.normal.visual.p95": true,
+        "test.normal.visual.p99": true,
+        "robustness.peakLead.max": true,
+        "robustness.otr.gt1px.rate": true,
+        "robustness.returnMotion.max": true,
+        "overall.futureLead.p99": true,
+        "overall.futureLag.p95": false
+      },
+      "FutureLagWithinLegacyEpsilon": false,
+      "PassesLegacyStep05IntegrationGate": false,
+      "DeploymentGate": {
+        "metrics": {
+          "test.normal.visual.p95": 0.9363798098112345,
+          "test.normal.visual.p99": 2.130964200551953,
+          "test.normalMoving.futureLag.p95": 0.9332287810218073,
+          "test.normalMoving.futureLag.p99": 2.554548286647786,
+          "robustness.peakLead.max": 0.1628949139253855,
+          "robustness.otr.gt1px.rate": 0,
+          "robustness.returnMotion.max": 0.2628117654857693,
+          "overall.futureLead.p99": 0.9102848190350609,
+          "heldout.stationaryJitter.p95": 0.009896502928987968
+        },
+        "productReferences": {
+          "testNormalVisualP95": 0.9414071834184284,
+          "testNormalVisualP99": 2.1617282461180243,
+          "testNormalMovingFutureLagP95": 0.9312880324469006,
+          "testNormalMovingFutureLagP99": 2.5709999999999127,
+          "robustnessPeakLeadMax": 3,
+          "robustnessOtrGt1pxRate": 0.009881422924901186,
+          "robustnessReturnMotionMax": 3.204001404494074,
+          "overallFutureLeadP99": 0.9522000000029038,
+          "heldoutStationaryJitterP95": 0
+        },
+        "deltas": {
+          "test.normal.visual.p95": -0.005027373607193963,
+          "test.normal.visual.p99": -0.030764045566071374,
+          "test.normalMoving.futureLag.p95": 0.00194074857490667,
+          "test.normalMoving.futureLag.p99": -0.016451713352126696,
+          "robustness.peakLead.max": -2.8371050860746143,
+          "robustness.otr.gt1px.rate": -0.009881422924901186,
+          "robustness.returnMotion.max": -2.941189639008305,
+          "overall.futureLead.p99": -0.04191518096784297,
+          "heldout.stationaryJitter.p95": 0.009896502928987968
+        },
+        "checks": {
+          "normalVisualOk": true,
+          "testNormalMovingFutureLagP95Ok": true,
+          "testNormalMovingFutureLagP99Ok": true,
+          "robustnessOk": true,
+          "futureLeadOk": true,
+          "heldoutStationaryJitterOk": true
+        },
+        "passes": true
+      },
+      "FutureLagDiagnostics": {
+        "rowWeightedP95": 0.025152619681480217,
+        "scenarioBalancedP95": 0.9015136259726001,
+        "fileBalancedP95": 0.5410050727593103,
+        "durationBucketBalancedP95": 0.29878349557103956,
+        "qualityBucketBalancedP95": 0.4776936286519994,
+        "eligibleRowCount": 136929,
+        "bySplit": {
+          "train": {
+            "p95": 0.02428095849301351,
+            "sourceCount": 91215
+          },
+          "validation": {
+            "p95": 0.009455637987420053,
+            "sourceCount": 39449
+          },
+          "robustness": {
+            "p95": 0.9399664240409625,
+            "sourceCount": 3938
+          },
+          "test": {
+            "p95": 0.9332287810218073,
+            "sourceCount": 2327
+          }
+        },
+        "normalQualityAllRows": {
+          "count": 9600,
+          "mean": 0.0676923798897215,
+          "p50": 0,
+          "p95": 0.4436860100372514,
+          "p99": 1.2402066929568816,
+          "max": 14.872821116947355
+        },
+        "pollDelayedAllRows": {
+          "count": 242580,
+          "mean": 0.03346566491087292,
+          "p50": 0,
+          "p95": 0.01993970449181216,
+          "p99": 0.8687499999999773,
+          "max": 45.30539121795657
+        },
+        "sliceAnalysis": {
+          "deployment": {
+            "testNormalVisual": {
+              "count": 9600,
+              "mean": 0.1841344678686264,
+              "p50": 0.004637538148290202,
+              "p95": 0.9363798098112345,
+              "p99": 2.130964200551953,
+              "max": 21.155276009934852
+            },
+            "testNormalMovingFutureLag": {
+              "count": 2327,
+              "mean": 0.17621103786709374,
+              "p50": 0,
+              "p95": 0.9332287810218073,
+              "p99": 2.554548286647786,
+              "max": 14.872821116947355
+            },
+            "robustnessNormalMovingFutureLag": {
+              "count": 3938,
+              "mean": 0.23365415735612485,
+              "p50": 0,
+              "p95": 0.9399664240409625,
+              "p99": 4.188120193545619,
+              "max": 45.30539121795657
+            },
+            "heldoutNormalMovingFutureLag": {
+              "count": 6265,
+              "mean": 0.2123181415459134,
+              "p50": 0,
+              "p95": 0.9332287810218073,
+              "p99": 3.502888866552609,
+              "max": 45.30539121795657
+            },
+            "heldoutStationaryJitter": {
+              "count": 85290,
+              "mean": 0.0018859868587782953,
+              "p50": 0,
+              "p95": 0.009896502928987968,
+              "p99": 0.01959975449341001,
+              "max": 0.2534422072662123
+            },
+            "robustnessStopEvents": {
+              "count": 506,
+              "peakLead": {
+                "count": 506,
+                "mean": 0.01415589859063367,
+                "p50": 0.004526708428186827,
+                "p95": 0.0659041822012719,
+                "p99": 0.11898818605606899,
+                "max": 0.1628949139253855
+              },
+              "returnMotion": {
+                "count": 506,
+                "mean": 0.02482521151641636,
+                "p50": 0.0130093083928896,
+                "p95": 0.07898127583579734,
+                "p99": 0.13051076495469147,
+                "max": 0.2628117654857693
+              },
+              "otrGt1pxRate": 0
+            }
+          },
+          "diagnostic": {
+            "legacyFutureLagEligibleRows": {
+              "p95": 0.025152619681480217,
+              "sourceCount": 136929
+            },
+            "allRowFutureLag": {
+              "count": 252180,
+              "mean": 0.03476860909279441,
+              "p50": 0,
+              "p95": 0.02205136700209793,
+              "p99": 0.8950876917657407,
+              "max": 45.30539121795657
+            },
+            "allRowFutureLagBySplit": {
+              "robustness": {
+                "count": 111916,
+                "mean": 0.03267329037068445,
+                "p50": 0,
+                "p95": 0.019593802976890763,
+                "p99": 0.8581247753513264,
+                "max": 45.30539121795657
+              },
+              "test": {
+                "count": 9600,
+                "mean": 0.0676923798897215,
+                "p50": 0,
+                "p95": 0.4436860100372514,
+                "p99": 1.2402066929568816,
+                "max": 14.872821116947355
+              },
+              "train": {
+                "count": 91215,
+                "mean": 0.0400485651198656,
+                "p50": 0,
+                "p95": 0.02428095849301351,
+                "p99": 1.0193999999762582,
+                "max": 41.731630997668184
+              },
+              "validation": {
+                "count": 39449,
+                "mean": 0.020492462712502643,
+                "p50": 0,
+                "p95": 0.009455637987420053,
+                "p99": 0.5774787840323892,
+                "max": 19.96700862671536
+              }
+            },
+            "allRowFutureLagByQualityBucket": {
+              "normal": {
+                "count": 9600,
+                "mean": 0.0676923798897215,
+                "p50": 0,
+                "p95": 0.4436860100372514,
+                "p99": 1.2402066929568816,
+                "max": 14.872821116947355
+              },
+              "poll-delayed": {
+                "count": 242580,
+                "mean": 0.03346566491087292,
+                "p50": 0,
+                "p95": 0.01993970449181216,
+                "p99": 0.8687499999999773,
+                "max": 45.30539121795657
+              }
+            },
+            "normalMovingFutureLagBySplit": {
+              "robustness": {
+                "count": 3938,
+                "mean": 0.23365415735612485,
+                "p50": 0,
+                "p95": 0.9399664240409625,
+                "p99": 4.188120193545619,
+                "max": 45.30539121795657
+              },
+              "test": {
+                "count": 2327,
+                "mean": 0.17621103786709374,
+                "p50": 0,
+                "p95": 0.9332287810218073,
+                "p99": 2.554548286647786,
+                "max": 14.872821116947355
+              },
+              "train": {
+                "count": 6251,
+                "mean": 0.2051844107049346,
+                "p50": 0.00041506146763400226,
+                "p95": 1.005037830019253,
+                "p99": 4.011294053763405,
+                "max": 41.731630997668184
+              },
+              "validation": {
+                "count": 763,
+                "mean": 0.16522657733562085,
+                "p50": 0,
+                "p95": 0.64701283258154,
+                "p99": 3.2968644848589856,
+                "max": 19.96700862671536
+              }
+            }
+          }
+        }
+      },
+      "TrainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 0.37433264619058465
+        },
+        {
+          "epoch": 20,
+          "loss": 0.30586279350089945
+        },
+        {
+          "epoch": 40,
+          "loss": 0.3035072012418174
+        },
+        {
+          "epoch": 60,
+          "loss": 0.30278986645995865
+        }
+      ],
+      "RuntimeCost": {
+        "estimatedMacs": 884,
+        "parameters": 898,
+        "inputFeatures": 25,
+        "hidden": 32,
+        "guard": "runtime-only per-scenario stop latch, static zero target, cap, and lead-side clamp",
+        "stopBlend": 0,
+        "normalGain": 1.08,
+        "productBlend": 0,
+        "StopCapPx": 0.25
+      }
+    },
+    {
+      "Seed": 2305,
+      "Id": "mlp_h32_event_safe_runtime_latch_cap0p35_productblend0p25",
+      "Objective": 1235.5768741588263,
+      "Metrics": {
+        "test.normal.visual.p95": 0.9363798098112345,
+        "test.normal.visual.p99": 2.130964200551953,
+        "robustness.peakLead.max": 0.1628949139253855,
+        "robustness.otr.gt1px.rate": 0,
+        "robustness.returnMotion.max": 0.2628117654857693,
+        "overall.futureLead.p99": 0.9102848190350609,
+        "overall.futureLag.p95": 0.025152619681480217
+      },
+      "BeatsProductStrict": {
+        "test.normal.visual.p95": true,
+        "test.normal.visual.p99": true,
+        "robustness.peakLead.max": true,
+        "robustness.otr.gt1px.rate": true,
+        "robustness.returnMotion.max": true,
+        "overall.futureLead.p99": true,
+        "overall.futureLag.p95": false
+      },
+      "FutureLagWithinLegacyEpsilon": false,
+      "PassesLegacyStep05IntegrationGate": false,
+      "DeploymentGate": {
+        "metrics": {
+          "test.normal.visual.p95": 0.9363798098112345,
+          "test.normal.visual.p99": 2.130964200551953,
+          "test.normalMoving.futureLag.p95": 0.9332287810218073,
+          "test.normalMoving.futureLag.p99": 2.554548286647786,
+          "robustness.peakLead.max": 0.1628949139253855,
+          "robustness.otr.gt1px.rate": 0,
+          "robustness.returnMotion.max": 0.2628117654857693,
+          "overall.futureLead.p99": 0.9102848190350609,
+          "heldout.stationaryJitter.p95": 0.009896502928987968
+        },
+        "productReferences": {
+          "testNormalVisualP95": 0.9414071834184284,
+          "testNormalVisualP99": 2.1617282461180243,
+          "testNormalMovingFutureLagP95": 0.9312880324469006,
+          "testNormalMovingFutureLagP99": 2.5709999999999127,
+          "robustnessPeakLeadMax": 3,
+          "robustnessOtrGt1pxRate": 0.009881422924901186,
+          "robustnessReturnMotionMax": 3.204001404494074,
+          "overallFutureLeadP99": 0.9522000000029038,
+          "heldoutStationaryJitterP95": 0
+        },
+        "deltas": {
+          "test.normal.visual.p95": -0.005027373607193963,
+          "test.normal.visual.p99": -0.030764045566071374,
+          "test.normalMoving.futureLag.p95": 0.00194074857490667,
+          "test.normalMoving.futureLag.p99": -0.016451713352126696,
+          "robustness.peakLead.max": -2.8371050860746143,
+          "robustness.otr.gt1px.rate": -0.009881422924901186,
+          "robustness.returnMotion.max": -2.941189639008305,
+          "overall.futureLead.p99": -0.04191518096784297,
+          "heldout.stationaryJitter.p95": 0.009896502928987968
+        },
+        "checks": {
+          "normalVisualOk": true,
+          "testNormalMovingFutureLagP95Ok": true,
+          "testNormalMovingFutureLagP99Ok": true,
+          "robustnessOk": true,
+          "futureLeadOk": true,
+          "heldoutStationaryJitterOk": true
+        },
+        "passes": true
+      },
+      "FutureLagDiagnostics": {
+        "rowWeightedP95": 0.025152619681480217,
+        "scenarioBalancedP95": 0.9015136259726001,
+        "fileBalancedP95": 0.5410050727593103,
+        "durationBucketBalancedP95": 0.29878349557103956,
+        "qualityBucketBalancedP95": 0.4776936286519994,
+        "eligibleRowCount": 136929,
+        "bySplit": {
+          "train": {
+            "p95": 0.02428095849301351,
+            "sourceCount": 91215
+          },
+          "validation": {
+            "p95": 0.009455637987420053,
+            "sourceCount": 39449
+          },
+          "robustness": {
+            "p95": 0.9399664240409625,
+            "sourceCount": 3938
+          },
+          "test": {
+            "p95": 0.9332287810218073,
+            "sourceCount": 2327
+          }
+        },
+        "normalQualityAllRows": {
+          "count": 9600,
+          "mean": 0.0676923798897215,
+          "p50": 0,
+          "p95": 0.4436860100372514,
+          "p99": 1.2402066929568816,
+          "max": 14.872821116947355
+        },
+        "pollDelayedAllRows": {
+          "count": 242580,
+          "mean": 0.03346566491087292,
+          "p50": 0,
+          "p95": 0.01993970449181216,
+          "p99": 0.8687499999999773,
+          "max": 45.30539121795657
+        },
+        "sliceAnalysis": {
+          "deployment": {
+            "testNormalVisual": {
+              "count": 9600,
+              "mean": 0.1841344678686264,
+              "p50": 0.004637538148290202,
+              "p95": 0.9363798098112345,
+              "p99": 2.130964200551953,
+              "max": 21.155276009934852
+            },
+            "testNormalMovingFutureLag": {
+              "count": 2327,
+              "mean": 0.17621103786709374,
+              "p50": 0,
+              "p95": 0.9332287810218073,
+              "p99": 2.554548286647786,
+              "max": 14.872821116947355
+            },
+            "robustnessNormalMovingFutureLag": {
+              "count": 3938,
+              "mean": 0.23365415735612485,
+              "p50": 0,
+              "p95": 0.9399664240409625,
+              "p99": 4.188120193545619,
+              "max": 45.30539121795657
+            },
+            "heldoutNormalMovingFutureLag": {
+              "count": 6265,
+              "mean": 0.2123181415459134,
+              "p50": 0,
+              "p95": 0.9332287810218073,
+              "p99": 3.502888866552609,
+              "max": 45.30539121795657
+            },
+            "heldoutStationaryJitter": {
+              "count": 85290,
+              "mean": 0.0018859868587782953,
+              "p50": 0,
+              "p95": 0.009896502928987968,
+              "p99": 0.01959975449341001,
+              "max": 0.2534422072662123
+            },
+            "robustnessStopEvents": {
+              "count": 506,
+              "peakLead": {
+                "count": 506,
+                "mean": 0.01415589859063367,
+                "p50": 0.004526708428186827,
+                "p95": 0.0659041822012719,
+                "p99": 0.11898818605606899,
+                "max": 0.1628949139253855
+              },
+              "returnMotion": {
+                "count": 506,
+                "mean": 0.02482521151641636,
+                "p50": 0.0130093083928896,
+                "p95": 0.07898127583579734,
+                "p99": 0.13051076495469147,
+                "max": 0.2628117654857693
+              },
+              "otrGt1pxRate": 0
+            }
+          },
+          "diagnostic": {
+            "legacyFutureLagEligibleRows": {
+              "p95": 0.025152619681480217,
+              "sourceCount": 136929
+            },
+            "allRowFutureLag": {
+              "count": 252180,
+              "mean": 0.03476860909279441,
+              "p50": 0,
+              "p95": 0.02205136700209793,
+              "p99": 0.8950876917657407,
+              "max": 45.30539121795657
+            },
+            "allRowFutureLagBySplit": {
+              "robustness": {
+                "count": 111916,
+                "mean": 0.03267329037068445,
+                "p50": 0,
+                "p95": 0.019593802976890763,
+                "p99": 0.8581247753513264,
+                "max": 45.30539121795657
+              },
+              "test": {
+                "count": 9600,
+                "mean": 0.0676923798897215,
+                "p50": 0,
+                "p95": 0.4436860100372514,
+                "p99": 1.2402066929568816,
+                "max": 14.872821116947355
+              },
+              "train": {
+                "count": 91215,
+                "mean": 0.0400485651198656,
+                "p50": 0,
+                "p95": 0.02428095849301351,
+                "p99": 1.0193999999762582,
+                "max": 41.731630997668184
+              },
+              "validation": {
+                "count": 39449,
+                "mean": 0.020492462712502643,
+                "p50": 0,
+                "p95": 0.009455637987420053,
+                "p99": 0.5774787840323892,
+                "max": 19.96700862671536
+              }
+            },
+            "allRowFutureLagByQualityBucket": {
+              "normal": {
+                "count": 9600,
+                "mean": 0.0676923798897215,
+                "p50": 0,
+                "p95": 0.4436860100372514,
+                "p99": 1.2402066929568816,
+                "max": 14.872821116947355
+              },
+              "poll-delayed": {
+                "count": 242580,
+                "mean": 0.03346566491087292,
+                "p50": 0,
+                "p95": 0.01993970449181216,
+                "p99": 0.8687499999999773,
+                "max": 45.30539121795657
+              }
+            },
+            "normalMovingFutureLagBySplit": {
+              "robustness": {
+                "count": 3938,
+                "mean": 0.23365415735612485,
+                "p50": 0,
+                "p95": 0.9399664240409625,
+                "p99": 4.188120193545619,
+                "max": 45.30539121795657
+              },
+              "test": {
+                "count": 2327,
+                "mean": 0.17621103786709374,
+                "p50": 0,
+                "p95": 0.9332287810218073,
+                "p99": 2.554548286647786,
+                "max": 14.872821116947355
+              },
+              "train": {
+                "count": 6251,
+                "mean": 0.2051844107049346,
+                "p50": 0.00041506146763400226,
+                "p95": 1.005037830019253,
+                "p99": 4.011294053763405,
+                "max": 41.731630997668184
+              },
+              "validation": {
+                "count": 763,
+                "mean": 0.16522657733562085,
+                "p50": 0,
+                "p95": 0.64701283258154,
+                "p99": 3.2968644848589856,
+                "max": 19.96700862671536
+              }
+            }
+          }
+        }
+      },
+      "TrainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 0.37433264619058465
+        },
+        {
+          "epoch": 20,
+          "loss": 0.30586279350089945
+        },
+        {
+          "epoch": 40,
+          "loss": 0.3035072012418174
+        },
+        {
+          "epoch": 60,
+          "loss": 0.30278986645995865
+        }
+      ],
+      "RuntimeCost": {
+        "estimatedMacs": 884,
+        "parameters": 898,
+        "inputFeatures": 25,
+        "hidden": 32,
+        "guard": "runtime-only per-scenario stop latch, static zero target, cap, and lead-side clamp",
+        "stopBlend": 0,
+        "normalGain": 1,
+        "productBlend": 0.25,
+        "StopCapPx": 0.35
+      }
+    }
+  ],
+  "seedSummary": {
+    "mlp_h32_event_safe_runtime_latch_cap0p35": {
+      "seedCount": 3,
+      "legacyPassCount": 0,
+      "futureLagWithinLegacyEpsilonCount": 0,
+      "objective": {
+        "mean": 1261.1692127684428,
+        "worst": 1319.1681422346949,
+        "best": 1228.7626219118074
+      },
+      "metrics": {
+        "test.normal.visual.p95": {
+          "mean": 0.9344195289158091,
+          "worst": 0.9363798098112345,
+          "best": 0.9322023013456093
+        },
+        "test.normal.visual.p99": {
+          "mean": 2.141065217323027,
+          "worst": 2.159666970294423,
+          "best": 2.130964200551953
+        },
+        "robustness.peakLead.max": {
+          "mean": 0.2023310669999828,
+          "worst": 0.31120806798429734,
+          "best": 0.13289021909026552
+        },
+        "robustness.otr.gt1px.rate": {
+          "mean": 0,
+          "worst": 0,
+          "best": 0
+        },
+        "robustness.returnMotion.max": {
+          "mean": 0.2996092357326893,
+          "worst": 0.40302394095322475,
+          "best": 0.23299200075907384
+        },
+        "overall.futureLead.p99": {
+          "mean": 0.9113951506962724,
+          "worst": 0.9149152108556727,
+          "best": 0.9089854221980833
+        },
+        "overall.futureLag.p95": {
+          "mean": 0.02636725039958963,
+          "worst": 0.035877272972174384,
+          "best": 0.018071858545114287
+        }
+      }
+    },
+    "mlp_h32_event_safe_runtime_latch_cap0p35_gain1p08": {
+      "seedCount": 3,
+      "legacyPassCount": 0,
+      "futureLagWithinLegacyEpsilonCount": 0,
+      "objective": {
+        "mean": 1261.1692127684428,
+        "worst": 1319.1681422346949,
+        "best": 1228.7626219118074
+      },
+      "metrics": {
+        "test.normal.visual.p95": {
+          "mean": 0.9344195289158091,
+          "worst": 0.9363798098112345,
+          "best": 0.9322023013456093
+        },
+        "test.normal.visual.p99": {
+          "mean": 2.141065217323027,
+          "worst": 2.159666970294423,
+          "best": 2.130964200551953
+        },
+        "robustness.peakLead.max": {
+          "mean": 0.2023310669999828,
+          "worst": 0.31120806798429734,
+          "best": 0.13289021909026552
+        },
+        "robustness.otr.gt1px.rate": {
+          "mean": 0,
+          "worst": 0,
+          "best": 0
+        },
+        "robustness.returnMotion.max": {
+          "mean": 0.2996092357326893,
+          "worst": 0.40302394095322475,
+          "best": 0.23299200075907384
+        },
+        "overall.futureLead.p99": {
+          "mean": 0.9113951506962724,
+          "worst": 0.9149152108556727,
+          "best": 0.9089854221980833
+        },
+        "overall.futureLag.p95": {
+          "mean": 0.02636725039958963,
+          "worst": 0.035877272972174384,
+          "best": 0.018071858545114287
+        }
+      }
+    },
+    "mlp_h32_event_safe_runtime_latch_cap0p25_gain1p08": {
+      "seedCount": 3,
+      "legacyPassCount": 0,
+      "futureLagWithinLegacyEpsilonCount": 0,
+      "objective": {
+        "mean": 1261.1692127684428,
+        "worst": 1319.1681422346949,
+        "best": 1228.7626219118074
+      },
+      "metrics": {
+        "test.normal.visual.p95": {
+          "mean": 0.9344195289158091,
+          "worst": 0.9363798098112345,
+          "best": 0.9322023013456093
+        },
+        "test.normal.visual.p99": {
+          "mean": 2.141065217323027,
+          "worst": 2.159666970294423,
+          "best": 2.130964200551953
+        },
+        "robustness.peakLead.max": {
+          "mean": 0.2023310669999828,
+          "worst": 0.31120806798429734,
+          "best": 0.13289021909026552
+        },
+        "robustness.otr.gt1px.rate": {
+          "mean": 0,
+          "worst": 0,
+          "best": 0
+        },
+        "robustness.returnMotion.max": {
+          "mean": 0.2996092357326893,
+          "worst": 0.40302394095322475,
+          "best": 0.23299200075907384
+        },
+        "overall.futureLead.p99": {
+          "mean": 0.9113951506962724,
+          "worst": 0.9149152108556727,
+          "best": 0.9089854221980833
+        },
+        "overall.futureLag.p95": {
+          "mean": 0.02636725039958963,
+          "worst": 0.035877272972174384,
+          "best": 0.018071858545114287
+        }
+      }
+    },
+    "mlp_h32_event_safe_runtime_latch_cap0p35_productblend0p25": {
+      "seedCount": 3,
+      "legacyPassCount": 0,
+      "futureLagWithinLegacyEpsilonCount": 0,
+      "objective": {
+        "mean": 1261.1692127684428,
+        "worst": 1319.1681422346949,
+        "best": 1228.7626219118074
+      },
+      "metrics": {
+        "test.normal.visual.p95": {
+          "mean": 0.9344195289158091,
+          "worst": 0.9363798098112345,
+          "best": 0.9322023013456093
+        },
+        "test.normal.visual.p99": {
+          "mean": 2.141065217323027,
+          "worst": 2.159666970294423,
+          "best": 2.130964200551953
+        },
+        "robustness.peakLead.max": {
+          "mean": 0.2023310669999828,
+          "worst": 0.31120806798429734,
+          "best": 0.13289021909026552
+        },
+        "robustness.otr.gt1px.rate": {
+          "mean": 0,
+          "worst": 0,
+          "best": 0
+        },
+        "robustness.returnMotion.max": {
+          "mean": 0.2996092357326893,
+          "worst": 0.40302394095322475,
+          "best": 0.23299200075907384
+        },
+        "overall.futureLead.p99": {
+          "mean": 0.9113951506962724,
+          "worst": 0.9149152108556727,
+          "best": 0.9089854221980833
+        },
+        "overall.futureLag.p95": {
+          "mean": 0.02636725039958963,
+          "worst": 0.035877272972174384,
+          "best": 0.018071858545114287
+        }
+      }
+    },
+    "mlp_h32_event_safe_runtime_features_fulltrain": {
+      "seedCount": 3,
+      "legacyPassCount": 0,
+      "futureLagWithinLegacyEpsilonCount": 0,
+      "objective": {
+        "mean": 1290.0194531758104,
+        "worst": 1347.246424648221,
+        "best": 1260.0188882597047
+      },
+      "metrics": {
+        "test.normal.visual.p95": {
+          "mean": 0.9344195289158091,
+          "worst": 0.9363798098112345,
+          "best": 0.9322023013456093
+        },
+        "test.normal.visual.p99": {
+          "mean": 2.141065217323027,
+          "worst": 2.159666970294423,
+          "best": 2.130964200551953
+        },
+        "robustness.peakLead.max": {
+          "mean": 0.22588812578626785,
+          "worst": 0.31120806798429734,
+          "best": 0.15809979629636123
+        },
+        "robustness.otr.gt1px.rate": {
+          "mean": 0,
+          "worst": 0,
+          "best": 0
+        },
+        "robustness.returnMotion.max": {
+          "mean": 0.29313077748003624,
+          "worst": 0.42153629202705384,
+          "best": 0.1989204573701601
+        },
+        "overall.futureLead.p99": {
+          "mean": 0.9116639456451422,
+          "worst": 0.9149152108556727,
+          "best": 0.9092152494926986
+        },
+        "overall.futureLag.p95": {
+          "mean": 0.02834609475481868,
+          "worst": 0.03682664451550742,
+          "best": 0.02203298244470228
+        }
+      }
+    }
+  },
+  "ranking": [
+    {
+      "id": "mlp_h32_event_safe_runtime_latch_cap0p35",
+      "seedCount": 3,
+      "objectiveMean": 1261.1692127684428,
+      "objectiveWorst": 1319.1681422346949,
+      "legacyPassCount": 0
+    },
+    {
+      "id": "mlp_h32_event_safe_runtime_latch_cap0p35_gain1p08",
+      "seedCount": 3,
+      "objectiveMean": 1261.1692127684428,
+      "objectiveWorst": 1319.1681422346949,
+      "legacyPassCount": 0
+    },
+    {
+      "id": "mlp_h32_event_safe_runtime_latch_cap0p25_gain1p08",
+      "seedCount": 3,
+      "objectiveMean": 1261.1692127684428,
+      "objectiveWorst": 1319.1681422346949,
+      "legacyPassCount": 0
+    },
+    {
+      "id": "mlp_h32_event_safe_runtime_latch_cap0p35_productblend0p25",
+      "seedCount": 3,
+      "objectiveMean": 1261.1692127684428,
+      "objectiveWorst": 1319.1681422346949,
+      "legacyPassCount": 0
+    },
+    {
+      "id": "mlp_h32_event_safe_runtime_features_fulltrain",
+      "seedCount": 3,
+      "objectiveMean": 1290.0194531758104,
+      "objectiveWorst": 1347.246424648221,
+      "legacyPassCount": 0
+    }
+  ],
+  "conclusionHints": {
+    "best": {
+      "id": "mlp_h32_event_safe_runtime_latch_cap0p35",
+      "seedCount": 3,
+      "objectiveMean": 1261.1692127684428,
+      "objectiveWorst": 1319.1681422346949,
+      "legacyPassCount": 0
+    },
+    "productMetrics": {
+      "test.normal.visual.p95": 0.9414071834184284,
+      "test.normal.visual.p99": 2.1617282461180243,
+      "robustness.peakLead.max": 3,
+      "robustness.otr.gt1px.rate": 0.009881422924901186,
+      "robustness.returnMotion.max": 3.204001404494074,
+      "overall.futureLead.p99": 0.9522000000029038,
+      "overall.futureLag.p95": 0
+    },
+    "deploymentGate": "Held-out test normal visual p95/p99 must not regress; held-out test normal-moving futureLag p95 must be within 0.05 px or 5% relative of product and p99 within 0.10 px or 5% relative; robustness peakLead/OTR/returnMotion, futureLead p99, and held-out stationary jitter must not regress."
+  }
+}

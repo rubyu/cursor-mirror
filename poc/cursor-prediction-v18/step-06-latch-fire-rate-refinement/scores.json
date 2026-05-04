@@ -1,0 +1,5269 @@
+{
+  "schemaVersion": "cursor-prediction-v18-step-06-latch-fire-rate-refinement/1",
+  "generatedAtUtc": "2026-05-04T08:10:22.412Z",
+  "source": "step-06-latch-fire-rate-refinement/latch-refinement-output.json",
+  "rawOutputDeletedAfterSummary": true,
+  "harness": {
+    "kind": "C# chronological replay output summarized without re-running replay",
+    "productSourceModified": false,
+    "baseline": "lag0 offset -4ms",
+    "lagConst": 0,
+    "candidateCount": 1469
+  },
+  "datasetSummary": {
+    "replayRows": 90522,
+    "sourceZipsReadInPlace": [
+      "cursor-mirror-motion-recording-20260504-070248.zip",
+      "cursor-mirror-motion-recording-20260504-070307.zip"
+    ],
+    "sliceCounts": {
+      "all": 90522,
+      "fastThenNearZero": 1926,
+      "hardBrake": 334,
+      "stopAfterHighSpeed": 44,
+      "oneFrameStop": 406,
+      "postStopFirstFrames": 271,
+      "normalMove": 3444,
+      "highSpeed": 13,
+      "staticHold": 64631
+    }
+  },
+  "selectedCandidate": "baseLatchN10_v0_h400_td0p1_rv50_rt0p25",
+  "baselineCandidate": "none",
+  "step05BestCandidate": "step05_best_latchN10_v20_h400_td0p25",
+  "comparedCandidates": {
+    "none": {
+      "id": "none",
+      "candidate": {
+        "Id": "none",
+        "Family": "none",
+        "Action": "none",
+        "StopV2Threshold": 0,
+        "HighSpeedThreshold": 0,
+        "StopTargetDistanceThreshold": 0,
+        "CapPx": 0,
+        "Scale": 1,
+        "LatchFrames": 0,
+        "ReleaseV2Threshold": 0,
+        "ReleaseTargetDistanceThreshold": 0,
+        "CurrentDeltaThreshold": 999,
+        "PathEfficiencyMax": 1,
+        "ConsecutiveStopFrames": 1,
+        "IncludeOneFrameSnap": false,
+        "RefreshWhileStopped": false
+      },
+      "eventMetrics": {
+        "count": 623,
+        "peakLead": {
+          "mean": 0.026668,
+          "p50": 0,
+          "p95": 0,
+          "p99": 1.517162,
+          "max": 2.441013
+        },
+        "peakDistance": {
+          "mean": 0.031947,
+          "p50": 0,
+          "p95": 0,
+          "p99": 1.754459,
+          "max": 2.490607
+        },
+        "returnMotion": {
+          "mean": 0.024538,
+          "p50": 0,
+          "p95": 0,
+          "p99": 1.179248,
+          "max": 2.490607
+        },
+        "settleFrames0p5": {
+          "mean": 0.012882,
+          "p50": 0,
+          "p95": 0,
+          "p99": 1,
+          "max": 1
+        },
+        "settleFrames1p0": {
+          "mean": 0.011272,
+          "p50": 0,
+          "p95": 0,
+          "p99": 1,
+          "max": 1
+        },
+        "overshootThenReturnRateGt0p5": 0.012841,
+        "overshootThenReturnRateGt1": 0.011236,
+        "leadGt1": 0.014446,
+        "leadGt2": 0.001605,
+        "distanceGt2": 0.009631,
+        "gateFireRateInWindows": 0,
+        "examples": [
+          {
+            "PackageId": "m070307",
+            "StopElapsedMs": 527283.573,
+            "Phase": "postStopFirstFrames",
+            "PreMaxSpeed": 961.7942994501536,
+            "V2AtStop": 0,
+            "V5AtStop": 152.88955394419315,
+            "V12AtStop": 504.4803881927289,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 2.441013209745534,
+            "PeakDistancePx": 2.4906073556464094,
+            "PeakFrame": 8,
+            "SettleFrames0p5": 1,
+            "SettleFrames1p0": 1,
+            "SettleMs0p5": 16.666666666666668,
+            "SettleMs1p0": 16.666666666666668,
+            "ReturnMotionPx": 2.4906073556464094,
+            "OvershootThenReturn": true,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070307",
+            "StopElapsedMs": 695969.43,
+            "Phase": "oneFrameStop",
+            "PreMaxSpeed": 1502.5661790099145,
+            "V2AtStop": 0,
+            "V5AtStop": 874.2987428229138,
+            "V12AtStop": 876.6287504878093,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 1.9878475531793014,
+            "PeakDistancePx": 2.1505813167606567,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 1,
+            "SettleFrames1p0": 1,
+            "SettleMs0p5": 16.666666666666668,
+            "SettleMs1p0": 16.666666666666668,
+            "ReturnMotionPx": 2.1505813167606567,
+            "OvershootThenReturn": true,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070307",
+            "StopElapsedMs": 695781.306,
+            "Phase": "fastThenNearZero",
+            "PreMaxSpeed": 545.9581314746243,
+            "V2AtStop": 0,
+            "V5AtStop": 365.3438249867743,
+            "V12AtStop": 265.57836359839126,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 1.9708102192636363,
+            "PeakDistancePx": 2.1505813167606567,
+            "PeakFrame": 10,
+            "SettleFrames0p5": -1,
+            "SettleFrames1p0": -1,
+            "SettleMs0p5": -1,
+            "SettleMs1p0": -1,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070307",
+            "StopElapsedMs": 696252.153,
+            "Phase": "fastThenNearZero",
+            "PreMaxSpeed": 887.4341850989016,
+            "V2AtStop": 0,
+            "V5AtStop": 122.50426095076104,
+            "V12AtStop": 169.99960841902504,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 1.9366226011774934,
+            "PeakDistancePx": 2.4653853654145026,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 1,
+            "SettleFrames1p0": 1,
+            "SettleMs0p5": 16.666666666666668,
+            "SettleMs1p0": 16.666666666666668,
+            "ReturnMotionPx": 2.4653853654145026,
+            "OvershootThenReturn": true,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070307",
+            "StopElapsedMs": 696197.962,
+            "Phase": "fastThenNearZero",
+            "PreMaxSpeed": 1242.8762328730513,
+            "V2AtStop": 0,
+            "V5AtStop": 199.95216588886825,
+            "V12AtStop": 434.61181089156554,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 1.7951309390706416,
+            "PeakDistancePx": 2.4653853654145026,
+            "PeakFrame": 3,
+            "SettleFrames0p5": 1,
+            "SettleFrames1p0": 1,
+            "SettleMs0p5": 16.666666666666668,
+            "SettleMs1p0": 16.666666666666668,
+            "ReturnMotionPx": 2.4653853654145026,
+            "OvershootThenReturn": true,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070307",
+            "StopElapsedMs": 696033.04,
+            "Phase": "oneFrameStop",
+            "PreMaxSpeed": 1460.8066282145176,
+            "V2AtStop": 0,
+            "V5AtStop": 1441.2637490566167,
+            "V12AtStop": 1140.2718499383384,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 1.7800371359414213,
+            "PeakDistancePx": 2.4653853654145026,
+            "PeakFrame": 10,
+            "SettleFrames0p5": -1,
+            "SettleFrames1p0": -1,
+            "SettleMs0p5": -1,
+            "SettleMs1p0": -1,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070307",
+            "StopElapsedMs": 684146.587,
+            "Phase": "oneFrameStop",
+            "PreMaxSpeed": 1347.8367459956353,
+            "V2AtStop": 61.60290765724142,
+            "V5AtStop": 1148.1267340595207,
+            "V12AtStop": 591.4009325167954,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 1.5171617832315596,
+            "PeakDistancePx": 1.7544586059522749,
+            "PeakFrame": 9,
+            "SettleFrames0p5": 1,
+            "SettleFrames1p0": 1,
+            "SettleMs0p5": 16.666666666666668,
+            "SettleMs1p0": 16.666666666666668,
+            "ReturnMotionPx": 1.7544586059522749,
+            "OvershootThenReturn": true,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070307",
+            "StopElapsedMs": 635892.738,
+            "Phase": "fastThenNearZero",
+            "PreMaxSpeed": 524.759219259716,
+            "V2AtStop": 0,
+            "V5AtStop": 342.69861441791915,
+            "V12AtStop": 289.88660457596654,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 1.1296748047687872,
+            "PeakDistancePx": 1.1792476415070754,
+            "PeakFrame": 3,
+            "SettleFrames0p5": 1,
+            "SettleFrames1p0": 1,
+            "SettleMs0p5": 16.666666666666668,
+            "SettleMs1p0": 16.666666666666668,
+            "ReturnMotionPx": 1.1792476415070754,
+            "OvershootThenReturn": true,
+            "GateFireRate": 0
+          }
+        ]
+      },
+      "guardrails": {
+        "normalMoveVisual": {
+          "mean": 0.352584,
+          "p95": 1.720209,
+          "p99": 7.368017,
+          "max": 36.070464
+        },
+        "highSpeedVisual": {
+          "mean": 0.202996,
+          "p95": 1.928248,
+          "p99": 1.928248,
+          "max": 1.928248
+        },
+        "staticCurrentDistance": {
+          "mean": 0.001449,
+          "p95": 0,
+          "p99": 0,
+          "max": 2.490607
+        },
+        "postStopJitter": {
+          "mean": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        }
+      },
+      "gateFire": {
+        "overall": 0,
+        "fastThenNearZero": 0,
+        "hardBrake": 0,
+        "stopAfterHighSpeed": 0,
+        "oneFrameStop": 0,
+        "postStopFirstFrames": 0,
+        "normalMove": 0,
+        "highSpeed": 0,
+        "staticHold": 0,
+        "movementResumeFalseSnapRows": 0,
+        "activeFrameDistribution": {}
+      },
+      "fireClassification": {
+        "normalMoveFiredCount": 0,
+        "allFiredCount": 0,
+        "normalMoveFireLooksStopSoonRate": 0,
+        "normalMoveFireByPackage": {},
+        "normalMoveFired": {
+          "targetDistance": {
+            "mean": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "latestDelta": {
+            "mean": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "v2": {
+            "mean": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "v5": {
+            "mean": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "v8": {
+            "mean": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "v12": {
+            "mean": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "recentHigh": {
+            "mean": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "pathEfficiency": {
+            "mean": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          }
+        },
+        "examples": []
+      },
+      "objective": {
+        "primaryObjective": 7912.120613784741,
+        "guardrailPenalty": 0,
+        "totalObjective": 7912.120613784741
+      }
+    },
+    "step04_oneFrameStopSnap_v20_h400_td0p25": {
+      "id": "step04_oneFrameStopSnap_v20_h400_td0p25",
+      "candidate": {
+        "Id": "step04_oneFrameStopSnap_v20_h400_td0p25",
+        "Family": "oneFrameStopSnap",
+        "Action": "snap",
+        "StopV2Threshold": 0,
+        "HighSpeedThreshold": 400,
+        "StopTargetDistanceThreshold": 0.25,
+        "CapPx": 0,
+        "Scale": 0,
+        "LatchFrames": 1,
+        "ReleaseV2Threshold": 100,
+        "ReleaseTargetDistanceThreshold": 0.5,
+        "CurrentDeltaThreshold": 999,
+        "PathEfficiencyMax": 1,
+        "ConsecutiveStopFrames": 1,
+        "IncludeOneFrameSnap": false,
+        "RefreshWhileStopped": false
+      },
+      "eventMetrics": {
+        "count": 623,
+        "peakLead": {
+          "mean": 0.006353,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 2.441013
+        },
+        "peakDistance": {
+          "mean": 0.006814,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 2.490607
+        },
+        "returnMotion": {
+          "mean": 0.006814,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 2.490607
+        },
+        "settleFrames0p5": {
+          "mean": 0.00321,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 1
+        },
+        "settleFrames1p0": {
+          "mean": 0.00321,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 1
+        },
+        "overshootThenReturnRateGt0p5": 0.00321,
+        "overshootThenReturnRateGt1": 0.00321,
+        "leadGt1": 0.00321,
+        "leadGt2": 0.001605,
+        "distanceGt2": 0.001605,
+        "gateFireRateInWindows": 0.269371,
+        "examples": [
+          {
+            "PackageId": "m070307",
+            "StopElapsedMs": 527283.573,
+            "Phase": "postStopFirstFrames",
+            "PreMaxSpeed": 961.7942994501536,
+            "V2AtStop": 0,
+            "V5AtStop": 152.88955394419315,
+            "V12AtStop": 504.4803881927289,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 2.441013209745534,
+            "PeakDistancePx": 2.4906073556464094,
+            "PeakFrame": 8,
+            "SettleFrames0p5": 1,
+            "SettleFrames1p0": 1,
+            "SettleMs0p5": 16.666666666666668,
+            "SettleMs1p0": 16.666666666666668,
+            "ReturnMotionPx": 2.4906073556464094,
+            "OvershootThenReturn": true,
+            "GateFireRate": 0.36363636363636365
+          },
+          {
+            "PackageId": "m070307",
+            "StopElapsedMs": 684146.587,
+            "Phase": "oneFrameStop",
+            "PreMaxSpeed": 1347.8367459956353,
+            "V2AtStop": 61.60290765724142,
+            "V5AtStop": 1148.1267340595207,
+            "V12AtStop": 591.4009325167954,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 1.5171617832315596,
+            "PeakDistancePx": 1.7544586059522749,
+            "PeakFrame": 9,
+            "SettleFrames0p5": 1,
+            "SettleFrames1p0": 1,
+            "SettleMs0p5": 16.666666666666668,
+            "SettleMs1p0": 16.666666666666668,
+            "ReturnMotionPx": 1.7544586059522749,
+            "OvershootThenReturn": true,
+            "GateFireRate": 0.5454545454545454
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 5115.889,
+            "Phase": "oneFrameStop",
+            "PreMaxSpeed": 1393.084616284057,
+            "V2AtStop": 0,
+            "V5AtStop": 644.5017433878861,
+            "V12AtStop": 909.4390322287609,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0.5454545454545454
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 20316.157,
+            "Phase": "oneFrameStop",
+            "PreMaxSpeed": 836.8699588599369,
+            "V2AtStop": 0,
+            "V5AtStop": 515.9992394002257,
+            "V12AtStop": 602.4260432176659,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0.45454545454545453
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 36249.753,
+            "Phase": "postStopFirstFrames",
+            "PreMaxSpeed": 880.3274985720037,
+            "V2AtStop": 84.83584657307108,
+            "V5AtStop": 147.73212836629972,
+            "V12AtStop": 543.4091932988042,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 36316.45,
+            "Phase": "fastThenNearZero",
+            "PreMaxSpeed": 812.4558951742065,
+            "V2AtStop": 62.531265632816414,
+            "V5AtStop": 80.74073507255954,
+            "V12AtStop": 188.3655207527082,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 44699.907,
+            "Phase": "oneFrameStop",
+            "PreMaxSpeed": 2020.0966344353308,
+            "V2AtStop": 0,
+            "V5AtStop": 1643.7699946359662,
+            "V12AtStop": 813.2455333744409,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0.7272727272727273
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 46233.262,
+            "Phase": "postStopFirstFrames",
+            "PreMaxSpeed": 1038.6563384608912,
+            "V2AtStop": 84.9275499863737,
+            "V5AtStop": 114.48330811695065,
+            "V12AtStop": 552.177596448926,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0
+          }
+        ]
+      },
+      "guardrails": {
+        "normalMoveVisual": {
+          "mean": 0.351631,
+          "p95": 1.720209,
+          "p99": 7.368017,
+          "max": 36.070464
+        },
+        "highSpeedVisual": {
+          "mean": 0.202996,
+          "p95": 1.928248,
+          "p99": 1.928248,
+          "max": 1.928248
+        },
+        "staticCurrentDistance": {
+          "mean": 0.001449,
+          "p95": 0,
+          "p99": 0,
+          "max": 2.490607
+        },
+        "postStopJitter": {
+          "mean": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        }
+      },
+      "gateFire": {
+        "overall": 0.018448553942687965,
+        "fastThenNearZero": 0.26531671858774664,
+        "hardBrake": 0.6706586826347305,
+        "stopAfterHighSpeed": 0.18181818181818182,
+        "oneFrameStop": 0.8300492610837439,
+        "postStopFirstFrames": 0.9114391143911439,
+        "normalMove": 0.15505226480836237,
+        "highSpeed": 0.23076923076923078,
+        "staticHold": 0.0008664572728257337,
+        "movementResumeFalseSnapRows": 0,
+        "activeFrameDistribution": {
+          "1": 1670
+        }
+      },
+      "fireClassification": {
+        "normalMoveFiredCount": 534,
+        "allFiredCount": 1670,
+        "normalMoveFireLooksStopSoonRate": 0.9943820224719101,
+        "normalMoveFireByPackage": {
+          "m070248": 238,
+          "m070307": 296
+        },
+        "normalMoveFired": {
+          "targetDistance": {
+            "mean": 0.001242061167089733,
+            "p95": 0,
+            "p99": 0.003394112558168529,
+            "max": 0.22273863607380107
+          },
+          "latestDelta": {
+            "mean": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "v2": {
+            "mean": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "v5": {
+            "mean": 194.37174628752027,
+            "p95": 447.7807415147419,
+            "p99": 487.61746890034385,
+            "max": 497.0984120908172
+          },
+          "v8": {
+            "mean": 322.33777303719273,
+            "p95": 515.2365134521813,
+            "p99": 629.1686677266168,
+            "max": 779.9083819454867
+          },
+          "v12": {
+            "mean": 378.1207333113695,
+            "p95": 492.87875545335623,
+            "p99": 650.0997722621886,
+            "max": 785.5907978071843
+          },
+          "recentHigh": {
+            "mean": 760.0893868706946,
+            "p95": 1445.7254737811465,
+            "p99": 2547.456833053473,
+            "max": 3090.007664898313
+          },
+          "pathEfficiency": {
+            "mean": 0.9837370184612709,
+            "p95": 0.9996089922942074,
+            "p99": 0.9999221792087256,
+            "max": 1
+          }
+        },
+        "examples": [
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 576639.505,
+            "GateFamily": "oneFrameStopSnap",
+            "GateActiveFrame": 1,
+            "v2": 0,
+            "v5": 386.2,
+            "v8": 651.1,
+            "v12": 622.2,
+            "recentHigh": 3090,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9986,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 440356.616,
+            "GateFamily": "oneFrameStopSnap",
+            "GateActiveFrame": 1,
+            "v2": 0,
+            "v5": 0,
+            "v8": 527.5,
+            "v12": 334.7,
+            "recentHigh": 3054.7,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9991,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 658077.95,
+            "GateFamily": "oneFrameStopSnap",
+            "GateActiveFrame": 1,
+            "v2": 0,
+            "v5": 0,
+            "v8": 459.3,
+            "v12": 437,
+            "recentHigh": 2922.4,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9928,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 612427.627,
+            "GateFamily": "oneFrameStopSnap",
+            "GateActiveFrame": 1,
+            "v2": 0,
+            "v5": 0,
+            "v8": 401.3,
+            "v12": 256.5,
+            "recentHigh": 2686.5,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 1,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 408090.462,
+            "GateFamily": "oneFrameStopSnap",
+            "GateActiveFrame": 1,
+            "v2": 0,
+            "v5": 189.3,
+            "v8": 266.4,
+            "v12": 325,
+            "recentHigh": 2550.5,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.7067,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 599292.839,
+            "GateFamily": "oneFrameStopSnap",
+            "GateActiveFrame": 1,
+            "v2": 0,
+            "v5": 0,
+            "v8": 454.8,
+            "v12": 322.7,
+            "recentHigh": 2547.5,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9992,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 334071.483,
+            "GateFamily": "oneFrameStopSnap",
+            "GateActiveFrame": 1,
+            "v2": 0,
+            "v5": 0,
+            "v8": 441.2,
+            "v12": 281.1,
+            "recentHigh": 2422.4,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9997,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 718944.68,
+            "GateFamily": "oneFrameStopSnap",
+            "GateActiveFrame": 1,
+            "v2": 0,
+            "v5": 243,
+            "v8": 466.3,
+            "v12": 348.1,
+            "recentHigh": 2103.4,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9889,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 326117.211,
+            "GateFamily": "oneFrameStopSnap",
+            "GateActiveFrame": 1,
+            "v2": 0,
+            "v5": 331.4,
+            "v8": 665.8,
+            "v12": 440,
+            "recentHigh": 2093.1,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.8003,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 326350.73,
+            "GateFamily": "oneFrameStopSnap",
+            "GateActiveFrame": 1,
+            "v2": 0,
+            "v5": 0,
+            "v8": 489.4,
+            "v12": 403.8,
+            "recentHigh": 2086.3,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9982,
+            "visualError": 0
+          }
+        ]
+      },
+      "objective": {
+        "primaryObjective": 7877.68735871326,
+        "guardrailPenalty": 2.1010452961672472,
+        "totalObjective": 7879.788404009428
+      }
+    },
+    "step05_best_latchN10_v20_h400_td0p25": {
+      "id": "step05_best_latchN10_v20_h400_td0p25",
+      "candidate": {
+        "Id": "step05_best_latchN10_v20_h400_td0p25",
+        "Family": "step05Best",
+        "Action": "snap",
+        "StopV2Threshold": 20,
+        "HighSpeedThreshold": 400,
+        "StopTargetDistanceThreshold": 0.25,
+        "CapPx": 0,
+        "Scale": 0,
+        "LatchFrames": 10,
+        "ReleaseV2Threshold": 100,
+        "ReleaseTargetDistanceThreshold": 0.5,
+        "CurrentDeltaThreshold": 999,
+        "PathEfficiencyMax": 1,
+        "ConsecutiveStopFrames": 1,
+        "IncludeOneFrameSnap": false,
+        "RefreshWhileStopped": false
+      },
+      "eventMetrics": {
+        "count": 623,
+        "peakLead": {
+          "mean": 0,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        },
+        "peakDistance": {
+          "mean": 0,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        },
+        "returnMotion": {
+          "mean": 0,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        },
+        "settleFrames0p5": {
+          "mean": 0,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        },
+        "settleFrames1p0": {
+          "mean": 0,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        },
+        "overshootThenReturnRateGt0p5": 0,
+        "overshootThenReturnRateGt1": 0,
+        "leadGt1": 0,
+        "leadGt2": 0,
+        "distanceGt2": 0,
+        "gateFireRateInWindows": 0.37925,
+        "examples": [
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 5115.889,
+            "Phase": "oneFrameStop",
+            "PreMaxSpeed": 1393.084616284057,
+            "V2AtStop": 0,
+            "V5AtStop": 644.5017433878861,
+            "V12AtStop": 909.4390322287609,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0.9090909090909091
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 20316.157,
+            "Phase": "oneFrameStop",
+            "PreMaxSpeed": 836.8699588599369,
+            "V2AtStop": 0,
+            "V5AtStop": 515.9992394002257,
+            "V12AtStop": 602.4260432176659,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0.9090909090909091
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 36249.753,
+            "Phase": "postStopFirstFrames",
+            "PreMaxSpeed": 880.3274985720037,
+            "V2AtStop": 84.83584657307108,
+            "V5AtStop": 147.73212836629972,
+            "V12AtStop": 543.4091932988042,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 36316.45,
+            "Phase": "fastThenNearZero",
+            "PreMaxSpeed": 812.4558951742065,
+            "V2AtStop": 62.531265632816414,
+            "V5AtStop": 80.74073507255954,
+            "V12AtStop": 188.3655207527082,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 44699.907,
+            "Phase": "oneFrameStop",
+            "PreMaxSpeed": 2020.0966344353308,
+            "V2AtStop": 0,
+            "V5AtStop": 1643.7699946359662,
+            "V12AtStop": 813.2455333744409,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0.9090909090909091
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 46233.262,
+            "Phase": "postStopFirstFrames",
+            "PreMaxSpeed": 1038.6563384608912,
+            "V2AtStop": 84.9275499863737,
+            "V5AtStop": 114.48330811695065,
+            "V12AtStop": 552.177596448926,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 46299.934,
+            "Phase": "fastThenNearZero",
+            "PreMaxSpeed": 600.4428511627208,
+            "V2AtStop": 84.80023759507675,
+            "V5AtStop": 87.45728184013231,
+            "V12AtStop": 182.94336598195082,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 59666.821,
+            "Phase": "oneFrameStop",
+            "PreMaxSpeed": 831.1031066405264,
+            "V2AtStop": 0,
+            "V5AtStop": 665.786875307047,
+            "V12AtStop": 577.830650104675,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0.9090909090909091
+          }
+        ]
+      },
+      "guardrails": {
+        "normalMoveVisual": {
+          "mean": 0.351122,
+          "p95": 1.71379,
+          "p99": 7.368017,
+          "max": 36.070464
+        },
+        "highSpeedVisual": {
+          "mean": 0.202996,
+          "p95": 1.928248,
+          "p99": 1.928248,
+          "max": 1.928248
+        },
+        "staticCurrentDistance": {
+          "mean": 0.00141,
+          "p95": 0,
+          "p99": 0,
+          "max": 2.183031
+        },
+        "postStopJitter": {
+          "mean": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        }
+      },
+      "gateFire": {
+        "overall": 0.028821722896091556,
+        "fastThenNearZero": 0.2715472481827622,
+        "hardBrake": 0.6766467065868264,
+        "stopAfterHighSpeed": 0.18181818181818182,
+        "oneFrameStop": 0.8399014778325123,
+        "postStopFirstFrames": 0.9261992619926199,
+        "normalMove": 0.2221254355400697,
+        "highSpeed": 0.23076923076923078,
+        "staticHold": 0.00464173539013786,
+        "movementResumeFalseSnapRows": 0,
+        "activeFrameDistribution": {
+          "1": 1009,
+          "2": 231,
+          "3": 197,
+          "4": 192,
+          "5": 190,
+          "6": 182,
+          "7": 169,
+          "8": 161,
+          "9": 144,
+          "10": 134
+        }
+      },
+      "fireClassification": {
+        "normalMoveFiredCount": 765,
+        "allFiredCount": 2609,
+        "normalMoveFireLooksStopSoonRate": 0.9947712418300654,
+        "normalMoveFireByPackage": {
+          "m070248": 361,
+          "m070307": 404
+        },
+        "normalMoveFired": {
+          "targetDistance": {
+            "mean": 0.002094569546627971,
+            "p95": 0,
+            "p99": 0.03544999998803178,
+            "max": 0.4491870431047573
+          },
+          "latestDelta": {
+            "mean": 0.019925020506038286,
+            "p95": 0,
+            "p99": 1,
+            "max": 1.4142135623730951
+          },
+          "v2": {
+            "mean": 1.2087928433341855,
+            "p95": 0,
+            "p99": 60.13952369497233,
+            "max": 88.47128948220802
+          },
+          "v5": {
+            "mean": 139.17989059024953,
+            "p95": 436.0964896034515,
+            "p99": 481.63183216532065,
+            "max": 497.0984120908172
+          },
+          "v8": {
+            "mean": 254.8049913984109,
+            "p95": 493.0158911832617,
+            "p99": 620.473966025812,
+            "max": 779.9083819454867
+          },
+          "v12": {
+            "mean": 358.679042528318,
+            "p95": 486.6104308717589,
+            "p99": 623.0482500730071,
+            "max": 785.5907978071843
+          },
+          "recentHigh": {
+            "mean": 630.6254487313726,
+            "p95": 1310.9596224436286,
+            "p99": 2103.396659802608,
+            "max": 3090.007664898313
+          },
+          "pathEfficiency": {
+            "mean": 0.9865985231519844,
+            "p95": 0.9998654990795045,
+            "p99": 0.9999956443104064,
+            "max": 1
+          }
+        },
+        "examples": [
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 576639.505,
+            "GateFamily": "step05Best",
+            "GateActiveFrame": 1,
+            "v2": 0,
+            "v5": 386.2,
+            "v8": 651.1,
+            "v12": 622.2,
+            "recentHigh": 3090,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9986,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 440356.616,
+            "GateFamily": "step05Best",
+            "GateActiveFrame": 4,
+            "v2": 0,
+            "v5": 0,
+            "v8": 527.5,
+            "v12": 334.7,
+            "recentHigh": 3054.7,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9991,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 658077.95,
+            "GateFamily": "step05Best",
+            "GateActiveFrame": 4,
+            "v2": 0,
+            "v5": 0,
+            "v8": 459.3,
+            "v12": 437,
+            "recentHigh": 2922.4,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9928,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 612427.627,
+            "GateFamily": "step05Best",
+            "GateActiveFrame": 4,
+            "v2": 0,
+            "v5": 0,
+            "v8": 401.3,
+            "v12": 256.5,
+            "recentHigh": 2686.5,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 1,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 408090.462,
+            "GateFamily": "step05Best",
+            "GateActiveFrame": 1,
+            "v2": 0,
+            "v5": 189.3,
+            "v8": 266.4,
+            "v12": 325,
+            "recentHigh": 2550.5,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.7067,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 599292.839,
+            "GateFamily": "step05Best",
+            "GateActiveFrame": 4,
+            "v2": 0,
+            "v5": 0,
+            "v8": 454.8,
+            "v12": 322.7,
+            "recentHigh": 2547.5,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9992,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 334071.483,
+            "GateFamily": "step05Best",
+            "GateActiveFrame": 4,
+            "v2": 0,
+            "v5": 0,
+            "v8": 441.2,
+            "v12": 281.1,
+            "recentHigh": 2422.4,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9997,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 718944.68,
+            "GateFamily": "step05Best",
+            "GateActiveFrame": 2,
+            "v2": 0,
+            "v5": 243,
+            "v8": 466.3,
+            "v12": 348.1,
+            "recentHigh": 2103.4,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9889,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 326117.211,
+            "GateFamily": "step05Best",
+            "GateActiveFrame": 1,
+            "v2": 0,
+            "v5": 331.4,
+            "v8": 665.8,
+            "v12": 440,
+            "recentHigh": 2093.1,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.8003,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 326350.73,
+            "GateFamily": "step05Best",
+            "GateActiveFrame": 4,
+            "v2": 0,
+            "v5": 0,
+            "v8": 489.4,
+            "v12": 403.8,
+            "recentHigh": 2086.3,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9982,
+            "visualError": 0
+          }
+        ]
+      },
+      "objective": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.883594855605972,
+        "totalObjective": 3.883594855605972
+      }
+    },
+    "baseLatchN10_v0_h400_td0p1_rv50_rt0p25": {
+      "id": "baseLatchN10_v0_h400_td0p1_rv50_rt0p25",
+      "candidate": {
+        "Id": "baseLatchN10_v0_h400_td0p1_rv50_rt0p25",
+        "Family": "baseLatch",
+        "Action": "snap",
+        "StopV2Threshold": 0,
+        "HighSpeedThreshold": 400,
+        "StopTargetDistanceThreshold": 0.1,
+        "CapPx": 0,
+        "Scale": 0,
+        "LatchFrames": 10,
+        "ReleaseV2Threshold": 50,
+        "ReleaseTargetDistanceThreshold": 0.25,
+        "CurrentDeltaThreshold": 999,
+        "PathEfficiencyMax": 1,
+        "ConsecutiveStopFrames": 1,
+        "IncludeOneFrameSnap": false,
+        "RefreshWhileStopped": false
+      },
+      "eventMetrics": {
+        "count": 623,
+        "peakLead": {
+          "mean": 0,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        },
+        "peakDistance": {
+          "mean": 0,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        },
+        "returnMotion": {
+          "mean": 0,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        },
+        "settleFrames0p5": {
+          "mean": 0,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        },
+        "settleFrames1p0": {
+          "mean": 0,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        },
+        "overshootThenReturnRateGt0p5": 0,
+        "overshootThenReturnRateGt1": 0,
+        "leadGt1": 0,
+        "leadGt2": 0,
+        "distanceGt2": 0,
+        "gateFireRateInWindows": 0.365679,
+        "examples": [
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 5115.889,
+            "Phase": "oneFrameStop",
+            "PreMaxSpeed": 1393.084616284057,
+            "V2AtStop": 0,
+            "V5AtStop": 644.5017433878861,
+            "V12AtStop": 909.4390322287609,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0.9090909090909091
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 20316.157,
+            "Phase": "oneFrameStop",
+            "PreMaxSpeed": 836.8699588599369,
+            "V2AtStop": 0,
+            "V5AtStop": 515.9992394002257,
+            "V12AtStop": 602.4260432176659,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0.9090909090909091
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 36249.753,
+            "Phase": "postStopFirstFrames",
+            "PreMaxSpeed": 880.3274985720037,
+            "V2AtStop": 84.83584657307108,
+            "V5AtStop": 147.73212836629972,
+            "V12AtStop": 543.4091932988042,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 36316.45,
+            "Phase": "fastThenNearZero",
+            "PreMaxSpeed": 812.4558951742065,
+            "V2AtStop": 62.531265632816414,
+            "V5AtStop": 80.74073507255954,
+            "V12AtStop": 188.3655207527082,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 44699.907,
+            "Phase": "oneFrameStop",
+            "PreMaxSpeed": 2020.0966344353308,
+            "V2AtStop": 0,
+            "V5AtStop": 1643.7699946359662,
+            "V12AtStop": 813.2455333744409,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0.9090909090909091
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 46233.262,
+            "Phase": "postStopFirstFrames",
+            "PreMaxSpeed": 1038.6563384608912,
+            "V2AtStop": 84.9275499863737,
+            "V5AtStop": 114.48330811695065,
+            "V12AtStop": 552.177596448926,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 46299.934,
+            "Phase": "fastThenNearZero",
+            "PreMaxSpeed": 600.4428511627208,
+            "V2AtStop": 84.80023759507675,
+            "V5AtStop": 87.45728184013231,
+            "V12AtStop": 182.94336598195082,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 59666.821,
+            "Phase": "oneFrameStop",
+            "PreMaxSpeed": 831.1031066405264,
+            "V2AtStop": 0,
+            "V5AtStop": 665.786875307047,
+            "V12AtStop": 577.830650104675,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0.9090909090909091
+          }
+        ]
+      },
+      "guardrails": {
+        "normalMoveVisual": {
+          "mean": 0.351122,
+          "p95": 1.71379,
+          "p99": 7.368017,
+          "max": 36.070464
+        },
+        "highSpeedVisual": {
+          "mean": 0.202996,
+          "p95": 1.928248,
+          "p99": 1.928248,
+          "max": 1.928248
+        },
+        "staticCurrentDistance": {
+          "mean": 0.00141,
+          "p95": 0,
+          "p99": 0,
+          "max": 2.183031
+        },
+        "postStopJitter": {
+          "mean": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        }
+      },
+      "gateFire": {
+        "overall": 0.02768387795232098,
+        "fastThenNearZero": 0.26427829698857735,
+        "hardBrake": 0.6676646706586826,
+        "stopAfterHighSpeed": 0.18181818181818182,
+        "oneFrameStop": 0.8201970443349754,
+        "postStopFirstFrames": 0.9077490774907749,
+        "normalMove": 0.21660859465737514,
+        "highSpeed": 0.23076923076923078,
+        "staticHold": 0.00431681391282821,
+        "movementResumeFalseSnapRows": 0,
+        "activeFrameDistribution": {
+          "1": 999,
+          "2": 206,
+          "3": 190,
+          "4": 185,
+          "5": 184,
+          "6": 173,
+          "7": 161,
+          "8": 147,
+          "9": 137,
+          "10": 124
+        }
+      },
+      "fireClassification": {
+        "normalMoveFiredCount": 746,
+        "allFiredCount": 2506,
+        "normalMoveFireLooksStopSoonRate": 0.9946380697050938,
+        "normalMoveFireByPackage": {
+          "m070248": 349,
+          "m070307": 397
+        },
+        "normalMoveFired": {
+          "targetDistance": {
+            "mean": 0.00014925484255552088,
+            "p95": 0,
+            "p99": 0,
+            "max": 0.07250000000021828
+          },
+          "latestDelta": {
+            "mean": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "v2": {
+            "mean": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "v5": {
+            "mean": 139.30555521588946,
+            "p95": 436.31249560964915,
+            "p99": 481.63183216532065,
+            "max": 497.0984120908172
+          },
+          "v8": {
+            "mean": 256.1409477996972,
+            "p95": 493.8391171910222,
+            "p99": 620.473966025812,
+            "max": 779.9083819454867
+          },
+          "v12": {
+            "mean": 359.25948267670714,
+            "p95": 486.6104308717589,
+            "p99": 623.0482500730071,
+            "max": 785.5907978071843
+          },
+          "recentHigh": {
+            "mean": 632.8638696152478,
+            "p95": 1310.9596224436286,
+            "p99": 2103.396659802608,
+            "max": 3090.007664898313
+          },
+          "pathEfficiency": {
+            "mean": 0.9869981764416582,
+            "p95": 0.9998654990795045,
+            "p99": 0.9999956443104064,
+            "max": 1
+          }
+        },
+        "examples": [
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 576639.505,
+            "GateFamily": "baseLatch",
+            "GateActiveFrame": 1,
+            "v2": 0,
+            "v5": 386.2,
+            "v8": 651.1,
+            "v12": 622.2,
+            "recentHigh": 3090,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9986,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 440356.616,
+            "GateFamily": "baseLatch",
+            "GateActiveFrame": 4,
+            "v2": 0,
+            "v5": 0,
+            "v8": 527.5,
+            "v12": 334.7,
+            "recentHigh": 3054.7,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9991,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 658077.95,
+            "GateFamily": "baseLatch",
+            "GateActiveFrame": 4,
+            "v2": 0,
+            "v5": 0,
+            "v8": 459.3,
+            "v12": 437,
+            "recentHigh": 2922.4,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9928,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 612427.627,
+            "GateFamily": "baseLatch",
+            "GateActiveFrame": 4,
+            "v2": 0,
+            "v5": 0,
+            "v8": 401.3,
+            "v12": 256.5,
+            "recentHigh": 2686.5,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 1,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 408090.462,
+            "GateFamily": "baseLatch",
+            "GateActiveFrame": 1,
+            "v2": 0,
+            "v5": 189.3,
+            "v8": 266.4,
+            "v12": 325,
+            "recentHigh": 2550.5,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.7067,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 599292.839,
+            "GateFamily": "baseLatch",
+            "GateActiveFrame": 4,
+            "v2": 0,
+            "v5": 0,
+            "v8": 454.8,
+            "v12": 322.7,
+            "recentHigh": 2547.5,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9992,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 334071.483,
+            "GateFamily": "baseLatch",
+            "GateActiveFrame": 4,
+            "v2": 0,
+            "v5": 0,
+            "v8": 441.2,
+            "v12": 281.1,
+            "recentHigh": 2422.4,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9997,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 718944.68,
+            "GateFamily": "baseLatch",
+            "GateActiveFrame": 2,
+            "v2": 0,
+            "v5": 243,
+            "v8": 466.3,
+            "v12": 348.1,
+            "recentHigh": 2103.4,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9889,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 326117.211,
+            "GateFamily": "baseLatch",
+            "GateActiveFrame": 1,
+            "v2": 0,
+            "v5": 331.4,
+            "v8": 665.8,
+            "v12": 440,
+            "recentHigh": 2093.1,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.8003,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 326350.73,
+            "GateFamily": "baseLatch",
+            "GateActiveFrame": 4,
+            "v2": 0,
+            "v5": 0,
+            "v8": 489.4,
+            "v12": 403.8,
+            "recentHigh": 2086.3,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9982,
+            "visualError": 0
+          }
+        ]
+      },
+      "objective": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.716365790763552,
+        "totalObjective": 3.716365790763552
+      }
+    },
+    "sustainedStopN10_c2_h400_td0p25": {
+      "id": "sustainedStopN10_c2_h400_td0p25",
+      "candidate": {
+        "Id": "sustainedStopN10_c2_h400_td0p25",
+        "Family": "sustainedStop",
+        "Action": "snap",
+        "StopV2Threshold": 20,
+        "HighSpeedThreshold": 400,
+        "StopTargetDistanceThreshold": 0.25,
+        "CapPx": 0,
+        "Scale": 0,
+        "LatchFrames": 10,
+        "ReleaseV2Threshold": 100,
+        "ReleaseTargetDistanceThreshold": 0.5,
+        "CurrentDeltaThreshold": 999,
+        "PathEfficiencyMax": 1,
+        "ConsecutiveStopFrames": 2,
+        "IncludeOneFrameSnap": false,
+        "RefreshWhileStopped": false
+      },
+      "eventMetrics": {
+        "count": 623,
+        "peakLead": {
+          "mean": 0.020314,
+          "p50": 0,
+          "p95": 0,
+          "p99": 1.117357,
+          "max": 1.987848
+        },
+        "peakDistance": {
+          "mean": 0.025134,
+          "p50": 0,
+          "p95": 0,
+          "p99": 1.179248,
+          "max": 2.465385
+        },
+        "returnMotion": {
+          "mean": 0.017724,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0.395285,
+          "max": 2.465385
+        },
+        "settleFrames0p5": {
+          "mean": 0.009662,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 1
+        },
+        "settleFrames1p0": {
+          "mean": 0.008052,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 1
+        },
+        "overshootThenReturnRateGt0p5": 0.009631,
+        "overshootThenReturnRateGt1": 0.008026,
+        "leadGt1": 0.011236,
+        "leadGt2": 0,
+        "distanceGt2": 0.008026,
+        "gateFireRateInWindows": 0.218299,
+        "examples": [
+          {
+            "PackageId": "m070307",
+            "StopElapsedMs": 695969.43,
+            "Phase": "oneFrameStop",
+            "PreMaxSpeed": 1502.5661790099145,
+            "V2AtStop": 0,
+            "V5AtStop": 874.2987428229138,
+            "V12AtStop": 876.6287504878093,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 1.9878475531793014,
+            "PeakDistancePx": 2.1505813167606567,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 1,
+            "SettleFrames1p0": 1,
+            "SettleMs0p5": 16.666666666666668,
+            "SettleMs1p0": 16.666666666666668,
+            "ReturnMotionPx": 2.1505813167606567,
+            "OvershootThenReturn": true,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070307",
+            "StopElapsedMs": 695781.306,
+            "Phase": "fastThenNearZero",
+            "PreMaxSpeed": 545.9581314746243,
+            "V2AtStop": 0,
+            "V5AtStop": 365.3438249867743,
+            "V12AtStop": 265.57836359839126,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 1.9708102192636363,
+            "PeakDistancePx": 2.1505813167606567,
+            "PeakFrame": 10,
+            "SettleFrames0p5": -1,
+            "SettleFrames1p0": -1,
+            "SettleMs0p5": -1,
+            "SettleMs1p0": -1,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070307",
+            "StopElapsedMs": 696252.153,
+            "Phase": "fastThenNearZero",
+            "PreMaxSpeed": 887.4341850989016,
+            "V2AtStop": 0,
+            "V5AtStop": 122.50426095076104,
+            "V12AtStop": 169.99960841902504,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 1.9366226011774934,
+            "PeakDistancePx": 2.4653853654145026,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 1,
+            "SettleFrames1p0": 1,
+            "SettleMs0p5": 16.666666666666668,
+            "SettleMs1p0": 16.666666666666668,
+            "ReturnMotionPx": 2.4653853654145026,
+            "OvershootThenReturn": true,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070307",
+            "StopElapsedMs": 696197.962,
+            "Phase": "fastThenNearZero",
+            "PreMaxSpeed": 1242.8762328730513,
+            "V2AtStop": 0,
+            "V5AtStop": 199.95216588886825,
+            "V12AtStop": 434.61181089156554,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 1.7951309390706416,
+            "PeakDistancePx": 2.4653853654145026,
+            "PeakFrame": 3,
+            "SettleFrames0p5": 1,
+            "SettleFrames1p0": 1,
+            "SettleMs0p5": 16.666666666666668,
+            "SettleMs1p0": 16.666666666666668,
+            "ReturnMotionPx": 2.4653853654145026,
+            "OvershootThenReturn": true,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070307",
+            "StopElapsedMs": 696033.04,
+            "Phase": "oneFrameStop",
+            "PreMaxSpeed": 1460.8066282145176,
+            "V2AtStop": 0,
+            "V5AtStop": 1441.2637490566167,
+            "V12AtStop": 1140.2718499383384,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 1.7800371359414213,
+            "PeakDistancePx": 2.4653853654145026,
+            "PeakFrame": 10,
+            "SettleFrames0p5": -1,
+            "SettleFrames1p0": -1,
+            "SettleMs0p5": -1,
+            "SettleMs1p0": -1,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070307",
+            "StopElapsedMs": 635892.738,
+            "Phase": "fastThenNearZero",
+            "PreMaxSpeed": 524.759219259716,
+            "V2AtStop": 0,
+            "V5AtStop": 342.69861441791915,
+            "V12AtStop": 289.88660457596654,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 1.1296748047687872,
+            "PeakDistancePx": 1.1792476415070754,
+            "PeakFrame": 3,
+            "SettleFrames0p5": 1,
+            "SettleFrames1p0": 1,
+            "SettleMs0p5": 16.666666666666668,
+            "SettleMs1p0": 16.666666666666668,
+            "ReturnMotionPx": 1.1792476415070754,
+            "OvershootThenReturn": true,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070307",
+            "StopElapsedMs": 635947.452,
+            "Phase": "fastThenNearZero",
+            "PreMaxSpeed": 684.3556086892982,
+            "V2AtStop": 0,
+            "V5AtStop": 427.4413843039708,
+            "V12AtStop": 401.94605335481043,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 1.1173568199669954,
+            "PeakDistancePx": 1.1792476415070754,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 1,
+            "SettleFrames1p0": 1,
+            "SettleMs0p5": 16.666666666666668,
+            "SettleMs1p0": 16.666666666666668,
+            "ReturnMotionPx": 1.1792476415070754,
+            "OvershootThenReturn": true,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070307",
+            "StopElapsedMs": 749359.507,
+            "Phase": "fastThenNearZero",
+            "PreMaxSpeed": 578.3436520281477,
+            "V2AtStop": 0,
+            "V5AtStop": 315.69478667384897,
+            "V12AtStop": 240.39519166898813,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0.6461623427559644,
+            "PeakDistancePx": 0.7071067811865476,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 1,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 16.666666666666668,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0.7071067811865476,
+            "OvershootThenReturn": true,
+            "GateFireRate": 0.36363636363636365
+          }
+        ]
+      },
+      "guardrails": {
+        "normalMoveVisual": {
+          "mean": 0.352074,
+          "p95": 1.71379,
+          "p99": 7.368017,
+          "max": 36.070464
+        },
+        "highSpeedVisual": {
+          "mean": 0.202996,
+          "p95": 1.928248,
+          "p99": 1.928248,
+          "max": 1.928248
+        },
+        "staticCurrentDistance": {
+          "mean": 0.00141,
+          "p95": 0,
+          "p99": 0,
+          "max": 2.183031
+        },
+        "postStopJitter": {
+          "mean": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        }
+      },
+      "gateFire": {
+        "overall": 0.017907249066525265,
+        "fastThenNearZero": 0.1526479750778816,
+        "hardBrake": 0.344311377245509,
+        "stopAfterHighSpeed": 0.06818181818181818,
+        "oneFrameStop": 0.13793103448275862,
+        "postStopFirstFrames": 0.7675276752767528,
+        "normalMove": 0.14082462253193961,
+        "highSpeed": 0.07692307692307693,
+        "staticHold": 0.005415357955160836,
+        "movementResumeFalseSnapRows": 0,
+        "activeFrameDistribution": {
+          "1": 199,
+          "2": 188,
+          "3": 183,
+          "4": 181,
+          "5": 174,
+          "6": 162,
+          "7": 154,
+          "8": 138,
+          "9": 128,
+          "10": 114
+        }
+      },
+      "fireClassification": {
+        "normalMoveFiredCount": 485,
+        "allFiredCount": 1621,
+        "normalMoveFireLooksStopSoonRate": 0.9979381443298969,
+        "normalMoveFireByPackage": {
+          "m070248": 243,
+          "m070307": 242
+        },
+        "normalMoveFired": {
+          "targetDistance": {
+            "mean": 0.00025593856110652045,
+            "p95": 0,
+            "p99": 0,
+            "max": 0.12413020213666243
+          },
+          "latestDelta": {
+            "mean": 0.012017375514940597,
+            "p95": 0,
+            "p99": 1,
+            "max": 1.4142135623730951
+          },
+          "v2": {
+            "mean": 0.7303526630005455,
+            "p95": 0,
+            "p99": 59.04233335301411,
+            "max": 88.47128948220802
+          },
+          "v5": {
+            "mean": 51.1459193431841,
+            "p95": 276.8964577514683,
+            "p99": 409.55957217322435,
+            "max": 441.7773055502972
+          },
+          "v8": {
+            "mean": 200.26191837827577,
+            "p95": 475.6592423547454,
+            "p99": 611.6924556451669,
+            "max": 629.1686677266168
+          },
+          "v12": {
+            "mean": 357.96886887670513,
+            "p95": 483.0927459578149,
+            "p99": 493.7204680241246,
+            "max": 498.5122764773756
+          },
+          "recentHigh": {
+            "mean": 554.4987093616704,
+            "p95": 1359.5776806497772,
+            "p99": 2422.407832551695,
+            "max": 3054.6795576422346
+          },
+          "pathEfficiency": {
+            "mean": 0.9951987210143735,
+            "p95": 0.9999221792087256,
+            "p99": 1,
+            "max": 1
+          }
+        },
+        "examples": [
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 440356.616,
+            "GateFamily": "sustainedStop",
+            "GateActiveFrame": 3,
+            "v2": 0,
+            "v5": 0,
+            "v8": 527.5,
+            "v12": 334.7,
+            "recentHigh": 3054.7,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9991,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 658077.95,
+            "GateFamily": "sustainedStop",
+            "GateActiveFrame": 3,
+            "v2": 0,
+            "v5": 0,
+            "v8": 459.3,
+            "v12": 437,
+            "recentHigh": 2922.4,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9928,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 612427.627,
+            "GateFamily": "sustainedStop",
+            "GateActiveFrame": 3,
+            "v2": 0,
+            "v5": 0,
+            "v8": 401.3,
+            "v12": 256.5,
+            "recentHigh": 2686.5,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 1,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 599292.839,
+            "GateFamily": "sustainedStop",
+            "GateActiveFrame": 3,
+            "v2": 0,
+            "v5": 0,
+            "v8": 454.8,
+            "v12": 322.7,
+            "recentHigh": 2547.5,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9992,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 334071.483,
+            "GateFamily": "sustainedStop",
+            "GateActiveFrame": 3,
+            "v2": 0,
+            "v5": 0,
+            "v8": 441.2,
+            "v12": 281.1,
+            "recentHigh": 2422.4,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9997,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 718944.68,
+            "GateFamily": "sustainedStop",
+            "GateActiveFrame": 1,
+            "v2": 0,
+            "v5": 243,
+            "v8": 466.3,
+            "v12": 348.1,
+            "recentHigh": 2103.4,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9889,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 326350.73,
+            "GateFamily": "sustainedStop",
+            "GateActiveFrame": 3,
+            "v2": 0,
+            "v5": 0,
+            "v8": 489.4,
+            "v12": 403.8,
+            "recentHigh": 2086.3,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9982,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 223658.08,
+            "GateFamily": "sustainedStop",
+            "GateActiveFrame": 3,
+            "v2": 0,
+            "v5": 0,
+            "v8": 619.3,
+            "v12": 488.9,
+            "recentHigh": 2063.4,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9923,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 591838.856,
+            "GateFamily": "sustainedStop",
+            "GateActiveFrame": 2,
+            "v2": 0,
+            "v5": 379.5,
+            "v8": 355.8,
+            "v12": 321,
+            "recentHigh": 1861.5,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9975,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 591855.651,
+            "GateFamily": "sustainedStop",
+            "GateActiveFrame": 3,
+            "v2": 0,
+            "v5": 0,
+            "v8": 244,
+            "v12": 321.2,
+            "recentHigh": 1861.5,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9975,
+            "visualError": 0
+          }
+        ]
+      },
+      "objective": {
+        "primaryObjective": 6936.901042626442,
+        "guardrailPenalty": 1.8164924506387923,
+        "totalObjective": 6938.717535077081
+      }
+    },
+    "targetAndCurrentZeroN10_ld0p25_h400_td0p25": {
+      "id": "targetAndCurrentZeroN10_ld0p25_h400_td0p25",
+      "candidate": {
+        "Id": "targetAndCurrentZeroN10_ld0p25_h400_td0p25",
+        "Family": "targetAndCurrentZero",
+        "Action": "snap",
+        "StopV2Threshold": 20,
+        "HighSpeedThreshold": 400,
+        "StopTargetDistanceThreshold": 0.25,
+        "CapPx": 0,
+        "Scale": 0,
+        "LatchFrames": 10,
+        "ReleaseV2Threshold": 100,
+        "ReleaseTargetDistanceThreshold": 0.5,
+        "CurrentDeltaThreshold": 0.25,
+        "PathEfficiencyMax": 1,
+        "ConsecutiveStopFrames": 1,
+        "IncludeOneFrameSnap": false,
+        "RefreshWhileStopped": false
+      },
+      "eventMetrics": {
+        "count": 623,
+        "peakLead": {
+          "mean": 0,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        },
+        "peakDistance": {
+          "mean": 0,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        },
+        "returnMotion": {
+          "mean": 0,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        },
+        "settleFrames0p5": {
+          "mean": 0,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        },
+        "settleFrames1p0": {
+          "mean": 0,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        },
+        "overshootThenReturnRateGt0p5": 0,
+        "overshootThenReturnRateGt1": 0,
+        "leadGt1": 0,
+        "leadGt2": 0,
+        "distanceGt2": 0,
+        "gateFireRateInWindows": 0.37925,
+        "examples": [
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 5115.889,
+            "Phase": "oneFrameStop",
+            "PreMaxSpeed": 1393.084616284057,
+            "V2AtStop": 0,
+            "V5AtStop": 644.5017433878861,
+            "V12AtStop": 909.4390322287609,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0.9090909090909091
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 20316.157,
+            "Phase": "oneFrameStop",
+            "PreMaxSpeed": 836.8699588599369,
+            "V2AtStop": 0,
+            "V5AtStop": 515.9992394002257,
+            "V12AtStop": 602.4260432176659,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0.9090909090909091
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 36249.753,
+            "Phase": "postStopFirstFrames",
+            "PreMaxSpeed": 880.3274985720037,
+            "V2AtStop": 84.83584657307108,
+            "V5AtStop": 147.73212836629972,
+            "V12AtStop": 543.4091932988042,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 36316.45,
+            "Phase": "fastThenNearZero",
+            "PreMaxSpeed": 812.4558951742065,
+            "V2AtStop": 62.531265632816414,
+            "V5AtStop": 80.74073507255954,
+            "V12AtStop": 188.3655207527082,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 44699.907,
+            "Phase": "oneFrameStop",
+            "PreMaxSpeed": 2020.0966344353308,
+            "V2AtStop": 0,
+            "V5AtStop": 1643.7699946359662,
+            "V12AtStop": 813.2455333744409,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0.9090909090909091
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 46233.262,
+            "Phase": "postStopFirstFrames",
+            "PreMaxSpeed": 1038.6563384608912,
+            "V2AtStop": 84.9275499863737,
+            "V5AtStop": 114.48330811695065,
+            "V12AtStop": 552.177596448926,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 46299.934,
+            "Phase": "fastThenNearZero",
+            "PreMaxSpeed": 600.4428511627208,
+            "V2AtStop": 84.80023759507675,
+            "V5AtStop": 87.45728184013231,
+            "V12AtStop": 182.94336598195082,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 59666.821,
+            "Phase": "oneFrameStop",
+            "PreMaxSpeed": 831.1031066405264,
+            "V2AtStop": 0,
+            "V5AtStop": 665.786875307047,
+            "V12AtStop": 577.830650104675,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0,
+            "PeakDistancePx": 0,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0.9090909090909091
+          }
+        ]
+      },
+      "guardrails": {
+        "normalMoveVisual": {
+          "mean": 0.351122,
+          "p95": 1.71379,
+          "p99": 7.368017,
+          "max": 36.070464
+        },
+        "highSpeedVisual": {
+          "mean": 0.202996,
+          "p95": 1.928248,
+          "p99": 1.928248,
+          "max": 1.928248
+        },
+        "staticCurrentDistance": {
+          "mean": 0.00141,
+          "p95": 0,
+          "p99": 0,
+          "max": 2.183031
+        },
+        "postStopJitter": {
+          "mean": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        }
+      },
+      "gateFire": {
+        "overall": 0.028821722896091556,
+        "fastThenNearZero": 0.2715472481827622,
+        "hardBrake": 0.6766467065868264,
+        "stopAfterHighSpeed": 0.18181818181818182,
+        "oneFrameStop": 0.8399014778325123,
+        "postStopFirstFrames": 0.9261992619926199,
+        "normalMove": 0.2221254355400697,
+        "highSpeed": 0.23076923076923078,
+        "staticHold": 0.00464173539013786,
+        "movementResumeFalseSnapRows": 0,
+        "activeFrameDistribution": {
+          "1": 1009,
+          "2": 231,
+          "3": 197,
+          "4": 192,
+          "5": 190,
+          "6": 182,
+          "7": 169,
+          "8": 161,
+          "9": 144,
+          "10": 134
+        }
+      },
+      "fireClassification": {
+        "normalMoveFiredCount": 765,
+        "allFiredCount": 2609,
+        "normalMoveFireLooksStopSoonRate": 0.9947712418300654,
+        "normalMoveFireByPackage": {
+          "m070248": 361,
+          "m070307": 404
+        },
+        "normalMoveFired": {
+          "targetDistance": {
+            "mean": 0.002094569546627971,
+            "p95": 0,
+            "p99": 0.03544999998803178,
+            "max": 0.4491870431047573
+          },
+          "latestDelta": {
+            "mean": 0.019925020506038286,
+            "p95": 0,
+            "p99": 1,
+            "max": 1.4142135623730951
+          },
+          "v2": {
+            "mean": 1.2087928433341855,
+            "p95": 0,
+            "p99": 60.13952369497233,
+            "max": 88.47128948220802
+          },
+          "v5": {
+            "mean": 139.17989059024953,
+            "p95": 436.0964896034515,
+            "p99": 481.63183216532065,
+            "max": 497.0984120908172
+          },
+          "v8": {
+            "mean": 254.8049913984109,
+            "p95": 493.0158911832617,
+            "p99": 620.473966025812,
+            "max": 779.9083819454867
+          },
+          "v12": {
+            "mean": 358.679042528318,
+            "p95": 486.6104308717589,
+            "p99": 623.0482500730071,
+            "max": 785.5907978071843
+          },
+          "recentHigh": {
+            "mean": 630.6254487313726,
+            "p95": 1310.9596224436286,
+            "p99": 2103.396659802608,
+            "max": 3090.007664898313
+          },
+          "pathEfficiency": {
+            "mean": 0.9865985231519844,
+            "p95": 0.9998654990795045,
+            "p99": 0.9999956443104064,
+            "max": 1
+          }
+        },
+        "examples": [
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 576639.505,
+            "GateFamily": "targetAndCurrentZero",
+            "GateActiveFrame": 1,
+            "v2": 0,
+            "v5": 386.2,
+            "v8": 651.1,
+            "v12": 622.2,
+            "recentHigh": 3090,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9986,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 440356.616,
+            "GateFamily": "targetAndCurrentZero",
+            "GateActiveFrame": 4,
+            "v2": 0,
+            "v5": 0,
+            "v8": 527.5,
+            "v12": 334.7,
+            "recentHigh": 3054.7,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9991,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 658077.95,
+            "GateFamily": "targetAndCurrentZero",
+            "GateActiveFrame": 4,
+            "v2": 0,
+            "v5": 0,
+            "v8": 459.3,
+            "v12": 437,
+            "recentHigh": 2922.4,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9928,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 612427.627,
+            "GateFamily": "targetAndCurrentZero",
+            "GateActiveFrame": 4,
+            "v2": 0,
+            "v5": 0,
+            "v8": 401.3,
+            "v12": 256.5,
+            "recentHigh": 2686.5,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 1,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 408090.462,
+            "GateFamily": "targetAndCurrentZero",
+            "GateActiveFrame": 1,
+            "v2": 0,
+            "v5": 189.3,
+            "v8": 266.4,
+            "v12": 325,
+            "recentHigh": 2550.5,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.7067,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 599292.839,
+            "GateFamily": "targetAndCurrentZero",
+            "GateActiveFrame": 4,
+            "v2": 0,
+            "v5": 0,
+            "v8": 454.8,
+            "v12": 322.7,
+            "recentHigh": 2547.5,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9992,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 334071.483,
+            "GateFamily": "targetAndCurrentZero",
+            "GateActiveFrame": 4,
+            "v2": 0,
+            "v5": 0,
+            "v8": 441.2,
+            "v12": 281.1,
+            "recentHigh": 2422.4,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9997,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 718944.68,
+            "GateFamily": "targetAndCurrentZero",
+            "GateActiveFrame": 2,
+            "v2": 0,
+            "v5": 243,
+            "v8": 466.3,
+            "v12": 348.1,
+            "recentHigh": 2103.4,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9889,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 326117.211,
+            "GateFamily": "targetAndCurrentZero",
+            "GateActiveFrame": 1,
+            "v2": 0,
+            "v5": 331.4,
+            "v8": 665.8,
+            "v12": 440,
+            "recentHigh": 2093.1,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.8003,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 326350.73,
+            "GateFamily": "targetAndCurrentZero",
+            "GateActiveFrame": 4,
+            "v2": 0,
+            "v5": 0,
+            "v8": 489.4,
+            "v12": 403.8,
+            "recentHigh": 2086.3,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9982,
+            "visualError": 0
+          }
+        ]
+      },
+      "objective": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.883594855605972,
+        "totalObjective": 3.883594855605972
+      }
+    },
+    "distanceCapN10_cap0p25_ld0p25_h400": {
+      "id": "distanceCapN10_cap0p25_ld0p25_h400",
+      "candidate": {
+        "Id": "distanceCapN10_cap0p25_ld0p25_h400",
+        "Family": "distanceCapInsteadOfSnap",
+        "Action": "cap",
+        "StopV2Threshold": 20,
+        "HighSpeedThreshold": 400,
+        "StopTargetDistanceThreshold": 0.25,
+        "CapPx": 0.25,
+        "Scale": 1,
+        "LatchFrames": 10,
+        "ReleaseV2Threshold": 100,
+        "ReleaseTargetDistanceThreshold": 0.5,
+        "CurrentDeltaThreshold": 0.25,
+        "PathEfficiencyMax": 1,
+        "ConsecutiveStopFrames": 1,
+        "IncludeOneFrameSnap": false,
+        "RefreshWhileStopped": false
+      },
+      "eventMetrics": {
+        "count": 623,
+        "peakLead": {
+          "mean": 0.003952,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0.225534,
+          "max": 0.245027
+        },
+        "peakDistance": {
+          "mean": 0.005217,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0.250001,
+          "max": 0.250026
+        },
+        "returnMotion": {
+          "mean": 0.004414,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0.25,
+          "max": 0.250026
+        },
+        "settleFrames0p5": {
+          "mean": 0,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        },
+        "settleFrames1p0": {
+          "mean": 0,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        },
+        "overshootThenReturnRateGt0p5": 0,
+        "overshootThenReturnRateGt1": 0,
+        "leadGt1": 0,
+        "leadGt2": 0,
+        "distanceGt2": 0,
+        "gateFireRateInWindows": 0.37925,
+        "examples": [
+          {
+            "PackageId": "m070307",
+            "StopElapsedMs": 527283.573,
+            "Phase": "postStopFirstFrames",
+            "PreMaxSpeed": 961.7942994501536,
+            "V2AtStop": 0,
+            "V5AtStop": 152.88955394419315,
+            "V12AtStop": 504.4803881927289,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0.24502669068551186,
+            "PeakDistancePx": 0.2499993219962463,
+            "PeakFrame": 8,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0.2499993219962463,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0.9090909090909091
+          },
+          {
+            "PackageId": "m070307",
+            "StopElapsedMs": 635892.738,
+            "Phase": "fastThenNearZero",
+            "PreMaxSpeed": 524.759219259716,
+            "V2AtStop": 0,
+            "V5AtStop": 342.69861441791915,
+            "V12AtStop": 289.88660457596654,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0.23949841073293732,
+            "PeakDistancePx": 0.2500091435578283,
+            "PeakFrame": 3,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0.2500091435578283,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0.45454545454545453
+          },
+          {
+            "PackageId": "m070307",
+            "StopElapsedMs": 635947.452,
+            "Phase": "fastThenNearZero",
+            "PreMaxSpeed": 684.3556086892982,
+            "V2AtStop": 0,
+            "V5AtStop": 427.4413843039708,
+            "V12AtStop": 401.94605335481043,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0.23688680152479757,
+            "PeakDistancePx": 0.2500091435578283,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0.2500091435578283,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0.45454545454545453
+          },
+          {
+            "PackageId": "m070307",
+            "StopElapsedMs": 695969.43,
+            "Phase": "oneFrameStop",
+            "PreMaxSpeed": 1502.5661790099145,
+            "V2AtStop": 0,
+            "V5AtStop": 874.2987428229138,
+            "V12AtStop": 876.6287504878093,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0.23107945263850682,
+            "PeakDistancePx": 0.2499973443195732,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0.2499973443195732,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0.36363636363636365
+          },
+          {
+            "PackageId": "m070307",
+            "StopElapsedMs": 695781.306,
+            "Phase": "fastThenNearZero",
+            "PreMaxSpeed": 545.9581314746243,
+            "V2AtStop": 0,
+            "V5AtStop": 365.3438249867743,
+            "V12AtStop": 265.57836359839126,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0.229098890754661,
+            "PeakDistancePx": 0.2499973443195732,
+            "PeakFrame": 10,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0.2727272727272727
+          },
+          {
+            "PackageId": "m070307",
+            "StopElapsedMs": 749359.507,
+            "Phase": "fastThenNearZero",
+            "PreMaxSpeed": 578.3436520281477,
+            "V2AtStop": 0,
+            "V5AtStop": 315.69478667384897,
+            "V12AtStop": 240.39519166898813,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0.22842848445083896,
+            "PeakDistancePx": 0.24997329569290058,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0.24997329569290058,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0.6363636363636364
+          },
+          {
+            "PackageId": "m070248",
+            "StopElapsedMs": 720066.407,
+            "Phase": "oneFrameStop",
+            "PreMaxSpeed": 536.0604246664449,
+            "V2AtStop": 0,
+            "V5AtStop": 530.9601005245554,
+            "V12AtStop": 137.7115714543701,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0.22553355540891165,
+            "PeakDistancePx": 0.25,
+            "PeakFrame": 0,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0.25,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0.36363636363636365
+          },
+          {
+            "PackageId": "m070307",
+            "StopElapsedMs": 684146.587,
+            "Phase": "oneFrameStop",
+            "PreMaxSpeed": 1347.8367459956353,
+            "V2AtStop": 61.60290765724142,
+            "V5AtStop": 1148.1267340595207,
+            "V12AtStop": 591.4009325167954,
+            "TargetDistanceAtStop": 0,
+            "PeakLeadPx": 0.21621315855424908,
+            "PeakDistancePx": 0.25002565848286035,
+            "PeakFrame": 9,
+            "SettleFrames0p5": 0,
+            "SettleFrames1p0": 0,
+            "SettleMs0p5": 0,
+            "SettleMs1p0": 0,
+            "ReturnMotionPx": 0.25002565848286035,
+            "OvershootThenReturn": false,
+            "GateFireRate": 0.8181818181818182
+          }
+        ]
+      },
+      "guardrails": {
+        "normalMoveVisual": {
+          "mean": 0.351448,
+          "p95": 1.71379,
+          "p99": 7.368017,
+          "max": 36.070464
+        },
+        "highSpeedVisual": {
+          "mean": 0.202996,
+          "p95": 1.928248,
+          "p99": 1.928248,
+          "max": 1.928248
+        },
+        "staticCurrentDistance": {
+          "mean": 0.001414,
+          "p95": 0,
+          "p99": 0,
+          "max": 2.183031
+        },
+        "postStopJitter": {
+          "mean": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        }
+      },
+      "gateFire": {
+        "overall": 0.028821722896091556,
+        "fastThenNearZero": 0.2715472481827622,
+        "hardBrake": 0.6766467065868264,
+        "stopAfterHighSpeed": 0.18181818181818182,
+        "oneFrameStop": 0.8399014778325123,
+        "postStopFirstFrames": 0.9261992619926199,
+        "normalMove": 0.2221254355400697,
+        "highSpeed": 0.23076923076923078,
+        "staticHold": 0.00464173539013786,
+        "movementResumeFalseSnapRows": 0,
+        "activeFrameDistribution": {
+          "1": 1009,
+          "2": 231,
+          "3": 197,
+          "4": 192,
+          "5": 190,
+          "6": 182,
+          "7": 169,
+          "8": 161,
+          "9": 144,
+          "10": 134
+        }
+      },
+      "fireClassification": {
+        "normalMoveFiredCount": 765,
+        "allFiredCount": 2609,
+        "normalMoveFireLooksStopSoonRate": 0.9947712418300654,
+        "normalMoveFireByPackage": {
+          "m070248": 361,
+          "m070307": 404
+        },
+        "normalMoveFired": {
+          "targetDistance": {
+            "mean": 0.002094569546627971,
+            "p95": 0,
+            "p99": 0.03544999998803178,
+            "max": 0.4491870431047573
+          },
+          "latestDelta": {
+            "mean": 0.019925020506038286,
+            "p95": 0,
+            "p99": 1,
+            "max": 1.4142135623730951
+          },
+          "v2": {
+            "mean": 1.2087928433341855,
+            "p95": 0,
+            "p99": 60.13952369497233,
+            "max": 88.47128948220802
+          },
+          "v5": {
+            "mean": 139.17989059024953,
+            "p95": 436.0964896034515,
+            "p99": 481.63183216532065,
+            "max": 497.0984120908172
+          },
+          "v8": {
+            "mean": 254.8049913984109,
+            "p95": 493.0158911832617,
+            "p99": 620.473966025812,
+            "max": 779.9083819454867
+          },
+          "v12": {
+            "mean": 358.679042528318,
+            "p95": 486.6104308717589,
+            "p99": 623.0482500730071,
+            "max": 785.5907978071843
+          },
+          "recentHigh": {
+            "mean": 630.6254487313726,
+            "p95": 1310.9596224436286,
+            "p99": 2103.396659802608,
+            "max": 3090.007664898313
+          },
+          "pathEfficiency": {
+            "mean": 0.9865985231519844,
+            "p95": 0.9998654990795045,
+            "p99": 0.9999956443104064,
+            "max": 1
+          }
+        },
+        "examples": [
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 576639.505,
+            "GateFamily": "distanceCapInsteadOfSnap",
+            "GateActiveFrame": 1,
+            "v2": 0,
+            "v5": 386.2,
+            "v8": 651.1,
+            "v12": 622.2,
+            "recentHigh": 3090,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9986,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 440356.616,
+            "GateFamily": "distanceCapInsteadOfSnap",
+            "GateActiveFrame": 4,
+            "v2": 0,
+            "v5": 0,
+            "v8": 527.5,
+            "v12": 334.7,
+            "recentHigh": 3054.7,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9991,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 658077.95,
+            "GateFamily": "distanceCapInsteadOfSnap",
+            "GateActiveFrame": 4,
+            "v2": 0,
+            "v5": 0,
+            "v8": 459.3,
+            "v12": 437,
+            "recentHigh": 2922.4,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9928,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 612427.627,
+            "GateFamily": "distanceCapInsteadOfSnap",
+            "GateActiveFrame": 4,
+            "v2": 0,
+            "v5": 0,
+            "v8": 401.3,
+            "v12": 256.5,
+            "recentHigh": 2686.5,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 1,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 408090.462,
+            "GateFamily": "distanceCapInsteadOfSnap",
+            "GateActiveFrame": 1,
+            "v2": 0,
+            "v5": 189.3,
+            "v8": 266.4,
+            "v12": 325,
+            "recentHigh": 2550.5,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.7067,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 599292.839,
+            "GateFamily": "distanceCapInsteadOfSnap",
+            "GateActiveFrame": 4,
+            "v2": 0,
+            "v5": 0,
+            "v8": 454.8,
+            "v12": 322.7,
+            "recentHigh": 2547.5,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9992,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 334071.483,
+            "GateFamily": "distanceCapInsteadOfSnap",
+            "GateActiveFrame": 4,
+            "v2": 0,
+            "v5": 0,
+            "v8": 441.2,
+            "v12": 281.1,
+            "recentHigh": 2422.4,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9997,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070248",
+            "elapsedMs": 718944.68,
+            "GateFamily": "distanceCapInsteadOfSnap",
+            "GateActiveFrame": 2,
+            "v2": 0,
+            "v5": 243,
+            "v8": 466.3,
+            "v12": 348.1,
+            "recentHigh": 2103.4,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9889,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 326117.211,
+            "GateFamily": "distanceCapInsteadOfSnap",
+            "GateActiveFrame": 1,
+            "v2": 0,
+            "v5": 331.4,
+            "v8": 665.8,
+            "v12": 440,
+            "recentHigh": 2093.1,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.8003,
+            "visualError": 0
+          },
+          {
+            "PackageId": "m070307",
+            "elapsedMs": 326350.73,
+            "GateFamily": "distanceCapInsteadOfSnap",
+            "GateActiveFrame": 4,
+            "v2": 0,
+            "v5": 0,
+            "v8": 489.4,
+            "v12": 403.8,
+            "recentHigh": 2086.3,
+            "latestDelta": 0,
+            "targetDistance": 0,
+            "pathEfficiency": 0.9982,
+            "visualError": 0
+          }
+        ]
+      },
+      "objective": {
+        "primaryObjective": 2.2553355540891165,
+        "guardrailPenalty": 3.883594855605972,
+        "totalObjective": 6.138930409695089
+      }
+    }
+  },
+  "topRanking": [
+    {
+      "id": "baseLatchN10_v0_h400_td0p1_rv50_rt0p25",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.716365790763552,
+        "totalObjective": 3.716365790763552
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027684,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v10_h400_td0p1_rv50_rt0p25",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.716365790763552,
+        "totalObjective": 3.716365790763552
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027684,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v20_h400_td0p1_rv50_rt0p25",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.716365790763552,
+        "totalObjective": 3.716365790763552
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027684,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v50_h400_td0p1_rv50_rt0p25",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.716365790763552,
+        "totalObjective": 3.716365790763552
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027684,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v0_h400_td0p1_rv50_rt0p5",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7169181426780042,
+        "totalObjective": 3.7169181426780042
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027695,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v10_h400_td0p1_rv50_rt0p5",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7169181426780042,
+        "totalObjective": 3.7169181426780042
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027695,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v20_h400_td0p1_rv50_rt0p5",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7169181426780042,
+        "totalObjective": 3.7169181426780042
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027695,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v50_h400_td0p1_rv50_rt0p5",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7169181426780042,
+        "totalObjective": 3.7169181426780042
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027695,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v0_h400_td0p1_rv50_rt0p75",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.717470494592456,
+        "totalObjective": 3.717470494592456
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027706,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v10_h400_td0p1_rv50_rt0p75",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.717470494592456,
+        "totalObjective": 3.717470494592456
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027706,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v20_h400_td0p1_rv50_rt0p75",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.717470494592456,
+        "totalObjective": 3.717470494592456
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027706,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v50_h400_td0p1_rv50_rt0p75",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.717470494592456,
+        "totalObjective": 3.717470494592456
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027706,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v0_h400_td0p1_rv50_rt1",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7180228465069076,
+        "totalObjective": 3.7180228465069076
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027717,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v10_h400_td0p1_rv50_rt1",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7180228465069076,
+        "totalObjective": 3.7180228465069076
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027717,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v20_h400_td0p1_rv50_rt1",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7180228465069076,
+        "totalObjective": 3.7180228465069076
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027717,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v50_h400_td0p1_rv50_rt1",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7180228465069076,
+        "totalObjective": 3.7180228465069076
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027717,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v0_h400_td0p25_rv50_rt0p25",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.739310912695526,
+        "totalObjective": 3.739310912695526
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027794,
+        "normalMove": 0.21748,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.99466
+      }
+    },
+    {
+      "id": "baseLatchN10_v10_h400_td0p25_rv50_rt0p25",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.739310912695526,
+        "totalObjective": 3.739310912695526
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027794,
+        "normalMove": 0.21748,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.99466
+      }
+    },
+    {
+      "id": "baseLatchN10_v20_h400_td0p25_rv50_rt0p25",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.739310912695526,
+        "totalObjective": 3.739310912695526
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027794,
+        "normalMove": 0.21748,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.99466
+      }
+    },
+    {
+      "id": "baseLatchN10_v50_h400_td0p25_rv50_rt0p25",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.739310912695526,
+        "totalObjective": 3.739310912695526
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027794,
+        "normalMove": 0.21748,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.99466
+      }
+    },
+    {
+      "id": "baseLatchN10_v0_h400_td0p25_rv50_rt0p5",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7398632646099776,
+        "totalObjective": 3.7398632646099776
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027805,
+        "normalMove": 0.21748,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.99466
+      }
+    },
+    {
+      "id": "baseLatchN10_v10_h400_td0p25_rv50_rt0p5",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7398632646099776,
+        "totalObjective": 3.7398632646099776
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027805,
+        "normalMove": 0.21748,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.99466
+      }
+    },
+    {
+      "id": "baseLatchN10_v20_h400_td0p25_rv50_rt0p5",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7398632646099776,
+        "totalObjective": 3.7398632646099776
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027805,
+        "normalMove": 0.21748,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.99466
+      }
+    },
+    {
+      "id": "baseLatchN10_v50_h400_td0p25_rv50_rt0p5",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7398632646099776,
+        "totalObjective": 3.7398632646099776
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027805,
+        "normalMove": 0.21748,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.99466
+      }
+    },
+    {
+      "id": "baseLatchN10_v0_h400_td0p25_rv50_rt0p75",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7404156165244293,
+        "totalObjective": 3.7404156165244293
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027816,
+        "normalMove": 0.21748,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.99466
+      }
+    },
+    {
+      "id": "baseLatchN10_v10_h400_td0p25_rv50_rt0p75",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7404156165244293,
+        "totalObjective": 3.7404156165244293
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027816,
+        "normalMove": 0.21748,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.99466
+      }
+    },
+    {
+      "id": "baseLatchN10_v20_h400_td0p25_rv50_rt0p75",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7404156165244293,
+        "totalObjective": 3.7404156165244293
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027816,
+        "normalMove": 0.21748,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.99466
+      }
+    },
+    {
+      "id": "baseLatchN10_v50_h400_td0p25_rv50_rt0p75",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7404156165244293,
+        "totalObjective": 3.7404156165244293
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027816,
+        "normalMove": 0.21748,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.99466
+      }
+    },
+    {
+      "id": "baseLatchN10_v0_h400_td0p25_rv50_rt1",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.740967968438881,
+        "totalObjective": 3.740967968438881
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027827,
+        "normalMove": 0.21748,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.99466
+      }
+    },
+    {
+      "id": "baseLatchN10_v10_h400_td0p25_rv50_rt1",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.740967968438881,
+        "totalObjective": 3.740967968438881
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027827,
+        "normalMove": 0.21748,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.99466
+      }
+    },
+    {
+      "id": "baseLatchN10_v20_h400_td0p25_rv50_rt1",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.740967968438881,
+        "totalObjective": 3.740967968438881
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027827,
+        "normalMove": 0.21748,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.99466
+      }
+    },
+    {
+      "id": "baseLatchN10_v50_h400_td0p25_rv50_rt1",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.740967968438881,
+        "totalObjective": 3.740967968438881
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027827,
+        "normalMove": 0.21748,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.99466
+      }
+    },
+    {
+      "id": "baseLatchN10_v0_h400_td0p5_rv50_rt0p25",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7777368998869663,
+        "totalObjective": 3.7777368998869663
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027982,
+        "normalMove": 0.218931,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994695
+      }
+    },
+    {
+      "id": "baseLatchN10_v10_h400_td0p5_rv50_rt0p25",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7777368998869663,
+        "totalObjective": 3.7777368998869663
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027982,
+        "normalMove": 0.218931,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994695
+      }
+    },
+    {
+      "id": "baseLatchN10_v20_h400_td0p5_rv50_rt0p25",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7777368998869663,
+        "totalObjective": 3.7777368998869663
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027982,
+        "normalMove": 0.218931,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994695
+      }
+    },
+    {
+      "id": "baseLatchN10_v50_h400_td0p5_rv50_rt0p25",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7777368998869663,
+        "totalObjective": 3.7777368998869663
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027982,
+        "normalMove": 0.218931,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994695
+      }
+    },
+    {
+      "id": "baseLatchN10_v0_h400_td0p5_rv50_rt0p5",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.778289251801418,
+        "totalObjective": 3.778289251801418
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027993,
+        "normalMove": 0.218931,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994695
+      }
+    },
+    {
+      "id": "baseLatchN10_v10_h400_td0p5_rv50_rt0p5",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.778289251801418,
+        "totalObjective": 3.778289251801418
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027993,
+        "normalMove": 0.218931,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994695
+      }
+    },
+    {
+      "id": "baseLatchN10_v20_h400_td0p5_rv50_rt0p5",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.778289251801418,
+        "totalObjective": 3.778289251801418
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027993,
+        "normalMove": 0.218931,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994695
+      }
+    },
+    {
+      "id": "baseLatchN10_v50_h400_td0p5_rv50_rt0p5",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.778289251801418,
+        "totalObjective": 3.778289251801418
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027993,
+        "normalMove": 0.218931,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994695
+      }
+    },
+    {
+      "id": "baseLatchN10_v0_h400_td0p5_rv50_rt0p75",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7788416037158696,
+        "totalObjective": 3.7788416037158696
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.028004,
+        "normalMove": 0.218931,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994695
+      }
+    },
+    {
+      "id": "baseLatchN10_v10_h400_td0p5_rv50_rt0p75",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7788416037158696,
+        "totalObjective": 3.7788416037158696
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.028004,
+        "normalMove": 0.218931,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994695
+      }
+    },
+    {
+      "id": "baseLatchN10_v20_h400_td0p5_rv50_rt0p75",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7788416037158696,
+        "totalObjective": 3.7788416037158696
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.028004,
+        "normalMove": 0.218931,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994695
+      }
+    },
+    {
+      "id": "baseLatchN10_v50_h400_td0p5_rv50_rt0p75",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7788416037158696,
+        "totalObjective": 3.7788416037158696
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.028004,
+        "normalMove": 0.218931,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994695
+      }
+    },
+    {
+      "id": "baseLatchN10_v0_h400_td0p5_rv50_rt1",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7793939556303213,
+        "totalObjective": 3.7793939556303213
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.028015,
+        "normalMove": 0.218931,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994695
+      }
+    },
+    {
+      "id": "baseLatchN10_v10_h400_td0p5_rv50_rt1",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7793939556303213,
+        "totalObjective": 3.7793939556303213
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.028015,
+        "normalMove": 0.218931,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994695
+      }
+    },
+    {
+      "id": "baseLatchN10_v20_h400_td0p5_rv50_rt1",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7793939556303213,
+        "totalObjective": 3.7793939556303213
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.028015,
+        "normalMove": 0.218931,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994695
+      }
+    },
+    {
+      "id": "baseLatchN10_v50_h400_td0p5_rv50_rt1",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7793939556303213,
+        "totalObjective": 3.7793939556303213
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.028015,
+        "normalMove": 0.218931,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994695
+      }
+    },
+    {
+      "id": "shorterLatchWithRefreshN6_h400_td0p25",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.827254960331895,
+        "totalObjective": 3.827254960331895
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027695,
+        "normalMove": 0.222125,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994771
+      }
+    },
+    {
+      "id": "baseLatchN10_v0_h400_td0p1_rv100_rt0p25",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.8457212203289823,
+        "totalObjective": 3.8457212203289823
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.028645,
+        "normalMove": 0.220674,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994737
+      }
+    }
+  ],
+  "lowFireTradeoffRanking": [
+    {
+      "id": "none",
+      "score": {
+        "primaryObjective": 7912.120613784741,
+        "guardrailPenalty": 0,
+        "totalObjective": 7912.120613784741
+      },
+      "event": {
+        "peakLeadP99": 1.517162,
+        "peakLeadMax": 2.441013,
+        "peakDistanceMax": 2.490607,
+        "returnMotionMax": 2.490607,
+        "otrGt1": 0.011236
+      },
+      "fire": {
+        "overall": 0,
+        "normalMove": 0,
+        "highSpeed": 0,
+        "stopSoonRate": 0
+      }
+    },
+    {
+      "id": "preMotionThenFullStopN6_eff0p2_h400_td0p25",
+      "score": {
+        "primaryObjective": 7912.120613784741,
+        "guardrailPenalty": 0,
+        "totalObjective": 7912.120613784741
+      },
+      "event": {
+        "peakLeadP99": 1.517162,
+        "peakLeadMax": 2.441013,
+        "peakDistanceMax": 2.490607,
+        "returnMotionMax": 2.490607,
+        "otrGt1": 0.011236
+      },
+      "fire": {
+        "overall": 0.000088,
+        "normalMove": 0,
+        "highSpeed": 0,
+        "stopSoonRate": 0
+      }
+    },
+    {
+      "id": "preMotionThenFullStopN6_eff0p2_h400_td0p5",
+      "score": {
+        "primaryObjective": 7912.120613784741,
+        "guardrailPenalty": 0,
+        "totalObjective": 7912.120613784741
+      },
+      "event": {
+        "peakLeadP99": 1.517162,
+        "peakLeadMax": 2.441013,
+        "peakDistanceMax": 2.490607,
+        "returnMotionMax": 2.490607,
+        "otrGt1": 0.011236
+      },
+      "fire": {
+        "overall": 0.000099,
+        "normalMove": 0,
+        "highSpeed": 0,
+        "stopSoonRate": 0
+      }
+    },
+    {
+      "id": "preMotionThenFullStopN6_eff0p2_h600_td0p25",
+      "score": {
+        "primaryObjective": 7912.120613784741,
+        "guardrailPenalty": 0,
+        "totalObjective": 7912.120613784741
+      },
+      "event": {
+        "peakLeadP99": 1.517162,
+        "peakLeadMax": 2.441013,
+        "peakDistanceMax": 2.490607,
+        "returnMotionMax": 2.490607,
+        "otrGt1": 0.011236
+      },
+      "fire": {
+        "overall": 0.000066,
+        "normalMove": 0,
+        "highSpeed": 0,
+        "stopSoonRate": 0
+      }
+    },
+    {
+      "id": "preMotionThenFullStopN6_eff0p2_h600_td0p5",
+      "score": {
+        "primaryObjective": 7912.120613784741,
+        "guardrailPenalty": 0,
+        "totalObjective": 7912.120613784741
+      },
+      "event": {
+        "peakLeadP99": 1.517162,
+        "peakLeadMax": 2.441013,
+        "peakDistanceMax": 2.490607,
+        "returnMotionMax": 2.490607,
+        "otrGt1": 0.011236
+      },
+      "fire": {
+        "overall": 0.000077,
+        "normalMove": 0,
+        "highSpeed": 0,
+        "stopSoonRate": 0
+      }
+    },
+    {
+      "id": "preMotionThenFullStopN6_eff0p35_h400_td0p25",
+      "score": {
+        "primaryObjective": 7912.120613784741,
+        "guardrailPenalty": 0,
+        "totalObjective": 7912.120613784741
+      },
+      "event": {
+        "peakLeadP99": 1.517162,
+        "peakLeadMax": 2.441013,
+        "peakDistanceMax": 2.490607,
+        "returnMotionMax": 2.490607,
+        "otrGt1": 0.011236
+      },
+      "fire": {
+        "overall": 0.000265,
+        "normalMove": 0,
+        "highSpeed": 0,
+        "stopSoonRate": 0
+      }
+    },
+    {
+      "id": "preMotionThenFullStopN6_eff0p35_h400_td0p5",
+      "score": {
+        "primaryObjective": 7912.120613784741,
+        "guardrailPenalty": 0,
+        "totalObjective": 7912.120613784741
+      },
+      "event": {
+        "peakLeadP99": 1.517162,
+        "peakLeadMax": 2.441013,
+        "peakDistanceMax": 2.490607,
+        "returnMotionMax": 2.490607,
+        "otrGt1": 0.011236
+      },
+      "fire": {
+        "overall": 0.000287,
+        "normalMove": 0,
+        "highSpeed": 0,
+        "stopSoonRate": 0
+      }
+    },
+    {
+      "id": "preMotionThenFullStopN6_eff0p35_h600_td0p25",
+      "score": {
+        "primaryObjective": 7912.120613784741,
+        "guardrailPenalty": 0,
+        "totalObjective": 7912.120613784741
+      },
+      "event": {
+        "peakLeadP99": 1.517162,
+        "peakLeadMax": 2.441013,
+        "peakDistanceMax": 2.490607,
+        "returnMotionMax": 2.490607,
+        "otrGt1": 0.011236
+      },
+      "fire": {
+        "overall": 0.000243,
+        "normalMove": 0,
+        "highSpeed": 0,
+        "stopSoonRate": 0
+      }
+    },
+    {
+      "id": "preMotionThenFullStopN6_eff0p35_h600_td0p5",
+      "score": {
+        "primaryObjective": 7912.120613784741,
+        "guardrailPenalty": 0,
+        "totalObjective": 7912.120613784741
+      },
+      "event": {
+        "peakLeadP99": 1.517162,
+        "peakLeadMax": 2.441013,
+        "peakDistanceMax": 2.490607,
+        "returnMotionMax": 2.490607,
+        "otrGt1": 0.011236
+      },
+      "fire": {
+        "overall": 0.000265,
+        "normalMove": 0,
+        "highSpeed": 0,
+        "stopSoonRate": 0
+      }
+    },
+    {
+      "id": "preMotionThenFullStopN6_eff0p5_h400_td0p25",
+      "score": {
+        "primaryObjective": 7912.120613784741,
+        "guardrailPenalty": 0,
+        "totalObjective": 7912.120613784741
+      },
+      "event": {
+        "peakLeadP99": 1.517162,
+        "peakLeadMax": 2.441013,
+        "peakDistanceMax": 2.490607,
+        "returnMotionMax": 2.490607,
+        "otrGt1": 0.011236
+      },
+      "fire": {
+        "overall": 0.000409,
+        "normalMove": 0.000871,
+        "highSpeed": 0,
+        "stopSoonRate": 1
+      }
+    },
+    {
+      "id": "preMotionThenFullStopN6_eff0p5_h400_td0p5",
+      "score": {
+        "primaryObjective": 7912.120613784741,
+        "guardrailPenalty": 0,
+        "totalObjective": 7912.120613784741
+      },
+      "event": {
+        "peakLeadP99": 1.517162,
+        "peakLeadMax": 2.441013,
+        "peakDistanceMax": 2.490607,
+        "returnMotionMax": 2.490607,
+        "otrGt1": 0.011236
+      },
+      "fire": {
+        "overall": 0.000442,
+        "normalMove": 0.000871,
+        "highSpeed": 0,
+        "stopSoonRate": 1
+      }
+    },
+    {
+      "id": "preMotionThenFullStopN6_eff0p5_h600_td0p25",
+      "score": {
+        "primaryObjective": 7912.120613784741,
+        "guardrailPenalty": 0,
+        "totalObjective": 7912.120613784741
+      },
+      "event": {
+        "peakLeadP99": 1.517162,
+        "peakLeadMax": 2.441013,
+        "peakDistanceMax": 2.490607,
+        "returnMotionMax": 2.490607,
+        "otrGt1": 0.011236
+      },
+      "fire": {
+        "overall": 0.000376,
+        "normalMove": 0.000871,
+        "highSpeed": 0,
+        "stopSoonRate": 1
+      }
+    },
+    {
+      "id": "preMotionThenFullStopN6_eff0p5_h600_td0p5",
+      "score": {
+        "primaryObjective": 7912.120613784741,
+        "guardrailPenalty": 0,
+        "totalObjective": 7912.120613784741
+      },
+      "event": {
+        "peakLeadP99": 1.517162,
+        "peakLeadMax": 2.441013,
+        "peakDistanceMax": 2.490607,
+        "returnMotionMax": 2.490607,
+        "otrGt1": 0.011236
+      },
+      "fire": {
+        "overall": 0.000409,
+        "normalMove": 0.000871,
+        "highSpeed": 0,
+        "stopSoonRate": 1
+      }
+    },
+    {
+      "id": "preMotionThenFullStopN8_eff0p2_h400_td0p25",
+      "score": {
+        "primaryObjective": 7912.120613784741,
+        "guardrailPenalty": 0,
+        "totalObjective": 7912.120613784741
+      },
+      "event": {
+        "peakLeadP99": 1.517162,
+        "peakLeadMax": 2.441013,
+        "peakDistanceMax": 2.490607,
+        "returnMotionMax": 2.490607,
+        "otrGt1": 0.011236
+      },
+      "fire": {
+        "overall": 0.000088,
+        "normalMove": 0,
+        "highSpeed": 0,
+        "stopSoonRate": 0
+      }
+    },
+    {
+      "id": "preMotionThenFullStopN8_eff0p2_h400_td0p5",
+      "score": {
+        "primaryObjective": 7912.120613784741,
+        "guardrailPenalty": 0,
+        "totalObjective": 7912.120613784741
+      },
+      "event": {
+        "peakLeadP99": 1.517162,
+        "peakLeadMax": 2.441013,
+        "peakDistanceMax": 2.490607,
+        "returnMotionMax": 2.490607,
+        "otrGt1": 0.011236
+      },
+      "fire": {
+        "overall": 0.000099,
+        "normalMove": 0,
+        "highSpeed": 0,
+        "stopSoonRate": 0
+      }
+    },
+    {
+      "id": "preMotionThenFullStopN8_eff0p2_h600_td0p25",
+      "score": {
+        "primaryObjective": 7912.120613784741,
+        "guardrailPenalty": 0,
+        "totalObjective": 7912.120613784741
+      },
+      "event": {
+        "peakLeadP99": 1.517162,
+        "peakLeadMax": 2.441013,
+        "peakDistanceMax": 2.490607,
+        "returnMotionMax": 2.490607,
+        "otrGt1": 0.011236
+      },
+      "fire": {
+        "overall": 0.000066,
+        "normalMove": 0,
+        "highSpeed": 0,
+        "stopSoonRate": 0
+      }
+    },
+    {
+      "id": "preMotionThenFullStopN8_eff0p2_h600_td0p5",
+      "score": {
+        "primaryObjective": 7912.120613784741,
+        "guardrailPenalty": 0,
+        "totalObjective": 7912.120613784741
+      },
+      "event": {
+        "peakLeadP99": 1.517162,
+        "peakLeadMax": 2.441013,
+        "peakDistanceMax": 2.490607,
+        "returnMotionMax": 2.490607,
+        "otrGt1": 0.011236
+      },
+      "fire": {
+        "overall": 0.000077,
+        "normalMove": 0,
+        "highSpeed": 0,
+        "stopSoonRate": 0
+      }
+    },
+    {
+      "id": "preMotionThenFullStopN8_eff0p35_h400_td0p25",
+      "score": {
+        "primaryObjective": 7912.120613784741,
+        "guardrailPenalty": 0,
+        "totalObjective": 7912.120613784741
+      },
+      "event": {
+        "peakLeadP99": 1.517162,
+        "peakLeadMax": 2.441013,
+        "peakDistanceMax": 2.490607,
+        "returnMotionMax": 2.490607,
+        "otrGt1": 0.011236
+      },
+      "fire": {
+        "overall": 0.000287,
+        "normalMove": 0,
+        "highSpeed": 0,
+        "stopSoonRate": 0
+      }
+    },
+    {
+      "id": "preMotionThenFullStopN8_eff0p35_h400_td0p5",
+      "score": {
+        "primaryObjective": 7912.120613784741,
+        "guardrailPenalty": 0,
+        "totalObjective": 7912.120613784741
+      },
+      "event": {
+        "peakLeadP99": 1.517162,
+        "peakLeadMax": 2.441013,
+        "peakDistanceMax": 2.490607,
+        "returnMotionMax": 2.490607,
+        "otrGt1": 0.011236
+      },
+      "fire": {
+        "overall": 0.000309,
+        "normalMove": 0,
+        "highSpeed": 0,
+        "stopSoonRate": 0
+      }
+    },
+    {
+      "id": "preMotionThenFullStopN8_eff0p35_h600_td0p25",
+      "score": {
+        "primaryObjective": 7912.120613784741,
+        "guardrailPenalty": 0,
+        "totalObjective": 7912.120613784741
+      },
+      "event": {
+        "peakLeadP99": 1.517162,
+        "peakLeadMax": 2.441013,
+        "peakDistanceMax": 2.490607,
+        "returnMotionMax": 2.490607,
+        "otrGt1": 0.011236
+      },
+      "fire": {
+        "overall": 0.000265,
+        "normalMove": 0,
+        "highSpeed": 0,
+        "stopSoonRate": 0
+      }
+    }
+  ],
+  "zeroTailRanking": [
+    {
+      "id": "baseLatchN10_v0_h400_td0p1_rv50_rt0p25",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.716365790763552,
+        "totalObjective": 3.716365790763552
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027684,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v10_h400_td0p1_rv50_rt0p25",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.716365790763552,
+        "totalObjective": 3.716365790763552
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027684,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v20_h400_td0p1_rv50_rt0p25",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.716365790763552,
+        "totalObjective": 3.716365790763552
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027684,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v50_h400_td0p1_rv50_rt0p25",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.716365790763552,
+        "totalObjective": 3.716365790763552
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027684,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v0_h400_td0p1_rv50_rt0p5",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7169181426780042,
+        "totalObjective": 3.7169181426780042
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027695,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v10_h400_td0p1_rv50_rt0p5",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7169181426780042,
+        "totalObjective": 3.7169181426780042
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027695,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v20_h400_td0p1_rv50_rt0p5",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7169181426780042,
+        "totalObjective": 3.7169181426780042
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027695,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v50_h400_td0p1_rv50_rt0p5",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7169181426780042,
+        "totalObjective": 3.7169181426780042
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027695,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v0_h400_td0p1_rv50_rt0p75",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.717470494592456,
+        "totalObjective": 3.717470494592456
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027706,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v10_h400_td0p1_rv50_rt0p75",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.717470494592456,
+        "totalObjective": 3.717470494592456
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027706,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v20_h400_td0p1_rv50_rt0p75",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.717470494592456,
+        "totalObjective": 3.717470494592456
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027706,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v50_h400_td0p1_rv50_rt0p75",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.717470494592456,
+        "totalObjective": 3.717470494592456
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027706,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v0_h400_td0p1_rv50_rt1",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7180228465069076,
+        "totalObjective": 3.7180228465069076
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027717,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v10_h400_td0p1_rv50_rt1",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7180228465069076,
+        "totalObjective": 3.7180228465069076
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027717,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v20_h400_td0p1_rv50_rt1",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7180228465069076,
+        "totalObjective": 3.7180228465069076
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027717,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v50_h400_td0p1_rv50_rt1",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.7180228465069076,
+        "totalObjective": 3.7180228465069076
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027717,
+        "normalMove": 0.216609,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.994638
+      }
+    },
+    {
+      "id": "baseLatchN10_v0_h400_td0p25_rv50_rt0p25",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.739310912695526,
+        "totalObjective": 3.739310912695526
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027794,
+        "normalMove": 0.21748,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.99466
+      }
+    },
+    {
+      "id": "baseLatchN10_v10_h400_td0p25_rv50_rt0p25",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.739310912695526,
+        "totalObjective": 3.739310912695526
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027794,
+        "normalMove": 0.21748,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.99466
+      }
+    },
+    {
+      "id": "baseLatchN10_v20_h400_td0p25_rv50_rt0p25",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.739310912695526,
+        "totalObjective": 3.739310912695526
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027794,
+        "normalMove": 0.21748,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.99466
+      }
+    },
+    {
+      "id": "baseLatchN10_v50_h400_td0p25_rv50_rt0p25",
+      "score": {
+        "primaryObjective": 0,
+        "guardrailPenalty": 3.739310912695526,
+        "totalObjective": 3.739310912695526
+      },
+      "event": {
+        "peakLeadP99": 0,
+        "peakLeadMax": 0,
+        "peakDistanceMax": 0,
+        "returnMotionMax": 0,
+        "otrGt1": 0
+      },
+      "fire": {
+        "overall": 0.027794,
+        "normalMove": 0.21748,
+        "highSpeed": 0.230769,
+        "stopSoonRate": 0.99466
+      }
+    }
+  ],
+  "normalMoveFireInterpretation": {
+    "selectedNormalMoveFireRate": 0.216609,
+    "selectedNormalMoveFireLooksStopSoonRate": 0.994638,
+    "selectedNormalMoveFiredStats": {
+      "targetDistance": {
+        "mean": 0.00014925484255552088,
+        "p95": 0,
+        "p99": 0,
+        "max": 0.07250000000021828
+      },
+      "latestDelta": {
+        "mean": 0,
+        "p95": 0,
+        "p99": 0,
+        "max": 0
+      },
+      "v2": {
+        "mean": 0,
+        "p95": 0,
+        "p99": 0,
+        "max": 0
+      },
+      "v5": {
+        "mean": 139.30555521588946,
+        "p95": 436.31249560964915,
+        "p99": 481.63183216532065,
+        "max": 497.0984120908172
+      },
+      "v8": {
+        "mean": 256.1409477996972,
+        "p95": 493.8391171910222,
+        "p99": 620.473966025812,
+        "max": 779.9083819454867
+      },
+      "v12": {
+        "mean": 359.25948267670714,
+        "p95": 486.6104308717589,
+        "p99": 623.0482500730071,
+        "max": 785.5907978071843
+      },
+      "recentHigh": {
+        "mean": 632.8638696152478,
+        "p95": 1310.9596224436286,
+        "p99": 2103.396659802608,
+        "max": 3090.007664898313
+      },
+      "pathEfficiency": {
+        "mean": 0.9869981764416582,
+        "p95": 0.9998654990795045,
+        "p99": 0.9999956443104064,
+        "max": 1
+      }
+    },
+    "interpretation": "Selected still fires on 21.66% of normalMove rows, but about 99.46% of those fired rows are followed by stop/near-stop within 10 frames. This suggests most normalMove firings are stop-prep/hold rows rather than ordinary continuous motion, but live validation is still required."
+  },
+  "adoptionDecision": {
+    "recommendation": "Do not ship directly. Selected is a validation-flag candidate because it preserves zero event tail while only slightly lowering fire rate versus Step05 best; normalMove fire remains high by slice label.",
+    "productCandidate": "baseLatchN10_v0_h400_td0p1_rv50_rt0p25",
+    "runtimeShape": "snap for up to 10 frames after stop onset: v2 <= 0px/s, target displacement <= 0.1px, recentHigh >= 400px/s; release when v2 > 50px/s or target displacement > 0.25px."
+  }
+}

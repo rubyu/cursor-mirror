@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "cursor-prediction-v19-step-03-motionlab-abrupt-stop-scenarios/1",
+  "generatedAtUtc": "2026-05-04T08:53:12.570Z",
+  "scenarioSet": "abrupt-stop-scenarios.json",
+  "scenarioMetadata": "scenario-metadata.json",
+  "scenarioCount": 24,
+  "familyCounts": {
+    "straight-hard-stop": 3,
+    "straight-one-frame-stop": 3,
+    "curved-hard-stop": 3,
+    "curved-creep-stop": 3,
+    "short-stop-duration": 3,
+    "long-stop-duration": 3,
+    "phase-shifted-stop": 3,
+    "dropout-proxy-stop": 3
+  },
+  "dimensions": {
+    "speedMultipliers": [
+      0.9,
+      1.4,
+      2.1
+    ],
+    "stopDurationsMs": [
+      67,
+      133,
+      200,
+      333
+    ],
+    "phaseShiftProgress": [
+      -0.035,
+      -0.015,
+      0,
+      0.018,
+      0.037
+    ],
+    "curveFamilies": [
+      "straight",
+      "curved"
+    ],
+    "nearZeroCreep": true,
+    "dropoutProxy": true
+  },
+  "verificationStatus": "not-run-yet",
+  "next": "Use MotionLab package writer/playback or a POC sampler replay to verify whether product brake and no-brake predictors reproduce overshoot-then-return on these synthetic families."
+}

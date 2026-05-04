@@ -1,0 +1,4430 @@
+{
+  "schemaVersion": "cursor-prediction-v10-phase8-real-gate/1",
+  "generatedAt": "2026-05-03T09:38:00.201Z",
+  "command": "C:\\Users\\seigl\\AppData\\Local\\OpenAI\\Codex\\bin\\node.exe C:\\Users\\seigl\\OneDrive\\my\\ドキュメント\\projects\\cursor\\poc\\cursor-prediction-v10\\scripts\\run-v10-phase8-real-gate.js --zip-limit 6",
+  "environment": {
+    "node": "v24.14.0",
+    "gpuUsed": false,
+    "dependencies": "node standard library only"
+  },
+  "policy": {
+    "anchorStream": "runtimeSelfSchedulerPoll",
+    "historyStream": "referencePoll at or before anchor time",
+    "labelStream": "referencePoll interpolated at anchor time + fixed horizon",
+    "targetPolicy": "fixed horizons only; DWM next-vblank target not reconstructed",
+    "horizonsMs": [
+      8.33,
+      16.67,
+      25,
+      33.33
+    ],
+    "historyMs": 200,
+    "zipSelection": "newest 6 cursor-mirror-trace ZIPs",
+    "zipExpandedToDisk": false,
+    "perFrameCsvWritten": false,
+    "rawCsvCopyWritten": false,
+    "cacheWritten": false,
+    "checkpointWritten": false
+  },
+  "inputZips": [
+    "cursor-mirror-trace-20260502-184947.zip",
+    "cursor-mirror-trace-20260502-175951.zip",
+    "cursor-mirror-trace-20260502-173150.zip",
+    "cursor-mirror-trace-20260502-165358.zip",
+    "cursor-mirror-trace-20260502-163258.zip",
+    "cursor-mirror-trace-20260502-161143.zip"
+  ],
+  "rowSummary": {
+    "totalRows": 110945,
+    "sessions": [
+      {
+        "sessionId": "session_1",
+        "sourceZip": "cursor-mirror-trace-20260502-184947.zip",
+        "traceFormatVersion": 9,
+        "createdUtc": "2026-05-02T09:49:50.7516196Z",
+        "csvRows": 208139,
+        "eventCounts": {
+          "referencePoll": 97907,
+          "poll": 12159,
+          "schedulerExperiment": 35743,
+          "runtimeSelfSchedulerPoll": 11911,
+          "runtimeSelfSchedulerLoop": 11912,
+          "runtimeSchedulerLoop": 11913,
+          "runtimeSchedulerPoll": 11912,
+          "move": 14682
+        },
+        "referencePollCount": 97907,
+        "anchorCount": 11911,
+        "rowsBuilt": 47636,
+        "qualityWarnings": [
+          "product_poll_interval_p95_exceeds_requested_interval"
+        ]
+      },
+      {
+        "sessionId": "session_2",
+        "sourceZip": "cursor-mirror-trace-20260502-175951.zip",
+        "traceFormatVersion": 9,
+        "createdUtc": "2026-05-02T08:59:55.9772580Z",
+        "csvRows": 260359,
+        "eventCounts": {
+          "referencePoll": 122812,
+          "poll": 14434,
+          "schedulerExperiment": 47506,
+          "runtimeSelfSchedulerPoll": 15829,
+          "runtimeSelfSchedulerLoop": 15830,
+          "runtimeSchedulerLoop": 15839,
+          "runtimeSchedulerPoll": 15838,
+          "move": 12271
+        },
+        "referencePollCount": 122812,
+        "anchorCount": 15829,
+        "rowsBuilt": 63309,
+        "qualityWarnings": [
+          "product_poll_interval_p95_exceeds_requested_interval"
+        ]
+      },
+      {
+        "sessionId": "session_3",
+        "sourceZip": "cursor-mirror-trace-20260502-173150.zip",
+        "traceFormatVersion": 8,
+        "createdUtc": "2026-05-02T08:31:54.0433192Z",
+        "csvRows": 246843,
+        "eventCounts": {
+          "referencePoll": 133611,
+          "poll": 16284,
+          "schedulerExperiment": 49696,
+          "runtimeSchedulerLoop": 16564,
+          "runtimeSchedulerPoll": 16563,
+          "move": 14125
+        },
+        "referencePollCount": 133611,
+        "anchorCount": 0,
+        "rowsBuilt": 0,
+        "qualityWarnings": [
+          "product_poll_interval_p95_exceeds_requested_interval"
+        ]
+      },
+      {
+        "sessionId": "session_4",
+        "sourceZip": "cursor-mirror-trace-20260502-165358.zip",
+        "traceFormatVersion": 8,
+        "createdUtc": "2026-05-02T07:54:02.8371048Z",
+        "csvRows": 258622,
+        "eventCounts": {
+          "referencePoll": 141143,
+          "poll": 16966,
+          "schedulerExperiment": 53081,
+          "runtimeSchedulerLoop": 17698,
+          "runtimeSchedulerPoll": 17697,
+          "move": 12037
+        },
+        "referencePollCount": 141143,
+        "anchorCount": 0,
+        "rowsBuilt": 0,
+        "qualityWarnings": [
+          "product_poll_interval_p95_exceeds_requested_interval"
+        ]
+      },
+      {
+        "sessionId": "session_5",
+        "sourceZip": "cursor-mirror-trace-20260502-163258.zip",
+        "traceFormatVersion": 8,
+        "createdUtc": "2026-05-02T07:33:03.1125529Z",
+        "csvRows": 263200,
+        "eventCounts": {
+          "referencePoll": 88345,
+          "poll": 10809,
+          "runtimeSchedulerLoop": 102175,
+          "schedulerExperiment": 41634,
+          "runtimeSchedulerPoll": 10282,
+          "move": 9955
+        },
+        "referencePollCount": 88345,
+        "anchorCount": 0,
+        "rowsBuilt": 0,
+        "qualityWarnings": [
+          "product_poll_interval_p95_exceeds_requested_interval"
+        ]
+      },
+      {
+        "sessionId": "session_6",
+        "sourceZip": "cursor-mirror-trace-20260502-161143.zip",
+        "traceFormatVersion": 7,
+        "createdUtc": "2026-05-02T07:11:48.3625013Z",
+        "csvRows": 362181,
+        "eventCounts": {
+          "referencePoll": 144258,
+          "poll": 18035,
+          "runtimeSchedulerLoop": 167110,
+          "runtimeSchedulerPoll": 16828,
+          "move": 15950
+        },
+        "referencePollCount": 144258,
+        "anchorCount": 0,
+        "rowsBuilt": 0,
+        "qualityWarnings": [
+          "product_poll_interval_p95_exceeds_requested_interval"
+        ]
+      }
+    ],
+    "nonEmptySessions": 2
+  },
+  "candidateModels": {
+    "baseline": {
+      "id": "constant_velocity_last2_cap24",
+      "family": "constant_velocity_last2",
+      "params": {
+        "gain": 1,
+        "horizonCapMs": 33.33,
+        "displacementCapPx": 24
+      }
+    },
+    "advanced": [
+      {
+        "id": "least_squares_w50_cap24",
+        "family": "least_squares_window",
+        "params": {
+          "windowMs": 50,
+          "horizonCapMs": 33.33,
+          "displacementCapPx": 24
+        }
+      },
+      {
+        "id": "least_squares_w50_cap36",
+        "family": "least_squares_window",
+        "params": {
+          "windowMs": 50,
+          "horizonCapMs": 33.33,
+          "displacementCapPx": 36
+        }
+      },
+      {
+        "id": "least_squares_w70_cap24",
+        "family": "least_squares_window",
+        "params": {
+          "windowMs": 70,
+          "horizonCapMs": 33.33,
+          "displacementCapPx": 24
+        }
+      },
+      {
+        "id": "blend_cv_ls_w50_cap36_ls0p25",
+        "family": "blend",
+        "params": {
+          "weightB": 0.25,
+          "a": {
+            "id": "constant_velocity_last2_cap24",
+            "family": "constant_velocity_last2",
+            "params": {
+              "gain": 1,
+              "horizonCapMs": 33.33,
+              "displacementCapPx": 24
+            }
+          },
+          "b": {
+            "family": "least_squares_window",
+            "params": {
+              "windowMs": 50,
+              "horizonCapMs": 33.33,
+              "displacementCapPx": 36
+            }
+          }
+        }
+      },
+      {
+        "id": "blend_cv_ls_w50_cap36_ls0p5",
+        "family": "blend",
+        "params": {
+          "weightB": 0.5,
+          "a": {
+            "id": "constant_velocity_last2_cap24",
+            "family": "constant_velocity_last2",
+            "params": {
+              "gain": 1,
+              "horizonCapMs": 33.33,
+              "displacementCapPx": 24
+            }
+          },
+          "b": {
+            "family": "least_squares_window",
+            "params": {
+              "windowMs": 50,
+              "horizonCapMs": 33.33,
+              "displacementCapPx": 36
+            }
+          }
+        }
+      },
+      {
+        "id": "blend_cv_ls_w50_cap36_ls0p75",
+        "family": "blend",
+        "params": {
+          "weightB": 0.75,
+          "a": {
+            "id": "constant_velocity_last2_cap24",
+            "family": "constant_velocity_last2",
+            "params": {
+              "gain": 1,
+              "horizonCapMs": 33.33,
+              "displacementCapPx": 24
+            }
+          },
+          "b": {
+            "family": "least_squares_window",
+            "params": {
+              "windowMs": 50,
+              "horizonCapMs": 33.33,
+              "displacementCapPx": 36
+            }
+          }
+        }
+      }
+    ]
+  },
+  "crossSession": {
+    "splits": [
+      {
+        "id": "cursor-mirror-trace-20260502-184947.zip_to_cursor-mirror-trace-20260502-175951.zip",
+        "trainSourceZip": "cursor-mirror-trace-20260502-184947.zip",
+        "validationSourceZip": "cursor-mirror-trace-20260502-184947.zip",
+        "testSourceZip": "cursor-mirror-trace-20260502-175951.zip",
+        "rowCounts": {
+          "train": 33345,
+          "validation": 14291,
+          "test": 63309
+        },
+        "selected": {
+          "gate": {
+            "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_1",
+            "role": "real_tree_gate",
+            "family": "tree",
+            "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+            "params": {
+              "policy": {
+                "id": "strict",
+                "maxWorse10": 0,
+                "maxWorse5Rate": 0,
+                "minRows": 66,
+                "minGain": 0.015
+              },
+              "maxDepth": 2,
+              "root": {
+                "type": "split",
+                "feature": "lsCvDisagreement",
+                "threshold": 16,
+                "left": {
+                  "type": "split",
+                  "feature": "jitterProxy",
+                  "threshold": 0.01,
+                  "left": {
+                    "type": "leaf",
+                    "useAdvanced": false,
+                    "rows": 13732,
+                    "worseOver5px": 0,
+                    "worseOver10px": 0,
+                    "meanDeltaPx": 0.121485,
+                    "cost": 0
+                  },
+                  "right": {
+                    "type": "leaf",
+                    "useAdvanced": true,
+                    "rows": 9711,
+                    "worseOver5px": 0,
+                    "worseOver10px": 0,
+                    "meanDeltaPx": -0.711389,
+                    "cost": -6364.300937
+                  }
+                },
+                "right": {
+                  "type": "leaf",
+                  "useAdvanced": false,
+                  "rows": 9902,
+                  "worseOver5px": 1367,
+                  "worseOver10px": 94,
+                  "meanDeltaPx": -3.723977,
+                  "cost": 0
+                }
+              }
+            }
+          },
+          "train": {
+            "metrics": {
+              "count": 33345,
+              "mean": 23.967396,
+              "rmse": 62.409915,
+              "p50": 3.375,
+              "p90": 64.925,
+              "p95": 116.175,
+              "p99": 292.025,
+              "max": 962.266075
+            },
+            "regressionsVsBaseline": {
+              "count": 33345,
+              "worseOver1px": 1351,
+              "worseOver3px": 272,
+              "worseOver5px": 0,
+              "worseOver10px": 0,
+              "improvedOver1px": 4119,
+              "improvedOver3px": 867,
+              "meanDeltaPx": -0.207177
+            },
+            "gateUses": {
+              "advanced": 9711,
+              "fallback": 23634
+            }
+          },
+          "validation": {
+            "metrics": {
+              "count": 14291,
+              "mean": 31.884792,
+              "rmse": 67.073233,
+              "p50": 9.325,
+              "p90": 90.025,
+              "p95": 149.025,
+              "p99": 290.775,
+              "max": 710.372438
+            },
+            "regressionsVsBaseline": {
+              "count": 14291,
+              "worseOver1px": 846,
+              "worseOver3px": 163,
+              "worseOver5px": 0,
+              "worseOver10px": 0,
+              "improvedOver1px": 1687,
+              "improvedOver3px": 346,
+              "meanDeltaPx": -0.150694
+            },
+            "gateUses": {
+              "advanced": 4464,
+              "fallback": 9827
+            }
+          },
+          "test": {
+            "metrics": {
+              "count": 63309,
+              "mean": 9.876374,
+              "rmse": 37.320131,
+              "p50": 0.025,
+              "p90": 22.225,
+              "p95": 43.875,
+              "p99": 161.025,
+              "max": 959.016163
+            },
+            "regressionsVsBaseline": {
+              "count": 63309,
+              "worseOver1px": 1607,
+              "worseOver3px": 299,
+              "worseOver5px": 0,
+              "worseOver10px": 0,
+              "improvedOver1px": 6386,
+              "improvedOver3px": 1440,
+              "meanDeltaPx": -0.189206
+            },
+            "gateUses": {
+              "advanced": 16769,
+              "fallback": 46540
+            }
+          },
+          "validationRank": 32062.894449
+        },
+        "topValidation": [
+          {
+            "gate": {
+              "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_1",
+              "role": "real_tree_gate",
+              "family": "tree",
+              "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+              "params": {
+                "policy": {
+                  "id": "strict",
+                  "maxWorse10": 0,
+                  "maxWorse5Rate": 0,
+                  "minRows": 66,
+                  "minGain": 0.015
+                },
+                "maxDepth": 2,
+                "root": {
+                  "type": "split",
+                  "feature": "lsCvDisagreement",
+                  "threshold": 16,
+                  "left": {
+                    "type": "split",
+                    "feature": "jitterProxy",
+                    "threshold": 0.01,
+                    "left": {
+                      "type": "leaf",
+                      "useAdvanced": false,
+                      "rows": 13732,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": 0.121485,
+                      "cost": 0
+                    },
+                    "right": {
+                      "type": "leaf",
+                      "useAdvanced": true,
+                      "rows": 9711,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": -0.711389,
+                      "cost": -6364.300937
+                    }
+                  },
+                  "right": {
+                    "type": "leaf",
+                    "useAdvanced": false,
+                    "rows": 9902,
+                    "worseOver5px": 1367,
+                    "worseOver10px": 94,
+                    "meanDeltaPx": -3.723977,
+                    "cost": 0
+                  }
+                }
+              }
+            },
+            "validation": {
+              "metrics": {
+                "count": 14291,
+                "mean": 31.884792,
+                "rmse": 67.073233,
+                "p50": 9.325,
+                "p90": 90.025,
+                "p95": 149.025,
+                "p99": 290.775,
+                "max": 710.372438
+              },
+              "regressionsVsBaseline": {
+                "count": 14291,
+                "worseOver1px": 846,
+                "worseOver3px": 163,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 1687,
+                "improvedOver3px": 346,
+                "meanDeltaPx": -0.150694
+              },
+              "gateUses": {
+                "advanced": 4464,
+                "fallback": 9827
+              }
+            },
+            "test": {
+              "metrics": {
+                "count": 63309,
+                "mean": 9.876374,
+                "rmse": 37.320131,
+                "p50": 0.025,
+                "p90": 22.225,
+                "p95": 43.875,
+                "p99": 161.025,
+                "max": 959.016163
+              },
+              "regressionsVsBaseline": {
+                "count": 63309,
+                "worseOver1px": 1607,
+                "worseOver3px": 299,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 6386,
+                "improvedOver3px": 1440,
+                "meanDeltaPx": -0.189206
+              },
+              "gateUses": {
+                "advanced": 16769,
+                "fallback": 46540
+              }
+            },
+            "validationRank": 32062.894449
+          },
+          {
+            "gate": {
+              "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_2",
+              "role": "real_tree_gate",
+              "family": "tree",
+              "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+              "params": {
+                "policy": {
+                  "id": "strict",
+                  "maxWorse10": 0,
+                  "maxWorse5Rate": 0,
+                  "minRows": 66,
+                  "minGain": 0.015
+                },
+                "maxDepth": 3,
+                "root": {
+                  "type": "split",
+                  "feature": "lsCvDisagreement",
+                  "threshold": 16,
+                  "left": {
+                    "type": "split",
+                    "feature": "jitterProxy",
+                    "threshold": 0.01,
+                    "left": {
+                      "type": "leaf",
+                      "useAdvanced": false,
+                      "rows": 13732,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": 0.121485,
+                      "cost": 0
+                    },
+                    "right": {
+                      "type": "leaf",
+                      "useAdvanced": true,
+                      "rows": 9711,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": -0.711389,
+                      "cost": -6364.300937
+                    }
+                  },
+                  "right": {
+                    "type": "leaf",
+                    "useAdvanced": false,
+                    "rows": 9902,
+                    "worseOver5px": 1367,
+                    "worseOver10px": 94,
+                    "meanDeltaPx": -3.723977,
+                    "cost": 0
+                  }
+                }
+              }
+            },
+            "validation": {
+              "metrics": {
+                "count": 14291,
+                "mean": 31.884792,
+                "rmse": 67.073233,
+                "p50": 9.325,
+                "p90": 90.025,
+                "p95": 149.025,
+                "p99": 290.775,
+                "max": 710.372438
+              },
+              "regressionsVsBaseline": {
+                "count": 14291,
+                "worseOver1px": 846,
+                "worseOver3px": 163,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 1687,
+                "improvedOver3px": 346,
+                "meanDeltaPx": -0.150694
+              },
+              "gateUses": {
+                "advanced": 4464,
+                "fallback": 9827
+              }
+            },
+            "test": {
+              "metrics": {
+                "count": 63309,
+                "mean": 9.876374,
+                "rmse": 37.320131,
+                "p50": 0.025,
+                "p90": 22.225,
+                "p95": 43.875,
+                "p99": 161.025,
+                "max": 959.016163
+              },
+              "regressionsVsBaseline": {
+                "count": 63309,
+                "worseOver1px": 1607,
+                "worseOver3px": 299,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 6386,
+                "improvedOver3px": 1440,
+                "meanDeltaPx": -0.189206
+              },
+              "gateUses": {
+                "advanced": 16769,
+                "fallback": 46540
+              }
+            },
+            "validationRank": 32062.894449
+          },
+          {
+            "gate": {
+              "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_3",
+              "role": "real_tree_gate",
+              "family": "tree",
+              "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+              "params": {
+                "policy": {
+                  "id": "strict",
+                  "maxWorse10": 0,
+                  "maxWorse5Rate": 0,
+                  "minRows": 66,
+                  "minGain": 0.015
+                },
+                "maxDepth": 4,
+                "root": {
+                  "type": "split",
+                  "feature": "lsCvDisagreement",
+                  "threshold": 16,
+                  "left": {
+                    "type": "split",
+                    "feature": "jitterProxy",
+                    "threshold": 0.01,
+                    "left": {
+                      "type": "leaf",
+                      "useAdvanced": false,
+                      "rows": 13732,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": 0.121485,
+                      "cost": 0
+                    },
+                    "right": {
+                      "type": "leaf",
+                      "useAdvanced": true,
+                      "rows": 9711,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": -0.711389,
+                      "cost": -6364.300937
+                    }
+                  },
+                  "right": {
+                    "type": "leaf",
+                    "useAdvanced": false,
+                    "rows": 9902,
+                    "worseOver5px": 1367,
+                    "worseOver10px": 94,
+                    "meanDeltaPx": -3.723977,
+                    "cost": 0
+                  }
+                }
+              }
+            },
+            "validation": {
+              "metrics": {
+                "count": 14291,
+                "mean": 31.884792,
+                "rmse": 67.073233,
+                "p50": 9.325,
+                "p90": 90.025,
+                "p95": 149.025,
+                "p99": 290.775,
+                "max": 710.372438
+              },
+              "regressionsVsBaseline": {
+                "count": 14291,
+                "worseOver1px": 846,
+                "worseOver3px": 163,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 1687,
+                "improvedOver3px": 346,
+                "meanDeltaPx": -0.150694
+              },
+              "gateUses": {
+                "advanced": 4464,
+                "fallback": 9827
+              }
+            },
+            "test": {
+              "metrics": {
+                "count": 63309,
+                "mean": 9.876374,
+                "rmse": 37.320131,
+                "p50": 0.025,
+                "p90": 22.225,
+                "p95": 43.875,
+                "p99": 161.025,
+                "max": 959.016163
+              },
+              "regressionsVsBaseline": {
+                "count": 63309,
+                "worseOver1px": 1607,
+                "worseOver3px": 299,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 6386,
+                "improvedOver3px": 1440,
+                "meanDeltaPx": -0.189206
+              },
+              "gateUses": {
+                "advanced": 16769,
+                "fallback": 46540
+              }
+            },
+            "validationRank": 32062.894449
+          },
+          {
+            "gate": {
+              "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_4",
+              "role": "real_tree_gate",
+              "family": "tree",
+              "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+              "params": {
+                "policy": {
+                  "id": "balanced",
+                  "maxWorse10": 0,
+                  "maxWorse5Rate": 0.002,
+                  "minRows": 100,
+                  "minGain": 0.025
+                },
+                "maxDepth": 2,
+                "root": {
+                  "type": "split",
+                  "feature": "lsCvDisagreement",
+                  "threshold": 16,
+                  "left": {
+                    "type": "split",
+                    "feature": "jitterProxy",
+                    "threshold": 0.01,
+                    "left": {
+                      "type": "leaf",
+                      "useAdvanced": false,
+                      "rows": 13732,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": 0.121485,
+                      "cost": 0
+                    },
+                    "right": {
+                      "type": "leaf",
+                      "useAdvanced": true,
+                      "rows": 9711,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": -0.711389,
+                      "cost": -6364.300937
+                    }
+                  },
+                  "right": {
+                    "type": "leaf",
+                    "useAdvanced": false,
+                    "rows": 9902,
+                    "worseOver5px": 1367,
+                    "worseOver10px": 94,
+                    "meanDeltaPx": -3.723977,
+                    "cost": 0
+                  }
+                }
+              }
+            },
+            "validation": {
+              "metrics": {
+                "count": 14291,
+                "mean": 31.884792,
+                "rmse": 67.073233,
+                "p50": 9.325,
+                "p90": 90.025,
+                "p95": 149.025,
+                "p99": 290.775,
+                "max": 710.372438
+              },
+              "regressionsVsBaseline": {
+                "count": 14291,
+                "worseOver1px": 846,
+                "worseOver3px": 163,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 1687,
+                "improvedOver3px": 346,
+                "meanDeltaPx": -0.150694
+              },
+              "gateUses": {
+                "advanced": 4464,
+                "fallback": 9827
+              }
+            },
+            "test": {
+              "metrics": {
+                "count": 63309,
+                "mean": 9.876374,
+                "rmse": 37.320131,
+                "p50": 0.025,
+                "p90": 22.225,
+                "p95": 43.875,
+                "p99": 161.025,
+                "max": 959.016163
+              },
+              "regressionsVsBaseline": {
+                "count": 63309,
+                "worseOver1px": 1607,
+                "worseOver3px": 299,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 6386,
+                "improvedOver3px": 1440,
+                "meanDeltaPx": -0.189206
+              },
+              "gateUses": {
+                "advanced": 16769,
+                "fallback": 46540
+              }
+            },
+            "validationRank": 32062.894449
+          },
+          {
+            "gate": {
+              "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_5",
+              "role": "real_tree_gate",
+              "family": "tree",
+              "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+              "params": {
+                "policy": {
+                  "id": "balanced",
+                  "maxWorse10": 0,
+                  "maxWorse5Rate": 0.002,
+                  "minRows": 100,
+                  "minGain": 0.025
+                },
+                "maxDepth": 3,
+                "root": {
+                  "type": "split",
+                  "feature": "lsCvDisagreement",
+                  "threshold": 16,
+                  "left": {
+                    "type": "split",
+                    "feature": "jitterProxy",
+                    "threshold": 0.01,
+                    "left": {
+                      "type": "leaf",
+                      "useAdvanced": false,
+                      "rows": 13732,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": 0.121485,
+                      "cost": 0
+                    },
+                    "right": {
+                      "type": "leaf",
+                      "useAdvanced": true,
+                      "rows": 9711,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": -0.711389,
+                      "cost": -6364.300937
+                    }
+                  },
+                  "right": {
+                    "type": "leaf",
+                    "useAdvanced": false,
+                    "rows": 9902,
+                    "worseOver5px": 1367,
+                    "worseOver10px": 94,
+                    "meanDeltaPx": -3.723977,
+                    "cost": 0
+                  }
+                }
+              }
+            },
+            "validation": {
+              "metrics": {
+                "count": 14291,
+                "mean": 31.884792,
+                "rmse": 67.073233,
+                "p50": 9.325,
+                "p90": 90.025,
+                "p95": 149.025,
+                "p99": 290.775,
+                "max": 710.372438
+              },
+              "regressionsVsBaseline": {
+                "count": 14291,
+                "worseOver1px": 846,
+                "worseOver3px": 163,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 1687,
+                "improvedOver3px": 346,
+                "meanDeltaPx": -0.150694
+              },
+              "gateUses": {
+                "advanced": 4464,
+                "fallback": 9827
+              }
+            },
+            "test": {
+              "metrics": {
+                "count": 63309,
+                "mean": 9.876374,
+                "rmse": 37.320131,
+                "p50": 0.025,
+                "p90": 22.225,
+                "p95": 43.875,
+                "p99": 161.025,
+                "max": 959.016163
+              },
+              "regressionsVsBaseline": {
+                "count": 63309,
+                "worseOver1px": 1607,
+                "worseOver3px": 299,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 6386,
+                "improvedOver3px": 1440,
+                "meanDeltaPx": -0.189206
+              },
+              "gateUses": {
+                "advanced": 16769,
+                "fallback": 46540
+              }
+            },
+            "validationRank": 32062.894449
+          },
+          {
+            "gate": {
+              "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_6",
+              "role": "real_tree_gate",
+              "family": "tree",
+              "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+              "params": {
+                "policy": {
+                  "id": "balanced",
+                  "maxWorse10": 0,
+                  "maxWorse5Rate": 0.002,
+                  "minRows": 100,
+                  "minGain": 0.025
+                },
+                "maxDepth": 4,
+                "root": {
+                  "type": "split",
+                  "feature": "lsCvDisagreement",
+                  "threshold": 16,
+                  "left": {
+                    "type": "split",
+                    "feature": "jitterProxy",
+                    "threshold": 0.01,
+                    "left": {
+                      "type": "leaf",
+                      "useAdvanced": false,
+                      "rows": 13732,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": 0.121485,
+                      "cost": 0
+                    },
+                    "right": {
+                      "type": "leaf",
+                      "useAdvanced": true,
+                      "rows": 9711,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": -0.711389,
+                      "cost": -6364.300937
+                    }
+                  },
+                  "right": {
+                    "type": "leaf",
+                    "useAdvanced": false,
+                    "rows": 9902,
+                    "worseOver5px": 1367,
+                    "worseOver10px": 94,
+                    "meanDeltaPx": -3.723977,
+                    "cost": 0
+                  }
+                }
+              }
+            },
+            "validation": {
+              "metrics": {
+                "count": 14291,
+                "mean": 31.884792,
+                "rmse": 67.073233,
+                "p50": 9.325,
+                "p90": 90.025,
+                "p95": 149.025,
+                "p99": 290.775,
+                "max": 710.372438
+              },
+              "regressionsVsBaseline": {
+                "count": 14291,
+                "worseOver1px": 846,
+                "worseOver3px": 163,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 1687,
+                "improvedOver3px": 346,
+                "meanDeltaPx": -0.150694
+              },
+              "gateUses": {
+                "advanced": 4464,
+                "fallback": 9827
+              }
+            },
+            "test": {
+              "metrics": {
+                "count": 63309,
+                "mean": 9.876374,
+                "rmse": 37.320131,
+                "p50": 0.025,
+                "p90": 22.225,
+                "p95": 43.875,
+                "p99": 161.025,
+                "max": 959.016163
+              },
+              "regressionsVsBaseline": {
+                "count": 63309,
+                "worseOver1px": 1607,
+                "worseOver3px": 299,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 6386,
+                "improvedOver3px": 1440,
+                "meanDeltaPx": -0.189206
+              },
+              "gateUses": {
+                "advanced": 16769,
+                "fallback": 46540
+              }
+            },
+            "validationRank": 32062.894449
+          },
+          {
+            "gate": {
+              "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_7",
+              "role": "real_tree_gate",
+              "family": "tree",
+              "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+              "params": {
+                "policy": {
+                  "id": "strict",
+                  "maxWorse10": 0,
+                  "maxWorse5Rate": 0,
+                  "minRows": 66,
+                  "minGain": 0.015
+                },
+                "maxDepth": 1,
+                "root": {
+                  "type": "split",
+                  "feature": "lsCvDisagreement",
+                  "threshold": 16,
+                  "left": {
+                    "type": "leaf",
+                    "useAdvanced": true,
+                    "rows": 23443,
+                    "worseOver5px": 0,
+                    "worseOver10px": 0,
+                    "meanDeltaPx": -0.223524,
+                    "cost": -4460.073433
+                  },
+                  "right": {
+                    "type": "leaf",
+                    "useAdvanced": false,
+                    "rows": 9902,
+                    "worseOver5px": 1367,
+                    "worseOver10px": 94,
+                    "meanDeltaPx": -3.723977,
+                    "cost": 0
+                  }
+                }
+              }
+            },
+            "validation": {
+              "metrics": {
+                "count": 14291,
+                "mean": 31.935558,
+                "rmse": 67.071518,
+                "p50": 9.275,
+                "p90": 90.025,
+                "p95": 149.025,
+                "p99": 290.775,
+                "max": 710.372438
+              },
+              "regressionsVsBaseline": {
+                "count": 14291,
+                "worseOver1px": 1168,
+                "worseOver3px": 219,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 1754,
+                "improvedOver3px": 357,
+                "meanDeltaPx": -0.099927
+              },
+              "gateUses": {
+                "advanced": 8598,
+                "fallback": 5693
+              }
+            },
+            "test": {
+              "metrics": {
+                "count": 63309,
+                "mean": 9.90812,
+                "rmse": 37.316065,
+                "p50": 0.225,
+                "p90": 22.175,
+                "p95": 43.825,
+                "p99": 161.025,
+                "max": 959.016163
+              },
+              "regressionsVsBaseline": {
+                "count": 63309,
+                "worseOver1px": 2463,
+                "worseOver3px": 446,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 6627,
+                "improvedOver3px": 1473,
+                "meanDeltaPx": -0.15746
+              },
+              "gateUses": {
+                "advanced": 53725,
+                "fallback": 9584
+              }
+            },
+            "validationRank": 32113.660945
+          },
+          {
+            "gate": {
+              "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_8",
+              "role": "real_tree_gate",
+              "family": "tree",
+              "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+              "params": {
+                "policy": {
+                  "id": "balanced",
+                  "maxWorse10": 0,
+                  "maxWorse5Rate": 0.002,
+                  "minRows": 100,
+                  "minGain": 0.025
+                },
+                "maxDepth": 1,
+                "root": {
+                  "type": "split",
+                  "feature": "lsCvDisagreement",
+                  "threshold": 16,
+                  "left": {
+                    "type": "leaf",
+                    "useAdvanced": true,
+                    "rows": 23443,
+                    "worseOver5px": 0,
+                    "worseOver10px": 0,
+                    "meanDeltaPx": -0.223524,
+                    "cost": -4460.073433
+                  },
+                  "right": {
+                    "type": "leaf",
+                    "useAdvanced": false,
+                    "rows": 9902,
+                    "worseOver5px": 1367,
+                    "worseOver10px": 94,
+                    "meanDeltaPx": -3.723977,
+                    "cost": 0
+                  }
+                }
+              }
+            },
+            "validation": {
+              "metrics": {
+                "count": 14291,
+                "mean": 31.935558,
+                "rmse": 67.071518,
+                "p50": 9.275,
+                "p90": 90.025,
+                "p95": 149.025,
+                "p99": 290.775,
+                "max": 710.372438
+              },
+              "regressionsVsBaseline": {
+                "count": 14291,
+                "worseOver1px": 1168,
+                "worseOver3px": 219,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 1754,
+                "improvedOver3px": 357,
+                "meanDeltaPx": -0.099927
+              },
+              "gateUses": {
+                "advanced": 8598,
+                "fallback": 5693
+              }
+            },
+            "test": {
+              "metrics": {
+                "count": 63309,
+                "mean": 9.90812,
+                "rmse": 37.316065,
+                "p50": 0.225,
+                "p90": 22.175,
+                "p95": 43.825,
+                "p99": 161.025,
+                "max": 959.016163
+              },
+              "regressionsVsBaseline": {
+                "count": 63309,
+                "worseOver1px": 2463,
+                "worseOver3px": 446,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 6627,
+                "improvedOver3px": 1473,
+                "meanDeltaPx": -0.15746
+              },
+              "gateUses": {
+                "advanced": 53725,
+                "fallback": 9584
+              }
+            },
+            "validationRank": 32113.660945
+          },
+          {
+            "gate": {
+              "id": "real_monotonic_least_squares_w50_cap24_1",
+              "role": "real_monotonic_gate",
+              "family": "monotonic",
+              "candidateId": "least_squares_w50_cap24",
+              "params": {
+                "weights": {
+                  "lowSpeed": 1.2,
+                  "highSpeed": 0.2,
+                  "acceleration": 1.2,
+                  "curvature": 2,
+                  "edgeNear": 0.2,
+                  "sparseHistory": 0.2,
+                  "jitterProxy": 0.6,
+                  "horizon": 0.4,
+                  "disagreement": 0.6
+                },
+                "threshold": 1.29997
+              }
+            },
+            "validation": {
+              "metrics": {
+                "count": 14291,
+                "mean": 32.035315,
+                "rmse": 67.209067,
+                "p50": 9.825,
+                "p90": 90.225,
+                "p95": 149.425,
+                "p99": 291.075,
+                "max": 710.372438
+              },
+              "regressionsVsBaseline": {
+                "count": 14291,
+                "worseOver1px": 0,
+                "worseOver3px": 0,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 1,
+                "improvedOver3px": 0,
+                "meanDeltaPx": -0.000171
+              },
+              "gateUses": {
+                "advanced": 515,
+                "fallback": 13776
+              }
+            },
+            "test": {
+              "metrics": {
+                "count": 63309,
+                "mean": 10.06558,
+                "rmse": 37.419386,
+                "p50": 0.025,
+                "p90": 22.775,
+                "p95": 44.075,
+                "p99": 161.625,
+                "max": 959.016163
+              },
+              "regressionsVsBaseline": {
+                "count": 63309,
+                "worseOver1px": 0,
+                "worseOver3px": 0,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 0,
+                "improvedOver3px": 0,
+                "meanDeltaPx": 0
+              },
+              "gateUses": {
+                "advanced": 6274,
+                "fallback": 57035
+              }
+            },
+            "validationRank": 32213.847151
+          },
+          {
+            "gate": {
+              "id": "real_monotonic_least_squares_w50_cap24_2",
+              "role": "real_monotonic_gate",
+              "family": "monotonic",
+              "candidateId": "least_squares_w50_cap24",
+              "params": {
+                "weights": {
+                  "lowSpeed": 1.2,
+                  "highSpeed": 0.2,
+                  "acceleration": 1.2,
+                  "curvature": 2,
+                  "edgeNear": 0.2,
+                  "sparseHistory": 0.2,
+                  "jitterProxy": 0.6,
+                  "horizon": 0.4,
+                  "disagreement": 0.6
+                },
+                "threshold": 1.29997
+              }
+            },
+            "validation": {
+              "metrics": {
+                "count": 14291,
+                "mean": 32.035315,
+                "rmse": 67.209067,
+                "p50": 9.825,
+                "p90": 90.225,
+                "p95": 149.425,
+                "p99": 291.075,
+                "max": 710.372438
+              },
+              "regressionsVsBaseline": {
+                "count": 14291,
+                "worseOver1px": 0,
+                "worseOver3px": 0,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 1,
+                "improvedOver3px": 0,
+                "meanDeltaPx": -0.000171
+              },
+              "gateUses": {
+                "advanced": 578,
+                "fallback": 13713
+              }
+            },
+            "test": {
+              "metrics": {
+                "count": 63309,
+                "mean": 10.06558,
+                "rmse": 37.419386,
+                "p50": 0.025,
+                "p90": 22.775,
+                "p95": 44.075,
+                "p99": 161.625,
+                "max": 959.016163
+              },
+              "regressionsVsBaseline": {
+                "count": 63309,
+                "worseOver1px": 0,
+                "worseOver3px": 0,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 0,
+                "improvedOver3px": 0,
+                "meanDeltaPx": 0
+              },
+              "gateUses": {
+                "advanced": 6759,
+                "fallback": 56550
+              }
+            },
+            "validationRank": 32213.847151
+          },
+          {
+            "gate": {
+              "id": "real_monotonic_least_squares_w50_cap36_1",
+              "role": "real_monotonic_gate",
+              "family": "monotonic",
+              "candidateId": "least_squares_w50_cap36",
+              "params": {
+                "weights": {
+                  "lowSpeed": 1.2,
+                  "highSpeed": 0.2,
+                  "acceleration": 1.2,
+                  "curvature": 2,
+                  "edgeNear": 0.2,
+                  "sparseHistory": 0.2,
+                  "jitterProxy": 0.6,
+                  "horizon": 0.4,
+                  "disagreement": 0.6
+                },
+                "threshold": 1.29997
+              }
+            },
+            "validation": {
+              "metrics": {
+                "count": 14291,
+                "mean": 32.035315,
+                "rmse": 67.209067,
+                "p50": 9.825,
+                "p90": 90.225,
+                "p95": 149.425,
+                "p99": 291.075,
+                "max": 710.372438
+              },
+              "regressionsVsBaseline": {
+                "count": 14291,
+                "worseOver1px": 0,
+                "worseOver3px": 0,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 1,
+                "improvedOver3px": 0,
+                "meanDeltaPx": -0.000171
+              },
+              "gateUses": {
+                "advanced": 515,
+                "fallback": 13776
+              }
+            },
+            "test": {
+              "metrics": {
+                "count": 63309,
+                "mean": 10.06558,
+                "rmse": 37.419386,
+                "p50": 0.025,
+                "p90": 22.775,
+                "p95": 44.075,
+                "p99": 161.625,
+                "max": 959.016163
+              },
+              "regressionsVsBaseline": {
+                "count": 63309,
+                "worseOver1px": 0,
+                "worseOver3px": 0,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 0,
+                "improvedOver3px": 0,
+                "meanDeltaPx": 0
+              },
+              "gateUses": {
+                "advanced": 6274,
+                "fallback": 57035
+              }
+            },
+            "validationRank": 32213.847151
+          },
+          {
+            "gate": {
+              "id": "real_monotonic_least_squares_w50_cap36_2",
+              "role": "real_monotonic_gate",
+              "family": "monotonic",
+              "candidateId": "least_squares_w50_cap36",
+              "params": {
+                "weights": {
+                  "lowSpeed": 1.2,
+                  "highSpeed": 0.2,
+                  "acceleration": 1.2,
+                  "curvature": 2,
+                  "edgeNear": 0.2,
+                  "sparseHistory": 0.2,
+                  "jitterProxy": 0.6,
+                  "horizon": 0.4,
+                  "disagreement": 0.6
+                },
+                "threshold": 1.29997
+              }
+            },
+            "validation": {
+              "metrics": {
+                "count": 14291,
+                "mean": 32.035315,
+                "rmse": 67.209067,
+                "p50": 9.825,
+                "p90": 90.225,
+                "p95": 149.425,
+                "p99": 291.075,
+                "max": 710.372438
+              },
+              "regressionsVsBaseline": {
+                "count": 14291,
+                "worseOver1px": 0,
+                "worseOver3px": 0,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 1,
+                "improvedOver3px": 0,
+                "meanDeltaPx": -0.000171
+              },
+              "gateUses": {
+                "advanced": 578,
+                "fallback": 13713
+              }
+            },
+            "test": {
+              "metrics": {
+                "count": 63309,
+                "mean": 10.06558,
+                "rmse": 37.419386,
+                "p50": 0.025,
+                "p90": 22.775,
+                "p95": 44.075,
+                "p99": 161.625,
+                "max": 959.016163
+              },
+              "regressionsVsBaseline": {
+                "count": 63309,
+                "worseOver1px": 0,
+                "worseOver3px": 0,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 0,
+                "improvedOver3px": 0,
+                "meanDeltaPx": 0
+              },
+              "gateUses": {
+                "advanced": 6759,
+                "fallback": 56550
+              }
+            },
+            "validationRank": 32213.847151
+          }
+        ]
+      },
+      {
+        "id": "cursor-mirror-trace-20260502-175951.zip_to_cursor-mirror-trace-20260502-184947.zip",
+        "trainSourceZip": "cursor-mirror-trace-20260502-175951.zip",
+        "validationSourceZip": "cursor-mirror-trace-20260502-175951.zip",
+        "testSourceZip": "cursor-mirror-trace-20260502-184947.zip",
+        "rowCounts": {
+          "train": 44316,
+          "validation": 18993,
+          "test": 47636
+        },
+        "selected": {
+          "gate": {
+            "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_1",
+            "role": "real_tree_gate",
+            "family": "tree",
+            "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+            "params": {
+              "policy": {
+                "id": "strict",
+                "maxWorse10": 0,
+                "maxWorse5Rate": 0,
+                "minRows": 88,
+                "minGain": 0.015
+              },
+              "maxDepth": 2,
+              "root": {
+                "type": "split",
+                "feature": "lsCvDisagreement",
+                "threshold": 16,
+                "left": {
+                  "type": "split",
+                  "feature": "jitterProxy",
+                  "threshold": 0.01,
+                  "left": {
+                    "type": "leaf",
+                    "useAdvanced": false,
+                    "rows": 26168,
+                    "worseOver5px": 0,
+                    "worseOver10px": 0,
+                    "meanDeltaPx": 0.049092,
+                    "cost": 0
+                  },
+                  "right": {
+                    "type": "leaf",
+                    "useAdvanced": true,
+                    "rows": 12173,
+                    "worseOver5px": 0,
+                    "worseOver10px": 0,
+                    "meanDeltaPx": -0.802752,
+                    "cost": -9459.905303
+                  }
+                },
+                "right": {
+                  "type": "leaf",
+                  "useAdvanced": false,
+                  "rows": 5975,
+                  "worseOver5px": 636,
+                  "worseOver10px": 31,
+                  "meanDeltaPx": -3.990248,
+                  "cost": 0
+                }
+              }
+            }
+          },
+          "train": {
+            "metrics": {
+              "count": 44316,
+              "mean": 8.016974,
+              "rmse": 28.739033,
+              "p50": 0.025,
+              "p90": 19.825,
+              "p95": 37.125,
+              "p99": 117.025,
+              "max": 710.771705
+            },
+            "regressionsVsBaseline": {
+              "count": 44316,
+              "worseOver1px": 949,
+              "worseOver3px": 156,
+              "worseOver5px": 0,
+              "worseOver10px": 0,
+              "improvedOver1px": 4818,
+              "improvedOver3px": 1100,
+              "meanDeltaPx": -0.220505
+            },
+            "gateUses": {
+              "advanced": 12173,
+              "fallback": 32143
+            }
+          },
+          "validation": {
+            "metrics": {
+              "count": 18993,
+              "mean": 14.214876,
+              "rmse": 52.109846,
+              "p50": 0.025,
+              "p90": 29.325,
+              "p95": 67.575,
+              "p99": 255.025,
+              "max": 959.016163
+            },
+            "regressionsVsBaseline": {
+              "count": 18993,
+              "worseOver1px": 658,
+              "worseOver3px": 143,
+              "worseOver5px": 0,
+              "worseOver10px": 0,
+              "improvedOver1px": 1568,
+              "improvedOver3px": 340,
+              "meanDeltaPx": -0.116175
+            },
+            "gateUses": {
+              "advanced": 4596,
+              "fallback": 14397
+            }
+          },
+          "test": {
+            "metrics": {
+              "count": 47636,
+              "mean": 26.342648,
+              "rmse": 63.844705,
+              "p50": 5.025,
+              "p90": 72.525,
+              "p95": 127.575,
+              "p99": 291.075,
+              "max": 962.266075
+            },
+            "regressionsVsBaseline": {
+              "count": 47636,
+              "worseOver1px": 2197,
+              "worseOver3px": 435,
+              "worseOver5px": 0,
+              "worseOver10px": 0,
+              "improvedOver1px": 5806,
+              "improvedOver3px": 1213,
+              "meanDeltaPx": -0.190231
+            },
+            "gateUses": {
+              "advanced": 14175,
+              "fallback": 33461
+            }
+          },
+          "validationRank": 14307.953217
+        },
+        "topValidation": [
+          {
+            "gate": {
+              "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_1",
+              "role": "real_tree_gate",
+              "family": "tree",
+              "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+              "params": {
+                "policy": {
+                  "id": "strict",
+                  "maxWorse10": 0,
+                  "maxWorse5Rate": 0,
+                  "minRows": 88,
+                  "minGain": 0.015
+                },
+                "maxDepth": 2,
+                "root": {
+                  "type": "split",
+                  "feature": "lsCvDisagreement",
+                  "threshold": 16,
+                  "left": {
+                    "type": "split",
+                    "feature": "jitterProxy",
+                    "threshold": 0.01,
+                    "left": {
+                      "type": "leaf",
+                      "useAdvanced": false,
+                      "rows": 26168,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": 0.049092,
+                      "cost": 0
+                    },
+                    "right": {
+                      "type": "leaf",
+                      "useAdvanced": true,
+                      "rows": 12173,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": -0.802752,
+                      "cost": -9459.905303
+                    }
+                  },
+                  "right": {
+                    "type": "leaf",
+                    "useAdvanced": false,
+                    "rows": 5975,
+                    "worseOver5px": 636,
+                    "worseOver10px": 31,
+                    "meanDeltaPx": -3.990248,
+                    "cost": 0
+                  }
+                }
+              }
+            },
+            "validation": {
+              "metrics": {
+                "count": 18993,
+                "mean": 14.214876,
+                "rmse": 52.109846,
+                "p50": 0.025,
+                "p90": 29.325,
+                "p95": 67.575,
+                "p99": 255.025,
+                "max": 959.016163
+              },
+              "regressionsVsBaseline": {
+                "count": 18993,
+                "worseOver1px": 658,
+                "worseOver3px": 143,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 1568,
+                "improvedOver3px": 340,
+                "meanDeltaPx": -0.116175
+              },
+              "gateUses": {
+                "advanced": 4596,
+                "fallback": 14397
+              }
+            },
+            "test": {
+              "metrics": {
+                "count": 47636,
+                "mean": 26.342648,
+                "rmse": 63.844705,
+                "p50": 5.025,
+                "p90": 72.525,
+                "p95": 127.575,
+                "p99": 291.075,
+                "max": 962.266075
+              },
+              "regressionsVsBaseline": {
+                "count": 47636,
+                "worseOver1px": 2197,
+                "worseOver3px": 435,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 5806,
+                "improvedOver3px": 1213,
+                "meanDeltaPx": -0.190231
+              },
+              "gateUses": {
+                "advanced": 14175,
+                "fallback": 33461
+              }
+            },
+            "validationRank": 14307.953217
+          },
+          {
+            "gate": {
+              "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_2",
+              "role": "real_tree_gate",
+              "family": "tree",
+              "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+              "params": {
+                "policy": {
+                  "id": "strict",
+                  "maxWorse10": 0,
+                  "maxWorse5Rate": 0,
+                  "minRows": 88,
+                  "minGain": 0.015
+                },
+                "maxDepth": 3,
+                "root": {
+                  "type": "split",
+                  "feature": "lsCvDisagreement",
+                  "threshold": 16,
+                  "left": {
+                    "type": "split",
+                    "feature": "jitterProxy",
+                    "threshold": 0.01,
+                    "left": {
+                      "type": "leaf",
+                      "useAdvanced": false,
+                      "rows": 26168,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": 0.049092,
+                      "cost": 0
+                    },
+                    "right": {
+                      "type": "leaf",
+                      "useAdvanced": true,
+                      "rows": 12173,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": -0.802752,
+                      "cost": -9459.905303
+                    }
+                  },
+                  "right": {
+                    "type": "leaf",
+                    "useAdvanced": false,
+                    "rows": 5975,
+                    "worseOver5px": 636,
+                    "worseOver10px": 31,
+                    "meanDeltaPx": -3.990248,
+                    "cost": 0
+                  }
+                }
+              }
+            },
+            "validation": {
+              "metrics": {
+                "count": 18993,
+                "mean": 14.214876,
+                "rmse": 52.109846,
+                "p50": 0.025,
+                "p90": 29.325,
+                "p95": 67.575,
+                "p99": 255.025,
+                "max": 959.016163
+              },
+              "regressionsVsBaseline": {
+                "count": 18993,
+                "worseOver1px": 658,
+                "worseOver3px": 143,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 1568,
+                "improvedOver3px": 340,
+                "meanDeltaPx": -0.116175
+              },
+              "gateUses": {
+                "advanced": 4596,
+                "fallback": 14397
+              }
+            },
+            "test": {
+              "metrics": {
+                "count": 47636,
+                "mean": 26.342648,
+                "rmse": 63.844705,
+                "p50": 5.025,
+                "p90": 72.525,
+                "p95": 127.575,
+                "p99": 291.075,
+                "max": 962.266075
+              },
+              "regressionsVsBaseline": {
+                "count": 47636,
+                "worseOver1px": 2197,
+                "worseOver3px": 435,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 5806,
+                "improvedOver3px": 1213,
+                "meanDeltaPx": -0.190231
+              },
+              "gateUses": {
+                "advanced": 14175,
+                "fallback": 33461
+              }
+            },
+            "validationRank": 14307.953217
+          },
+          {
+            "gate": {
+              "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_3",
+              "role": "real_tree_gate",
+              "family": "tree",
+              "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+              "params": {
+                "policy": {
+                  "id": "strict",
+                  "maxWorse10": 0,
+                  "maxWorse5Rate": 0,
+                  "minRows": 88,
+                  "minGain": 0.015
+                },
+                "maxDepth": 4,
+                "root": {
+                  "type": "split",
+                  "feature": "lsCvDisagreement",
+                  "threshold": 16,
+                  "left": {
+                    "type": "split",
+                    "feature": "jitterProxy",
+                    "threshold": 0.01,
+                    "left": {
+                      "type": "leaf",
+                      "useAdvanced": false,
+                      "rows": 26168,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": 0.049092,
+                      "cost": 0
+                    },
+                    "right": {
+                      "type": "leaf",
+                      "useAdvanced": true,
+                      "rows": 12173,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": -0.802752,
+                      "cost": -9459.905303
+                    }
+                  },
+                  "right": {
+                    "type": "leaf",
+                    "useAdvanced": false,
+                    "rows": 5975,
+                    "worseOver5px": 636,
+                    "worseOver10px": 31,
+                    "meanDeltaPx": -3.990248,
+                    "cost": 0
+                  }
+                }
+              }
+            },
+            "validation": {
+              "metrics": {
+                "count": 18993,
+                "mean": 14.214876,
+                "rmse": 52.109846,
+                "p50": 0.025,
+                "p90": 29.325,
+                "p95": 67.575,
+                "p99": 255.025,
+                "max": 959.016163
+              },
+              "regressionsVsBaseline": {
+                "count": 18993,
+                "worseOver1px": 658,
+                "worseOver3px": 143,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 1568,
+                "improvedOver3px": 340,
+                "meanDeltaPx": -0.116175
+              },
+              "gateUses": {
+                "advanced": 4596,
+                "fallback": 14397
+              }
+            },
+            "test": {
+              "metrics": {
+                "count": 47636,
+                "mean": 26.342648,
+                "rmse": 63.844705,
+                "p50": 5.025,
+                "p90": 72.525,
+                "p95": 127.575,
+                "p99": 291.075,
+                "max": 962.266075
+              },
+              "regressionsVsBaseline": {
+                "count": 47636,
+                "worseOver1px": 2197,
+                "worseOver3px": 435,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 5806,
+                "improvedOver3px": 1213,
+                "meanDeltaPx": -0.190231
+              },
+              "gateUses": {
+                "advanced": 14175,
+                "fallback": 33461
+              }
+            },
+            "validationRank": 14307.953217
+          },
+          {
+            "gate": {
+              "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_4",
+              "role": "real_tree_gate",
+              "family": "tree",
+              "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+              "params": {
+                "policy": {
+                  "id": "balanced",
+                  "maxWorse10": 0,
+                  "maxWorse5Rate": 0.002,
+                  "minRows": 132,
+                  "minGain": 0.025
+                },
+                "maxDepth": 2,
+                "root": {
+                  "type": "split",
+                  "feature": "lsCvDisagreement",
+                  "threshold": 16,
+                  "left": {
+                    "type": "split",
+                    "feature": "jitterProxy",
+                    "threshold": 0.01,
+                    "left": {
+                      "type": "leaf",
+                      "useAdvanced": false,
+                      "rows": 26168,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": 0.049092,
+                      "cost": 0
+                    },
+                    "right": {
+                      "type": "leaf",
+                      "useAdvanced": true,
+                      "rows": 12173,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": -0.802752,
+                      "cost": -9459.905303
+                    }
+                  },
+                  "right": {
+                    "type": "leaf",
+                    "useAdvanced": false,
+                    "rows": 5975,
+                    "worseOver5px": 636,
+                    "worseOver10px": 31,
+                    "meanDeltaPx": -3.990248,
+                    "cost": 0
+                  }
+                }
+              }
+            },
+            "validation": {
+              "metrics": {
+                "count": 18993,
+                "mean": 14.214876,
+                "rmse": 52.109846,
+                "p50": 0.025,
+                "p90": 29.325,
+                "p95": 67.575,
+                "p99": 255.025,
+                "max": 959.016163
+              },
+              "regressionsVsBaseline": {
+                "count": 18993,
+                "worseOver1px": 658,
+                "worseOver3px": 143,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 1568,
+                "improvedOver3px": 340,
+                "meanDeltaPx": -0.116175
+              },
+              "gateUses": {
+                "advanced": 4596,
+                "fallback": 14397
+              }
+            },
+            "test": {
+              "metrics": {
+                "count": 47636,
+                "mean": 26.342648,
+                "rmse": 63.844705,
+                "p50": 5.025,
+                "p90": 72.525,
+                "p95": 127.575,
+                "p99": 291.075,
+                "max": 962.266075
+              },
+              "regressionsVsBaseline": {
+                "count": 47636,
+                "worseOver1px": 2197,
+                "worseOver3px": 435,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 5806,
+                "improvedOver3px": 1213,
+                "meanDeltaPx": -0.190231
+              },
+              "gateUses": {
+                "advanced": 14175,
+                "fallback": 33461
+              }
+            },
+            "validationRank": 14307.953217
+          },
+          {
+            "gate": {
+              "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_5",
+              "role": "real_tree_gate",
+              "family": "tree",
+              "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+              "params": {
+                "policy": {
+                  "id": "balanced",
+                  "maxWorse10": 0,
+                  "maxWorse5Rate": 0.002,
+                  "minRows": 132,
+                  "minGain": 0.025
+                },
+                "maxDepth": 3,
+                "root": {
+                  "type": "split",
+                  "feature": "lsCvDisagreement",
+                  "threshold": 16,
+                  "left": {
+                    "type": "split",
+                    "feature": "jitterProxy",
+                    "threshold": 0.01,
+                    "left": {
+                      "type": "leaf",
+                      "useAdvanced": false,
+                      "rows": 26168,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": 0.049092,
+                      "cost": 0
+                    },
+                    "right": {
+                      "type": "leaf",
+                      "useAdvanced": true,
+                      "rows": 12173,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": -0.802752,
+                      "cost": -9459.905303
+                    }
+                  },
+                  "right": {
+                    "type": "leaf",
+                    "useAdvanced": false,
+                    "rows": 5975,
+                    "worseOver5px": 636,
+                    "worseOver10px": 31,
+                    "meanDeltaPx": -3.990248,
+                    "cost": 0
+                  }
+                }
+              }
+            },
+            "validation": {
+              "metrics": {
+                "count": 18993,
+                "mean": 14.214876,
+                "rmse": 52.109846,
+                "p50": 0.025,
+                "p90": 29.325,
+                "p95": 67.575,
+                "p99": 255.025,
+                "max": 959.016163
+              },
+              "regressionsVsBaseline": {
+                "count": 18993,
+                "worseOver1px": 658,
+                "worseOver3px": 143,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 1568,
+                "improvedOver3px": 340,
+                "meanDeltaPx": -0.116175
+              },
+              "gateUses": {
+                "advanced": 4596,
+                "fallback": 14397
+              }
+            },
+            "test": {
+              "metrics": {
+                "count": 47636,
+                "mean": 26.342648,
+                "rmse": 63.844705,
+                "p50": 5.025,
+                "p90": 72.525,
+                "p95": 127.575,
+                "p99": 291.075,
+                "max": 962.266075
+              },
+              "regressionsVsBaseline": {
+                "count": 47636,
+                "worseOver1px": 2197,
+                "worseOver3px": 435,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 5806,
+                "improvedOver3px": 1213,
+                "meanDeltaPx": -0.190231
+              },
+              "gateUses": {
+                "advanced": 14175,
+                "fallback": 33461
+              }
+            },
+            "validationRank": 14307.953217
+          },
+          {
+            "gate": {
+              "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_6",
+              "role": "real_tree_gate",
+              "family": "tree",
+              "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+              "params": {
+                "policy": {
+                  "id": "balanced",
+                  "maxWorse10": 0,
+                  "maxWorse5Rate": 0.002,
+                  "minRows": 132,
+                  "minGain": 0.025
+                },
+                "maxDepth": 4,
+                "root": {
+                  "type": "split",
+                  "feature": "lsCvDisagreement",
+                  "threshold": 16,
+                  "left": {
+                    "type": "split",
+                    "feature": "jitterProxy",
+                    "threshold": 0.01,
+                    "left": {
+                      "type": "leaf",
+                      "useAdvanced": false,
+                      "rows": 26168,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": 0.049092,
+                      "cost": 0
+                    },
+                    "right": {
+                      "type": "leaf",
+                      "useAdvanced": true,
+                      "rows": 12173,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": -0.802752,
+                      "cost": -9459.905303
+                    }
+                  },
+                  "right": {
+                    "type": "leaf",
+                    "useAdvanced": false,
+                    "rows": 5975,
+                    "worseOver5px": 636,
+                    "worseOver10px": 31,
+                    "meanDeltaPx": -3.990248,
+                    "cost": 0
+                  }
+                }
+              }
+            },
+            "validation": {
+              "metrics": {
+                "count": 18993,
+                "mean": 14.214876,
+                "rmse": 52.109846,
+                "p50": 0.025,
+                "p90": 29.325,
+                "p95": 67.575,
+                "p99": 255.025,
+                "max": 959.016163
+              },
+              "regressionsVsBaseline": {
+                "count": 18993,
+                "worseOver1px": 658,
+                "worseOver3px": 143,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 1568,
+                "improvedOver3px": 340,
+                "meanDeltaPx": -0.116175
+              },
+              "gateUses": {
+                "advanced": 4596,
+                "fallback": 14397
+              }
+            },
+            "test": {
+              "metrics": {
+                "count": 47636,
+                "mean": 26.342648,
+                "rmse": 63.844705,
+                "p50": 5.025,
+                "p90": 72.525,
+                "p95": 127.575,
+                "p99": 291.075,
+                "max": 962.266075
+              },
+              "regressionsVsBaseline": {
+                "count": 47636,
+                "worseOver1px": 2197,
+                "worseOver3px": 435,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 5806,
+                "improvedOver3px": 1213,
+                "meanDeltaPx": -0.190231
+              },
+              "gateUses": {
+                "advanced": 14175,
+                "fallback": 33461
+              }
+            },
+            "validationRank": 14307.953217
+          },
+          {
+            "gate": {
+              "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_7",
+              "role": "real_tree_gate",
+              "family": "tree",
+              "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+              "params": {
+                "policy": {
+                  "id": "strict",
+                  "maxWorse10": 0,
+                  "maxWorse5Rate": 0,
+                  "minRows": 88,
+                  "minGain": 0.015
+                },
+                "maxDepth": 1,
+                "root": {
+                  "type": "split",
+                  "feature": "lsCvDisagreement",
+                  "threshold": 16,
+                  "left": {
+                    "type": "leaf",
+                    "useAdvanced": true,
+                    "rows": 38341,
+                    "worseOver5px": 0,
+                    "worseOver10px": 0,
+                    "meanDeltaPx": -0.221363,
+                    "cost": -7975.27416
+                  },
+                  "right": {
+                    "type": "leaf",
+                    "useAdvanced": false,
+                    "rows": 5975,
+                    "worseOver5px": 636,
+                    "worseOver10px": 31,
+                    "meanDeltaPx": -3.990248,
+                    "cost": 0
+                  }
+                }
+              }
+            },
+            "validation": {
+              "metrics": {
+                "count": 18993,
+                "mean": 14.253056,
+                "rmse": 52.107285,
+                "p50": 0.225,
+                "p90": 29.275,
+                "p95": 67.575,
+                "p99": 255.025,
+                "max": 959.016163
+              },
+              "regressionsVsBaseline": {
+                "count": 18993,
+                "worseOver1px": 938,
+                "worseOver3px": 190,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 1617,
+                "improvedOver3px": 345,
+                "meanDeltaPx": -0.077995
+              },
+              "gateUses": {
+                "advanced": 15384,
+                "fallback": 3609
+              }
+            },
+            "test": {
+              "metrics": {
+                "count": 47636,
+                "mean": 26.392898,
+                "rmse": 63.84319,
+                "p50": 5.025,
+                "p90": 72.525,
+                "p95": 127.575,
+                "p99": 291.075,
+                "max": 962.266075
+              },
+              "regressionsVsBaseline": {
+                "count": 47636,
+                "worseOver1px": 3267,
+                "worseOver3px": 609,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 6006,
+                "improvedOver3px": 1244,
+                "meanDeltaPx": -0.139981
+              },
+              "gateUses": {
+                "advanced": 32041,
+                "fallback": 15595
+              }
+            },
+            "validationRank": 14346.133469
+          },
+          {
+            "gate": {
+              "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_8",
+              "role": "real_tree_gate",
+              "family": "tree",
+              "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+              "params": {
+                "policy": {
+                  "id": "balanced",
+                  "maxWorse10": 0,
+                  "maxWorse5Rate": 0.002,
+                  "minRows": 132,
+                  "minGain": 0.025
+                },
+                "maxDepth": 1,
+                "root": {
+                  "type": "split",
+                  "feature": "lsCvDisagreement",
+                  "threshold": 16,
+                  "left": {
+                    "type": "leaf",
+                    "useAdvanced": true,
+                    "rows": 38341,
+                    "worseOver5px": 0,
+                    "worseOver10px": 0,
+                    "meanDeltaPx": -0.221363,
+                    "cost": -7975.27416
+                  },
+                  "right": {
+                    "type": "leaf",
+                    "useAdvanced": false,
+                    "rows": 5975,
+                    "worseOver5px": 636,
+                    "worseOver10px": 31,
+                    "meanDeltaPx": -3.990248,
+                    "cost": 0
+                  }
+                }
+              }
+            },
+            "validation": {
+              "metrics": {
+                "count": 18993,
+                "mean": 14.253056,
+                "rmse": 52.107285,
+                "p50": 0.225,
+                "p90": 29.275,
+                "p95": 67.575,
+                "p99": 255.025,
+                "max": 959.016163
+              },
+              "regressionsVsBaseline": {
+                "count": 18993,
+                "worseOver1px": 938,
+                "worseOver3px": 190,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 1617,
+                "improvedOver3px": 345,
+                "meanDeltaPx": -0.077995
+              },
+              "gateUses": {
+                "advanced": 15384,
+                "fallback": 3609
+              }
+            },
+            "test": {
+              "metrics": {
+                "count": 47636,
+                "mean": 26.392898,
+                "rmse": 63.84319,
+                "p50": 5.025,
+                "p90": 72.525,
+                "p95": 127.575,
+                "p99": 291.075,
+                "max": 962.266075
+              },
+              "regressionsVsBaseline": {
+                "count": 47636,
+                "worseOver1px": 3267,
+                "worseOver3px": 609,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 6006,
+                "improvedOver3px": 1244,
+                "meanDeltaPx": -0.139981
+              },
+              "gateUses": {
+                "advanced": 32041,
+                "fallback": 15595
+              }
+            },
+            "validationRank": 14346.133469
+          },
+          {
+            "gate": {
+              "id": "real_tree_blend_cv_ls_w50_cap36_ls0p5_1",
+              "role": "real_tree_gate",
+              "family": "tree",
+              "candidateId": "blend_cv_ls_w50_cap36_ls0p5",
+              "params": {
+                "policy": {
+                  "id": "strict",
+                  "maxWorse10": 0,
+                  "maxWorse5Rate": 0,
+                  "minRows": 88,
+                  "minGain": 0.015
+                },
+                "maxDepth": 2,
+                "root": {
+                  "type": "split",
+                  "feature": "lsCvDisagreement",
+                  "threshold": 8,
+                  "left": {
+                    "type": "split",
+                    "feature": "jitterProxy",
+                    "threshold": 0.01,
+                    "left": {
+                      "type": "leaf",
+                      "useAdvanced": false,
+                      "rows": 25803,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": 0.067743,
+                      "cost": 0
+                    },
+                    "right": {
+                      "type": "leaf",
+                      "useAdvanced": true,
+                      "rows": 8282,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": -0.625133,
+                      "cost": -4943.353104
+                    }
+                  },
+                  "right": {
+                    "type": "leaf",
+                    "useAdvanced": false,
+                    "rows": 10231,
+                    "worseOver5px": 1790,
+                    "worseOver10px": 724,
+                    "meanDeltaPx": -4.804014,
+                    "cost": 0
+                  }
+                }
+              }
+            },
+            "validation": {
+              "metrics": {
+                "count": 18993,
+                "mean": 14.281817,
+                "rmse": 52.169011,
+                "p50": 0.025,
+                "p90": 29.525,
+                "p95": 67.925,
+                "p99": 255.125,
+                "max": 959.016163
+              },
+              "regressionsVsBaseline": {
+                "count": 18993,
+                "worseOver1px": 481,
+                "worseOver3px": 82,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 874,
+                "improvedOver3px": 169,
+                "meanDeltaPx": -0.049234
+              },
+              "gateUses": {
+                "advanced": 3039,
+                "fallback": 15954
+              }
+            },
+            "test": {
+              "metrics": {
+                "count": 47636,
+                "mean": 26.468913,
+                "rmse": 63.954714,
+                "p50": 5.075,
+                "p90": 72.825,
+                "p95": 127.925,
+                "p99": 291.725,
+                "max": 962.266075
+              },
+              "regressionsVsBaseline": {
+                "count": 47636,
+                "worseOver1px": 1317,
+                "worseOver3px": 242,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 2593,
+                "improvedOver3px": 557,
+                "meanDeltaPx": -0.063967
+              },
+              "gateUses": {
+                "advanced": 7852,
+                "fallback": 39784
+              }
+            },
+            "validationRank": 14375.254413
+          },
+          {
+            "gate": {
+              "id": "real_tree_blend_cv_ls_w50_cap36_ls0p5_2",
+              "role": "real_tree_gate",
+              "family": "tree",
+              "candidateId": "blend_cv_ls_w50_cap36_ls0p5",
+              "params": {
+                "policy": {
+                  "id": "strict",
+                  "maxWorse10": 0,
+                  "maxWorse5Rate": 0,
+                  "minRows": 88,
+                  "minGain": 0.015
+                },
+                "maxDepth": 3,
+                "root": {
+                  "type": "split",
+                  "feature": "lsCvDisagreement",
+                  "threshold": 8,
+                  "left": {
+                    "type": "split",
+                    "feature": "jitterProxy",
+                    "threshold": 0.01,
+                    "left": {
+                      "type": "leaf",
+                      "useAdvanced": false,
+                      "rows": 25803,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": 0.067743,
+                      "cost": 0
+                    },
+                    "right": {
+                      "type": "leaf",
+                      "useAdvanced": true,
+                      "rows": 8282,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": -0.625133,
+                      "cost": -4943.353104
+                    }
+                  },
+                  "right": {
+                    "type": "leaf",
+                    "useAdvanced": false,
+                    "rows": 10231,
+                    "worseOver5px": 1790,
+                    "worseOver10px": 724,
+                    "meanDeltaPx": -4.804014,
+                    "cost": 0
+                  }
+                }
+              }
+            },
+            "validation": {
+              "metrics": {
+                "count": 18993,
+                "mean": 14.281817,
+                "rmse": 52.169011,
+                "p50": 0.025,
+                "p90": 29.525,
+                "p95": 67.925,
+                "p99": 255.125,
+                "max": 959.016163
+              },
+              "regressionsVsBaseline": {
+                "count": 18993,
+                "worseOver1px": 481,
+                "worseOver3px": 82,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 874,
+                "improvedOver3px": 169,
+                "meanDeltaPx": -0.049234
+              },
+              "gateUses": {
+                "advanced": 3039,
+                "fallback": 15954
+              }
+            },
+            "test": {
+              "metrics": {
+                "count": 47636,
+                "mean": 26.468913,
+                "rmse": 63.954714,
+                "p50": 5.075,
+                "p90": 72.825,
+                "p95": 127.925,
+                "p99": 291.725,
+                "max": 962.266075
+              },
+              "regressionsVsBaseline": {
+                "count": 47636,
+                "worseOver1px": 1317,
+                "worseOver3px": 242,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 2593,
+                "improvedOver3px": 557,
+                "meanDeltaPx": -0.063967
+              },
+              "gateUses": {
+                "advanced": 7852,
+                "fallback": 39784
+              }
+            },
+            "validationRank": 14375.254413
+          },
+          {
+            "gate": {
+              "id": "real_tree_blend_cv_ls_w50_cap36_ls0p5_3",
+              "role": "real_tree_gate",
+              "family": "tree",
+              "candidateId": "blend_cv_ls_w50_cap36_ls0p5",
+              "params": {
+                "policy": {
+                  "id": "strict",
+                  "maxWorse10": 0,
+                  "maxWorse5Rate": 0,
+                  "minRows": 88,
+                  "minGain": 0.015
+                },
+                "maxDepth": 4,
+                "root": {
+                  "type": "split",
+                  "feature": "lsCvDisagreement",
+                  "threshold": 8,
+                  "left": {
+                    "type": "split",
+                    "feature": "jitterProxy",
+                    "threshold": 0.01,
+                    "left": {
+                      "type": "leaf",
+                      "useAdvanced": false,
+                      "rows": 25803,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": 0.067743,
+                      "cost": 0
+                    },
+                    "right": {
+                      "type": "leaf",
+                      "useAdvanced": true,
+                      "rows": 8282,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": -0.625133,
+                      "cost": -4943.353104
+                    }
+                  },
+                  "right": {
+                    "type": "leaf",
+                    "useAdvanced": false,
+                    "rows": 10231,
+                    "worseOver5px": 1790,
+                    "worseOver10px": 724,
+                    "meanDeltaPx": -4.804014,
+                    "cost": 0
+                  }
+                }
+              }
+            },
+            "validation": {
+              "metrics": {
+                "count": 18993,
+                "mean": 14.281817,
+                "rmse": 52.169011,
+                "p50": 0.025,
+                "p90": 29.525,
+                "p95": 67.925,
+                "p99": 255.125,
+                "max": 959.016163
+              },
+              "regressionsVsBaseline": {
+                "count": 18993,
+                "worseOver1px": 481,
+                "worseOver3px": 82,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 874,
+                "improvedOver3px": 169,
+                "meanDeltaPx": -0.049234
+              },
+              "gateUses": {
+                "advanced": 3039,
+                "fallback": 15954
+              }
+            },
+            "test": {
+              "metrics": {
+                "count": 47636,
+                "mean": 26.468913,
+                "rmse": 63.954714,
+                "p50": 5.075,
+                "p90": 72.825,
+                "p95": 127.925,
+                "p99": 291.725,
+                "max": 962.266075
+              },
+              "regressionsVsBaseline": {
+                "count": 47636,
+                "worseOver1px": 1317,
+                "worseOver3px": 242,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 2593,
+                "improvedOver3px": 557,
+                "meanDeltaPx": -0.063967
+              },
+              "gateUses": {
+                "advanced": 7852,
+                "fallback": 39784
+              }
+            },
+            "validationRank": 14375.254413
+          },
+          {
+            "gate": {
+              "id": "real_tree_blend_cv_ls_w50_cap36_ls0p5_4",
+              "role": "real_tree_gate",
+              "family": "tree",
+              "candidateId": "blend_cv_ls_w50_cap36_ls0p5",
+              "params": {
+                "policy": {
+                  "id": "balanced",
+                  "maxWorse10": 0,
+                  "maxWorse5Rate": 0.002,
+                  "minRows": 132,
+                  "minGain": 0.025
+                },
+                "maxDepth": 2,
+                "root": {
+                  "type": "split",
+                  "feature": "lsCvDisagreement",
+                  "threshold": 8,
+                  "left": {
+                    "type": "split",
+                    "feature": "jitterProxy",
+                    "threshold": 0.01,
+                    "left": {
+                      "type": "leaf",
+                      "useAdvanced": false,
+                      "rows": 25803,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": 0.067743,
+                      "cost": 0
+                    },
+                    "right": {
+                      "type": "leaf",
+                      "useAdvanced": true,
+                      "rows": 8282,
+                      "worseOver5px": 0,
+                      "worseOver10px": 0,
+                      "meanDeltaPx": -0.625133,
+                      "cost": -4943.353104
+                    }
+                  },
+                  "right": {
+                    "type": "leaf",
+                    "useAdvanced": false,
+                    "rows": 10231,
+                    "worseOver5px": 1790,
+                    "worseOver10px": 724,
+                    "meanDeltaPx": -4.804014,
+                    "cost": 0
+                  }
+                }
+              }
+            },
+            "validation": {
+              "metrics": {
+                "count": 18993,
+                "mean": 14.281817,
+                "rmse": 52.169011,
+                "p50": 0.025,
+                "p90": 29.525,
+                "p95": 67.925,
+                "p99": 255.125,
+                "max": 959.016163
+              },
+              "regressionsVsBaseline": {
+                "count": 18993,
+                "worseOver1px": 481,
+                "worseOver3px": 82,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 874,
+                "improvedOver3px": 169,
+                "meanDeltaPx": -0.049234
+              },
+              "gateUses": {
+                "advanced": 3039,
+                "fallback": 15954
+              }
+            },
+            "test": {
+              "metrics": {
+                "count": 47636,
+                "mean": 26.468913,
+                "rmse": 63.954714,
+                "p50": 5.075,
+                "p90": 72.825,
+                "p95": 127.925,
+                "p99": 291.725,
+                "max": 962.266075
+              },
+              "regressionsVsBaseline": {
+                "count": 47636,
+                "worseOver1px": 1317,
+                "worseOver3px": 242,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "improvedOver1px": 2593,
+                "improvedOver3px": 557,
+                "meanDeltaPx": -0.063967
+              },
+              "gateUses": {
+                "advanced": 7852,
+                "fallback": 39784
+              }
+            },
+            "validationRank": 14375.254413
+          }
+        ]
+      }
+    ],
+    "selectedAggregate": {
+      "id": "selected_real_gate_cross_session_aggregate",
+      "metrics": {
+        "count": 110945,
+        "mean": 16.946431,
+        "rmse": 50.447329,
+        "p50": 1.025,
+        "p90": 43.375,
+        "p95": 83.625,
+        "p99": 239.725,
+        "max": 962.266075
+      },
+      "regressionsVsBaseline": {
+        "count": 110945,
+        "worseOver1px": 3804,
+        "worseOver3px": 734,
+        "worseOver5px": 0,
+        "worseOver10px": 0,
+        "improvedOver1px": 12192,
+        "improvedOver3px": 2653,
+        "meanDeltaPx": -0.189646
+      },
+      "gateUses": {
+        "advanced": 30944,
+        "fallback": 80001
+      }
+    }
+  },
+  "chronological": {
+    "id": "chronological_70_15_15",
+    "trainSourceZip": null,
+    "validationSourceZip": null,
+    "testSourceZip": null,
+    "rowCounts": {
+      "train": 77661,
+      "validation": 16642,
+      "test": 16642
+    },
+    "selected": {
+      "gate": {
+        "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_1",
+        "role": "real_tree_gate",
+        "family": "tree",
+        "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+        "params": {
+          "policy": {
+            "id": "strict",
+            "maxWorse10": 0,
+            "maxWorse5Rate": 0,
+            "minRows": 155,
+            "minGain": 0.015
+          },
+          "maxDepth": 2,
+          "root": {
+            "type": "split",
+            "feature": "lsCvDisagreement",
+            "threshold": 16,
+            "left": {
+              "type": "split",
+              "feature": "jitterProxy",
+              "threshold": 0.01,
+              "left": {
+                "type": "leaf",
+                "useAdvanced": false,
+                "rows": 42471,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "meanDeltaPx": 0.06375,
+                "cost": 0
+              },
+              "right": {
+                "type": "leaf",
+                "useAdvanced": true,
+                "rows": 20945,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "meanDeltaPx": -0.708101,
+                "cost": -14003.166757
+              }
+            },
+            "right": {
+              "type": "leaf",
+              "useAdvanced": false,
+              "rows": 14245,
+              "worseOver5px": 2082,
+              "worseOver10px": 157,
+              "meanDeltaPx": -3.471063,
+              "cost": 0
+            }
+          }
+        }
+      },
+      "train": {
+        "metrics": {
+          "count": 77661,
+          "mean": 13.10362,
+          "rmse": 44.85157,
+          "p50": 0.175,
+          "p90": 30.025,
+          "p95": 60.875,
+          "p99": 210.325,
+          "max": 962.266075
+        },
+        "regressionsVsBaseline": {
+          "count": 77661,
+          "worseOver1px": 2207,
+          "worseOver3px": 414,
+          "worseOver5px": 0,
+          "worseOver10px": 0,
+          "improvedOver1px": 8134,
+          "improvedOver3px": 1817,
+          "meanDeltaPx": -0.190973
+        },
+        "gateUses": {
+          "advanced": 20945,
+          "fallback": 56716
+        }
+      },
+      "validation": {
+        "metrics": {
+          "count": 16642,
+          "mean": 21.448206,
+          "rmse": 58.624739,
+          "p50": 2.075,
+          "p90": 57.425,
+          "p95": 103.825,
+          "p99": 274.025,
+          "max": 930.483745
+        },
+        "regressionsVsBaseline": {
+          "count": 16642,
+          "worseOver1px": 652,
+          "worseOver3px": 139,
+          "worseOver5px": 0,
+          "worseOver10px": 0,
+          "improvedOver1px": 2026,
+          "improvedOver3px": 408,
+          "meanDeltaPx": -0.206428
+        },
+        "gateUses": {
+          "advanced": 4835,
+          "fallback": 11807
+        }
+      },
+      "test": {
+        "metrics": {
+          "count": 16642,
+          "mean": 30.377385,
+          "rmse": 64.354829,
+          "p50": 9.025,
+          "p90": 85.375,
+          "p95": 140.275,
+          "p99": 277.725,
+          "max": 710.372438
+        },
+        "regressionsVsBaseline": {
+          "count": 16642,
+          "worseOver1px": 945,
+          "worseOver3px": 181,
+          "worseOver5px": 0,
+          "worseOver10px": 0,
+          "improvedOver1px": 2032,
+          "improvedOver3px": 428,
+          "meanDeltaPx": -0.166671
+        },
+        "gateUses": {
+          "advanced": 5164,
+          "fallback": 11478
+        }
+      },
+      "validationRank": 21579.433613
+    },
+    "topValidation": [
+      {
+        "gate": {
+          "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_1",
+          "role": "real_tree_gate",
+          "family": "tree",
+          "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+          "params": {
+            "policy": {
+              "id": "strict",
+              "maxWorse10": 0,
+              "maxWorse5Rate": 0,
+              "minRows": 155,
+              "minGain": 0.015
+            },
+            "maxDepth": 2,
+            "root": {
+              "type": "split",
+              "feature": "lsCvDisagreement",
+              "threshold": 16,
+              "left": {
+                "type": "split",
+                "feature": "jitterProxy",
+                "threshold": 0.01,
+                "left": {
+                  "type": "leaf",
+                  "useAdvanced": false,
+                  "rows": 42471,
+                  "worseOver5px": 0,
+                  "worseOver10px": 0,
+                  "meanDeltaPx": 0.06375,
+                  "cost": 0
+                },
+                "right": {
+                  "type": "leaf",
+                  "useAdvanced": true,
+                  "rows": 20945,
+                  "worseOver5px": 0,
+                  "worseOver10px": 0,
+                  "meanDeltaPx": -0.708101,
+                  "cost": -14003.166757
+                }
+              },
+              "right": {
+                "type": "leaf",
+                "useAdvanced": false,
+                "rows": 14245,
+                "worseOver5px": 2082,
+                "worseOver10px": 157,
+                "meanDeltaPx": -3.471063,
+                "cost": 0
+              }
+            }
+          }
+        },
+        "validation": {
+          "metrics": {
+            "count": 16642,
+            "mean": 21.448206,
+            "rmse": 58.624739,
+            "p50": 2.075,
+            "p90": 57.425,
+            "p95": 103.825,
+            "p99": 274.025,
+            "max": 930.483745
+          },
+          "regressionsVsBaseline": {
+            "count": 16642,
+            "worseOver1px": 652,
+            "worseOver3px": 139,
+            "worseOver5px": 0,
+            "worseOver10px": 0,
+            "improvedOver1px": 2026,
+            "improvedOver3px": 408,
+            "meanDeltaPx": -0.206428
+          },
+          "gateUses": {
+            "advanced": 4835,
+            "fallback": 11807
+          }
+        },
+        "test": {
+          "metrics": {
+            "count": 16642,
+            "mean": 30.377385,
+            "rmse": 64.354829,
+            "p50": 9.025,
+            "p90": 85.375,
+            "p95": 140.275,
+            "p99": 277.725,
+            "max": 710.372438
+          },
+          "regressionsVsBaseline": {
+            "count": 16642,
+            "worseOver1px": 945,
+            "worseOver3px": 181,
+            "worseOver5px": 0,
+            "worseOver10px": 0,
+            "improvedOver1px": 2032,
+            "improvedOver3px": 428,
+            "meanDeltaPx": -0.166671
+          },
+          "gateUses": {
+            "advanced": 5164,
+            "fallback": 11478
+          }
+        },
+        "validationRank": 21579.433613
+      },
+      {
+        "gate": {
+          "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_2",
+          "role": "real_tree_gate",
+          "family": "tree",
+          "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+          "params": {
+            "policy": {
+              "id": "strict",
+              "maxWorse10": 0,
+              "maxWorse5Rate": 0,
+              "minRows": 155,
+              "minGain": 0.015
+            },
+            "maxDepth": 3,
+            "root": {
+              "type": "split",
+              "feature": "lsCvDisagreement",
+              "threshold": 16,
+              "left": {
+                "type": "split",
+                "feature": "jitterProxy",
+                "threshold": 0.01,
+                "left": {
+                  "type": "leaf",
+                  "useAdvanced": false,
+                  "rows": 42471,
+                  "worseOver5px": 0,
+                  "worseOver10px": 0,
+                  "meanDeltaPx": 0.06375,
+                  "cost": 0
+                },
+                "right": {
+                  "type": "leaf",
+                  "useAdvanced": true,
+                  "rows": 20945,
+                  "worseOver5px": 0,
+                  "worseOver10px": 0,
+                  "meanDeltaPx": -0.708101,
+                  "cost": -14003.166757
+                }
+              },
+              "right": {
+                "type": "leaf",
+                "useAdvanced": false,
+                "rows": 14245,
+                "worseOver5px": 2082,
+                "worseOver10px": 157,
+                "meanDeltaPx": -3.471063,
+                "cost": 0
+              }
+            }
+          }
+        },
+        "validation": {
+          "metrics": {
+            "count": 16642,
+            "mean": 21.448206,
+            "rmse": 58.624739,
+            "p50": 2.075,
+            "p90": 57.425,
+            "p95": 103.825,
+            "p99": 274.025,
+            "max": 930.483745
+          },
+          "regressionsVsBaseline": {
+            "count": 16642,
+            "worseOver1px": 652,
+            "worseOver3px": 139,
+            "worseOver5px": 0,
+            "worseOver10px": 0,
+            "improvedOver1px": 2026,
+            "improvedOver3px": 408,
+            "meanDeltaPx": -0.206428
+          },
+          "gateUses": {
+            "advanced": 4835,
+            "fallback": 11807
+          }
+        },
+        "test": {
+          "metrics": {
+            "count": 16642,
+            "mean": 30.377385,
+            "rmse": 64.354829,
+            "p50": 9.025,
+            "p90": 85.375,
+            "p95": 140.275,
+            "p99": 277.725,
+            "max": 710.372438
+          },
+          "regressionsVsBaseline": {
+            "count": 16642,
+            "worseOver1px": 945,
+            "worseOver3px": 181,
+            "worseOver5px": 0,
+            "worseOver10px": 0,
+            "improvedOver1px": 2032,
+            "improvedOver3px": 428,
+            "meanDeltaPx": -0.166671
+          },
+          "gateUses": {
+            "advanced": 5164,
+            "fallback": 11478
+          }
+        },
+        "validationRank": 21579.433613
+      },
+      {
+        "gate": {
+          "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_3",
+          "role": "real_tree_gate",
+          "family": "tree",
+          "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+          "params": {
+            "policy": {
+              "id": "strict",
+              "maxWorse10": 0,
+              "maxWorse5Rate": 0,
+              "minRows": 155,
+              "minGain": 0.015
+            },
+            "maxDepth": 4,
+            "root": {
+              "type": "split",
+              "feature": "lsCvDisagreement",
+              "threshold": 16,
+              "left": {
+                "type": "split",
+                "feature": "jitterProxy",
+                "threshold": 0.01,
+                "left": {
+                  "type": "leaf",
+                  "useAdvanced": false,
+                  "rows": 42471,
+                  "worseOver5px": 0,
+                  "worseOver10px": 0,
+                  "meanDeltaPx": 0.06375,
+                  "cost": 0
+                },
+                "right": {
+                  "type": "leaf",
+                  "useAdvanced": true,
+                  "rows": 20945,
+                  "worseOver5px": 0,
+                  "worseOver10px": 0,
+                  "meanDeltaPx": -0.708101,
+                  "cost": -14003.166757
+                }
+              },
+              "right": {
+                "type": "leaf",
+                "useAdvanced": false,
+                "rows": 14245,
+                "worseOver5px": 2082,
+                "worseOver10px": 157,
+                "meanDeltaPx": -3.471063,
+                "cost": 0
+              }
+            }
+          }
+        },
+        "validation": {
+          "metrics": {
+            "count": 16642,
+            "mean": 21.448206,
+            "rmse": 58.624739,
+            "p50": 2.075,
+            "p90": 57.425,
+            "p95": 103.825,
+            "p99": 274.025,
+            "max": 930.483745
+          },
+          "regressionsVsBaseline": {
+            "count": 16642,
+            "worseOver1px": 652,
+            "worseOver3px": 139,
+            "worseOver5px": 0,
+            "worseOver10px": 0,
+            "improvedOver1px": 2026,
+            "improvedOver3px": 408,
+            "meanDeltaPx": -0.206428
+          },
+          "gateUses": {
+            "advanced": 4835,
+            "fallback": 11807
+          }
+        },
+        "test": {
+          "metrics": {
+            "count": 16642,
+            "mean": 30.377385,
+            "rmse": 64.354829,
+            "p50": 9.025,
+            "p90": 85.375,
+            "p95": 140.275,
+            "p99": 277.725,
+            "max": 710.372438
+          },
+          "regressionsVsBaseline": {
+            "count": 16642,
+            "worseOver1px": 945,
+            "worseOver3px": 181,
+            "worseOver5px": 0,
+            "worseOver10px": 0,
+            "improvedOver1px": 2032,
+            "improvedOver3px": 428,
+            "meanDeltaPx": -0.166671
+          },
+          "gateUses": {
+            "advanced": 5164,
+            "fallback": 11478
+          }
+        },
+        "validationRank": 21579.433613
+      },
+      {
+        "gate": {
+          "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_4",
+          "role": "real_tree_gate",
+          "family": "tree",
+          "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+          "params": {
+            "policy": {
+              "id": "balanced",
+              "maxWorse10": 0,
+              "maxWorse5Rate": 0.002,
+              "minRows": 232,
+              "minGain": 0.025
+            },
+            "maxDepth": 2,
+            "root": {
+              "type": "split",
+              "feature": "lsCvDisagreement",
+              "threshold": 16,
+              "left": {
+                "type": "split",
+                "feature": "jitterProxy",
+                "threshold": 0.01,
+                "left": {
+                  "type": "leaf",
+                  "useAdvanced": false,
+                  "rows": 42471,
+                  "worseOver5px": 0,
+                  "worseOver10px": 0,
+                  "meanDeltaPx": 0.06375,
+                  "cost": 0
+                },
+                "right": {
+                  "type": "leaf",
+                  "useAdvanced": true,
+                  "rows": 20945,
+                  "worseOver5px": 0,
+                  "worseOver10px": 0,
+                  "meanDeltaPx": -0.708101,
+                  "cost": -14003.166757
+                }
+              },
+              "right": {
+                "type": "leaf",
+                "useAdvanced": false,
+                "rows": 14245,
+                "worseOver5px": 2082,
+                "worseOver10px": 157,
+                "meanDeltaPx": -3.471063,
+                "cost": 0
+              }
+            }
+          }
+        },
+        "validation": {
+          "metrics": {
+            "count": 16642,
+            "mean": 21.448206,
+            "rmse": 58.624739,
+            "p50": 2.075,
+            "p90": 57.425,
+            "p95": 103.825,
+            "p99": 274.025,
+            "max": 930.483745
+          },
+          "regressionsVsBaseline": {
+            "count": 16642,
+            "worseOver1px": 652,
+            "worseOver3px": 139,
+            "worseOver5px": 0,
+            "worseOver10px": 0,
+            "improvedOver1px": 2026,
+            "improvedOver3px": 408,
+            "meanDeltaPx": -0.206428
+          },
+          "gateUses": {
+            "advanced": 4835,
+            "fallback": 11807
+          }
+        },
+        "test": {
+          "metrics": {
+            "count": 16642,
+            "mean": 30.377385,
+            "rmse": 64.354829,
+            "p50": 9.025,
+            "p90": 85.375,
+            "p95": 140.275,
+            "p99": 277.725,
+            "max": 710.372438
+          },
+          "regressionsVsBaseline": {
+            "count": 16642,
+            "worseOver1px": 945,
+            "worseOver3px": 181,
+            "worseOver5px": 0,
+            "worseOver10px": 0,
+            "improvedOver1px": 2032,
+            "improvedOver3px": 428,
+            "meanDeltaPx": -0.166671
+          },
+          "gateUses": {
+            "advanced": 5164,
+            "fallback": 11478
+          }
+        },
+        "validationRank": 21579.433613
+      },
+      {
+        "gate": {
+          "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_5",
+          "role": "real_tree_gate",
+          "family": "tree",
+          "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+          "params": {
+            "policy": {
+              "id": "balanced",
+              "maxWorse10": 0,
+              "maxWorse5Rate": 0.002,
+              "minRows": 232,
+              "minGain": 0.025
+            },
+            "maxDepth": 3,
+            "root": {
+              "type": "split",
+              "feature": "lsCvDisagreement",
+              "threshold": 16,
+              "left": {
+                "type": "split",
+                "feature": "jitterProxy",
+                "threshold": 0.01,
+                "left": {
+                  "type": "leaf",
+                  "useAdvanced": false,
+                  "rows": 42471,
+                  "worseOver5px": 0,
+                  "worseOver10px": 0,
+                  "meanDeltaPx": 0.06375,
+                  "cost": 0
+                },
+                "right": {
+                  "type": "leaf",
+                  "useAdvanced": true,
+                  "rows": 20945,
+                  "worseOver5px": 0,
+                  "worseOver10px": 0,
+                  "meanDeltaPx": -0.708101,
+                  "cost": -14003.166757
+                }
+              },
+              "right": {
+                "type": "leaf",
+                "useAdvanced": false,
+                "rows": 14245,
+                "worseOver5px": 2082,
+                "worseOver10px": 157,
+                "meanDeltaPx": -3.471063,
+                "cost": 0
+              }
+            }
+          }
+        },
+        "validation": {
+          "metrics": {
+            "count": 16642,
+            "mean": 21.448206,
+            "rmse": 58.624739,
+            "p50": 2.075,
+            "p90": 57.425,
+            "p95": 103.825,
+            "p99": 274.025,
+            "max": 930.483745
+          },
+          "regressionsVsBaseline": {
+            "count": 16642,
+            "worseOver1px": 652,
+            "worseOver3px": 139,
+            "worseOver5px": 0,
+            "worseOver10px": 0,
+            "improvedOver1px": 2026,
+            "improvedOver3px": 408,
+            "meanDeltaPx": -0.206428
+          },
+          "gateUses": {
+            "advanced": 4835,
+            "fallback": 11807
+          }
+        },
+        "test": {
+          "metrics": {
+            "count": 16642,
+            "mean": 30.377385,
+            "rmse": 64.354829,
+            "p50": 9.025,
+            "p90": 85.375,
+            "p95": 140.275,
+            "p99": 277.725,
+            "max": 710.372438
+          },
+          "regressionsVsBaseline": {
+            "count": 16642,
+            "worseOver1px": 945,
+            "worseOver3px": 181,
+            "worseOver5px": 0,
+            "worseOver10px": 0,
+            "improvedOver1px": 2032,
+            "improvedOver3px": 428,
+            "meanDeltaPx": -0.166671
+          },
+          "gateUses": {
+            "advanced": 5164,
+            "fallback": 11478
+          }
+        },
+        "validationRank": 21579.433613
+      },
+      {
+        "gate": {
+          "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_6",
+          "role": "real_tree_gate",
+          "family": "tree",
+          "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+          "params": {
+            "policy": {
+              "id": "balanced",
+              "maxWorse10": 0,
+              "maxWorse5Rate": 0.002,
+              "minRows": 232,
+              "minGain": 0.025
+            },
+            "maxDepth": 4,
+            "root": {
+              "type": "split",
+              "feature": "lsCvDisagreement",
+              "threshold": 16,
+              "left": {
+                "type": "split",
+                "feature": "jitterProxy",
+                "threshold": 0.01,
+                "left": {
+                  "type": "leaf",
+                  "useAdvanced": false,
+                  "rows": 42471,
+                  "worseOver5px": 0,
+                  "worseOver10px": 0,
+                  "meanDeltaPx": 0.06375,
+                  "cost": 0
+                },
+                "right": {
+                  "type": "leaf",
+                  "useAdvanced": true,
+                  "rows": 20945,
+                  "worseOver5px": 0,
+                  "worseOver10px": 0,
+                  "meanDeltaPx": -0.708101,
+                  "cost": -14003.166757
+                }
+              },
+              "right": {
+                "type": "leaf",
+                "useAdvanced": false,
+                "rows": 14245,
+                "worseOver5px": 2082,
+                "worseOver10px": 157,
+                "meanDeltaPx": -3.471063,
+                "cost": 0
+              }
+            }
+          }
+        },
+        "validation": {
+          "metrics": {
+            "count": 16642,
+            "mean": 21.448206,
+            "rmse": 58.624739,
+            "p50": 2.075,
+            "p90": 57.425,
+            "p95": 103.825,
+            "p99": 274.025,
+            "max": 930.483745
+          },
+          "regressionsVsBaseline": {
+            "count": 16642,
+            "worseOver1px": 652,
+            "worseOver3px": 139,
+            "worseOver5px": 0,
+            "worseOver10px": 0,
+            "improvedOver1px": 2026,
+            "improvedOver3px": 408,
+            "meanDeltaPx": -0.206428
+          },
+          "gateUses": {
+            "advanced": 4835,
+            "fallback": 11807
+          }
+        },
+        "test": {
+          "metrics": {
+            "count": 16642,
+            "mean": 30.377385,
+            "rmse": 64.354829,
+            "p50": 9.025,
+            "p90": 85.375,
+            "p95": 140.275,
+            "p99": 277.725,
+            "max": 710.372438
+          },
+          "regressionsVsBaseline": {
+            "count": 16642,
+            "worseOver1px": 945,
+            "worseOver3px": 181,
+            "worseOver5px": 0,
+            "worseOver10px": 0,
+            "improvedOver1px": 2032,
+            "improvedOver3px": 428,
+            "meanDeltaPx": -0.166671
+          },
+          "gateUses": {
+            "advanced": 5164,
+            "fallback": 11478
+          }
+        },
+        "validationRank": 21579.433613
+      },
+      {
+        "gate": {
+          "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_7",
+          "role": "real_tree_gate",
+          "family": "tree",
+          "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+          "params": {
+            "policy": {
+              "id": "strict",
+              "maxWorse10": 0,
+              "maxWorse5Rate": 0,
+              "minRows": 155,
+              "minGain": 0.015
+            },
+            "maxDepth": 1,
+            "root": {
+              "type": "split",
+              "feature": "lsCvDisagreement",
+              "threshold": 16,
+              "left": {
+                "type": "leaf",
+                "useAdvanced": true,
+                "rows": 63416,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "meanDeltaPx": -0.191176,
+                "cost": -10901.643932
+              },
+              "right": {
+                "type": "leaf",
+                "useAdvanced": false,
+                "rows": 14245,
+                "worseOver5px": 2082,
+                "worseOver10px": 157,
+                "meanDeltaPx": -3.471063,
+                "cost": 0
+              }
+            }
+          }
+        },
+        "validation": {
+          "metrics": {
+            "count": 16642,
+            "mean": 21.501414,
+            "rmse": 58.622487,
+            "p50": 2.275,
+            "p90": 57.425,
+            "p95": 103.825,
+            "p99": 274.025,
+            "max": 930.483745
+          },
+          "regressionsVsBaseline": {
+            "count": 16642,
+            "worseOver1px": 1059,
+            "worseOver3px": 203,
+            "worseOver5px": 0,
+            "worseOver10px": 0,
+            "improvedOver1px": 2097,
+            "improvedOver3px": 419,
+            "meanDeltaPx": -0.15322
+          },
+          "gateUses": {
+            "advanced": 12227,
+            "fallback": 4415
+          }
+        },
+        "test": {
+          "metrics": {
+            "count": 16642,
+            "mean": 30.426087,
+            "rmse": 64.353154,
+            "p50": 8.975,
+            "p90": 85.325,
+            "p95": 140.275,
+            "p99": 277.725,
+            "max": 710.372438
+          },
+          "regressionsVsBaseline": {
+            "count": 16642,
+            "worseOver1px": 1305,
+            "worseOver3px": 241,
+            "worseOver5px": 0,
+            "worseOver10px": 0,
+            "improvedOver1px": 2108,
+            "improvedOver3px": 441,
+            "meanDeltaPx": -0.117968
+          },
+          "gateUses": {
+            "advanced": 10123,
+            "fallback": 6519
+          }
+        },
+        "validationRank": 21632.641369
+      },
+      {
+        "gate": {
+          "id": "real_tree_blend_cv_ls_w50_cap36_ls0p25_8",
+          "role": "real_tree_gate",
+          "family": "tree",
+          "candidateId": "blend_cv_ls_w50_cap36_ls0p25",
+          "params": {
+            "policy": {
+              "id": "balanced",
+              "maxWorse10": 0,
+              "maxWorse5Rate": 0.002,
+              "minRows": 232,
+              "minGain": 0.025
+            },
+            "maxDepth": 1,
+            "root": {
+              "type": "split",
+              "feature": "lsCvDisagreement",
+              "threshold": 16,
+              "left": {
+                "type": "leaf",
+                "useAdvanced": true,
+                "rows": 63416,
+                "worseOver5px": 0,
+                "worseOver10px": 0,
+                "meanDeltaPx": -0.191176,
+                "cost": -10901.643932
+              },
+              "right": {
+                "type": "leaf",
+                "useAdvanced": false,
+                "rows": 14245,
+                "worseOver5px": 2082,
+                "worseOver10px": 157,
+                "meanDeltaPx": -3.471063,
+                "cost": 0
+              }
+            }
+          }
+        },
+        "validation": {
+          "metrics": {
+            "count": 16642,
+            "mean": 21.501414,
+            "rmse": 58.622487,
+            "p50": 2.275,
+            "p90": 57.425,
+            "p95": 103.825,
+            "p99": 274.025,
+            "max": 930.483745
+          },
+          "regressionsVsBaseline": {
+            "count": 16642,
+            "worseOver1px": 1059,
+            "worseOver3px": 203,
+            "worseOver5px": 0,
+            "worseOver10px": 0,
+            "improvedOver1px": 2097,
+            "improvedOver3px": 419,
+            "meanDeltaPx": -0.15322
+          },
+          "gateUses": {
+            "advanced": 12227,
+            "fallback": 4415
+          }
+        },
+        "test": {
+          "metrics": {
+            "count": 16642,
+            "mean": 30.426087,
+            "rmse": 64.353154,
+            "p50": 8.975,
+            "p90": 85.325,
+            "p95": 140.275,
+            "p99": 277.725,
+            "max": 710.372438
+          },
+          "regressionsVsBaseline": {
+            "count": 16642,
+            "worseOver1px": 1305,
+            "worseOver3px": 241,
+            "worseOver5px": 0,
+            "worseOver10px": 0,
+            "improvedOver1px": 2108,
+            "improvedOver3px": 441,
+            "meanDeltaPx": -0.117968
+          },
+          "gateUses": {
+            "advanced": 10123,
+            "fallback": 6519
+          }
+        },
+        "validationRank": 21632.641369
+      },
+      {
+        "gate": {
+          "id": "real_tree_blend_cv_ls_w50_cap36_ls0p5_1",
+          "role": "real_tree_gate",
+          "family": "tree",
+          "candidateId": "blend_cv_ls_w50_cap36_ls0p5",
+          "params": {
+            "policy": {
+              "id": "strict",
+              "maxWorse10": 0,
+              "maxWorse5Rate": 0,
+              "minRows": 155,
+              "minGain": 0.015
+            },
+            "maxDepth": 2,
+            "root": {
+              "type": "split",
+              "feature": "lsCvDisagreement",
+              "threshold": 8,
+              "left": {
+                "type": "split",
+                "feature": "jitterProxy",
+                "threshold": 0.01,
+                "left": {
+                  "type": "leaf",
+                  "useAdvanced": false,
+                  "rows": 41773,
+                  "worseOver5px": 0,
+                  "worseOver10px": 0,
+                  "meanDeltaPx": 0.084704,
+                  "cost": 0
+                },
+                "right": {
+                  "type": "leaf",
+                  "useAdvanced": true,
+                  "rows": 13618,
+                  "worseOver5px": 0,
+                  "worseOver10px": 0,
+                  "meanDeltaPx": -0.509871,
+                  "cost": -6409.428746
+                }
+              },
+              "right": {
+                "type": "leaf",
+                "useAdvanced": false,
+                "rows": 22270,
+                "worseOver5px": 4921,
+                "worseOver10px": 2332,
+                "meanDeltaPx": -4.087896,
+                "cost": 0
+              }
+            }
+          }
+        },
+        "validation": {
+          "metrics": {
+            "count": 16642,
+            "mean": 21.567226,
+            "rmse": 58.724124,
+            "p50": 2.075,
+            "p90": 57.925,
+            "p95": 104.125,
+            "p99": 274.925,
+            "max": 930.483745
+          },
+          "regressionsVsBaseline": {
+            "count": 16642,
+            "worseOver1px": 378,
+            "worseOver3px": 75,
+            "worseOver5px": 0,
+            "worseOver10px": 0,
+            "improvedOver1px": 981,
+            "improvedOver3px": 213,
+            "meanDeltaPx": -0.087408
+          },
+          "gateUses": {
+            "advanced": 2799,
+            "fallback": 13843
+          }
+        },
+        "test": {
+          "metrics": {
+            "count": 16642,
+            "mean": 30.498298,
+            "rmse": 64.471121,
+            "p50": 9.225,
+            "p90": 85.375,
+            "p95": 140.275,
+            "p99": 278.575,
+            "max": 710.372438
+          },
+          "regressionsVsBaseline": {
+            "count": 16642,
+            "worseOver1px": 552,
+            "worseOver3px": 99,
+            "worseOver5px": 0,
+            "worseOver10px": 0,
+            "improvedOver1px": 870,
+            "improvedOver3px": 177,
+            "meanDeltaPx": -0.045758
+          },
+          "gateUses": {
+            "advanced": 2756,
+            "fallback": 13886
+          }
+        },
+        "validationRank": 21698.843841
+      },
+      {
+        "gate": {
+          "id": "real_tree_blend_cv_ls_w50_cap36_ls0p5_2",
+          "role": "real_tree_gate",
+          "family": "tree",
+          "candidateId": "blend_cv_ls_w50_cap36_ls0p5",
+          "params": {
+            "policy": {
+              "id": "strict",
+              "maxWorse10": 0,
+              "maxWorse5Rate": 0,
+              "minRows": 155,
+              "minGain": 0.015
+            },
+            "maxDepth": 3,
+            "root": {
+              "type": "split",
+              "feature": "lsCvDisagreement",
+              "threshold": 8,
+              "left": {
+                "type": "split",
+                "feature": "jitterProxy",
+                "threshold": 0.01,
+                "left": {
+                  "type": "leaf",
+                  "useAdvanced": false,
+                  "rows": 41773,
+                  "worseOver5px": 0,
+                  "worseOver10px": 0,
+                  "meanDeltaPx": 0.084704,
+                  "cost": 0
+                },
+                "right": {
+                  "type": "leaf",
+                  "useAdvanced": true,
+                  "rows": 13618,
+                  "worseOver5px": 0,
+                  "worseOver10px": 0,
+                  "meanDeltaPx": -0.509871,
+                  "cost": -6409.428746
+                }
+              },
+              "right": {
+                "type": "leaf",
+                "useAdvanced": false,
+                "rows": 22270,
+                "worseOver5px": 4921,
+                "worseOver10px": 2332,
+                "meanDeltaPx": -4.087896,
+                "cost": 0
+              }
+            }
+          }
+        },
+        "validation": {
+          "metrics": {
+            "count": 16642,
+            "mean": 21.567226,
+            "rmse": 58.724124,
+            "p50": 2.075,
+            "p90": 57.925,
+            "p95": 104.125,
+            "p99": 274.925,
+            "max": 930.483745
+          },
+          "regressionsVsBaseline": {
+            "count": 16642,
+            "worseOver1px": 378,
+            "worseOver3px": 75,
+            "worseOver5px": 0,
+            "worseOver10px": 0,
+            "improvedOver1px": 981,
+            "improvedOver3px": 213,
+            "meanDeltaPx": -0.087408
+          },
+          "gateUses": {
+            "advanced": 2799,
+            "fallback": 13843
+          }
+        },
+        "test": {
+          "metrics": {
+            "count": 16642,
+            "mean": 30.498298,
+            "rmse": 64.471121,
+            "p50": 9.225,
+            "p90": 85.375,
+            "p95": 140.275,
+            "p99": 278.575,
+            "max": 710.372438
+          },
+          "regressionsVsBaseline": {
+            "count": 16642,
+            "worseOver1px": 552,
+            "worseOver3px": 99,
+            "worseOver5px": 0,
+            "worseOver10px": 0,
+            "improvedOver1px": 870,
+            "improvedOver3px": 177,
+            "meanDeltaPx": -0.045758
+          },
+          "gateUses": {
+            "advanced": 2756,
+            "fallback": 13886
+          }
+        },
+        "validationRank": 21698.843841
+      },
+      {
+        "gate": {
+          "id": "real_tree_blend_cv_ls_w50_cap36_ls0p5_3",
+          "role": "real_tree_gate",
+          "family": "tree",
+          "candidateId": "blend_cv_ls_w50_cap36_ls0p5",
+          "params": {
+            "policy": {
+              "id": "strict",
+              "maxWorse10": 0,
+              "maxWorse5Rate": 0,
+              "minRows": 155,
+              "minGain": 0.015
+            },
+            "maxDepth": 4,
+            "root": {
+              "type": "split",
+              "feature": "lsCvDisagreement",
+              "threshold": 8,
+              "left": {
+                "type": "split",
+                "feature": "jitterProxy",
+                "threshold": 0.01,
+                "left": {
+                  "type": "leaf",
+                  "useAdvanced": false,
+                  "rows": 41773,
+                  "worseOver5px": 0,
+                  "worseOver10px": 0,
+                  "meanDeltaPx": 0.084704,
+                  "cost": 0
+                },
+                "right": {
+                  "type": "leaf",
+                  "useAdvanced": true,
+                  "rows": 13618,
+                  "worseOver5px": 0,
+                  "worseOver10px": 0,
+                  "meanDeltaPx": -0.509871,
+                  "cost": -6409.428746
+                }
+              },
+              "right": {
+                "type": "leaf",
+                "useAdvanced": false,
+                "rows": 22270,
+                "worseOver5px": 4921,
+                "worseOver10px": 2332,
+                "meanDeltaPx": -4.087896,
+                "cost": 0
+              }
+            }
+          }
+        },
+        "validation": {
+          "metrics": {
+            "count": 16642,
+            "mean": 21.567226,
+            "rmse": 58.724124,
+            "p50": 2.075,
+            "p90": 57.925,
+            "p95": 104.125,
+            "p99": 274.925,
+            "max": 930.483745
+          },
+          "regressionsVsBaseline": {
+            "count": 16642,
+            "worseOver1px": 378,
+            "worseOver3px": 75,
+            "worseOver5px": 0,
+            "worseOver10px": 0,
+            "improvedOver1px": 981,
+            "improvedOver3px": 213,
+            "meanDeltaPx": -0.087408
+          },
+          "gateUses": {
+            "advanced": 2799,
+            "fallback": 13843
+          }
+        },
+        "test": {
+          "metrics": {
+            "count": 16642,
+            "mean": 30.498298,
+            "rmse": 64.471121,
+            "p50": 9.225,
+            "p90": 85.375,
+            "p95": 140.275,
+            "p99": 278.575,
+            "max": 710.372438
+          },
+          "regressionsVsBaseline": {
+            "count": 16642,
+            "worseOver1px": 552,
+            "worseOver3px": 99,
+            "worseOver5px": 0,
+            "worseOver10px": 0,
+            "improvedOver1px": 870,
+            "improvedOver3px": 177,
+            "meanDeltaPx": -0.045758
+          },
+          "gateUses": {
+            "advanced": 2756,
+            "fallback": 13886
+          }
+        },
+        "validationRank": 21698.843841
+      },
+      {
+        "gate": {
+          "id": "real_tree_blend_cv_ls_w50_cap36_ls0p5_4",
+          "role": "real_tree_gate",
+          "family": "tree",
+          "candidateId": "blend_cv_ls_w50_cap36_ls0p5",
+          "params": {
+            "policy": {
+              "id": "balanced",
+              "maxWorse10": 0,
+              "maxWorse5Rate": 0.002,
+              "minRows": 232,
+              "minGain": 0.025
+            },
+            "maxDepth": 2,
+            "root": {
+              "type": "split",
+              "feature": "lsCvDisagreement",
+              "threshold": 8,
+              "left": {
+                "type": "split",
+                "feature": "jitterProxy",
+                "threshold": 0.01,
+                "left": {
+                  "type": "leaf",
+                  "useAdvanced": false,
+                  "rows": 41773,
+                  "worseOver5px": 0,
+                  "worseOver10px": 0,
+                  "meanDeltaPx": 0.084704,
+                  "cost": 0
+                },
+                "right": {
+                  "type": "leaf",
+                  "useAdvanced": true,
+                  "rows": 13618,
+                  "worseOver5px": 0,
+                  "worseOver10px": 0,
+                  "meanDeltaPx": -0.509871,
+                  "cost": -6409.428746
+                }
+              },
+              "right": {
+                "type": "leaf",
+                "useAdvanced": false,
+                "rows": 22270,
+                "worseOver5px": 4921,
+                "worseOver10px": 2332,
+                "meanDeltaPx": -4.087896,
+                "cost": 0
+              }
+            }
+          }
+        },
+        "validation": {
+          "metrics": {
+            "count": 16642,
+            "mean": 21.567226,
+            "rmse": 58.724124,
+            "p50": 2.075,
+            "p90": 57.925,
+            "p95": 104.125,
+            "p99": 274.925,
+            "max": 930.483745
+          },
+          "regressionsVsBaseline": {
+            "count": 16642,
+            "worseOver1px": 378,
+            "worseOver3px": 75,
+            "worseOver5px": 0,
+            "worseOver10px": 0,
+            "improvedOver1px": 981,
+            "improvedOver3px": 213,
+            "meanDeltaPx": -0.087408
+          },
+          "gateUses": {
+            "advanced": 2799,
+            "fallback": 13843
+          }
+        },
+        "test": {
+          "metrics": {
+            "count": 16642,
+            "mean": 30.498298,
+            "rmse": 64.471121,
+            "p50": 9.225,
+            "p90": 85.375,
+            "p95": 140.275,
+            "p99": 278.575,
+            "max": 710.372438
+          },
+          "regressionsVsBaseline": {
+            "count": 16642,
+            "worseOver1px": 552,
+            "worseOver3px": 99,
+            "worseOver5px": 0,
+            "worseOver10px": 0,
+            "improvedOver1px": 870,
+            "improvedOver3px": 177,
+            "meanDeltaPx": -0.045758
+          },
+          "gateUses": {
+            "advanced": 2756,
+            "fallback": 13886
+          }
+        },
+        "validationRank": 21698.843841
+      }
+    ]
+  },
+  "recommendation": "proceed_to_calibrator_with_real_gate_as_safety_anchor",
+  "elapsedSec": 57.048
+}

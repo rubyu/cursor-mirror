@@ -1,0 +1,8 @@
+{
+  "scenarioPath": "C:/Users/seigl/OneDrive/my/ドキュメント/projects/cursor/poc/cursor-prediction-v19/step-03-motionlab-abrupt-stop-scenarios/abrupt-stop-scenarios.json",
+  "metadataPath": "C:/Users/seigl/OneDrive/my/ドキュメント/projects/cursor/poc/cursor-prediction-v19/step-03-motionlab-abrupt-stop-scenarios/scenario-metadata.json",
+  "outputPath": "C:/Users/seigl/OneDrive/my/ドキュメント/projects/cursor/poc/cursor-prediction-v19/step-04-reproduction/scores.json",
+  "callRateHz": 60,
+  "refreshMs": 16.6666667,
+  "phaseOffsetsMs": [0, 4.1666667, 8.3333333, 12.5]
+}

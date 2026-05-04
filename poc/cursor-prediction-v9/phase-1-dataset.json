@@ -1,0 +1,131 @@
+{
+  "schemaVersion": "cursor-prediction-v9-phase1-dataset/1",
+  "generatedAt": "2026-05-03T04:16:55.574Z",
+  "policy": {
+    "anchorStream": "runtimeSelfSchedulerPoll",
+    "historyStream": "referencePoll at or before anchor time",
+    "labelStream": "referencePoll interpolated at anchor time + fixed horizon",
+    "causalInputsOnly": true,
+    "horizonsMs": [
+      4,
+      8,
+      12,
+      16.67
+    ],
+    "largeDatasetWritten": false
+  },
+  "sessions": [
+    {
+      "sessionId": "session-1",
+      "sourceZip": "cursor-mirror-trace-20260502-175951.zip",
+      "traceFormatVersion": 9,
+      "qualityWarnings": [
+        "product_poll_interval_p95_exceeds_requested_interval"
+      ],
+      "csvRows": 260359,
+      "eventCounts": {
+        "referencePoll": 122812,
+        "poll": 14434,
+        "schedulerExperiment": 47506,
+        "runtimeSelfSchedulerPoll": 15829,
+        "runtimeSelfSchedulerLoop": 15830,
+        "runtimeSchedulerLoop": 15839,
+        "runtimeSchedulerPoll": 15838,
+        "move": 12271
+      },
+      "runtimeSelfSchedulerPollIntervalMs": {
+        "count": 15828,
+        "mean": 17.10823041445594,
+        "p50": 16.668,
+        "p95": 16.969,
+        "max": 50.145
+      },
+      "referencePollIntervalMs": {
+        "count": 122811,
+        "mean": 2.205112888910254,
+        "p50": 2,
+        "p95": 2.001,
+        "max": 42.5
+      },
+      "referencePollCount": 122812,
+      "anchorCount": 15829,
+      "rowsBuilt": 63310,
+      "rowsByHorizon": {
+        "4": 15828,
+        "8": 15828,
+        "12": 15827,
+        "16.67": 15827
+      },
+      "rowsBySpeedBin": {
+        "0-25": 57134,
+        "1000-2000": 1188,
+        "500-1000": 1604,
+        ">=2000": 3292,
+        "250-500": 76,
+        "100-250": 8,
+        "25-100": 8
+      },
+      "diagnostics": {
+        "anchorsSeen": 15829,
+        "anchorsWithInsufficientHistory": 0,
+        "labelsMissing": 6,
+        "rowsBuilt": 63310
+      }
+    },
+    {
+      "sessionId": "session-2",
+      "sourceZip": "cursor-mirror-trace-20260502-184947.zip",
+      "traceFormatVersion": 9,
+      "qualityWarnings": [
+        "product_poll_interval_p95_exceeds_requested_interval"
+      ],
+      "csvRows": 208139,
+      "eventCounts": {
+        "referencePoll": 97907,
+        "poll": 12159,
+        "schedulerExperiment": 35743,
+        "runtimeSelfSchedulerPoll": 11911,
+        "runtimeSelfSchedulerLoop": 11912,
+        "runtimeSchedulerLoop": 11913,
+        "runtimeSchedulerPoll": 11912,
+        "move": 14682
+      },
+      "runtimeSelfSchedulerPollIntervalMs": {
+        "count": 11910,
+        "mean": 16.681942569270433,
+        "p50": 16.668,
+        "p95": 16.77655,
+        "max": 33.382
+      },
+      "referencePollIntervalMs": {
+        "count": 97906,
+        "mean": 2.0295799235987007,
+        "p50": 2,
+        "p95": 2.001,
+        "max": 24.672
+      },
+      "referencePollCount": 97907,
+      "anchorCount": 11911,
+      "rowsBuilt": 47639,
+      "rowsByHorizon": {
+        "4": 11910,
+        "8": 11910,
+        "12": 11910,
+        "16.67": 11909
+      },
+      "rowsBySpeedBin": {
+        "0-25": 40419,
+        ">=2000": 5164,
+        "1000-2000": 1100,
+        "500-1000": 860,
+        "250-500": 96
+      },
+      "diagnostics": {
+        "anchorsSeen": 11911,
+        "anchorsWithInsufficientHistory": 0,
+        "labelsMissing": 5,
+        "rowsBuilt": 47639
+      }
+    }
+  ]
+}

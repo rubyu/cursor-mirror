@@ -1,0 +1,97 @@
+{
+  "schemaVersion": "cursor-prediction-v10-phase0-dataset/1",
+  "generatedAt": "2026-05-03T08:04:12.280Z",
+  "command": "C:\\Users\\seigl\\AppData\\Local\\OpenAI\\Codex\\bin\\node.exe C:\\Users\\seigl\\OneDrive\\my\\ドキュメント\\projects\\cursor\\poc\\cursor-prediction-v10\\scripts\\run-v10-pilot.js --count 2000 --seed 10010",
+  "environment": {
+    "node": "v24.14.0",
+    "platform": "win32",
+    "arch": "x64",
+    "cpuCount": 32,
+    "gpuUsed": false,
+    "dependencies": "node standard library only"
+  },
+  "policy": {
+    "canonicalData": "scripts/seeds only",
+    "scriptSchema": "cursor-mirror-motion-script/1",
+    "rawZipWritten": false,
+    "perFrameCsvWritten": false,
+    "nodeModulesWritten": false,
+    "checkpointsWritten": false,
+    "deterministic": true,
+    "rootSeed": 10010,
+    "scriptCount": 2000,
+    "horizonsMs": [
+      8.33,
+      16.67,
+      25,
+      33.33
+    ],
+    "missingHistoryScenarios": [
+      {
+        "id": "clean",
+        "dropRate": 0
+      },
+      {
+        "id": "missing_10pct",
+        "dropRate": 0.1
+      },
+      {
+        "id": "missing_25pct",
+        "dropRate": 0.25
+      }
+    ],
+    "evaluation": {
+      "onDemandSamplingOnly": true,
+      "anchorsPerScript": 32,
+      "sampleIntervalMs": 8.33,
+      "historyMs": 200
+    }
+  },
+  "scripts": {
+    "count": 2000,
+    "boundsCounts": {
+      "1280x720": 696,
+      "1920x1080": 625,
+      "640x480": 679
+    },
+    "tagCounts": {
+      "near_stop": 689,
+      "acute_acceleration": 582,
+      "edge_proximity": 644,
+      "missing_history": 538,
+      "jitter": 538,
+      "loop_or_reversal": 406,
+      "smooth_reference": 298
+    },
+    "durationMs": {
+      "count": 2000,
+      "mean": 6986.554246,
+      "rmse": 7565.040175,
+      "p50": 7011.0685,
+      "p90": 10996.6484,
+      "p95": 11504.33455,
+      "p99": 11899.6323,
+      "max": 11997.57
+    },
+    "controlPointCounts": {
+      "count": 2000,
+      "mean": 9.101,
+      "rmse": 10.10866,
+      "p50": 9,
+      "p90": 15,
+      "p95": 16,
+      "p99": 16,
+      "max": 16
+    },
+    "speedPointCounts": {
+      "count": 2000,
+      "mean": 2.2755,
+      "rmse": 3.114402,
+      "p50": 2,
+      "p90": 5,
+      "p95": 6,
+      "p99": 9,
+      "max": 17
+    }
+  }
+}

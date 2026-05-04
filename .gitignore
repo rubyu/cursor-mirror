@@ -7,16 +7,20 @@ assets/icons/CursorMirror.ico
 *.obj
 bin/
 obj/
+.dotnet/
 
 # Local capture packages
 /cursor-mirror-trace-*.zip
 /cursor-mirror-calibration-*.zip
+/cursor-mirror-motion-*.zip
 
 # POC local/generated data
 poc/**/.venv*/
 poc/**/.uv-cache/
+poc/**/.appdata/
 poc/**/__pycache__/
 poc/**/raw/
 poc/**/runs/raw/
 poc/**/*.zip
 poc/**/dataset.jsonl
+poc/**/runs/*.jsonl

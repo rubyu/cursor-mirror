@@ -1,0 +1,1492 @@
+{
+  "SchemaVersion": "cursor-mirror-motion-scenarios/1",
+  "Seed": 19001,
+  "GenerationProfile": "v19-abrupt-stop-parameterized",
+  "DurationMilliseconds": 86400,
+  "ScenarioDurationMilliseconds": 3600,
+  "SampleRateHz": 240,
+  "Scenarios": [
+    {
+      "SchemaVersion": "cursor-mirror-motion-script/1",
+      "Seed": 19000,
+      "Bounds": {
+        "X": 200,
+        "Y": 160,
+        "Width": 1400,
+        "Height": 800
+      },
+      "DurationMilliseconds": 3600,
+      "SampleRateHz": 240,
+      "ControlPoints": [
+        {
+          "X": 280,
+          "Y": 240
+        },
+        {
+          "X": 487,
+          "Y": 240
+        },
+        {
+          "X": 740,
+          "Y": 240
+        }
+      ],
+      "SpeedPoints": [
+        {
+          "Progress": 0.05,
+          "Multiplier": 0.9,
+          "EasingWidth": 0.05,
+          "Easing": "ease-in-out"
+        },
+        {
+          "Progress": 0.425,
+          "Multiplier": 1.035,
+          "EasingWidth": 0.045,
+          "Easing": "linear"
+        },
+        {
+          "Progress": 0.545,
+          "Multiplier": 0,
+          "EasingWidth": 0.018,
+          "Easing": "ease-out"
+        },
+        {
+          "Progress": 0.625,
+          "Multiplier": 0.08,
+          "EasingWidth": 0.025,
+          "Easing": "ease-in-out"
+        }
+      ],
+      "HoldSegments": [
+        {
+          "Progress": 0.545,
+          "DurationMilliseconds": 67,
+          "ResumeEasingMilliseconds": 0
+        }
+      ],
+      "GenerationProfile": "v19-straight-hard-stop"
+    },
+    {
+      "SchemaVersion": "cursor-mirror-motion-script/1",
+      "Seed": 19017,
+      "Bounds": {
+        "X": 200,
+        "Y": 160,
+        "Width": 1400,
+        "Height": 800
+      },
+      "DurationMilliseconds": 3600,
+      "SampleRateHz": 240,
+      "ControlPoints": [
+        {
+          "X": 470,
+          "Y": 240
+        },
+        {
+          "X": 677,
+          "Y": 240
+        },
+        {
+          "X": 930,
+          "Y": 240
+        }
+      ],
+      "SpeedPoints": [
+        {
+          "Progress": 0.05,
+          "Multiplier": 1.4,
+          "EasingWidth": 0.05,
+          "Easing": "ease-in-out"
+        },
+        {
+          "Progress": 0.445,
+          "Multiplier": 1.61,
+          "EasingWidth": 0.045,
+          "Easing": "linear"
+        },
+        {
+          "Progress": 0.565,
+          "Multiplier": 0,
+          "EasingWidth": 0.018,
+          "Easing": "ease-out"
+        },
+        {
+          "Progress": 0.645,
+          "Multiplier": 0.08,
+          "EasingWidth": 0.025,
+          "Easing": "ease-in-out"
+        }
+      ],
+      "HoldSegments": [
+        {
+          "Progress": 0.565,
+          "DurationMilliseconds": 133,
+          "ResumeEasingMilliseconds": 0
+        }
+      ],
+      "GenerationProfile": "v19-straight-hard-stop"
+    },
+    {
+      "SchemaVersion": "cursor-mirror-motion-script/1",
+      "Seed": 19034,
+      "Bounds": {
+        "X": 200,
+        "Y": 160,
+        "Width": 1400,
+        "Height": 800
+      },
+      "DurationMilliseconds": 3600,
+      "SampleRateHz": 240,
+      "ControlPoints": [
+        {
+          "X": 660,
+          "Y": 240
+        },
+        {
+          "X": 867,
+          "Y": 240
+        },
+        {
+          "X": 1120,
+          "Y": 240
+        }
+      ],
+      "SpeedPoints": [
+        {
+          "Progress": 0.05,
+          "Multiplier": 2.1,
+          "EasingWidth": 0.05,
+          "Easing": "ease-in-out"
+        },
+        {
+          "Progress": 0.46,
+          "Multiplier": 2.415,
+          "EasingWidth": 0.045,
+          "Easing": "linear"
+        },
+        {
+          "Progress": 0.58,
+          "Multiplier": 0,
+          "EasingWidth": 0.018,
+          "Easing": "ease-out"
+        },
+        {
+          "Progress": 0.66,
+          "Multiplier": 0.08,
+          "EasingWidth": 0.025,
+          "Easing": "ease-in-out"
+        }
+      ],
+      "HoldSegments": [
+        {
+          "Progress": 0.58,
+          "DurationMilliseconds": 200,
+          "ResumeEasingMilliseconds": 0
+        }
+      ],
+      "GenerationProfile": "v19-straight-hard-stop"
+    },
+    {
+      "SchemaVersion": "cursor-mirror-motion-script/1",
+      "Seed": 19051,
+      "Bounds": {
+        "X": 200,
+        "Y": 160,
+        "Width": 1400,
+        "Height": 800
+      },
+      "DurationMilliseconds": 3600,
+      "SampleRateHz": 240,
+      "ControlPoints": [
+        {
+          "X": 850,
+          "Y": 240
+        },
+        {
+          "X": 1084,
+          "Y": 240
+        },
+        {
+          "X": 1370,
+          "Y": 240
+        }
+      ],
+      "SpeedPoints": [
+        {
+          "Progress": 0.05,
+          "Multiplier": 0.9,
+          "EasingWidth": 0.05,
+          "Easing": "ease-in-out"
+        },
+        {
+          "Progress": 0.478,
+          "Multiplier": 1.035,
+          "EasingWidth": 0.045,
+          "Easing": "linear"
+        },
+        {
+          "Progress": 0.598,
+          "Multiplier": 0,
+          "EasingWidth": 0.005,
+          "Easing": "ease-out"
+        },
+        {
+          "Progress": 0.678,
+          "Multiplier": 0.08,
+          "EasingWidth": 0.025,
+          "Easing": "ease-in-out"
+        }
+      ],
+      "HoldSegments": [
+        {
+          "Progress": 0.598,
+          "DurationMilliseconds": 333,
+          "ResumeEasingMilliseconds": 0
+        }
+      ],
+      "GenerationProfile": "v19-straight-one-frame-stop"
+    },
+    {
+      "SchemaVersion": "cursor-mirror-motion-script/1",
+      "Seed": 19068,
+      "Bounds": {
+        "X": 200,
+        "Y": 160,
+        "Width": 1400,
+        "Height": 800
+      },
+      "DurationMilliseconds": 3600,
+      "SampleRateHz": 240,
+      "ControlPoints": [
+        {
+          "X": 1040,
+          "Y": 240
+        },
+        {
+          "X": 1274,
+          "Y": 240
+        },
+        {
+          "X": 1560,
+          "Y": 240
+        }
+      ],
+      "SpeedPoints": [
+        {
+          "Progress": 0.05,
+          "Multiplier": 1.4,
+          "EasingWidth": 0.05,
+          "Easing": "ease-in-out"
+        },
+        {
+          "Progress": 0.497,
+          "Multiplier": 1.61,
+          "EasingWidth": 0.045,
+          "Easing": "linear"
+        },
+        {
+          "Progress": 0.617,
+          "Multiplier": 0,
+          "EasingWidth": 0.005,
+          "Easing": "ease-out"
+        },
+        {
+          "Progress": 0.697,
+          "Multiplier": 0.08,
+          "EasingWidth": 0.025,
+          "Easing": "ease-in-out"
+        }
+      ],
+      "HoldSegments": [
+        {
+          "Progress": 0.617,
+          "DurationMilliseconds": 67,
+          "ResumeEasingMilliseconds": 0
+        }
+      ],
+      "GenerationProfile": "v19-straight-one-frame-stop"
+    },
+    {
+      "SchemaVersion": "cursor-mirror-motion-script/1",
+      "Seed": 19085,
+      "Bounds": {
+        "X": 200,
+        "Y": 160,
+        "Width": 1400,
+        "Height": 800
+      },
+      "DurationMilliseconds": 3600,
+      "SampleRateHz": 240,
+      "ControlPoints": [
+        {
+          "X": 1230,
+          "Y": 240
+        },
+        {
+          "X": 1464,
+          "Y": 240
+        },
+        {
+          "X": 1750,
+          "Y": 240
+        }
+      ],
+      "SpeedPoints": [
+        {
+          "Progress": 0.05,
+          "Multiplier": 2.1,
+          "EasingWidth": 0.05,
+          "Easing": "ease-in-out"
+        },
+        {
+          "Progress": 0.425,
+          "Multiplier": 2.415,
+          "EasingWidth": 0.045,
+          "Easing": "linear"
+        },
+        {
+          "Progress": 0.545,
+          "Multiplier": 0,
+          "EasingWidth": 0.005,
+          "Easing": "ease-out"
+        },
+        {
+          "Progress": 0.625,
+          "Multiplier": 0.08,
+          "EasingWidth": 0.025,
+          "Easing": "ease-in-out"
+        }
+      ],
+      "HoldSegments": [
+        {
+          "Progress": 0.545,
+          "DurationMilliseconds": 133,
+          "ResumeEasingMilliseconds": 0
+        }
+      ],
+      "GenerationProfile": "v19-straight-one-frame-stop"
+    },
+    {
+      "SchemaVersion": "cursor-mirror-motion-script/1",
+      "Seed": 19102,
+      "Bounds": {
+        "X": 200,
+        "Y": 160,
+        "Width": 1400,
+        "Height": 800
+      },
+      "DurationMilliseconds": 3600,
+      "SampleRateHz": 240,
+      "ControlPoints": [
+        {
+          "X": 280,
+          "Y": 360
+        },
+        {
+          "X": 441,
+          "Y": 270
+        },
+        {
+          "X": 611.2,
+          "Y": 450
+        },
+        {
+          "X": 740,
+          "Y": 360
+        }
+      ],
+      "SpeedPoints": [
+        {
+          "Progress": 0.05,
+          "Multiplier": 0.9,
+          "EasingWidth": 0.05,
+          "Easing": "ease-in-out"
+        },
+        {
+          "Progress": 0.445,
+          "Multiplier": 1.035,
+          "EasingWidth": 0.045,
+          "Easing": "linear"
+        },
+        {
+          "Progress": 0.565,
+          "Multiplier": 0,
+          "EasingWidth": 0.018,
+          "Easing": "ease-out"
+        },
+        {
+          "Progress": 0.645,
+          "Multiplier": 0.08,
+          "EasingWidth": 0.025,
+          "Easing": "ease-in-out"
+        }
+      ],
+      "HoldSegments": [
+        {
+          "Progress": 0.565,
+          "DurationMilliseconds": 200,
+          "ResumeEasingMilliseconds": 0
+        }
+      ],
+      "GenerationProfile": "v19-curved-hard-stop"
+    },
+    {
+      "SchemaVersion": "cursor-mirror-motion-script/1",
+      "Seed": 19119,
+      "Bounds": {
+        "X": 200,
+        "Y": 160,
+        "Width": 1400,
+        "Height": 800
+      },
+      "DurationMilliseconds": 3600,
+      "SampleRateHz": 240,
+      "ControlPoints": [
+        {
+          "X": 470,
+          "Y": 360
+        },
+        {
+          "X": 631,
+          "Y": 240
+        },
+        {
+          "X": 801.2,
+          "Y": 480
+        },
+        {
+          "X": 930,
+          "Y": 360
+        }
+      ],
+      "SpeedPoints": [
+        {
+          "Progress": 0.05,
+          "Multiplier": 1.4,
+          "EasingWidth": 0.05,
+          "Easing": "ease-in-out"
+        },
+        {
+          "Progress": 0.46,
+          "Multiplier": 1.61,
+          "EasingWidth": 0.045,
+          "Easing": "linear"
+        },
+        {
+          "Progress": 0.58,
+          "Multiplier": 0,
+          "EasingWidth": 0.018,
+          "Easing": "ease-out"
+        },
+        {
+          "Progress": 0.66,
+          "Multiplier": 0.08,
+          "EasingWidth": 0.025,
+          "Easing": "ease-in-out"
+        }
+      ],
+      "HoldSegments": [
+        {
+          "Progress": 0.58,
+          "DurationMilliseconds": 333,
+          "ResumeEasingMilliseconds": 0
+        }
+      ],
+      "GenerationProfile": "v19-curved-hard-stop"
+    },
+    {
+      "SchemaVersion": "cursor-mirror-motion-script/1",
+      "Seed": 19136,
+      "Bounds": {
+        "X": 200,
+        "Y": 160,
+        "Width": 1400,
+        "Height": 800
+      },
+      "DurationMilliseconds": 3600,
+      "SampleRateHz": 240,
+      "ControlPoints": [
+        {
+          "X": 660,
+          "Y": 360
+        },
+        {
+          "X": 821,
+          "Y": 210
+        },
+        {
+          "X": 991.2,
+          "Y": 510
+        },
+        {
+          "X": 1120,
+          "Y": 360
+        }
+      ],
+      "SpeedPoints": [
+        {
+          "Progress": 0.05,
+          "Multiplier": 2.1,
+          "EasingWidth": 0.05,
+          "Easing": "ease-in-out"
+        },
+        {
+          "Progress": 0.478,
+          "Multiplier": 2.415,
+          "EasingWidth": 0.045,
+          "Easing": "linear"
+        },
+        {
+          "Progress": 0.598,
+          "Multiplier": 0,
+          "EasingWidth": 0.018,
+          "Easing": "ease-out"
+        },
+        {
+          "Progress": 0.678,
+          "Multiplier": 0.08,
+          "EasingWidth": 0.025,
+          "Easing": "ease-in-out"
+        }
+      ],
+      "HoldSegments": [
+        {
+          "Progress": 0.598,
+          "DurationMilliseconds": 67,
+          "ResumeEasingMilliseconds": 0
+        }
+      ],
+      "GenerationProfile": "v19-curved-hard-stop"
+    },
+    {
+      "SchemaVersion": "cursor-mirror-motion-script/1",
+      "Seed": 19153,
+      "Bounds": {
+        "X": 200,
+        "Y": 160,
+        "Width": 1400,
+        "Height": 800
+      },
+      "DurationMilliseconds": 3600,
+      "SampleRateHz": 240,
+      "ControlPoints": [
+        {
+          "X": 850,
+          "Y": 360
+        },
+        {
+          "X": 1011,
+          "Y": 270
+        },
+        {
+          "X": 1181.2,
+          "Y": 450
+        },
+        {
+          "X": 1310,
+          "Y": 360
+        }
+      ],
+      "SpeedPoints": [
+        {
+          "Progress": 0.05,
+          "Multiplier": 0.9,
+          "EasingWidth": 0.05,
+          "Easing": "ease-in-out"
+        },
+        {
+          "Progress": 0.497,
+          "Multiplier": 1.035,
+          "EasingWidth": 0.045,
+          "Easing": "linear"
+        },
+        {
+          "Progress": 0.617,
+          "Multiplier": 0.18,
+          "EasingWidth": 0.018,
+          "Easing": "ease-out"
+        },
+        {
+          "Progress": 0.697,
+          "Multiplier": 0.08,
+          "EasingWidth": 0.025,
+          "Easing": "ease-in-out"
+        }
+      ],
+      "HoldSegments": [
+        {
+          "Progress": 0.617,
+          "DurationMilliseconds": 133,
+          "ResumeEasingMilliseconds": 80
+        }
+      ],
+      "GenerationProfile": "v19-curved-creep-stop"
+    },
+    {
+      "SchemaVersion": "cursor-mirror-motion-script/1",
+      "Seed": 19170,
+      "Bounds": {
+        "X": 200,
+        "Y": 160,
+        "Width": 1400,
+        "Height": 800
+      },
+      "DurationMilliseconds": 3600,
+      "SampleRateHz": 240,
+      "ControlPoints": [
+        {
+          "X": 1040,
+          "Y": 360
+        },
+        {
+          "X": 1201,
+          "Y": 240
+        },
+        {
+          "X": 1371.2,
+          "Y": 480
+        },
+        {
+          "X": 1500,
+          "Y": 360
+        }
+      ],
+      "SpeedPoints": [
+        {
+          "Progress": 0.05,
+          "Multiplier": 1.4,
+          "EasingWidth": 0.05,
+          "Easing": "ease-in-out"
+        },
+        {
+          "Progress": 0.425,
+          "Multiplier": 1.61,
+          "EasingWidth": 0.045,
+          "Easing": "linear"
+        },
+        {
+          "Progress": 0.545,
+          "Multiplier": 0.18,
+          "EasingWidth": 0.018,
+          "Easing": "ease-out"
+        },
+        {
+          "Progress": 0.625,
+          "Multiplier": 0.08,
+          "EasingWidth": 0.025,
+          "Easing": "ease-in-out"
+        }
+      ],
+      "HoldSegments": [
+        {
+          "Progress": 0.545,
+          "DurationMilliseconds": 200,
+          "ResumeEasingMilliseconds": 80
+        }
+      ],
+      "GenerationProfile": "v19-curved-creep-stop"
+    },
+    {
+      "SchemaVersion": "cursor-mirror-motion-script/1",
+      "Seed": 19187,
+      "Bounds": {
+        "X": 200,
+        "Y": 160,
+        "Width": 1400,
+        "Height": 800
+      },
+      "DurationMilliseconds": 3600,
+      "SampleRateHz": 240,
+      "ControlPoints": [
+        {
+          "X": 1230,
+          "Y": 360
+        },
+        {
+          "X": 1391,
+          "Y": 210
+        },
+        {
+          "X": 1561.2,
+          "Y": 510
+        },
+        {
+          "X": 1690,
+          "Y": 360
+        }
+      ],
+      "SpeedPoints": [
+        {
+          "Progress": 0.05,
+          "Multiplier": 2.1,
+          "EasingWidth": 0.05,
+          "Easing": "ease-in-out"
+        },
+        {
+          "Progress": 0.445,
+          "Multiplier": 2.415,
+          "EasingWidth": 0.045,
+          "Easing": "linear"
+        },
+        {
+          "Progress": 0.565,
+          "Multiplier": 0.18,
+          "EasingWidth": 0.018,
+          "Easing": "ease-out"
+        },
+        {
+          "Progress": 0.645,
+          "Multiplier": 0.08,
+          "EasingWidth": 0.025,
+          "Easing": "ease-in-out"
+        }
+      ],
+      "HoldSegments": [
+        {
+          "Progress": 0.565,
+          "DurationMilliseconds": 333,
+          "ResumeEasingMilliseconds": 80
+        }
+      ],
+      "GenerationProfile": "v19-curved-creep-stop"
+    },
+    {
+      "SchemaVersion": "cursor-mirror-motion-script/1",
+      "Seed": 19204,
+      "Bounds": {
+        "X": 200,
+        "Y": 160,
+        "Width": 1400,
+        "Height": 800
+      },
+      "DurationMilliseconds": 3600,
+      "SampleRateHz": 240,
+      "ControlPoints": [
+        {
+          "X": 280,
+          "Y": 480
+        },
+        {
+          "X": 442,
+          "Y": 480
+        },
+        {
+          "X": 640,
+          "Y": 480
+        }
+      ],
+      "SpeedPoints": [
+        {
+          "Progress": 0.05,
+          "Multiplier": 0.9,
+          "EasingWidth": 0.05,
+          "Easing": "ease-in-out"
+        },
+        {
+          "Progress": 0.46,
+          "Multiplier": 1.035,
+          "EasingWidth": 0.045,
+          "Easing": "linear"
+        },
+        {
+          "Progress": 0.58,
+          "Multiplier": 0,
+          "EasingWidth": 0.018,
+          "Easing": "ease-out"
+        },
+        {
+          "Progress": 0.66,
+          "Multiplier": 0.08,
+          "EasingWidth": 0.025,
+          "Easing": "ease-in-out"
+        }
+      ],
+      "HoldSegments": [
+        {
+          "Progress": 0.58,
+          "DurationMilliseconds": 67,
+          "ResumeEasingMilliseconds": 0
+        }
+      ],
+      "GenerationProfile": "v19-short-stop-duration"
+    },
+    {
+      "SchemaVersion": "cursor-mirror-motion-script/1",
+      "Seed": 19221,
+      "Bounds": {
+        "X": 200,
+        "Y": 160,
+        "Width": 1400,
+        "Height": 800
+      },
+      "DurationMilliseconds": 3600,
+      "SampleRateHz": 240,
+      "ControlPoints": [
+        {
+          "X": 470,
+          "Y": 480
+        },
+        {
+          "X": 632,
+          "Y": 480
+        },
+        {
+          "X": 830,
+          "Y": 480
+        }
+      ],
+      "SpeedPoints": [
+        {
+          "Progress": 0.05,
+          "Multiplier": 1.4,
+          "EasingWidth": 0.05,
+          "Easing": "ease-in-out"
+        },
+        {
+          "Progress": 0.478,
+          "Multiplier": 1.61,
+          "EasingWidth": 0.045,
+          "Easing": "linear"
+        },
+        {
+          "Progress": 0.598,
+          "Multiplier": 0,
+          "EasingWidth": 0.018,
+          "Easing": "ease-out"
+        },
+        {
+          "Progress": 0.678,
+          "Multiplier": 0.08,
+          "EasingWidth": 0.025,
+          "Easing": "ease-in-out"
+        }
+      ],
+      "HoldSegments": [
+        {
+          "Progress": 0.598,
+          "DurationMilliseconds": 133,
+          "ResumeEasingMilliseconds": 0
+        }
+      ],
+      "GenerationProfile": "v19-short-stop-duration"
+    },
+    {
+      "SchemaVersion": "cursor-mirror-motion-script/1",
+      "Seed": 19238,
+      "Bounds": {
+        "X": 200,
+        "Y": 160,
+        "Width": 1400,
+        "Height": 800
+      },
+      "DurationMilliseconds": 3600,
+      "SampleRateHz": 240,
+      "ControlPoints": [
+        {
+          "X": 660,
+          "Y": 480
+        },
+        {
+          "X": 822,
+          "Y": 480
+        },
+        {
+          "X": 1020,
+          "Y": 480
+        }
+      ],
+      "SpeedPoints": [
+        {
+          "Progress": 0.05,
+          "Multiplier": 2.1,
+          "EasingWidth": 0.05,
+          "Easing": "ease-in-out"
+        },
+        {
+          "Progress": 0.497,
+          "Multiplier": 2.415,
+          "EasingWidth": 0.045,
+          "Easing": "linear"
+        },
+        {
+          "Progress": 0.617,
+          "Multiplier": 0,
+          "EasingWidth": 0.018,
+          "Easing": "ease-out"
+        },
+        {
+          "Progress": 0.697,
+          "Multiplier": 0.08,
+          "EasingWidth": 0.025,
+          "Easing": "ease-in-out"
+        }
+      ],
+      "HoldSegments": [
+        {
+          "Progress": 0.617,
+          "DurationMilliseconds": 200,
+          "ResumeEasingMilliseconds": 0
+        }
+      ],
+      "GenerationProfile": "v19-short-stop-duration"
+    },
+    {
+      "SchemaVersion": "cursor-mirror-motion-script/1",
+      "Seed": 19255,
+      "Bounds": {
+        "X": 200,
+        "Y": 160,
+        "Width": 1400,
+        "Height": 800
+      },
+      "DurationMilliseconds": 3600,
+      "SampleRateHz": 240,
+      "ControlPoints": [
+        {
+          "X": 850,
+          "Y": 480
+        },
+        {
+          "X": 1057,
+          "Y": 480
+        },
+        {
+          "X": 1310,
+          "Y": 480
+        }
+      ],
+      "SpeedPoints": [
+        {
+          "Progress": 0.05,
+          "Multiplier": 0.9,
+          "EasingWidth": 0.05,
+          "Easing": "ease-in-out"
+        },
+        {
+          "Progress": 0.425,
+          "Multiplier": 1.035,
+          "EasingWidth": 0.045,
+          "Easing": "linear"
+        },
+        {
+          "Progress": 0.545,
+          "Multiplier": 0,
+          "EasingWidth": 0.018,
+          "Easing": "ease-out"
+        },
+        {
+          "Progress": 0.625,
+          "Multiplier": 0.08,
+          "EasingWidth": 0.025,
+          "Easing": "ease-in-out"
+        }
+      ],
+      "HoldSegments": [
+        {
+          "Progress": 0.545,
+          "DurationMilliseconds": 333,
+          "ResumeEasingMilliseconds": 0
+        }
+      ],
+      "GenerationProfile": "v19-long-stop-duration"
+    },
+    {
+      "SchemaVersion": "cursor-mirror-motion-script/1",
+      "Seed": 19272,
+      "Bounds": {
+        "X": 200,
+        "Y": 160,
+        "Width": 1400,
+        "Height": 800
+      },
+      "DurationMilliseconds": 3600,
+      "SampleRateHz": 240,
+      "ControlPoints": [
+        {
+          "X": 1040,
+          "Y": 480
+        },
+        {
+          "X": 1247,
+          "Y": 480
+        },
+        {
+          "X": 1500,
+          "Y": 480
+        }
+      ],
+      "SpeedPoints": [
+        {
+          "Progress": 0.05,
+          "Multiplier": 1.4,
+          "EasingWidth": 0.05,
+          "Easing": "ease-in-out"
+        },
+        {
+          "Progress": 0.445,
+          "Multiplier": 1.61,
+          "EasingWidth": 0.045,
+          "Easing": "linear"
+        },
+        {
+          "Progress": 0.565,
+          "Multiplier": 0,
+          "EasingWidth": 0.018,
+          "Easing": "ease-out"
+        },
+        {
+          "Progress": 0.645,
+          "Multiplier": 0.08,
+          "EasingWidth": 0.025,
+          "Easing": "ease-in-out"
+        }
+      ],
+      "HoldSegments": [
+        {
+          "Progress": 0.565,
+          "DurationMilliseconds": 67,
+          "ResumeEasingMilliseconds": 0
+        }
+      ],
+      "GenerationProfile": "v19-long-stop-duration"
+    },
+    {
+      "SchemaVersion": "cursor-mirror-motion-script/1",
+      "Seed": 19289,
+      "Bounds": {
+        "X": 200,
+        "Y": 160,
+        "Width": 1400,
+        "Height": 800
+      },
+      "DurationMilliseconds": 3600,
+      "SampleRateHz": 240,
+      "ControlPoints": [
+        {
+          "X": 1230,
+          "Y": 480
+        },
+        {
+          "X": 1437,
+          "Y": 480
+        },
+        {
+          "X": 1690,
+          "Y": 480
+        }
+      ],
+      "SpeedPoints": [
+        {
+          "Progress": 0.05,
+          "Multiplier": 2.1,
+          "EasingWidth": 0.05,
+          "Easing": "ease-in-out"
+        },
+        {
+          "Progress": 0.46,
+          "Multiplier": 2.415,
+          "EasingWidth": 0.045,
+          "Easing": "linear"
+        },
+        {
+          "Progress": 0.58,
+          "Multiplier": 0,
+          "EasingWidth": 0.018,
+          "Easing": "ease-out"
+        },
+        {
+          "Progress": 0.66,
+          "Multiplier": 0.08,
+          "EasingWidth": 0.025,
+          "Easing": "ease-in-out"
+        }
+      ],
+      "HoldSegments": [
+        {
+          "Progress": 0.58,
+          "DurationMilliseconds": 133,
+          "ResumeEasingMilliseconds": 0
+        }
+      ],
+      "GenerationProfile": "v19-long-stop-duration"
+    },
+    {
+      "SchemaVersion": "cursor-mirror-motion-script/1",
+      "Seed": 19306,
+      "Bounds": {
+        "X": 200,
+        "Y": 160,
+        "Width": 1400,
+        "Height": 800
+      },
+      "DurationMilliseconds": 3600,
+      "SampleRateHz": 240,
+      "ControlPoints": [
+        {
+          "X": 280,
+          "Y": 600
+        },
+        {
+          "X": 487,
+          "Y": 600
+        },
+        {
+          "X": 740,
+          "Y": 600
+        }
+      ],
+      "SpeedPoints": [
+        {
+          "Progress": 0.05,
+          "Multiplier": 0.9,
+          "EasingWidth": 0.05,
+          "Easing": "ease-in-out"
+        },
+        {
+          "Progress": 0.478,
+          "Multiplier": 1.035,
+          "EasingWidth": 0.045,
+          "Easing": "linear"
+        },
+        {
+          "Progress": 0.598,
+          "Multiplier": 0,
+          "EasingWidth": 0.018,
+          "Easing": "ease-out"
+        },
+        {
+          "Progress": 0.678,
+          "Multiplier": 0.08,
+          "EasingWidth": 0.025,
+          "Easing": "ease-in-out"
+        }
+      ],
+      "HoldSegments": [
+        {
+          "Progress": 0.598,
+          "DurationMilliseconds": 200,
+          "ResumeEasingMilliseconds": 0
+        }
+      ],
+      "GenerationProfile": "v19-phase-shifted-stop"
+    },
+    {
+      "SchemaVersion": "cursor-mirror-motion-script/1",
+      "Seed": 19323,
+      "Bounds": {
+        "X": 200,
+        "Y": 160,
+        "Width": 1400,
+        "Height": 800
+      },
+      "DurationMilliseconds": 3600,
+      "SampleRateHz": 240,
+      "ControlPoints": [
+        {
+          "X": 470,
+          "Y": 600
+        },
+        {
+          "X": 677,
+          "Y": 600
+        },
+        {
+          "X": 930,
+          "Y": 600
+        }
+      ],
+      "SpeedPoints": [
+        {
+          "Progress": 0.05,
+          "Multiplier": 1.4,
+          "EasingWidth": 0.05,
+          "Easing": "ease-in-out"
+        },
+        {
+          "Progress": 0.497,
+          "Multiplier": 1.61,
+          "EasingWidth": 0.045,
+          "Easing": "linear"
+        },
+        {
+          "Progress": 0.617,
+          "Multiplier": 0,
+          "EasingWidth": 0.018,
+          "Easing": "ease-out"
+        },
+        {
+          "Progress": 0.697,
+          "Multiplier": 0.08,
+          "EasingWidth": 0.025,
+          "Easing": "ease-in-out"
+        }
+      ],
+      "HoldSegments": [
+        {
+          "Progress": 0.617,
+          "DurationMilliseconds": 333,
+          "ResumeEasingMilliseconds": 0
+        }
+      ],
+      "GenerationProfile": "v19-phase-shifted-stop"
+    },
+    {
+      "SchemaVersion": "cursor-mirror-motion-script/1",
+      "Seed": 19340,
+      "Bounds": {
+        "X": 200,
+        "Y": 160,
+        "Width": 1400,
+        "Height": 800
+      },
+      "DurationMilliseconds": 3600,
+      "SampleRateHz": 240,
+      "ControlPoints": [
+        {
+          "X": 660,
+          "Y": 600
+        },
+        {
+          "X": 867,
+          "Y": 600
+        },
+        {
+          "X": 1120,
+          "Y": 600
+        }
+      ],
+      "SpeedPoints": [
+        {
+          "Progress": 0.05,
+          "Multiplier": 2.1,
+          "EasingWidth": 0.05,
+          "Easing": "ease-in-out"
+        },
+        {
+          "Progress": 0.425,
+          "Multiplier": 2.415,
+          "EasingWidth": 0.045,
+          "Easing": "linear"
+        },
+        {
+          "Progress": 0.545,
+          "Multiplier": 0,
+          "EasingWidth": 0.018,
+          "Easing": "ease-out"
+        },
+        {
+          "Progress": 0.625,
+          "Multiplier": 0.08,
+          "EasingWidth": 0.025,
+          "Easing": "ease-in-out"
+        }
+      ],
+      "HoldSegments": [
+        {
+          "Progress": 0.545,
+          "DurationMilliseconds": 67,
+          "ResumeEasingMilliseconds": 0
+        }
+      ],
+      "GenerationProfile": "v19-phase-shifted-stop"
+    },
+    {
+      "SchemaVersion": "cursor-mirror-motion-script/1",
+      "Seed": 19357,
+      "Bounds": {
+        "X": 200,
+        "Y": 160,
+        "Width": 1400,
+        "Height": 800
+      },
+      "DurationMilliseconds": 3600,
+      "SampleRateHz": 240,
+      "ControlPoints": [
+        {
+          "X": 850,
+          "Y": 600
+        },
+        {
+          "X": 1057,
+          "Y": 600
+        },
+        {
+          "X": 1310,
+          "Y": 600
+        }
+      ],
+      "SpeedPoints": [
+        {
+          "Progress": 0.05,
+          "Multiplier": 0.9,
+          "EasingWidth": 0.05,
+          "Easing": "ease-in-out"
+        },
+        {
+          "Progress": 0.445,
+          "Multiplier": 1.035,
+          "EasingWidth": 0.045,
+          "Easing": "linear"
+        },
+        {
+          "Progress": 0.565,
+          "Multiplier": 0,
+          "EasingWidth": 0.018,
+          "Easing": "ease-out"
+        },
+        {
+          "Progress": 0.58,
+          "Multiplier": 1.6,
+          "EasingWidth": 0.006,
+          "Easing": "step"
+        },
+        {
+          "Progress": 0.645,
+          "Multiplier": 0.08,
+          "EasingWidth": 0.025,
+          "Easing": "ease-in-out"
+        }
+      ],
+      "HoldSegments": [
+        {
+          "Progress": 0.565,
+          "DurationMilliseconds": 133,
+          "ResumeEasingMilliseconds": 0
+        }
+      ],
+      "GenerationProfile": "v19-dropout-proxy-stop"
+    },
+    {
+      "SchemaVersion": "cursor-mirror-motion-script/1",
+      "Seed": 19374,
+      "Bounds": {
+        "X": 200,
+        "Y": 160,
+        "Width": 1400,
+        "Height": 800
+      },
+      "DurationMilliseconds": 3600,
+      "SampleRateHz": 240,
+      "ControlPoints": [
+        {
+          "X": 1040,
+          "Y": 600
+        },
+        {
+          "X": 1247,
+          "Y": 600
+        },
+        {
+          "X": 1500,
+          "Y": 600
+        }
+      ],
+      "SpeedPoints": [
+        {
+          "Progress": 0.05,
+          "Multiplier": 1.4,
+          "EasingWidth": 0.05,
+          "Easing": "ease-in-out"
+        },
+        {
+          "Progress": 0.46,
+          "Multiplier": 1.61,
+          "EasingWidth": 0.045,
+          "Easing": "linear"
+        },
+        {
+          "Progress": 0.58,
+          "Multiplier": 0,
+          "EasingWidth": 0.018,
+          "Easing": "ease-out"
+        },
+        {
+          "Progress": 0.595,
+          "Multiplier": 1.6,
+          "EasingWidth": 0.006,
+          "Easing": "step"
+        },
+        {
+          "Progress": 0.66,
+          "Multiplier": 0.08,
+          "EasingWidth": 0.025,
+          "Easing": "ease-in-out"
+        }
+      ],
+      "HoldSegments": [
+        {
+          "Progress": 0.58,
+          "DurationMilliseconds": 200,
+          "ResumeEasingMilliseconds": 0
+        }
+      ],
+      "GenerationProfile": "v19-dropout-proxy-stop"
+    },
+    {
+      "SchemaVersion": "cursor-mirror-motion-script/1",
+      "Seed": 19391,
+      "Bounds": {
+        "X": 200,
+        "Y": 160,
+        "Width": 1400,
+        "Height": 800
+      },
+      "DurationMilliseconds": 3600,
+      "SampleRateHz": 240,
+      "ControlPoints": [
+        {
+          "X": 1230,
+          "Y": 600
+        },
+        {
+          "X": 1437,
+          "Y": 600
+        },
+        {
+          "X": 1690,
+          "Y": 600
+        }
+      ],
+      "SpeedPoints": [
+        {
+          "Progress": 0.05,
+          "Multiplier": 2.1,
+          "EasingWidth": 0.05,
+          "Easing": "ease-in-out"
+        },
+        {
+          "Progress": 0.478,
+          "Multiplier": 2.415,
+          "EasingWidth": 0.045,
+          "Easing": "linear"
+        },
+        {
+          "Progress": 0.598,
+          "Multiplier": 0,
+          "EasingWidth": 0.018,
+          "Easing": "ease-out"
+        },
+        {
+          "Progress": 0.613,
+          "Multiplier": 1.6,
+          "EasingWidth": 0.006,
+          "Easing": "step"
+        },
+        {
+          "Progress": 0.678,
+          "Multiplier": 0.08,
+          "EasingWidth": 0.025,
+          "Easing": "ease-in-out"
+        }
+      ],
+      "HoldSegments": [
+        {
+          "Progress": 0.598,
+          "DurationMilliseconds": 333,
+          "ResumeEasingMilliseconds": 0
+        }
+      ],
+      "GenerationProfile": "v19-dropout-proxy-stop"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "outputPath": "C:/Users/seigl/OneDrive/my/ドキュメント/projects/cursor/poc/cursor-prediction-v19/step-06-high-accuracy-model-search/scores.json",
+  "weightsPath": "C:/Users/seigl/OneDrive/my/ドキュメント/projects/cursor/poc/cursor-prediction-v19/step-06-high-accuracy-model-search/top-candidate-weights.json",
+  "realPackages": [
+    {
+      "packageId": "m070248",
+      "zipPath": "cursor-mirror-motion-recording-20260504-070248.zip",
+      "warmupMs": 1500.0,
+      "split": "train",
+      "excludeMs": [
+        { "startMs": 0.0, "endMs": 795.648 }
+      ]
+    },
+    {
+      "packageId": "m070307",
+      "zipPath": "cursor-mirror-motion-recording-20260504-070307.zip",
+      "warmupMs": 1500.0,
+      "split": "test",
+      "excludeMs": []
+    }
+  ],
+  "syntheticSets": [
+    {
+      "id": "step03_original",
+      "scenarioPath": "C:/Users/seigl/OneDrive/my/ドキュメント/projects/cursor/poc/cursor-prediction-v19/step-03-motionlab-abrupt-stop-scenarios/abrupt-stop-scenarios.json",
+      "metadataPath": "C:/Users/seigl/OneDrive/my/ドキュメント/projects/cursor/poc/cursor-prediction-v19/step-03-motionlab-abrupt-stop-scenarios/scenario-metadata.json",
+      "role": "coverage"
+    },
+    {
+      "id": "step04b_revised",
+      "scenarioPath": "C:/Users/seigl/OneDrive/my/ドキュメント/projects/cursor/poc/cursor-prediction-v19/step-04b-generator-revision/abrupt-stop-scenarios-revised.json",
+      "metadataPath": "C:/Users/seigl/OneDrive/my/ドキュメント/projects/cursor/poc/cursor-prediction-v19/step-04b-generator-revision/scenario-metadata-revised.json",
+      "role": "positive"
+    }
+  ],
+  "callRateHz": 60,
+  "refreshMs": 16.6666667,
+  "phaseOffsetsMs": [0, 4.1666667, 8.3333333, 12.5],
+  "maxEpochs": 140,
+  "learningRate": 0.012,
+  "seed": 19006
+}

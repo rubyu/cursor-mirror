@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "cursor-prediction-v21-step-06-gate-policy/1",
+  "generatedAtUtc": "2026-05-04T12:36:22.1774462+00:00",
+  "purpose": "Separate diagnostic futureLag metrics from deployment gates for v21 step06.",
+  "inputs": {
+    "sourceScores": "poc/cursor-prediction-v21/step-06-deployment-gate-analysis/scores.json",
+    "upstreamScores": "poc/cursor-prediction-v21/step-05-multiseed-event-safe-validation/scores.json",
+    "manifest": "poc/cursor-prediction-v21/step-02-balanced-evaluation/split-manifest.json",
+    "metricPolicy": "poc/cursor-prediction-v21/step-02-balanced-evaluation/metric-policy.json"
+  },
+  "metricCategories": {
+    "diagnostic": [
+      {
+        "id": "legacy.overall.futureLag.p95",
+        "description": "Step05 legacy rowWeighted futureLag p95 over normal-moving rows plus all train/validation rows.",
+        "deploymentGate": false
+      },
+      {
+        "id": "diagnostic.allRowFutureLag",
+        "description": "All evaluation rows, including train, validation, test, robustness, static, and non-moving rows.",
+        "deploymentGate": false
+      },
+      {
+        "id": "diagnostic.trainValidationAllRowFutureLag",
+        "description": "Train and validation all-row futureLag used to explain product's nearest-rank zero artifact.",
+        "deploymentGate": false
+      },
+      {
+        "id": "diagnostic.robustnessNormalMovingFutureLag",
+        "description": "Robustness split normal-moving futureLag. Reported for awareness but not the normal-motion product integration gate.",
+        "deploymentGate": false
+      }
+    ],
+    "deploymentGates": [
+      {
+        "id": "test.normal.visual.p95",
+        "slice": "split == test and qualityBucket == normal",
+        "statistic": "p95",
+        "threshold": "candidate <= product"
+      },
+      {
+        "id": "test.normal.visual.p99",
+        "slice": "split == test and qualityBucket == normal",
+        "statistic": "p99",
+        "threshold": "candidate <= product"
+      },
+      {
+        "id": "test.normalMoving.futureLag.p95",
+        "slice": "split == test and NormalMove",
+        "statistic": "p95",
+        "threshold": "candidate <= product + max(0.05 px, 5% of product)"
+      },
+      {
+        "id": "test.normalMoving.futureLag.p99",
+        "slice": "split == test and NormalMove",
+        "statistic": "p99",
+        "threshold": "candidate <= product + max(0.10 px, 5% of product)"
+      },
+      {
+        "id": "robustness.peakLead.max",
+        "slice": "split == robustness stop events",
+        "statistic": "max",
+        "threshold": "candidate <= product"
+      },
+      {
+        "id": "robustness.otr.gt1px.rate",
+        "slice": "split == robustness stop events",
+        "statistic": "rate",
+        "threshold": "candidate <= product"
+      },
+      {
+        "id": "robustness.returnMotion.max",
+        "slice": "split == robustness stop events",
+        "statistic": "max",
+        "threshold": "candidate <= product"
+      },
+      {
+        "id": "overall.futureLead.p99",
+        "slice": "all evaluation rows",
+        "statistic": "p99",
+        "threshold": "candidate <= product"
+      },
+      {
+        "id": "heldout.stationaryJitter.p95",
+        "slice": "split in test or robustness and StaticHold",
+        "statistic": "p95",
+        "threshold": "candidate <= product + 0.05 px"
+      }
+    ]
+  },
+  "toleranceJustification": {
+    "futureLagP95": "0.05 px absolute or 5% relative is below a visible pixel and distinguishes material held-out lag regression from nearest-rank diagnostic artifacts.",
+    "futureLagP99": "0.10 px absolute or 5% relative allows a slightly wider tail tolerance while remaining subpixel.",
+    "stationaryJitterP95": "0.05 px absolute tolerance prevents product's exact zero from turning tiny numerical noise into a deployment blocker."
+  },
+  "decisionLanguage": {
+    "pass": "Ready for a product-integration experiment, not automatically final product.",
+    "fail": "Do not integrate; open the next POC step to calibrate failed held-out deployment slices."
+  }
+}

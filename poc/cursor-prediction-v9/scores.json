@@ -1,0 +1,321 @@
+{
+  "schemaVersion": "cursor-prediction-v9-scores/1",
+  "generatedAt": "2026-05-03T00:00:00Z",
+  "status": "phase-2-completed",
+  "baseline": {
+    "productDefault": "ConstantVelocity",
+    "notes": "v8 selected ConstantVelocity with DWM target offset and high-speed displacement cap as the product default."
+  },
+  "phases": [
+    {
+      "phase": 0,
+      "name": "setup-and-audit",
+      "status": "completed",
+      "summary": {
+        "traceZipCount": 22,
+        "calibrationZipCount": 2,
+        "traceCsvRows": 10100605,
+        "traceFormatVersions": [2, 3, 4, 5, 6, 7, 8, 9],
+        "format9TraceFiles": [
+          "cursor-mirror-trace-20260502-175951.zip",
+          "cursor-mirror-trace-20260502-184947.zip"
+        ]
+      },
+      "report": "phase-0-audit.md",
+      "scores": "phase-0-audit.json"
+    },
+    {
+      "phase": 1,
+      "name": "causal-dataset",
+      "status": "completed",
+      "summary": {
+        "anchorStream": "runtimeSelfSchedulerPoll",
+        "labelStream": "referencePoll",
+        "horizonsMilliseconds": [4, 8, 12, 16.67],
+        "rows": {
+          "session-1": 63310,
+          "session-2": 47639
+        }
+      },
+      "report": "phase-1-dataset.md",
+      "scores": "phase-1-dataset.json"
+    },
+    {
+      "phase": 2,
+      "name": "classical-baselines",
+      "status": "completed",
+      "summary": {
+        "bestFamily": "alpha_beta",
+        "bestFoldCandidates": [
+          {
+            "fold": "train-session-1-eval-session-2",
+            "candidate": "alpha_beta_a0.9_b0.15_hcap16.67",
+            "mean": 10.932,
+            "p95": 51.4,
+            "p99": 140.115,
+            "baselineP95": 65.847
+          },
+          {
+            "fold": "train-session-2-eval-session-1",
+            "candidate": "alpha_beta_a0.9_b0.35_hcap16.67",
+            "mean": 4.413,
+            "p95": 18.728,
+            "p99": 73.322,
+            "baselineP95": 24.0
+          }
+        ],
+        "decision": "Use alpha-beta as a teacher/regime signal, not as a direct product candidate, because regression counts remain high."
+      },
+      "report": "phase-2-classical-baselines.md",
+      "scores": "phase-2-classical-baselines.json"
+    },
+    {
+      "phase": 3,
+      "name": "accuracy-ceiling-teachers",
+      "status": "completed",
+      "summary": {
+        "families": ["rfn", "mlp", "cnn1d", "fsmn", "tcn", "gru", "lstm"],
+        "bestFamily": "mlp",
+        "bestCandidate": "mlp_seq16_residual",
+        "aggregate": {
+          "baselineMean": 9.165,
+          "candidateMean": 6.549,
+          "baselineP95Average": 44.924,
+          "candidateP95Average": 29.578,
+          "baselineP99Average": 122.206,
+          "candidateP99Average": 86.466,
+          "candidateWorseOver1px": 21458,
+          "candidateWorseOver5px": 6070
+        },
+        "decision": "MLP seq16 defines the current offline accuracy ceiling, but needs validation-tuned gating before product consideration."
+      },
+      "report": "phase-3-ml-teachers.md",
+      "scores": "phase-3-ml-teachers.json"
+    },
+    {
+      "phase": 4,
+      "name": "guarded-mlp",
+      "status": "completed",
+      "summary": {
+        "strict": {
+          "behavior": "almost baseline fallback",
+          "candidateWorseOver1px": 5,
+          "candidateWorseOver5px": 0,
+          "accuracyGain": "negligible"
+        },
+        "balanced": {
+          "candidateMean": 8.553,
+          "baselineMean": 9.165,
+          "candidateP95Average": 42.651,
+          "baselineP95Average": 44.924,
+          "candidateP99Average": 121.094,
+          "baselineP99Average": 122.206,
+          "candidateWorseOver5px": 2207,
+          "decision": "Improves aggregate metrics and reduces unguarded regressions, but selected gate shape differs by fold."
+        }
+      },
+      "report": "phase-4-guarded-mlp.md",
+      "scores": "phase-4-guarded-mlp.json"
+    },
+    {
+      "phase": 5,
+      "name": "expanded-teachers-and-fixed-gates",
+      "status": "completed",
+      "summary": {
+        "bestTeacher": "mlp_seq32_h256_128_64",
+        "bestTeacherMetrics": {
+          "mean": 7.097,
+          "rmse": 20.018,
+          "p95": 28.237,
+          "p99": 88.705,
+          "max": 521.477,
+          "worseOver5px": 11463,
+          "params": 109378,
+          "gpuRowsPerSecond": 15356050.4,
+          "cpuRowsPerSecond": 818962.5
+        },
+        "bestValidationObjectiveTeacher": "fsmn_seq32_c64",
+        "bestNonRfnFixedGate": "tcn_seq32_c64__common-r8-cos075-base8-or-eff09",
+        "bestNonRfnFixedGateMetrics": {
+          "mean": 8.946,
+          "p95": 42.418,
+          "p99": 128.996,
+          "worseOver5px": 540,
+          "improvedOver1px": 9073
+        },
+        "decision": "Expanded teachers improve the accuracy ceiling, but fixed common gates are too conservative. Try a learned lightweight confidence gate."
+      },
+      "report": "phase-5-expanded-teachers.md",
+      "scores": "phase-5-expanded-teachers.json"
+    },
+    {
+      "phase": 6,
+      "name": "learned-confidence-gate",
+      "status": "completed",
+      "summary": {
+        "bestTeacherAlone": "mlp_seq32_h256_128_64",
+        "bestTeacherAloneMetrics": {
+          "mean": 6.865,
+          "p95": 26.996,
+          "p99": 84.363,
+          "worseOver5px": 11033
+        },
+        "learnedStrict": {
+          "teacher": "mlp_seq32_h256_128_64",
+          "mean": 8.833,
+          "p95": 40.87,
+          "p99": 122.036,
+          "max": 631.383,
+          "worseOver5px": 276
+        },
+        "learnedBalanced": {
+          "teacher": "tcn_seq32_c64",
+          "mean": 8.706,
+          "p95": 40.591,
+          "p99": 122.324,
+          "max": 760.167,
+          "worseOver5px": 339
+        },
+        "decision": "Learned gates beat fixed gates, but max outlier risk still needs a max-safe phase before Calibrator."
+      },
+      "report": "phase-6-confidence-gate.md",
+      "scores": "phase-6-confidence-gate.json"
+    },
+    {
+      "phase": 7,
+      "name": "max-safe-confidence-gate",
+      "status": "completed",
+      "summary": {
+        "maxSafe": {
+          "teacher": "tcn_seq32_c64",
+          "mean": 9.1,
+          "p95": 42.19,
+          "p99": 127.69,
+          "max": 606.649,
+          "worseOver1px": 81,
+          "worseOver5px": 77,
+          "worseOver10px": 0,
+          "worseOver20px": 0,
+          "worseOver50px": 0,
+          "improvedOver1px": 1087
+        },
+        "decision": "Large regressions can be eliminated, but p95 gain is small and selected gates still differ by fold. Evaluate a single common production-shaped gate before Calibrator."
+      },
+      "report": "phase-7-max-safe-gate.md",
+      "scores": "phase-7-max-safe-gate.json"
+    },
+    {
+      "phase": 8,
+      "name": "common-product-gate",
+      "status": "completed",
+      "summary": {
+        "productCandidate": "mlp_seq32_h256_128_64__tiny-mlp__m5__p09__speed-lt-1000__clamp4",
+        "candidateSpec": {
+          "teacher": "mlp_seq32_h256_128_64",
+          "gate": "tiny-mlp",
+          "marginPixels": 5,
+          "probabilityThreshold": 0.9,
+          "applyCondition": "speed < 1000 px/s",
+          "residualClampPixels": 4
+        },
+        "metrics": {
+          "mean": 8.957,
+          "rmse": 27.109,
+          "p95": 40.804,
+          "p99": 126.57,
+          "max": 610.66,
+          "worseOver1px": 337,
+          "worseOver3px": 327,
+          "worseOver5px": 0,
+          "worseOver10px": 0,
+          "worseOver20px": 0,
+          "worseOver50px": 0,
+          "improvedOver1px": 6224
+        },
+        "cost": {
+          "teacherParams": 109378,
+          "gpuRowsPerSecond": 12180017.8,
+          "cpuRowsPerSecond": 1605991.4,
+          "csharpSimdLowRowsPerSecond": 826233.8
+        },
+        "decision": "Proceed to a feature-flagged product prototype and Calibrator measurement; do not make it default yet."
+      },
+      "report": "phase-8-common-product-gate.md",
+      "scores": "phase-8-common-product-gate.json"
+    },
+    {
+      "phase": 9,
+      "name": "runtime-candidate-export",
+      "status": "completed",
+      "summary": {
+        "candidate": "mlp_seq32_h256_128_64 + tiny-MLP gate m5 p>=0.90 speed<1000 clamp4",
+        "productConstraint": "GPU is allowed only for offline training/export; runtime inference must be fixed-weight CPU code.",
+        "metrics": {
+          "mean": 8.972,
+          "p95": 41.0,
+          "p99": 126.333,
+          "max": 610.65,
+          "worseOver5px": 0,
+          "improvedOver1px": 5688
+        },
+        "csharpVerification": {
+          "maxTeacherAbsDiff": 0.00001526,
+          "maxGateProbabilityAbsDiff": 0.00000009,
+          "maxFinalAbsDiff": 0.00000095,
+          "applyMismatches": 0,
+          "scalarRowsPerSecond": 22160.6,
+          "vectorHardwareAccelerated": false
+        },
+        "decision": "Integrate behind an experimental CPU-only model option and measure with Calibrator."
+      },
+      "report": "phase-9-runtime-candidate.md",
+      "scores": "phase-9-runtime-candidate.json"
+    },
+    {
+      "phase": 10,
+      "name": "cpu-only-product-integration",
+      "status": "completed",
+      "summary": {
+        "modelName": "ExperimentalMLP",
+        "defaultModel": "ConstantVelocity",
+        "productConstraint": "runtime inference is fixed-weight CPU code; GPU remains offline-only for POC training/export",
+        "verification": {
+          "testsPassed": 119,
+          "testsFailed": 0,
+          "releaseBuild": true
+        },
+        "calibrator": {
+          "constantVelocity": {
+            "score": 14.1,
+            "mean": 3.756,
+            "p95": 12,
+            "p99": 12,
+            "max": 26
+          },
+          "constantVelocityRerun": {
+            "score": 23.1,
+            "mean": 4.263,
+            "p95": 12,
+            "p99": 12,
+            "max": 86
+          },
+          "experimentalMlpCounters": {
+            "score": 23.25,
+            "mean": 3.993,
+            "p95": 12,
+            "p99": 12,
+            "max": 87,
+            "skippedByRecentSpeed": 1151,
+            "skippedByPathSpeed": 137,
+            "evaluated": 510,
+            "rejected": 453,
+            "applied": 57
+          }
+        },
+        "decision": "Keep ExperimentalMLP as a non-default experimental option. Do not promote it to the default model because Calibrator did not show a stable win."
+      },
+      "report": "phase-10-product-integration.md",
+      "scores": "phase-10-product-integration.json"
+    }
+  ]
+}

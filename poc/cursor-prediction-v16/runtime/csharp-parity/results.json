@@ -1,0 +1,11 @@
+{
+  "method": "csharp_generated_source_vs_json_descriptor",
+  "csharpCompileRun": "passed",
+  "sampleCount": 512,
+  "maxErrorPx": 0,
+  "p99ErrorPx": 0,
+  "targetMaxErrorPx": 0.01,
+  "passed": true,
+  "runtime": ".NET 10.0.7",
+  "descriptorPath": "C:\\Users\\seigl\\OneDrive\\my\\ドキュメント\\projects\\cursor\\poc\\cursor-prediction-v16\\runtime\\selected-candidate.json"
+}

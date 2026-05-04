@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>Step06DeploymentGateAnalysis</AssemblyName>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="..\..\..\..\src\CursorMirror.Core\CursorMirrorSettings.cs" Link="Product\CursorMirrorSettings.cs" />
+    <Compile Include="..\..\..\..\src\CursorMirror.Core\CursorPollSample.cs" Link="Product\CursorPollSample.cs" />
+    <Compile Include="..\..\..\..\src\CursorMirror.Core\CursorPredictionCounters.cs" Link="Product\CursorPredictionCounters.cs" />
+    <Compile Include="..\..\..\..\src\CursorMirror.Core\DwmAwareCursorPositionPredictor.cs" Link="Product\DwmAwareCursorPositionPredictor.cs" />
+    <Compile Include="..\..\..\..\src\CursorMirror.Core\ExperimentalMlpPredictionModel.cs" Link="Product\ExperimentalMlpPredictionModel.cs" />
+    <Compile Include="..\..\..\..\src\CursorMirror.Core\ExperimentalMlpPredictionWeights.g.cs" Link="Product\ExperimentalMlpPredictionWeights.g.cs" />
+    <Compile Include="..\..\..\..\src\CursorMirror.Core\DistilledMlpPredictionModel.g.cs" Link="Product\DistilledMlpPredictionModel.g.cs" />
+  </ItemGroup>
+</Project>

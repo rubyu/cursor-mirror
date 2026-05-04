@@ -1,0 +1,539 @@
+{
+  "schemaVersion": "cursor-prediction-v17-step-01-data-inventory/1",
+  "generatedAtUtc": "2026-05-04T04:38:32.890448+00:00",
+  "constraints": {
+    "rawDataCopied": false,
+    "expandedCsvWritten": false,
+    "checkpointWritten": false,
+    "tensorDumpWritten": false,
+    "gpuTrainingRun": false
+  },
+  "priorPocs": {
+    "v14": {
+      "path": "poc\\cursor-prediction-v14",
+      "exists": true,
+      "fileCount": 5,
+      "totalBytes": 94711,
+      "keyFiles": [
+        {
+          "path": "poc\\cursor-prediction-v14\\notes.md",
+          "bytes": 530,
+          "lastWriteTimeUtc": "2026-05-04T01:24:13.277164+00:00"
+        },
+        {
+          "path": "poc\\cursor-prediction-v14\\README.md",
+          "bytes": 417,
+          "lastWriteTimeUtc": "2026-05-04T01:24:13.284170+00:00"
+        },
+        {
+          "path": "poc\\cursor-prediction-v14\\report.md",
+          "bytes": 3121,
+          "lastWriteTimeUtc": "2026-05-04T01:24:13.277164+00:00"
+        },
+        {
+          "path": "poc\\cursor-prediction-v14\\scores.json",
+          "bytes": 63621,
+          "lastWriteTimeUtc": "2026-05-04T01:24:13.275429+00:00"
+        },
+        {
+          "path": "poc\\cursor-prediction-v14\\scripts\\run-60hz-distillation-gpu.py",
+          "bytes": 27022,
+          "lastWriteTimeUtc": "2026-05-04T01:14:59.288845+00:00"
+        }
+      ]
+    },
+    "v15": {
+      "path": "poc\\cursor-prediction-v15",
+      "exists": true,
+      "fileCount": 7,
+      "totalBytes": 540146,
+      "keyFiles": [
+        {
+          "path": "poc\\cursor-prediction-v15\\notes.md",
+          "bytes": 524,
+          "lastWriteTimeUtc": "2026-05-04T02:12:30.309382+00:00"
+        },
+        {
+          "path": "poc\\cursor-prediction-v15\\README.md",
+          "bytes": 498,
+          "lastWriteTimeUtc": "2026-05-04T02:12:30.310384+00:00"
+        },
+        {
+          "path": "poc\\cursor-prediction-v15\\report.md",
+          "bytes": 4005,
+          "lastWriteTimeUtc": "2026-05-04T02:12:30.309382+00:00"
+        },
+        {
+          "path": "poc\\cursor-prediction-v15\\runtime-prototype\\candidate.json",
+          "bytes": 4798,
+          "lastWriteTimeUtc": "2026-05-04T02:12:30.279619+00:00"
+        },
+        {
+          "path": "poc\\cursor-prediction-v15\\runtime-prototype\\Distilled60HzPredictorShape.cs",
+          "bytes": 627,
+          "lastWriteTimeUtc": "2026-05-04T02:12:30.288648+00:00"
+        },
+        {
+          "path": "poc\\cursor-prediction-v15\\scores.json",
+          "bytes": 500014,
+          "lastWriteTimeUtc": "2026-05-04T02:12:30.307382+00:00"
+        },
+        {
+          "path": "poc\\cursor-prediction-v15\\scripts\\run-60hz-student-compression-gpu.py",
+          "bytes": 29680,
+          "lastWriteTimeUtc": "2026-05-04T01:29:12.550366+00:00"
+        }
+      ]
+    },
+    "v16": {
+      "path": "poc\\cursor-prediction-v16",
+      "exists": true,
+      "fileCount": 19,
+      "totalBytes": 2443508,
+      "keyFiles": [
+        {
+          "path": "poc\\cursor-prediction-v16\\notes.md",
+          "bytes": 1531,
+          "lastWriteTimeUtc": "2026-05-04T03:42:00.921511+00:00"
+        },
+        {
+          "path": "poc\\cursor-prediction-v16\\README.md",
+          "bytes": 823,
+          "lastWriteTimeUtc": "2026-05-04T03:43:58.772533+00:00"
+        },
+        {
+          "path": "poc\\cursor-prediction-v16\\report.md",
+          "bytes": 6017,
+          "lastWriteTimeUtc": "2026-05-04T03:43:13.865648+00:00"
+        },
+        {
+          "path": "poc\\cursor-prediction-v16\\runtime\\candidates\\mlp_fsmn_h8_hardtanh_blend75teacher25label_q0p125_lag0p375.json",
+          "bytes": 33048,
+          "lastWriteTimeUtc": "2026-05-04T03:43:13.868802+00:00"
+        },
+        {
+          "path": "poc\\cursor-prediction-v16\\runtime\\candidates\\mlp_fsmn_h8_hardtanh_label_q0p03125_lag0p125.json",
+          "bytes": 33012,
+          "lastWriteTimeUtc": "2026-05-04T03:43:13.868802+00:00"
+        },
+        {
+          "path": "poc\\cursor-prediction-v16\\runtime\\candidates\\mlp_fsmn_h8_hardtanh_label_q0p03125_lag0p5.json",
+          "bytes": 33008,
+          "lastWriteTimeUtc": "2026-05-04T03:43:13.870306+00:00"
+        },
+        {
+          "path": "poc\\cursor-prediction-v16\\runtime\\candidates\\mlp_fsmn_h8_hardtanh_label_q0p125_lag0p5.json",
+          "bytes": 33168,
+          "lastWriteTimeUtc": "2026-05-04T03:43:13.871311+00:00"
+        },
+        {
+          "path": "poc\\cursor-prediction-v16\\runtime\\candidates\\mlp_fsmn_h8_hardtanh_teacher_q0p0625_lag0p5.json",
+          "bytes": 33033,
+          "lastWriteTimeUtc": "2026-05-04T03:43:13.872310+00:00"
+        },
+        {
+          "path": "poc\\cursor-prediction-v16\\runtime\\candidates\\mlp_fsmn_h8_hardtanh_teacher_q0p125_lag0p5.json",
+          "bytes": 33031,
+          "lastWriteTimeUtc": "2026-05-04T03:43:13.872310+00:00"
+        },
+        {
+          "path": "poc\\cursor-prediction-v16\\runtime\\csharp-parity\\Program.cs",
+          "bytes": 14029,
+          "lastWriteTimeUtc": "2026-05-04T03:38:09.193532+00:00"
+        },
+        {
+          "path": "poc\\cursor-prediction-v16\\runtime\\csharp-parity\\results.json",
+          "bytes": 382,
+          "lastWriteTimeUtc": "2026-05-04T03:39:52.908960+00:00"
+        },
+        {
+          "path": "poc\\cursor-prediction-v16\\runtime\\Distilled60HzPredictor.g.cs",
+          "bytes": 19500,
+          "lastWriteTimeUtc": "2026-05-04T03:27:51.407411+00:00"
+        },
+        {
+          "path": "poc\\cursor-prediction-v16\\runtime\\selected-candidate.json",
+          "bytes": 33168,
+          "lastWriteTimeUtc": "2026-05-04T03:43:13.841567+00:00"
+        },
+        {
+          "path": "poc\\cursor-prediction-v16\\scores.json",
+          "bytes": 2102961,
+          "lastWriteTimeUtc": "2026-05-04T03:43:13.864650+00:00"
+        },
+        {
+          "path": "poc\\cursor-prediction-v16\\scripts\\run-runtime-ready-distillation-gpu.py",
+          "bytes": 51749,
+          "lastWriteTimeUtc": "2026-05-04T03:43:07.220651+00:00"
+        }
+      ]
+    }
+  },
+  "rawData": {
+    "rootZipFiles": {
+      "count": 39,
+      "totalBytes": 342538737,
+      "byKind": {
+        "calibration": 2,
+        "motion-recording": 13,
+        "trace": 24
+      },
+      "entries": [
+        {
+          "path": "cursor-mirror-calibration-20260502-230553.zip",
+          "bytes": 1569,
+          "lastWriteTimeUtc": "2026-05-02T14:05:53.325361+00:00",
+          "kind": "calibration"
+        },
+        {
+          "path": "cursor-mirror-calibration-20260502-230713.zip",
+          "bytes": 1372,
+          "lastWriteTimeUtc": "2026-05-02T14:07:13.544008+00:00",
+          "kind": "calibration"
+        },
+        {
+          "path": "cursor-mirror-motion-recording-20260503-193218.zip",
+          "bytes": 233679,
+          "lastWriteTimeUtc": "2026-05-03T10:32:49.560355+00:00",
+          "kind": "motion-recording"
+        },
+        {
+          "path": "cursor-mirror-motion-recording-20260503-194156.zip",
+          "bytes": 324051,
+          "lastWriteTimeUtc": "2026-05-03T10:42:11.335906+00:00",
+          "kind": "motion-recording"
+        },
+        {
+          "path": "cursor-mirror-motion-recording-20260503-194850.zip",
+          "bytes": 324391,
+          "lastWriteTimeUtc": "2026-05-03T10:49:05.342084+00:00",
+          "kind": "motion-recording"
+        },
+        {
+          "path": "cursor-mirror-motion-recording-20260503-201431.zip",
+          "bytes": 15434057,
+          "lastWriteTimeUtc": "2026-05-03T11:27:34.882507+00:00",
+          "kind": "motion-recording"
+        },
+        {
+          "path": "cursor-mirror-motion-recording-20260503-212102.zip",
+          "bytes": 2180276,
+          "lastWriteTimeUtc": "2026-05-03T12:22:42.033581+00:00",
+          "kind": "motion-recording"
+        },
+        {
+          "path": "cursor-mirror-motion-recording-20260503-212556.zip",
+          "bytes": 15177846,
+          "lastWriteTimeUtc": "2026-05-03T12:38:58.559744+00:00",
+          "kind": "motion-recording"
+        },
+        {
+          "path": "cursor-mirror-motion-recording-20260503-215632.zip",
+          "bytes": 14922386,
+          "lastWriteTimeUtc": "2026-05-03T13:09:33.337896+00:00",
+          "kind": "motion-recording"
+        },
+        {
+          "path": "cursor-mirror-motion-recording-20260504-062321.zip",
+          "bytes": 16481394,
+          "lastWriteTimeUtc": "2026-05-03T21:36:16.790055+00:00",
+          "kind": "motion-recording"
+        },
+        {
+          "path": "cursor-mirror-motion-recording-20260504-063726.zip",
+          "bytes": 16319976,
+          "lastWriteTimeUtc": "2026-05-03T21:50:21.600685+00:00",
+          "kind": "motion-recording"
+        },
+        {
+          "path": "cursor-mirror-motion-recording-20260504-070055.zip",
+          "bytes": 14747412,
+          "lastWriteTimeUtc": "2026-05-03T22:13:58+00:00",
+          "kind": "motion-recording"
+        },
+        {
+          "path": "cursor-mirror-motion-recording-20260504-070211.zip",
+          "bytes": 13885506,
+          "lastWriteTimeUtc": "2026-05-03T22:15:13+00:00",
+          "kind": "motion-recording"
+        },
+        {
+          "path": "cursor-mirror-motion-recording-20260504-070248.zip",
+          "bytes": 17311725,
+          "lastWriteTimeUtc": "2026-05-03T22:15:43+00:00",
+          "kind": "motion-recording"
+        },
+        {
+          "path": "cursor-mirror-motion-recording-20260504-070307.zip",
+          "bytes": 16564685,
+          "lastWriteTimeUtc": "2026-05-03T22:16:02.209127+00:00",
+          "kind": "motion-recording"
+        },
+        {
+          "path": "cursor-mirror-trace-20260501-000443.zip",
+          "bytes": 241129,
+          "lastWriteTimeUtc": "2026-04-30T15:04:54.239940+00:00",
+          "kind": "trace"
+        },
+        {
+          "path": "cursor-mirror-trace-20260501-091537.zip",
+          "bytes": 5516072,
+          "lastWriteTimeUtc": "2026-05-01T00:15:42.958788+00:00",
+          "kind": "trace"
+        },
+        {
+          "path": "cursor-mirror-trace-20260501-195819.zip",
+          "bytes": 11442073,
+          "lastWriteTimeUtc": "2026-05-01T10:58:26.864558+00:00",
+          "kind": "trace"
+        },
+        {
+          "path": "cursor-mirror-trace-20260501-231621.zip",
+          "bytes": 9617120,
+          "lastWriteTimeUtc": "2026-05-01T14:16:25.595701+00:00",
+          "kind": "trace"
+        },
+        {
+          "path": "cursor-mirror-trace-20260501-235043.zip",
+          "bytes": 1476008,
+          "lastWriteTimeUtc": "2026-05-01T14:50:45.673876+00:00",
+          "kind": "trace"
+        },
+        {
+          "path": "cursor-mirror-trace-20260502-094201.zip",
+          "bytes": 27481073,
+          "lastWriteTimeUtc": "2026-05-02T00:42:09.866284+00:00",
+          "kind": "trace"
+        },
+        {
+          "path": "cursor-mirror-trace-20260502-114656.zip",
+          "bytes": 10998464,
+          "lastWriteTimeUtc": "2026-05-02T02:47:00.979114+00:00",
+          "kind": "trace"
+        },
+        {
+          "path": "cursor-mirror-trace-20260502-122134.zip",
+          "bytes": 12277445,
+          "lastWriteTimeUtc": "2026-05-02T03:21:39.772815+00:00",
+          "kind": "trace"
+        },
+        {
+          "path": "cursor-mirror-trace-20260502-124831.zip",
+          "bytes": 5111847,
+          "lastWriteTimeUtc": "2026-05-02T03:48:34.649895+00:00",
+          "kind": "trace"
+        },
+        {
+          "path": "cursor-mirror-trace-20260502-130828.zip",
+          "bytes": 5147248,
+          "lastWriteTimeUtc": "2026-05-02T04:08:32.006898+00:00",
+          "kind": "trace"
+        },
+        {
+          "path": "cursor-mirror-trace-20260502-132725.zip",
+          "bytes": 7724859,
+          "lastWriteTimeUtc": "2026-05-02T04:27:29.343920+00:00",
+          "kind": "trace"
+        },
+        {
+          "path": "cursor-mirror-trace-20260502-134341.zip",
+          "bytes": 10294141,
+          "lastWriteTimeUtc": "2026-05-02T04:43:46.228554+00:00",
+          "kind": "trace"
+        },
+        {
+          "path": "cursor-mirror-trace-20260502-145302.zip",
+          "bytes": 7327849,
+          "lastWriteTimeUtc": "2026-05-02T05:53:05.522889+00:00",
+          "kind": "trace"
+        },
+        {
+          "path": "cursor-mirror-trace-20260502-152600.zip",
+          "bytes": 8416994,
+          "lastWriteTimeUtc": "2026-05-02T06:26:04.223464+00:00",
+          "kind": "trace"
+        },
+        {
+          "path": "cursor-mirror-trace-20260502-153745.zip",
+          "bytes": 8807156,
+          "lastWriteTimeUtc": "2026-05-02T06:37:49.710163+00:00",
+          "kind": "trace"
+        },
+        {
+          "path": "cursor-mirror-trace-20260502-154732.zip",
+          "bytes": 10113796,
+          "lastWriteTimeUtc": "2026-05-02T06:47:36.427131+00:00",
+          "kind": "trace"
+        },
+        {
+          "path": "cursor-mirror-trace-20260502-161143.zip",
+          "bytes": 10559685,
+          "lastWriteTimeUtc": "2026-05-02T07:11:48.508112+00:00",
+          "kind": "trace"
+        },
+        {
+          "path": "cursor-mirror-trace-20260502-163258.zip",
+          "bytes": 8596478,
+          "lastWriteTimeUtc": "2026-05-02T07:33:03.269269+00:00",
+          "kind": "trace"
+        },
+        {
+          "path": "cursor-mirror-trace-20260502-165358.zip",
+          "bytes": 6229126,
+          "lastWriteTimeUtc": "2026-05-02T07:54:02.900459+00:00",
+          "kind": "trace"
+        },
+        {
+          "path": "cursor-mirror-trace-20260502-173150.zip",
+          "bytes": 5957895,
+          "lastWriteTimeUtc": "2026-05-02T08:31:54.157943+00:00",
+          "kind": "trace"
+        },
+        {
+          "path": "cursor-mirror-trace-20260502-175951.zip",
+          "bytes": 6729383,
+          "lastWriteTimeUtc": "2026-05-02T08:59:56.176056+00:00",
+          "kind": "trace"
+        },
+        {
+          "path": "cursor-mirror-trace-20260502-184947.zip",
+          "bytes": 5317362,
+          "lastWriteTimeUtc": "2026-05-02T09:49:50.862967+00:00",
+          "kind": "trace"
+        },
+        {
+          "path": "cursor-mirror-trace-20260503-185536.zip",
+          "bytes": 8781103,
+          "lastWriteTimeUtc": "2026-05-03T09:55:41.657805+00:00",
+          "kind": "trace"
+        },
+        {
+          "path": "cursor-mirror-trace-20260503-190129.zip",
+          "bytes": 4464106,
+          "lastWriteTimeUtc": "2026-05-03T10:01:32.353733+00:00",
+          "kind": "trace"
+        }
+      ]
+    },
+    "analysisDirectories": [
+      {
+        "path": "artifacts\\analysis\\trace-20260502-145302",
+        "reportCount": 2,
+        "scoreCount": 2,
+        "totalBytes": 333819
+      },
+      {
+        "path": "artifacts\\analysis\\trace-20260502-153745",
+        "reportCount": 2,
+        "scoreCount": 2,
+        "totalBytes": 336518
+      },
+      {
+        "path": "artifacts\\analysis\\trace-20260502-154732",
+        "reportCount": 2,
+        "scoreCount": 2,
+        "totalBytes": 322370
+      },
+      {
+        "path": "artifacts\\analysis\\trace-20260502-161143",
+        "reportCount": 2,
+        "scoreCount": 2,
+        "totalBytes": 340567
+      },
+      {
+        "path": "artifacts\\analysis\\trace-20260502-163258",
+        "reportCount": 2,
+        "scoreCount": 2,
+        "totalBytes": 339317
+      },
+      {
+        "path": "artifacts\\analysis\\trace-20260502-165358",
+        "reportCount": 2,
+        "scoreCount": 2,
+        "totalBytes": 356329
+      },
+      {
+        "path": "artifacts\\analysis\\trace-20260502-173150",
+        "reportCount": 2,
+        "scoreCount": 2,
+        "totalBytes": 359694
+      },
+      {
+        "path": "artifacts\\analysis\\trace-20260502-175951-runtime",
+        "reportCount": 2,
+        "scoreCount": 2,
+        "totalBytes": 372004
+      },
+      {
+        "path": "artifacts\\analysis\\trace-20260502-175951-self",
+        "reportCount": 2,
+        "scoreCount": 2,
+        "totalBytes": 355805
+      }
+    ],
+    "calibrationArtifacts": [
+      {
+        "path": "artifacts\\calibration\\target-vblank-sync-product-15s.zip",
+        "bytes": 10172,
+        "lastWriteTimeUtc": "2026-05-02T23:25:49.139966+00:00"
+      },
+      {
+        "path": "artifacts\\calibration\\target-vblank-sync-product.zip",
+        "bytes": 7118,
+        "lastWriteTimeUtc": "2026-05-02T23:24:39.249890+00:00"
+      }
+    ]
+  },
+  "splitManifest": {
+    "path": "poc/cursor-prediction-v12/step-2-clean-split/split-manifest.json",
+    "exists": true
+  },
+  "v16SelectedRuntime": {
+    "path": "poc/cursor-prediction-v16/runtime/selected-candidate.json",
+    "exists": true,
+    "modelId": "mlp_fsmn_h8_hardtanh_label_q0p125_lag0p5",
+    "family": "tiny_mlp_fsmn",
+    "target": "label",
+    "runtime": {
+      "type": "mlp",
+      "activation": "hardtanh",
+      "hidden": 8,
+      "quantizationStep": 0.125,
+      "lagCompensationPx": 0.5
+    }
+  },
+  "codeLocations": [
+    {
+      "path": "src\\CursorMirror.Core\\MouseTrace",
+      "exists": true
+    },
+    {
+      "path": "src\\CursorMirror.Core\\MotionLab",
+      "exists": true
+    },
+    {
+      "path": "src\\CursorMirror.Core\\MotionLabInputBlocker.cs",
+      "exists": true
+    },
+    {
+      "path": "src\\CursorMirror.MotionLab",
+      "exists": true
+    },
+    {
+      "path": "src\\CursorMirror.Calibrator",
+      "exists": true
+    },
+    {
+      "path": "artifacts\\analysis",
+      "exists": true
+    },
+    {
+      "path": "artifacts\\calibration",
+      "exists": true
+    },
+    {
+      "path": "poc\\cursor-prediction-v12\\step-2-clean-split\\split-manifest.json",
+      "exists": true
+    }
+  ]
+}

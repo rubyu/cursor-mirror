@@ -1,0 +1,730 @@
+{
+  "schemaVersion": "cursor-prediction-v12-audit-clean-split/1/split-manifest",
+  "generatedAtUtc": "2026-05-03T22:36:47.427Z",
+  "cleaningPolicy": {
+    "motionLabExtraInfo": 1129139532,
+    "contaminationNearMilliseconds": 250,
+    "globalRules": [
+      "Drop rows with warmupSample=true in trace.csv.",
+      "Drop motion-samples.csv rows whose elapsed time is inside metadata WarmupDurationMilliseconds.",
+      "Treat trace.csv event=move rows with hookExtraInfo != 1129139532 as external input contamination.",
+      "Drop all rows within +/- 250 ms of external move contamination windows.",
+      "For m070055, drop scenario 0 because non-warmup external input continues into the first scenario."
+    ],
+    "perPackageRules": {
+      "m070055": {
+        "id": "drop-scenario-0-plus-contamination-windows",
+        "dropScenarios": [
+          0
+        ],
+        "contaminationWindows": [
+          {
+            "startMs": 0,
+            "endMs": 2711.235,
+            "durationMs": 2711.235
+          }
+        ],
+        "rationale": [
+          "Non-warmup external move rows continue until roughly 2.46 s in the first scenario.",
+          "Dropping the whole first scenario costs about 1/64 of one package and avoids training on an unknown recovery period.",
+          "The contamination windows are retained in the manifest for transparency, but scenario 0 is the effective exclusion."
+        ]
+      },
+      "m070211": {
+        "id": "warmup-only",
+        "dropScenarios": [],
+        "contaminationWindows": [],
+        "rationale": [
+          "No external move rows were found; only warmup rows are removed."
+        ]
+      },
+      "m070248": {
+        "id": "warmup-plus-contamination-windows",
+        "dropScenarios": [],
+        "contaminationWindows": [
+          {
+            "startMs": 0,
+            "endMs": 795.648,
+            "durationMs": 795.648
+          }
+        ],
+        "rationale": [
+          "External move rows are sparse, so +/- 250 ms windows remove the local contamination without discarding a complete scenario."
+        ]
+      },
+      "m070307": {
+        "id": "warmup-only",
+        "dropScenarios": [],
+        "contaminationWindows": [],
+        "rationale": [
+          "No external move rows were found; only warmup rows are removed."
+        ]
+      }
+    }
+  },
+  "baseScenarioSplit": {
+    "method": "Stable Fisher-Yates shuffle over scenario indices using Mulberry32 seed 0xc0def00d.",
+    "seed": "0xc0def00d",
+    "ratio": "70/15/15",
+    "scenarioCount": 64,
+    "counts": {
+      "train": 44,
+      "validation": 10,
+      "test": 10
+    },
+    "train": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      13,
+      15,
+      16,
+      17,
+      19,
+      20,
+      22,
+      25,
+      27,
+      28,
+      31,
+      33,
+      36,
+      38,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      54,
+      55,
+      56,
+      57,
+      58,
+      60,
+      62,
+      63
+    ],
+    "validation": [
+      1,
+      21,
+      24,
+      26,
+      30,
+      32,
+      35,
+      39,
+      53,
+      61
+    ],
+    "test": [
+      0,
+      11,
+      12,
+      14,
+      18,
+      23,
+      29,
+      34,
+      37,
+      59
+    ],
+    "selectionOrder": [
+      3,
+      4,
+      57,
+      49,
+      8,
+      63,
+      28,
+      58,
+      46,
+      55,
+      36,
+      43,
+      47,
+      27,
+      22,
+      16,
+      20,
+      45,
+      5,
+      2,
+      25,
+      9,
+      7,
+      51,
+      40,
+      33,
+      50,
+      44,
+      6,
+      17,
+      10,
+      41,
+      52,
+      60,
+      48,
+      42,
+      38,
+      54,
+      56,
+      62,
+      13,
+      15,
+      19,
+      31,
+      35,
+      26,
+      32,
+      39,
+      61,
+      21,
+      24,
+      1,
+      53,
+      30,
+      23,
+      29,
+      37,
+      0,
+      18,
+      11,
+      14,
+      12,
+      59,
+      34
+    ]
+  },
+  "packageScenarioAssignments": [
+    {
+      "packageId": "m070055",
+      "sourceZip": "cursor-mirror-motion-recording-20260504-070055.zip",
+      "machineKey": "6cpu_3840x2160_1mon_30Hz",
+      "refreshBucket": "30Hz",
+      "droppedScenarios": [
+        0
+      ],
+      "cleanScenarioCount": 63,
+      "scenarioIndicesBySplit": {
+        "train": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          13,
+          15,
+          16,
+          17,
+          19,
+          20,
+          22,
+          25,
+          27,
+          28,
+          31,
+          33,
+          36,
+          38,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          54,
+          55,
+          56,
+          57,
+          58,
+          60,
+          62,
+          63
+        ],
+        "validation": [
+          1,
+          21,
+          24,
+          26,
+          30,
+          32,
+          35,
+          39,
+          53,
+          61
+        ],
+        "test": [
+          11,
+          12,
+          14,
+          18,
+          23,
+          29,
+          34,
+          37,
+          59
+        ],
+        "unassigned": []
+      },
+      "cleanTraceRowsBySplit": {
+        "train": 365509,
+        "validation": 84221,
+        "test": 83136,
+        "unassigned": 0
+      },
+      "cleanMotionRowsBySplit": {
+        "train": 126721,
+        "validation": 28800,
+        "test": 25920,
+        "unassigned": 0
+      }
+    },
+    {
+      "packageId": "m070211",
+      "sourceZip": "cursor-mirror-motion-recording-20260504-070211.zip",
+      "machineKey": "6cpu_3840x2160_1mon_30Hz",
+      "refreshBucket": "30Hz",
+      "droppedScenarios": [],
+      "cleanScenarioCount": 64,
+      "scenarioIndicesBySplit": {
+        "train": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          13,
+          15,
+          16,
+          17,
+          19,
+          20,
+          22,
+          25,
+          27,
+          28,
+          31,
+          33,
+          36,
+          38,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          54,
+          55,
+          56,
+          57,
+          58,
+          60,
+          62,
+          63
+        ],
+        "validation": [
+          1,
+          21,
+          24,
+          26,
+          30,
+          32,
+          35,
+          39,
+          53,
+          61
+        ],
+        "test": [
+          0,
+          11,
+          12,
+          14,
+          18,
+          23,
+          29,
+          34,
+          37,
+          59
+        ],
+        "unassigned": []
+      },
+      "cleanTraceRowsBySplit": {
+        "train": 336555,
+        "validation": 73942,
+        "test": 83352,
+        "unassigned": 0
+      },
+      "cleanMotionRowsBySplit": {
+        "train": 126721,
+        "validation": 28800,
+        "test": 28680,
+        "unassigned": 0
+      }
+    },
+    {
+      "packageId": "m070248",
+      "sourceZip": "cursor-mirror-motion-recording-20260504-070248.zip",
+      "machineKey": "24cpu_2560x1440_1mon_60Hz",
+      "refreshBucket": "60Hz",
+      "droppedScenarios": [],
+      "cleanScenarioCount": 64,
+      "scenarioIndicesBySplit": {
+        "train": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          13,
+          15,
+          16,
+          17,
+          19,
+          20,
+          22,
+          25,
+          27,
+          28,
+          31,
+          33,
+          36,
+          38,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          54,
+          55,
+          56,
+          57,
+          58,
+          60,
+          62,
+          63
+        ],
+        "validation": [
+          1,
+          21,
+          24,
+          26,
+          30,
+          32,
+          35,
+          39,
+          53,
+          61
+        ],
+        "test": [
+          0,
+          11,
+          12,
+          14,
+          18,
+          23,
+          29,
+          34,
+          37,
+          59
+        ],
+        "unassigned": []
+      },
+      "cleanTraceRowsBySplit": {
+        "train": 401102,
+        "validation": 95570,
+        "test": 103817,
+        "unassigned": 0
+      },
+      "cleanMotionRowsBySplit": {
+        "train": 126721,
+        "validation": 28800,
+        "test": 28609,
+        "unassigned": 0
+      }
+    },
+    {
+      "packageId": "m070307",
+      "sourceZip": "cursor-mirror-motion-recording-20260504-070307.zip",
+      "machineKey": "32cpu_7680x1440_3mon_60Hz",
+      "refreshBucket": "60Hz",
+      "droppedScenarios": [],
+      "cleanScenarioCount": 64,
+      "scenarioIndicesBySplit": {
+        "train": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          13,
+          15,
+          16,
+          17,
+          19,
+          20,
+          22,
+          25,
+          27,
+          28,
+          31,
+          33,
+          36,
+          38,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          54,
+          55,
+          56,
+          57,
+          58,
+          60,
+          62,
+          63
+        ],
+        "validation": [
+          1,
+          21,
+          24,
+          26,
+          30,
+          32,
+          35,
+          39,
+          53,
+          61
+        ],
+        "test": [
+          0,
+          11,
+          12,
+          14,
+          18,
+          23,
+          29,
+          34,
+          37,
+          59
+        ],
+        "unassigned": []
+      },
+      "cleanTraceRowsBySplit": {
+        "train": 371918,
+        "validation": 82527,
+        "test": 95611,
+        "unassigned": 0
+      },
+      "cleanMotionRowsBySplit": {
+        "train": 126721,
+        "validation": 28800,
+        "test": 28680,
+        "unassigned": 0
+      }
+    }
+  ],
+  "holdouts": {
+    "packageHoldouts": [
+      {
+        "id": "package:m070055",
+        "trainPackageIds": [
+          "m070211",
+          "m070248",
+          "m070307"
+        ],
+        "testPackageIds": [
+          "m070055"
+        ],
+        "trainCleanMotionRows": 552532,
+        "testCleanMotionRows": 181441,
+        "trainCleanTraceRows": 1644394,
+        "testCleanTraceRows": 532866
+      },
+      {
+        "id": "package:m070211",
+        "trainPackageIds": [
+          "m070055",
+          "m070248",
+          "m070307"
+        ],
+        "testPackageIds": [
+          "m070211"
+        ],
+        "trainCleanMotionRows": 549772,
+        "testCleanMotionRows": 184201,
+        "trainCleanTraceRows": 1683411,
+        "testCleanTraceRows": 493849
+      },
+      {
+        "id": "package:m070248",
+        "trainPackageIds": [
+          "m070055",
+          "m070211",
+          "m070307"
+        ],
+        "testPackageIds": [
+          "m070248"
+        ],
+        "trainCleanMotionRows": 549843,
+        "testCleanMotionRows": 184130,
+        "trainCleanTraceRows": 1576771,
+        "testCleanTraceRows": 600489
+      },
+      {
+        "id": "package:m070307",
+        "trainPackageIds": [
+          "m070055",
+          "m070211",
+          "m070248"
+        ],
+        "testPackageIds": [
+          "m070307"
+        ],
+        "trainCleanMotionRows": 549772,
+        "testCleanMotionRows": 184201,
+        "trainCleanTraceRows": 1627204,
+        "testCleanTraceRows": 550056
+      }
+    ],
+    "machineHoldouts": [
+      {
+        "id": "machine:24cpu_2560x1440_1mon_60Hz",
+        "trainPackageIds": [
+          "m070055",
+          "m070211",
+          "m070307"
+        ],
+        "testPackageIds": [
+          "m070248"
+        ],
+        "trainCleanMotionRows": 549843,
+        "testCleanMotionRows": 184130,
+        "trainCleanTraceRows": 1576771,
+        "testCleanTraceRows": 600489
+      },
+      {
+        "id": "machine:32cpu_7680x1440_3mon_60Hz",
+        "trainPackageIds": [
+          "m070055",
+          "m070211",
+          "m070248"
+        ],
+        "testPackageIds": [
+          "m070307"
+        ],
+        "trainCleanMotionRows": 549772,
+        "testCleanMotionRows": 184201,
+        "trainCleanTraceRows": 1627204,
+        "testCleanTraceRows": 550056
+      },
+      {
+        "id": "machine:6cpu_3840x2160_1mon_30Hz",
+        "trainPackageIds": [
+          "m070248",
+          "m070307"
+        ],
+        "testPackageIds": [
+          "m070055",
+          "m070211"
+        ],
+        "trainCleanMotionRows": 368331,
+        "testCleanMotionRows": 365642,
+        "trainCleanTraceRows": 1150545,
+        "testCleanTraceRows": 1026715
+      }
+    ],
+    "refreshHoldouts": [
+      {
+        "id": "refresh:30Hz",
+        "trainPackageIds": [
+          "m070248",
+          "m070307"
+        ],
+        "testPackageIds": [
+          "m070055",
+          "m070211"
+        ],
+        "trainCleanMotionRows": 368331,
+        "testCleanMotionRows": 365642,
+        "trainCleanTraceRows": 1150545,
+        "testCleanTraceRows": 1026715
+      },
+      {
+        "id": "refresh:60Hz",
+        "trainPackageIds": [
+          "m070055",
+          "m070211"
+        ],
+        "testPackageIds": [
+          "m070248",
+          "m070307"
+        ],
+        "trainCleanMotionRows": 365642,
+        "testCleanMotionRows": 368331,
+        "trainCleanTraceRows": 1026715,
+        "testCleanTraceRows": 1150545
+      }
+    ]
+  }
+}

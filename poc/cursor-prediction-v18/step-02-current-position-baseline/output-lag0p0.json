@@ -1,0 +1,4809 @@
+{
+  "schemaVersion": "cursor-prediction-v18-step-02-current-position-baseline-single-lag/1",
+  "generatedAtUtc": "2026-05-04T07:04:10.0558395+00:00",
+  "overlay": {
+    "lagPx": 0,
+    "modelId": "mlp_fsmn_h8_hardtanh_label_q0p125_lag0",
+    "lagConst": 0,
+    "productSourceEdited": false
+  },
+  "candidates": {
+    "lagp0_offsetm4": {
+      "id": "lagp0_offsetm4",
+      "lagPx": 0,
+      "offsetMs": -4,
+      "rows": 90522,
+      "metrics": {
+        "all": {
+          "count": 90522,
+          "visualError": {
+            "mean": 0.07457791563451326,
+            "p95": 0.4152508720176229,
+            "p99": 1.555200951645879,
+            "max": 36.07046403915525
+          },
+          "currentDistance": {
+            "mean": 0.0015454557655195005,
+            "p95": 0,
+            "p99": 0,
+            "max": 2.5124689052802225
+          },
+          "currentOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 2.4759662061195735,
+            "gt0p5": 0.000684916373920152,
+            "gt1": 0.00036455226353814544,
+            "gt2": 6.628222973420826E-05,
+            "gt4": 0
+          },
+          "offset0Overshoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 31.62808859082212,
+            "gt0p5": 0.0037118048651156627,
+            "gt1": 0.002319878040697289,
+            "gt2": 0.001215174211793818,
+            "gt4": 0.0005744459910298049
+          },
+          "candidateTargetOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 0,
+            "gt0p5": 0,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "currentSignedMean": 0.0006055955340117685,
+          "currentLeadRate": 0.0011267979054815404,
+          "currentLagRate": 0.0006407282207640132
+        },
+        "fastThenNearZero": {
+          "count": 1926,
+          "visualError": {
+            "mean": 0.411024824669243,
+            "p95": 2.1262500000000273,
+            "p99": 9.218738274033097,
+            "max": 35.60701746803706
+          },
+          "currentDistance": {
+            "mean": 0.00111660504504707,
+            "p95": 0,
+            "p99": 0,
+            "max": 2.1505813167606567
+          },
+          "currentOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 1.988998482444051,
+            "gt0p5": 0.0005192107995846313,
+            "gt1": 0.0005192107995846313,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "offset0Overshoot": {
+            "p95": 0,
+            "p99": 3.2606801516462283,
+            "max": 27.689000000357737,
+            "gt0p5": 0.035306334371754934,
+            "gt1": 0.028556593977154723,
+            "gt2": 0.017653167185877467,
+            "gt4": 0.008826583592938734
+          },
+          "candidateTargetOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 0,
+            "gt0p5": 0,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "currentSignedMean": 0.001032709492442394,
+          "currentLeadRate": 0.0005192107995846313,
+          "currentLagRate": 0
+        },
+        "hardBrake": {
+          "count": 334,
+          "visualError": {
+            "mean": 0.16363763097578643,
+            "p95": 0.5702162133671271,
+            "p99": 4.493663594440522,
+            "max": 10.077616822071505
+          },
+          "currentDistance": {
+            "mean": 0.006438866217846277,
+            "p95": 0,
+            "p99": 0,
+            "max": 2.1505813167606567
+          },
+          "currentOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 1.988998482444051,
+            "gt0p5": 0.0029940119760479044,
+            "gt1": 0.0029940119760479044,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "offset0Overshoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 0.23983076919955693,
+            "gt0p5": 0,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "candidateTargetOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 0,
+            "gt0p5": 0,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "currentSignedMean": 0.005955085276778595,
+          "currentLeadRate": 0.0029940119760479044,
+          "currentLagRate": 0
+        },
+        "stopAfterHighSpeed": {
+          "count": 44,
+          "visualError": {
+            "mean": 0.6686809993979899,
+            "p95": 3.7342084167866565,
+            "p99": 10.754273867303786,
+            "max": 10.754273867303786
+          },
+          "currentDistance": {
+            "mean": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "currentOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 0,
+            "gt0p5": 0,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "offset0Overshoot": {
+            "p95": 0,
+            "p99": 10.202400000572197,
+            "max": 10.202400000572197,
+            "gt0p5": 0.045454545454545456,
+            "gt1": 0.045454545454545456,
+            "gt2": 0.045454545454545456,
+            "gt4": 0.022727272727272728
+          },
+          "candidateTargetOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 0,
+            "gt0p5": 0,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "currentSignedMean": 0,
+          "currentLeadRate": 0,
+          "currentLagRate": 0
+        },
+        "oneFrameStop": {
+          "count": 406,
+          "visualError": {
+            "mean": 0.374368866073189,
+            "p95": 1.4388067280422852,
+            "p99": 11.256826593460751,
+            "max": 17.215506850331188
+          },
+          "currentDistance": {
+            "mean": 0.005912761863942504,
+            "p95": 0,
+            "p99": 0,
+            "max": 2.1505813167606567
+          },
+          "currentOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 1.988998482444051,
+            "gt0p5": 0.0024630541871921183,
+            "gt1": 0.0024630541871921183,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "offset0Overshoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 1.3895236536387499,
+            "gt0p5": 0.0024630541871921183,
+            "gt1": 0.0024630541871921183,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "candidateTargetOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 0,
+            "gt0p5": 0,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "currentSignedMean": 0.005444937669914815,
+          "currentLeadRate": 0.0049261083743842365,
+          "currentLagRate": 0
+        },
+        "postStopFirstFrames": {
+          "count": 271,
+          "visualError": {
+            "mean": 0.020206939416316766,
+            "p95": 0,
+            "p99": 0.5504341022177451,
+            "max": 2.153652769111135
+          },
+          "currentDistance": {
+            "mean": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "currentOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 0,
+            "gt0p5": 0,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "offset0Overshoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 0,
+            "gt0p5": 0,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "candidateTargetOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 0,
+            "gt0p5": 0,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "currentSignedMean": 0,
+          "currentLeadRate": 0,
+          "currentLagRate": 0
+        },
+        "normalMove": {
+          "count": 3444,
+          "visualError": {
+            "mean": 0.3525837330325809,
+            "p95": 1.7202085135293341,
+            "p99": 7.368017348759165,
+            "max": 36.07046403915525
+          },
+          "currentDistance": {
+            "mean": 0.0014620005183114365,
+            "p95": 0,
+            "p99": 0,
+            "max": 1.7544586059522749
+          },
+          "currentOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 1.7544038512482754,
+            "gt0p5": 0.0008710801393728223,
+            "gt1": 0.0008710801393728223,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "offset0Overshoot": {
+            "p95": 0.010924799769323026,
+            "p99": 3.4592000000477015,
+            "max": 31.62808859082212,
+            "gt0p5": 0.031068524970963997,
+            "gt1": 0.02264808362369338,
+            "gt2": 0.014227642276422764,
+            "gt4": 0.008130081300813009
+          },
+          "candidateTargetOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 0,
+            "gt0p5": 0,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "currentSignedMean": 0.0013092687132386343,
+          "currentLeadRate": 0.0014518002322880372,
+          "currentLagRate": 0
+        },
+        "highSpeed": {
+          "count": 13,
+          "visualError": {
+            "mean": 0.20299569271099488,
+            "p95": 1.928247576431886,
+            "p99": 1.928247576431886,
+            "max": 1.928247576431886
+          },
+          "currentDistance": {
+            "mean": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "currentOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 0,
+            "gt0p5": 0,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "offset0Overshoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 0,
+            "gt0p5": 0,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "candidateTargetOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 0,
+            "gt0p5": 0,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "currentSignedMean": 0,
+          "currentLeadRate": 0,
+          "currentLagRate": 0
+        },
+        "staticHold": {
+          "count": 64631,
+          "visualError": {
+            "mean": 0.038569340038048065,
+            "p95": 0.20230000001197368,
+            "p99": 1.035299999952258,
+            "max": 9.154916711800277
+          },
+          "currentDistance": {
+            "mean": 0.0014488908620854937,
+            "p95": 0,
+            "p99": 0,
+            "max": 2.4906073556464094
+          },
+          "currentOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 2.4759662061195735,
+            "gt0p5": 0.0005879531494174622,
+            "gt1": 0.0002011418669059739,
+            "gt2": 3.094490260091906E-05,
+            "gt4": 0
+          },
+          "offset0Overshoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 4.098250000000007,
+            "gt0p5": 0.0005260633442156241,
+            "gt1": 0.00013925206170413578,
+            "gt2": 1.547245130045953E-05,
+            "gt4": 1.547245130045953E-05
+          },
+          "candidateTargetOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 0,
+            "gt0p5": 0,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "currentSignedMean": 0.000242464419344502,
+          "currentLeadRate": 0.001021181785830329,
+          "currentLagRate": 0.0008045674676238956
+        }
+      },
+      "byPackage": {
+        "m070248": {
+          "all": {
+            "count": 45814,
+            "visualError": {
+              "mean": 0.06480485036641633,
+              "p95": 0.3293999999998505,
+              "p99": 1.390275265010539,
+              "max": 23.03232213282175
+            },
+            "currentDistance": {
+              "mean": 0.00044971996798687133,
+              "p95": 0,
+              "p99": 0,
+              "max": 1.9121323175972944
+            },
+            "currentOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 1.8973665961010275,
+              "gt0p5": 0.0002619286680927227,
+              "gt1": 0.00017461911206181517,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 20.029349999606666,
+              "gt0p5": 0.003732483520321299,
+              "gt1": 0.0023137032348190508,
+              "gt2": 0.0010695420613786178,
+              "gt4": 0.00045837516916226483
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0.00027192360425832554,
+            "currentLeadRate": 0.0003928930021390841,
+            "currentLagRate": 0.00013096433404636136
+          },
+          "fastThenNearZero": {
+            "count": 1067,
+            "visualError": {
+              "mean": 0.3891330779860466,
+              "p95": 2.2939821381304597,
+              "p99": 8.111451540759585,
+              "max": 14.784082022567382
+            },
+            "currentDistance": {
+              "mean": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            },
+            "currentOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 2.5737366027791015,
+              "max": 7.670659006711302,
+              "gt0p5": 0.03280224929709466,
+              "gt1": 0.026241799437675725,
+              "gt2": 0.014058106841611996,
+              "gt4": 0.004686035613870665
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0,
+            "currentLeadRate": 0,
+            "currentLagRate": 0
+          },
+          "hardBrake": {
+            "count": 182,
+            "visualError": {
+              "mean": 0.18903846396700616,
+              "p95": 0.5199999999999818,
+              "p99": 7.589325202206665,
+              "max": 10.077616822071505
+            },
+            "currentDistance": {
+              "mean": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            },
+            "currentOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0.14224010620296748,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0,
+            "currentLeadRate": 0,
+            "currentLagRate": 0
+          },
+          "stopAfterHighSpeed": {
+            "count": 31,
+            "visualError": {
+              "mean": 0.15910597054254272,
+              "p95": 0.4730467135167373,
+              "p99": 3.7342084167866565,
+              "max": 3.7342084167866565
+            },
+            "currentDistance": {
+              "mean": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            },
+            "currentOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 3.642500000000041,
+              "max": 3.642500000000041,
+              "gt0p5": 0.03225806451612903,
+              "gt1": 0.03225806451612903,
+              "gt2": 0.03225806451612903,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0,
+            "currentLeadRate": 0,
+            "currentLagRate": 0
+          },
+          "oneFrameStop": {
+            "count": 197,
+            "visualError": {
+              "mean": 0.48264063510232624,
+              "p95": 3.231503616739465,
+              "p99": 13.732139143473509,
+              "max": 17.215506850331188
+            },
+            "currentDistance": {
+              "mean": 0.0012690355329949238,
+              "p95": 0,
+              "p99": 0,
+              "max": 0.25
+            },
+            "currentOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0.22164621154136366,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0.0011251076727988004,
+            "currentLeadRate": 0.005076142131979695,
+            "currentLagRate": 0
+          },
+          "postStopFirstFrames": {
+            "count": 144,
+            "visualError": {
+              "mean": 0.010174652777819284,
+              "p95": 0,
+              "p99": 0.4498499999940435,
+              "max": 0.7830500000119258
+            },
+            "currentDistance": {
+              "mean": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            },
+            "currentOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0,
+            "currentLeadRate": 0,
+            "currentLagRate": 0
+          },
+          "normalMove": {
+            "count": 1829,
+            "visualError": {
+              "mean": 0.2978032260683427,
+              "p95": 1.5941999999881773,
+              "p99": 6.65473036731153,
+              "max": 23.03232213282175
+            },
+            "currentDistance": {
+              "mean": 6.83433570256971E-05,
+              "p95": 0,
+              "p99": 0,
+              "max": 0.125
+            },
+            "currentOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0.015131796913879973,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0.07905559150794458,
+              "p99": 2.298450592225722,
+              "max": 20.029349999606666,
+              "gt0p5": 0.0306178239475123,
+              "gt1": 0.02241662110442865,
+              "gt2": 0.012575177692728267,
+              "gt4": 0.007654455986878075
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 8.273262391405125E-06,
+            "currentLeadRate": 0.0005467468562055768,
+            "currentLagRate": 0
+          },
+          "highSpeed": {
+            "count": 10,
+            "visualError": {
+              "mean": 0.07106964288110476,
+              "p95": 0.4730467135167373,
+              "p99": 0.4730467135167373,
+              "max": 0.4730467135167373
+            },
+            "currentDistance": {
+              "mean": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            },
+            "currentOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": -0,
+            "currentLeadRate": 0,
+            "currentLagRate": 0
+          },
+          "staticHold": {
+            "count": 32429,
+            "visualError": {
+              "mean": 0.033221032326354934,
+              "p95": 0.1895999999940159,
+              "p99": 0.8783000000007632,
+              "max": 9.154916711800277
+            },
+            "currentDistance": {
+              "mean": 0.0002960648791032378,
+              "p95": 0,
+              "p99": 0,
+              "max": 1.7544586059522749
+            },
+            "currentOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 1.7403718656566562,
+              "gt0p5": 0.0001541829843658454,
+              "gt1": 6.167319374633815E-05,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 1.4938999999760654,
+              "gt0p5": 0.0005242221468438743,
+              "gt1": 0.0001233463874926763,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 8.26065663082172E-05,
+            "currentLeadRate": 0.00021585617811218353,
+            "currentLagRate": 0.0001541829843658454
+          }
+        },
+        "m070307": {
+          "all": {
+            "count": 44708,
+            "visualError": {
+              "mean": 0.08459274994140677,
+              "p95": 0.5091313730790716,
+              "p99": 1.692927065818303,
+              "max": 36.07046403915525
+            },
+            "currentDistance": {
+              "mean": 0.0026682982059811583,
+              "p95": 0,
+              "p99": 0,
+              "max": 2.5124689052802225
+            },
+            "currentOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 2.4759662061195735,
+              "gt0p5": 0.0011183680773016015,
+              "gt1": 0.0005591840386508008,
+              "gt2": 0.00013420416927619218,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 31.62808859082212,
+              "gt0p5": 0.003690614655095285,
+              "gt1": 0.002326205600787331,
+              "gt2": 0.0013644090543079538,
+              "gt4": 0.000693388207926993
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0.0009475219406889679,
+            "currentLeadRate": 0.0018788583698666906,
+            "currentLagRate": 0.0011631028003936655
+          },
+          "fastThenNearZero": {
+            "count": 859,
+            "visualError": {
+              "mean": 0.4382174832384748,
+              "p95": 1.9502984899486708,
+              "p99": 9.995957442909381,
+              "max": 35.60701746803706
+            },
+            "currentDistance": {
+              "mean": 0.0025035870975094955,
+              "p95": 0,
+              "p99": 0,
+              "max": 2.1505813167606567
+            },
+            "currentOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 1.988998482444051,
+              "gt0p5": 0.0011641443538998836,
+              "gt1": 0.0011641443538998836,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 5.7988000006675975,
+              "max": 27.689000000357737,
+              "gt0p5": 0.03841676367869616,
+              "gt1": 0.03143189755529686,
+              "gt2": 0.02211874272409779,
+              "gt4": 0.013969732246798603
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0.0023154813532526787,
+            "currentLeadRate": 0.0011641443538998836,
+            "currentLagRate": 0
+          },
+          "hardBrake": {
+            "count": 152,
+            "visualError": {
+              "mean": 0.13322347568366807,
+              "p95": 0.5702162133671271,
+              "p99": 2.1505813167606567,
+              "max": 9.995957442909381
+            },
+            "currentDistance": {
+              "mean": 0.014148561294478005,
+              "p95": 0,
+              "p99": 0,
+              "max": 2.1505813167606567
+            },
+            "currentOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 1.988998482444051,
+              "gt0p5": 0.006578947368421052,
+              "gt1": 0.006578947368421052,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0.23983076919955693,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0.013085516331868757,
+            "currentLeadRate": 0.006578947368421052,
+            "currentLagRate": 0
+          },
+          "stopAfterHighSpeed": {
+            "count": 13,
+            "visualError": {
+              "mean": 1.8838214528225177,
+              "p95": 10.754273867303786,
+              "p99": 10.754273867303786,
+              "max": 10.754273867303786
+            },
+            "currentDistance": {
+              "mean": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            },
+            "currentOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 10.202400000572197,
+              "p99": 10.202400000572197,
+              "max": 10.202400000572197,
+              "gt0p5": 0.07692307692307693,
+              "gt1": 0.07692307692307693,
+              "gt2": 0.07692307692307693,
+              "gt4": 0.07692307692307693
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0,
+            "currentLeadRate": 0,
+            "currentLagRate": 0
+          },
+          "oneFrameStop": {
+            "count": 209,
+            "visualError": {
+              "mean": 0.2723136579452462,
+              "p95": 1.4142135623730951,
+              "p99": 5.3151802529579655,
+              "max": 15.601554980758506
+            },
+            "currentDistance": {
+              "mean": 0.010289862759620367,
+              "p95": 0,
+              "p99": 0,
+              "max": 2.1505813167606567
+            },
+            "currentOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 1.988998482444051,
+              "gt0p5": 0.004784688995215311,
+              "gt1": 0.004784688995215311,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0.020031409772753413,
+              "max": 1.3895236536387499,
+              "gt0p5": 0.004784688995215311,
+              "gt1": 0.004784688995215311,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0.009516739150450005,
+            "currentLeadRate": 0.004784688995215311,
+            "currentLagRate": 0
+          },
+          "postStopFirstFrames": {
+            "count": 127,
+            "visualError": {
+              "mean": 0.03158213056547927,
+              "p95": 0.05244999998808453,
+              "p99": 0.5504341022177451,
+              "max": 2.153652769111135
+            },
+            "currentDistance": {
+              "mean": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            },
+            "currentOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0,
+            "currentLeadRate": 0,
+            "currentLagRate": 0
+          },
+          "normalMove": {
+            "count": 1615,
+            "visualError": {
+              "mean": 0.41462308116731245,
+              "p95": 1.8965000000000032,
+              "p99": 8.695308263767025,
+              "max": 36.07046403915525
+            },
+            "currentDistance": {
+              "mean": 0.00304032804028767,
+              "p95": 0,
+              "p99": 0,
+              "max": 1.7544586059522749
+            },
+            "currentOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 1.7544038512482754,
+              "gt0p5": 0.0018575851393188853,
+              "gt1": 0.0018575851393188853,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 3.868750000000091,
+              "max": 31.62808859082212,
+              "gt0p5": 0.031578947368421054,
+              "gt1": 0.022910216718266253,
+              "gt2": 0.01609907120743034,
+              "gt4": 0.0086687306501548
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0.0027826561309473538,
+            "currentLeadRate": 0.002476780185758514,
+            "currentLagRate": 0
+          },
+          "highSpeed": {
+            "count": 3,
+            "visualError": {
+              "mean": 0.642749192143962,
+              "p95": 1.928247576431886,
+              "p99": 1.928247576431886,
+              "max": 1.928247576431886
+            },
+            "currentDistance": {
+              "mean": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            },
+            "currentOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0,
+            "currentLeadRate": 0,
+            "currentLagRate": 0
+          },
+          "staticHold": {
+            "count": 32202,
+            "visualError": {
+              "mean": 0.043955349316431316,
+              "p95": 0.2240499999969643,
+              "p99": 1.186899999976049,
+              "max": 7.918540261652212
+            },
+            "currentDistance": {
+              "mean": 0.002609843405471978,
+              "p95": 0,
+              "p99": 0,
+              "max": 2.4906073556464094
+            },
+            "currentOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 2.4759662061195735,
+              "gt0p5": 0.0010247810694987889,
+              "gt1": 0.0003415936898329296,
+              "gt2": 6.21079436059872E-05,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 4.098250000000007,
+              "gt0p5": 0.0005279175206508913,
+              "gt1": 0.00015526985901496802,
+              "gt2": 3.10539718029936E-05,
+              "gt4": 3.10539718029936E-05
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0.00040344915060696007,
+            "currentLeadRate": 0.0018321843363766227,
+            "currentLagRate": 0.0014595366747406993
+          }
+        }
+      },
+      "acuteTailExamples": [
+        {
+          "PackageId": "m070307",
+          "elapsedMs": 695969.43,
+          "slice": "oneFrameStop",
+          "currentOvershoot": 1.989,
+          "currentDistance": 2.1506,
+          "visualError": 2.1506,
+          "speeds": {
+            "v2": 0,
+            "v5": 874.3,
+            "v12": 876.6,
+            "target": 0
+          },
+          "accelDrop": 876.6,
+          "path": {
+            "net": 179.739,
+            "efficiency": 0.999
+          },
+          "predictedDxDy": [
+            -1.75,
+            -1.25
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        }
+      ],
+      "objective": {
+        "acuteStopObjective": 0,
+        "sideEffectObjective": 3.64845608996122,
+        "balancedObjective": 0.7296912179922441
+      }
+    },
+    "lagp0_offsetm3p5": {
+      "id": "lagp0_offsetm3p5",
+      "lagPx": 0,
+      "offsetMs": -3.5,
+      "rows": 90522,
+      "metrics": {
+        "all": {
+          "count": 90522,
+          "visualError": {
+            "mean": 0.36284536801977696,
+            "p95": 1.0752906583803283,
+            "p99": 2.42706097986845,
+            "max": 35.14428190110831
+          },
+          "currentDistance": {
+            "mean": 0.30589369820709233,
+            "p95": 0.8003905296791061,
+            "p99": 1.8915932438026946,
+            "max": 4.317479009792636
+          },
+          "currentOvershoot": {
+            "p95": 0.35575623676894275,
+            "p99": 0.8223726047923032,
+            "max": 4.046355884559813,
+            "gt0p5": 0.019531163695013367,
+            "gt1": 0.008141667219018581,
+            "gt2": 0.0030600296060626147,
+            "gt4": 1.104703828903471E-05
+          },
+          "offset0Overshoot": {
+            "p95": 0.07505878203483007,
+            "p99": 0.375,
+            "max": 22.351100933182384,
+            "gt0p5": 0.004109498243520912,
+            "gt1": 0.0018559024325578313,
+            "gt2": 0.0006738693356311173,
+            "gt4": 0.00028722299551490246
+          },
+          "candidateTargetOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 3.016338546226941,
+            "gt0p5": 0.0012262212500828529,
+            "gt1": 0.0004308344932723537,
+            "gt2": 5.523519144517355E-05,
+            "gt4": 0
+          },
+          "currentSignedMean": -0.012747461853952894,
+          "currentLeadRate": 0.42195267448796975,
+          "currentLagRate": 0.31657497624886766
+        },
+        "fastThenNearZero": {
+          "count": 1926,
+          "visualError": {
+            "mean": 1.2149379169805414,
+            "p95": 3.2750999999939268,
+            "p99": 8.34143769103444,
+            "max": 24.710442251202224
+          },
+          "currentDistance": {
+            "mean": 0.8908450839486611,
+            "p95": 2.75,
+            "p99": 3.4573291714848327,
+            "max": 4.138236339311712
+          },
+          "currentOvershoot": {
+            "p95": 1.3580828499879605,
+            "p99": 2.4619752222778972,
+            "max": 3.4482770030544767,
+            "gt0p5": 0.09449636552440291,
+            "gt1": 0.06386292834890965,
+            "gt2": 0.029075804776739357,
+            "gt4": 0
+          },
+          "offset0Overshoot": {
+            "p95": 0.12862393885688161,
+            "p99": 1.713610694543719,
+            "max": 20.189000000357737,
+            "gt0p5": 0.029595015576323987,
+            "gt1": 0.018691588785046728,
+            "gt2": 0.008307372793354102,
+            "gt4": 0.0036344755970924196
+          },
+          "candidateTargetOvershoot": {
+            "p95": 0,
+            "p99": 0.6263999999761154,
+            "max": 2.3747390654428506,
+            "gt0p5": 0.011941848390446522,
+            "gt1": 0.006749740394600207,
+            "gt2": 0.0010384215991692627,
+            "gt4": 0
+          },
+          "currentSignedMean": -0.32967359753257547,
+          "currentLeadRate": 0.31412253374870197,
+          "currentLagRate": 0.5623052959501558
+        },
+        "hardBrake": {
+          "count": 334,
+          "visualError": {
+            "mean": 1.386339380121066,
+            "p95": 3.528898553373276,
+            "p99": 9.826012034391178,
+            "max": 21.777932987067615
+          },
+          "currentDistance": {
+            "mean": 1.1083679584470558,
+            "p95": 3.0644126680328156,
+            "p99": 3.760402239122831,
+            "max": 3.972562145517676
+          },
+          "currentOvershoot": {
+            "p95": 1.6102473281806566,
+            "p99": 2.6701800630081034,
+            "max": 3.3628381622396226,
+            "gt0p5": 0.12874251497005987,
+            "gt1": 0.09281437125748503,
+            "gt2": 0.03592814371257485,
+            "gt4": 0
+          },
+          "offset0Overshoot": {
+            "p95": 0,
+            "p99": 1.1373839463344426,
+            "max": 2,
+            "gt0p5": 0.020958083832335328,
+            "gt1": 0.014970059880239521,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "candidateTargetOvershoot": {
+            "p95": 0,
+            "p99": 0.516450000003033,
+            "max": 1.204999999999984,
+            "gt0p5": 0.011976047904191617,
+            "gt1": 0.008982035928143712,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "currentSignedMean": -0.4497629906878993,
+          "currentLeadRate": 0.23652694610778444,
+          "currentLagRate": 0.5718562874251497
+        },
+        "stopAfterHighSpeed": {
+          "count": 44,
+          "visualError": {
+            "mean": 1.4482463164101222,
+            "p95": 4.138236339311712,
+            "p99": 21.777932987067615,
+            "max": 21.777932987067615
+          },
+          "currentDistance": {
+            "mean": 0.8614251280987922,
+            "p95": 3.528898553373276,
+            "p99": 4.138236339311712,
+            "max": 4.138236339311712
+          },
+          "currentOvershoot": {
+            "p95": 0.44131875569774287,
+            "p99": 1.7858565547786243,
+            "max": 1.7858565547786243,
+            "gt0p5": 0.022727272727272728,
+            "gt1": 0.022727272727272728,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "offset0Overshoot": {
+            "p95": 0.5303300858899106,
+            "p99": 4.202400000572197,
+            "max": 4.202400000572197,
+            "gt0p5": 0.06818181818181818,
+            "gt1": 0.045454545454545456,
+            "gt2": 0.022727272727272728,
+            "gt4": 0.022727272727272728
+          },
+          "candidateTargetOvershoot": {
+            "p95": 0.07862753203926331,
+            "p99": 1.116849999994045,
+            "max": 1.116849999994045,
+            "gt0p5": 0.022727272727272728,
+            "gt1": 0.022727272727272728,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "currentSignedMean": -0.4599772276287082,
+          "currentLeadRate": 0.3181818181818182,
+          "currentLagRate": 0.4772727272727273
+        },
+        "oneFrameStop": {
+          "count": 406,
+          "visualError": {
+            "mean": 1.4596684955952326,
+            "p95": 5.7463371577033815,
+            "p99": 18.381143472869173,
+            "max": 24.250295475569494
+          },
+          "currentDistance": {
+            "mean": 0.7599934889291727,
+            "p95": 2.75,
+            "p99": 3.528898553373276,
+            "max": 3.8078865529319543
+          },
+          "currentOvershoot": {
+            "p95": 0.22164621154136366,
+            "p99": 0.7509276082855694,
+            "max": 2.3826254548438177,
+            "gt0p5": 0.017241379310344827,
+            "gt1": 0.0024630541871921183,
+            "gt2": 0.0024630541871921183,
+            "gt4": 0
+          },
+          "offset0Overshoot": {
+            "p95": 0.12218002137213048,
+            "p99": 0.875,
+            "max": 1.3895236536387499,
+            "gt0p5": 0.019704433497536946,
+            "gt1": 0.007389162561576354,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "candidateTargetOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 1.116849999994045,
+            "gt0p5": 0.0049261083743842365,
+            "gt1": 0.0024630541871921183,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "currentSignedMean": -0.5824808825351102,
+          "currentLeadRate": 0.15270935960591134,
+          "currentLagRate": 0.5270935960591133
+        },
+        "postStopFirstFrames": {
+          "count": 271,
+          "visualError": {
+            "mean": 1.4678011942444154,
+            "p95": 3.095083627865819,
+            "p99": 3.8078865529319543,
+            "max": 3.972562145517676
+          },
+          "currentDistance": {
+            "mean": 1.4580004013869954,
+            "p95": 3.0644126680328156,
+            "p99": 3.8078865529319543,
+            "max": 3.972562145517676
+          },
+          "currentOvershoot": {
+            "p95": 2.4605698428183507,
+            "p99": 3.3618430403123005,
+            "max": 3.3628381622396226,
+            "gt0p5": 0.3985239852398524,
+            "gt1": 0.2988929889298893,
+            "gt2": 0.12915129151291513,
+            "gt4": 0
+          },
+          "offset0Overshoot": {
+            "p95": 0,
+            "p99": 1.2931732223887593,
+            "max": 3.2450565398908138,
+            "gt0p5": 0.014760147601476014,
+            "gt1": 0.01107011070110701,
+            "gt2": 0.0036900369003690036,
+            "gt4": 0
+          },
+          "candidateTargetOvershoot": {
+            "p95": 0,
+            "p99": 0.3795786024207928,
+            "max": 1.2931732223887593,
+            "gt0p5": 0.007380073800738007,
+            "gt1": 0.0036900369003690036,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "currentSignedMean": 0.18418446767847188,
+          "currentLeadRate": 0.5129151291512916,
+          "currentLagRate": 0.3874538745387454
+        },
+        "normalMove": {
+          "count": 3444,
+          "visualError": {
+            "mean": 1.0112987028325264,
+            "p95": 2.918154382482188,
+            "p99": 6.665026975826991,
+            "max": 35.14428190110831
+          },
+          "currentDistance": {
+            "mean": 0.7393418087082252,
+            "p95": 2.2534695471649933,
+            "p99": 3.1868871959954905,
+            "max": 4.317479009792636
+          },
+          "currentOvershoot": {
+            "p95": 1.2413793103448276,
+            "p99": 3.043692247912065,
+            "max": 4.046355884559813,
+            "gt0p5": 0.10220673635307782,
+            "gt1": 0.060685249709639955,
+            "gt2": 0.02932636469221835,
+            "gt4": 0.00029036004645760743
+          },
+          "offset0Overshoot": {
+            "p95": 0.24514516892273147,
+            "p99": 1.844756081437319,
+            "max": 22.351100933182384,
+            "gt0p5": 0.028164924506387922,
+            "gt1": 0.017711962833914054,
+            "gt2": 0.009001161440185831,
+            "gt4": 0.004355400696864111
+          },
+          "candidateTargetOvershoot": {
+            "p95": 0,
+            "p99": 0.38830000001189546,
+            "max": 2.7475000000000023,
+            "gt0p5": 0.008130081300813009,
+            "gt1": 0.003484320557491289,
+            "gt2": 0.0005807200929152149,
+            "gt4": 0
+          },
+          "currentSignedMean": -0.21866891547516393,
+          "currentLeadRate": 0.3623693379790941,
+          "currentLagRate": 0.5031939605110337
+        },
+        "highSpeed": {
+          "count": 13,
+          "visualError": {
+            "mean": 1.0469541574574568,
+            "p95": 3.528898553373276,
+            "p99": 3.528898553373276,
+            "max": 3.528898553373276
+          },
+          "currentDistance": {
+            "mean": 1.019950457120121,
+            "p95": 3.528898553373276,
+            "p99": 3.528898553373276,
+            "max": 3.528898553373276
+          },
+          "currentOvershoot": {
+            "p95": 0.4415727271502737,
+            "p99": 0.4415727271502737,
+            "max": 0.4415727271502737,
+            "gt0p5": 0,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "offset0Overshoot": {
+            "p95": 1.116849999994045,
+            "p99": 1.116849999994045,
+            "max": 1.116849999994045,
+            "gt0p5": 0.15384615384615385,
+            "gt1": 0.07692307692307693,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "candidateTargetOvershoot": {
+            "p95": 1.116849999994045,
+            "p99": 1.116849999994045,
+            "max": 1.116849999994045,
+            "gt0p5": 0.07692307692307693,
+            "gt1": 0.07692307692307693,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "currentSignedMean": -0.6014969808241187,
+          "currentLeadRate": 0.15384615384615385,
+          "currentLagRate": 0.7692307692307693
+        },
+        "staticHold": {
+          "count": 64631,
+          "visualError": {
+            "mean": 0.2771821085801613,
+            "p95": 0.6992202800262777,
+            "p99": 1.3969601569290149,
+            "max": 15.127065974603271
+          },
+          "currentDistance": {
+            "mean": 0.24959425386589137,
+            "p95": 0.625,
+            "p99": 0.8385254915624212,
+            "max": 4.21678194835825
+          },
+          "currentOvershoot": {
+            "p95": 0.33541019662496846,
+            "p99": 0.4992301766027062,
+            "max": 2.88457184292247,
+            "gt0p5": 0.0092525258776748,
+            "gt1": 0.0016710247404496295,
+            "gt2": 0.00021661431820643344,
+            "gt4": 0
+          },
+          "offset0Overshoot": {
+            "p95": 0,
+            "p99": 0.25,
+            "max": 3.2412500000000364,
+            "gt0p5": 0.0007426776624220575,
+            "gt1": 0.0002475592208073525,
+            "gt2": 3.094490260091906E-05,
+            "gt4": 0
+          },
+          "candidateTargetOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 1.7218999999761309,
+            "gt0p5": 0.0002939765747087311,
+            "gt1": 7.736225650229766E-05,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "currentSignedMean": 0.02416788061757709,
+          "currentLeadRate": 0.4329810771920595,
+          "currentLagRate": 0.27076789775804183
+        }
+      },
+      "byPackage": {
+        "m070248": {
+          "all": {
+            "count": 45814,
+            "visualError": {
+              "mean": 0.370308086123429,
+              "p95": 1.0746827624814945,
+              "p99": 2.4558603380485624,
+              "max": 35.14428190110831
+            },
+            "currentDistance": {
+              "mean": 0.3180601262186758,
+              "p95": 0.875,
+              "p99": 1.956559480312316,
+              "max": 4.138236339311712
+            },
+            "currentOvershoot": {
+              "p95": 0.36380343755449945,
+              "p99": 0.900186448454922,
+              "max": 3.980720521196082,
+              "gt0p5": 0.020539573056271007,
+              "gt1": 0.009102021216222115,
+              "gt2": 0.0034269000742131227,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0.125,
+              "p99": 0.375,
+              "max": 14.681913418025347,
+              "gt0p5": 0.004409132579560833,
+              "gt1": 0.0017680185096258785,
+              "gt2": 0.0005238573361854454,
+              "gt4": 0.00017461911206181517
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 3.016338546226941,
+              "gt0p5": 0.0013969528964945213,
+              "gt1": 0.0005456847251931724,
+              "gt2": 8.730955603090758E-05,
+              "gt4": 0
+            },
+            "currentSignedMean": -0.022899687340538735,
+            "currentLeadRate": 0.42323307285982453,
+            "currentLagRate": 0.35161740952547255
+          },
+          "fastThenNearZero": {
+            "count": 1067,
+            "visualError": {
+              "mean": 1.2982126431369163,
+              "p95": 3.502231431530475,
+              "p99": 9.82235913294298,
+              "max": 24.710442251202224
+            },
+            "currentDistance": {
+              "mean": 0.9688476860851206,
+              "p95": 2.809025631780529,
+              "p99": 3.528898553373276,
+              "max": 4.138236339311712
+            },
+            "currentOvershoot": {
+              "p95": 1.6818658438748684,
+              "p99": 2.5769764127942953,
+              "max": 3.4482770030544767,
+              "gt0p5": 0.1021555763823805,
+              "gt1": 0.08059981255857544,
+              "gt2": 0.03748828491096532,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0.21221867190679136,
+              "p99": 1.306697976032375,
+              "max": 3.765349999845057,
+              "gt0p5": 0.02999062792877226,
+              "gt1": 0.016869728209934397,
+              "gt2": 0.0037488284910965324,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0.7734428137570052,
+              "max": 2.3747390654428506,
+              "gt0p5": 0.013120899718837863,
+              "gt1": 0.008434864104967198,
+              "gt2": 0.0009372071227741331,
+              "gt4": 0
+            },
+            "currentSignedMean": -0.342591064546971,
+            "currentLeadRate": 0.3261480787253983,
+            "currentLagRate": 0.5960637300843487
+          },
+          "hardBrake": {
+            "count": 182,
+            "visualError": {
+              "mean": 1.6113467585233658,
+              "p95": 3.528898553373276,
+              "p99": 11.739581850564903,
+              "max": 14.47705463181299
+            },
+            "currentDistance": {
+              "mean": 1.3097664839112104,
+              "p95": 3.3634060117684275,
+              "p99": 3.8017265814363874,
+              "max": 3.972562145517676
+            },
+            "currentOvershoot": {
+              "p95": 2.034988766989673,
+              "p99": 3.3618682410231835,
+              "max": 3.3628381622396226,
+              "gt0p5": 0.15934065934065933,
+              "gt1": 0.12637362637362637,
+              "gt2": 0.06043956043956044,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 1.204999999999984,
+              "max": 2,
+              "gt0p5": 0.027472527472527472,
+              "gt1": 0.016483516483516484,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 1.1456544068805823,
+              "max": 1.204999999999984,
+              "gt0p5": 0.02197802197802198,
+              "gt1": 0.016483516483516484,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": -0.5009959060650593,
+            "currentLeadRate": 0.25824175824175827,
+            "currentLagRate": 0.5989010989010989
+          },
+          "stopAfterHighSpeed": {
+            "count": 31,
+            "visualError": {
+              "mean": 0.996553686914258,
+              "p95": 3.968150506830261,
+              "p99": 4.138236339311712,
+              "max": 4.138236339311712
+            },
+            "currentDistance": {
+              "mean": 0.9935697507656419,
+              "p95": 3.6443449342783127,
+              "p99": 4.138236339311712,
+              "max": 4.138236339311712
+            },
+            "currentOvershoot": {
+              "p95": 0.44131875569774287,
+              "p99": 0.4415727271502737,
+              "max": 0.4415727271502737,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0.5303300858899106,
+              "p99": 1.116849999994045,
+              "max": 1.116849999994045,
+              "gt0p5": 0.06451612903225806,
+              "gt1": 0.03225806451612903,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0.18643726683797013,
+              "p99": 1.116849999994045,
+              "max": 1.116849999994045,
+              "gt0p5": 0.03225806451612903,
+              "gt1": 0.03225806451612903,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": -0.6387326154610932,
+            "currentLeadRate": 0.2903225806451613,
+            "currentLagRate": 0.5483870967741935
+          },
+          "oneFrameStop": {
+            "count": 197,
+            "visualError": {
+              "mean": 1.7553165238095072,
+              "p95": 8.94132109972658,
+              "p99": 18.49978561201192,
+              "max": 23.898974350466666
+            },
+            "currentDistance": {
+              "mean": 0.9071131398827867,
+              "p95": 2.752839443193155,
+              "p99": 3.528898553373276,
+              "max": 3.528898553373276
+            },
+            "currentOvershoot": {
+              "p95": 0.14910058166716642,
+              "p99": 0.6097281792766113,
+              "max": 0.9081793765978281,
+              "gt0p5": 0.015228426395939087,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0.057288708795234594,
+              "p99": 0.875,
+              "max": 1.116849999994045,
+              "gt0p5": 0.015228426395939087,
+              "gt1": 0.005076142131979695,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0.1115000000000066,
+              "max": 1.116849999994045,
+              "gt0p5": 0.005076142131979695,
+              "gt1": 0.005076142131979695,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": -0.7558981304108232,
+            "currentLeadRate": 0.14213197969543148,
+            "currentLagRate": 0.5989847715736041
+          },
+          "postStopFirstFrames": {
+            "count": 144,
+            "visualError": {
+              "mean": 1.59699039798816,
+              "p95": 3.3634060117684275,
+              "p99": 3.952847075210474,
+              "max": 3.972562145517676
+            },
+            "currentDistance": {
+              "mean": 1.5952515565500396,
+              "p95": 3.3634060117684275,
+              "p99": 3.952847075210474,
+              "max": 3.972562145517676
+            },
+            "currentOvershoot": {
+              "p95": 2.5769764127942953,
+              "p99": 3.3618682410231835,
+              "max": 3.3628381622396226,
+              "gt0p5": 0.4791666666666667,
+              "gt1": 0.3958333333333333,
+              "gt2": 0.18055555555555555,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 1.625,
+              "max": 3.2450565398908138,
+              "gt0p5": 0.020833333333333332,
+              "gt1": 0.013888888888888888,
+              "gt2": 0.006944444444444444,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0.516450000003033,
+              "gt0p5": 0.006944444444444444,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0.35121293530485226,
+            "currentLeadRate": 0.5625,
+            "currentLagRate": 0.3541666666666667
+          },
+          "normalMove": {
+            "count": 1829,
+            "visualError": {
+              "mean": 0.9964487745059661,
+              "p95": 2.885849095153799,
+              "p99": 5.175076586788863,
+              "max": 35.14428190110831
+            },
+            "currentDistance": {
+              "mean": 0.7611312103307041,
+              "p95": 2.25,
+              "p99": 3.2427804427682116,
+              "max": 4.031128874149275
+            },
+            "currentOvershoot": {
+              "p95": 1.176388784288817,
+              "p99": 3.1004834756301216,
+              "max": 3.980720521196082,
+              "gt0p5": 0.09732094040459267,
+              "gt1": 0.0541279387643521,
+              "gt2": 0.026790595954073265,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0.28119999998807543,
+              "p99": 1.5026019100214136,
+              "max": 14.681913418025347,
+              "gt0p5": 0.02952433023510115,
+              "gt1": 0.01530891197375615,
+              "gt2": 0.007107709130672498,
+              "gt4": 0.0032804811372334607
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0.38830000001189546,
+              "max": 2.7475000000000023,
+              "gt0p5": 0.008747949699289229,
+              "gt1": 0.0038272279934390375,
+              "gt2": 0.0010934937124111536,
+              "gt4": 0
+            },
+            "currentSignedMean": -0.2380371797377156,
+            "currentLeadRate": 0.37124111536358667,
+            "currentLagRate": 0.537452159650082
+          },
+          "highSpeed": {
+            "count": 10,
+            "visualError": {
+              "mean": 1.0825830666415304,
+              "p95": 3.528898553373276,
+              "p99": 3.528898553373276,
+              "max": 3.528898553373276
+            },
+            "currentDistance": {
+              "mean": 1.1068748457985442,
+              "p95": 3.528898553373276,
+              "p99": 3.528898553373276,
+              "max": 3.528898553373276
+            },
+            "currentOvershoot": {
+              "p95": 0.4415727271502737,
+              "p99": 0.4415727271502737,
+              "max": 0.4415727271502737,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 1.116849999994045,
+              "p99": 1.116849999994045,
+              "max": 1.116849999994045,
+              "gt0p5": 0.2,
+              "gt1": 0.1,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 1.116849999994045,
+              "p99": 1.116849999994045,
+              "max": 1.116849999994045,
+              "gt0p5": 0.1,
+              "gt1": 0.1,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": -0.6899221003556919,
+            "currentLeadRate": 0.1,
+            "currentLagRate": 0.8
+          },
+          "staticHold": {
+            "count": 32429,
+            "visualError": {
+              "mean": 0.2749309607897286,
+              "p95": 0.625,
+              "p99": 1.2680984277822454,
+              "max": 15.127065974603271
+            },
+            "currentDistance": {
+              "mean": 0.24985301003002425,
+              "p95": 0.625,
+              "p99": 0.75,
+              "max": 3.5794552658190883
+            },
+            "currentOvershoot": {
+              "p95": 0.33348648442495776,
+              "p99": 0.49116942763063354,
+              "max": 2.571478174124758,
+              "gt0p5": 0.00869592031823368,
+              "gt1": 0.0015418298436584538,
+              "gt2": 0.0001541829843658454,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0.25,
+              "max": 2.125,
+              "gt0p5": 0.000801751518702396,
+              "gt1": 0.00033920256560485986,
+              "gt2": 3.0836596873169075E-05,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 1.5801500000004582,
+              "gt0p5": 0.0002466927749853526,
+              "gt1": 9.250979061950723E-05,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0.020336701393916183,
+            "currentLeadRate": 0.43581362360849857,
+            "currentLagRate": 0.30161275401646676
+          }
+        },
+        "m070307": {
+          "all": {
+            "count": 44708,
+            "visualError": {
+              "mean": 0.35519803494271296,
+              "p95": 1.0878371182335926,
+              "p99": 2.404423007708918,
+              "max": 25.063257633141657
+            },
+            "currentDistance": {
+              "mean": 0.2934262934264999,
+              "p95": 0.7905694150420949,
+              "p99": 1.8582585934148133,
+              "max": 4.317479009792636
+            },
+            "currentOvershoot": {
+              "p95": 0.3535533905932738,
+              "p99": 0.7510409442899901,
+              "max": 4.046355884559813,
+              "gt0p5": 0.01849780799856849,
+              "gt1": 0.007157555694730249,
+              "gt2": 0.0026840833855238436,
+              "gt4": 2.236736154603203E-05
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0.35355339059327373,
+              "max": 22.351100933182384,
+              "gt0p5": 0.003802451462825445,
+              "gt1": 0.0019459604545047867,
+              "gt2": 0.0008275923772031851,
+              "gt4": 0.00040261250782857655
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 2.274791001450012,
+              "gt0p5": 0.0010512659926635054,
+              "gt1": 0.00031314306164444844,
+              "gt2": 2.236736154603203E-05,
+              "gt4": 0
+            },
+            "currentSignedMean": -0.0023440875486288736,
+            "currentLeadRate": 0.42064060123467834,
+            "currentLagRate": 0.2806656526796099
+          },
+          "fastThenNearZero": {
+            "count": 859,
+            "visualError": {
+              "mean": 1.1114988799504448,
+              "p95": 2.9757202556575186,
+              "p99": 8.086343225616114,
+              "max": 24.250295475569494
+            },
+            "currentDistance": {
+              "mean": 0.7939547737279373,
+              "p95": 2.75,
+              "p99": 3.3541019662496847,
+              "max": 3.8078865529319543
+            },
+            "currentOvershoot": {
+              "p95": 0.9201427301737328,
+              "p99": 2.290880955761543,
+              "max": 3.1386479949911705,
+              "gt0p5": 0.08498253783469151,
+              "gt1": 0.04307334109429569,
+              "gt2": 0.018626309662398137,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 3.0110000000148887,
+              "max": 20.189000000357737,
+              "gt0p5": 0.02910360884749709,
+              "gt1": 0.020954598370197905,
+              "gt2": 0.013969732246798603,
+              "gt4": 0.008149010477299184
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0.5293999999762491,
+              "max": 2.274791001450012,
+              "gt0p5": 0.010477299185098952,
+              "gt1": 0.004656577415599534,
+              "gt2": 0.0011641443538998836,
+              "gt4": 0
+            },
+            "currentSignedMean": -0.3136282688895503,
+            "currentLeadRate": 0.2991850989522701,
+            "currentLagRate": 0.5203725261932479
+          },
+          "hardBrake": {
+            "count": 152,
+            "visualError": {
+              "mean": 1.1169226507183139,
+              "p95": 2.823042457917612,
+              "p99": 8.214954169074847,
+              "max": 21.777932987067615
+            },
+            "currentDistance": {
+              "mean": 0.8672197240097146,
+              "p95": 2.62797450520358,
+              "p99": 3.760402239122831,
+              "max": 3.8078865529319543
+            },
+            "currentOvershoot": {
+              "p95": 1.136703425796642,
+              "p99": 1.7858565547786243,
+              "max": 2.3826254548438177,
+              "gt0p5": 0.09210526315789473,
+              "gt1": 0.05263157894736842,
+              "gt2": 0.006578947368421052,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 1.1373839463344426,
+              "max": 1.25,
+              "gt0p5": 0.013157894736842105,
+              "gt1": 0.013157894736842105,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0.233084937852027,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": -0.38841831569682633,
+            "currentLeadRate": 0.21052631578947367,
+            "currentLagRate": 0.5394736842105263
+          },
+          "stopAfterHighSpeed": {
+            "count": 13,
+            "visualError": {
+              "mean": 2.525359509823337,
+              "p95": 21.777932987067615,
+              "p99": 21.777932987067615,
+              "max": 21.777932987067615
+            },
+            "currentDistance": {
+              "mean": 0.5463110278932276,
+              "p95": 1.7897276329095442,
+              "p99": 1.7897276329095442,
+              "max": 1.7897276329095442
+            },
+            "currentOvershoot": {
+              "p95": 1.7858565547786243,
+              "p99": 1.7858565547786243,
+              "max": 1.7858565547786243,
+              "gt0p5": 0.07692307692307693,
+              "gt1": 0.07692307692307693,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 4.202400000572197,
+              "p99": 4.202400000572197,
+              "max": 4.202400000572197,
+              "gt0p5": 0.07692307692307693,
+              "gt1": 0.07692307692307693,
+              "gt2": 0.07692307692307693,
+              "gt4": 0.07692307692307693
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": -0.033714379720713325,
+            "currentLeadRate": 0.38461538461538464,
+            "currentLagRate": 0.3076923076923077
+          },
+          "oneFrameStop": {
+            "count": 209,
+            "visualError": {
+              "mean": 1.180995473785605,
+              "p95": 3.9516110941049627,
+              "p99": 9.205399685056383,
+              "max": 24.250295475569494
+            },
+            "currentDistance": {
+              "mean": 0.6213208992743309,
+              "p95": 2.5310570914145734,
+              "p99": 2.885849095153799,
+              "max": 3.8078865529319543
+            },
+            "currentOvershoot": {
+              "p95": 0.2679973145325227,
+              "p99": 0.8380875398698961,
+              "max": 2.3826254548438177,
+              "gt0p5": 0.019138755980861243,
+              "gt1": 0.004784688995215311,
+              "gt2": 0.004784688995215311,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0.125,
+              "p99": 0.875,
+              "max": 1.3895236536387499,
+              "gt0p5": 0.023923444976076555,
+              "gt1": 0.009569377990430622,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0.5293999999762491,
+              "gt0p5": 0.004784688995215311,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": -0.41902060582929473,
+            "currentLeadRate": 0.16267942583732056,
+            "currentLagRate": 0.45933014354066987
+          },
+          "postStopFirstFrames": {
+            "count": 127,
+            "visualError": {
+              "mean": 1.3213189474798561,
+              "p95": 2.850438562747845,
+              "p99": 3.599045012221992,
+              "max": 3.8078865529319543
+            },
+            "currentDistance": {
+              "mean": 1.302377044351734,
+              "p95": 2.7950849718747373,
+              "p99": 3.599045012221992,
+              "max": 3.8078865529319543
+            },
+            "currentOvershoot": {
+              "p95": 2.2141300543369207,
+              "p99": 2.4846355248110457,
+              "max": 3.1386479949911705,
+              "gt0p5": 0.30708661417322836,
+              "gt1": 0.1889763779527559,
+              "gt2": 0.07086614173228346,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0.37957860242079283,
+              "max": 1.2931732223887593,
+              "gt0p5": 0.007874015748031496,
+              "gt1": 0.007874015748031496,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0.3795786024207928,
+              "max": 1.2931732223887593,
+              "gt0p5": 0.007874015748031496,
+              "gt1": 0.007874015748031496,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": -0.005202141283723385,
+            "currentLeadRate": 0.4566929133858268,
+            "currentLagRate": 0.4251968503937008
+          },
+          "normalMove": {
+            "count": 1615,
+            "visualError": {
+              "mean": 1.0281163615998843,
+              "p95": 2.942150573984955,
+              "p99": 8.882151534546908,
+              "max": 25.063257633141657
+            },
+            "currentDistance": {
+              "mean": 0.7146651427221546,
+              "p95": 2.2534695471649933,
+              "p99": 3.125,
+              "max": 4.317479009792636
+            },
+            "currentOvershoot": {
+              "p95": 1.3224592190571434,
+              "p99": 2.998470558146835,
+              "max": 4.046355884559813,
+              "gt0p5": 0.10773993808049535,
+              "gt1": 0.06811145510835913,
+              "gt2": 0.03219814241486068,
+              "gt4": 0.0006191950464396285
+            },
+            "offset0Overshoot": {
+              "p95": 0.15019999999924494,
+              "p99": 2.209248744994263,
+              "max": 22.351100933182384,
+              "gt0p5": 0.026625386996904025,
+              "gt1": 0.02043343653250774,
+              "gt2": 0.011145510835913313,
+              "gt4": 0.005572755417956657
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0.379654004286121,
+              "max": 1.8479075188390652,
+              "gt0p5": 0.007430340557275541,
+              "gt1": 0.0030959752321981426,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": -0.19673420628865712,
+            "currentLeadRate": 0.3523219814241486,
+            "currentLagRate": 0.46439628482972134
+          },
+          "highSpeed": {
+            "count": 3,
+            "visualError": {
+              "mean": 0.928191126843878,
+              "p95": 2.019185177329426,
+              "p99": 2.019185177329426,
+              "max": 2.019185177329426
+            },
+            "currentDistance": {
+              "mean": 0.7302024948587099,
+              "p95": 1.4252192813739224,
+              "p99": 1.4252192813739224,
+              "max": 1.4252192813739224
+            },
+            "currentOvershoot": {
+              "p95": 0.034885660744839044,
+              "p99": 0.034885660744839044,
+              "max": 0.034885660744839044,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0.07053495945568661,
+              "p99": 0.07053495945568661,
+              "max": 0.07053495945568661,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": -0.30674658238554126,
+            "currentLeadRate": 0.3333333333333333,
+            "currentLagRate": 0.6666666666666666
+          },
+          "staticHold": {
+            "count": 32202,
+            "visualError": {
+              "mean": 0.27944912527757837,
+              "p95": 0.7288689868556626,
+              "p99": 1.525800000011941,
+              "max": 13.055235860070896
+            },
+            "currentDistance": {
+              "mean": 0.2493336736642362,
+              "p95": 0.625,
+              "p99": 0.9013878188659973,
+              "max": 4.21678194835825
+            },
+            "currentOvershoot": {
+              "p95": 0.34256260439667735,
+              "p99": 0.5,
+              "max": 2.88457184292247,
+              "gt0p5": 0.009813055089745979,
+              "gt1": 0.001801130364573629,
+              "gt2": 0.00027948574622694243,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0.25,
+              "max": 3.2412500000000364,
+              "gt0p5": 0.0006831873796658592,
+              "gt1": 0.00015526985901496802,
+              "gt2": 3.10539718029936E-05,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 1.7218999999761309,
+              "gt0p5": 0.0003415936898329296,
+              "gt1": 6.21079436059872E-05,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0.02802606678750669,
+            "currentLeadRate": 0.4301285634432644,
+            "currentLagRate": 0.2397056083473076
+          }
+        }
+      },
+      "acuteTailExamples": [
+        {
+          "PackageId": "m070248",
+          "elapsedMs": 428089.804,
+          "slice": "fastThenNearZero",
+          "currentOvershoot": 3.4483,
+          "currentDistance": 3.4483,
+          "visualError": 3.4483,
+          "speeds": {
+            "v2": 422.8,
+            "v5": 106.8,
+            "v12": 625.5,
+            "target": 0
+          },
+          "accelDrop": 202.7,
+          "path": {
+            "net": 114.586,
+            "efficiency": 1
+          },
+          "predictedDxDy": [
+            -2.375,
+            -2.5
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070248",
+          "elapsedMs": 428073.08,
+          "slice": "hardBrake",
+          "currentOvershoot": 3.3628,
+          "currentDistance": 3.3634,
+          "visualError": 3.3634,
+          "speeds": {
+            "v2": 0,
+            "v5": 0,
+            "v12": 1015,
+            "target": 0
+          },
+          "accelDrop": 1015,
+          "path": {
+            "net": 186.078,
+            "efficiency": 1
+          },
+          "predictedDxDy": [
+            -2.25,
+            -2.5
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070248",
+          "elapsedMs": 428056.431,
+          "slice": "hardBrake",
+          "currentOvershoot": 3.3619,
+          "currentDistance": 3.3634,
+          "visualError": 3.3634,
+          "speeds": {
+            "v2": 0,
+            "v5": 0,
+            "v12": 1382,
+            "target": 0
+          },
+          "accelDrop": 1382,
+          "path": {
+            "net": 253.207,
+            "efficiency": 1
+          },
+          "predictedDxDy": [
+            -2.25,
+            -2.5
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070248",
+          "elapsedMs": 428039.755,
+          "slice": "hardBrake",
+          "currentOvershoot": 3.3618,
+          "currentDistance": 3.3634,
+          "visualError": 3.3634,
+          "speeds": {
+            "v2": 0,
+            "v5": 0,
+            "v12": 1399.5,
+            "target": 0
+          },
+          "accelDrop": 1399.5,
+          "path": {
+            "net": 256.035,
+            "efficiency": 1
+          },
+          "predictedDxDy": [
+            -2.25,
+            -2.5
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070248",
+          "elapsedMs": 283954.002,
+          "slice": "postStopFirstFrames",
+          "currentOvershoot": 3.1623,
+          "currentDistance": 3.9528,
+          "visualError": 3.9528,
+          "speeds": {
+            "v2": 0,
+            "v5": 60,
+            "v12": 793.3,
+            "target": 0
+          },
+          "accelDrop": 793.3,
+          "path": {
+            "net": 145.465,
+            "efficiency": 0.971
+          },
+          "predictedDxDy": [
+            -3.25,
+            -2.25
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070307",
+          "elapsedMs": 564169.874,
+          "slice": "postStopFirstFrames",
+          "currentOvershoot": 3.1386,
+          "currentDistance": 3.4573,
+          "visualError": 3.4573,
+          "speeds": {
+            "v2": 0,
+            "v5": 43.8,
+            "v12": 770.5,
+            "target": 0
+          },
+          "accelDrop": 770.5,
+          "path": {
+            "net": 141.223,
+            "efficiency": 0.932
+          },
+          "predictedDxDy": [
+            3.375,
+            0.75
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070248",
+          "elapsedMs": 283970.637,
+          "slice": "postStopFirstFrames",
+          "currentOvershoot": 3.0476,
+          "currentDistance": 3.6336,
+          "visualError": 3.6336,
+          "speeds": {
+            "v2": 0,
+            "v5": 0,
+            "v12": 705.2,
+            "target": 0
+          },
+          "accelDrop": 705.2,
+          "path": {
+            "net": 129.12,
+            "efficiency": 0.974
+          },
+          "predictedDxDy": [
+            -2.75,
+            -2.375
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070248",
+          "elapsedMs": 587092.589,
+          "slice": "fastThenNearZero",
+          "currentOvershoot": 2.9702,
+          "currentDistance": 3.0052,
+          "visualError": 3.0052,
+          "speeds": {
+            "v2": 4388.1,
+            "v5": 1499.2,
+            "v12": 629.1,
+            "target": 0
+          },
+          "accelDrop": -3759,
+          "path": {
+            "net": 115.395,
+            "efficiency": 0.999
+          },
+          "predictedDxDy": [
+            -2.875,
+            -0.875
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070307",
+          "elapsedMs": 108098.344,
+          "slice": "fastThenNearZero",
+          "currentOvershoot": 2.7304,
+          "currentDistance": 3.0104,
+          "visualError": 3.0104,
+          "speeds": {
+            "v2": 268.5,
+            "v5": 215.5,
+            "v12": 630.3,
+            "target": 0
+          },
+          "accelDrop": 361.8,
+          "path": {
+            "net": 115.551,
+            "efficiency": 0.848
+          },
+          "predictedDxDy": [
+            -2.25,
+            -2
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            -2,
+            0
+          ],
+          "offset0Overshoot": 2.25,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070248",
+          "elapsedMs": 587309.125,
+          "slice": "postStopFirstFrames",
+          "currentOvershoot": 2.6746,
+          "currentDistance": 2.8284,
+          "visualError": 2.8284,
+          "speeds": {
+            "v2": 0,
+            "v5": 0,
+            "v12": 510.6,
+            "target": 0
+          },
+          "accelDrop": 510.6,
+          "path": {
+            "net": 93.472,
+            "efficiency": 1
+          },
+          "predictedDxDy": [
+            -2,
+            -2
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070248",
+          "elapsedMs": 564108.735,
+          "slice": "hardBrake",
+          "currentOvershoot": 2.6702,
+          "currentDistance": 3.2716,
+          "visualError": 3.2716,
+          "speeds": {
+            "v2": 141,
+            "v5": 75,
+            "v12": 850.3,
+            "target": 0
+          },
+          "accelDrop": 709.3,
+          "path": {
+            "net": 155.795,
+            "efficiency": 0.936
+          },
+          "predictedDxDy": [
+            3.25,
+            -0.375
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070248",
+          "elapsedMs": 324104.971,
+          "slice": "fastThenNearZero",
+          "currentOvershoot": 2.6368,
+          "currentDistance": 3.9151,
+          "visualError": 3.9151,
+          "speeds": {
+            "v2": 119.4,
+            "v5": 66.8,
+            "v12": 572.1,
+            "target": 0
+          },
+          "accelDrop": 452.7,
+          "path": {
+            "net": 104.957,
+            "efficiency": 0.914
+          },
+          "predictedDxDy": [
+            3.75,
+            1.125
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            1
+          ],
+          "offset0Overshoot": 1.125,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070248",
+          "elapsedMs": 312237.768,
+          "slice": "postStopFirstFrames",
+          "currentOvershoot": 2.577,
+          "currentDistance": 2.9817,
+          "visualError": 2.9817,
+          "speeds": {
+            "v2": 0,
+            "v5": 0,
+            "v12": 775.6,
+            "target": 0
+          },
+          "accelDrop": 775.6,
+          "path": {
+            "net": 142.172,
+            "efficiency": 0.99
+          },
+          "predictedDxDy": [
+            -1.625,
+            -2.5
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070248",
+          "elapsedMs": 427806.74,
+          "slice": "fastThenNearZero",
+          "currentOvershoot": 2.5684,
+          "currentDistance": 2.6575,
+          "visualError": 3.0488,
+          "speeds": {
+            "v2": 323.1,
+            "v5": 74.6,
+            "v12": 723.2,
+            "target": 0
+          },
+          "accelDrop": 400.1,
+          "path": {
+            "net": 132.575,
+            "efficiency": 1
+          },
+          "predictedDxDy": [
+            -1.75,
+            -2
+          ],
+          "shiftedTargetDxDy": [
+            0.319,
+            0.2392
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070248",
+          "elapsedMs": 105934.399,
+          "slice": "postStopFirstFrames",
+          "currentOvershoot": 2.5595,
+          "currentDistance": 2.8777,
+          "visualError": 2.8777,
+          "speeds": {
+            "v2": 0,
+            "v5": 0,
+            "v12": 526.9,
+            "target": 0
+          },
+          "accelDrop": 526.9,
+          "path": {
+            "net": 96.649,
+            "efficiency": 0.999
+          },
+          "predictedDxDy": [
+            -1.625,
+            -2.375
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070248",
+          "elapsedMs": 456106.898,
+          "slice": "hardBrake",
+          "currentOvershoot": 2.5429,
+          "currentDistance": 3.3842,
+          "visualError": 3.3842,
+          "speeds": {
+            "v2": 0,
+            "v5": 249.8,
+            "v12": 842.3,
+            "target": 0
+          },
+          "accelDrop": 842.3,
+          "path": {
+            "net": 154.156,
+            "efficiency": 0.823
+          },
+          "predictedDxDy": [
+            3.375,
+            -0.25
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            -4,
+            2
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        }
+      ],
+      "objective": {
+        "acuteStopObjective": 7.526046083903676,
+        "sideEffectObjective": 7.072052935855464,
+        "balancedObjective": 8.940456671074768
+      }
+    },
+    "lagp0_offsetp0": {
+      "id": "lagp0_offsetp0",
+      "lagPx": 0,
+      "offsetMs": 0,
+      "rows": 90522,
+      "metrics": {
+        "all": {
+          "count": 90522,
+          "visualError": {
+            "mean": 0.6661586973735468,
+            "p95": 2.1866069605669876,
+            "p99": 5.323573357235952,
+            "max": 98.54470883528349
+          },
+          "currentDistance": {
+            "mean": 0.33818446880993325,
+            "p95": 0.7905694150420949,
+            "p99": 1.7897276329095442,
+            "max": 4.430011286667337
+          },
+          "currentOvershoot": {
+            "p95": 0.6187184335382291,
+            "p99": 1.5087746226885463,
+            "max": 4.358385449253131,
+            "gt0p5": 0.07643445792183115,
+            "gt1": 0.01843750690439893,
+            "gt2": 0.005899118446344535,
+            "gt4": 2.209407657806942E-05
+          },
+          "offset0Overshoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 2.165759167589158,
+            "gt0p5": 0.0005744459910298049,
+            "gt1": 0.00014361149775745123,
+            "gt2": 3.314111486710413E-05,
+            "gt4": 0
+          },
+          "candidateTargetOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 2.165759167589158,
+            "gt0p5": 0.0005744459910298049,
+            "gt1": 0.00014361149775745123,
+            "gt2": 3.314111486710413E-05,
+            "gt4": 0
+          },
+          "currentSignedMean": 0.11335121389694526,
+          "currentLeadRate": 0.586266321999072,
+          "currentLagRate": 0.2621683126753717
+        },
+        "fastThenNearZero": {
+          "count": 1926,
+          "visualError": {
+            "mean": 1.9108905178472935,
+            "p95": 7.075485849042453,
+            "p99": 20.982879926263696,
+            "max": 45.70045131068182
+          },
+          "currentDistance": {
+            "mean": 0.7437364283278285,
+            "p95": 2.3048861143232218,
+            "p99": 3.3634060117684275,
+            "max": 4.430011286667337
+          },
+          "currentOvershoot": {
+            "p95": 1.9264341796824123,
+            "p99": 2.9904817303626947,
+            "max": 4.358385449253131,
+            "gt0p5": 0.20145379023883697,
+            "gt1": 0.11993769470404984,
+            "gt2": 0.04776739356178609,
+            "gt4": 0.0005192107995846313
+          },
+          "offset0Overshoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 1.6138386860416176,
+            "gt0p5": 0.0020768431983385254,
+            "gt1": 0.0005192107995846313,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "candidateTargetOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 1.6138386860416176,
+            "gt0p5": 0.0020768431983385254,
+            "gt1": 0.0005192107995846313,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "currentSignedMean": 0.13607748097942304,
+          "currentLeadRate": 0.5368639667705088,
+          "currentLagRate": 0.4501557632398754
+        },
+        "hardBrake": {
+          "count": 334,
+          "visualError": {
+            "mean": 3.1113392321383433,
+            "p95": 17.61671377694401,
+            "p99": 35.15577416320561,
+            "max": 52.15156944789142
+          },
+          "currentDistance": {
+            "mean": 0.9622593676623612,
+            "p95": 2.75,
+            "p99": 3.400367627183861,
+            "max": 3.8078865529319543
+          },
+          "currentOvershoot": {
+            "p95": 2.301703633946098,
+            "p99": 3.3618430403123005,
+            "max": 3.7498880480203924,
+            "gt0p5": 0.26047904191616766,
+            "gt1": 0.15868263473053892,
+            "gt2": 0.0718562874251497,
+            "gt4": 0
+          },
+          "offset0Overshoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 0.9156499999761536,
+            "gt0p5": 0.0029940119760479044,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "candidateTargetOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 0.9156499999761536,
+            "gt0p5": 0.0029940119760479044,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "currentSignedMean": 0.09190292899838347,
+          "currentLeadRate": 0.46706586826347307,
+          "currentLagRate": 0.5209580838323353
+        },
+        "stopAfterHighSpeed": {
+          "count": 44,
+          "visualError": {
+            "mean": 1.743436577553422,
+            "p95": 3.3634060117684275,
+            "p99": 42.4665309390819,
+            "max": 42.4665309390819
+          },
+          "currentDistance": {
+            "mean": 0.7351344389607786,
+            "p95": 2.5310570914145734,
+            "p99": 3.3634060117684275,
+            "max": 3.3634060117684275
+          },
+          "currentOvershoot": {
+            "p95": 2.1225097485263107,
+            "p99": 3.359854240252728,
+            "max": 3.359854240252728,
+            "gt0p5": 0.13636363636363635,
+            "gt1": 0.09090909090909091,
+            "gt2": 0.09090909090909091,
+            "gt4": 0
+          },
+          "offset0Overshoot": {
+            "p95": 0,
+            "p99": 0.25,
+            "max": 0.25,
+            "gt0p5": 0,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "candidateTargetOvershoot": {
+            "p95": 0,
+            "p99": 0.25,
+            "max": 0.25,
+            "gt0p5": 0,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "currentSignedMean": 0.13309188532108723,
+          "currentLeadRate": 0.6363636363636364,
+          "currentLagRate": 0.3409090909090909
+        },
+        "oneFrameStop": {
+          "count": 406,
+          "visualError": {
+            "mean": 6.576660121756765,
+            "p95": 25.225545088263207,
+            "p99": 43.991062438651625,
+            "max": 98.54470883528349
+          },
+          "currentDistance": {
+            "mean": 0.6970448080273166,
+            "p95": 2.25,
+            "p99": 2.75,
+            "max": 3.8078865529319543
+          },
+          "currentOvershoot": {
+            "p95": 0.5,
+            "p99": 1.1315321951280604,
+            "max": 3.7498880480203924,
+            "gt0p5": 0.04926108374384237,
+            "gt1": 0.012315270935960592,
+            "gt2": 0.0049261083743842365,
+            "gt4": 0
+          },
+          "offset0Overshoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 0.9156499999761536,
+            "gt0p5": 0.0024630541871921183,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "candidateTargetOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 0.9156499999761536,
+            "gt0p5": 0.0024630541871921183,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "currentSignedMean": -0.36588349218772737,
+          "currentLeadRate": 0.3694581280788177,
+          "currentLagRate": 0.6206896551724138
+        },
+        "postStopFirstFrames": {
+          "count": 271,
+          "visualError": {
+            "mean": 1.6495347402262392,
+            "p95": 3.6336104634371584,
+            "p99": 5.376453291901642,
+            "max": 12.807478667428388
+          },
+          "currentDistance": {
+            "mean": 1.4711968003775497,
+            "p95": 3.2015621187164243,
+            "p99": 3.7291084725440746,
+            "max": 4.430011286667337
+          },
+          "currentOvershoot": {
+            "p95": 2.804000732130959,
+            "p99": 3.5015449886717587,
+            "max": 4.358385449253131,
+            "gt0p5": 0.6937269372693727,
+            "gt1": 0.5350553505535055,
+            "gt2": 0.22878228782287824,
+            "gt4": 0.0036900369003690036
+          },
+          "offset0Overshoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 0.875,
+            "gt0p5": 0.0036900369003690036,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "candidateTargetOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 0.875,
+            "gt0p5": 0.0036900369003690036,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "currentSignedMean": 1.0689339832688574,
+          "currentLeadRate": 0.8081180811808119,
+          "currentLagRate": 0.1918819188191882
+        },
+        "normalMove": {
+          "count": 3444,
+          "visualError": {
+            "mean": 2.1603228701152712,
+            "p95": 8.313842953219506,
+            "p99": 20.626515095866292,
+            "max": 94.01247617987397
+          },
+          "currentDistance": {
+            "mean": 0.6965968476751029,
+            "p95": 2.358495283014151,
+            "p99": 3.3587572106361008,
+            "max": 4.317479009792636
+          },
+          "currentOvershoot": {
+            "p95": 2.1929152314645863,
+            "p99": 3.28234063643908,
+            "max": 3.8748354840092647,
+            "gt0p5": 0.22415795586527293,
+            "gt1": 0.1367595818815331,
+            "gt2": 0.057200929152148666,
+            "gt4": 0
+          },
+          "offset0Overshoot": {
+            "p95": 0,
+            "p99": 0.06168301031379996,
+            "max": 2.165759167589158,
+            "gt0p5": 0.003193960511033682,
+            "gt1": 0.0008710801393728223,
+            "gt2": 0.0005807200929152149,
+            "gt4": 0
+          },
+          "candidateTargetOvershoot": {
+            "p95": 0,
+            "p99": 0.06168301031379996,
+            "max": 2.165759167589158,
+            "gt0p5": 0.003193960511033682,
+            "gt1": 0.0008710801393728223,
+            "gt2": 0.0005807200929152149,
+            "gt4": 0
+          },
+          "currentSignedMean": 0.2497545978734201,
+          "currentLeadRate": 0.6135307781649245,
+          "currentLagRate": 0.36498257839721254
+        },
+        "highSpeed": {
+          "count": 13,
+          "visualError": {
+            "mean": 1.655051660288351,
+            "p95": 10.242522733850164,
+            "p99": 10.242522733850164,
+            "max": 10.242522733850164
+          },
+          "currentDistance": {
+            "mean": 0.44675991106432716,
+            "p95": 1.346291201783626,
+            "p99": 1.346291201783626,
+            "max": 1.346291201783626
+          },
+          "currentOvershoot": {
+            "p95": 0.6178059002374788,
+            "p99": 0.6178059002374788,
+            "max": 0.6178059002374788,
+            "gt0p5": 0.07692307692307693,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "offset0Overshoot": {
+            "p95": 0.25,
+            "p99": 0.25,
+            "max": 0.25,
+            "gt0p5": 0,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "candidateTargetOvershoot": {
+            "p95": 0.25,
+            "p99": 0.25,
+            "max": 0.25,
+            "gt0p5": 0,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "currentSignedMean": 0.050162608020542024,
+          "currentLeadRate": 0.46153846153846156,
+          "currentLagRate": 0.46153846153846156
+        },
+        "staticHold": {
+          "count": 64631,
+          "visualError": {
+            "mean": 0.4269374019766329,
+            "p95": 1.625,
+            "p99": 2.4906073556464094,
+            "max": 28.054912671402132
+          },
+          "currentDistance": {
+            "mean": 0.28857953662416247,
+            "p95": 0.6373774391990981,
+            "p99": 0.9100137361600648,
+            "max": 3.627154532136727
+          },
+          "currentOvershoot": {
+            "p95": 0.5303300858899107,
+            "p99": 0.780895189700447,
+            "max": 3.518033896937322,
+            "gt0p5": 0.060915040769909175,
+            "gt1": 0.004517955779734183,
+            "gt2": 0.00046417353901378593,
+            "gt4": 0
+          },
+          "offset0Overshoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 0.375,
+            "gt0p5": 0,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "candidateTargetOvershoot": {
+            "p95": 0,
+            "p99": 0,
+            "max": 0.375,
+            "gt0p5": 0,
+            "gt1": 0,
+            "gt2": 0,
+            "gt4": 0
+          },
+          "currentSignedMean": 0.11014132120353827,
+          "currentLeadRate": 0.5824759016570995,
+          "currentLagRate": 0.21932199718401385
+        }
+      },
+      "byPackage": {
+        "m070248": {
+          "all": {
+            "count": 45814,
+            "visualError": {
+              "mean": 0.6629507358284022,
+              "p95": 2.1830311495716224,
+              "p99": 5.427073336523103,
+              "max": 96.25769968057466
+            },
+            "currentDistance": {
+              "mean": 0.3294273557435978,
+              "p95": 0.7603453162872774,
+              "p99": 1.8200274723201295,
+              "max": 4.317479009792636
+            },
+            "currentOvershoot": {
+              "p95": 0.621622951908649,
+              "p99": 1.5341473118948563,
+              "max": 4.1444038718158325,
+              "gt0p5": 0.07469332518444144,
+              "gt1": 0.01927358449382285,
+              "gt2": 0.00604618675514035,
+              "gt4": 2.1827389007726896E-05
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 2.165759167589158,
+              "gt0p5": 0.0006548216702318069,
+              "gt1": 0.00019644650106954206,
+              "gt2": 4.365477801545379E-05,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 2.165759167589158,
+              "gt0p5": 0.0006548216702318069,
+              "gt1": 0.00019644650106954206,
+              "gt2": 4.365477801545379E-05,
+              "gt4": 0
+            },
+            "currentSignedMean": 0.10881595070703844,
+            "currentLeadRate": 0.5672720129218143,
+            "currentLagRate": 0.2769240843410311
+          },
+          "fastThenNearZero": {
+            "count": 1067,
+            "visualError": {
+              "mean": 2.0407951673501885,
+              "p95": 8.31038506929733,
+              "p99": 20.982879926263696,
+              "max": 39.87519592428356
+            },
+            "currentDistance": {
+              "mean": 0.7148581140254738,
+              "p95": 2.3351927115336757,
+              "p99": 3.3634060117684275,
+              "max": 3.8099376635320428
+            },
+            "currentOvershoot": {
+              "p95": 2.002951053293631,
+              "p99": 3.02818850532796,
+              "max": 3.685322234049015,
+              "gt0p5": 0.20243673851921273,
+              "gt1": 0.1218369259606373,
+              "gt2": 0.05060918462980318,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 1.6138386860416176,
+              "gt0p5": 0.0018744142455482662,
+              "gt1": 0.0009372071227741331,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 1.6138386860416176,
+              "gt0p5": 0.0018744142455482662,
+              "gt1": 0.0009372071227741331,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0.17703229716811483,
+            "currentLeadRate": 0.5501405810684161,
+            "currentLagRate": 0.43486410496719774
+          },
+          "hardBrake": {
+            "count": 182,
+            "visualError": {
+              "mean": 3.193857936489568,
+              "p95": 15.21663269107396,
+              "p99": 39.87519592428356,
+              "max": 52.15156944789142
+            },
+            "currentDistance": {
+              "mean": 1.0715909057941047,
+              "p95": 3.005203820042827,
+              "p99": 3.400367627183861,
+              "max": 3.400367627183861
+            },
+            "currentOvershoot": {
+              "p95": 2.458727173472596,
+              "p99": 3.3618682410231835,
+              "max": 3.3628381622396226,
+              "gt0p5": 0.2967032967032967,
+              "gt1": 0.1978021978021978,
+              "gt2": 0.09340659340659341,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0.25,
+              "max": 0.9156499999761536,
+              "gt0p5": 0.005494505494505495,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0.25,
+              "max": 0.9156499999761536,
+              "gt0p5": 0.005494505494505495,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0.16588325181378377,
+            "currentLeadRate": 0.4835164835164835,
+            "currentLagRate": 0.5054945054945055
+          },
+          "stopAfterHighSpeed": {
+            "count": 31,
+            "visualError": {
+              "mean": 0.8417647030675021,
+              "p95": 3.3634060117684275,
+              "p99": 5.5,
+              "max": 5.5
+            },
+            "currentDistance": {
+              "mean": 0.7363791843511621,
+              "p95": 2.692582403567252,
+              "p99": 3.3634060117684275,
+              "max": 3.3634060117684275
+            },
+            "currentOvershoot": {
+              "p95": 2.0845795261493607,
+              "p99": 3.359854240252728,
+              "max": 3.359854240252728,
+              "gt0p5": 0.12903225806451613,
+              "gt1": 0.06451612903225806,
+              "gt2": 0.06451612903225806,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0.25,
+              "max": 0.25,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0.25,
+              "max": 0.25,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0.04855640271579304,
+            "currentLeadRate": 0.5806451612903226,
+            "currentLagRate": 0.3870967741935484
+          },
+          "oneFrameStop": {
+            "count": 197,
+            "visualError": {
+              "mean": 6.609371399650627,
+              "p95": 23.921455850386028,
+              "p99": 39.87519592428356,
+              "max": 41.40689857982604
+            },
+            "currentDistance": {
+              "mean": 0.7095399748263754,
+              "p95": 2.225561726845607,
+              "p99": 2.75,
+              "max": 2.75
+            },
+            "currentOvershoot": {
+              "p95": 0.49003392610202456,
+              "p99": 1.3577731273888323,
+              "max": 2.0845795261493607,
+              "gt0p5": 0.04060913705583756,
+              "gt1": 0.01015228426395939,
+              "gt2": 0.005076142131979695,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0.25,
+              "max": 0.9156499999761536,
+              "gt0p5": 0.005076142131979695,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0.25,
+              "max": 0.9156499999761536,
+              "gt0p5": 0.005076142131979695,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": -0.4187499361808474,
+            "currentLeadRate": 0.30456852791878175,
+            "currentLagRate": 0.6852791878172588
+          },
+          "postStopFirstFrames": {
+            "count": 144,
+            "visualError": {
+              "mean": 1.738712222715178,
+              "p95": 3.6933216756735394,
+              "p99": 7.846177413237608,
+              "max": 12.807478667428388
+            },
+            "currentDistance": {
+              "mean": 1.514698640338155,
+              "p95": 3.3634060117684275,
+              "p99": 3.6933216756735394,
+              "max": 3.8099376635320428
+            },
+            "currentOvershoot": {
+              "p95": 3.02818850532796,
+              "p99": 3.5015449886717587,
+              "max": 3.685322234049015,
+              "gt0p5": 0.7222222222222222,
+              "gt1": 0.5416666666666666,
+              "gt2": 0.2569444444444444,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0.25,
+              "max": 0.875,
+              "gt0p5": 0.006944444444444444,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0.25,
+              "max": 0.875,
+              "gt0p5": 0.006944444444444444,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 1.1567657987355155,
+            "currentLeadRate": 0.8333333333333334,
+            "currentLagRate": 0.16666666666666666
+          },
+          "normalMove": {
+            "count": 1829,
+            "visualError": {
+              "mean": 2.1688915919371463,
+              "p95": 7.852149387269705,
+              "p99": 20.00375205430215,
+              "max": 57.0866072303235
+            },
+            "currentDistance": {
+              "mean": 0.6832648142620096,
+              "p95": 2.348536778506992,
+              "p99": 3.395769426801531,
+              "max": 4.317479009792636
+            },
+            "currentOvershoot": {
+              "p95": 1.9802207044825935,
+              "p99": 3.28234063643908,
+              "max": 3.8748354840092647,
+              "gt0p5": 0.22252597047566977,
+              "gt1": 0.13395297977036633,
+              "gt2": 0.04975396391470749,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0.08429976275851142,
+              "max": 2.165759167589158,
+              "gt0p5": 0.0032804811372334607,
+              "gt1": 0.0016402405686167304,
+              "gt2": 0.0010934937124111536,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0.08429976275851142,
+              "max": 2.165759167589158,
+              "gt0p5": 0.0032804811372334607,
+              "gt1": 0.0016402405686167304,
+              "gt2": 0.0010934937124111536,
+              "gt4": 0
+            },
+            "currentSignedMean": 0.26504521418476457,
+            "currentLeadRate": 0.6216511755057409,
+            "currentLagRate": 0.3586659376708584
+          },
+          "highSpeed": {
+            "count": 10,
+            "visualError": {
+              "mean": 0.9483048085171137,
+              "p95": 5.263686107483445,
+              "p99": 5.263686107483445,
+              "max": 5.263686107483445
+            },
+            "currentDistance": {
+              "mean": 0.4251921225591951,
+              "p95": 1.346291201783626,
+              "p99": 1.346291201783626,
+              "max": 1.346291201783626
+            },
+            "currentOvershoot": {
+              "p95": 0.6178059002374788,
+              "p99": 0.6178059002374788,
+              "max": 0.6178059002374788,
+              "gt0p5": 0.1,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0.25,
+              "p99": 0.25,
+              "max": 0.25,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0.25,
+              "p99": 0.25,
+              "max": 0.25,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0.0442829600353542,
+            "currentLeadRate": 0.4,
+            "currentLagRate": 0.5
+          },
+          "staticHold": {
+            "count": 32429,
+            "visualError": {
+              "mean": 0.4149934735194873,
+              "p95": 1.3287682265918312,
+              "p99": 2.38812164681785,
+              "max": 24.413111231467404
+            },
+            "currentDistance": {
+              "mean": 0.2767833469902507,
+              "p95": 0.625,
+              "p99": 0.8838834764831844,
+              "max": 2.918154382482188
+            },
+            "currentOvershoot": {
+              "p95": 0.5151021148075838,
+              "p99": 0.7752170911825529,
+              "max": 2.912631500224078,
+              "gt0p5": 0.05482746924049462,
+              "gt1": 0.004964692096580222,
+              "gt2": 0.00043171235622436706,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0.375,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0.375,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0.0976023186996013,
+            "currentLeadRate": 0.5576181812575164,
+            "currentLagRate": 0.2375343057140214
+          }
+        },
+        "m070307": {
+          "all": {
+            "count": 44708,
+            "visualError": {
+              "mean": 0.6694460184394725,
+              "p95": 2.2125037807709753,
+              "p99": 5.075985126061738,
+              "max": 98.54470883528349
+            },
+            "currentDistance": {
+              "mean": 0.3471582179826704,
+              "p95": 0.7905694150420949,
+              "p99": 1.7677669529663689,
+              "max": 4.430011286667337
+            },
+            "currentOvershoot": {
+              "p95": 0.6149186938124422,
+              "p99": 1.491396897503261,
+              "max": 4.358385449253131,
+              "gt0p5": 0.07821866332647401,
+              "gt1": 0.017580746175181176,
+              "gt2": 0.005748411917330232,
+              "gt4": 2.236736154603203E-05
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 2.009100000001581,
+              "gt0p5": 0.0004920819540127047,
+              "gt1": 8.946944618412812E-05,
+              "gt2": 2.236736154603203E-05,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 2.009100000001581,
+              "gt0p5": 0.0004920819540127047,
+              "gt1": 8.946944618412812E-05,
+              "gt2": 2.236736154603203E-05,
+              "gt4": 0
+            },
+            "currentSignedMean": 0.11799867179670614,
+            "currentLeadRate": 0.6057305180280934,
+            "currentLagRate": 0.24704750827592378
+          },
+          "fastThenNearZero": {
+            "count": 859,
+            "visualError": {
+              "mean": 1.7495304933774614,
+              "p95": 5.075985126061738,
+              "p99": 22.203468863038673,
+              "max": 45.70045131068182
+            },
+            "currentDistance": {
+              "mean": 0.7796073961515939,
+              "p95": 2.3048861143232218,
+              "p99": 2.775450413896815,
+              "max": 4.430011286667337
+            },
+            "currentOvershoot": {
+              "p95": 1.87907747586227,
+              "p99": 2.6067936105830842,
+              "max": 4.358385449253131,
+              "gt0p5": 0.20023282887077998,
+              "gt1": 0.11757857974388825,
+              "gt2": 0.04423748544819558,
+              "gt4": 0.0011641443538998836
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0.6376181126504435,
+              "gt0p5": 0.002328288707799767,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0.6376181126504435,
+              "gt0p5": 0.002328288707799767,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0.08520578264026804,
+            "currentLeadRate": 0.5203725261932479,
+            "currentLagRate": 0.4691501746216531
+          },
+          "hardBrake": {
+            "count": 152,
+            "visualError": {
+              "mean": 3.012533941402009,
+              "p95": 20.415221037255513,
+              "p99": 31.490077802380863,
+              "max": 42.4665309390819
+            },
+            "currentDistance": {
+              "mean": 0.8313492364783001,
+              "p95": 2.378287198805056,
+              "p99": 3.1868871959954905,
+              "max": 3.8078865529319543
+            },
+            "currentOvershoot": {
+              "p95": 1.9264341796824123,
+              "p99": 2.5330000214983994,
+              "max": 3.7498880480203924,
+              "gt0p5": 0.21710526315789475,
+              "gt1": 0.1118421052631579,
+              "gt2": 0.046052631578947366,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0.0033212266799434132,
+            "currentLeadRate": 0.4473684210526316,
+            "currentLagRate": 0.5394736842105263
+          },
+          "stopAfterHighSpeed": {
+            "count": 13,
+            "visualError": {
+              "mean": 3.8935772013275387,
+              "p95": 42.4665309390819,
+              "p99": 42.4665309390819,
+              "max": 42.4665309390819
+            },
+            "currentDistance": {
+              "mean": 0.7321661999529412,
+              "p95": 2.5310570914145734,
+              "p99": 2.5310570914145734,
+              "max": 2.5310570914145734
+            },
+            "currentOvershoot": {
+              "p95": 2.301703633946098,
+              "p99": 2.301703633946098,
+              "max": 2.301703633946098,
+              "gt0p5": 0.15384615384615385,
+              "gt1": 0.15384615384615385,
+              "gt2": 0.15384615384615385,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0.334676497687558,
+            "currentLeadRate": 0.7692307692307693,
+            "currentLagRate": 0.23076923076923078
+          },
+          "oneFrameStop": {
+            "count": 209,
+            "visualError": {
+              "mean": 6.5458270033592045,
+              "p95": 27.785450329264055,
+              "p99": 47.06756871774872,
+              "max": 98.54470883528349
+            },
+            "currentDistance": {
+              "mean": 0.6852670670731799,
+              "p95": 2.2638462845343543,
+              "p99": 2.75,
+              "max": 3.8078865529319543
+            },
+            "currentOvershoot": {
+              "p95": 0.5247323476756962,
+              "p99": 1.1315321951280604,
+              "max": 3.7498880480203924,
+              "gt0p5": 0.05741626794258373,
+              "gt1": 0.014354066985645933,
+              "gt2": 0.004784688995215311,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": -0.31605244210808786,
+            "currentLeadRate": 0.430622009569378,
+            "currentLagRate": 0.5598086124401914
+          },
+          "postStopFirstFrames": {
+            "count": 127,
+            "visualError": {
+              "mean": 1.5484201144120116,
+              "p95": 3.4865814202453382,
+              "p99": 4.430011286667337,
+              "max": 4.48783076775406
+            },
+            "currentDistance": {
+              "mean": 1.421871879477337,
+              "p95": 2.6721947908039936,
+              "p99": 3.7291084725440746,
+              "max": 4.430011286667337
+            },
+            "currentOvershoot": {
+              "p95": 2.473887951195947,
+              "p99": 3.448625379748837,
+              "max": 4.358385449253131,
+              "gt0p5": 0.6614173228346457,
+              "gt1": 0.5275590551181102,
+              "gt2": 0.1968503937007874,
+              "gt4": 0.007874015748031496
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0.9693451531334341,
+            "currentLeadRate": 0.7795275590551181,
+            "currentLagRate": 0.2204724409448819
+          },
+          "normalMove": {
+            "count": 1615,
+            "visualError": {
+              "mean": 2.1506187263306282,
+              "p95": 8.798716734856914,
+              "p99": 21.127338522386108,
+              "max": 94.01247617987397
+            },
+            "currentDistance": {
+              "mean": 0.7116954787045482,
+              "p95": 2.358495283014151,
+              "p99": 3.328381738923587,
+              "max": 4.138236339311712
+            },
+            "currentOvershoot": {
+              "p95": 2.25312283286997,
+              "p99": 3.2422985673746956,
+              "max": 3.790923491371356,
+              "gt0p5": 0.2260061919504644,
+              "gt1": 0.13993808049535603,
+              "gt2": 0.06563467492260062,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0.9278926140668773,
+              "gt0p5": 0.0030959752321981426,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0.9278926140668773,
+              "gt0p5": 0.0030959752321981426,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0.23243785655239865,
+            "currentLeadRate": 0.6043343653250774,
+            "currentLagRate": 0.3721362229102167
+          },
+          "highSpeed": {
+            "count": 3,
+            "visualError": {
+              "mean": 4.010874499525809,
+              "p95": 10.242522733850164,
+              "p99": 10.242522733850164,
+              "max": 10.242522733850164
+            },
+            "currentDistance": {
+              "mean": 0.5186525394147675,
+              "p95": 0.7905694150420949,
+              "p99": 0.7905694150420949,
+              "max": 0.7905694150420949
+            },
+            "currentOvershoot": {
+              "p95": 0.31729567660425595,
+              "p99": 0.31729567660425595,
+              "max": 0.31729567660425595,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0.06976143463783477,
+            "currentLeadRate": 0.6666666666666666,
+            "currentLagRate": 0.3333333333333333
+          },
+          "staticHold": {
+            "count": 32202,
+            "visualError": {
+              "mean": 0.4389655261902817,
+              "p95": 1.8582585934148133,
+              "p99": 2.6516504294495533,
+              "max": 28.054912671402132
+            },
+            "currentDistance": {
+              "mean": 0.3004588805663129,
+              "p95": 0.6373774391990981,
+              "p99": 0.9762812094883317,
+              "max": 3.627154532136727
+            },
+            "currentOvershoot": {
+              "p95": 0.5499999999999999,
+              "p99": 0.7826237921249264,
+              "max": 3.518033896937322,
+              "gt0p5": 0.0670455251226632,
+              "gt1": 0.004068070306192162,
+              "gt2": 0.0004968635488478976,
+              "gt4": 0
+            },
+            "offset0Overshoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0.125,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "candidateTargetOvershoot": {
+              "p95": 0,
+              "p99": 0,
+              "max": 0.125,
+              "gt0p5": 0,
+              "gt1": 0,
+              "gt2": 0,
+              "gt4": 0
+            },
+            "currentSignedMean": 0.12276871429092863,
+            "currentLeadRate": 0.6075088503819639,
+            "currentLagRate": 0.2009813055089746
+          }
+        }
+      },
+      "acuteTailExamples": [
+        {
+          "PackageId": "m070307",
+          "elapsedMs": 528383.614,
+          "slice": "postStopFirstFrames",
+          "currentOvershoot": 4.3584,
+          "currentDistance": 4.43,
+          "visualError": 4.43,
+          "speeds": {
+            "v2": 0,
+            "v5": 0,
+            "v12": 522.1,
+            "target": 0
+          },
+          "accelDrop": 522.1,
+          "path": {
+            "net": 94.53,
+            "efficiency": 1
+          },
+          "predictedDxDy": [
+            4.25,
+            -1.25
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070307",
+          "elapsedMs": 695969.43,
+          "slice": "oneFrameStop",
+          "currentOvershoot": 3.7499,
+          "currentDistance": 3.8079,
+          "visualError": 3.8079,
+          "speeds": {
+            "v2": 0,
+            "v5": 874.3,
+            "v12": 876.6,
+            "target": 0
+          },
+          "accelDrop": 876.6,
+          "path": {
+            "net": 179.739,
+            "efficiency": 0.999
+          },
+          "predictedDxDy": [
+            -3.5,
+            -1.5
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070248",
+          "elapsedMs": 44816.825,
+          "slice": "postStopFirstFrames",
+          "currentOvershoot": 3.6853,
+          "currentDistance": 3.6933,
+          "visualError": 3.6933,
+          "speeds": {
+            "v2": 0,
+            "v5": 0,
+            "v12": 596.9,
+            "target": 0
+          },
+          "accelDrop": 596.9,
+          "path": {
+            "net": 109.59,
+            "efficiency": 1
+          },
+          "predictedDxDy": [
+            3.375,
+            -1.5
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070248",
+          "elapsedMs": 558575.3,
+          "slice": "postStopFirstFrames",
+          "currentOvershoot": 3.5015,
+          "currentDistance": 3.6336,
+          "visualError": 3.6336,
+          "speeds": {
+            "v2": 0,
+            "v5": 96.4,
+            "v12": 531.3,
+            "target": 0
+          },
+          "accelDrop": 531.3,
+          "path": {
+            "net": 97.35,
+            "efficiency": 0.994
+          },
+          "predictedDxDy": [
+            -2.75,
+            -2.375
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070307",
+          "elapsedMs": 528366.926,
+          "slice": "postStopFirstFrames",
+          "currentOvershoot": 3.4486,
+          "currentDistance": 3.4866,
+          "visualError": 3.4866,
+          "speeds": {
+            "v2": 0,
+            "v5": 0,
+            "v12": 516.1,
+            "target": 0
+          },
+          "accelDrop": 516.1,
+          "path": {
+            "net": 94.53,
+            "efficiency": 1
+          },
+          "predictedDxDy": [
+            3.375,
+            -0.875
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070248",
+          "elapsedMs": 428073.08,
+          "slice": "hardBrake",
+          "currentOvershoot": 3.3628,
+          "currentDistance": 3.3634,
+          "visualError": 3.3634,
+          "speeds": {
+            "v2": 0,
+            "v5": 0,
+            "v12": 1015,
+            "target": 0
+          },
+          "accelDrop": 1015,
+          "path": {
+            "net": 186.078,
+            "efficiency": 1
+          },
+          "predictedDxDy": [
+            -2.25,
+            -2.5
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070248",
+          "elapsedMs": 428089.804,
+          "slice": "fastThenNearZero",
+          "currentOvershoot": 3.3621,
+          "currentDistance": 3.3634,
+          "visualError": 3.3634,
+          "speeds": {
+            "v2": 422.8,
+            "v5": 106.8,
+            "v12": 625.5,
+            "target": 0
+          },
+          "accelDrop": 202.7,
+          "path": {
+            "net": 114.586,
+            "efficiency": 1
+          },
+          "predictedDxDy": [
+            -2.25,
+            -2.5
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070248",
+          "elapsedMs": 428056.431,
+          "slice": "hardBrake",
+          "currentOvershoot": 3.3619,
+          "currentDistance": 3.3634,
+          "visualError": 3.3634,
+          "speeds": {
+            "v2": 0,
+            "v5": 0,
+            "v12": 1382,
+            "target": 0
+          },
+          "accelDrop": 1382,
+          "path": {
+            "net": 253.207,
+            "efficiency": 1
+          },
+          "predictedDxDy": [
+            -2.25,
+            -2.5
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070248",
+          "elapsedMs": 428039.755,
+          "slice": "hardBrake",
+          "currentOvershoot": 3.3618,
+          "currentDistance": 3.3634,
+          "visualError": 3.3634,
+          "speeds": {
+            "v2": 0,
+            "v5": 0,
+            "v12": 1399.5,
+            "target": 0
+          },
+          "accelDrop": 1399.5,
+          "path": {
+            "net": 256.035,
+            "efficiency": 1
+          },
+          "predictedDxDy": [
+            -2.25,
+            -2.5
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070248",
+          "elapsedMs": 428023.577,
+          "slice": "stopAfterHighSpeed",
+          "currentOvershoot": 3.3599,
+          "currentDistance": 3.3634,
+          "visualError": 3.3634,
+          "speeds": {
+            "v2": 0,
+            "v5": 84.2,
+            "v12": 1742.6,
+            "target": 0
+          },
+          "accelDrop": 1742.6,
+          "path": {
+            "net": 320.326,
+            "efficiency": 0.999
+          },
+          "predictedDxDy": [
+            -2.25,
+            -2.5
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070248",
+          "elapsedMs": 283954.002,
+          "slice": "postStopFirstFrames",
+          "currentOvershoot": 3.2809,
+          "currentDistance": 3.8099,
+          "visualError": 3.8099,
+          "speeds": {
+            "v2": 0,
+            "v5": 60,
+            "v12": 793.3,
+            "target": 0
+          },
+          "accelDrop": 793.3,
+          "path": {
+            "net": 145.465,
+            "efficiency": 0.971
+          },
+          "predictedDxDy": [
+            -2.875,
+            -2.5
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070307",
+          "elapsedMs": 564154.042,
+          "slice": "fastThenNearZero",
+          "currentOvershoot": 3.204,
+          "currentDistance": 3.2524,
+          "visualError": 3.2524,
+          "speeds": {
+            "v2": 114.4,
+            "v5": 41.9,
+            "v12": 788.7,
+            "target": 0
+          },
+          "accelDrop": 674.3,
+          "path": {
+            "net": 143.178,
+            "efficiency": 0.932
+          },
+          "predictedDxDy": [
+            3.25,
+            -0.125
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070307",
+          "elapsedMs": 108098.344,
+          "slice": "fastThenNearZero",
+          "currentOvershoot": 3.1891,
+          "currentDistance": 3.3634,
+          "visualError": 2.5125,
+          "speeds": {
+            "v2": 268.5,
+            "v5": 215.5,
+            "v12": 630.3,
+            "target": 0
+          },
+          "accelDrop": 361.8,
+          "path": {
+            "net": 115.551,
+            "efficiency": 0.848
+          },
+          "predictedDxDy": [
+            -2.25,
+            -2.5
+          ],
+          "shiftedTargetDxDy": [
+            -2,
+            0
+          ],
+          "offset0TargetDxDy": [
+            -2,
+            0
+          ],
+          "offset0Overshoot": 0.25,
+          "candidateTargetOvershoot": 0.25
+        },
+        {
+          "PackageId": "m070248",
+          "elapsedMs": 564108.735,
+          "slice": "hardBrake",
+          "currentOvershoot": 3.0874,
+          "currentDistance": 3.4004,
+          "visualError": 3.4004,
+          "speeds": {
+            "v2": 141,
+            "v5": 75,
+            "v12": 850.3,
+            "target": 0
+          },
+          "accelDrop": 709.3,
+          "path": {
+            "net": 155.795,
+            "efficiency": 0.936
+          },
+          "predictedDxDy": [
+            3.25,
+            -1
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070307",
+          "elapsedMs": 288263.539,
+          "slice": "postStopFirstFrames",
+          "currentOvershoot": 3.0709,
+          "currentDistance": 3.7291,
+          "visualError": 3.7291,
+          "speeds": {
+            "v2": 0,
+            "v5": 0,
+            "v12": 502.5,
+            "target": 0
+          },
+          "accelDrop": 502.5,
+          "path": {
+            "net": 92.114,
+            "efficiency": 1
+          },
+          "predictedDxDy": [
+            3.625,
+            -0.875
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        },
+        {
+          "PackageId": "m070248",
+          "elapsedMs": 456056.888,
+          "slice": "hardBrake",
+          "currentOvershoot": 3.0484,
+          "currentDistance": 3.4004,
+          "visualError": 3.4004,
+          "speeds": {
+            "v2": 301,
+            "v5": 584.3,
+            "v12": 1246.5,
+            "target": 0
+          },
+          "accelDrop": 945.5,
+          "path": {
+            "net": 228.484,
+            "efficiency": 0.957
+          },
+          "predictedDxDy": [
+            3.25,
+            -1
+          ],
+          "shiftedTargetDxDy": [
+            0,
+            0
+          ],
+          "offset0TargetDxDy": [
+            0,
+            0
+          ],
+          "offset0Overshoot": 0,
+          "candidateTargetOvershoot": 0
+        }
+      ],
+      "objective": {
+        "acuteStopObjective": 9.590786355560263,
+        "sideEffectObjective": 19.19374312626877,
+        "balancedObjective": 13.429534980814019
+      }
+    }
+  }
+}
