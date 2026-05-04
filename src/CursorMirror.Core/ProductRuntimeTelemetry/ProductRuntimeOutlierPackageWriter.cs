@@ -63,7 +63,7 @@ namespace CursorMirror.ProductRuntimeTelemetry
             using (Stream stream = entry.Open())
             using (StreamWriter writer = new StreamWriter(stream, Encoding.UTF8))
             {
-                writer.WriteLine("sequence,stopwatchTicks,eventKind,threadId,loopIteration,targetVBlankTicks,plannedWakeTicks,refreshPeriodTicks,dwmReadDurationTicks,decisionDurationTicks,waitDurationTicks,tickDurationTicks,wakeLateMicroseconds,vBlankLeadMicroseconds,processedMessageCountBeforeTick,processedMessageDurationTicksBeforeTick,maxMessageDispatchTicksBeforeTick,messageWakeCount,waitReturnReason,fineSleepZeroCount,fineSpinCount,pollDurationTicks,selectTargetDurationTicks,predictDurationTicks,moveOverlayDurationTicks,applyOpacityDurationTicks,tickTotalDurationTicks,pollSampleAvailable,stalePollSample,predictionEnabled,rawX,rawY,displayX,displayY,gen0Before,gen0After,gen1Before,gen1After,gen2Before,gen2After,overlayOperation,x,y,width,height,alpha,hadBitmap,getDcTicks,createCompatibleDcTicks,getHbitmapTicks,selectObjectTicks,updateLayeredWindowTicks,cleanupTicks,totalTicks,succeeded,lastWin32Error");
+                writer.WriteLine("sequence,stopwatchTicks,eventKind,threadId,loopIteration,targetVBlankTicks,plannedWakeTicks,refreshPeriodTicks,dwmReadDurationTicks,decisionDurationTicks,waitDurationTicks,tickDurationTicks,wakeLateMicroseconds,vBlankLeadMicroseconds,processedMessageCountBeforeTick,processedMessageDurationTicksBeforeTick,maxMessageDispatchTicksBeforeTick,messageWakeCount,waitReturnReason,fineSleepZeroCount,fineSpinCount,pollDurationTicks,selectTargetDurationTicks,predictDurationTicks,moveOverlayDurationTicks,applyOpacityDurationTicks,tickTotalDurationTicks,pollSampleAvailable,stalePollSample,predictionEnabled,rawX,rawY,displayX,displayY,gen0Before,gen0After,gen1Before,gen1After,gen2Before,gen2After,overlayOperation,x,y,width,height,alpha,hadBitmap,getDcTicks,createCompatibleDcTicks,getHbitmapTicks,selectObjectTicks,updateLayeredWindowTicks,cleanupTicks,totalTicks,succeeded,lastWin32Error,mouseMoveEventsReceived,mouseMoveEventsCoalesced,mouseMovePostsQueued,mouseMoveCallbacksProcessed,latestMouseMoveAgeMicroseconds,overlayMoveSkipped");
                 for (int i = 0; i < snapshot.Events.Length; i++)
                 {
                     ProductRuntimeOutlierEvent item = snapshot.Events[i];
@@ -123,7 +123,13 @@ namespace CursorMirror.ProductRuntimeTelemetry
                         item.CleanupTicks.ToString(CultureInfo.InvariantCulture) + "," +
                         item.TotalTicks.ToString(CultureInfo.InvariantCulture) + "," +
                         item.Succeeded.ToString(CultureInfo.InvariantCulture) + "," +
-                        item.LastWin32Error.ToString(CultureInfo.InvariantCulture));
+                        item.LastWin32Error.ToString(CultureInfo.InvariantCulture) + "," +
+                        item.MouseMoveEventsReceived.ToString(CultureInfo.InvariantCulture) + "," +
+                        item.MouseMoveEventsCoalesced.ToString(CultureInfo.InvariantCulture) + "," +
+                        item.MouseMovePostsQueued.ToString(CultureInfo.InvariantCulture) + "," +
+                        item.MouseMoveCallbacksProcessed.ToString(CultureInfo.InvariantCulture) + "," +
+                        item.LatestMouseMoveAgeMicroseconds.ToString(CultureInfo.InvariantCulture) + "," +
+                        item.OverlayMoveSkipped.ToString(CultureInfo.InvariantCulture));
                 }
             }
         }

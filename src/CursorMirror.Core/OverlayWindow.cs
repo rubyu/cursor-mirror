@@ -284,28 +284,13 @@ namespace CursorMirror
             long cleanupTicks = 0;
             bool updateSucceeded = false;
             int updateError = 0;
-            IntPtr screenDc = IntPtr.Zero;
             LayerBitmapResources layerResources = null;
 
             try
             {
-                phaseStartedTicks = telemetryEnabled ? Stopwatch.GetTimestamp() : 0;
-                screenDc = GetDC(IntPtr.Zero);
-                if (telemetryEnabled)
-                {
-                    getDcTicks = Stopwatch.GetTimestamp() - phaseStartedTicks;
-                }
-
-                if (screenDc == IntPtr.Zero)
-                {
-                    updateError = Marshal.GetLastWin32Error();
-                    lastWin32Error = updateError;
-                    return false;
-                }
-
                 if (!TryEnsureLayerResources(
                     bitmap,
-                    screenDc,
+                    IntPtr.Zero,
                     telemetryEnabled,
                     out layerResources,
                     out createCompatibleDcTicks,
@@ -327,7 +312,7 @@ namespace CursorMirror
                 blend.AlphaFormat = AC_SRC_ALPHA;
 
                 phaseStartedTicks = telemetryEnabled ? Stopwatch.GetTimestamp() : 0;
-                updateSucceeded = UpdateLayeredWindow(Handle, screenDc, ref destination, ref size, layerResources.MemoryDc, ref source, 0, ref blend, ULW_ALPHA);
+                updateSucceeded = UpdateLayeredWindow(Handle, IntPtr.Zero, ref destination, ref size, layerResources.MemoryDc, ref source, 0, ref blend, ULW_ALPHA);
                 updateError = updateSucceeded ? 0 : Marshal.GetLastWin32Error();
                 lastWin32Error = updateError;
                 if (telemetryEnabled)
@@ -338,11 +323,6 @@ namespace CursorMirror
             finally
             {
                 phaseStartedTicks = telemetryEnabled ? Stopwatch.GetTimestamp() : 0;
-                if (screenDc != IntPtr.Zero)
-                {
-                    ReleaseDC(IntPtr.Zero, screenDc);
-                }
-
                 if (telemetryEnabled)
                 {
                     cleanupTicks = Stopwatch.GetTimestamp() - phaseStartedTicks;

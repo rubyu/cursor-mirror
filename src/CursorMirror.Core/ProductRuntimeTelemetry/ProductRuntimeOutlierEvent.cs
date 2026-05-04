@@ -89,5 +89,11 @@ namespace CursorMirror.ProductRuntimeTelemetry
         public long TotalTicks;
         public int Succeeded;
         public int LastWin32Error;
+        public long MouseMoveEventsReceived;
+        public long MouseMoveEventsCoalesced;
+        public long MouseMovePostsQueued;
+        public long MouseMoveCallbacksProcessed;
+        public long LatestMouseMoveAgeMicroseconds;
+        public int OverlayMoveSkipped;
     }
 }

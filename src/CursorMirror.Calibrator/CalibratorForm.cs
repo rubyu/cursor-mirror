@@ -212,7 +212,7 @@ namespace CursorMirror.Calibrator
                     }
                 }
 
-                if (!WgcDisplayCapture.IsSupported)
+                if (!_options.DisableDisplayCapture && !WgcDisplayCapture.IsSupported)
                 {
                     MessageBox.Show(this, "Windows Graphics Capture is not supported on this system.", Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -234,8 +234,11 @@ namespace CursorMirror.Calibrator
                 _activeRuntimeMode = GetSelectedRuntimeMode();
                 StartOverlayRuntime(settings, _activeRuntimeMode);
 
-                _mouseHook = new LowLevelMouseHook(HandleMouseEvent);
-                _mouseHook.SetHook();
+                if (!_options.DisableDisplayCapture)
+                {
+                    _mouseHook = new LowLevelMouseHook(HandleMouseEvent);
+                    _mouseHook.SetHook();
+                }
 
                 EnterFullScreen();
                 Refresh();
@@ -244,9 +247,12 @@ namespace CursorMirror.Calibrator
                 _running = true;
                 MoveCursorForElapsed(0);
 
-                _capture = new WgcDisplayCapture(_primaryBounds);
-                _capture.FrameCaptured += CaptureFrameCaptured;
-                _capture.Start();
+                if (!_options.DisableDisplayCapture)
+                {
+                    _capture = new WgcDisplayCapture(_primaryBounds);
+                    _capture.FrameCaptured += CaptureFrameCaptured;
+                    _capture.Start();
+                }
 
                 _timer.Start();
                 Focus();
@@ -305,7 +311,22 @@ namespace CursorMirror.Calibrator
             {
                 CalibrationMotionSample sample = _motionSuite.GetSample(elapsedMilliseconds);
                 _cursorDriver.MoveTo(new Point(sample.ExpectedX, sample.ExpectedY));
+                FeedProductRuntimeMouseMove(sample);
             }
+        }
+
+        private void FeedProductRuntimeMouseMove(CalibrationMotionSample sample)
+        {
+            if (!_options.DisableDisplayCapture || _overlayRuntime == null)
+            {
+                return;
+            }
+
+            LowLevelMouseHook.MSLLHOOKSTRUCT data = new LowLevelMouseHook.MSLLHOOKSTRUCT();
+            data.pt.x = sample.ExpectedX;
+            data.pt.y = sample.ExpectedY;
+            data.dwExtraInfo = RealCursorDriver.CalibratorInjectionExtraInfo;
+            _overlayRuntime.HandleMouseEvent(LowLevelMouseHook.MouseEvent.WM_MOUSEMOVE, data);
         }
 
         private void CaptureFrameCaptured(object sender, CalibrationFrameAnalysis e)

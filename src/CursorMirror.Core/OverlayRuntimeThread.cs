@@ -21,6 +21,7 @@ namespace CursorMirror
         private readonly CursorMirrorSettings _initialSettings;
         private readonly ManualResetEvent _ready = new ManualResetEvent(false);
         private readonly object _sync = new object();
+        private readonly object _mouseMoveSync = new object();
         private Thread _thread;
         private OverlayWindow _overlayWindow;
         private CursorMirrorController _controller;
@@ -36,6 +37,14 @@ namespace CursorMirror
         private ProductWaitReturnReason _lastWaitReturnReason = ProductWaitReturnReason.None;
         private int _lastFineSleepZeroCount;
         private int _lastFineSpinCount;
+        private bool _mouseMovePostPending;
+        private bool _hasPendingMouseMove;
+        private LowLevelMouseHook.MSLLHOOKSTRUCT _latestMouseMoveData;
+        private long _latestMouseMoveReceivedTicks;
+        private long _mouseMoveEventsReceivedSinceLastTick;
+        private long _mouseMoveEventsCoalescedSinceLastTick;
+        private long _mouseMovePostsQueuedSinceLastTick;
+        private long _mouseMoveCallbacksProcessedSinceLastTick;
 
         [DllImport("user32.dll", EntryPoint = "PeekMessageW", SetLastError = true)]
         private static extern bool PeekMessageNative(out NativeMessage message, IntPtr window, uint filterMin, uint filterMax, uint removeMessage);
@@ -97,17 +106,84 @@ namespace CursorMirror
         {
             if (mouseEvent == LowLevelMouseHook.MouseEvent.WM_MOUSEMOVE)
             {
-                Post(delegate
-                {
-                    CursorMirrorController controller = GetController();
-                    if (controller != null)
-                    {
-                        controller.HandleMouseEvent(mouseEvent, data);
-                    }
-                });
+                QueueLatestMouseMove(data);
             }
 
             return HookResult.Transfer;
+        }
+
+        private void QueueLatestMouseMove(LowLevelMouseHook.MSLLHOOKSTRUCT data)
+        {
+            long receivedTicks = Stopwatch.GetTimestamp();
+            bool shouldPost = false;
+            Interlocked.Increment(ref _mouseMoveEventsReceivedSinceLastTick);
+
+            lock (_mouseMoveSync)
+            {
+                _latestMouseMoveData = data;
+                _latestMouseMoveReceivedTicks = receivedTicks;
+                _hasPendingMouseMove = true;
+                if (_mouseMovePostPending)
+                {
+                    Interlocked.Increment(ref _mouseMoveEventsCoalescedSinceLastTick);
+                    return;
+                }
+
+                _mouseMovePostPending = true;
+                shouldPost = true;
+            }
+
+            if (shouldPost)
+            {
+                if (Post(ProcessCoalescedMouseMoves))
+                {
+                    Interlocked.Increment(ref _mouseMovePostsQueuedSinceLastTick);
+                }
+                else
+                {
+                    lock (_mouseMoveSync)
+                    {
+                        _hasPendingMouseMove = false;
+                        _mouseMovePostPending = false;
+                    }
+                }
+            }
+        }
+
+        private void ProcessCoalescedMouseMoves()
+        {
+            while (!_stopping)
+            {
+                LowLevelMouseHook.MSLLHOOKSTRUCT data;
+                lock (_mouseMoveSync)
+                {
+                    if (!_hasPendingMouseMove)
+                    {
+                        _mouseMovePostPending = false;
+                        return;
+                    }
+
+                    data = _latestMouseMoveData;
+                    _hasPendingMouseMove = false;
+                }
+
+                CursorMirrorController controller = GetController();
+                if (controller != null)
+                {
+                    controller.HandleMouseEvent(LowLevelMouseHook.MouseEvent.WM_MOUSEMOVE, data);
+                }
+
+                Interlocked.Increment(ref _mouseMoveCallbacksProcessedSinceLastTick);
+
+                lock (_mouseMoveSync)
+                {
+                    if (!_hasPendingMouseMove)
+                    {
+                        _mouseMovePostPending = false;
+                        return;
+                    }
+                }
+            }
         }
 
         public void UpdateSettings(CursorMirrorSettings settings)
@@ -693,6 +769,11 @@ namespace CursorMirror
             long processedMessageDurationTicks,
             long maxMessageDispatchTicks)
         {
+            long mouseMoveEventsReceived = Interlocked.Exchange(ref _mouseMoveEventsReceivedSinceLastTick, 0);
+            long mouseMoveEventsCoalesced = Interlocked.Exchange(ref _mouseMoveEventsCoalescedSinceLastTick, 0);
+            long mouseMovePostsQueued = Interlocked.Exchange(ref _mouseMovePostsQueuedSinceLastTick, 0);
+            long mouseMoveCallbacksProcessed = Interlocked.Exchange(ref _mouseMoveCallbacksProcessedSinceLastTick, 0);
+            long latestMouseMoveReceivedTicks = Volatile.Read(ref _latestMouseMoveReceivedTicks);
             ProductRuntimeOutlierEvent runtimeEvent = new ProductRuntimeOutlierEvent();
             runtimeEvent.EventKind = (int)ProductRuntimeOutlierEventKind.SchedulerTick;
             runtimeEvent.StopwatchTicks = tickCompletedTicks > 0 ? tickCompletedTicks : Stopwatch.GetTimestamp();
@@ -712,6 +793,10 @@ namespace CursorMirror
             runtimeEvent.FineSleepZeroCount = _lastFineSleepZeroCount;
             runtimeEvent.FineSpinCount = _lastFineSpinCount;
             runtimeEvent.TotalTicks = runtimeEvent.StopwatchTicks - loopStartedTicks;
+            runtimeEvent.MouseMoveEventsReceived = mouseMoveEventsReceived;
+            runtimeEvent.MouseMoveEventsCoalesced = mouseMoveEventsCoalesced;
+            runtimeEvent.MouseMovePostsQueued = mouseMovePostsQueued;
+            runtimeEvent.MouseMoveCallbacksProcessed = mouseMoveCallbacksProcessed;
 
             if (plannedWakeTicks > 0 && tickStartedTicks > 0)
             {
@@ -721,6 +806,11 @@ namespace CursorMirror
             if (targetVBlankTicks > 0 && tickStartedTicks > 0)
             {
                 runtimeEvent.VBlankLeadMicroseconds = ProductRuntimeOutlierRecorder.TicksToMicroseconds(targetVBlankTicks - tickStartedTicks);
+            }
+
+            if (latestMouseMoveReceivedTicks > 0 && tickStartedTicks > 0)
+            {
+                runtimeEvent.LatestMouseMoveAgeMicroseconds = ProductRuntimeOutlierRecorder.TicksToMicroseconds(tickStartedTicks - latestMouseMoveReceivedTicks);
             }
 
             recorder.Record(ref runtimeEvent);
