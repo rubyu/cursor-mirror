@@ -33,6 +33,7 @@ namespace CursorMirror.Tests
             suite.Add("COT-MLU-17", TraceRuntimeSchedulerLoopFields);
             suite.Add("COT-MLU-18", TraceRuntimeSchedulerLatencyProfileMetadata);
             suite.Add("COT-MLU-19", TraceToolWindowChromeAndLabelLayout);
+            suite.Add("COT-MLU-20", TraceDerivedTelemetryFields);
         }
 
         // Trace session starts empty [COT-MLU-1]
@@ -274,7 +275,7 @@ namespace CursorMirror.Tests
                     TestAssert.True(csv.Contains("runtimeSchedulerWaitMethod,runtimeSchedulerWaitTargetTicks"), "runtime scheduler wait header");
                     TestAssert.True(csv.Contains(",poll,,,12,22,"), "poll row values");
                     TestAssert.True(csv.Contains("true,60000,1001,166667,123456,42,"), "dwm row values");
-                    TestAssert.True(metadataJson.Contains("\"TraceFormatVersion\":8"), "metadata trace format version");
+                    TestAssert.True(metadataJson.Contains("\"TraceFormatVersion\":10"), "metadata trace format version");
                     TestAssert.True(metadataJson.Contains("\"PollSampleCount\":1"), "metadata poll sample count");
                     TestAssert.True(metadataJson.Contains("\"ReferencePollSampleCount\":1"), "metadata reference poll sample count");
                     TestAssert.True(metadataJson.Contains("\"DwmTimingSampleCount\":1"), "metadata dwm timing sample count");
@@ -614,6 +615,98 @@ namespace CursorMirror.Tests
             });
         }
 
+        // Trace derived telemetry fields [COT-MLU-20]
+        private static void TraceDerivedTelemetryFields()
+        {
+            string directory = NewTestDirectory();
+            try
+            {
+                string path = Path.Combine(directory, "trace.zip");
+                MouseTraceSession session = new MouseTraceSession();
+                long start = Stopwatch.GetTimestamp();
+                DwmTimingInfo timing = new DwmTimingInfo();
+                timing.QpcVBlank = (ulong)(start + 1000);
+                timing.QpcRefreshPeriod = (ulong)(Stopwatch.Frequency / 60);
+                session.Start(start, 8, 2, 1, true, 2, 8, 2);
+                session.AddRuntimeSchedulerPoll(
+                    start + 10,
+                    new Point(10, 20),
+                    true,
+                    timing,
+                    true,
+                    (long)timing.QpcVBlank,
+                    start + 900,
+                    start + 10,
+                    1000,
+                    start + 1,
+                    start + 2,
+                    start + 3,
+                    start + 4,
+                    start + 5);
+                session.AddRuntimeSchedulerPoll(
+                    start + 10 + (long)timing.QpcRefreshPeriod,
+                    new Point(10, 20),
+                    true,
+                    timing,
+                    true,
+                    (long)timing.QpcVBlank + (long)timing.QpcRefreshPeriod,
+                    start + 900 + (long)timing.QpcRefreshPeriod,
+                    start + 10 + (long)timing.QpcRefreshPeriod,
+                    1000,
+                    start + 1 + (long)timing.QpcRefreshPeriod,
+                    start + 2 + (long)timing.QpcRefreshPeriod,
+                    start + 3 + (long)timing.QpcRefreshPeriod,
+                    start + 4 + (long)timing.QpcRefreshPeriod,
+                    start + 5 + (long)timing.QpcRefreshPeriod);
+                session.AddRuntimeSchedulerLoop(start + 20, false, new DwmTimingInfo(), false, null, null, null, 2, start + 20, start + 21, start + 22, start + 23, false, 2, "fallback", start + 24, start + 25, start + 26);
+                session.Stop(start + 20 + (long)timing.QpcRefreshPeriod);
+
+                new MouseTracePackageWriter().Write(path, session.Snapshot());
+
+                using (FileStream stream = File.OpenRead(path))
+                using (ZipArchive archive = new ZipArchive(stream, ZipArchiveMode.Read))
+                {
+                    string csv;
+                    using (StreamReader reader = new StreamReader(archive.GetEntry("trace.csv").Open()))
+                    {
+                        csv = reader.ReadToEnd();
+                    }
+
+                    TestAssert.True(csv.Contains("warmupSample,predictionTargetTicks,presentReferenceTicks,schedulerProvenance,sampleRecordedToPredictionTargetMicroseconds,runtimeSchedulerMissing"), "derived telemetry header");
+                    TestAssert.True(csv.Contains("runtimeSchedulerDuplicateHoldRunLength"), "runtime duplicate/hold telemetry header");
+                    TestAssert.True(csv.Contains("runtimeSchedulerLastMovementAgeMicroseconds"), "runtime last movement age telemetry header");
+                    TestAssert.True(csv.Contains("runtimeSchedulerMissedCadence"), "runtime missed cadence telemetry header");
+                    TestAssert.True(csv.Contains("runtimeSchedulerReadCompletedToTargetMicroseconds"), "runtime target phase telemetry header");
+                    TestAssert.True(csv.Contains(",true," + timing.QpcVBlank.ToString() + "," + timing.QpcVBlank.ToString() + ",dwm,"), "dwm provenance row");
+                    TestAssert.True(csv.Contains(",missing,,true"), "missing scheduler row");
+
+                    string[] lines = SplitCsvLines(csv);
+                    string[] header = lines[0].Split(',');
+                    string[] firstRuntime = FindCsvRowByEvent(lines, "runtimeSchedulerPoll", 1).Split(',');
+                    string[] secondRuntime = FindCsvRowByEvent(lines, "runtimeSchedulerPoll", 2).Split(',');
+                    TestAssert.Equal("0", firstRuntime[CsvColumn(header, "runtimeSchedulerDuplicateHoldRunLength")], "first runtime hold run");
+                    TestAssert.Equal("1", secondRuntime[CsvColumn(header, "runtimeSchedulerDuplicateHoldRunLength")], "second runtime hold run");
+                    TestAssert.Equal("false", secondRuntime[CsvColumn(header, "runtimeSchedulerMissedCadence")], "second runtime missed cadence");
+                    TestAssert.Equal(
+                        MouseTraceSession.TicksToMicroseconds((long)timing.QpcRefreshPeriod).ToString(),
+                        secondRuntime[CsvColumn(header, "runtimeSchedulerLastMovementAgeMicroseconds")],
+                        "second runtime last movement age");
+
+                    string metadataJson;
+                    using (StreamReader reader = new StreamReader(archive.GetEntry("metadata.json").Open()))
+                    {
+                        metadataJson = reader.ReadToEnd();
+                    }
+
+                    TestAssert.True(metadataJson.Contains("\"WarmupDurationMilliseconds\":" + MouseTracePackageWriter.WarmupDurationMilliseconds.ToString()), "metadata warmup duration");
+                }
+            }
+            finally
+            {
+                DeleteDirectory(directory);
+            }
+        }
+
         private static T FindChild<T>(Control parent)
             where T : Control
         {
@@ -633,6 +726,43 @@ namespace CursorMirror.Tests
             }
 
             return null;
+        }
+
+        private static string[] SplitCsvLines(string csv)
+        {
+            return csv.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        private static int CsvColumn(string[] header, string columnName)
+        {
+            for (int i = 0; i < header.Length; i++)
+            {
+                if (string.Equals(header[i], columnName, StringComparison.Ordinal))
+                {
+                    return i;
+                }
+            }
+
+            throw new InvalidOperationException("Missing CSV column: " + columnName);
+        }
+
+        private static string FindCsvRowByEvent(string[] lines, string eventType, int occurrence)
+        {
+            int seen = 0;
+            for (int i = 1; i < lines.Length; i++)
+            {
+                string[] columns = lines[i].Split(',');
+                if (columns.Length > 5 && string.Equals(columns[5], eventType, StringComparison.Ordinal))
+                {
+                    seen++;
+                    if (seen == occurrence)
+                    {
+                        return lines[i];
+                    }
+                }
+            }
+
+            throw new InvalidOperationException("Missing CSV event row: " + eventType);
         }
 
         private static void RunOnStaThread(Action action)

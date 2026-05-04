@@ -137,7 +137,14 @@ namespace CursorMirror
             {
                 if (disposing && IsActivated)
                 {
-                    Unhook();
+                    try
+                    {
+                        Unhook();
+                    }
+                    catch (Win32Exception)
+                    {
+                        _hookHandle = IntPtr.Zero;
+                    }
                 }
 
                 _disposed = true;

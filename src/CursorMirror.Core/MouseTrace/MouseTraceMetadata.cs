@@ -127,6 +127,9 @@ namespace CursorMirror.MouseTrace
 
         [DataMember(Order = 41)]
         public string RuntimeSchedulerCaptureThreadProfile { get; set; }
+
+        [DataMember(Order = 42)]
+        public int WarmupDurationMilliseconds { get; set; }
     }
 
     [DataContract]

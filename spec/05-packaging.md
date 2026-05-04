@@ -16,6 +16,7 @@
 - The release package MUST include `CursorMirror.TraceTool.exe`.
 - The release package MUST include `CursorMirror.Demo.exe`.
 - The release package MUST include `CursorMirror.Calibrator.exe`.
+- The release package SHOULD include `CursorMirror.MotionLab.exe`, `CursorMirror.LoadGen.exe`, and `CursorMirror.KernelBench.exe` while predictive-model research remains active.
 
 ### 5.3 Startup and Shutdown
 - Startup MUST create the tray icon before installing the hook or immediately after successful hook installation.

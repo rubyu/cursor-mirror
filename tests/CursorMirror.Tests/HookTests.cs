@@ -14,6 +14,7 @@ namespace CursorMirror.Tests
             suite.Add("COT-MHU-4", DisposeUnhooks);
             suite.Add("COT-MHU-5", MouseMovePassThrough);
             suite.Add("COT-MHU-6", NonMovePassThrough);
+            suite.Add("COT-MHU-7", DisposeSuppressesUnhookFailure);
         }
 
         // Hook inactive and activate [COT-MHU-1]
@@ -66,6 +67,19 @@ namespace CursorMirror.Tests
 
             TestAssert.False(hook.IsActivated, "disposed hook must be inactive");
             TestAssert.Equal(1, nativeMethods.UnhookCallCount, "Dispose must unhook once");
+        }
+
+        // Dispose suppresses unhook failure [COT-MHU-7]
+        private static void DisposeSuppressesUnhookFailure()
+        {
+            FakeWindowsHookNativeMethods nativeMethods = new FakeWindowsHookNativeMethods();
+            nativeMethods.UnhookResult = false;
+            LowLevelMouseHook hook = new LowLevelMouseHook(delegate { return HookResult.Transfer; }, nativeMethods);
+            hook.SetHook();
+            hook.Dispose();
+
+            TestAssert.False(hook.IsActivated, "disposed hook must be inactive after unhook failure");
+            TestAssert.Equal(1, nativeMethods.UnhookCallCount, "Dispose must attempt unhook once");
         }
 
         // Mouse move pass-through [COT-MHU-5]

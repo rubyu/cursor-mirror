@@ -57,6 +57,11 @@ Copy-Item -LiteralPath (Join-Path $bin "CursorMirror.Core.dll") -Destination $st
 Copy-Item -LiteralPath (Join-Path $bin "CursorMirror.TraceTool.exe") -Destination $stage
 Copy-Item -LiteralPath (Join-Path $bin "CursorMirror.Demo.exe") -Destination $stage
 Copy-Item -LiteralPath (Join-Path $bin "CursorMirror.Calibrator.exe") -Destination $stage
+Copy-Item -LiteralPath (Join-Path $bin "CursorMirror.MotionLab.exe") -Destination $stage
+Copy-Item -LiteralPath (Join-Path $bin "CursorMirror.LoadGen.exe") -Destination $stage
+Copy-Item -LiteralPath (Join-Path $bin "CursorMirror.KernelBench.exe") -Destination $stage
+Get-ChildItem -Path $bin -Filter "CursorMirror.KernelBench.Native.*.dll" -ErrorAction SilentlyContinue |
+    ForEach-Object { Copy-Item -LiteralPath $_.FullName -Destination $stage }
 Copy-Item -LiteralPath (Join-Path $root "README.md") -Destination $stage
 Copy-Item -LiteralPath (Join-Path $root "CONTRIBUTING.md") -Destination $stage
 Copy-Item -LiteralPath (Join-Path $root "LICENSE") -Destination $stage

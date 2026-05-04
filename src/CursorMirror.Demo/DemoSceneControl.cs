@@ -14,7 +14,7 @@ namespace CursorMirror.Demo
         private readonly Timer _timer;
         private DemoPointerSpeed _speed;
         private DemoPointerStream _stream;
-        private DemoCursorDriver _cursorDriver;
+        private RealCursorDriver _cursorDriver;
         private DemoFreeModeController _modeController;
         private LowLevelMouseHook _mouseHook;
         private OverlayWindow _overlayWindow;
@@ -49,7 +49,7 @@ namespace CursorMirror.Demo
             StopDemo();
             _speed = speed;
             _mirrorCursorEnabled = mirrorCursorEnabled;
-            _cursorDriver = new DemoCursorDriver();
+            _cursorDriver = new RealCursorDriver(RealCursorDriver.DemoInjectionExtraInfo);
             _modeController = new DemoFreeModeController();
             if (mirrorCursorEnabled)
             {
@@ -155,7 +155,7 @@ namespace CursorMirror.Demo
                 _mirrorController.HandleMouseEvent(mouseEvent, data);
             }
 
-            bool isDemoInjected = data.dwExtraInfo == DemoCursorDriver.InjectionExtraInfo;
+            bool isDemoInjected = data.dwExtraInfo == RealCursorDriver.DemoInjectionExtraInfo;
             if (isDemoInjected)
             {
                 return HookResult.Transfer;
