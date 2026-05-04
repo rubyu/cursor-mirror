@@ -1,0 +1,128 @@
+{
+    "package":  "product-runtime-outlier-release-final-selected.zip",
+    "metadata":  {
+                     "format":  "product-runtime-outlier-v1",
+                     "capturedUtc":  "2026-05-04T15:52:57.6880770Z",
+                     "stopwatchFrequency":  10000000,
+                     "capacity":  65536,
+                     "droppedCount":  0,
+                     "lastSequence":  11541,
+                     "eventCount":  11541
+                 },
+    "counts":  {
+                   "overlay":  7937,
+                   "scheduler":  1802,
+                   "controller":  1802,
+                   "updateLayerFailures":  0
+               },
+    "scheduler":  {
+                      "wakeLateUs":  {
+                                         "count":  1802,
+                                         "min":  0,
+                                         "p50":  0,
+                                         "p95":  588,
+                                         "p99":  1575,
+                                         "max":  9072
+                                     },
+                      "vBlankLeadUs":  {
+                                           "count":  1802,
+                                           "min":  -5072,
+                                           "p50":  4000,
+                                           "p95":  4000,
+                                           "p99":  4000,
+                                           "max":  4000
+                                       },
+                      "tickDurationUs":  {
+                                             "count":  1802,
+                                             "min":  140.1,
+                                             "p50":  620.4,
+                                             "p95":  1252.6,
+                                             "p99":  1749,
+                                             "max":  11695.2
+                                         },
+                      "waitDurationUs":  {
+                                             "count":  1802,
+                                             "min":  4430.9,
+                                             "p50":  16033.8,
+                                             "p95":  16579.5,
+                                             "p99":  17581,
+                                             "max":  20854.2
+                                         },
+                      "processedMessagesBeforeTick":  {
+                                                          "count":  1802,
+                                                          "min":  0,
+                                                          "p50":  0,
+                                                          "p95":  0,
+                                                          "p99":  1,
+                                                          "max":  1
+                                                      }
+                  },
+    "controller":  {
+                       "tickTotalUs":  {
+                                           "count":  1802,
+                                           "min":  138.9,
+                                           "p50":  617.3,
+                                           "p95":  1250.7,
+                                           "p99":  1745.3,
+                                           "max":  11689.9
+                                       },
+                       "predictUs":  {
+                                         "count":  1802,
+                                         "min":  0.5,
+                                         "p50":  3.9,
+                                         "p95":  8.6,
+                                         "p99":  11.9,
+                                         "max":  1343.2
+                                     },
+                       "moveOverlayUs":  {
+                                             "count":  1802,
+                                             "min":  0,
+                                             "p50":  587.1,
+                                             "p95":  1212,
+                                             "p99":  1685.1,
+                                             "max":  3039.2
+                                         },
+                       "applyOpacityUs":  {
+                                              "count":  1802,
+                                              "min":  0.4,
+                                              "p50":  2.2,
+                                              "p95":  7,
+                                              "p99":  248.1,
+                                              "max":  9948.3
+                                          }
+                   },
+    "overlay":  {
+                    "moveUs":  {
+                                   "count":  1801,
+                                   "min":  125,
+                                   "p50":  586.6,
+                                   "p95":  1213.3,
+                                   "p99":  1684.2,
+                                   "max":  3037.8
+                               },
+                    "updateLayerUs":  {
+                                          "count":  2162,
+                                          "min":  105,
+                                          "p50":  517,
+                                          "p95":  1171.3,
+                                          "p99":  1607.4,
+                                          "max":  9943.3
+                                      },
+                    "getHbitmapUs":  {
+                                         "count":  2162,
+                                         "min":  0,
+                                         "p50":  0,
+                                         "p95":  97,
+                                         "p99":  183.3,
+                                         "max":  593.5
+                                     },
+                    "updateLayeredWindowUs":  {
+                                                  "count":  2162,
+                                                  "min":  41.8,
+                                                  "p50":  411.4,
+                                                  "p95":  980.1,
+                                                  "p99":  1338,
+                                                  "max":  9836.6
+                                              }
+                }
+}
