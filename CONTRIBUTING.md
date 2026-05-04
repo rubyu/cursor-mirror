@@ -54,6 +54,10 @@ CursorMirror.Core.dll
 CursorMirror.TraceTool.exe
 CursorMirror.Demo.exe
 CursorMirror.Calibrator.exe
+CursorMirror.MotionLab.exe
+CursorMirror.LoadGen.exe
+CursorMirror.KernelBench.exe
+CursorMirror.KernelBench.Native.*.dll
 README.md
 CONTRIBUTING.md
 LICENSE
@@ -86,6 +90,9 @@ The release package includes these additional tools:
 CursorMirror.TraceTool.exe
 CursorMirror.Demo.exe
 CursorMirror.Calibrator.exe
+CursorMirror.MotionLab.exe
+CursorMirror.LoadGen.exe
+CursorMirror.KernelBench.exe
 ```
 
 ### Trace Tool
@@ -121,6 +128,16 @@ CursorMirror.Calibrator.exe --auto-run --duration-seconds 5 --output calibration
 ```
 
 During calibration, low-level mouse input is blocked so accidental mouse movement does not corrupt the run. Pressing any keyboard key stops calibration and releases the mouse hook.
+
+### Motion Lab
+
+`CursorMirror.MotionLab.exe` generates compact Bezier motion scripts for prediction research. It can preview a random bounded path, play it by moving the real Windows cursor, optionally start `CursorMirror.LoadGen.exe`, and save a `.zip` package containing `motion-script.json`, `motion-samples.csv`, and `metadata.json`.
+
+`CursorMirror.LoadGen.exe` creates controlled CPU load in a separate process. It is intended for Motion Lab and scripted experiments, not for normal app use.
+
+`CursorMirror.KernelBench.exe` reports CPU feature availability, including AVX, AVX2, FMA3, and AVX-512F, and writes scalar, CPU-friendly, and optional native SIMD benchmark results. Use `--out path.json` to save machine-readable output.
+
+Native kernel DLLs are built by `scripts\build-native-kernels.ps1` when the MSVC x64 C++ toolchain is available. The main build invokes this script after building KernelBench. If the C++ toolchain is not installed, native kernels are skipped and KernelBench reports skip reasons in JSON.
 
 ## Settings Persistence
 
