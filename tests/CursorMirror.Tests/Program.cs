@@ -19,6 +19,7 @@ namespace CursorMirror.Tests
             SettingsTests.AddTo(suite);
             SettingsWindowTests.AddTo(suite);
             MouseTraceTests.AddTo(suite);
+            ProductRuntimeTelemetryTests.AddTo(suite);
             DemoPointerStreamTests.AddTo(suite);
             DemoFreeModeControllerTests.AddTo(suite);
             DemoSettingsTests.AddTo(suite);

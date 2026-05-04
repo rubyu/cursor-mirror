@@ -1,8 +1,10 @@
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using CursorMirror.ProductRuntimeTelemetry;
 
 namespace CursorMirror
 {
@@ -119,17 +121,48 @@ namespace CursorMirror
                 throw new ArgumentNullException("bitmap");
             }
 
+            ProductRuntimeOutlierRecorder recorder = ProductRuntimeOutlierRecorder.Current;
+            bool telemetryEnabled = recorder.IsEnabled;
+            long startedTicks = telemetryEnabled ? Stopwatch.GetTimestamp() : 0;
             EnsureHandleVisible();
             _isLayerVisible = true;
             ReplaceLastBitmap(bitmap);
             _lastLocation = location;
             UpdateLayer(_lastBitmap, _lastLocation);
+            if (telemetryEnabled)
+            {
+                RecordOverlayOperation(
+                    recorder,
+                    ProductOverlayOperation.ShowCursor,
+                    location,
+                    bitmap.Size,
+                    true,
+                    Stopwatch.GetTimestamp() - startedTicks,
+                    true,
+                    0);
+            }
         }
 
         public new void Move(Point location)
         {
+            ProductRuntimeOutlierRecorder recorder = ProductRuntimeOutlierRecorder.Current;
+            bool telemetryEnabled = recorder.IsEnabled;
+            long startedTicks = telemetryEnabled ? Stopwatch.GetTimestamp() : 0;
             if (!IsHandleCreated)
             {
+                if (telemetryEnabled)
+                {
+                    RecordOverlayOperation(
+                        recorder,
+                        ProductOverlayOperation.Move,
+                        location,
+                        Size.Empty,
+                        _lastBitmap != null,
+                        Stopwatch.GetTimestamp() - startedTicks,
+                        false,
+                        0);
+                }
+
                 return;
             }
 
@@ -142,12 +175,42 @@ namespace CursorMirror
             {
                 SetDesktopLocation(location.X, location.Y);
             }
+
+            if (telemetryEnabled)
+            {
+                Size size = _lastBitmap == null ? Size.Empty : _lastBitmap.Size;
+                RecordOverlayOperation(
+                    recorder,
+                    ProductOverlayOperation.Move,
+                    location,
+                    size,
+                    _lastBitmap != null,
+                    Stopwatch.GetTimestamp() - startedTicks,
+                    true,
+                    0);
+            }
         }
 
         public void SetOpacity(byte alpha)
         {
+            ProductRuntimeOutlierRecorder recorder = ProductRuntimeOutlierRecorder.Current;
+            bool telemetryEnabled = recorder.IsEnabled;
+            long startedTicks = telemetryEnabled ? Stopwatch.GetTimestamp() : 0;
             if (_opacity == alpha)
             {
+                if (telemetryEnabled)
+                {
+                    RecordOverlayOperation(
+                        recorder,
+                        ProductOverlayOperation.SetOpacity,
+                        _lastLocation,
+                        _lastBitmap == null ? Size.Empty : _lastBitmap.Size,
+                        _lastBitmap != null,
+                        Stopwatch.GetTimestamp() - startedTicks,
+                        true,
+                        0);
+                }
+
                 return;
             }
 
@@ -155,6 +218,19 @@ namespace CursorMirror
             if (IsHandleCreated && _lastBitmap != null && _isLayerVisible)
             {
                 UpdateLayer(_lastBitmap, _lastLocation);
+            }
+
+            if (telemetryEnabled)
+            {
+                RecordOverlayOperation(
+                    recorder,
+                    ProductOverlayOperation.SetOpacity,
+                    _lastLocation,
+                    _lastBitmap == null ? Size.Empty : _lastBitmap.Size,
+                    _lastBitmap != null,
+                    Stopwatch.GetTimestamp() - startedTicks,
+                    true,
+                    0);
             }
         }
 
@@ -184,6 +260,18 @@ namespace CursorMirror
 
         private void UpdateLayer(Bitmap bitmap, Point location)
         {
+            ProductRuntimeOutlierRecorder recorder = ProductRuntimeOutlierRecorder.Current;
+            bool telemetryEnabled = recorder.IsEnabled;
+            long totalStartedTicks = telemetryEnabled ? Stopwatch.GetTimestamp() : 0;
+            long phaseStartedTicks = 0;
+            long getDcTicks = 0;
+            long createCompatibleDcTicks = 0;
+            long getHbitmapTicks = 0;
+            long selectObjectTicks = 0;
+            long updateLayeredWindowTicks = 0;
+            long cleanupTicks = 0;
+            bool updateSucceeded = false;
+            int updateError = 0;
             IntPtr screenDc = IntPtr.Zero;
             IntPtr memoryDc = IntPtr.Zero;
             IntPtr hBitmap = IntPtr.Zero;
@@ -191,10 +279,33 @@ namespace CursorMirror
 
             try
             {
+                phaseStartedTicks = telemetryEnabled ? Stopwatch.GetTimestamp() : 0;
                 screenDc = GetDC(IntPtr.Zero);
+                if (telemetryEnabled)
+                {
+                    getDcTicks = Stopwatch.GetTimestamp() - phaseStartedTicks;
+                }
+
+                phaseStartedTicks = telemetryEnabled ? Stopwatch.GetTimestamp() : 0;
                 memoryDc = CreateCompatibleDC(screenDc);
+                if (telemetryEnabled)
+                {
+                    createCompatibleDcTicks = Stopwatch.GetTimestamp() - phaseStartedTicks;
+                }
+
+                phaseStartedTicks = telemetryEnabled ? Stopwatch.GetTimestamp() : 0;
                 hBitmap = bitmap.GetHbitmap(Color.FromArgb(0));
+                if (telemetryEnabled)
+                {
+                    getHbitmapTicks = Stopwatch.GetTimestamp() - phaseStartedTicks;
+                }
+
+                phaseStartedTicks = telemetryEnabled ? Stopwatch.GetTimestamp() : 0;
                 oldBitmap = SelectObject(memoryDc, hBitmap);
+                if (telemetryEnabled)
+                {
+                    selectObjectTicks = Stopwatch.GetTimestamp() - phaseStartedTicks;
+                }
 
                 POINT destination = new POINT(location.X, location.Y);
                 SIZE size = new SIZE(bitmap.Width, bitmap.Height);
@@ -205,10 +316,17 @@ namespace CursorMirror
                 blend.SourceConstantAlpha = _opacity;
                 blend.AlphaFormat = AC_SRC_ALPHA;
 
-                UpdateLayeredWindow(Handle, screenDc, ref destination, ref size, memoryDc, ref source, 0, ref blend, ULW_ALPHA);
+                phaseStartedTicks = telemetryEnabled ? Stopwatch.GetTimestamp() : 0;
+                updateSucceeded = UpdateLayeredWindow(Handle, screenDc, ref destination, ref size, memoryDc, ref source, 0, ref blend, ULW_ALPHA);
+                updateError = Marshal.GetLastWin32Error();
+                if (telemetryEnabled)
+                {
+                    updateLayeredWindowTicks = Stopwatch.GetTimestamp() - phaseStartedTicks;
+                }
             }
             finally
             {
+                phaseStartedTicks = telemetryEnabled ? Stopwatch.GetTimestamp() : 0;
                 if (oldBitmap != IntPtr.Zero && memoryDc != IntPtr.Zero)
                 {
                     SelectObject(memoryDc, oldBitmap);
@@ -228,7 +346,56 @@ namespace CursorMirror
                 {
                     ReleaseDC(IntPtr.Zero, screenDc);
                 }
+
+                if (telemetryEnabled)
+                {
+                    cleanupTicks = Stopwatch.GetTimestamp() - phaseStartedTicks;
+                    ProductRuntimeOutlierEvent runtimeEvent = new ProductRuntimeOutlierEvent();
+                    runtimeEvent.EventKind = (int)ProductRuntimeOutlierEventKind.OverlayOperation;
+                    runtimeEvent.OverlayOperation = (int)ProductOverlayOperation.UpdateLayer;
+                    runtimeEvent.X = location.X;
+                    runtimeEvent.Y = location.Y;
+                    runtimeEvent.Width = bitmap.Width;
+                    runtimeEvent.Height = bitmap.Height;
+                    runtimeEvent.Alpha = _opacity;
+                    runtimeEvent.HadBitmap = 1;
+                    runtimeEvent.GetDcTicks = getDcTicks;
+                    runtimeEvent.CreateCompatibleDcTicks = createCompatibleDcTicks;
+                    runtimeEvent.GetHbitmapTicks = getHbitmapTicks;
+                    runtimeEvent.SelectObjectTicks = selectObjectTicks;
+                    runtimeEvent.UpdateLayeredWindowTicks = updateLayeredWindowTicks;
+                    runtimeEvent.CleanupTicks = cleanupTicks;
+                    runtimeEvent.TotalTicks = Stopwatch.GetTimestamp() - totalStartedTicks;
+                    runtimeEvent.Succeeded = updateSucceeded ? 1 : 0;
+                    runtimeEvent.LastWin32Error = updateError;
+                    recorder.Record(ref runtimeEvent);
+                }
             }
+        }
+
+        private void RecordOverlayOperation(
+            ProductRuntimeOutlierRecorder recorder,
+            ProductOverlayOperation operation,
+            Point location,
+            Size size,
+            bool hadBitmap,
+            long totalTicks,
+            bool succeeded,
+            int lastWin32Error)
+        {
+            ProductRuntimeOutlierEvent runtimeEvent = new ProductRuntimeOutlierEvent();
+            runtimeEvent.EventKind = (int)ProductRuntimeOutlierEventKind.OverlayOperation;
+            runtimeEvent.OverlayOperation = (int)operation;
+            runtimeEvent.X = location.X;
+            runtimeEvent.Y = location.Y;
+            runtimeEvent.Width = size.Width;
+            runtimeEvent.Height = size.Height;
+            runtimeEvent.Alpha = _opacity;
+            runtimeEvent.HadBitmap = hadBitmap ? 1 : 0;
+            runtimeEvent.TotalTicks = totalTicks;
+            runtimeEvent.Succeeded = succeeded ? 1 : 0;
+            runtimeEvent.LastWin32Error = lastWin32Error;
+            recorder.Record(ref runtimeEvent);
         }
 
         private void ReplaceLastBitmap(Bitmap bitmap)

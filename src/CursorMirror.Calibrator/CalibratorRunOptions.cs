@@ -6,6 +6,7 @@ namespace CursorMirror.Calibrator
         public bool ExitAfterRun { get; set; }
         public int DurationSeconds { get; set; }
         public string OutputPath { get; set; }
+        public string ProductRuntimeOutlierOutputPath { get; set; }
         public bool? PredictionEnabled { get; set; }
         public int? PredictionGainPercent { get; set; }
         public int? PredictionHorizonMilliseconds { get; set; }
@@ -61,6 +62,11 @@ namespace CursorMirror.Calibrator
                 else if ((argument == "--output" || argument == "--output-path") && i + 1 < args.Length)
                 {
                     options.OutputPath = args[i + 1];
+                    i++;
+                }
+                else if ((argument == "--product-runtime-outlier-output" || argument == "--product-runtime-outlier-output-path") && i + 1 < args.Length)
+                {
+                    options.ProductRuntimeOutlierOutputPath = args[i + 1];
                     i++;
                 }
                 else if (argument == "--prediction-enabled" && i + 1 < args.Length)

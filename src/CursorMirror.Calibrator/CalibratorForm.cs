@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using CursorMirror.ProductRuntimeTelemetry;
 
 namespace CursorMirror.Calibrator
 {
@@ -39,6 +40,8 @@ namespace CursorMirror.Calibrator
         private int _activeRuntimeMode = CalibrationRuntimeMode.Default;
         private CursorMirrorSettings _activeCursorSettings;
         private CursorPredictionCounters _predictionCountersSnapshot = new CursorPredictionCounters();
+        private ProductRuntimeOutlierRecorder _previousProductRuntimeOutlierRecorder;
+        private bool _overrodeProductRuntimeOutlierRecorder;
         private bool _running;
         private bool _savedSinceStop;
 
@@ -217,6 +220,7 @@ namespace CursorMirror.Calibrator
 
                 _frames.Clear();
                 _predictionCountersSnapshot = new CursorPredictionCounters();
+                ConfigureProductRuntimeOutlierRecorder();
                 _savedSinceStop = false;
                 _resultLabel.Text = string.Empty;
                 RefreshUi();
@@ -333,6 +337,7 @@ namespace CursorMirror.Calibrator
         {
             if (!_running && _capture == null && _mouseHook == null && _overlayRuntime == null && _mirrorController == null && _overlayWindow == null)
             {
+                RestoreProductRuntimeOutlierRecorder();
                 return;
             }
 
@@ -348,6 +353,7 @@ namespace CursorMirror.Calibrator
             }
 
             _predictionCountersSnapshot = CapturePredictionCounters();
+            SaveProductRuntimeOutliers();
 
             if (_mouseHook != null)
             {
@@ -387,6 +393,7 @@ namespace CursorMirror.Calibrator
             _cursorDriver = null;
             _motionSuite = null;
             _calibrationStartTicks = 0;
+            RestoreProductRuntimeOutlierRecorder();
             LeaveFullScreen();
 
             if (saveResults)
@@ -489,6 +496,50 @@ namespace CursorMirror.Calibrator
             }
 
             return new CursorPredictionCounters();
+        }
+
+        private void ConfigureProductRuntimeOutlierRecorder()
+        {
+            if (string.IsNullOrWhiteSpace(_options.ProductRuntimeOutlierOutputPath))
+            {
+                return;
+            }
+
+            _previousProductRuntimeOutlierRecorder = ProductRuntimeOutlierRecorder.Current;
+            ProductRuntimeOutlierRecorder.Current = ProductRuntimeOutlierRecorder.Create(65536);
+            _overrodeProductRuntimeOutlierRecorder = true;
+        }
+
+        private void RestoreProductRuntimeOutlierRecorder()
+        {
+            if (!_overrodeProductRuntimeOutlierRecorder)
+            {
+                return;
+            }
+
+            ProductRuntimeOutlierRecorder.Current = _previousProductRuntimeOutlierRecorder ?? ProductRuntimeOutlierRecorder.Disabled;
+            _previousProductRuntimeOutlierRecorder = null;
+            _overrodeProductRuntimeOutlierRecorder = false;
+        }
+
+        private void SaveProductRuntimeOutliers()
+        {
+            if (string.IsNullOrWhiteSpace(_options.ProductRuntimeOutlierOutputPath))
+            {
+                return;
+            }
+
+            ProductRuntimeOutlierSnapshot snapshot;
+            if (_overlayRuntime != null)
+            {
+                snapshot = _overlayRuntime.SnapshotProductRuntimeOutliers();
+            }
+            else
+            {
+                snapshot = ProductRuntimeOutlierRecorder.Current.Snapshot();
+            }
+
+            new ProductRuntimeOutlierPackageWriter().Write(_options.ProductRuntimeOutlierOutputPath, snapshot);
         }
 
         private static void ApplyPredictionCounters(CalibrationSummary summary, CursorPredictionCounters counters)

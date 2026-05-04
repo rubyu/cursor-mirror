@@ -181,6 +181,9 @@ namespace CursorMirror.Tests
 
             CalibratorRunOptions predictionOptions = CalibratorRunOptions.FromArguments(new[] { "--dwm-target-offset-ms", "3" });
             TestAssert.Equal(3, predictionOptions.DwmPredictionTargetOffsetMilliseconds.Value, "DWM prediction target offset option");
+
+            CalibratorRunOptions outlierOptions = CalibratorRunOptions.FromArguments(new[] { "--product-runtime-outlier-output", "product-runtime.zip" });
+            TestAssert.Equal("product-runtime.zip", outlierOptions.ProductRuntimeOutlierOutputPath, "product runtime outlier output option");
         }
     }
 }

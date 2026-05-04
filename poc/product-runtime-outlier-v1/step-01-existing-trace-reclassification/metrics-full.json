@@ -1,0 +1,556 @@
+{
+  "poc": "product-runtime-outlier-v1",
+  "step": "step-01-existing-trace-reclassification-full",
+  "generatedAt": "2026-05-05T00:14:07+09:00",
+  "inputRoot": "C:\\Users\\seigl\\OneDrive\\my\\ドキュメント\\projects\\cursor",
+  "fullCorpusPending": false,
+  "totals": {
+    "candidateZipFiles": 47,
+    "selectedZipFiles": 47,
+    "processedZips": 47,
+    "zipsWithoutTraceCsv": 0,
+    "runtimeSchedulerPollRows": 1150239,
+    "classifiedOutlierRows": 398260
+  },
+  "classifications": {
+    "scheduler_wake_late": 295972,
+    "dispatcher_late": 24336,
+    "cursor_read_late": 177,
+    "mixed": 13668,
+    "unknown": 64107
+  },
+  "distributions": {
+    "pollCadenceGapUs": {
+      "count": 1026819,
+      "p50": 2.4,
+      "p95": 6728.2,
+      "p99": 168206.1,
+      "max": 1178824.1
+    },
+    "queueToDispatchUs": {
+      "count": 1026860,
+      "p50": 100.3,
+      "p95": 806.2,
+      "p99": 4538.9,
+      "max": 66768.7
+    },
+    "estimatedWakeLateUs": {
+      "count": 1026860,
+      "p50": 2,
+      "p95": 2863.8,
+      "p99": 3686.9,
+      "max": 68056.5
+    },
+    "cursorReadLatencyUs": {
+      "count": 1026860,
+      "p50": 2.3,
+      "p95": 46,
+      "p99": 151.5,
+      "max": 10294
+    }
+  },
+  "topPollCadenceGapOutliers": [
+    {
+      "zip": "cursor-mirror-trace-20260502-114656.zip",
+      "sequence": 548474,
+      "schedulerIntervalUs": 1195492,
+      "pollCadenceGapUs": 1178824.1,
+      "estimatedWakeLateUs": 2057.8,
+      "dispatcherLateUs": 29709.2,
+      "cursorReadLatencyUs": 27.5,
+      "classification": "mixed"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 265138,
+      "schedulerIntervalUs": 766921.1,
+      "pollCadenceGapUs": 750252.9,
+      "estimatedWakeLateUs": 2097,
+      "dispatcherLateUs": 236,
+      "cursorReadLatencyUs": 2.5,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 267759,
+      "schedulerIntervalUs": 651028.1,
+      "pollCadenceGapUs": 634360.1,
+      "estimatedWakeLateUs": 3626.6,
+      "dispatcherLateUs": 189.4,
+      "cursorReadLatencyUs": 3.6,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 189889,
+      "schedulerIntervalUs": 547837.2,
+      "pollCadenceGapUs": 531169.1,
+      "estimatedWakeLateUs": 2576.4,
+      "dispatcherLateUs": 181.6,
+      "cursorReadLatencyUs": 2.3,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 178469,
+      "schedulerIntervalUs": 518118.8,
+      "pollCadenceGapUs": 501450.7,
+      "estimatedWakeLateUs": 3449.3,
+      "dispatcherLateUs": 377.7,
+      "cursorReadLatencyUs": 24.9,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-124831.zip",
+      "sequence": 357404,
+      "schedulerIntervalUs": 501236.8,
+      "pollCadenceGapUs": 484568.7,
+      "estimatedWakeLateUs": 3988.8,
+      "dispatcherLateUs": 505.2,
+      "cursorReadLatencyUs": 2.9,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 247011,
+      "schedulerIntervalUs": 500302.1,
+      "pollCadenceGapUs": 483634,
+      "estimatedWakeLateUs": 2995.1,
+      "dispatcherLateUs": 279.9,
+      "cursorReadLatencyUs": 1.9,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 353533,
+      "schedulerIntervalUs": 485499.3,
+      "pollCadenceGapUs": 468831.2,
+      "estimatedWakeLateUs": 3779.3,
+      "dispatcherLateUs": 769.7,
+      "cursorReadLatencyUs": 0.8,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 273133,
+      "schedulerIntervalUs": 484578.4,
+      "pollCadenceGapUs": 467910.4,
+      "estimatedWakeLateUs": 3832.9,
+      "dispatcherLateUs": 188.1,
+      "cursorReadLatencyUs": 6.8,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 205632,
+      "schedulerIntervalUs": 484417.4,
+      "pollCadenceGapUs": 467749.4,
+      "estimatedWakeLateUs": 3844.4,
+      "dispatcherLateUs": 304.6,
+      "cursorReadLatencyUs": 20,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 278363,
+      "schedulerIntervalUs": 483791.3,
+      "pollCadenceGapUs": 467123.2,
+      "estimatedWakeLateUs": 3414.6,
+      "dispatcherLateUs": 164.4,
+      "cursorReadLatencyUs": 24.9,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 287233,
+      "schedulerIntervalUs": 483661.8,
+      "pollCadenceGapUs": 466993.7,
+      "estimatedWakeLateUs": 3672.6,
+      "dispatcherLateUs": 306.4,
+      "cursorReadLatencyUs": 15.2,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 372797,
+      "schedulerIntervalUs": 482400.1,
+      "pollCadenceGapUs": 465732,
+      "estimatedWakeLateUs": 3696.1,
+      "dispatcherLateUs": 207.9,
+      "cursorReadLatencyUs": 1.1,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 222037,
+      "schedulerIntervalUs": 468080.6,
+      "pollCadenceGapUs": 451412.5,
+      "estimatedWakeLateUs": 3542.5,
+      "dispatcherLateUs": 298.5,
+      "cursorReadLatencyUs": 3.4,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 227335,
+      "schedulerIntervalUs": 467119.8,
+      "pollCadenceGapUs": 450451.6,
+      "estimatedWakeLateUs": 2428.1,
+      "dispatcherLateUs": 189.9,
+      "cursorReadLatencyUs": 3.3,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 284392,
+      "schedulerIntervalUs": 452164.7,
+      "pollCadenceGapUs": 435496.6,
+      "estimatedWakeLateUs": 3538.7,
+      "dispatcherLateUs": 1147.3,
+      "cursorReadLatencyUs": 30.5,
+      "classification": "mixed"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 252920,
+      "schedulerIntervalUs": 451614.1,
+      "pollCadenceGapUs": 434946,
+      "estimatedWakeLateUs": 3621.2,
+      "dispatcherLateUs": 520.8,
+      "cursorReadLatencyUs": 2.7,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 347855,
+      "schedulerIntervalUs": 451194.4,
+      "pollCadenceGapUs": 434526.3,
+      "estimatedWakeLateUs": 3137.9,
+      "dispatcherLateUs": 319.1,
+      "cursorReadLatencyUs": 2.6,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 372533,
+      "schedulerIntervalUs": 434159.1,
+      "pollCadenceGapUs": 417491,
+      "estimatedWakeLateUs": 3955.5,
+      "dispatcherLateUs": 928.5,
+      "cursorReadLatencyUs": 30,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 283218,
+      "schedulerIntervalUs": 433940.1,
+      "pollCadenceGapUs": 417271.9,
+      "estimatedWakeLateUs": 3058.9,
+      "dispatcherLateUs": 372.1,
+      "cursorReadLatencyUs": 18.3,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 379303,
+      "schedulerIntervalUs": 433485,
+      "pollCadenceGapUs": 416816.9,
+      "estimatedWakeLateUs": 3991.5,
+      "dispatcherLateUs": 376.5,
+      "cursorReadLatencyUs": 27.3,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 89239,
+      "schedulerIntervalUs": 432943.7,
+      "pollCadenceGapUs": 416275.7,
+      "estimatedWakeLateUs": 2899.4,
+      "dispatcherLateUs": 237.6,
+      "cursorReadLatencyUs": 2.1,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 242743,
+      "schedulerIntervalUs": 418231.2,
+      "pollCadenceGapUs": 401563.1,
+      "estimatedWakeLateUs": 3402.8,
+      "dispatcherLateUs": 291.2,
+      "cursorReadLatencyUs": 17.3,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 245310,
+      "schedulerIntervalUs": 417938.5,
+      "pollCadenceGapUs": 401270.4,
+      "estimatedWakeLateUs": 3869.4,
+      "dispatcherLateUs": 112.6,
+      "cursorReadLatencyUs": 2,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 239092,
+      "schedulerIntervalUs": 417700.8,
+      "pollCadenceGapUs": 401032.7,
+      "estimatedWakeLateUs": 3895.7,
+      "dispatcherLateUs": 197.3,
+      "cursorReadLatencyUs": 1.5,
+      "classification": "scheduler_wake_late"
+    }
+  ],
+  "topSchedulerIntervalOutliers": [
+    {
+      "zip": "cursor-mirror-trace-20260502-114656.zip",
+      "sequence": 548474,
+      "schedulerIntervalUs": 1195492,
+      "pollCadenceGapUs": 1178824.1,
+      "estimatedWakeLateUs": 2057.8,
+      "dispatcherLateUs": 29709.2,
+      "cursorReadLatencyUs": 27.5,
+      "classification": "mixed"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 265138,
+      "schedulerIntervalUs": 766921.1,
+      "pollCadenceGapUs": 750252.9,
+      "estimatedWakeLateUs": 2097,
+      "dispatcherLateUs": 236,
+      "cursorReadLatencyUs": 2.5,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 267759,
+      "schedulerIntervalUs": 651028.1,
+      "pollCadenceGapUs": 634360.1,
+      "estimatedWakeLateUs": 3626.6,
+      "dispatcherLateUs": 189.4,
+      "cursorReadLatencyUs": 3.6,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 189889,
+      "schedulerIntervalUs": 547837.2,
+      "pollCadenceGapUs": 531169.1,
+      "estimatedWakeLateUs": 2576.4,
+      "dispatcherLateUs": 181.6,
+      "cursorReadLatencyUs": 2.3,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 178469,
+      "schedulerIntervalUs": 518118.8,
+      "pollCadenceGapUs": 501450.7,
+      "estimatedWakeLateUs": 3449.3,
+      "dispatcherLateUs": 377.7,
+      "cursorReadLatencyUs": 24.9,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-124831.zip",
+      "sequence": 357404,
+      "schedulerIntervalUs": 501236.8,
+      "pollCadenceGapUs": 484568.7,
+      "estimatedWakeLateUs": 3988.8,
+      "dispatcherLateUs": 505.2,
+      "cursorReadLatencyUs": 2.9,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 247011,
+      "schedulerIntervalUs": 500302.1,
+      "pollCadenceGapUs": 483634,
+      "estimatedWakeLateUs": 2995.1,
+      "dispatcherLateUs": 279.9,
+      "cursorReadLatencyUs": 1.9,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 353533,
+      "schedulerIntervalUs": 485499.3,
+      "pollCadenceGapUs": 468831.2,
+      "estimatedWakeLateUs": 3779.3,
+      "dispatcherLateUs": 769.7,
+      "cursorReadLatencyUs": 0.8,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 273133,
+      "schedulerIntervalUs": 484578.4,
+      "pollCadenceGapUs": 467910.4,
+      "estimatedWakeLateUs": 3832.9,
+      "dispatcherLateUs": 188.1,
+      "cursorReadLatencyUs": 6.8,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 205632,
+      "schedulerIntervalUs": 484417.4,
+      "pollCadenceGapUs": 467749.4,
+      "estimatedWakeLateUs": 3844.4,
+      "dispatcherLateUs": 304.6,
+      "cursorReadLatencyUs": 20,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 278363,
+      "schedulerIntervalUs": 483791.3,
+      "pollCadenceGapUs": 467123.2,
+      "estimatedWakeLateUs": 3414.6,
+      "dispatcherLateUs": 164.4,
+      "cursorReadLatencyUs": 24.9,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 287233,
+      "schedulerIntervalUs": 483661.8,
+      "pollCadenceGapUs": 466993.7,
+      "estimatedWakeLateUs": 3672.6,
+      "dispatcherLateUs": 306.4,
+      "cursorReadLatencyUs": 15.2,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 372797,
+      "schedulerIntervalUs": 482400.1,
+      "pollCadenceGapUs": 465732,
+      "estimatedWakeLateUs": 3696.1,
+      "dispatcherLateUs": 207.9,
+      "cursorReadLatencyUs": 1.1,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 222037,
+      "schedulerIntervalUs": 468080.6,
+      "pollCadenceGapUs": 451412.5,
+      "estimatedWakeLateUs": 3542.5,
+      "dispatcherLateUs": 298.5,
+      "cursorReadLatencyUs": 3.4,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 227335,
+      "schedulerIntervalUs": 467119.8,
+      "pollCadenceGapUs": 450451.6,
+      "estimatedWakeLateUs": 2428.1,
+      "dispatcherLateUs": 189.9,
+      "cursorReadLatencyUs": 3.3,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 284392,
+      "schedulerIntervalUs": 452164.7,
+      "pollCadenceGapUs": 435496.6,
+      "estimatedWakeLateUs": 3538.7,
+      "dispatcherLateUs": 1147.3,
+      "cursorReadLatencyUs": 30.5,
+      "classification": "mixed"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 252920,
+      "schedulerIntervalUs": 451614.1,
+      "pollCadenceGapUs": 434946,
+      "estimatedWakeLateUs": 3621.2,
+      "dispatcherLateUs": 520.8,
+      "cursorReadLatencyUs": 2.7,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 347855,
+      "schedulerIntervalUs": 451194.4,
+      "pollCadenceGapUs": 434526.3,
+      "estimatedWakeLateUs": 3137.9,
+      "dispatcherLateUs": 319.1,
+      "cursorReadLatencyUs": 2.6,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 372533,
+      "schedulerIntervalUs": 434159.1,
+      "pollCadenceGapUs": 417491,
+      "estimatedWakeLateUs": 3955.5,
+      "dispatcherLateUs": 928.5,
+      "cursorReadLatencyUs": 30,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 283218,
+      "schedulerIntervalUs": 433940.1,
+      "pollCadenceGapUs": 417271.9,
+      "estimatedWakeLateUs": 3058.9,
+      "dispatcherLateUs": 372.1,
+      "cursorReadLatencyUs": 18.3,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 379303,
+      "schedulerIntervalUs": 433485,
+      "pollCadenceGapUs": 416816.9,
+      "estimatedWakeLateUs": 3991.5,
+      "dispatcherLateUs": 376.5,
+      "cursorReadLatencyUs": 27.3,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 89239,
+      "schedulerIntervalUs": 432943.7,
+      "pollCadenceGapUs": 416275.7,
+      "estimatedWakeLateUs": 2899.4,
+      "dispatcherLateUs": 237.6,
+      "cursorReadLatencyUs": 2.1,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 242743,
+      "schedulerIntervalUs": 418231.2,
+      "pollCadenceGapUs": 401563.1,
+      "estimatedWakeLateUs": 3402.8,
+      "dispatcherLateUs": 291.2,
+      "cursorReadLatencyUs": 17.3,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 245310,
+      "schedulerIntervalUs": 417938.5,
+      "pollCadenceGapUs": 401270.4,
+      "estimatedWakeLateUs": 3869.4,
+      "dispatcherLateUs": 112.6,
+      "cursorReadLatencyUs": 2,
+      "classification": "scheduler_wake_late"
+    },
+    {
+      "zip": "cursor-mirror-trace-20260502-132725.zip",
+      "sequence": 239092,
+      "schedulerIntervalUs": 417700.8,
+      "pollCadenceGapUs": 401032.7,
+      "estimatedWakeLateUs": 3895.7,
+      "dispatcherLateUs": 197.3,
+      "cursorReadLatencyUs": 1.5,
+      "classification": "scheduler_wake_late"
+    }
+  ]
+}
