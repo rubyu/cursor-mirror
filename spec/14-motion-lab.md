@@ -1,4 +1,4 @@
-## 14. Motion Lab and CPU Kernel Benchmarking
+## 14. Motion Lab and Load Generation
 
 ### Purpose
 
@@ -109,35 +109,18 @@
 - Load generator runs MUST be explicitly requested by the user or by command-line arguments.
 - Motion Lab MAY start and stop the load generator as a child process for controlled dataset capture.
 
-### Kernel Benchmarking
-
-- CPU-kernel benchmarking MUST be provided by `CursorMirror.KernelBench.exe`.
-- KernelBench MUST report CPU feature availability through operating-system-supported feature detection when available.
-- KernelBench MUST explicitly report AVX, AVX2, and AVX-512F availability.
-- KernelBench SHOULD benchmark scalar and managed-vector reference kernels when the target runtime exposes managed vector APIs.
-- KernelBench SHOULD provide at least one CPU-only scalar baseline and one CPU-friendly reference variant even when managed vector APIs are unavailable.
-- KernelBench MAY benchmark native AVX/FMA/AVX2/AVX-512 kernels when native kernel libraries are present.
-- Native kernel libraries SHOULD be built by an optional MSVC x64 build step when the C++ toolchain is available.
-- Native kernel libraries MUST use a small stable C ABI so `CursorMirror.KernelBench.exe` can load them dynamically.
-- KernelBench MUST continue to run when native libraries are absent and MUST report skipped native kernels with a machine-readable reason.
-- KernelBench MUST write machine-readable JSON when an output path is provided.
-- AVX-512-capable environments MUST be considered first-class benchmark targets, but the product runtime MUST continue to provide a scalar fallback.
-
 ### Product Runtime Constraints
 
 - Cursor Mirror MUST NOT require GPU inference in the installed product.
 - Cursor Mirror MUST NOT require a machine-learning runtime in the installed product.
 - Prediction models promoted to the product MUST have a CPU-only inference path.
-- CPU-only acceleration MAY use scalar loops, managed SIMD, or native CPU feature dispatch.
-- AVX-512 support MUST be optional and selected only when supported by the CPU and operating system.
+- CPU-only acceleration MAY use scalar loops or managed SIMD.
 
 ### Packaging
 
 - Development packages SHOULD include:
   - `CursorMirror.MotionLab.exe`;
-  - `CursorMirror.LoadGen.exe`;
-  - `CursorMirror.KernelBench.exe`;
-  - native `CursorMirror.KernelBench.Native.*.dll` files when they were built.
+  - `CursorMirror.LoadGen.exe`.
 - Release packages MAY include these tools while the prediction system remains experimental.
 - Diagnostic packages created by Motion Lab MUST be `.zip` packages and SHOULD contain:
   - `motion-script.json`;
@@ -151,4 +134,4 @@
 
 - Unit tests MUST cover deterministic Bezier script generation, bounds clipping, deterministic sampling, speed-profile influence, hold-segment pause behavior, motion-sample transition telemetry, Play and Record input blocking, and package readability.
 - Unit tests MUST NOT require actual mouse movement, real CPU stress, real AVX-512 execution, or Windows Graphics Capture.
-- Manual validation SHOULD cover Motion Lab GUI startup, script generation, script-only save flow, `Play and Record` save flow, optional load generator launch, KernelBench JSON output, and AVX/AVX2/AVX-512 feature detection on capable hardware.
+- Manual validation SHOULD cover Motion Lab GUI startup, script generation, script-only save flow, `Play and Record` save flow, and optional load generator launch.

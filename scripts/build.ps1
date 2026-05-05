@@ -28,7 +28,6 @@ $demoOut = Join-Path $bin "CursorMirror.Demo.exe"
 $calibratorOut = Join-Path $bin "CursorMirror.Calibrator.exe"
 $motionLabOut = Join-Path $bin "CursorMirror.MotionLab.exe"
 $loadGenOut = Join-Path $bin "CursorMirror.LoadGen.exe"
-$kernelBenchOut = Join-Path $bin "CursorMirror.KernelBench.exe"
 $testsOut = Join-Path $bin "CursorMirror.Tests.exe"
 $manifest = Join-Path $root "src\CursorMirror.App\app.manifest"
 $traceToolManifest = Join-Path $root "src\CursorMirror.TraceTool\app.manifest"
@@ -45,7 +44,6 @@ $demoAssemblyVersionSource = Join-Path $generated "CursorMirror.Demo.AssemblyVer
 $calibratorAssemblyVersionSource = Join-Path $generated "CursorMirror.Calibrator.AssemblyVersion.g.cs"
 $motionLabAssemblyVersionSource = Join-Path $generated "CursorMirror.MotionLab.AssemblyVersion.g.cs"
 $loadGenAssemblyVersionSource = Join-Path $generated "CursorMirror.LoadGen.AssemblyVersion.g.cs"
-$kernelBenchAssemblyVersionSource = Join-Path $generated "CursorMirror.KernelBench.AssemblyVersion.g.cs"
 
 function ConvertTo-CSharpLiteral([string]$Value) {
     return $Value.Replace('\', '\\').Replace('"', '\"')
@@ -139,14 +137,6 @@ using System.Reflection;
 [assembly: AssemblyInformationalVersion("$informationalVersion")]
 "@ | Set-Content -LiteralPath $loadGenAssemblyVersionSource -Encoding ASCII
 
-@"
-using System.Reflection;
-
-[assembly: AssemblyVersion("$assemblyVersion")]
-[assembly: AssemblyFileVersion("$fileVersion")]
-[assembly: AssemblyInformationalVersion("$informationalVersion")]
-"@ | Set-Content -LiteralPath $kernelBenchAssemblyVersionSource -Encoding ASCII
-
 $coreSources = @(Get-ChildItem -Path (Join-Path $root "src\CursorMirror.Core") -Recurse -Filter *.cs | ForEach-Object { $_.FullName }) + @($buildVersionSource, $coreAssemblyVersionSource)
 $appCoreSources = @(Get-ChildItem -Path (Join-Path $root "src\CursorMirror.Core") -Recurse -Filter *.cs | Where-Object { $_.FullName -notmatch "\\Properties\\AssemblyInfo\.cs$" } | ForEach-Object { $_.FullName }) + @($buildVersionSource)
 $appSources = @(Get-ChildItem -Path (Join-Path $root "src\CursorMirror.App") -Recurse -Filter *.cs | ForEach-Object { $_.FullName }) + @($appAssemblyVersionSource)
@@ -155,7 +145,6 @@ $demoSources = @(Get-ChildItem -Path (Join-Path $root "src\CursorMirror.Demo") -
 $calibratorSources = @(Get-ChildItem -Path (Join-Path $root "src\CursorMirror.Calibrator") -Recurse -Filter *.cs | ForEach-Object { $_.FullName }) + @($calibratorAssemblyVersionSource)
 $motionLabSources = @(Get-ChildItem -Path (Join-Path $root "src\CursorMirror.MotionLab") -Recurse -Filter *.cs | ForEach-Object { $_.FullName }) + @($motionLabAssemblyVersionSource)
 $loadGenSources = @(Get-ChildItem -Path (Join-Path $root "src\CursorMirror.LoadGen") -Recurse -Filter *.cs | ForEach-Object { $_.FullName }) + @($loadGenAssemblyVersionSource)
-$kernelBenchSources = @(Get-ChildItem -Path (Join-Path $root "src\CursorMirror.KernelBench") -Recurse -Filter *.cs | ForEach-Object { $_.FullName }) + @($kernelBenchAssemblyVersionSource)
 $testSources = Get-ChildItem -Path (Join-Path $root "tests\CursorMirror.Tests") -Recurse -Filter *.cs | ForEach-Object { $_.FullName }
 
 $windowsWinmd = Get-ChildItem -Path "${env:ProgramFiles(x86)}\Windows Kits\10\UnionMetadata" -Recurse -Filter Windows.winmd -ErrorAction SilentlyContinue |
@@ -203,12 +192,6 @@ if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 & $csc /nologo /target:exe /warn:4 $debugFlag $optimizeFlag /out:$loadGenOut /reference:System.dll /reference:System.Core.dll $loadGenSources
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
-& $csc /nologo /target:exe /warn:4 $debugFlag $optimizeFlag /out:$kernelBenchOut /reference:System.dll /reference:System.Core.dll $kernelBenchSources
-if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-
-& (Join-Path $root "scripts\build-native-kernels.ps1") -Configuration $Configuration -OutDir $bin
-if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-
 & $csc /nologo /target:exe /warn:4 $debugFlag $optimizeFlag /out:$testsOut /reference:System.dll /reference:System.Core.dll /reference:System.Drawing.dll /reference:System.IO.Compression.dll /reference:System.Runtime.Serialization.dll /reference:System.Windows.Forms.dll /reference:$coreOut /reference:$traceToolOut /reference:$calibratorOut $testSources
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
@@ -221,5 +204,4 @@ Write-Host "  $demoOut"
 Write-Host "  $calibratorOut"
 Write-Host "  $motionLabOut"
 Write-Host "  $loadGenOut"
-Write-Host "  $kernelBenchOut"
 Write-Host "  $testsOut"
