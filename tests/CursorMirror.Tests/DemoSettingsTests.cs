@@ -25,7 +25,6 @@ namespace CursorMirror.Tests
             TestAssert.True(settings.CursorSettings.PredictionEnabled, "default prediction enabled");
             TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, settings.CursorSettings.DwmPredictionModel, "default prediction model");
             TestAssert.Equal(100, settings.CursorSettings.PredictionGainPercent, "default prediction gain");
-            TestAssert.False(settings.CursorSettings.DistilledMlpPostStopBrakeEnabled, "default post-stop brake disabled");
             TestAssert.True(settings.CursorSettings.IdleFadeEnabled, "default idle fade enabled");
             TestAssert.Equal(80, settings.CursorSettings.IdleFadeDurationMilliseconds, "default idle fade duration");
 
@@ -57,7 +56,6 @@ namespace CursorMirror.Tests
                 settings.CursorSettings.PredictionEnabled = false;
                 settings.CursorSettings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelConstantVelocity;
                 settings.CursorSettings.PredictionGainPercent = 90;
-                settings.CursorSettings.DistilledMlpPostStopBrakeEnabled = true;
                 settings.CursorSettings.MovingOpacityPercent = 42;
                 settings.CursorSettings.IdleFadeEnabled = false;
                 settings.CursorSettings.IdleFadeDurationMilliseconds = 120;
@@ -74,7 +72,6 @@ namespace CursorMirror.Tests
                 TestAssert.False(loaded.CursorSettings.PredictionEnabled, "loaded prediction flag");
                 TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, loaded.CursorSettings.DwmPredictionModel, "loaded prediction model");
                 TestAssert.Equal(90, loaded.CursorSettings.PredictionGainPercent, "loaded prediction gain");
-                TestAssert.True(loaded.CursorSettings.DistilledMlpPostStopBrakeEnabled, "loaded post-stop brake");
                 TestAssert.Equal(42, loaded.CursorSettings.MovingOpacityPercent, "loaded moving opacity");
                 TestAssert.False(loaded.CursorSettings.IdleFadeEnabled, "loaded idle fade flag");
                 TestAssert.Equal(120, loaded.CursorSettings.IdleFadeDurationMilliseconds, "loaded idle fade duration");
@@ -140,7 +137,6 @@ namespace CursorMirror.Tests
             TestAssert.False(mirrorDisabled.OverlaySettingsEnabled, "mirror disabled overlay settings");
             TestAssert.False(mirrorDisabled.PredictionModelEnabled, "mirror disabled prediction model");
             TestAssert.False(mirrorDisabled.PredictionGainEnabled, "mirror disabled prediction gain");
-            TestAssert.False(mirrorDisabled.DistilledMlpPostStopBrakeEnabled, "mirror disabled post-stop brake");
             TestAssert.False(mirrorDisabled.MovementTranslucencyInputsEnabled, "mirror disabled movement inputs");
             TestAssert.False(mirrorDisabled.IdleFadeInputsEnabled, "mirror disabled idle fade inputs");
 
@@ -148,32 +144,14 @@ namespace CursorMirror.Tests
             TestAssert.True(featureDisabled.OverlaySettingsEnabled, "mirror enabled overlay settings");
             TestAssert.False(featureDisabled.PredictionModelEnabled, "prediction disabled model");
             TestAssert.False(featureDisabled.PredictionGainEnabled, "prediction disabled gain");
-            TestAssert.False(featureDisabled.DistilledMlpPostStopBrakeEnabled, "prediction disabled post-stop brake");
             TestAssert.False(featureDisabled.MovementTranslucencyInputsEnabled, "movement disabled inputs");
             TestAssert.False(featureDisabled.IdleFadeInputsEnabled, "idle fade disabled inputs");
 
             DemoOverlayControlState featureEnabled = DemoOverlayControlState.From(true, true, true, true);
             TestAssert.True(featureEnabled.PredictionModelEnabled, "prediction enabled model");
             TestAssert.True(featureEnabled.PredictionGainEnabled, "prediction enabled gain");
-            TestAssert.False(featureEnabled.DistilledMlpPostStopBrakeEnabled, "post-stop brake disabled for default model");
             TestAssert.True(featureEnabled.MovementTranslucencyInputsEnabled, "movement enabled inputs");
             TestAssert.True(featureEnabled.IdleFadeInputsEnabled, "idle fade enabled inputs");
-
-            DemoOverlayControlState distilledEnabled = DemoOverlayControlState.From(
-                true,
-                true,
-                true,
-                true,
-                CursorMirrorSettings.DwmPredictionModelDistilledMlp);
-            TestAssert.True(distilledEnabled.DistilledMlpPostStopBrakeEnabled, "post-stop brake enabled for DistilledMLP");
-
-            DemoOverlayControlState runtimeEventSafeEnabled = DemoOverlayControlState.From(
-                true,
-                true,
-                true,
-                true,
-                CursorMirrorSettings.DwmPredictionModelRuntimeEventSafeMlp);
-            TestAssert.False(runtimeEventSafeEnabled.DistilledMlpPostStopBrakeEnabled, "post-stop brake disabled for RuntimeEventSafeMLP");
         }
 
         private static string NewTestDirectory()

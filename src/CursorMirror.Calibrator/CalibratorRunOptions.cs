@@ -423,26 +423,27 @@ namespace CursorMirror.Calibrator
                 return true;
             }
 
-            if (normalized == "experimentalmlp" || normalized == "experimental-mlp" || normalized == "experimental_mlp" || normalized == "mlp")
-            {
-                model = CursorMirrorSettings.DwmPredictionModelExperimentalMlp;
-                return true;
-            }
-
-            if (normalized == "distilledmlp" || normalized == "distilled-mlp" || normalized == "distilled_mlp" || normalized == "distilled" || normalized == "v16")
-            {
-                model = CursorMirrorSettings.DwmPredictionModelDistilledMlp;
-                return true;
-            }
-
-            if (normalized == "runtimeeventsafemlp" ||
+            if (normalized == "smoothpredictor" ||
+                normalized == "smooth-predictor" ||
+                normalized == "smooth_predictor" ||
+                normalized == "smooth" ||
+                normalized == "experimentalmlp" ||
+                normalized == "experimental-mlp" ||
+                normalized == "experimental_mlp" ||
+                normalized == "mlp" ||
+                normalized == "distilledmlp" ||
+                normalized == "distilled-mlp" ||
+                normalized == "distilled_mlp" ||
+                normalized == "distilled" ||
+                normalized == "v16" ||
+                normalized == "runtimeeventsafemlp" ||
                 normalized == "runtime-event-safe-mlp" ||
                 normalized == "runtime_event_safe_mlp" ||
                 normalized == "event-safe-mlp" ||
                 normalized == "event_safe_mlp" ||
                 normalized == "v21")
             {
-                model = CursorMirrorSettings.DwmPredictionModelRuntimeEventSafeMlp;
+                model = CursorMirrorSettings.DwmPredictionModelSmoothPredictor;
                 return true;
             }
 
@@ -454,6 +455,7 @@ namespace CursorMirror.Calibrator
 
             if (int.TryParse(value, out model))
             {
+                model = CursorMirrorSettings.NormalizeDwmPredictionModel(model);
                 return true;
             }
 

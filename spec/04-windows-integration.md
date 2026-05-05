@@ -92,7 +92,7 @@ Recommended extended window styles:
 - Predictive overlay positioning MUST be enabled by default.
 - The settings UI MUST allow the user to disable predictive overlay positioning.
 - The settings UI MUST allow the user to choose the prediction model.
-- User-facing prediction model names MUST include `ConstantVelocity`, `LeastSquares`, `ExperimentalMLP`, `DistilledMLP`, and `RuntimeEventSafeMLP`.
+- User-facing prediction model names MUST include `ConstantVelocity`, `LeastSquares`, and `SmoothPredictor`.
 - The user-facing prediction model option for the default model MUST append ` (default)` to the model name.
 - The settings UI MUST allow the user to tune the prediction gain as a percentage.
 - The settings UI MUST allow the user to tune the DWM prediction target offset in milliseconds.
@@ -108,24 +108,13 @@ Recommended extended window styles:
   - `predictedPosition = currentPosition + velocity * horizonMs * gain`.
 - The default product prediction model SHOULD be `ConstantVelocity`.
 - The `LeastSquares` prediction model SHOULD fit velocity from a bounded recent sample window, remain allocation-free after construction, fall back to exact positioning when the fit is low-confidence, reset stale history after discontinuous cursor samples, and honor the configured DWM horizon cap.
-- The `ExperimentalMLP` prediction model MAY apply a fixed-weight CPU-only residual correction on top of the `ConstantVelocity` baseline when its confidence gate indicates a low-risk improvement.
-- The `ExperimentalMLP` prediction model MUST NOT require GPU acceleration, runtime model training, network access, or optional machine-learning runtimes in the installed application.
-- The `ExperimentalMLP` prediction model SHOULD reuse preallocated buffers during prediction and MAY use SIMD or other CPU-only acceleration when available.
-- The `DistilledMLP` prediction model MAY apply the fixed-weight v16 distilled 60Hz CPU-only model as a full cursor displacement prediction while keeping `ConstantVelocity`, `LeastSquares`, `ExperimentalMLP`, and `RuntimeEventSafeMLP` selectable.
-- The `DistilledMLP` prediction model SHOULD use the validated no-lag compensation variant when the generated model is updated.
-- Switching to `DistilledMLP` in UI MUST preserve the current DWM prediction target offset instead of applying a model-specific automatic offset.
-- The `DistilledMLP` prediction model MUST fall back to the existing baseline behavior when the refresh cadence is outside the model's supported 60Hz range, when history is insufficient, or when model evaluation fails.
-- The `DistilledMLP` prediction model MUST fall back to exact/baseline positioning for stationary or near-stationary cursor history so model bias cannot create visible mirror-cursor jitter while the real cursor is stopped.
-- Cursor Mirror MAY expose an off-by-default experimental `DistilledMLP` post-stop brake for validation.
-- When the experimental post-stop brake is enabled and `DistilledMLP` detects an abrupt stop after recent high-speed motion, the DWM-aware predictor MAY snap the displayed overlay to the exact current cursor position for a bounded short latch, then release as soon as movement resumes.
-- The experimental post-stop brake MUST be disabled by default and MUST NOT affect `ConstantVelocity`, `LeastSquares`, `ExperimentalMLP`, or `RuntimeEventSafeMLP`.
-- The `DistilledMLP` prediction model MUST NOT require GPU acceleration, runtime model training, network access, or optional machine-learning runtimes in the installed application.
-- The `RuntimeEventSafeMLP` prediction model MAY apply the fixed-weight v21 60Hz CPU-only model as a full cursor displacement prediction while keeping all older prediction models selectable.
-- `RuntimeEventSafeMLP` MUST use only runtime-available cursor history, DWM timing, and polling-derived features. It MUST NOT depend on oracle labels, future cursor positions, generated scenario phase names, generated scenario velocities, or any training-only metadata at runtime.
-- `RuntimeEventSafeMLP` MUST include a runtime-only static/stop guard that can snap the overlay to the exact current cursor position after detected abrupt stops and during stationary cursor history.
-- Switching to `RuntimeEventSafeMLP` in UI MUST preserve the current DWM prediction target offset instead of applying a model-specific automatic offset.
-- The `RuntimeEventSafeMLP` prediction model MUST fall back to the existing baseline behavior when the refresh cadence is outside the model's supported 60Hz range, when runtime history is insufficient, or when model evaluation fails.
-- The `RuntimeEventSafeMLP` prediction model MUST NOT require GPU acceleration, runtime model training, network access, or optional machine-learning runtimes in the installed application.
+- The `SmoothPredictor` prediction model MAY apply the fixed-weight v21 60Hz CPU-only model as a full cursor displacement prediction.
+- `SmoothPredictor` MUST use only runtime-available cursor history, DWM timing, and polling-derived features. It MUST NOT depend on oracle labels, future cursor positions, generated scenario phase names, generated scenario velocities, or any training-only metadata at runtime.
+- `SmoothPredictor` MUST include a runtime-only static/stop guard that can snap the overlay to the exact current cursor position after detected abrupt stops and during stationary cursor history.
+- Switching to `SmoothPredictor` in UI MUST preserve the current DWM prediction target offset instead of applying a model-specific automatic offset.
+- The `SmoothPredictor` prediction model MUST fall back to the existing baseline behavior when the refresh cadence is outside the model's supported 60Hz range, when runtime history is insufficient, or when model evaluation fails.
+- The `SmoothPredictor` prediction model MUST NOT require GPU acceleration, runtime model training, network access, or optional machine-learning runtimes in the installed application.
+- Persisted settings that reference removed prediction model IDs MUST normalize to `SmoothPredictor` when they correspond to a previous ML-family model.
 - The default prediction gain SHOULD be `100%`.
 - Prediction gain MUST be configurable within `50%` to `150%`.
 - The configured prediction gain SHOULD apply to both the DWM-aware polling predictor and the fixed-horizon fallback predictor.
@@ -178,7 +167,7 @@ Recommended extended window styles:
 - The controller MUST ignore stale or out-of-order poll samples and SHOULD expose a diagnostic counter for ignored stale samples.
 - If DWM timing is unavailable or invalid, the scheduler MUST fall back to a documented high-resolution interval loop.
 - Invalid, late, stale, or excessive DWM horizons MUST fall back to exact pointer positioning or a documented fixed-horizon fallback.
-- The implementation SHOULD expose diagnostic counters for invalid DWM horizon, late DWM horizon, excessive horizon, fallback-to-hold, prediction reset due to invalid `dt` or idle gaps, scheduled-target use, scheduled-target adjustment, overlay updates that complete after or near the target vblank, and `ExperimentalMLP` skip/evaluate/apply decisions.
+- The implementation SHOULD expose diagnostic counters for invalid DWM horizon, late DWM horizon, excessive horizon, fallback-to-hold, prediction reset due to invalid `dt` or idle gaps, scheduled-target use, scheduled-target adjustment, and overlay updates that complete after or near the target vblank.
 - The overlay MUST apply hot spot placement after choosing the exact or predicted pointer position.
 - Prediction reset MUST occur when the overlay is hidden, the controller is disposed, prediction is disabled, or prediction-related settings change.
 - Cursor capture failure MUST preserve current fallback behavior: if the previous image is still available, the overlay SHOULD move using the current exact or predicted display position.
@@ -212,9 +201,7 @@ Recommended extended window styles:
 - The settings window MUST provide a control for selecting the prediction model.
 - The settings window MUST provide a control for prediction gain.
 - The settings window MUST provide a control for the DWM prediction target offset.
-- The settings window SHOULD provide a control for the off-by-default experimental `DistilledMLP` post-stop brake.
-- When predictive overlay positioning is disabled in the settings window, the prediction model, prediction gain, prediction target offset, and post-stop brake controls MUST be disabled visually and functionally.
-- When any model other than `DistilledMLP` is selected, the post-stop brake control MUST be disabled visually and functionally.
+- When predictive overlay positioning is disabled in the settings window, the prediction model, prediction gain, and prediction target offset controls MUST be disabled visually and functionally.
 - The settings window MUST provide controls for moving opacity, fade duration, and idle delay.
 - When movement translucency mode is disabled in the settings window, moving opacity, fade duration, and idle delay controls MUST be disabled visually and functionally.
 - The settings window MUST provide controls for idle fade enablement, idle opacity, idle fade duration, and idle fade delay.

@@ -40,7 +40,8 @@
 - The interactive Save command SHOULD use a standard save-file dialog with a timestamped default filename.
 - The calibrator MAY support an explicit command-line output path for automation. When that output path is provided, an auto-run calibration MAY save to that path without showing the save-file dialog.
 - The calibrator MAY support command-line prediction setting overrides for controlled experiments, including prediction enabled state, prediction model, prediction gain, prediction horizon, DWM prediction horizon cap, DWM prediction target offset, DWM adaptive gain parameters, DWM adaptive reversal cooldown, DWM adaptive oscillation suppression, and prediction idle reset.
-- Command-line prediction model names SHOULD accept the same external model names as the UI: `ConstantVelocity`, `LeastSquares`, `ExperimentalMLP`, `DistilledMLP`, and `RuntimeEventSafeMLP`.
+- Command-line prediction model names SHOULD accept the same external model names as the UI: `ConstantVelocity`, `LeastSquares`, and `SmoothPredictor`.
+- Command-line parsing MAY accept removed ML-family model names as compatibility aliases that normalize to `SmoothPredictor`.
 - Command-line motion source selection SHOULD accept `--motion-package path.zip`.
 - The calibrator MAY support command-line runtime mode overrides. Runtime mode names SHOULD accept `ProductRuntime` and `SimpleTimer`.
 - Command-line prediction setting overrides MUST be normalized through the same settings bounds as normal Cursor Mirror settings.

@@ -74,21 +74,6 @@ namespace CursorMirror
         [DataMember(Order = 23)]
         public int DwmPredictionModel { get; set; }
 
-        [DataMember(Order = 24)]
-        public long PredictionExperimentalMlpSkippedByRecentSpeed { get; set; }
-
-        [DataMember(Order = 25)]
-        public long PredictionExperimentalMlpSkippedByPathSpeed { get; set; }
-
-        [DataMember(Order = 26)]
-        public long PredictionExperimentalMlpEvaluated { get; set; }
-
-        [DataMember(Order = 27)]
-        public long PredictionExperimentalMlpRejected { get; set; }
-
-        [DataMember(Order = 28)]
-        public long PredictionExperimentalMlpApplied { get; set; }
-
         [DataMember(Order = 29)]
         public string MotionSourceName { get; set; }
 

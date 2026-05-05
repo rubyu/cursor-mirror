@@ -5,7 +5,7 @@ using System;
 
 namespace CursorMirror
 {
-    internal sealed class RuntimeEventSafeMlpPredictionModel
+    internal sealed class SmoothPredictorModel
     {
         public const string ModelId = "mlp_h32_event_safe_runtime_latch_cap0p35_seed2205";
         public const int FeatureCount = 25;
@@ -196,3 +196,4 @@ namespace CursorMirror
         }
     }
 }
+

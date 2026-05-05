@@ -16,7 +16,6 @@ namespace CursorMirror.Tests
             suite.Add("COT-MSU-15", PredictionGainDependentControlDisabled);
             suite.Add("COT-MSU-16", PredictionModelSelection);
             suite.Add("COT-MSU-17", PredictionTargetOffsetControl);
-            suite.Add("COT-MSU-18", DistilledMlpPostStopBrakeControl);
             suite.Add("COT-MSU-19", RuntimeSchedulerControls);
             suite.Add("COT-MSU-20", SettingsWindowGroupedLayout);
         }
@@ -140,7 +139,6 @@ namespace CursorMirror.Tests
                         NumericUpDown predictionGainInput = GetField<NumericUpDown>(window, "_predictionGainInput");
                         Label predictionTargetOffsetLabel = GetField<Label>(window, "_predictionTargetOffsetLabel");
                         NumericUpDown predictionTargetOffsetInput = GetField<NumericUpDown>(window, "_predictionTargetOffsetInput");
-                        CheckBox postStopBrakeCheckBox = GetField<CheckBox>(window, "_distilledMlpPostStopBrakeCheckBox");
 
                         TestAssert.True(predictionModelLabel.Enabled, "prediction model label initially enabled");
                         TestAssert.True(predictionModelInput.Enabled, "prediction model input initially enabled");
@@ -148,7 +146,6 @@ namespace CursorMirror.Tests
                         TestAssert.True(predictionGainInput.Enabled, "prediction gain input initially enabled");
                         TestAssert.True(predictionTargetOffsetLabel.Enabled, "prediction target offset label initially enabled");
                         TestAssert.True(predictionTargetOffsetInput.Enabled, "prediction target offset input initially enabled");
-                        TestAssert.False(postStopBrakeCheckBox.Enabled, "post-stop brake initially disabled for constant velocity");
 
                         predictionCheckBox.Checked = false;
 
@@ -158,7 +155,6 @@ namespace CursorMirror.Tests
                         TestAssert.False(predictionGainInput.Enabled, "prediction gain input disabled");
                         TestAssert.False(predictionTargetOffsetLabel.Enabled, "prediction target offset label disabled");
                         TestAssert.False(predictionTargetOffsetInput.Enabled, "prediction target offset input disabled");
-                        TestAssert.False(postStopBrakeCheckBox.Enabled, "post-stop brake disabled with prediction");
                         TestAssert.False(controller.CurrentSettings.PredictionEnabled, "prediction setting updated");
 
                         predictionCheckBox.Checked = true;
@@ -169,7 +165,6 @@ namespace CursorMirror.Tests
                         TestAssert.True(predictionGainInput.Enabled, "prediction gain input re-enabled");
                         TestAssert.True(predictionTargetOffsetLabel.Enabled, "prediction target offset label re-enabled");
                         TestAssert.True(predictionTargetOffsetInput.Enabled, "prediction target offset input re-enabled");
-                        TestAssert.False(postStopBrakeCheckBox.Enabled, "post-stop brake remains disabled outside DistilledMLP");
                     }
                 }
                 finally
@@ -197,14 +192,11 @@ namespace CursorMirror.Tests
                     {
                         ComboBox predictionModelInput = GetField<ComboBox>(window, "_predictionModelInput");
                         NumericUpDown predictionTargetOffsetInput = GetField<NumericUpDown>(window, "_predictionTargetOffsetInput");
-                        CheckBox postStopBrakeCheckBox = GetField<CheckBox>(window, "_distilledMlpPostStopBrakeCheckBox");
 
-                        TestAssert.Equal(5, predictionModelInput.Items.Count, "prediction model option count");
+                        TestAssert.Equal(3, predictionModelInput.Items.Count, "prediction model option count");
                         TestAssert.Equal("ConstantVelocity (default)", predictionModelInput.Items[0].ToString(), "constant velocity default option");
                         TestAssert.Equal("LeastSquares", predictionModelInput.Items[1].ToString(), "least-squares option");
-                        TestAssert.Equal("ExperimentalMLP", predictionModelInput.Items[2].ToString(), "experimental MLP option");
-                        TestAssert.Equal("DistilledMLP", predictionModelInput.Items[3].ToString(), "distilled MLP option");
-                        TestAssert.Equal("RuntimeEventSafeMLP", predictionModelInput.Items[4].ToString(), "runtime event-safe MLP option");
+                        TestAssert.Equal("SmoothPredictor", predictionModelInput.Items[2].ToString(), "smooth predictor option");
                         TestAssert.Equal(0, predictionModelInput.SelectedIndex, "constant velocity selected by default");
 
                         predictionModelInput.SelectedIndex = 1;
@@ -213,26 +205,13 @@ namespace CursorMirror.Tests
 
                         predictionModelInput.SelectedIndex = 2;
 
-                        TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelExperimentalMlp, controller.CurrentSettings.DwmPredictionModel, "experimental MLP selection applied");
-
-                        predictionModelInput.SelectedIndex = 3;
-
-                        TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelDistilledMlp, controller.CurrentSettings.DwmPredictionModel, "distilled MLP selection applied");
-                        TestAssert.Equal(CursorMirrorSettings.DefaultDwmPredictionTargetOffsetMilliseconds, controller.CurrentSettings.DwmPredictionTargetOffsetMilliseconds, "distilled MLP selection preserves target offset");
-                        TestAssert.Equal(CursorMirrorSettings.DefaultDwmPredictionTargetOffsetDisplayMilliseconds, (int)predictionTargetOffsetInput.Value, "distilled MLP target offset input preserved");
-                        TestAssert.True(postStopBrakeCheckBox.Enabled, "post-stop brake enabled for DistilledMLP");
+                        TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelSmoothPredictor, controller.CurrentSettings.DwmPredictionModel, "smooth predictor selection applied");
+                        TestAssert.Equal(CursorMirrorSettings.DefaultDwmPredictionTargetOffsetMilliseconds, controller.CurrentSettings.DwmPredictionTargetOffsetMilliseconds, "smooth predictor selection preserves target offset");
+                        TestAssert.Equal(CursorMirrorSettings.DefaultDwmPredictionTargetOffsetDisplayMilliseconds, (int)predictionTargetOffsetInput.Value, "smooth predictor target offset input preserved");
 
                         predictionModelInput.SelectedIndex = 0;
 
                         TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, controller.CurrentSettings.DwmPredictionModel, "constant velocity selection applied");
-
-                        predictionTargetOffsetInput.Value = CursorMirrorSettings.DefaultDwmPredictionTargetOffsetDisplayMilliseconds;
-                        predictionModelInput.SelectedIndex = 4;
-
-                        TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelRuntimeEventSafeMlp, controller.CurrentSettings.DwmPredictionModel, "runtime event-safe MLP selection applied");
-                        TestAssert.Equal(CursorMirrorSettings.DefaultDwmPredictionTargetOffsetMilliseconds, controller.CurrentSettings.DwmPredictionTargetOffsetMilliseconds, "runtime event-safe MLP selection preserves target offset");
-                        TestAssert.Equal(CursorMirrorSettings.DefaultDwmPredictionTargetOffsetDisplayMilliseconds, (int)predictionTargetOffsetInput.Value, "runtime event-safe MLP target offset input preserved");
-                        TestAssert.False(postStopBrakeCheckBox.Enabled, "post-stop brake disabled for RuntimeEventSafeMLP");
                     }
                 }
                 finally
@@ -267,46 +246,6 @@ namespace CursorMirror.Tests
                         predictionTargetOffsetInput.Value = -4;
 
                         TestAssert.Equal(4, controller.CurrentSettings.DwmPredictionTargetOffsetMilliseconds, "target offset selection applied");
-                    }
-                }
-                finally
-                {
-                    DeleteDirectory(directory);
-                }
-            });
-        }
-
-        // Distilled MLP post-stop brake control [COT-MSU-18]
-        private static void DistilledMlpPostStopBrakeControl()
-        {
-            RunOnStaThread(delegate
-            {
-                string directory = NewTestDirectory();
-                try
-                {
-                    SettingsController controller = new SettingsController(
-                        new SettingsStore(Path.Combine(directory, "settings.json")),
-                        CursorMirrorSettings.Default(),
-                        delegate { },
-                        delegate { });
-
-                    using (SettingsWindow window = new SettingsWindow(controller))
-                    {
-                        ComboBox predictionModelInput = GetField<ComboBox>(window, "_predictionModelInput");
-                        CheckBox postStopBrakeCheckBox = GetField<CheckBox>(window, "_distilledMlpPostStopBrakeCheckBox");
-
-                        TestAssert.False(postStopBrakeCheckBox.Checked, "post-stop brake default unchecked");
-                        TestAssert.False(postStopBrakeCheckBox.Enabled, "post-stop brake disabled before DistilledMLP");
-
-                        predictionModelInput.SelectedIndex = 3;
-                        postStopBrakeCheckBox.Checked = true;
-
-                        TestAssert.True(controller.CurrentSettings.DistilledMlpPostStopBrakeEnabled, "post-stop brake setting applied");
-
-                        predictionModelInput.SelectedIndex = 0;
-
-                        TestAssert.False(postStopBrakeCheckBox.Enabled, "post-stop brake disabled after leaving DistilledMLP");
-                        TestAssert.True(controller.CurrentSettings.DistilledMlpPostStopBrakeEnabled, "post-stop brake value preserved while disabled");
                     }
                 }
                 finally

@@ -350,24 +350,12 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that high-speed, high-efficiency, one-directional `ConstantVelocity` motion can use a wider prediction displacement cap while ordinary motion remains bounded by the conservative cap.
   Refs: Section 4.4.2.
 
-- COT-MOU-50 - DistilledMLP prediction model is selectable
-  Verify that `DistilledMLP` can be selected as the DWM prediction model and produces a deterministic fixed-weight prediction after sufficient 60Hz history is available.
+- COT-MOU-53 - SmoothPredictor prediction model is selectable
+  Verify that `SmoothPredictor` can be selected as the DWM prediction model and produces a deterministic fixed-weight prediction with runtime-only features after 60Hz history is available.
   Refs: Section 4.4.2.
 
-- COT-MOU-51 - DistilledMLP stationary input falls back to exact position
-  Verify that `DistilledMLP` does not emit model-biased displacement for stationary cursor history and instead returns the exact cursor position.
-  Refs: Section 4.4.2.
-
-- COT-MOU-52 - DistilledMLP post-stop brake snaps after abrupt stop
-  Verify that the off-by-default experimental `DistilledMLP` post-stop brake snaps the displayed overlay to the exact current cursor position immediately after a high-speed abrupt stop when the option is enabled.
-  Refs: Section 4.4.2.
-
-- COT-MOU-53 - RuntimeEventSafeMLP prediction model is selectable
-  Verify that `RuntimeEventSafeMLP` can be selected as the DWM prediction model and produces a deterministic fixed-weight prediction with runtime-only features after 60Hz history is available.
-  Refs: Section 4.4.2.
-
-- COT-MOU-54 - RuntimeEventSafeMLP static and stop guards snap to exact position
-  Verify that `RuntimeEventSafeMLP` snaps to the exact current cursor position for stationary input and immediately after a detected abrupt stop without requiring training-only labels.
+- COT-MOU-54 - SmoothPredictor static and stop guards snap to exact position
+  Verify that `SmoothPredictor` snaps to the exact current cursor position for stationary input and immediately after a detected abrupt stop without requiring training-only labels.
   Refs: Section 4.4.2.
 
 - COT-MOU-55 - Same-location polling skips overlay movement
@@ -423,7 +411,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 #### A.4.S Settings UI and Persistence
 ##### Unit
 - COT-MSU-1 - Settings defaults
-  Verify documented default settings: movement translucency enabled, predictive overlay positioning enabled, prediction model `ConstantVelocity`, prediction gain `100%`, DWM horizon cap `10ms`, DWM prediction target offset display `0ms` with internal `8ms`, experimental `DistilledMLP` post-stop brake disabled, idle fade enabled, moving opacity `70%`, fade duration `80ms`, movement idle delay `120ms`, idle fade duration `80ms`, idle fade delay `3000ms`, and idle opacity `0%`.
+  Verify documented default settings: movement translucency enabled, predictive overlay positioning enabled, prediction model `ConstantVelocity`, prediction gain `100%`, DWM horizon cap `10ms`, DWM prediction target offset display `0ms` with internal `8ms`, idle fade enabled, moving opacity `70%`, fade duration `80ms`, movement idle delay `120ms`, idle fade duration `80ms`, idle fade delay `3000ms`, and idle opacity `0%`.
   Refs: Sections 4.4.1, 4.4.1.1, 4.4.2, 4.5.1.
 
 - COT-MSU-2 - Moving opacity validation
@@ -483,15 +471,11 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Sections 4.4.2, 4.5.1, 6.1.
 
 - COT-MSU-16 - Prediction model selection
-  Verify that the settings window exposes `ConstantVelocity (default)`, `LeastSquares`, `ExperimentalMLP`, `DistilledMLP`, and `RuntimeEventSafeMLP`, selects `ConstantVelocity` by default, applies model changes immediately, and disables the prediction model control when prediction is disabled.
+  Verify that the settings window exposes `ConstantVelocity (default)`, `LeastSquares`, and `SmoothPredictor`, selects `ConstantVelocity` by default, applies model changes immediately, and disables the prediction model control when prediction is disabled.
   Refs: Sections 4.4.2, 4.5.1, 6.1.
 
 - COT-MSU-17 - Prediction target offset control
   Verify that the settings window exposes the user-facing DWM prediction target offset range, applies edited values immediately with the documented `+8ms` origin, disables the control when prediction is disabled, and preserves the current target offset when the prediction model changes.
-  Refs: Sections 4.4.2, 4.5.1, 6.1.
-
-- COT-MSU-18 - DistilledMLP post-stop brake control
-  Verify that the settings window exposes the off-by-default experimental `DistilledMLP` post-stop brake, enables it only when predictive positioning uses `DistilledMLP`, applies edited values immediately, and preserves its value while unavailable.
   Refs: Sections 4.4.2, 4.5.1, 6.1.
 
 - COT-MSU-19 - Runtime scheduler controls
@@ -721,7 +705,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Section 12.4.
 
 - COT-MEU-12 - Demo overlay control state dependencies
-  Verify that demo overlay setting controls are disabled when their parent setting or the demo-owned mirrored cursor overlay is disabled, including `DistilledMLP`-only controls when another prediction model is selected.
+  Verify that demo overlay setting controls are disabled when their parent setting or the demo-owned mirrored cursor overlay is disabled.
   Refs: Section 12.3.
 
 #### A.4.R Resource Management and Failure Handling
@@ -910,5 +894,5 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Sections 4.5.1, 6.3.
 
 - COT-BVM-9 - Prediction settings manual pass
-  Verify that predictive overlay positioning is enabled by default, `ConstantVelocity (default)`, `LeastSquares`, `ExperimentalMLP`, `DistilledMLP`, and `RuntimeEventSafeMLP` can be selected from the settings window, and disabling prediction returns to exact pointer positioning.
+  Verify that predictive overlay positioning is enabled by default, `ConstantVelocity (default)`, `LeastSquares`, and `SmoothPredictor` can be selected from the settings window, and disabling prediction returns to exact pointer positioning.
   Refs: Sections 2.3, 4.4.2, 4.5.1, 6.3.

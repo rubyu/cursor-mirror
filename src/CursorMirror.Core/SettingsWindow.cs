@@ -8,7 +8,6 @@ namespace CursorMirror
     {
         private readonly SettingsController _controller;
         private readonly CheckBox _predictionCheckBox;
-        private readonly CheckBox _distilledMlpPostStopBrakeCheckBox;
         private readonly CheckBox _runtimeSetWaitableTimerExCheckBox;
         private readonly CheckBox _runtimeMessageDeferralCheckBox;
         private readonly CheckBox _runtimeThreadLatencyProfileCheckBox;
@@ -70,7 +69,7 @@ namespace CursorMirror
             layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
             Controls.Add(layout);
 
-            TableLayoutPanel predictionLayout = AddGroup(layout, 0, 0, LocalizedStrings.PredictionCategoryLabel, 5);
+            TableLayoutPanel predictionLayout = AddGroup(layout, 0, 0, LocalizedStrings.PredictionCategoryLabel, 4);
 
             _predictionCheckBox = new CheckBox();
             _predictionCheckBox.Text = LocalizedStrings.PredictiveOverlayPositioningLabel;
@@ -88,13 +87,6 @@ namespace CursorMirror
 
             _predictionGainInput = AddNumberRow(predictionLayout, 2, LocalizedStrings.PredictionGainLabel, CursorMirrorSettings.MinimumPredictionGainPercent, CursorMirrorSettings.MaximumPredictionGainPercent, out _predictionGainLabel);
             _predictionTargetOffsetInput = AddNumberRow(predictionLayout, 3, LocalizedStrings.PredictionTargetOffsetLabel, CursorMirrorSettings.MinimumDwmPredictionTargetOffsetDisplayMilliseconds, CursorMirrorSettings.MaximumDwmPredictionTargetOffsetDisplayMilliseconds, out _predictionTargetOffsetLabel);
-
-            _distilledMlpPostStopBrakeCheckBox = new CheckBox();
-            _distilledMlpPostStopBrakeCheckBox.Text = LocalizedStrings.DistilledMlpPostStopBrakeLabel;
-            _distilledMlpPostStopBrakeCheckBox.AutoSize = true;
-            _distilledMlpPostStopBrakeCheckBox.CheckedChanged += delegate { ApplyFromControls(); };
-            predictionLayout.Controls.Add(_distilledMlpPostStopBrakeCheckBox, 0, 4);
-            predictionLayout.SetColumnSpan(_distilledMlpPostStopBrakeCheckBox, 2);
 
             TableLayoutPanel runtimeLayout = AddGroup(layout, 1, 0, LocalizedStrings.RuntimeSchedulerHeaderLabel, 6);
 
@@ -290,7 +282,6 @@ namespace CursorMirror
                 _predictionGainInput.Value = normalized.PredictionGainPercent;
                 _predictionTargetOffsetInput.Value =
                     CursorMirrorSettings.DwmPredictionTargetOffsetToDisplayMilliseconds(normalized.DwmPredictionTargetOffsetMilliseconds);
-                _distilledMlpPostStopBrakeCheckBox.Checked = normalized.DistilledMlpPostStopBrakeEnabled;
                 _runtimeSetWaitableTimerExCheckBox.Checked = normalized.RuntimeSetWaitableTimerExEnabled;
                 _runtimeFineWaitInput.Value = normalized.RuntimeFineWaitAdvanceMicroseconds;
                 _runtimeSpinThresholdInput.Value = normalized.RuntimeFineWaitYieldThresholdMicroseconds;
@@ -330,7 +321,6 @@ namespace CursorMirror
             settings.PredictionGainPercent = (int)_predictionGainInput.Value;
             settings.DwmPredictionTargetOffsetMilliseconds =
                 CursorMirrorSettings.DwmPredictionTargetOffsetFromDisplayMilliseconds((int)_predictionTargetOffsetInput.Value);
-            settings.DistilledMlpPostStopBrakeEnabled = _distilledMlpPostStopBrakeCheckBox.Checked;
             settings.RuntimeSetWaitableTimerExEnabled = _runtimeSetWaitableTimerExCheckBox.Checked;
             settings.RuntimeFineWaitAdvanceMicroseconds = (int)_runtimeFineWaitInput.Value;
             settings.RuntimeFineWaitYieldThresholdMicroseconds = (int)_runtimeSpinThresholdInput.Value;
@@ -363,9 +353,6 @@ namespace CursorMirror
             _predictionGainInput.Enabled = enabled;
             _predictionTargetOffsetLabel.Enabled = enabled;
             _predictionTargetOffsetInput.Enabled = enabled;
-            _distilledMlpPostStopBrakeCheckBox.Enabled =
-                enabled &&
-                PredictionModelFromSelection(_predictionModelInput) == CursorMirrorSettings.DwmPredictionModelDistilledMlp;
         }
 
         private static void ReplacePredictionModelItems(ComboBox comboBox, int selectedModel)
@@ -376,9 +363,7 @@ namespace CursorMirror
                 comboBox.Items.Clear();
                 comboBox.Items.Add(LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelConstantVelocity));
                 comboBox.Items.Add(LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelLeastSquares));
-                comboBox.Items.Add(LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelExperimentalMlp));
-                comboBox.Items.Add(LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelDistilledMlp));
-                comboBox.Items.Add(LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelRuntimeEventSafeMlp));
+                comboBox.Items.Add(LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelSmoothPredictor));
                 comboBox.SelectedIndex = PredictionModelIndex(selectedModel);
             }
             finally
@@ -396,17 +381,7 @@ namespace CursorMirror
 
             if (comboBox.SelectedIndex == 2)
             {
-                return CursorMirrorSettings.DwmPredictionModelExperimentalMlp;
-            }
-
-            if (comboBox.SelectedIndex == 3)
-            {
-                return CursorMirrorSettings.DwmPredictionModelDistilledMlp;
-            }
-
-            if (comboBox.SelectedIndex == 4)
-            {
-                return CursorMirrorSettings.DwmPredictionModelRuntimeEventSafeMlp;
+                return CursorMirrorSettings.DwmPredictionModelSmoothPredictor;
             }
 
             return CursorMirrorSettings.DwmPredictionModelConstantVelocity;
@@ -419,19 +394,9 @@ namespace CursorMirror
                 return 1;
             }
 
-            if (model == CursorMirrorSettings.DwmPredictionModelExperimentalMlp)
+            if (CursorMirrorSettings.NormalizeDwmPredictionModel(model) == CursorMirrorSettings.DwmPredictionModelSmoothPredictor)
             {
                 return 2;
-            }
-
-            if (model == CursorMirrorSettings.DwmPredictionModelDistilledMlp)
-            {
-                return 3;
-            }
-
-            if (model == CursorMirrorSettings.DwmPredictionModelRuntimeEventSafeMlp)
-            {
-                return 4;
             }
 
             return 0;

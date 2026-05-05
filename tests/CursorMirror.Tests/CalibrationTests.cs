@@ -291,8 +291,11 @@ namespace CursorMirror.Tests
             CalibratorRunOptions predictionOptions = CalibratorRunOptions.FromArguments(new[] { "--dwm-target-offset-ms", "3" });
             TestAssert.Equal(3, predictionOptions.DwmPredictionTargetOffsetMilliseconds.Value, "DWM prediction target offset option");
 
-            CalibratorRunOptions runtimeEventSafeOptions = CalibratorRunOptions.FromArguments(new[] { "--dwm-prediction-model", "RuntimeEventSafeMLP" });
-            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelRuntimeEventSafeMlp, runtimeEventSafeOptions.DwmPredictionModel.Value, "runtime event-safe MLP prediction model option");
+            CalibratorRunOptions smoothOptions = CalibratorRunOptions.FromArguments(new[] { "--dwm-prediction-model", "SmoothPredictor" });
+            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelSmoothPredictor, smoothOptions.DwmPredictionModel.Value, "SmoothPredictor prediction model option");
+
+            CalibratorRunOptions oldAliasOptions = CalibratorRunOptions.FromArguments(new[] { "--dwm-prediction-model", "RuntimeEventSafeMLP" });
+            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelSmoothPredictor, oldAliasOptions.DwmPredictionModel.Value, "old runtime event-safe MLP alias migrates to SmoothPredictor");
 
             CalibratorRunOptions outlierOptions = CalibratorRunOptions.FromArguments(new[] { "--product-runtime-outlier-output", "product-runtime.zip" });
             TestAssert.Equal("product-runtime.zip", outlierOptions.ProductRuntimeOutlierOutputPath, "product runtime outlier output option");

@@ -166,8 +166,7 @@ namespace CursorMirror
                 _settings.DwmAdaptiveOscillationMaximumEfficiencyPercent != normalized.DwmAdaptiveOscillationMaximumEfficiencyPercent ||
                 _settings.DwmAdaptiveOscillationLatchMilliseconds != normalized.DwmAdaptiveOscillationLatchMilliseconds ||
                 _settings.DwmPredictionModel != normalized.DwmPredictionModel ||
-                _settings.DwmPredictionTargetOffsetMilliseconds != normalized.DwmPredictionTargetOffsetMilliseconds ||
-                _settings.DistilledMlpPostStopBrakeEnabled != normalized.DistilledMlpPostStopBrakeEnabled;
+                _settings.DwmPredictionTargetOffsetMilliseconds != normalized.DwmPredictionTargetOffsetMilliseconds;
 
             _settings = normalized;
             _opacityController.ApplySettings(_settings);

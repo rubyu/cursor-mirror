@@ -36,52 +36,27 @@ namespace CursorMirror
         private const double LeastSquaresLowNetHorizonPixels = 32.0;
         private const double LeastSquaresMaximumPredictionPixels = 48.0;
         private const double LeastSquaresNetDisplacementScale = 0.8;
-        private const double ExperimentalMlpPathWindowMilliseconds = 72.0;
-        private const double ExperimentalMlpFeatureHorizonScaleMilliseconds = 16.67;
-        private const double ExperimentalMlpApplyMaximumSpeedPixelsPerSecond = 1000.0;
-        private const double DistilledMlpMinimumRefreshMilliseconds = 14.0;
-        private const double DistilledMlpMaximumRefreshMilliseconds = 19.5;
-        private const double DistilledMlpMaximumPredictionPixels = 48.0;
-        private const double DistilledMlpStepBaselineHorizonOffsetMilliseconds = -2.0;
-        private const double DistilledMlpStepBaselineMaximumPredictionPixels = 12.0;
-        private const double DistilledMlpStepBaselineMinimumEfficiency = 0.35;
-        private const double DistilledMlpStepBaselineMinimumSpeedPixelsPerSecond = 25.0;
-        private const double DistilledMlpStationaryMaximumSpeedPixelsPerSecond = 25.0;
-        private const double DistilledMlpStationaryMaximumNetPixels = 0.75;
-        private const double DistilledMlpStationaryMaximumPathPixels = 1.5;
-        private const int DistilledMlpPostStopBrakeLatchFrames = 10;
-        private const int DistilledMlpPostStopBrakeRecentSegmentSamples = 6;
-        private const double DistilledMlpPostStopBrakeStartVelocity2MaximumPixelsPerSecond = 0.0;
-        private const double DistilledMlpPostStopBrakeStartTargetMaximumPixels = 0.1;
-        private const double DistilledMlpPostStopBrakeRecentHighMinimumPixelsPerSecond = 400.0;
-        private const double DistilledMlpPostStopBrakeReleaseVelocity2MinimumPixelsPerSecond = 50.0;
-        private const double DistilledMlpPostStopBrakeReleaseTargetMinimumPixels = 0.25;
-        private const double RuntimeEventSafeMlpMinimumRefreshMilliseconds = 14.0;
-        private const double RuntimeEventSafeMlpMaximumRefreshMilliseconds = 19.5;
-        private const double RuntimeEventSafeMlpMaximumPredictionPixels = 48.0;
-        private const int RuntimeEventSafeMlpStopLatchFrames = 10;
-        private const double RuntimeEventSafeMlpStopCapPixels = 0.35;
-        private const int RuntimeEventSafeMlpRecentSegmentSamples = 6;
-        private const double RuntimeEventSafeMlpStopStartRecentHighMinimumPixelsPerSecond = 400.0;
-        private const double RuntimeEventSafeMlpStopStartVelocity2MaximumPixelsPerSecond = 140.0;
-        private const double RuntimeEventSafeMlpStopStartLatestDeltaMaximumPixels = 2.5;
-        private const double RuntimeEventSafeMlpStopStartRuntimeTargetMaximumPixels = 1.25;
-        private const double RuntimeEventSafeMlpStopReleaseVelocity2MinimumPixelsPerSecond = 220.0;
-        private const double RuntimeEventSafeMlpStopReleaseLatestDeltaMinimumPixels = 3.0;
-        private const double RuntimeEventSafeMlpStopReleaseRuntimeTargetMinimumPixels = 1.5;
-        private const double RuntimeEventSafeMlpStaticVelocity12MaximumPixelsPerSecond = 100.0;
-        private const double RuntimeEventSafeMlpStaticLatestDeltaMaximumPixels = 1.25;
-        private const double RuntimeEventSafeMlpStaticRuntimeTargetMaximumPixels = 0.75;
+        private const double SmoothPredictorMinimumRefreshMilliseconds = 14.0;
+        private const double SmoothPredictorMaximumRefreshMilliseconds = 19.5;
+        private const double SmoothPredictorMaximumPredictionPixels = 48.0;
+        private const int SmoothPredictorStopLatchFrames = 10;
+        private const double SmoothPredictorStopCapPixels = 0.35;
+        private const int SmoothPredictorRecentSegmentSamples = 6;
+        private const double SmoothPredictorStopStartRecentHighMinimumPixelsPerSecond = 400.0;
+        private const double SmoothPredictorStopStartVelocity2MaximumPixelsPerSecond = 140.0;
+        private const double SmoothPredictorStopStartLatestDeltaMaximumPixels = 2.5;
+        private const double SmoothPredictorStopStartRuntimeTargetMaximumPixels = 1.25;
+        private const double SmoothPredictorStopReleaseVelocity2MinimumPixelsPerSecond = 220.0;
+        private const double SmoothPredictorStopReleaseLatestDeltaMinimumPixels = 3.0;
+        private const double SmoothPredictorStopReleaseRuntimeTargetMinimumPixels = 1.5;
+        private const double SmoothPredictorStaticVelocity12MaximumPixelsPerSecond = 100.0;
+        private const double SmoothPredictorStaticLatestDeltaMaximumPixels = 1.25;
+        private const double SmoothPredictorStaticRuntimeTargetMaximumPixels = 0.75;
         private readonly double[] _historyX = new double[HistoryCapacity + 1];
         private readonly double[] _historyY = new double[HistoryCapacity + 1];
         private readonly long[] _historyTimestampTicks = new long[HistoryCapacity + 1];
-        private readonly ExperimentalMlpPredictionModel _experimentalMlpPredictionModel = new ExperimentalMlpPredictionModel();
-        private readonly float[] _experimentalMlpTeacherInput = new float[ExperimentalMlpPredictionModel.TeacherInputCount];
-        private readonly DistilledMlpPredictionModel _distilledMlpPredictionModel = new DistilledMlpPredictionModel();
-        private readonly float[] _distilledMlpScalarInput = new float[DistilledMlpPredictionModel.ScalarFeatureCount];
-        private readonly float[] _distilledMlpSequenceInput = new float[DistilledMlpPredictionModel.SequenceLength * DistilledMlpPredictionModel.SequenceFeatureCount];
-        private readonly RuntimeEventSafeMlpPredictionModel _runtimeEventSafeMlpPredictionModel = new RuntimeEventSafeMlpPredictionModel();
-        private readonly float[] _runtimeEventSafeMlpInput = new float[RuntimeEventSafeMlpPredictionModel.FeatureCount];
+        private readonly SmoothPredictorModel _smoothPredictorModel = new SmoothPredictorModel();
+        private readonly float[] _smoothPredictorInput = new float[SmoothPredictorModel.FeatureCount];
         private bool _hasSample;
         private double _lastX;
         private double _lastY;
@@ -107,9 +82,7 @@ namespace CursorMirror
         private int _adaptiveOscillationLatchMilliseconds;
         private int _predictionModel;
         private int _targetOffsetMilliseconds;
-        private bool _distilledMlpPostStopBrakeEnabled;
-        private int _distilledMlpPostStopBrakeRemainingFrames;
-        private int _runtimeEventSafeMlpStopLatchRemainingFrames;
+        private int _smoothPredictorStopLatchRemainingFrames;
         private int _historyCount;
         private int _historyNextIndex;
         private long _oscillationLatchUntilTicks;
@@ -211,7 +184,6 @@ namespace CursorMirror
                 normalized.DwmAdaptiveOscillationLatchMilliseconds);
             ApplyPredictionModel(normalized.DwmPredictionModel);
             ApplyPredictionTargetOffsetMilliseconds(normalized.DwmPredictionTargetOffsetMilliseconds);
-            ApplyDistilledMlpPostStopBrakeEnabled(normalized.DistilledMlpPostStopBrakeEnabled);
         }
 
         public void ApplySettings(int idleResetMilliseconds, int predictionGainPercent, int horizonCapMilliseconds)
@@ -268,7 +240,6 @@ namespace CursorMirror
                 adaptiveReversalCooldownSamples);
             ApplyPredictionModel(CursorMirrorSettings.DefaultDwmPredictionModel);
             ApplyPredictionTargetOffsetMilliseconds(CursorMirrorSettings.DefaultDwmPredictionTargetOffsetMilliseconds);
-            ApplyDistilledMlpPostStopBrakeEnabled(CursorMirrorSettings.DefaultDistilledMlpPostStopBrakeEnabled);
         }
 
         public void ApplyIdleResetMilliseconds(int idleResetMilliseconds)
@@ -365,12 +336,10 @@ namespace CursorMirror
 
         public void ApplyPredictionModel(int predictionModel)
         {
-            int normalized = Math.Max(
-                CursorMirrorSettings.MinimumDwmPredictionModel,
-                Math.Min(CursorMirrorSettings.MaximumDwmPredictionModel, predictionModel));
+            int normalized = CursorMirrorSettings.NormalizeDwmPredictionModel(predictionModel);
             if (_predictionModel != normalized)
             {
-                _runtimeEventSafeMlpStopLatchRemainingFrames = 0;
+                _smoothPredictorStopLatchRemainingFrames = 0;
             }
 
             _predictionModel = normalized;
@@ -381,15 +350,6 @@ namespace CursorMirror
             _targetOffsetMilliseconds = Math.Max(
                 CursorMirrorSettings.MinimumDwmPredictionTargetOffsetMilliseconds,
                 Math.Min(CursorMirrorSettings.MaximumDwmPredictionTargetOffsetMilliseconds, targetOffsetMilliseconds));
-        }
-
-        public void ApplyDistilledMlpPostStopBrakeEnabled(bool enabled)
-        {
-            _distilledMlpPostStopBrakeEnabled = enabled;
-            if (!enabled)
-            {
-                _distilledMlpPostStopBrakeRemainingFrames = 0;
-            }
         }
 
         public void Reset()
@@ -408,8 +368,7 @@ namespace CursorMirror
             _oscillationLatchUntilTicks = 0;
             _leastSquaresFreshSampleCount = 0;
             _leastSquaresLowHorizonUntilTicks = 0;
-            _distilledMlpPostStopBrakeRemainingFrames = 0;
-            _runtimeEventSafeMlpStopLatchRemainingFrames = 0;
+            _smoothPredictorStopLatchRemainingFrames = 0;
         }
 
         public Point PredictRounded(CursorPollSample sample, CursorPredictionCounters counters)
@@ -507,56 +466,19 @@ namespace CursorMirror
             ClampVector(ref dxConstantVelocity, ref dyConstantVelocity, maximumPredictionPixels);
             double predictedX = sample.Position.X + dxConstantVelocity;
             double predictedY = sample.Position.Y + dyConstantVelocity;
-            if (_predictionModel == CursorMirrorSettings.DwmPredictionModelDistilledMlp)
+            if (_predictionModel == CursorMirrorSettings.DwmPredictionModelSmoothPredictor)
             {
-                float distilledDx;
-                float distilledDy;
-                if (TryEvaluateDistilledMlpPrediction(
+                float smoothPredictorDx;
+                float smoothPredictorDy;
+                if (TryEvaluateSmoothPredictorPrediction(
                     sample,
                     horizonTicks,
                     effectiveRefreshPeriodTicks,
-                    out distilledDx,
-                    out distilledDy))
+                    out smoothPredictorDx,
+                    out smoothPredictorDy))
                 {
-                    predictedX = sample.Position.X + distilledDx;
-                    predictedY = sample.Position.Y + distilledDy;
-                }
-            }
-            else if (_predictionModel == CursorMirrorSettings.DwmPredictionModelRuntimeEventSafeMlp)
-            {
-                float runtimeEventSafeDx;
-                float runtimeEventSafeDy;
-                if (TryEvaluateRuntimeEventSafeMlpPrediction(
-                    sample,
-                    horizonTicks,
-                    effectiveRefreshPeriodTicks,
-                    out runtimeEventSafeDx,
-                    out runtimeEventSafeDy))
-                {
-                    predictedX = sample.Position.X + runtimeEventSafeDx;
-                    predictedY = sample.Position.Y + runtimeEventSafeDy;
-                }
-            }
-            else if (_predictionModel == CursorMirrorSettings.DwmPredictionModelExperimentalMlp)
-            {
-                float correctionX;
-                float correctionY;
-                float gateProbability;
-                double horizonMilliseconds = horizonTicks * 1000.0 / sample.StopwatchFrequency;
-                if (TryEvaluateExperimentalMlpPrediction(
-                    counters,
-                    sample,
-                    horizonMilliseconds,
-                    velocityXPerSecond,
-                    velocityYPerSecond,
-                    dxConstantVelocity,
-                    dyConstantVelocity,
-                    out correctionX,
-                    out correctionY,
-                    out gateProbability))
-                {
-                    predictedX += correctionX;
-                    predictedY += correctionY;
+                    predictedX = sample.Position.X + smoothPredictorDx;
+                    predictedY = sample.Position.Y + smoothPredictorDy;
                 }
             }
 
@@ -564,383 +486,7 @@ namespace CursorMirror
             return new PointF((float)predictedX, (float)predictedY);
         }
 
-        private bool TryEvaluateExperimentalMlpPrediction(
-            CursorPredictionCounters counters,
-            CursorPollSample sample,
-            double horizonMilliseconds,
-            double velocityXPerSecond,
-            double velocityYPerSecond,
-            double baselineDisplacementX,
-            double baselineDisplacementY,
-            out float correctionX,
-            out float correctionY,
-            out float gateProbability)
-        {
-            correctionX = 0.0f;
-            correctionY = 0.0f;
-            gateProbability = 0.0f;
-            if (_historyCount < 4 || sample.StopwatchFrequency <= 0 || horizonMilliseconds <= 0)
-            {
-                return false;
-            }
-
-            double speed = Magnitude(velocityXPerSecond, velocityYPerSecond);
-            if (speed >= ExperimentalMlpApplyMaximumSpeedPixelsPerSecond)
-            {
-                counters.ExperimentalMlpSkippedByRecentSpeed++;
-                return false;
-            }
-
-            ExperimentalMlpPathAnalysis pathAnalysis;
-            if (!TryAnalyzeExperimentalMlpPath(sample, out pathAnalysis))
-            {
-                pathAnalysis = new ExperimentalMlpPathAnalysis();
-            }
-            else if (pathAnalysis.Net * 1000.0 / ExperimentalMlpPathWindowMilliseconds >= ExperimentalMlpApplyMaximumSpeedPixelsPerSecond)
-            {
-                counters.ExperimentalMlpSkippedByPathSpeed++;
-                return false;
-            }
-
-            FillExperimentalMlpTeacherInput(
-                sample,
-                horizonMilliseconds,
-                velocityXPerSecond,
-                velocityYPerSecond,
-                speed,
-                pathAnalysis,
-                baselineDisplacementX,
-                baselineDisplacementY);
-
-            double alphaBetaCorrectionX;
-            double alphaBetaCorrectionY;
-            ComputeExperimentalMlpAlphaBetaCorrection(
-                sample,
-                horizonMilliseconds,
-                velocityXPerSecond,
-                velocityYPerSecond,
-                speed,
-                baselineDisplacementX,
-                baselineDisplacementY,
-                out alphaBetaCorrectionX,
-                out alphaBetaCorrectionY);
-
-            double baselineDisplacement = Magnitude(baselineDisplacementX, baselineDisplacementY);
-            counters.ExperimentalMlpEvaluated++;
-            if (_experimentalMlpPredictionModel.TryEvaluate(
-                _experimentalMlpTeacherInput,
-                (float)alphaBetaCorrectionX,
-                (float)alphaBetaCorrectionY,
-                (float)baselineDisplacement,
-                (float)pathAnalysis.Efficiency,
-                (float)(speed / 5000.0),
-                (float)horizonMilliseconds,
-                out correctionX,
-                out correctionY,
-                out gateProbability))
-            {
-                counters.ExperimentalMlpApplied++;
-                return true;
-            }
-
-            counters.ExperimentalMlpRejected++;
-            return false;
-        }
-
-        private void FillExperimentalMlpTeacherInput(
-            CursorPollSample sample,
-            double horizonMilliseconds,
-            double velocityXPerSecond,
-            double velocityYPerSecond,
-            double speed,
-            ExperimentalMlpPathAnalysis pathAnalysis,
-            double baselineDisplacementX,
-            double baselineDisplacementY)
-        {
-            Array.Clear(_experimentalMlpTeacherInput, 0, _experimentalMlpTeacherInput.Length);
-            int priorCount = Math.Min(_historyCount, ExperimentalMlpPredictionModel.SequenceLength - 1);
-            int totalCount = priorCount + 1;
-            int outputRow = ExperimentalMlpPredictionModel.SequenceLength - totalCount;
-            double previousX = priorCount > 0 ? _historyX[PriorHistoryIndex(0, priorCount)] : sample.Position.X;
-            double previousY = priorCount > 0 ? _historyY[PriorHistoryIndex(0, priorCount)] : sample.Position.Y;
-            long previousTicks = priorCount > 0 ? _historyTimestampTicks[PriorHistoryIndex(0, priorCount)] : sample.TimestampTicks;
-
-            for (int i = 0; i < priorCount; i++)
-            {
-                int historyIndex = PriorHistoryIndex(i, priorCount);
-                FillExperimentalMlpSequenceRow(
-                    outputRow++,
-                    _historyX[historyIndex],
-                    _historyY[historyIndex],
-                    _historyTimestampTicks[historyIndex],
-                    sample,
-                    ref previousX,
-                    ref previousY,
-                    ref previousTicks);
-            }
-
-            FillExperimentalMlpSequenceRow(
-                outputRow,
-                sample.Position.X,
-                sample.Position.Y,
-                sample.TimestampTicks,
-                sample,
-                ref previousX,
-                ref previousY,
-                ref previousTicks);
-
-            int contextOffset = ExperimentalMlpPredictionModel.SequenceLength * ExperimentalMlpPredictionModel.SequenceFeatureCount;
-            double baselineDisplacement = Magnitude(baselineDisplacementX, baselineDisplacementY);
-            _experimentalMlpTeacherInput[contextOffset] = (float)(horizonMilliseconds / ExperimentalMlpFeatureHorizonScaleMilliseconds);
-            _experimentalMlpTeacherInput[contextOffset + 1] = (float)(velocityXPerSecond / 5000.0);
-            _experimentalMlpTeacherInput[contextOffset + 2] = (float)(velocityYPerSecond / 5000.0);
-            _experimentalMlpTeacherInput[contextOffset + 3] = (float)(speed / 5000.0);
-            _experimentalMlpTeacherInput[contextOffset + 4] = (float)Math.Max(0.0, Math.Min(1.0, pathAnalysis.Efficiency));
-            _experimentalMlpTeacherInput[contextOffset + 5] = (float)(Math.Min(pathAnalysis.Reversals, 5) / 5.0);
-            _experimentalMlpTeacherInput[contextOffset + 6] = (float)(baselineDisplacementX / 24.0);
-            _experimentalMlpTeacherInput[contextOffset + 7] = (float)(baselineDisplacementY / 24.0);
-            _experimentalMlpTeacherInput[contextOffset + 8] = (float)(baselineDisplacement / 24.0);
-        }
-
-        private void FillExperimentalMlpSequenceRow(
-            int row,
-            double x,
-            double y,
-            long timestampTicks,
-            CursorPollSample currentSample,
-            ref double previousX,
-            ref double previousY,
-            ref long previousTicks)
-        {
-            double dtMilliseconds = Math.Max(0.0, (timestampTicks - previousTicks) * 1000.0 / currentSample.StopwatchFrequency);
-            double dx = x - previousX;
-            double dy = y - previousY;
-            double velocityX = dtMilliseconds > 0 ? dx / (dtMilliseconds / 1000.0) : 0.0;
-            double velocityY = dtMilliseconds > 0 ? dy / (dtMilliseconds / 1000.0) : 0.0;
-            double ageMilliseconds = (currentSample.TimestampTicks - timestampTicks) * 1000.0 / currentSample.StopwatchFrequency;
-            int offset = row * ExperimentalMlpPredictionModel.SequenceFeatureCount;
-            _experimentalMlpTeacherInput[offset] = (float)((x - currentSample.Position.X) / 500.0);
-            _experimentalMlpTeacherInput[offset + 1] = (float)((y - currentSample.Position.Y) / 500.0);
-            _experimentalMlpTeacherInput[offset + 2] = (float)(Math.Max(0.0, ageMilliseconds) / 100.0);
-            _experimentalMlpTeacherInput[offset + 3] = (float)(dx / 100.0);
-            _experimentalMlpTeacherInput[offset + 4] = (float)(dy / 100.0);
-            _experimentalMlpTeacherInput[offset + 5] = (float)(velocityX / 5000.0);
-            _experimentalMlpTeacherInput[offset + 6] = (float)(velocityY / 5000.0);
-            _experimentalMlpTeacherInput[offset + 7] = 1.0f;
-            previousX = x;
-            previousY = y;
-            previousTicks = timestampTicks;
-        }
-
-        private void ComputeExperimentalMlpAlphaBetaCorrection(
-            CursorPollSample sample,
-            double horizonMilliseconds,
-            double velocityXPerSecond,
-            double velocityYPerSecond,
-            double speed,
-            double baselineDisplacementX,
-            double baselineDisplacementY,
-            out double correctionX,
-            out double correctionY)
-        {
-            double oldestX = sample.Position.X;
-            double oldestY = sample.Position.Y;
-            long oldestTicks = sample.TimestampTicks;
-            if (_historyCount > 0)
-            {
-                int priorCount = Math.Min(_historyCount, ExperimentalMlpPredictionModel.SequenceLength - 1);
-                int oldestIndex = PriorHistoryIndex(0, priorCount);
-                oldestX = _historyX[oldestIndex];
-                oldestY = _historyY[oldestIndex];
-                oldestTicks = _historyTimestampTicks[oldestIndex];
-            }
-
-            double ageSeconds = Math.Max((sample.TimestampTicks - oldestTicks) / (double)sample.StopwatchFrequency, 0.001);
-            double averageVelocityX = -(oldestX - sample.Position.X) / ageSeconds;
-            double averageVelocityY = -(oldestY - sample.Position.Y) / ageSeconds;
-            double blendedVelocityX = 0.65 * velocityXPerSecond + 0.35 * averageVelocityX;
-            double blendedVelocityY = 0.65 * velocityYPerSecond + 0.35 * averageVelocityY;
-            double alphaBetaDisplacementX = blendedVelocityX * (horizonMilliseconds / 1000.0);
-            double alphaBetaDisplacementY = blendedVelocityY * (horizonMilliseconds / 1000.0);
-            double cap = speed >= 2000.0 ? 32.0 : 16.0;
-            ClampVector(ref alphaBetaDisplacementX, ref alphaBetaDisplacementY, cap);
-            correctionX = alphaBetaDisplacementX - baselineDisplacementX;
-            correctionY = alphaBetaDisplacementY - baselineDisplacementY;
-        }
-
-        private bool TryEvaluateDistilledMlpPrediction(
-            CursorPollSample sample,
-            long horizonTicks,
-            long refreshPeriodTicks,
-            out float displacementX,
-            out float displacementY)
-        {
-            displacementX = 0.0f;
-            displacementY = 0.0f;
-            if (sample.StopwatchFrequency <= 0 ||
-                horizonTicks <= 0 ||
-                refreshPeriodTicks <= 0 ||
-                _historyCount < DistilledMlpPredictionModel.SequenceLength - 1)
-            {
-                return false;
-            }
-
-            double refreshMilliseconds = refreshPeriodTicks * 1000.0 / sample.StopwatchFrequency;
-            if (refreshMilliseconds < DistilledMlpMinimumRefreshMilliseconds ||
-                refreshMilliseconds > DistilledMlpMaximumRefreshMilliseconds)
-            {
-                return false;
-            }
-
-            double horizonMilliseconds = horizonTicks * 1000.0 / sample.StopwatchFrequency;
-            DistilledMlpRuntimeSignals signals;
-            if (!FillDistilledMlpInputs(sample, horizonMilliseconds, out signals))
-            {
-                return false;
-            }
-
-            if (TryApplyDistilledMlpPostStopBrake(signals, out displacementX, out displacementY))
-            {
-                return true;
-            }
-
-            if (!_distilledMlpPredictionModel.TryEvaluate(
-                _distilledMlpScalarInput,
-                _distilledMlpSequenceInput,
-                out displacementX,
-                out displacementY))
-            {
-                return false;
-            }
-
-            double dx = displacementX * _gain;
-            double dy = displacementY * _gain;
-            ClampVector(ref dx, ref dy, DistilledMlpMaximumPredictionPixels);
-            displacementX = (float)dx;
-            displacementY = (float)dy;
-            return true;
-        }
-
-        private bool FillDistilledMlpInputs(CursorPollSample sample, double horizonMilliseconds, out DistilledMlpRuntimeSignals signals)
-        {
-            signals = new DistilledMlpRuntimeSignals();
-            DistilledMlpVelocity velocity2;
-            DistilledMlpVelocity velocity3;
-            DistilledMlpVelocity velocity5;
-            DistilledMlpVelocity velocity8;
-            DistilledMlpVelocity velocity12;
-            DistilledMlpPathAnalysis pathAnalysis;
-            if (!TryFitDistilledMlpVelocity(sample, 2, out velocity2) ||
-                !TryFitDistilledMlpVelocity(sample, 3, out velocity3) ||
-                !TryFitDistilledMlpVelocity(sample, 5, out velocity5) ||
-                !TryFitDistilledMlpVelocity(sample, 8, out velocity8) ||
-                !TryFitDistilledMlpVelocity(sample, 12, out velocity12) ||
-                !TryBuildDistilledMlpPathAnalysis(sample, out pathAnalysis))
-            {
-                return false;
-            }
-
-            if (IsDistilledMlpStationary(velocity2, velocity5, velocity12, pathAnalysis))
-            {
-                return false;
-            }
-
-            signals.Velocity2Speed = velocity2.Speed;
-            signals.TargetDisplacement = velocity2.Speed * Math.Max(0.0, horizonMilliseconds) / 1000.0;
-            signals.RecentHighSpeed = Math.Max(
-                Math.Max(velocity5.Speed, velocity8.Speed),
-                velocity12.Speed);
-            double recentSegmentMaxSpeed;
-            if (TryComputeDistilledMlpRecentSegmentMaxSpeed(
-                sample,
-                DistilledMlpPostStopBrakeRecentSegmentSamples,
-                out recentSegmentMaxSpeed))
-            {
-                signals.RecentHighSpeed = Math.Max(signals.RecentHighSpeed, recentSegmentMaxSpeed);
-            }
-
-            Array.Clear(_distilledMlpScalarInput, 0, _distilledMlpScalarInput.Length);
-            Array.Clear(_distilledMlpSequenceInput, 0, _distilledMlpSequenceInput.Length);
-
-            double baselineX = 0.0;
-            double baselineY = 0.0;
-            if (velocity12.Speed > DistilledMlpStepBaselineMinimumSpeedPixelsPerSecond &&
-                pathAnalysis.Net > 0.0 &&
-                pathAnalysis.Efficiency >= DistilledMlpStepBaselineMinimumEfficiency)
-            {
-                double baselineHorizonSeconds = Math.Max(
-                    0.0,
-                    horizonMilliseconds + DistilledMlpStepBaselineHorizonOffsetMilliseconds) / 1000.0;
-                baselineX = velocity12.XPerSecond * baselineHorizonSeconds;
-                baselineY = velocity12.YPerSecond * baselineHorizonSeconds;
-                ClampVector(ref baselineX, ref baselineY, DistilledMlpStepBaselineMaximumPredictionPixels);
-            }
-
-            _distilledMlpScalarInput[0] = (float)(horizonMilliseconds / 16.67);
-            _distilledMlpScalarInput[1] = 1.0f;
-            _distilledMlpScalarInput[2] = 0.0f;
-            _distilledMlpScalarInput[3] = 1.0f;
-            _distilledMlpScalarInput[4] = 0.0f;
-            _distilledMlpScalarInput[5] = (float)Math.Min(8.0, velocity2.Speed / 1000.0);
-            _distilledMlpScalarInput[6] = (float)Math.Min(8.0, velocity5.Speed / 1000.0);
-            _distilledMlpScalarInput[7] = (float)Math.Min(8.0, velocity8.Speed / 1000.0);
-            _distilledMlpScalarInput[8] = (float)Math.Min(8.0, velocity12.Speed / 1000.0);
-            SetDistilledMlpVelocityDisplacementFeatures(_distilledMlpScalarInput, 9, velocity2, horizonMilliseconds);
-            SetDistilledMlpVelocityDisplacementFeatures(_distilledMlpScalarInput, 11, velocity3, horizonMilliseconds);
-            SetDistilledMlpVelocityDisplacementFeatures(_distilledMlpScalarInput, 13, velocity5, horizonMilliseconds);
-            SetDistilledMlpVelocityDisplacementFeatures(_distilledMlpScalarInput, 15, velocity8, horizonMilliseconds);
-            SetDistilledMlpVelocityDisplacementFeatures(_distilledMlpScalarInput, 17, velocity12, horizonMilliseconds);
-            _distilledMlpScalarInput[19] = (float)(pathAnalysis.Net / 128.0);
-            _distilledMlpScalarInput[20] = (float)(pathAnalysis.Path / 256.0);
-            _distilledMlpScalarInput[21] = (float)Clamp01(pathAnalysis.Efficiency);
-            _distilledMlpScalarInput[22] = (float)(Math.Min(pathAnalysis.Reversals, 32) / 8.0);
-            _distilledMlpScalarInput[23] = (float)(baselineX / 32.0);
-            _distilledMlpScalarInput[24] = (float)(baselineY / 32.0);
-
-            FillDistilledMlpSequence(sample, horizonMilliseconds);
-            return true;
-        }
-
-        private bool TryApplyDistilledMlpPostStopBrake(
-            DistilledMlpRuntimeSignals signals,
-            out float displacementX,
-            out float displacementY)
-        {
-            displacementX = 0.0f;
-            displacementY = 0.0f;
-            if (!_distilledMlpPostStopBrakeEnabled)
-            {
-                return false;
-            }
-
-            bool release =
-                signals.Velocity2Speed > DistilledMlpPostStopBrakeReleaseVelocity2MinimumPixelsPerSecond ||
-                signals.TargetDisplacement > DistilledMlpPostStopBrakeReleaseTargetMinimumPixels;
-            if (release)
-            {
-                _distilledMlpPostStopBrakeRemainingFrames = 0;
-                return false;
-            }
-
-            bool start =
-                signals.Velocity2Speed <= DistilledMlpPostStopBrakeStartVelocity2MaximumPixelsPerSecond &&
-                signals.TargetDisplacement <= DistilledMlpPostStopBrakeStartTargetMaximumPixels &&
-                signals.RecentHighSpeed >= DistilledMlpPostStopBrakeRecentHighMinimumPixelsPerSecond;
-            if (start)
-            {
-                _distilledMlpPostStopBrakeRemainingFrames = DistilledMlpPostStopBrakeLatchFrames;
-            }
-
-            if (_distilledMlpPostStopBrakeRemainingFrames <= 0)
-            {
-                return false;
-            }
-
-            _distilledMlpPostStopBrakeRemainingFrames--;
-            return true;
-        }
-
-        private bool TryEvaluateRuntimeEventSafeMlpPrediction(
+        private bool TryEvaluateSmoothPredictorPrediction(
             CursorPollSample sample,
             long horizonTicks,
             long refreshPeriodTicks,
@@ -958,51 +504,51 @@ namespace CursorMirror
             }
 
             double refreshMilliseconds = refreshPeriodTicks * 1000.0 / sample.StopwatchFrequency;
-            if (refreshMilliseconds < RuntimeEventSafeMlpMinimumRefreshMilliseconds ||
-                refreshMilliseconds > RuntimeEventSafeMlpMaximumRefreshMilliseconds)
+            if (refreshMilliseconds < SmoothPredictorMinimumRefreshMilliseconds ||
+                refreshMilliseconds > SmoothPredictorMaximumRefreshMilliseconds)
             {
                 return false;
             }
 
             double horizonMilliseconds = horizonTicks * 1000.0 / sample.StopwatchFrequency;
-            RuntimeEventSafeMlpRuntimeSignals signals;
-            if (!FillRuntimeEventSafeMlpInputs(sample, horizonMilliseconds, out signals))
+            SmoothPredictorRuntimeSignals signals;
+            if (!FillSmoothPredictorInputs(sample, horizonMilliseconds, out signals))
             {
                 return false;
             }
 
-            if (!_runtimeEventSafeMlpPredictionModel.TryEvaluate(_runtimeEventSafeMlpInput, out displacementX, out displacementY))
+            if (!_smoothPredictorModel.TryEvaluate(_smoothPredictorInput, out displacementX, out displacementY))
             {
                 return false;
             }
 
             double dx = displacementX * _gain;
             double dy = displacementY * _gain;
-            ClampVector(ref dx, ref dy, RuntimeEventSafeMlpMaximumPredictionPixels);
-            ApplyRuntimeEventSafeMlpGuard(signals, ref dx, ref dy);
+            ClampVector(ref dx, ref dy, SmoothPredictorMaximumPredictionPixels);
+            ApplySmoothPredictorGuard(signals, ref dx, ref dy);
             displacementX = (float)dx;
             displacementY = (float)dy;
             return true;
         }
 
-        private bool FillRuntimeEventSafeMlpInputs(
+        private bool FillSmoothPredictorInputs(
             CursorPollSample sample,
             double horizonMilliseconds,
-            out RuntimeEventSafeMlpRuntimeSignals signals)
+            out SmoothPredictorRuntimeSignals signals)
         {
-            signals = new RuntimeEventSafeMlpRuntimeSignals();
-            RuntimeEventSafeMlpVelocity velocity2;
-            RuntimeEventSafeMlpVelocity velocity3;
-            RuntimeEventSafeMlpVelocity velocity5;
-            RuntimeEventSafeMlpVelocity velocity8;
-            RuntimeEventSafeMlpVelocity velocity12;
-            RuntimeEventSafeMlpPathAnalysis pathAnalysis;
-            if (!TryComputeRuntimeEventSafeMlpVelocity(sample, horizonMilliseconds, 2, out velocity2) ||
-                !TryComputeRuntimeEventSafeMlpVelocity(sample, horizonMilliseconds, 3, out velocity3) ||
-                !TryComputeRuntimeEventSafeMlpVelocity(sample, horizonMilliseconds, 5, out velocity5) ||
-                !TryComputeRuntimeEventSafeMlpVelocity(sample, horizonMilliseconds, 8, out velocity8) ||
-                !TryComputeRuntimeEventSafeMlpVelocity(sample, horizonMilliseconds, 12, out velocity12) ||
-                !TryBuildRuntimeEventSafeMlpPathAnalysis(sample, out pathAnalysis))
+            signals = new SmoothPredictorRuntimeSignals();
+            SmoothPredictorVelocity velocity2;
+            SmoothPredictorVelocity velocity3;
+            SmoothPredictorVelocity velocity5;
+            SmoothPredictorVelocity velocity8;
+            SmoothPredictorVelocity velocity12;
+            SmoothPredictorPathAnalysis pathAnalysis;
+            if (!TryComputeSmoothPredictorVelocity(sample, horizonMilliseconds, 2, out velocity2) ||
+                !TryComputeSmoothPredictorVelocity(sample, horizonMilliseconds, 3, out velocity3) ||
+                !TryComputeSmoothPredictorVelocity(sample, horizonMilliseconds, 5, out velocity5) ||
+                !TryComputeSmoothPredictorVelocity(sample, horizonMilliseconds, 8, out velocity8) ||
+                !TryComputeSmoothPredictorVelocity(sample, horizonMilliseconds, 12, out velocity12) ||
+                !TryBuildSmoothPredictorPathAnalysis(sample, out pathAnalysis))
             {
                 return false;
             }
@@ -1018,9 +564,9 @@ namespace CursorMirror
             double recentHighSpeed = Math.Max(
                 Math.Max(velocity5.Speed, velocity8.Speed),
                 velocity12.Speed);
-            if (TryComputeRuntimeEventSafeMlpRecentSegmentMaxSpeed(
+            if (TryComputeSmoothPredictorRecentSegmentMaxSpeed(
                 sample,
-                RuntimeEventSafeMlpRecentSegmentSamples,
+                SmoothPredictorRecentSegmentSamples,
                 out recentSegmentMaxSpeed))
             {
                 recentHighSpeed = Math.Max(recentHighSpeed, recentSegmentMaxSpeed);
@@ -1049,98 +595,98 @@ namespace CursorMirror
             signals.DirectionX = directionX;
             signals.DirectionY = directionY;
 
-            Array.Clear(_runtimeEventSafeMlpInput, 0, _runtimeEventSafeMlpInput.Length);
-            _runtimeEventSafeMlpInput[0] = (float)(horizonMilliseconds / 16.67);
-            SetRuntimeEventSafeMlpVelocityFeatures(_runtimeEventSafeMlpInput, 1, velocity2);
-            SetRuntimeEventSafeMlpVelocityFeatures(_runtimeEventSafeMlpInput, 4, velocity3);
-            SetRuntimeEventSafeMlpVelocityFeatures(_runtimeEventSafeMlpInput, 7, velocity5);
-            SetRuntimeEventSafeMlpVelocityFeatures(_runtimeEventSafeMlpInput, 10, velocity8);
-            SetRuntimeEventSafeMlpVelocityFeatures(_runtimeEventSafeMlpInput, 13, velocity12);
-            _runtimeEventSafeMlpInput[16] = (float)(recentHighSpeed / 3000.0);
-            _runtimeEventSafeMlpInput[17] = (float)(latestDelta / 8.0);
-            _runtimeEventSafeMlpInput[18] = (float)(pathAnalysis.Net / 80.0);
-            _runtimeEventSafeMlpInput[19] = (float)(pathAnalysis.Path / 100.0);
-            _runtimeEventSafeMlpInput[20] = (float)pathAnalysis.Efficiency;
-            _runtimeEventSafeMlpInput[21] = (float)(runtimeTargetDisplacement / 8.0);
-            _runtimeEventSafeMlpInput[22] = (float)(velocity2.Speed / 3000.0);
-            _runtimeEventSafeMlpInput[23] = (float)directionX;
-            _runtimeEventSafeMlpInput[24] = (float)directionY;
+            Array.Clear(_smoothPredictorInput, 0, _smoothPredictorInput.Length);
+            _smoothPredictorInput[0] = (float)(horizonMilliseconds / 16.67);
+            SetSmoothPredictorVelocityFeatures(_smoothPredictorInput, 1, velocity2);
+            SetSmoothPredictorVelocityFeatures(_smoothPredictorInput, 4, velocity3);
+            SetSmoothPredictorVelocityFeatures(_smoothPredictorInput, 7, velocity5);
+            SetSmoothPredictorVelocityFeatures(_smoothPredictorInput, 10, velocity8);
+            SetSmoothPredictorVelocityFeatures(_smoothPredictorInput, 13, velocity12);
+            _smoothPredictorInput[16] = (float)(recentHighSpeed / 3000.0);
+            _smoothPredictorInput[17] = (float)(latestDelta / 8.0);
+            _smoothPredictorInput[18] = (float)(pathAnalysis.Net / 80.0);
+            _smoothPredictorInput[19] = (float)(pathAnalysis.Path / 100.0);
+            _smoothPredictorInput[20] = (float)pathAnalysis.Efficiency;
+            _smoothPredictorInput[21] = (float)(runtimeTargetDisplacement / 8.0);
+            _smoothPredictorInput[22] = (float)(velocity2.Speed / 3000.0);
+            _smoothPredictorInput[23] = (float)directionX;
+            _smoothPredictorInput[24] = (float)directionY;
             return true;
         }
 
-        private void ApplyRuntimeEventSafeMlpGuard(
-            RuntimeEventSafeMlpRuntimeSignals signals,
+        private void ApplySmoothPredictorGuard(
+            SmoothPredictorRuntimeSignals signals,
             ref double displacementX,
             ref double displacementY)
         {
             bool start =
-                signals.RecentHighSpeed >= RuntimeEventSafeMlpStopStartRecentHighMinimumPixelsPerSecond &&
-                signals.Velocity2Speed <= RuntimeEventSafeMlpStopStartVelocity2MaximumPixelsPerSecond &&
-                signals.LatestDelta <= RuntimeEventSafeMlpStopStartLatestDeltaMaximumPixels &&
-                signals.RuntimeTargetDisplacement <= RuntimeEventSafeMlpStopStartRuntimeTargetMaximumPixels;
+                signals.RecentHighSpeed >= SmoothPredictorStopStartRecentHighMinimumPixelsPerSecond &&
+                signals.Velocity2Speed <= SmoothPredictorStopStartVelocity2MaximumPixelsPerSecond &&
+                signals.LatestDelta <= SmoothPredictorStopStartLatestDeltaMaximumPixels &&
+                signals.RuntimeTargetDisplacement <= SmoothPredictorStopStartRuntimeTargetMaximumPixels;
             if (start)
             {
-                _runtimeEventSafeMlpStopLatchRemainingFrames = RuntimeEventSafeMlpStopLatchFrames;
+                _smoothPredictorStopLatchRemainingFrames = SmoothPredictorStopLatchFrames;
             }
 
             bool release =
-                signals.Velocity2Speed > RuntimeEventSafeMlpStopReleaseVelocity2MinimumPixelsPerSecond ||
-                signals.LatestDelta > RuntimeEventSafeMlpStopReleaseLatestDeltaMinimumPixels ||
-                signals.RuntimeTargetDisplacement > RuntimeEventSafeMlpStopReleaseRuntimeTargetMinimumPixels;
+                signals.Velocity2Speed > SmoothPredictorStopReleaseVelocity2MinimumPixelsPerSecond ||
+                signals.LatestDelta > SmoothPredictorStopReleaseLatestDeltaMinimumPixels ||
+                signals.RuntimeTargetDisplacement > SmoothPredictorStopReleaseRuntimeTargetMinimumPixels;
             if (release)
             {
-                _runtimeEventSafeMlpStopLatchRemainingFrames = 0;
+                _smoothPredictorStopLatchRemainingFrames = 0;
             }
 
-            if (IsRuntimeEventSafeMlpStaticHold(signals))
+            if (IsSmoothPredictorStaticHold(signals))
             {
                 displacementX = 0.0;
                 displacementY = 0.0;
                 return;
             }
 
-            if (_runtimeEventSafeMlpStopLatchRemainingFrames <= 0)
+            if (_smoothPredictorStopLatchRemainingFrames <= 0)
             {
                 return;
             }
 
             displacementX = 0.0;
             displacementY = 0.0;
-            ClampVector(ref displacementX, ref displacementY, RuntimeEventSafeMlpStopCapPixels);
+            ClampVector(ref displacementX, ref displacementY, SmoothPredictorStopCapPixels);
             double lead = (displacementX * signals.DirectionX) + (displacementY * signals.DirectionY);
-            if (lead > RuntimeEventSafeMlpStopCapPixels)
+            if (lead > SmoothPredictorStopCapPixels)
             {
-                displacementX -= (lead - RuntimeEventSafeMlpStopCapPixels) * signals.DirectionX;
-                displacementY -= (lead - RuntimeEventSafeMlpStopCapPixels) * signals.DirectionY;
+                displacementX -= (lead - SmoothPredictorStopCapPixels) * signals.DirectionX;
+                displacementY -= (lead - SmoothPredictorStopCapPixels) * signals.DirectionY;
             }
 
-            _runtimeEventSafeMlpStopLatchRemainingFrames--;
+            _smoothPredictorStopLatchRemainingFrames--;
         }
 
-        private static bool IsRuntimeEventSafeMlpStaticHold(RuntimeEventSafeMlpRuntimeSignals signals)
+        private static bool IsSmoothPredictorStaticHold(SmoothPredictorRuntimeSignals signals)
         {
-            return signals.Velocity12Speed <= RuntimeEventSafeMlpStaticVelocity12MaximumPixelsPerSecond &&
-                signals.LatestDelta <= RuntimeEventSafeMlpStaticLatestDeltaMaximumPixels &&
-                signals.RuntimeTargetDisplacement <= RuntimeEventSafeMlpStaticRuntimeTargetMaximumPixels;
+            return signals.Velocity12Speed <= SmoothPredictorStaticVelocity12MaximumPixelsPerSecond &&
+                signals.LatestDelta <= SmoothPredictorStaticLatestDeltaMaximumPixels &&
+                signals.RuntimeTargetDisplacement <= SmoothPredictorStaticRuntimeTargetMaximumPixels;
         }
 
-        private static void SetRuntimeEventSafeMlpVelocityFeatures(
+        private static void SetSmoothPredictorVelocityFeatures(
             float[] input,
             int offset,
-            RuntimeEventSafeMlpVelocity velocity)
+            SmoothPredictorVelocity velocity)
         {
             input[offset] = (float)(velocity.DisplacementX / 8.0);
             input[offset + 1] = (float)(velocity.DisplacementY / 8.0);
             input[offset + 2] = (float)(velocity.Speed / 2000.0);
         }
 
-        private bool TryComputeRuntimeEventSafeMlpVelocity(
+        private bool TryComputeSmoothPredictorVelocity(
             CursorPollSample sample,
             double horizonMilliseconds,
             int sampleCount,
-            out RuntimeEventSafeMlpVelocity velocity)
+            out SmoothPredictorVelocity velocity)
         {
-            velocity = new RuntimeEventSafeMlpVelocity();
+            velocity = new SmoothPredictorVelocity();
             if (sampleCount < 2 || sample.StopwatchFrequency <= 0)
             {
                 return false;
@@ -1174,9 +720,9 @@ namespace CursorMirror
             return true;
         }
 
-        private bool TryBuildRuntimeEventSafeMlpPathAnalysis(CursorPollSample sample, out RuntimeEventSafeMlpPathAnalysis analysis)
+        private bool TryBuildSmoothPredictorPathAnalysis(CursorPollSample sample, out SmoothPredictorPathAnalysis analysis)
         {
-            analysis = new RuntimeEventSafeMlpPathAnalysis();
+            analysis = new SmoothPredictorPathAnalysis();
             int take = Math.Min(11, _historyCount);
             if (take <= 0)
             {
@@ -1204,7 +750,7 @@ namespace CursorMirror
             return true;
         }
 
-        private bool TryComputeRuntimeEventSafeMlpRecentSegmentMaxSpeed(
+        private bool TryComputeSmoothPredictorRecentSegmentMaxSpeed(
             CursorPollSample sample,
             int sampleCount,
             out double maximumSpeedPixelsPerSecond)
@@ -1223,7 +769,7 @@ namespace CursorMirror
             for (int i = 1; i < take; i++)
             {
                 int index = PriorHistoryIndex(_historyCount - take + i, _historyCount);
-                AccumulateRuntimeEventSafeMlpSegmentSpeed(
+                AccumulateSmoothPredictorSegmentSpeed(
                     _historyX[index],
                     _historyY[index],
                     _historyTimestampTicks[index],
@@ -1234,7 +780,7 @@ namespace CursorMirror
                     ref maximumSpeedPixelsPerSecond);
             }
 
-            AccumulateRuntimeEventSafeMlpSegmentSpeed(
+            AccumulateSmoothPredictorSegmentSpeed(
                 sample.Position.X,
                 sample.Position.Y,
                 sample.TimestampTicks,
@@ -1246,7 +792,7 @@ namespace CursorMirror
             return true;
         }
 
-        private static void AccumulateRuntimeEventSafeMlpSegmentSpeed(
+        private static void AccumulateSmoothPredictorSegmentSpeed(
             double x,
             double y,
             long timestampTicks,
@@ -1270,339 +816,6 @@ namespace CursorMirror
             previousX = x;
             previousY = y;
             previousTicks = timestampTicks;
-        }
-
-        private static bool IsDistilledMlpStationary(
-            DistilledMlpVelocity velocity2,
-            DistilledMlpVelocity velocity5,
-            DistilledMlpVelocity velocity12,
-            DistilledMlpPathAnalysis pathAnalysis)
-        {
-            return velocity2.Speed <= DistilledMlpStationaryMaximumSpeedPixelsPerSecond &&
-                velocity5.Speed <= DistilledMlpStationaryMaximumSpeedPixelsPerSecond &&
-                velocity12.Speed <= DistilledMlpStationaryMaximumSpeedPixelsPerSecond &&
-                pathAnalysis.Net <= DistilledMlpStationaryMaximumNetPixels &&
-                pathAnalysis.Path <= DistilledMlpStationaryMaximumPathPixels;
-        }
-
-        private static void SetDistilledMlpVelocityDisplacementFeatures(
-            float[] scalar,
-            int offset,
-            DistilledMlpVelocity velocity,
-            double horizonMilliseconds)
-        {
-            double horizonSeconds = horizonMilliseconds / 1000.0;
-            scalar[offset] = (float)(velocity.XPerSecond * horizonSeconds / 32.0);
-            scalar[offset + 1] = (float)(velocity.YPerSecond * horizonSeconds / 32.0);
-        }
-
-        private bool TryFitDistilledMlpVelocity(CursorPollSample sample, int sampleCount, out DistilledMlpVelocity velocity)
-        {
-            velocity = new DistilledMlpVelocity();
-            if (sampleCount < 2 || _historyCount + 1 < sampleCount || sample.StopwatchFrequency <= 0)
-            {
-                return false;
-            }
-
-            double sumT = 0.0;
-            double sumX = 0.0;
-            double sumY = 0.0;
-            for (int i = 0; i < sampleCount; i++)
-            {
-                double x;
-                double y;
-                long ticks;
-                if (!TryResolveDistilledMlpPoint(sample, i, sampleCount, out x, out y, out ticks))
-                {
-                    return false;
-                }
-
-                double t = (ticks - sample.TimestampTicks) / (double)sample.StopwatchFrequency;
-                sumT += t;
-                sumX += x;
-                sumY += y;
-            }
-
-            double meanT = sumT / sampleCount;
-            double meanX = sumX / sampleCount;
-            double meanY = sumY / sampleCount;
-            double denominator = 0.0;
-            double numeratorX = 0.0;
-            double numeratorY = 0.0;
-            for (int i = 0; i < sampleCount; i++)
-            {
-                double x;
-                double y;
-                long ticks;
-                if (!TryResolveDistilledMlpPoint(sample, i, sampleCount, out x, out y, out ticks))
-                {
-                    return false;
-                }
-
-                double centeredT = ((ticks - sample.TimestampTicks) / (double)sample.StopwatchFrequency) - meanT;
-                denominator += centeredT * centeredT;
-                numeratorX += centeredT * (x - meanX);
-                numeratorY += centeredT * (y - meanY);
-            }
-
-            if (denominator <= 0.0)
-            {
-                return false;
-            }
-
-            velocity.XPerSecond = numeratorX / denominator;
-            velocity.YPerSecond = numeratorY / denominator;
-            velocity.Speed = Magnitude(velocity.XPerSecond, velocity.YPerSecond);
-            return true;
-        }
-
-        private bool TryBuildDistilledMlpPathAnalysis(CursorPollSample sample, out DistilledMlpPathAnalysis analysis)
-        {
-            analysis = new DistilledMlpPathAnalysis();
-            int sampleCount = Math.Min(12, _historyCount + 1);
-            if (sampleCount < 2)
-            {
-                return false;
-            }
-
-            double firstX = 0.0;
-            double firstY = 0.0;
-            double previousX = 0.0;
-            double previousY = 0.0;
-            int previousSignX = 0;
-            int previousSignY = 0;
-            for (int i = 0; i < sampleCount; i++)
-            {
-                double x;
-                double y;
-                long ticks;
-                if (!TryResolveDistilledMlpPoint(sample, i, sampleCount, out x, out y, out ticks))
-                {
-                    return false;
-                }
-
-                if (i == 0)
-                {
-                    firstX = x;
-                    firstY = y;
-                    previousX = x;
-                    previousY = y;
-                    continue;
-                }
-
-                AccumulateDistilledMlpPathStep(
-                    previousX,
-                    previousY,
-                    x,
-                    y,
-                    ref analysis.Path,
-                    ref previousSignX,
-                    ref previousSignY,
-                    ref analysis.Reversals);
-                previousX = x;
-                previousY = y;
-            }
-
-            analysis.Net = Magnitude(sample.Position.X - firstX, sample.Position.Y - firstY);
-            analysis.Efficiency = analysis.Path > 0.0 ? analysis.Net / analysis.Path : 0.0;
-            return true;
-        }
-
-        private bool TryComputeDistilledMlpRecentSegmentMaxSpeed(
-            CursorPollSample sample,
-            int sampleCount,
-            out double maximumSpeedPixelsPerSecond)
-        {
-            maximumSpeedPixelsPerSecond = 0.0;
-            int resolvedSampleCount = Math.Min(sampleCount, _historyCount + 1);
-            if (resolvedSampleCount < 2 || sample.StopwatchFrequency <= 0)
-            {
-                return false;
-            }
-
-            double previousX;
-            double previousY;
-            long previousTicks;
-            if (!TryResolveDistilledMlpPoint(sample, 0, resolvedSampleCount, out previousX, out previousY, out previousTicks))
-            {
-                return false;
-            }
-
-            for (int i = 1; i < resolvedSampleCount; i++)
-            {
-                double x;
-                double y;
-                long ticks;
-                if (!TryResolveDistilledMlpPoint(sample, i, resolvedSampleCount, out x, out y, out ticks))
-                {
-                    return false;
-                }
-
-                long deltaTicks = ticks - previousTicks;
-                if (deltaTicks > 0)
-                {
-                    double deltaSeconds = deltaTicks / (double)sample.StopwatchFrequency;
-                    double speed = Magnitude(x - previousX, y - previousY) / deltaSeconds;
-                    maximumSpeedPixelsPerSecond = Math.Max(maximumSpeedPixelsPerSecond, speed);
-                }
-
-                previousX = x;
-                previousY = y;
-                previousTicks = ticks;
-            }
-
-            return true;
-        }
-
-        private void FillDistilledMlpSequence(CursorPollSample sample, double horizonMilliseconds)
-        {
-            int priorCount = DistilledMlpPredictionModel.SequenceLength - 1;
-            double previousX;
-            double previousY;
-            long previousTicks;
-            if (_historyCount > priorCount)
-            {
-                int previousIndex = PriorHistoryIndex(0, priorCount + 1);
-                previousX = _historyX[previousIndex];
-                previousY = _historyY[previousIndex];
-                previousTicks = _historyTimestampTicks[previousIndex];
-            }
-            else
-            {
-                int firstIndex = PriorHistoryIndex(0, priorCount);
-                previousX = _historyX[firstIndex];
-                previousY = _historyY[firstIndex];
-                previousTicks = _historyTimestampTicks[firstIndex];
-            }
-
-            for (int i = 0; i < priorCount; i++)
-            {
-                int index = PriorHistoryIndex(i, priorCount);
-                FillDistilledMlpSequenceRow(
-                    i,
-                    _historyX[index],
-                    _historyY[index],
-                    _historyTimestampTicks[index],
-                    sample,
-                    horizonMilliseconds,
-                    ref previousX,
-                    ref previousY,
-                    ref previousTicks);
-            }
-
-            FillDistilledMlpSequenceRow(
-                priorCount,
-                sample.Position.X,
-                sample.Position.Y,
-                sample.TimestampTicks,
-                sample,
-                horizonMilliseconds,
-                ref previousX,
-                ref previousY,
-                ref previousTicks);
-        }
-
-        private void FillDistilledMlpSequenceRow(
-            int row,
-            double x,
-            double y,
-            long timestampTicks,
-            CursorPollSample currentSample,
-            double horizonMilliseconds,
-            ref double previousX,
-            ref double previousY,
-            ref long previousTicks)
-        {
-            double dtMilliseconds = Math.Max(0.0, (timestampTicks - previousTicks) * 1000.0 / currentSample.StopwatchFrequency);
-            double dx = x - previousX;
-            double dy = y - previousY;
-            double velocityX = dtMilliseconds > 0.0 ? dx / (dtMilliseconds / 1000.0) : 0.0;
-            double velocityY = dtMilliseconds > 0.0 ? dy / (dtMilliseconds / 1000.0) : 0.0;
-            double ageMilliseconds = Math.Max(0.0, (currentSample.TimestampTicks - timestampTicks) * 1000.0 / currentSample.StopwatchFrequency);
-            double horizonSeconds = horizonMilliseconds / 1000.0;
-            int offset = row * DistilledMlpPredictionModel.SequenceFeatureCount;
-            _distilledMlpSequenceInput[offset] = 1.0f;
-            _distilledMlpSequenceInput[offset + 1] = (float)(ageMilliseconds / 64.0);
-            _distilledMlpSequenceInput[offset + 2] = (float)((x - currentSample.Position.X) / 128.0);
-            _distilledMlpSequenceInput[offset + 3] = (float)((y - currentSample.Position.Y) / 128.0);
-            _distilledMlpSequenceInput[offset + 4] = (float)(dx / 32.0);
-            _distilledMlpSequenceInput[offset + 5] = (float)(dy / 32.0);
-            _distilledMlpSequenceInput[offset + 6] = (float)(velocityX * horizonSeconds / 32.0);
-            _distilledMlpSequenceInput[offset + 7] = (float)(velocityY * horizonSeconds / 32.0);
-            _distilledMlpSequenceInput[offset + 8] = (float)(dtMilliseconds / 16.0);
-            previousX = x;
-            previousY = y;
-            previousTicks = timestampTicks;
-        }
-
-        private bool TryResolveDistilledMlpPoint(
-            CursorPollSample sample,
-            int offsetFromOldest,
-            int sampleCount,
-            out double x,
-            out double y,
-            out long timestampTicks)
-        {
-            if (offsetFromOldest == sampleCount - 1)
-            {
-                x = sample.Position.X;
-                y = sample.Position.Y;
-                timestampTicks = sample.TimestampTicks;
-                return true;
-            }
-
-            int priorCount = sampleCount - 1;
-            if (offsetFromOldest < 0 || priorCount <= 0 || _historyCount < priorCount)
-            {
-                x = 0.0;
-                y = 0.0;
-                timestampTicks = 0;
-                return false;
-            }
-
-            int index = PriorHistoryIndex(offsetFromOldest, priorCount);
-            x = _historyX[index];
-            y = _historyY[index];
-            timestampTicks = _historyTimestampTicks[index];
-            return true;
-        }
-
-        private static void AccumulateDistilledMlpPathStep(
-            double previousX,
-            double previousY,
-            double currentX,
-            double currentY,
-            ref double path,
-            ref int previousSignX,
-            ref int previousSignY,
-            ref int reversals)
-        {
-            double dx = currentX - previousX;
-            double dy = currentY - previousY;
-            path += Magnitude(dx, dy);
-            AccumulateDistilledMlpSign(dx, ref previousSignX, ref reversals);
-            AccumulateDistilledMlpSign(dy, ref previousSignY, ref reversals);
-        }
-
-        private static void AccumulateDistilledMlpSign(double delta, ref int previousSign, ref int reversals)
-        {
-            if (Math.Abs(delta) <= 0.5)
-            {
-                return;
-            }
-
-            int sign = delta > 0.0 ? 1 : -1;
-            if (previousSign != 0 && sign != previousSign)
-            {
-                reversals++;
-            }
-
-            previousSign = sign;
-        }
-
-        private static double Clamp01(double value)
-        {
-            return Math.Max(0.0, Math.Min(1.0, value));
         }
 
         private bool TryPredictLeastSquares(CursorPollSample sample, long horizonTicks, out PointF predicted)
@@ -2140,123 +1353,6 @@ namespace CursorMirror
             return true;
         }
 
-        private bool TryAnalyzeExperimentalMlpPath(CursorPollSample sample, out ExperimentalMlpPathAnalysis analysis)
-        {
-            analysis = new ExperimentalMlpPathAnalysis();
-            if (sample.StopwatchFrequency <= 0 || _historyCount < 1)
-            {
-                return false;
-            }
-
-            long windowTicks = (long)Math.Round(ExperimentalMlpPathWindowMilliseconds * sample.StopwatchFrequency / 1000.0);
-            if (windowTicks <= 0)
-            {
-                return false;
-            }
-
-            long minimumTicks = sample.TimestampTicks - windowTicks;
-            bool hasPrevious = false;
-            double firstX = 0.0;
-            double firstY = 0.0;
-            double previousX = 0.0;
-            double previousY = 0.0;
-            int previousSignX = 0;
-            int previousSignY = 0;
-            int selected = 0;
-            int historyCount = _historyCount;
-            for (int i = 0; i < historyCount; i++)
-            {
-                int index = PriorHistoryIndex(i, historyCount);
-                if (_historyTimestampTicks[index] < minimumTicks || _historyTimestampTicks[index] > sample.TimestampTicks)
-                {
-                    continue;
-                }
-
-                double x = _historyX[index];
-                double y = _historyY[index];
-                if (!hasPrevious)
-                {
-                    firstX = x;
-                    firstY = y;
-                    previousX = x;
-                    previousY = y;
-                    hasPrevious = true;
-                }
-                else
-                {
-                    AccumulateExperimentalMlpPathStep(
-                        previousX,
-                        previousY,
-                        x,
-                        y,
-                        ref analysis.Path,
-                        ref previousSignX,
-                        ref previousSignY,
-                        ref analysis.Reversals);
-                    previousX = x;
-                    previousY = y;
-                }
-
-                selected++;
-            }
-
-            if (!hasPrevious || selected < 1)
-            {
-                return false;
-            }
-
-            AccumulateExperimentalMlpPathStep(
-                previousX,
-                previousY,
-                sample.Position.X,
-                sample.Position.Y,
-                ref analysis.Path,
-                ref previousSignX,
-                ref previousSignY,
-                ref analysis.Reversals);
-            if (analysis.Path <= 0)
-            {
-                return false;
-            }
-
-            analysis.Net = Magnitude(sample.Position.X - firstX, sample.Position.Y - firstY);
-            analysis.Efficiency = analysis.Net / analysis.Path;
-            return true;
-        }
-
-        private static void AccumulateExperimentalMlpPathStep(
-            double previousX,
-            double previousY,
-            double currentX,
-            double currentY,
-            ref double path,
-            ref int previousSignX,
-            ref int previousSignY,
-            ref int reversals)
-        {
-            double dx = currentX - previousX;
-            double dy = currentY - previousY;
-            path += Magnitude(dx, dy);
-            AccumulateExperimentalMlpSign(dx, ref previousSignX, ref reversals);
-            AccumulateExperimentalMlpSign(dy, ref previousSignY, ref reversals);
-        }
-
-        private static void AccumulateExperimentalMlpSign(double delta, ref int previousSign, ref int reversals)
-        {
-            int sign = delta > 0.0 ? 1 : delta < 0.0 ? -1 : 0;
-            if (sign == 0)
-            {
-                return;
-            }
-
-            if (previousSign != 0 && sign != previousSign)
-            {
-                reversals++;
-            }
-
-            previousSign = sign;
-        }
-
         private static long MillisecondsToTicks(int milliseconds, long stopwatchFrequency)
         {
             if (milliseconds <= 0 || stopwatchFrequency <= 0)
@@ -2290,51 +1386,21 @@ namespace CursorMirror
             public double EfficiencyPercent;
         }
 
-        private struct ExperimentalMlpPathAnalysis
-        {
-            public double Path;
-            public double Net;
-            public int Reversals;
-            public double Efficiency;
-        }
-
-        private struct DistilledMlpVelocity
-        {
-            public double XPerSecond;
-            public double YPerSecond;
-            public double Speed;
-        }
-
-        private struct DistilledMlpPathAnalysis
-        {
-            public double Path;
-            public double Net;
-            public int Reversals;
-            public double Efficiency;
-        }
-
-        private struct DistilledMlpRuntimeSignals
-        {
-            public double Velocity2Speed;
-            public double TargetDisplacement;
-            public double RecentHighSpeed;
-        }
-
-        private struct RuntimeEventSafeMlpVelocity
+        private struct SmoothPredictorVelocity
         {
             public double DisplacementX;
             public double DisplacementY;
             public double Speed;
         }
 
-        private struct RuntimeEventSafeMlpPathAnalysis
+        private struct SmoothPredictorPathAnalysis
         {
             public double Path;
             public double Net;
             public double Efficiency;
         }
 
-        private struct RuntimeEventSafeMlpRuntimeSignals
+        private struct SmoothPredictorRuntimeSignals
         {
             public double Velocity2Speed;
             public double Velocity12Speed;

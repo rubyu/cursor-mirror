@@ -33,11 +33,8 @@ namespace CursorMirror.Tests
             suite.Add("COT-MOU-47", OverlayUpdateTimingCountersDeadlineMiss);
             suite.Add("COT-MOU-48", DwmPredictionTargetOffsetControlsProjection);
             suite.Add("COT-MOU-49", ConstantVelocityHighSpeedLinearMotionUsesWiderCap);
-            suite.Add("COT-MOU-50", DwmDistilledMlpPredictionIsSelectable);
-            suite.Add("COT-MOU-51", DwmDistilledMlpStationaryFallsBackToExactPosition);
-            suite.Add("COT-MOU-52", DwmDistilledMlpPostStopBrakeSnapsAfterAbruptStop);
-            suite.Add("COT-MOU-53", DwmRuntimeEventSafeMlpPredictionIsSelectable);
-            suite.Add("COT-MOU-54", DwmRuntimeEventSafeMlpStaticAndStopGuardsSnapToExactPosition);
+            suite.Add("COT-MOU-53", DwmSmoothPredictorPredictionIsSelectable);
+            suite.Add("COT-MOU-54", DwmSmoothPredictorStaticAndStopGuardsSnapToExactPosition);
             suite.Add("COT-MOU-55", PollingSkipsOverlayMoveWhenLocationIsUnchanged);
             suite.Add("COT-MRU-1", HookCallbackExceptionContainment);
             suite.Add("COT-MDU-3", DispatcherMarshalsToUiThread);
@@ -664,11 +661,11 @@ namespace CursorMirror.Tests
             controller.Dispose();
         }
 
-        // DWM distilled MLP prediction [COT-MOU-50]
-        private static void DwmDistilledMlpPredictionIsSelectable()
+        // DWM SmoothPredictor prediction [COT-MOU-53]
+        private static void DwmSmoothPredictorPredictionIsSelectable()
         {
             CursorMirrorSettings settings = CursorMirrorSettings.Default();
-            settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelDistilledMlp;
+            settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelSmoothPredictor;
             settings.DwmPredictionHorizonCapMilliseconds = 0;
             settings.DwmPredictionTargetOffsetMilliseconds = 0;
             DwmAwareCursorPositionPredictor predictor = new DwmAwareCursorPositionPredictor(100);
@@ -683,14 +680,14 @@ namespace CursorMirror.Tests
                 predicted = predictor.PredictRounded(sample, counters, timestamp + 16, 16);
             }
 
-            TestAssert.Equal(new Point(47, 0), predicted, "distilled MLP model should be selectable and produce its fixed-weight prediction");
+            TestAssert.Equal(new Point(45, 1), predicted, "SmoothPredictor should be selectable and produce its fixed-weight prediction");
         }
 
-        // DWM distilled MLP stationary fallback [COT-MOU-51]
-        private static void DwmDistilledMlpStationaryFallsBackToExactPosition()
+        // DWM SmoothPredictor guards [COT-MOU-54]
+        private static void DwmSmoothPredictorStaticAndStopGuardsSnapToExactPosition()
         {
             CursorMirrorSettings settings = CursorMirrorSettings.Default();
-            settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelDistilledMlp;
+            settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelSmoothPredictor;
             settings.DwmPredictionHorizonCapMilliseconds = 0;
             settings.DwmPredictionTargetOffsetMilliseconds = 0;
             DwmAwareCursorPositionPredictor predictor = new DwmAwareCursorPositionPredictor(100);
@@ -705,77 +702,7 @@ namespace CursorMirror.Tests
                 predicted = predictor.PredictRounded(sample, counters, timestamp + 16, 16);
             }
 
-            TestAssert.Equal(new Point(40, 20), predicted, "stationary distilled MLP input must fall back to exact position");
-        }
-
-        // DWM distilled MLP post-stop brake [COT-MOU-52]
-        private static void DwmDistilledMlpPostStopBrakeSnapsAfterAbruptStop()
-        {
-            CursorMirrorSettings settings = CursorMirrorSettings.Default();
-            settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelDistilledMlp;
-            settings.DwmPredictionHorizonCapMilliseconds = 0;
-            settings.DwmPredictionTargetOffsetMilliseconds = 0;
-            settings.DistilledMlpPostStopBrakeEnabled = true;
-            DwmAwareCursorPositionPredictor predictor = new DwmAwareCursorPositionPredictor(100);
-            predictor.ApplySettings(settings);
-            CursorPredictionCounters counters = new CursorPredictionCounters();
-            Point predicted = Point.Empty;
-
-            for (int i = 0; i <= 15; i++)
-            {
-                long timestamp = 100 + (i * 10);
-                CursorPollSample sample = PollSample(new Point(i * 30, 0), timestamp, true, timestamp + 16, 16);
-                predicted = predictor.PredictRounded(sample, counters, timestamp + 16, 16);
-            }
-
-            CursorPollSample stopSample = PollSample(new Point(450, 0), 260, true, 276, 16);
-            predicted = predictor.PredictRounded(stopSample, counters, 276, 16);
-
-            TestAssert.Equal(new Point(450, 0), predicted, "post-stop brake must snap to exact position after an abrupt stop");
-        }
-
-        // DWM runtime event-safe MLP prediction [COT-MOU-53]
-        private static void DwmRuntimeEventSafeMlpPredictionIsSelectable()
-        {
-            CursorMirrorSettings settings = CursorMirrorSettings.Default();
-            settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelRuntimeEventSafeMlp;
-            settings.DwmPredictionHorizonCapMilliseconds = 0;
-            settings.DwmPredictionTargetOffsetMilliseconds = 0;
-            DwmAwareCursorPositionPredictor predictor = new DwmAwareCursorPositionPredictor(100);
-            predictor.ApplySettings(settings);
-            CursorPredictionCounters counters = new CursorPredictionCounters();
-            Point predicted = Point.Empty;
-
-            for (int i = 0; i <= 15; i++)
-            {
-                long timestamp = 100 + (i * 10);
-                CursorPollSample sample = PollSample(new Point(i * 3, 0), timestamp, true, timestamp + 16, 16);
-                predicted = predictor.PredictRounded(sample, counters, timestamp + 16, 16);
-            }
-
-            TestAssert.Equal(new Point(45, 1), predicted, "runtime event-safe MLP model should be selectable and produce its fixed-weight prediction");
-        }
-
-        // DWM runtime event-safe MLP guards [COT-MOU-54]
-        private static void DwmRuntimeEventSafeMlpStaticAndStopGuardsSnapToExactPosition()
-        {
-            CursorMirrorSettings settings = CursorMirrorSettings.Default();
-            settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelRuntimeEventSafeMlp;
-            settings.DwmPredictionHorizonCapMilliseconds = 0;
-            settings.DwmPredictionTargetOffsetMilliseconds = 0;
-            DwmAwareCursorPositionPredictor predictor = new DwmAwareCursorPositionPredictor(100);
-            predictor.ApplySettings(settings);
-            CursorPredictionCounters counters = new CursorPredictionCounters();
-            Point predicted = Point.Empty;
-
-            for (int i = 0; i <= 15; i++)
-            {
-                long timestamp = 100 + (i * 10);
-                CursorPollSample sample = PollSample(new Point(40, 20), timestamp, true, timestamp + 16, 16);
-                predicted = predictor.PredictRounded(sample, counters, timestamp + 16, 16);
-            }
-
-            TestAssert.Equal(new Point(40, 20), predicted, "runtime event-safe MLP static guard must snap to exact position");
+            TestAssert.Equal(new Point(40, 20), predicted, "SmoothPredictor static guard must snap to exact position");
 
             predictor.Reset();
             for (int i = 0; i <= 15; i++)
@@ -788,7 +715,7 @@ namespace CursorMirror.Tests
             CursorPollSample stopSample = PollSample(new Point(450, 0), 260, true, 276, 16);
             predicted = predictor.PredictRounded(stopSample, counters, 276, 16);
 
-            TestAssert.Equal(new Point(450, 0), predicted, "runtime event-safe MLP stop latch must snap to exact position after an abrupt stop");
+            TestAssert.Equal(new Point(450, 0), predicted, "SmoothPredictor stop latch must snap to exact position after an abrupt stop");
         }
 
         // Same-location polling should not call the layered-window move path [COT-MOU-55]

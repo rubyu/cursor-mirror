@@ -54,7 +54,6 @@ namespace CursorMirror.Tests
             TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, settings.DwmPredictionModel, "default DWM prediction model");
             TestAssert.Equal(8, settings.DwmPredictionTargetOffsetMilliseconds, "default DWM prediction target offset");
             TestAssert.Equal(0, CursorMirrorSettings.DwmPredictionTargetOffsetToDisplayMilliseconds(settings.DwmPredictionTargetOffsetMilliseconds), "default DWM prediction target offset display");
-            TestAssert.False(settings.DistilledMlpPostStopBrakeEnabled, "default distilled MLP post-stop brake disabled");
             TestAssert.True(settings.RuntimeSetWaitableTimerExEnabled, "default runtime set waitable timer ex enabled");
             TestAssert.Equal(1000, settings.RuntimeFineWaitAdvanceMicroseconds, "default runtime fine wait");
             TestAssert.Equal(250, settings.RuntimeFineWaitYieldThresholdMicroseconds, "default runtime spin threshold");
@@ -174,11 +173,18 @@ namespace CursorMirror.Tests
             TestAssert.Equal(10000, high.DwmAdaptiveOscillationMaximumSpanPixels, "DWM adaptive oscillation span upper clamp");
             TestAssert.Equal(100, high.DwmAdaptiveOscillationMaximumEfficiencyPercent, "DWM adaptive oscillation efficiency upper clamp");
             TestAssert.Equal(1000, high.DwmAdaptiveOscillationLatchMilliseconds, "DWM adaptive oscillation latch upper clamp");
-            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelRuntimeEventSafeMlp, high.DwmPredictionModel, "DWM prediction model upper clamp");
+            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, high.DwmPredictionModel, "unknown DWM prediction model fallback");
             TestAssert.Equal(40, high.DwmPredictionTargetOffsetMilliseconds, "DWM prediction target offset upper clamp");
             TestAssert.Equal(5000, high.RuntimeFineWaitAdvanceMicroseconds, "runtime fine wait upper clamp");
             TestAssert.Equal(5000, high.RuntimeFineWaitYieldThresholdMicroseconds, "runtime spin threshold upper clamp");
             TestAssert.Equal(5000, high.RuntimeMessageDeferralMicroseconds, "runtime message deferral upper clamp");
+
+            CursorMirrorSettings oldExperimentalModel = CursorMirrorSettings.Default();
+            oldExperimentalModel.DwmPredictionModel = 2;
+            CursorMirrorSettings oldDistilledModel = CursorMirrorSettings.Default();
+            oldDistilledModel.DwmPredictionModel = 3;
+            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelSmoothPredictor, oldExperimentalModel.Normalize().DwmPredictionModel, "obsolete experimental model migration");
+            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelSmoothPredictor, oldDistilledModel.Normalize().DwmPredictionModel, "obsolete distilled model migration");
         }
 
         // Settings serialization round trip [COT-MSU-4]
@@ -212,7 +218,6 @@ namespace CursorMirror.Tests
                 settings.DwmAdaptiveOscillationLatchMilliseconds = 300;
                 settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelLeastSquares;
                 settings.DwmPredictionTargetOffsetMilliseconds = 3;
-                settings.DistilledMlpPostStopBrakeEnabled = true;
                 settings.RuntimeSetWaitableTimerExEnabled = false;
                 settings.RuntimeFineWaitAdvanceMicroseconds = 1800;
                 settings.RuntimeFineWaitYieldThresholdMicroseconds = 400;
@@ -249,7 +254,6 @@ namespace CursorMirror.Tests
                 TestAssert.Equal(300, loaded.DwmAdaptiveOscillationLatchMilliseconds, "loaded DWM adaptive oscillation latch");
                 TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelLeastSquares, loaded.DwmPredictionModel, "loaded DWM prediction model");
                 TestAssert.Equal(3, loaded.DwmPredictionTargetOffsetMilliseconds, "loaded DWM prediction target offset");
-                TestAssert.True(loaded.DistilledMlpPostStopBrakeEnabled, "loaded distilled MLP post-stop brake");
                 TestAssert.False(loaded.RuntimeSetWaitableTimerExEnabled, "loaded runtime set waitable timer ex");
                 TestAssert.Equal(1800, loaded.RuntimeFineWaitAdvanceMicroseconds, "loaded runtime fine wait");
                 TestAssert.Equal(400, loaded.RuntimeFineWaitYieldThresholdMicroseconds, "loaded runtime spin threshold");
@@ -407,7 +411,6 @@ namespace CursorMirror.Tests
                 TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, oldFormat.DwmPredictionModel, "old settings must use DWM prediction model default");
                 TestAssert.Equal(8, oldFormat.DwmPredictionTargetOffsetMilliseconds, "old settings must use DWM prediction target offset default");
                 TestAssert.Equal(80, oldFormat.IdleFadeDurationMilliseconds, "old settings must use idle fade duration default");
-                TestAssert.False(oldFormat.DistilledMlpPostStopBrakeEnabled, "old settings must use distilled MLP post-stop brake default");
                 TestAssert.True(oldFormat.RuntimeSetWaitableTimerExEnabled, "old settings must use runtime set waitable timer ex default");
                 TestAssert.Equal(1000, oldFormat.RuntimeFineWaitAdvanceMicroseconds, "old settings must use runtime fine wait default");
                 TestAssert.Equal(250, oldFormat.RuntimeFineWaitYieldThresholdMicroseconds, "old settings must use runtime spin threshold default");

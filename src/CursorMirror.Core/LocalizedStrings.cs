@@ -55,11 +55,6 @@ namespace CursorMirror
             get { return Get("PredictionTargetOffsetLabel"); }
         }
 
-        public static string DistilledMlpPostStopBrakeLabel
-        {
-            get { return Get("DistilledMlpPostStopBrakeLabel"); }
-        }
-
         public static string RuntimeSchedulerHeaderLabel
         {
             get { return Get("RuntimeSchedulerHeaderLabel"); }
@@ -468,8 +463,9 @@ namespace CursorMirror
 
         public static string PredictionModelOptionText(int predictionModel)
         {
-            string name = PredictionModelName(predictionModel);
-            if (predictionModel == CursorMirrorSettings.DefaultDwmPredictionModel)
+            int normalized = CursorMirrorSettings.NormalizeDwmPredictionModel(predictionModel);
+            string name = PredictionModelName(normalized);
+            if (normalized == CursorMirrorSettings.DefaultDwmPredictionModel)
             {
                 return name + " (default)";
             }
@@ -484,19 +480,9 @@ namespace CursorMirror
                 return "LeastSquares";
             }
 
-            if (predictionModel == CursorMirrorSettings.DwmPredictionModelExperimentalMlp)
+            if (CursorMirrorSettings.NormalizeDwmPredictionModel(predictionModel) == CursorMirrorSettings.DwmPredictionModelSmoothPredictor)
             {
-                return "ExperimentalMLP";
-            }
-
-            if (predictionModel == CursorMirrorSettings.DwmPredictionModelDistilledMlp)
-            {
-                return "DistilledMLP";
-            }
-
-            if (predictionModel == CursorMirrorSettings.DwmPredictionModelRuntimeEventSafeMlp)
-            {
-                return "RuntimeEventSafeMLP";
+                return "SmoothPredictor";
             }
 
             return "ConstantVelocity";
@@ -567,8 +553,6 @@ namespace CursorMirror
                     return "Prediction model";
                 case "PredictionTargetOffsetLabel":
                     return "Target offset (ms)";
-                case "DistilledMlpPostStopBrakeLabel":
-                    return "Post-stop brake (experimental)";
                 case "RuntimeSchedulerHeaderLabel":
                     return "Runtime scheduler";
                 case "RuntimeSetWaitableTimerExLabel":
@@ -764,8 +748,6 @@ namespace CursorMirror
                     return "予測モデル";
                 case "PredictionTargetOffsetLabel":
                     return "ターゲット補正 (ms)";
-                case "DistilledMlpPostStopBrakeLabel":
-                    return "停止直後ブレーキ（実験）";
                 case "RuntimeSchedulerHeaderLabel":
                     return "実行時スケジューラー";
                 case "RuntimeSetWaitableTimerExLabel":

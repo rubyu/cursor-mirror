@@ -590,11 +590,6 @@ namespace CursorMirror.Calibrator
             summary.PredictionScheduledDwmTargetAdjustedToNextVBlank = counters.ScheduledDwmTargetAdjustedToNextVBlank;
             summary.PredictionOverlayUpdateCompletedAfterTargetVBlank = counters.OverlayUpdateCompletedAfterTargetVBlank;
             summary.PredictionOverlayUpdateCompletedNearTargetVBlank = counters.OverlayUpdateCompletedNearTargetVBlank;
-            summary.PredictionExperimentalMlpSkippedByRecentSpeed = counters.ExperimentalMlpSkippedByRecentSpeed;
-            summary.PredictionExperimentalMlpSkippedByPathSpeed = counters.ExperimentalMlpSkippedByPathSpeed;
-            summary.PredictionExperimentalMlpEvaluated = counters.ExperimentalMlpEvaluated;
-            summary.PredictionExperimentalMlpRejected = counters.ExperimentalMlpRejected;
-            summary.PredictionExperimentalMlpApplied = counters.ExperimentalMlpApplied;
         }
 
         private void EnterFullScreen()
