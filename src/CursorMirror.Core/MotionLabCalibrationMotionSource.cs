@@ -40,6 +40,11 @@ namespace CursorMirror
             get { return _sampler.ScenarioCount; }
         }
 
+        public int SampleRateHz
+        {
+            get { return Math.Max(1, _scenarioSet.SampleRateHz); }
+        }
+
         public double TotalDurationMilliseconds
         {
             get { return _sampler.TotalDurationMilliseconds; }

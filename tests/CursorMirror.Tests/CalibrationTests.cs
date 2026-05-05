@@ -82,6 +82,8 @@ namespace CursorMirror.Tests
             TestAssert.True(Contains(names, "short-jitter"), "short jitter pattern");
 
             double maximumVelocity = 0;
+            double maximumFourMillisecondStep = 0;
+            CalibrationMotionSample previousSample = suite.GetSample(0);
             for (double elapsed = 0; elapsed < suite.TotalDurationMilliseconds; elapsed += 50)
             {
                 CalibrationMotionSample sample = suite.GetSample(elapsed);
@@ -92,7 +94,19 @@ namespace CursorMirror.Tests
                 }
             }
 
+            for (double elapsed = 4; elapsed <= suite.TotalDurationMilliseconds; elapsed += 4)
+            {
+                CalibrationMotionSample sample = suite.GetSample(elapsed);
+                maximumFourMillisecondStep = Math.Max(maximumFourMillisecondStep, Math.Abs(sample.ExpectedX - previousSample.ExpectedX));
+                previousSample = sample;
+            }
+
+            CalibrationMotionSample finalSample = suite.GetSample(suite.TotalDurationMilliseconds);
+            CalibrationMotionSample afterFinalSample = suite.GetSample(suite.TotalDurationMilliseconds + 1000);
+
             TestAssert.True(maximumVelocity > 1000, "fast speed range");
+            TestAssert.True(maximumFourMillisecondStep <= 25, "default pattern has no discontinuous cursor jumps");
+            TestAssert.Equal(finalSample.ExpectedX, afterFinalSample.ExpectedX, "default pattern clamps after its duration");
         }
 
         // Calibration pattern summary separation [COT-MCU-8]
@@ -152,6 +166,7 @@ namespace CursorMirror.Tests
                 TestAssert.Equal("motion-lab", source.SourceName, "source name");
                 TestAssert.Equal(MotionLabGenerationProfile.RealTraceWeighted, source.GenerationProfile, "generation profile");
                 TestAssert.Equal(2, source.ScenarioCount, "scenario count");
+                TestAssert.Equal(60, source.SampleRateHz, "motion source sample rate");
                 TestAssert.True(source.TotalDurationMilliseconds >= 1200, "total duration");
                 TestAssert.Equal("scenario-000", first.PatternName, "first scenario pattern");
                 TestAssert.Equal(0, first.ScenarioIndex, "first scenario index");

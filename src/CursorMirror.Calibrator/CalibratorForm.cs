@@ -28,6 +28,7 @@ namespace CursorMirror.Calibrator
         private readonly CalibratorRunOptions _options;
 
         private RealCursorDriver _cursorDriver;
+        private CalibratorMotionPlaybackRunner _motionPlaybackRunner;
         private LowLevelMouseHook _mouseHook;
         private OverlayRuntimeThread _overlayRuntime;
         private OverlayWindow _overlayWindow;
@@ -202,6 +203,11 @@ namespace CursorMirror.Calibrator
         {
             try
             {
+                if (!ResolveMainAppConflict())
+                {
+                    return;
+                }
+
                 if (HasUnsavedFrames())
                 {
                     DialogResult result = MessageBox.Show(
@@ -252,6 +258,13 @@ namespace CursorMirror.Calibrator
                 _stopwatch.Restart();
                 _running = true;
                 MoveCursorForElapsed(0);
+                _motionPlaybackRunner = new CalibratorMotionPlaybackRunner(
+                    _cursorDriver,
+                    _motionSource,
+                    (int)_durationInput.Value * 1000.0,
+                    GetMotionPlaybackSampleRateHz(_motionSource),
+                    FeedProductRuntimeMouseMove);
+                _motionPlaybackRunner.Start();
 
                 if (!_options.DisableDisplayCapture)
                 {
@@ -275,15 +288,6 @@ namespace CursorMirror.Calibrator
             bool isInjected = data.dwExtraInfo == RealCursorDriver.CalibratorInjectionExtraInfo;
             if (isInjected)
             {
-                if (_overlayRuntime != null)
-                {
-                    _overlayRuntime.HandleMouseEvent(mouseEvent, data);
-                }
-                else if (_mirrorController != null)
-                {
-                    _mirrorController.HandleMouseEvent(mouseEvent, data);
-                }
-
                 return HookResult.Transfer;
             }
 
@@ -304,7 +308,6 @@ namespace CursorMirror.Calibrator
                 return;
             }
 
-            MoveCursorForElapsed(elapsed);
             if (_activeRuntimeMode == CalibrationRuntimeMode.SimpleTimer && _mirrorController != null)
             {
                 _mirrorController.Tick();
@@ -323,16 +326,20 @@ namespace CursorMirror.Calibrator
 
         private void FeedProductRuntimeMouseMove(CalibrationMotionSample sample)
         {
-            if (!_options.DisableDisplayCapture || _overlayRuntime == null)
-            {
-                return;
-            }
-
             LowLevelMouseHook.MSLLHOOKSTRUCT data = new LowLevelMouseHook.MSLLHOOKSTRUCT();
             data.pt.x = sample.ExpectedX;
             data.pt.y = sample.ExpectedY;
             data.dwExtraInfo = RealCursorDriver.CalibratorInjectionExtraInfo;
-            _overlayRuntime.HandleMouseEvent(LowLevelMouseHook.MouseEvent.WM_MOUSEMOVE, data);
+            if (_overlayRuntime != null)
+            {
+                _overlayRuntime.HandleMouseEvent(LowLevelMouseHook.MouseEvent.WM_MOUSEMOVE, data);
+                return;
+            }
+
+            if (_mirrorController != null)
+            {
+                _mirrorController.HandleMouseEvent(LowLevelMouseHook.MouseEvent.WM_MOUSEMOVE, data);
+            }
         }
 
         private void CaptureFrameCaptured(object sender, CalibrationFrameAnalysis e)
@@ -371,6 +378,12 @@ namespace CursorMirror.Calibrator
             _timer.Stop();
             _running = false;
             _stopwatch.Reset();
+
+            if (_motionPlaybackRunner != null)
+            {
+                _motionPlaybackRunner.Dispose();
+                _motionPlaybackRunner = null;
+            }
 
             if (_capture != null)
             {
@@ -484,6 +497,48 @@ namespace CursorMirror.Calibrator
 
                 SaveResults(dialog.FileName);
             }
+        }
+
+        private bool ResolveMainAppConflict()
+        {
+            if (!CalibratorMainAppConflict.IsDetected())
+            {
+                return true;
+            }
+
+            if (_options.AutoRun)
+            {
+                if (CalibratorMainAppConflict.RequestShutdownAndWait())
+                {
+                    return true;
+                }
+
+                MessageBox.Show(
+                    this,
+                    "Cursor Mirror is already running. Close Cursor Mirror before running calibration.",
+                    Text,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return false;
+            }
+
+            DialogResult result = MessageBox.Show(
+                this,
+                "Cursor Mirror is already running. Running it together with the calibrator can show two mirrored cursors and invalidate measurement.\r\n\r\nChoose Yes to request Cursor Mirror to exit before starting calibration. Choose No to continue anyway. Choose Cancel to return.",
+                Text,
+                MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Warning);
+            if (result == DialogResult.Cancel)
+            {
+                return false;
+            }
+
+            if (result == DialogResult.No)
+            {
+                return true;
+            }
+
+            return CalibratorMainAppConflict.RequestShutdownAndWait();
         }
 
         private void SaveResults(string path)
@@ -658,6 +713,17 @@ namespace CursorMirror.Calibrator
             _activeMotionGenerationProfile = source.GenerationProfile ?? string.Empty;
             _activeMotionScenarioCount = source.ScenarioCount;
             _activeMotionDurationMilliseconds = source.TotalDurationMilliseconds;
+        }
+
+        private static int GetMotionPlaybackSampleRateHz(ICalibrationMotionSource source)
+        {
+            MotionLabCalibrationMotionSource motionLabSource = source as MotionLabCalibrationMotionSource;
+            if (motionLabSource != null)
+            {
+                return motionLabSource.SampleRateHz;
+            }
+
+            return 60;
         }
 
         private CursorMirrorSettings BuildCursorSettings()

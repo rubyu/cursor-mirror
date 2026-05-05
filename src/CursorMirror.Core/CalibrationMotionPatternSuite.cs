@@ -57,6 +57,7 @@ namespace CursorMirror
             Add(segments, ref start, "cubic-in-out", "strong-ease", 1000, right, left, y, MotionCurve.CubicInOut);
             Add(segments, ref start, "rapid-reversal", "bidirectional", 1000, left, right, y, MotionCurve.RapidReversal);
             Add(segments, ref start, "sine-sweep", "oscillating", 1400, left, right, y, MotionCurve.SineSweep);
+            Add(segments, ref start, "transition-to-jitter", "positioning", 450, left, jitterLeft, y, MotionCurve.CubicSmoothStep);
             Add(segments, ref start, "short-jitter", "small-oscillation", 1000, jitterLeft, jitterRight, y, MotionCurve.Jitter);
 
             return new CalibrationMotionPatternSuite(segments.ToArray());
@@ -83,14 +84,9 @@ namespace CursorMirror
                 return new CalibrationMotionSample(0, string.Empty, string.Empty, 0, 0, 0);
             }
 
-            double wrapped = elapsedMilliseconds % _totalDurationMilliseconds;
-            if (wrapped < 0)
-            {
-                wrapped += _totalDurationMilliseconds;
-            }
-
-            Segment segment = FindSegment(wrapped);
-            double segmentElapsed = Math.Max(0, Math.Min(segment.DurationMilliseconds, wrapped - segment.StartMilliseconds));
+            double clampedElapsed = Math.Max(0, Math.Min(_totalDurationMilliseconds, elapsedMilliseconds));
+            Segment segment = FindSegment(clampedElapsed);
+            double segmentElapsed = Math.Max(0, Math.Min(segment.DurationMilliseconds, clampedElapsed - segment.StartMilliseconds));
             double x = segment.GetX(segmentElapsed);
             double velocity = segment.GetVelocityPixelsPerSecond(segmentElapsed);
             return new CalibrationMotionSample(
@@ -218,9 +214,11 @@ namespace CursorMirror
 
                 if (Curve == MotionCurve.Jitter)
                 {
-                    double center = FromX + ((ToX - FromX) / 2.0);
-                    double amplitude = Math.Abs(ToX - FromX) / 2.0;
-                    return center + (Math.Sin(Math.PI * 2.0 * 4.0 * p) * amplitude);
+                    double travel = Lerp(FromX, ToX, SmoothStep(p));
+                    double envelope = Math.Sin(Math.PI * p);
+                    double amplitude = Math.Abs(ToX - FromX) * 0.08;
+                    double wobble = Math.Sin(Math.PI * 2.0 * 4.0 * p) * amplitude * envelope;
+                    return Clamp(travel + wobble, Math.Min(FromX, ToX), Math.Max(FromX, ToX));
                 }
 
                 return Lerp(FromX, ToX, ApplyCurve(p, Curve));
@@ -284,6 +282,11 @@ namespace CursorMirror
             private static double Clamp01(double value)
             {
                 return Math.Max(0, Math.Min(1, value));
+            }
+
+            private static double Clamp(double value, double minimum, double maximum)
+            {
+                return Math.Max(minimum, Math.Min(maximum, value));
             }
 
             private static double Lerp(int start, int end, double progress)

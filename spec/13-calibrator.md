@@ -12,7 +12,10 @@
 - The calibrator MUST move the real Windows cursor through deterministic movement patterns.
 - The movement suite MUST be defined as compact motion segments or a compact Motion Lab scenario package rather than a precomputed per-frame table.
 - Movement samples MUST be evaluated from the current elapsed time during calibration.
+- Real cursor playback SHOULD run on a dedicated high-resolution playback thread rather than the visible UI timer, so product-runtime low-latency scheduling does not starve the motion source and create artificial cursor jumps.
+- Built-in cursor playback SHOULD run at 60 Hz by default. When a Motion Lab scenario package is used, cursor playback SHOULD use that package's sample rate.
 - The default movement suite SHOULD include multiple speed ranges and at least linear, quadratic easing, cubic easing, rapid reversal, sinusoidal sweep, short jitter, and stationary hold patterns.
+- The default movement suite MUST avoid discontinuous position jumps at segment boundaries and MUST clamp to its final sample after its duration rather than wrapping back to the first sample.
 - The calibrator MAY accept a Motion Lab `.zip` package through a command-line option. When supplied, the calibrator MUST use the package's `motion-script.json` scenario definition as the motion source instead of the built-in default suite.
 - Motion Lab scenario playback in the calibrator MUST use the same scenario sampler as Motion Lab and MUST NOT rely on `motion-samples.csv` as a precomputed playback table.
 - When a Motion Lab scenario package is used and no duration override is supplied, the calibrator SHOULD default the run duration to the package duration within the supported UI bounds.
@@ -28,7 +31,9 @@
 ### 13.3 Input Safety
 - During calibration, the calibrator MUST install a low-level mouse hook that blocks user-generated mouse input.
 - Mouse input injected by the calibrator itself MUST be allowed through.
+- The low-level mouse hook SHOULD remain a lightweight input filter. It SHOULD NOT drive the measured overlay runtime from inside the hook callback; synthetic playback samples SHOULD be forwarded to the measured runtime from the playback path instead.
 - Real cursor movement MUST use the shared `RealCursorDriver` SendInput path with the calibrator-specific injection marker.
+- Before starting a run, the calibrator SHOULD detect whether the main Cursor Mirror tray application is already running and provide a path to request that app to exit. Automated runs SHOULD request shutdown and abort if the main app cannot be stopped.
 - The calibrator MUST NOT maintain a separate cursor movement implementation from Motion Lab or the demo app.
 - Pressing any keyboard key during calibration MUST stop calibration and release the mouse hook.
 - Calibration shutdown MUST release the mouse hook even when capture startup or saving fails.
