@@ -571,7 +571,7 @@ namespace CursorMirror
                 case "RuntimeMessageDeferralWindowLabel":
                     return "Deferral window (us)";
                 case "RuntimeThreadLatencyProfileLabel":
-                    return "MMCSS thread profile";
+                    return "Low latency runtime profile";
                 case "MovementCategoryLabel":
                     return "Movement translucency";
                 case "MovingOpacityLabel":
@@ -766,7 +766,7 @@ namespace CursorMirror
                 case "RuntimeMessageDeferralWindowLabel":
                     return "遅延幅 (us)";
                 case "RuntimeThreadLatencyProfileLabel":
-                    return "MMCSS スレッドプロファイル";
+                    return "低遅延ランタイムプロファイル";
                 case "MovementCategoryLabel":
                     return "移動中の半透明化";
                 case "MovingOpacityLabel":

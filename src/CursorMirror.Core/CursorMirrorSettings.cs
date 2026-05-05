@@ -6,6 +6,7 @@ namespace CursorMirror
     [DataContract]
     public sealed class CursorMirrorSettings
     {
+        public const int CurrentSettingsSchemaVersion = 1;
         public const bool DefaultMovementTranslucencyEnabled = true;
         public const bool DefaultPredictionEnabled = true;
         public const bool DefaultIdleFadeEnabled = true;
@@ -44,7 +45,7 @@ namespace CursorMirror
         public const int DefaultRuntimeFineWaitYieldThresholdMicroseconds = 100;
         public const bool DefaultRuntimeMessageDeferralEnabled = true;
         public const int DefaultRuntimeMessageDeferralMicroseconds = 100;
-        public const bool DefaultRuntimeThreadLatencyProfileEnabled = false;
+        public const bool DefaultRuntimeThreadLatencyProfileEnabled = true;
         private const int ObsoleteDwmPredictionModelExperimentalMlp = 2;
         private const int ObsoleteDwmPredictionModelDistilledMlp = 3;
 
@@ -105,6 +106,9 @@ namespace CursorMirror
         {
             ApplyDefaults();
         }
+
+        [DataMember(Order = 0)]
+        public int SettingsSchemaVersion { get; set; }
 
         [DataMember(Order = 1)]
         public bool MovementTranslucencyEnabled { get; set; }
@@ -211,6 +215,7 @@ namespace CursorMirror
         {
             return new CursorMirrorSettings
             {
+                SettingsSchemaVersion = SettingsSchemaVersion,
                 MovementTranslucencyEnabled = MovementTranslucencyEnabled,
                 PredictionEnabled = PredictionEnabled,
                 MovingOpacityPercent = MovingOpacityPercent,
@@ -250,6 +255,7 @@ namespace CursorMirror
         {
             return new CursorMirrorSettings
             {
+                SettingsSchemaVersion = CurrentSettingsSchemaVersion,
                 MovementTranslucencyEnabled = MovementTranslucencyEnabled,
                 PredictionEnabled = PredictionEnabled,
                 MovingOpacityPercent = Clamp(MovingOpacityPercent, MinimumMovingOpacityPercent, MaximumMovingOpacityPercent),
@@ -326,11 +332,28 @@ namespace CursorMirror
         [OnDeserializing]
         private void OnDeserializing(StreamingContext context)
         {
-            ApplyDefaults();
+            ApplyDefaults(0);
+        }
+
+        [OnDeserialized]
+        private void OnDeserialized(StreamingContext context)
+        {
+            if (SettingsSchemaVersion < CurrentSettingsSchemaVersion)
+            {
+                RuntimeThreadLatencyProfileEnabled = DefaultRuntimeThreadLatencyProfileEnabled;
+            }
+
+            SettingsSchemaVersion = CurrentSettingsSchemaVersion;
         }
 
         private void ApplyDefaults()
         {
+            ApplyDefaults(CurrentSettingsSchemaVersion);
+        }
+
+        private void ApplyDefaults(int settingsSchemaVersion)
+        {
+            SettingsSchemaVersion = settingsSchemaVersion;
             MovementTranslucencyEnabled = DefaultMovementTranslucencyEnabled;
             PredictionEnabled = DefaultPredictionEnabled;
             MovingOpacityPercent = DefaultMovingOpacityPercent;

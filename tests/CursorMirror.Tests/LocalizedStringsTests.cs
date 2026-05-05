@@ -34,7 +34,7 @@ namespace CursorMirror.Tests
                 TestAssert.Equal("Spin threshold (us)", LocalizedStrings.RuntimeSpinThresholdLabel, "English spin threshold label");
                 TestAssert.Equal("Defer messages near deadline", LocalizedStrings.RuntimeMessageDeferralLabel, "English message deferral label");
                 TestAssert.Equal("Deferral window (us)", LocalizedStrings.RuntimeMessageDeferralWindowLabel, "English message deferral window label");
-                TestAssert.Equal("MMCSS thread profile", LocalizedStrings.RuntimeThreadLatencyProfileLabel, "English MMCSS label");
+                TestAssert.Equal("Low latency runtime profile", LocalizedStrings.RuntimeThreadLatencyProfileLabel, "English low latency runtime profile label");
                 TestAssert.Equal("ConstantVelocity (default)", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelConstantVelocity), "English constant velocity option");
                 TestAssert.Equal("ConstantVelocityHighSpeedSwitch", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelConstantVelocityHighSpeedSwitch), "English constant velocity high-speed switch option");
                 TestAssert.Equal("LeastSquares", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelLeastSquares), "English least-squares option");
@@ -104,7 +104,7 @@ namespace CursorMirror.Tests
                 TestAssert.Equal("spin threshold (us)", LocalizedStrings.RuntimeSpinThresholdLabel, "Japanese spin threshold label");
                 TestAssert.Equal("期限直前のメッセージ処理を遅延", LocalizedStrings.RuntimeMessageDeferralLabel, "Japanese message deferral label");
                 TestAssert.Equal("遅延幅 (us)", LocalizedStrings.RuntimeMessageDeferralWindowLabel, "Japanese message deferral window label");
-                TestAssert.Equal("MMCSS スレッドプロファイル", LocalizedStrings.RuntimeThreadLatencyProfileLabel, "Japanese MMCSS label");
+                TestAssert.Equal("低遅延ランタイムプロファイル", LocalizedStrings.RuntimeThreadLatencyProfileLabel, "Japanese low latency runtime profile label");
                 TestAssert.Equal("ConstantVelocity (default)", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelConstantVelocity), "Japanese constant velocity option");
                 TestAssert.Equal("ConstantVelocityHighSpeedSwitch", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelConstantVelocityHighSpeedSwitch), "Japanese constant velocity high-speed switch option");
                 TestAssert.Equal("LeastSquares", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelLeastSquares), "Japanese least-squares option");

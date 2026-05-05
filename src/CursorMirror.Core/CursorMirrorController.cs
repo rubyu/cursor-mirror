@@ -567,6 +567,11 @@ namespace CursorMirror
                 runtimeEvent.VBlankLeadMicroseconds = ProductRuntimeOutlierRecorder.TicksToMicroseconds(targetVBlankTicks - completedTicks);
             }
 
+            int currentProcessForeground;
+            int foregroundWindowProcessId;
+            ForegroundWindowTelemetry.Capture(out currentProcessForeground, out foregroundWindowProcessId);
+            runtimeEvent.CurrentProcessForeground = currentProcessForeground;
+            runtimeEvent.ForegroundWindowProcessId = foregroundWindowProcessId;
             recorder.Record(ref runtimeEvent);
         }
 

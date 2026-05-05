@@ -475,7 +475,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Sections 4.4.2, 4.5.1, 6.1.
 
 - COT-MSU-16 - Prediction model selection
-  Verify that the settings window exposes `ConstantVelocity (default)`, `LeastSquares`, and `SmoothPredictor`, selects `ConstantVelocity` by default, applies model changes immediately, and disables the prediction model control when prediction is disabled.
+  Verify that the settings window exposes `ConstantVelocity (default)`, `ConstantVelocityHighSpeedSwitch`, `LeastSquares`, and `SmoothPredictor`, selects `ConstantVelocity` by default, applies model changes immediately, and disables the prediction model control when prediction is disabled.
   Refs: Sections 4.4.2, 4.5.1, 6.1.
 
 - COT-MSU-17 - Prediction target offset control
@@ -483,7 +483,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Sections 4.4.2, 4.5.1, 6.1.
 
 - COT-MSU-19 - Runtime scheduler controls
-  Verify that runtime scheduler controls expose persisted defaults, apply edited values immediately, disable the message-deferral window unless message deferral is enabled, and clamp spin threshold to the fine-wait advance.
+  Verify that runtime scheduler controls expose persisted defaults including the low-latency runtime profile, apply edited values immediately, disable the message-deferral window unless message deferral is enabled, and clamp spin threshold to the fine-wait advance.
   Refs: Sections 4.4.2, 4.5.1, 6.1.
 
 - COT-MSU-20 - Settings window grouped layout

@@ -27,6 +27,7 @@ namespace CursorMirror.Tests
         {
             CursorMirrorSettings settings = CursorMirrorSettings.Default();
 
+            TestAssert.Equal(CursorMirrorSettings.CurrentSettingsSchemaVersion, settings.SettingsSchemaVersion, "default settings schema version");
             TestAssert.True(settings.MovementTranslucencyEnabled, "default enabled");
             TestAssert.True(settings.PredictionEnabled, "prediction default enabled");
             TestAssert.Equal(20, settings.MovingOpacityPercent, "default moving opacity");
@@ -59,7 +60,7 @@ namespace CursorMirror.Tests
             TestAssert.Equal(100, settings.RuntimeFineWaitYieldThresholdMicroseconds, "default runtime spin threshold");
             TestAssert.True(settings.RuntimeMessageDeferralEnabled, "default runtime message deferral enabled");
             TestAssert.Equal(100, settings.RuntimeMessageDeferralMicroseconds, "default runtime message deferral window");
-            TestAssert.False(settings.RuntimeThreadLatencyProfileEnabled, "default runtime thread latency profile disabled");
+            TestAssert.True(settings.RuntimeThreadLatencyProfileEnabled, "default runtime thread latency profile enabled");
         }
 
         // Moving opacity validation [COT-MSU-2]
@@ -235,6 +236,7 @@ namespace CursorMirror.Tests
                 store.Save(settings);
                 CursorMirrorSettings loaded = store.Load();
 
+                TestAssert.Equal(CursorMirrorSettings.CurrentSettingsSchemaVersion, loaded.SettingsSchemaVersion, "loaded settings schema version");
                 TestAssert.False(loaded.MovementTranslucencyEnabled, "loaded enabled flag");
                 TestAssert.False(loaded.PredictionEnabled, "loaded prediction enabled flag");
                 TestAssert.Equal(88, loaded.MovingOpacityPercent, "loaded opacity");
@@ -419,7 +421,16 @@ namespace CursorMirror.Tests
                 TestAssert.Equal(100, oldFormat.RuntimeFineWaitYieldThresholdMicroseconds, "old settings must use runtime spin threshold default");
                 TestAssert.True(oldFormat.RuntimeMessageDeferralEnabled, "old settings must use runtime message deferral default");
                 TestAssert.Equal(100, oldFormat.RuntimeMessageDeferralMicroseconds, "old settings must use runtime message deferral window default");
-                TestAssert.False(oldFormat.RuntimeThreadLatencyProfileEnabled, "old settings must use runtime thread latency profile default");
+                TestAssert.True(oldFormat.RuntimeThreadLatencyProfileEnabled, "old settings must use runtime thread latency profile default");
+                TestAssert.Equal(CursorMirrorSettings.CurrentSettingsSchemaVersion, oldFormat.SettingsSchemaVersion, "old settings must be migrated to current schema version");
+
+                File.WriteAllText(
+                    path,
+                    "{\"RuntimeThreadLatencyProfileEnabled\":false}",
+                    System.Text.Encoding.UTF8);
+                CursorMirrorSettings oldRuntimeProfileDefault = store.Load();
+                TestAssert.True(oldRuntimeProfileDefault.RuntimeThreadLatencyProfileEnabled, "old settings migrate runtime latency profile to new default");
+                TestAssert.Equal(CursorMirrorSettings.CurrentSettingsSchemaVersion, oldRuntimeProfileDefault.SettingsSchemaVersion, "old runtime profile setting schema migration");
 
                 SettingsController controller = new SettingsController(store, loaded, delegate { }, delegate { });
                 controller.ResetToDefaults();

@@ -25,8 +25,10 @@ namespace CursorMirror
         private Thread _thread;
         private OverlayWindow _overlayWindow;
         private CursorMirrorController _controller;
+        private HighFrequencyCursorPoller _cursorPoller;
         private HighResolutionWaitTimer _waitTimer;
         private ThreadLatencyProfile _latencyProfile;
+        private ProcessLatencyProfile _processLatencyProfile;
         private RuntimeSchedulerOptions _schedulerOptions;
         private Exception _startupException;
         private bool _started;
@@ -258,7 +260,7 @@ namespace CursorMirror
                 }
 
                 ControlDispatcher dispatcher = new ControlDispatcher(overlayWindow);
-                cursorPoller = new HighFrequencyCursorPoller();
+                cursorPoller = new HighFrequencyCursorPoller(_schedulerOptions.UseThreadLatencyProfile);
                 cursorPoller.Start();
                 controller = new CursorMirrorController(
                     new CursorImageProvider(),
@@ -274,6 +276,7 @@ namespace CursorMirror
                 {
                     _overlayWindow = overlayWindow;
                     _controller = controller;
+                    _cursorPoller = cursorPoller;
                 }
 
                 _timerResolutionActive = TimeBeginPeriodNative(DwmSynchronizedRuntimeScheduler.TimerResolutionMilliseconds) == 0;
@@ -301,6 +304,12 @@ namespace CursorMirror
                     _latencyProfile = null;
                 }
 
+                if (_processLatencyProfile != null)
+                {
+                    _processLatencyProfile.Dispose();
+                    _processLatencyProfile = null;
+                }
+
                 if (_timerResolutionActive)
                 {
                     TimeEndPeriodNative(DwmSynchronizedRuntimeScheduler.TimerResolutionMilliseconds);
@@ -325,6 +334,7 @@ namespace CursorMirror
                 {
                     _controller = null;
                     _overlayWindow = null;
+                    _cursorPoller = null;
                     _waitTimer = null;
                 }
 
@@ -351,6 +361,11 @@ namespace CursorMirror
                 _waitTimer.PreferSetWaitableTimerEx = _schedulerOptions.PreferSetWaitableTimerEx;
             }
 
+            if (_cursorPoller != null)
+            {
+                _cursorPoller.ApplyThreadLatencyProfile(_schedulerOptions.UseThreadLatencyProfile);
+            }
+
             ApplyThreadLatencyProfileOption(_schedulerOptions.UseThreadLatencyProfile);
         }
 
@@ -363,6 +378,11 @@ namespace CursorMirror
                     _latencyProfile = ThreadLatencyProfile.Enter("overlayRuntime");
                 }
 
+                if (_processLatencyProfile == null)
+                {
+                    _processLatencyProfile = ProcessLatencyProfile.Enter();
+                }
+
                 return;
             }
 
@@ -370,6 +390,12 @@ namespace CursorMirror
             {
                 _latencyProfile.Dispose();
                 _latencyProfile = null;
+            }
+
+            if (_processLatencyProfile != null)
+            {
+                _processLatencyProfile.Dispose();
+                _processLatencyProfile = null;
             }
         }
 
@@ -875,6 +901,11 @@ namespace CursorMirror
             runtimeEvent.MouseMoveEventsCoalesced = mouseMoveEventsCoalesced;
             runtimeEvent.MouseMovePostsQueued = mouseMovePostsQueued;
             runtimeEvent.MouseMoveCallbacksProcessed = mouseMoveCallbacksProcessed;
+            int currentProcessForeground;
+            int foregroundWindowProcessId;
+            ForegroundWindowTelemetry.Capture(out currentProcessForeground, out foregroundWindowProcessId);
+            runtimeEvent.CurrentProcessForeground = currentProcessForeground;
+            runtimeEvent.ForegroundWindowProcessId = foregroundWindowProcessId;
 
             if (plannedWakeTicks > 0 && tickStartedTicks > 0)
             {

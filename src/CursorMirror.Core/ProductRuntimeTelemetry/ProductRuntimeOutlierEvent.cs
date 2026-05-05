@@ -95,5 +95,7 @@ namespace CursorMirror.ProductRuntimeTelemetry
         public long MouseMoveCallbacksProcessed;
         public long LatestMouseMoveAgeMicroseconds;
         public int OverlayMoveSkipped;
+        public int CurrentProcessForeground;
+        public int ForegroundWindowProcessId;
     }
 }

@@ -28,7 +28,7 @@ namespace CursorMirror
                     ? CursorMirrorSettings.DefaultRuntimeMessageDeferralMicroseconds
                     : 0,
                 PreferSetWaitableTimerEx = true,
-                UseThreadLatencyProfile = false
+                UseThreadLatencyProfile = true
             };
         }
 

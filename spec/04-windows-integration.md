@@ -159,9 +159,10 @@ Recommended extended window styles:
 - The default latest-position sampler interval SHOULD be `1ms` so blocking waits do not reduce the freshness of samples consumed by the product runtime scheduler.
 - The high-frequency latest-position sampler MUST use a blocking wait for positive remaining intervals and MUST NOT burn CPU with a tight `Sleep(0)` or spin loop between polls.
 - Runtime scheduler and latest-position sampler threads SHOULD use a priority appropriate for latency-sensitive cursor display work without requiring administrator privileges.
-- The overlay runtime thread and high-frequency latest-position sampler SHOULD NOT request managed `Highest` thread priority by default.
-- Cursor display threads SHOULD NOT request MMCSS by default. MMCSS and managed-priority experiments MAY be implemented as opt-in diagnostics, but the default runtime SHOULD avoid competing with other desktop latency-sensitive workloads.
-- Any optional MMCSS or elevated managed-priority request MUST be best-effort: failure MUST NOT prevent startup, MUST NOT require administrator privileges, and MUST fall back to the existing scheduler behavior.
+- The default runtime SHOULD enable a low-latency runtime profile for both the overlay runtime thread and the high-frequency latest-position sampler so tray-only operation does not depend on foreground-window scheduler behavior.
+- The low-latency runtime profile MAY request managed `Highest` thread priority, MMCSS, and `AboveNormal` process priority as best-effort latency hints.
+- Any MMCSS, elevated managed-priority, or process-priority request MUST be best-effort: failure MUST NOT prevent startup, MUST NOT require administrator privileges, and MUST fall back to the existing scheduler behavior.
+- Runtime telemetry SHOULD record whether the Cursor Mirror process is the foreground process when scheduler, controller, or overlay events are recorded, so tray-only and settings-window-visible runs can be compared.
 - The scheduler MUST avoid overlapping queued runtime ticks.
 - After the scheduler requests a tick for a target vblank, it MUST suppress duplicate ticks for that target. It MAY schedule the following distinct target before the prior target has passed when the next one-shot wait target is unambiguous.
 - If the current target vblank is already too close to the overlay update deadline, the controller SHOULD predict for a later distinct vblank instead of knowingly submitting a stale current-frame prediction.

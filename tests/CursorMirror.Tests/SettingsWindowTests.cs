@@ -290,21 +290,21 @@ namespace CursorMirror.Tests
                         TestAssert.True(messageDeferralCheckBox.Checked, "message deferral default checked");
                         TestAssert.True(messageDeferralLabel.Enabled, "message deferral label initially enabled");
                         TestAssert.True(messageDeferralInput.Enabled, "message deferral input initially enabled");
-                        TestAssert.False(threadLatencyProfileCheckBox.Checked, "thread latency default unchecked");
+                        TestAssert.True(threadLatencyProfileCheckBox.Checked, "thread latency default checked");
 
                         setExCheckBox.Checked = false;
                         fineWaitInput.Value = 800;
                         spinThresholdInput.Value = 300;
                         messageDeferralCheckBox.Checked = true;
                         messageDeferralInput.Value = 700;
-                        threadLatencyProfileCheckBox.Checked = true;
+                        threadLatencyProfileCheckBox.Checked = false;
 
                         TestAssert.False(controller.CurrentSettings.RuntimeSetWaitableTimerExEnabled, "set waitable timer ex setting applied");
                         TestAssert.Equal(800, controller.CurrentSettings.RuntimeFineWaitAdvanceMicroseconds, "fine wait setting applied");
                         TestAssert.Equal(300, controller.CurrentSettings.RuntimeFineWaitYieldThresholdMicroseconds, "spin threshold setting applied");
                         TestAssert.True(controller.CurrentSettings.RuntimeMessageDeferralEnabled, "message deferral setting applied");
                         TestAssert.Equal(700, controller.CurrentSettings.RuntimeMessageDeferralMicroseconds, "message deferral window setting applied");
-                        TestAssert.True(controller.CurrentSettings.RuntimeThreadLatencyProfileEnabled, "thread latency setting applied");
+                        TestAssert.False(controller.CurrentSettings.RuntimeThreadLatencyProfileEnabled, "thread latency setting applied");
                         TestAssert.True(messageDeferralLabel.Enabled, "message deferral label enabled");
                         TestAssert.True(messageDeferralInput.Enabled, "message deferral input enabled");
 

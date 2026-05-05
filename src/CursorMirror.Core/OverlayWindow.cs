@@ -344,6 +344,11 @@ namespace CursorMirror
                     runtimeEvent.TotalTicks = Stopwatch.GetTimestamp() - totalStartedTicks;
                     runtimeEvent.Succeeded = updateSucceeded ? 1 : 0;
                     runtimeEvent.LastWin32Error = updateError;
+                    int currentProcessForeground;
+                    int foregroundWindowProcessId;
+                    ForegroundWindowTelemetry.Capture(out currentProcessForeground, out foregroundWindowProcessId);
+                    runtimeEvent.CurrentProcessForeground = currentProcessForeground;
+                    runtimeEvent.ForegroundWindowProcessId = foregroundWindowProcessId;
                     recorder.Record(ref runtimeEvent);
                 }
             }
@@ -373,6 +378,11 @@ namespace CursorMirror
             runtimeEvent.TotalTicks = totalTicks;
             runtimeEvent.Succeeded = succeeded ? 1 : 0;
             runtimeEvent.LastWin32Error = lastWin32Error;
+            int currentProcessForeground;
+            int foregroundWindowProcessId;
+            ForegroundWindowTelemetry.Capture(out currentProcessForeground, out foregroundWindowProcessId);
+            runtimeEvent.CurrentProcessForeground = currentProcessForeground;
+            runtimeEvent.ForegroundWindowProcessId = foregroundWindowProcessId;
             recorder.Record(ref runtimeEvent);
         }
 

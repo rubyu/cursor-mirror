@@ -80,6 +80,7 @@ namespace CursorMirror.Tests
                         string header = reader.ReadLine();
                         string row = reader.ReadLine();
                         TestAssert.True(header.IndexOf("sequence,stopwatchTicks,eventKind", StringComparison.Ordinal) == 0, "events header");
+                        TestAssert.True(header.Contains("currentProcessForeground,foregroundWindowProcessId"), "foreground telemetry header");
                         TestAssert.True(row != null && row.Length > 0, "events row");
                     }
                 }

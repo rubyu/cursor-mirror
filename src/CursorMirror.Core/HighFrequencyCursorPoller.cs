@@ -21,9 +21,11 @@ namespace CursorMirror
         private Point _latestPosition;
         private long _latestTimestampTicks;
         private volatile bool _running;
+        private volatile bool _useThreadLatencyProfile;
         private bool _timerResolutionActive;
         private bool _disposed;
         private HighResolutionWaitTimer _waitTimer;
+        private ThreadLatencyProfile _latencyProfile;
 
         [DllImport("user32.dll", EntryPoint = "GetCursorPos", SetLastError = true)]
         private static extern bool GetCursorPosNative(out NativePoint point);
@@ -38,14 +40,25 @@ namespace CursorMirror
         private static extern uint TimeEndPeriodNative(uint milliseconds);
 
         public HighFrequencyCursorPoller()
-            : this(DefaultIntervalMilliseconds, DefaultMaximumSampleAgeMilliseconds)
+            : this(DefaultIntervalMilliseconds, DefaultMaximumSampleAgeMilliseconds, false)
+        {
+        }
+
+        public HighFrequencyCursorPoller(bool useThreadLatencyProfile)
+            : this(DefaultIntervalMilliseconds, DefaultMaximumSampleAgeMilliseconds, useThreadLatencyProfile)
         {
         }
 
         public HighFrequencyCursorPoller(int intervalMilliseconds, int maximumSampleAgeMilliseconds)
+            : this(intervalMilliseconds, maximumSampleAgeMilliseconds, false)
+        {
+        }
+
+        public HighFrequencyCursorPoller(int intervalMilliseconds, int maximumSampleAgeMilliseconds, bool useThreadLatencyProfile)
         {
             _intervalMilliseconds = Math.Max(1, intervalMilliseconds);
             _maximumSampleAgeMilliseconds = Math.Max(1, maximumSampleAgeMilliseconds);
+            _useThreadLatencyProfile = useThreadLatencyProfile;
         }
 
         public void Start()
@@ -65,6 +78,12 @@ namespace CursorMirror
             _thread.IsBackground = true;
             _thread.Priority = ThreadPriority.AboveNormal;
             _thread.Start();
+        }
+
+        public void ApplyThreadLatencyProfile(bool enabled)
+        {
+            ThrowIfDisposed();
+            _useThreadLatencyProfile = enabled;
         }
 
         public bool TryGetSample(out CursorPollSample sample)
@@ -125,26 +144,59 @@ namespace CursorMirror
 
         private void Run()
         {
-            long intervalTicks = Math.Max(1, MillisecondsToTicks(_intervalMilliseconds));
-            long nextTicks = Stopwatch.GetTimestamp() + intervalTicks;
-
-            while (_running)
+            try
             {
-                long now = Stopwatch.GetTimestamp();
-                if (now >= nextTicks)
+                ApplyThreadLatencyProfileOnCurrentThread();
+                long intervalTicks = Math.Max(1, MillisecondsToTicks(_intervalMilliseconds));
+                long nextTicks = Stopwatch.GetTimestamp() + intervalTicks;
+
+                while (_running)
                 {
-                    CaptureLatest(now);
-                    nextTicks += intervalTicks;
-                    if (now - nextTicks > intervalTicks * 4)
+                    ApplyThreadLatencyProfileOnCurrentThread();
+                    long now = Stopwatch.GetTimestamp();
+                    if (now >= nextTicks)
                     {
-                        nextTicks = now + intervalTicks;
+                        CaptureLatest(now);
+                        nextTicks += intervalTicks;
+                        if (now - nextTicks > intervalTicks * 4)
+                        {
+                            nextTicks = now + intervalTicks;
+                        }
+
+                        continue;
                     }
 
-                    continue;
+                    long remainingTicks = nextTicks - now;
+                    WaitForRemainingTicks(remainingTicks);
+                }
+            }
+            finally
+            {
+                DisposeLatencyProfile();
+            }
+        }
+
+        private void ApplyThreadLatencyProfileOnCurrentThread()
+        {
+            if (_useThreadLatencyProfile)
+            {
+                if (_latencyProfile == null)
+                {
+                    _latencyProfile = ThreadLatencyProfile.Enter("cursorPoller");
                 }
 
-                long remainingTicks = nextTicks - now;
-                WaitForRemainingTicks(remainingTicks);
+                return;
+            }
+
+            DisposeLatencyProfile();
+        }
+
+        private void DisposeLatencyProfile()
+        {
+            if (_latencyProfile != null)
+            {
+                _latencyProfile.Dispose();
+                _latencyProfile = null;
             }
         }
 
