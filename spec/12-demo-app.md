@@ -55,7 +55,8 @@
 ### 12.5 Real Cursor Driving and Free Mode
 - Auto mode MUST move the real Windows cursor using injected mouse movement.
 - Auto mode MUST use the shared `RealCursorDriver` SendInput path with the demo-specific injection marker.
-- When the demo-owned mirrored cursor overlay is enabled, Auto mode MUST feed both demo-injected and user-generated mouse movement into Cursor Mirror's overlay controller so the mirrored cursor remains visible.
+- When the demo-owned mirrored cursor overlay is enabled, Auto mode MUST feed demo-injected movement into Cursor Mirror's overlay controller from the playback path, not from inside the low-level hook callback.
+- When the demo-owned mirrored cursor overlay is enabled, user-generated mouse movement MAY be fed from the hook path so Free mode remains responsive.
 - Demo-injected mouse movement MUST carry a recognizable injection marker so the demo can distinguish its own movement from user movement.
 - The demo MUST install a low-level mouse hook only while the demo scene is running.
 - The demo hook MUST treat mouse movement, button, and wheel events without the demo injection marker as user control.

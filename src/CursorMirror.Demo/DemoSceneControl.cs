@@ -150,15 +150,15 @@ namespace CursorMirror.Demo
 
         private HookResult HandleMouseEvent(LowLevelMouseHook.MouseEvent mouseEvent, LowLevelMouseHook.MSLLHOOKSTRUCT data)
         {
-            if (_mirrorController != null)
-            {
-                _mirrorController.HandleMouseEvent(mouseEvent, data);
-            }
-
             bool isDemoInjected = data.dwExtraInfo == RealCursorDriver.DemoInjectionExtraInfo;
             if (isDemoInjected)
             {
                 return HookResult.Transfer;
+            }
+
+            if (_mirrorController != null)
+            {
+                _mirrorController.HandleMouseEvent(mouseEvent, data);
             }
 
             if (_modeController != null && IsPointerControlEvent(mouseEvent))
@@ -205,7 +205,22 @@ namespace CursorMirror.Demo
             double pathMilliseconds = Math.Max(0, nowMilliseconds - _autoStartMilliseconds);
             DemoPointerSample sample = _stream.GetSample(pathMilliseconds);
             _cursorDriver.MoveTo(sample.Position);
+            FeedMirrorControllerMove(sample.Position);
             _sentMoveCount++;
+        }
+
+        private void FeedMirrorControllerMove(Point position)
+        {
+            if (_mirrorController == null)
+            {
+                return;
+            }
+
+            LowLevelMouseHook.MSLLHOOKSTRUCT data = new LowLevelMouseHook.MSLLHOOKSTRUCT();
+            data.pt.x = position.X;
+            data.pt.y = position.Y;
+            data.dwExtraInfo = RealCursorDriver.DemoInjectionExtraInfo;
+            _mirrorController.HandleMouseEvent(LowLevelMouseHook.MouseEvent.WM_MOUSEMOVE, data);
         }
 
         private void RestartAutoPath(long nowMilliseconds)
