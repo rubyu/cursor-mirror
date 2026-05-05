@@ -15,6 +15,9 @@ namespace CursorMirror.Tests
             suite.Add("COT-MOU-33", ThreadLatencyProfileSummary);
             suite.Add("COT-MOU-34", DwmOneShotSchedulerWaitsUntilAbsoluteWake);
             suite.Add("COT-MOU-35", DwmOneShotSchedulerSkipsNearDuplicateVBlank);
+            suite.Add("COT-MOU-36", RuntimeSchedulerOptionsNormalize);
+            suite.Add("COT-MOU-37", HighResolutionWaitTimerSetExFallbackWaits);
+            suite.Add("COT-MOU-56", RuntimeSchedulerOptionsFromSettings);
         }
 
         // DWM scheduler waits until the configured vblank lead time [COT-MOU-23]
@@ -142,6 +145,20 @@ namespace CursorMirror.Tests
             }
         }
 
+        // High-resolution wait timer can request SetWaitableTimerEx and fall back [COT-MOU-37]
+        private static void HighResolutionWaitTimerSetExFallbackWaits()
+        {
+            using (HighResolutionWaitTimer timer = HighResolutionWaitTimer.CreateBestEffort(true))
+            {
+                TestAssert.True(timer != null, "wait timer should be available on Windows");
+                TestAssert.True(timer.WaitTicks(StopwatchTicksForOneMillisecond(), StopwatchTicksPerSecond()), "set-ex wait timer ticks should complete");
+                TestAssert.True(
+                    timer.WaitMethod == "highResolutionWaitableTimer+setWaitableTimerEx" ||
+                    timer.WaitMethod == "waitableTimer+setWaitableTimerEx",
+                    "set-ex wait timer method should be reported");
+            }
+        }
+
         private static long StopwatchTicksForOneMillisecond()
         {
             return System.Diagnostics.Stopwatch.Frequency / 1000;
@@ -209,6 +226,52 @@ namespace CursorMirror.Tests
                 "managed=unavailable;mmcss=unavailable;reason=avrtUnavailable",
                 CursorMirror.ThreadLatencyProfile.FormatSummary(false, false, false, "avrtUnavailable"),
                 "unavailable latency profile summary");
+        }
+
+        // Runtime scheduler option normalization keeps experimental values bounded [COT-MOU-36]
+        private static void RuntimeSchedulerOptionsNormalize()
+        {
+            RuntimeSchedulerOptions options = RuntimeSchedulerOptions.Default();
+            options.WakeAdvanceMilliseconds = 99;
+            options.FallbackIntervalMilliseconds = 0;
+            options.FineWaitAdvanceMicroseconds = 400;
+            options.FineWaitYieldThresholdMicroseconds = 900;
+            options.DeadlineMessageDeferralMicroseconds = -10;
+            options.PreferSetWaitableTimerEx = true;
+            options.UseThreadLatencyProfile = true;
+
+            RuntimeSchedulerOptions normalized = options.Normalize();
+
+            TestAssert.Equal(16, normalized.WakeAdvanceMilliseconds, "wake advance cap");
+            TestAssert.Equal(1, normalized.FallbackIntervalMilliseconds, "fallback interval minimum");
+            TestAssert.Equal(400, normalized.FineWaitAdvanceMicroseconds, "fine wait value");
+            TestAssert.Equal(400, normalized.FineWaitYieldThresholdMicroseconds, "yield threshold cannot exceed fine wait");
+            TestAssert.Equal(0, normalized.DeadlineMessageDeferralMicroseconds, "deadline deferral minimum");
+            TestAssert.True(normalized.PreferSetWaitableTimerEx, "set waitable timer ex flag");
+            TestAssert.True(normalized.UseThreadLatencyProfile, "thread latency flag");
+        }
+
+        // Runtime scheduler options are projected from persisted settings [COT-MOU-56]
+        private static void RuntimeSchedulerOptionsFromSettings()
+        {
+            CursorMirrorSettings settings = CursorMirrorSettings.Default();
+            settings.RuntimeSetWaitableTimerExEnabled = false;
+            settings.RuntimeFineWaitAdvanceMicroseconds = 1200;
+            settings.RuntimeFineWaitYieldThresholdMicroseconds = 300;
+            settings.RuntimeMessageDeferralEnabled = true;
+            settings.RuntimeMessageDeferralMicroseconds = 800;
+            settings.RuntimeThreadLatencyProfileEnabled = true;
+
+            RuntimeSchedulerOptions options = RuntimeSchedulerOptions.FromSettings(settings);
+
+            TestAssert.False(options.PreferSetWaitableTimerEx, "set waitable timer ex setting");
+            TestAssert.Equal(1200, options.FineWaitAdvanceMicroseconds, "fine wait setting");
+            TestAssert.Equal(300, options.FineWaitYieldThresholdMicroseconds, "yield threshold setting");
+            TestAssert.Equal(800, options.DeadlineMessageDeferralMicroseconds, "message deferral setting");
+            TestAssert.True(options.UseThreadLatencyProfile, "thread latency profile setting");
+
+            settings.RuntimeMessageDeferralEnabled = false;
+            TestAssert.Equal(0, RuntimeSchedulerOptions.FromSettings(settings).DeadlineMessageDeferralMicroseconds, "disabled message deferral");
         }
     }
 }

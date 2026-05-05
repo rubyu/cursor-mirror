@@ -765,7 +765,7 @@ namespace CursorMirror.Calibrator
         {
             if (CalibrationRuntimeMode.Normalize(runtimeMode) == CalibrationRuntimeMode.ProductRuntime)
             {
-                _overlayRuntime = new OverlayRuntimeThread(settings);
+                _overlayRuntime = new OverlayRuntimeThread(settings, BuildRuntimeSchedulerOptions());
                 _overlayRuntime.Start();
                 return;
             }
@@ -778,6 +778,47 @@ namespace CursorMirror.Calibrator
                 settings,
                 new SystemClock(),
                 new CursorPoller());
+        }
+
+        private RuntimeSchedulerOptions BuildRuntimeSchedulerOptions()
+        {
+            RuntimeSchedulerOptions options = RuntimeSchedulerOptions.Default();
+            if (_options.RuntimeWakeAdvanceMilliseconds.HasValue)
+            {
+                options.WakeAdvanceMilliseconds = _options.RuntimeWakeAdvanceMilliseconds.Value;
+            }
+
+            if (_options.RuntimeFallbackIntervalMilliseconds.HasValue)
+            {
+                options.FallbackIntervalMilliseconds = _options.RuntimeFallbackIntervalMilliseconds.Value;
+            }
+
+            if (_options.RuntimeFineWaitAdvanceMicroseconds.HasValue)
+            {
+                options.FineWaitAdvanceMicroseconds = _options.RuntimeFineWaitAdvanceMicroseconds.Value;
+            }
+
+            if (_options.RuntimeFineWaitYieldThresholdMicroseconds.HasValue)
+            {
+                options.FineWaitYieldThresholdMicroseconds = _options.RuntimeFineWaitYieldThresholdMicroseconds.Value;
+            }
+
+            if (_options.RuntimeDeadlineMessageDeferralMicroseconds.HasValue)
+            {
+                options.DeadlineMessageDeferralMicroseconds = _options.RuntimeDeadlineMessageDeferralMicroseconds.Value;
+            }
+
+            if (_options.RuntimePreferSetWaitableTimerEx.HasValue)
+            {
+                options.PreferSetWaitableTimerEx = _options.RuntimePreferSetWaitableTimerEx.Value;
+            }
+
+            if (_options.RuntimeUseThreadLatencyProfile.HasValue)
+            {
+                options.UseThreadLatencyProfile = _options.RuntimeUseThreadLatencyProfile.Value;
+            }
+
+            return options.Normalize();
         }
 
         private int GetSelectedRuntimeMode()

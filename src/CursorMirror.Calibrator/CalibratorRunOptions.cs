@@ -29,6 +29,13 @@ namespace CursorMirror.Calibrator
         public int? DwmPredictionModel { get; set; }
         public int? DwmPredictionTargetOffsetMilliseconds { get; set; }
         public int RuntimeMode { get; set; }
+        public int? RuntimeWakeAdvanceMilliseconds { get; set; }
+        public int? RuntimeFallbackIntervalMilliseconds { get; set; }
+        public int? RuntimeFineWaitAdvanceMicroseconds { get; set; }
+        public int? RuntimeFineWaitYieldThresholdMicroseconds { get; set; }
+        public int? RuntimeDeadlineMessageDeferralMicroseconds { get; set; }
+        public bool? RuntimePreferSetWaitableTimerEx { get; set; }
+        public bool? RuntimeUseThreadLatencyProfile { get; set; }
 
         public static CalibratorRunOptions FromArguments(string[] args)
         {
@@ -288,6 +295,84 @@ namespace CursorMirror.Calibrator
                 else if (argument == "--simple-runtime")
                 {
                     options.RuntimeMode = CalibrationRuntimeMode.SimpleTimer;
+                }
+                else if ((argument == "--runtime-wake-advance-ms" || argument == "--runtime-wake-advance-milliseconds") && i + 1 < args.Length)
+                {
+                    int milliseconds;
+                    if (int.TryParse(args[i + 1], out milliseconds))
+                    {
+                        options.RuntimeWakeAdvanceMilliseconds = milliseconds;
+                    }
+
+                    i++;
+                }
+                else if ((argument == "--runtime-fallback-interval-ms" || argument == "--runtime-fallback-interval-milliseconds") && i + 1 < args.Length)
+                {
+                    int milliseconds;
+                    if (int.TryParse(args[i + 1], out milliseconds))
+                    {
+                        options.RuntimeFallbackIntervalMilliseconds = milliseconds;
+                    }
+
+                    i++;
+                }
+                else if ((argument == "--runtime-fine-wait-us" || argument == "--runtime-fine-wait-microseconds") && i + 1 < args.Length)
+                {
+                    int microseconds;
+                    if (int.TryParse(args[i + 1], out microseconds))
+                    {
+                        options.RuntimeFineWaitAdvanceMicroseconds = microseconds;
+                    }
+
+                    i++;
+                }
+                else if ((argument == "--runtime-yield-threshold-us" || argument == "--runtime-yield-threshold-microseconds") && i + 1 < args.Length)
+                {
+                    int microseconds;
+                    if (int.TryParse(args[i + 1], out microseconds))
+                    {
+                        options.RuntimeFineWaitYieldThresholdMicroseconds = microseconds;
+                    }
+
+                    i++;
+                }
+                else if ((argument == "--runtime-deadline-message-deferral-us" || argument == "--runtime-deadline-message-deferral-microseconds") && i + 1 < args.Length)
+                {
+                    int microseconds;
+                    if (int.TryParse(args[i + 1], out microseconds))
+                    {
+                        options.RuntimeDeadlineMessageDeferralMicroseconds = microseconds;
+                    }
+
+                    i++;
+                }
+                else if (argument == "--runtime-use-set-waitable-timer-ex" && i + 1 < args.Length)
+                {
+                    bool enabled;
+                    if (TryParseBoolean(args[i + 1], out enabled))
+                    {
+                        options.RuntimePreferSetWaitableTimerEx = enabled;
+                    }
+
+                    i++;
+                }
+                else if (argument == "--runtime-set-waitable-timer-ex")
+                {
+                    options.RuntimePreferSetWaitableTimerEx = true;
+                }
+                else if (argument == "--runtime-use-thread-latency-profile" && i + 1 < args.Length)
+                {
+                    bool enabled;
+                    if (TryParseBoolean(args[i + 1], out enabled))
+                    {
+                        options.RuntimeUseThreadLatencyProfile = enabled;
+                    }
+
+                    i++;
+                }
+                else if (argument == "--runtime-thread-latency-profile")
+                {
+                    options.RuntimeUseThreadLatencyProfile = true;
                 }
             }
 

@@ -28,6 +28,13 @@ namespace CursorMirror.Tests
                 TestAssert.Equal("Prediction model", LocalizedStrings.PredictionModelLabel, "English prediction model label");
                 TestAssert.Equal("Target offset (ms)", LocalizedStrings.PredictionTargetOffsetLabel, "English prediction target offset label");
                 TestAssert.Equal("Post-stop brake (experimental)", LocalizedStrings.DistilledMlpPostStopBrakeLabel, "English post-stop brake label");
+                TestAssert.Equal("Runtime scheduler", LocalizedStrings.RuntimeSchedulerHeaderLabel, "English runtime scheduler header");
+                TestAssert.Equal("Use SetWaitableTimerEx", LocalizedStrings.RuntimeSetWaitableTimerExLabel, "English set waitable timer ex label");
+                TestAssert.Equal("Fine wait (us)", LocalizedStrings.RuntimeFineWaitLabel, "English fine wait label");
+                TestAssert.Equal("Spin threshold (us)", LocalizedStrings.RuntimeSpinThresholdLabel, "English spin threshold label");
+                TestAssert.Equal("Defer messages near deadline", LocalizedStrings.RuntimeMessageDeferralLabel, "English message deferral label");
+                TestAssert.Equal("Deferral window (us)", LocalizedStrings.RuntimeMessageDeferralWindowLabel, "English message deferral window label");
+                TestAssert.Equal("MMCSS thread profile", LocalizedStrings.RuntimeThreadLatencyProfileLabel, "English MMCSS label");
                 TestAssert.Equal("ConstantVelocity (default)", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelConstantVelocity), "English constant velocity option");
                 TestAssert.Equal("LeastSquares", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelLeastSquares), "English least-squares option");
                 TestAssert.Equal("ExperimentalMLP", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelExperimentalMlp), "English experimental MLP option");
@@ -89,6 +96,13 @@ namespace CursorMirror.Tests
                 TestAssert.Equal("予測モデル", LocalizedStrings.PredictionModelLabel, "Japanese prediction model label");
                 TestAssert.Equal("ターゲット補正 (ms)", LocalizedStrings.PredictionTargetOffsetLabel, "Japanese prediction target offset label");
                 TestAssert.Equal("停止直後ブレーキ（実験）", LocalizedStrings.DistilledMlpPostStopBrakeLabel, "Japanese post-stop brake label");
+                TestAssert.Equal("実行時スケジューラー", LocalizedStrings.RuntimeSchedulerHeaderLabel, "Japanese runtime scheduler header");
+                TestAssert.Equal("SetWaitableTimerEx を使う", LocalizedStrings.RuntimeSetWaitableTimerExLabel, "Japanese set waitable timer ex label");
+                TestAssert.Equal("fine wait (us)", LocalizedStrings.RuntimeFineWaitLabel, "Japanese fine wait label");
+                TestAssert.Equal("spin threshold (us)", LocalizedStrings.RuntimeSpinThresholdLabel, "Japanese spin threshold label");
+                TestAssert.Equal("期限直前のメッセージ処理を遅延", LocalizedStrings.RuntimeMessageDeferralLabel, "Japanese message deferral label");
+                TestAssert.Equal("遅延幅 (us)", LocalizedStrings.RuntimeMessageDeferralWindowLabel, "Japanese message deferral window label");
+                TestAssert.Equal("MMCSS スレッドプロファイル", LocalizedStrings.RuntimeThreadLatencyProfileLabel, "Japanese MMCSS label");
                 TestAssert.Equal("ConstantVelocity (default)", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelConstantVelocity), "Japanese constant velocity option");
                 TestAssert.Equal("LeastSquares", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelLeastSquares), "Japanese least-squares option");
                 TestAssert.Equal("ExperimentalMLP", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelExperimentalMlp), "Japanese experimental MLP option");

@@ -10,8 +10,8 @@ namespace CursorMirror
         public const int WakeAdvanceMilliseconds = 4;
         public const int FallbackIntervalMilliseconds = 8;
         public const int MaximumDwmSleepMilliseconds = 2;
-        public const int FineWaitAdvanceMicroseconds = 500;
-        public const int FineWaitYieldThresholdMicroseconds = 200;
+        public const int FineWaitAdvanceMicroseconds = 1000;
+        public const int FineWaitYieldThresholdMicroseconds = 250;
         public const int DisplayDeadlineGuardMicroseconds = 500;
 
         [DllImport("dwmapi.dll", EntryPoint = "DwmGetCompositionTimingInfo", PreserveSig = true)]

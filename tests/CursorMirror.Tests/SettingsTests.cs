@@ -53,6 +53,12 @@ namespace CursorMirror.Tests
             TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, settings.DwmPredictionModel, "default DWM prediction model");
             TestAssert.Equal(2, settings.DwmPredictionTargetOffsetMilliseconds, "default DWM prediction target offset");
             TestAssert.False(settings.DistilledMlpPostStopBrakeEnabled, "default distilled MLP post-stop brake disabled");
+            TestAssert.True(settings.RuntimeSetWaitableTimerExEnabled, "default runtime set waitable timer ex enabled");
+            TestAssert.Equal(1000, settings.RuntimeFineWaitAdvanceMicroseconds, "default runtime fine wait");
+            TestAssert.Equal(250, settings.RuntimeFineWaitYieldThresholdMicroseconds, "default runtime spin threshold");
+            TestAssert.False(settings.RuntimeMessageDeferralEnabled, "default runtime message deferral disabled");
+            TestAssert.Equal(1000, settings.RuntimeMessageDeferralMicroseconds, "default runtime message deferral window");
+            TestAssert.False(settings.RuntimeThreadLatencyProfileEnabled, "default runtime thread latency profile disabled");
         }
 
         // Moving opacity validation [COT-MSU-2]
@@ -91,6 +97,9 @@ namespace CursorMirror.Tests
             settings.DwmAdaptiveOscillationLatchMilliseconds = -1;
             settings.DwmPredictionModel = -1;
             settings.DwmPredictionTargetOffsetMilliseconds = -999;
+            settings.RuntimeFineWaitAdvanceMicroseconds = -1;
+            settings.RuntimeFineWaitYieldThresholdMicroseconds = -1;
+            settings.RuntimeMessageDeferralMicroseconds = -1;
             CursorMirrorSettings low = settings.Normalize();
 
             settings.FadeDurationMilliseconds = 999;
@@ -113,6 +122,9 @@ namespace CursorMirror.Tests
             settings.DwmAdaptiveOscillationLatchMilliseconds = 999999;
             settings.DwmPredictionModel = 999;
             settings.DwmPredictionTargetOffsetMilliseconds = 999;
+            settings.RuntimeFineWaitAdvanceMicroseconds = 99999;
+            settings.RuntimeFineWaitYieldThresholdMicroseconds = 99999;
+            settings.RuntimeMessageDeferralMicroseconds = 99999;
             CursorMirrorSettings high = settings.Normalize();
 
             TestAssert.Equal(0, low.FadeDurationMilliseconds, "fade duration lower clamp");
@@ -135,6 +147,9 @@ namespace CursorMirror.Tests
             TestAssert.Equal(0, low.DwmAdaptiveOscillationLatchMilliseconds, "DWM adaptive oscillation latch lower clamp");
             TestAssert.Equal(0, low.DwmPredictionModel, "DWM prediction model lower clamp");
             TestAssert.Equal(-8, low.DwmPredictionTargetOffsetMilliseconds, "DWM prediction target offset lower clamp");
+            TestAssert.Equal(0, low.RuntimeFineWaitAdvanceMicroseconds, "runtime fine wait lower clamp");
+            TestAssert.Equal(0, low.RuntimeFineWaitYieldThresholdMicroseconds, "runtime spin threshold lower clamp");
+            TestAssert.Equal(0, low.RuntimeMessageDeferralMicroseconds, "runtime message deferral lower clamp");
             TestAssert.Equal(300, high.FadeDurationMilliseconds, "fade duration upper clamp");
             TestAssert.Equal(500, high.IdleDelayMilliseconds, "idle delay upper clamp");
             TestAssert.Equal(60000, high.IdleFadeDelayMilliseconds, "idle fade delay upper clamp");
@@ -155,6 +170,9 @@ namespace CursorMirror.Tests
             TestAssert.Equal(1000, high.DwmAdaptiveOscillationLatchMilliseconds, "DWM adaptive oscillation latch upper clamp");
             TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelRuntimeEventSafeMlp, high.DwmPredictionModel, "DWM prediction model upper clamp");
             TestAssert.Equal(8, high.DwmPredictionTargetOffsetMilliseconds, "DWM prediction target offset upper clamp");
+            TestAssert.Equal(5000, high.RuntimeFineWaitAdvanceMicroseconds, "runtime fine wait upper clamp");
+            TestAssert.Equal(5000, high.RuntimeFineWaitYieldThresholdMicroseconds, "runtime spin threshold upper clamp");
+            TestAssert.Equal(5000, high.RuntimeMessageDeferralMicroseconds, "runtime message deferral upper clamp");
         }
 
         // Settings serialization round trip [COT-MSU-4]
@@ -189,6 +207,12 @@ namespace CursorMirror.Tests
                 settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelLeastSquares;
                 settings.DwmPredictionTargetOffsetMilliseconds = 3;
                 settings.DistilledMlpPostStopBrakeEnabled = true;
+                settings.RuntimeSetWaitableTimerExEnabled = false;
+                settings.RuntimeFineWaitAdvanceMicroseconds = 1800;
+                settings.RuntimeFineWaitYieldThresholdMicroseconds = 400;
+                settings.RuntimeMessageDeferralEnabled = true;
+                settings.RuntimeMessageDeferralMicroseconds = 900;
+                settings.RuntimeThreadLatencyProfileEnabled = true;
                 settings.IdleFadeEnabled = false;
                 settings.IdleFadeDelayMilliseconds = 4000;
                 settings.IdleOpacityPercent = 12;
@@ -219,6 +243,12 @@ namespace CursorMirror.Tests
                 TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelLeastSquares, loaded.DwmPredictionModel, "loaded DWM prediction model");
                 TestAssert.Equal(3, loaded.DwmPredictionTargetOffsetMilliseconds, "loaded DWM prediction target offset");
                 TestAssert.True(loaded.DistilledMlpPostStopBrakeEnabled, "loaded distilled MLP post-stop brake");
+                TestAssert.False(loaded.RuntimeSetWaitableTimerExEnabled, "loaded runtime set waitable timer ex");
+                TestAssert.Equal(1800, loaded.RuntimeFineWaitAdvanceMicroseconds, "loaded runtime fine wait");
+                TestAssert.Equal(400, loaded.RuntimeFineWaitYieldThresholdMicroseconds, "loaded runtime spin threshold");
+                TestAssert.True(loaded.RuntimeMessageDeferralEnabled, "loaded runtime message deferral");
+                TestAssert.Equal(900, loaded.RuntimeMessageDeferralMicroseconds, "loaded runtime message deferral window");
+                TestAssert.True(loaded.RuntimeThreadLatencyProfileEnabled, "loaded runtime thread latency profile");
                 TestAssert.False(loaded.IdleFadeEnabled, "loaded idle fade flag");
                 TestAssert.Equal(4000, loaded.IdleFadeDelayMilliseconds, "loaded idle fade delay");
                 TestAssert.Equal(12, loaded.IdleOpacityPercent, "loaded idle opacity");
@@ -369,6 +399,12 @@ namespace CursorMirror.Tests
                 TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, oldFormat.DwmPredictionModel, "old settings must use DWM prediction model default");
                 TestAssert.Equal(2, oldFormat.DwmPredictionTargetOffsetMilliseconds, "old settings must use DWM prediction target offset default");
                 TestAssert.False(oldFormat.DistilledMlpPostStopBrakeEnabled, "old settings must use distilled MLP post-stop brake default");
+                TestAssert.True(oldFormat.RuntimeSetWaitableTimerExEnabled, "old settings must use runtime set waitable timer ex default");
+                TestAssert.Equal(1000, oldFormat.RuntimeFineWaitAdvanceMicroseconds, "old settings must use runtime fine wait default");
+                TestAssert.Equal(250, oldFormat.RuntimeFineWaitYieldThresholdMicroseconds, "old settings must use runtime spin threshold default");
+                TestAssert.False(oldFormat.RuntimeMessageDeferralEnabled, "old settings must use runtime message deferral default");
+                TestAssert.Equal(1000, oldFormat.RuntimeMessageDeferralMicroseconds, "old settings must use runtime message deferral window default");
+                TestAssert.False(oldFormat.RuntimeThreadLatencyProfileEnabled, "old settings must use runtime thread latency profile default");
 
                 SettingsController controller = new SettingsController(store, loaded, delegate { }, delegate { });
                 controller.ResetToDefaults();
@@ -488,6 +524,12 @@ namespace CursorMirror.Tests
             settings.IdleDelayMilliseconds = 300;
             settings.IdleOpacityPercent = 20;
             settings.IdleFadeDelayMilliseconds = 5000;
+            settings.RuntimeSetWaitableTimerExEnabled = false;
+            settings.RuntimeFineWaitAdvanceMicroseconds = 1500;
+            settings.RuntimeFineWaitYieldThresholdMicroseconds = 300;
+            settings.RuntimeMessageDeferralEnabled = true;
+            settings.RuntimeMessageDeferralMicroseconds = 700;
+            settings.RuntimeThreadLatencyProfileEnabled = true;
             return settings;
         }
 

@@ -302,6 +302,22 @@ namespace CursorMirror.Tests
 
             CalibratorRunOptions motionPackageOptions = CalibratorRunOptions.FromArguments(new[] { "--motion-package", "motion.zip" });
             TestAssert.Equal("motion.zip", motionPackageOptions.MotionPackagePath, "motion package option");
+
+            CalibratorRunOptions runtimeSchedulerOptions = CalibratorRunOptions.FromArguments(new[]
+            {
+                "--runtime-wake-advance-ms", "3",
+                "--runtime-fine-wait-us", "1000",
+                "--runtime-yield-threshold-us", "250",
+                "--runtime-deadline-message-deferral-us", "750",
+                "--runtime-set-waitable-timer-ex",
+                "--runtime-thread-latency-profile"
+            });
+            TestAssert.Equal(3, runtimeSchedulerOptions.RuntimeWakeAdvanceMilliseconds.Value, "runtime wake advance option");
+            TestAssert.Equal(1000, runtimeSchedulerOptions.RuntimeFineWaitAdvanceMicroseconds.Value, "runtime fine wait option");
+            TestAssert.Equal(250, runtimeSchedulerOptions.RuntimeFineWaitYieldThresholdMicroseconds.Value, "runtime yield threshold option");
+            TestAssert.Equal(750, runtimeSchedulerOptions.RuntimeDeadlineMessageDeferralMicroseconds.Value, "runtime deadline message deferral option");
+            TestAssert.True(runtimeSchedulerOptions.RuntimePreferSetWaitableTimerEx.Value, "runtime set waitable timer ex option");
+            TestAssert.True(runtimeSchedulerOptions.RuntimeUseThreadLatencyProfile.Value, "runtime thread latency profile option");
         }
     }
 }

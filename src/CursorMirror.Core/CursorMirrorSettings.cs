@@ -39,6 +39,12 @@ namespace CursorMirror
         public const int RecommendedDistilledMlpPredictionTargetOffsetMilliseconds = -4;
         public const int RecommendedRuntimeEventSafeMlpPredictionTargetOffsetMilliseconds = -4;
         public const bool DefaultDistilledMlpPostStopBrakeEnabled = false;
+        public const bool DefaultRuntimeSetWaitableTimerExEnabled = true;
+        public const int DefaultRuntimeFineWaitAdvanceMicroseconds = DwmSynchronizedRuntimeScheduler.FineWaitAdvanceMicroseconds;
+        public const int DefaultRuntimeFineWaitYieldThresholdMicroseconds = DwmSynchronizedRuntimeScheduler.FineWaitYieldThresholdMicroseconds;
+        public const bool DefaultRuntimeMessageDeferralEnabled = false;
+        public const int DefaultRuntimeMessageDeferralMicroseconds = 1000;
+        public const bool DefaultRuntimeThreadLatencyProfileEnabled = false;
 
         public const int MinimumMovingOpacityPercent = 1;
         public const int MaximumMovingOpacityPercent = 100;
@@ -82,6 +88,12 @@ namespace CursorMirror
         public const int MaximumDwmPredictionModel = DwmPredictionModelRuntimeEventSafeMlp;
         public const int MinimumDwmPredictionTargetOffsetMilliseconds = -8;
         public const int MaximumDwmPredictionTargetOffsetMilliseconds = 8;
+        public const int MinimumRuntimeFineWaitAdvanceMicroseconds = 0;
+        public const int MaximumRuntimeFineWaitAdvanceMicroseconds = 5000;
+        public const int MinimumRuntimeFineWaitYieldThresholdMicroseconds = 0;
+        public const int MaximumRuntimeFineWaitYieldThresholdMicroseconds = 5000;
+        public const int MinimumRuntimeMessageDeferralMicroseconds = 0;
+        public const int MaximumRuntimeMessageDeferralMicroseconds = 5000;
 
         public CursorMirrorSettings()
         {
@@ -166,6 +178,24 @@ namespace CursorMirror
         [DataMember(Order = 26)]
         public bool DistilledMlpPostStopBrakeEnabled { get; set; }
 
+        [DataMember(Order = 27)]
+        public bool RuntimeSetWaitableTimerExEnabled { get; set; }
+
+        [DataMember(Order = 28)]
+        public int RuntimeFineWaitAdvanceMicroseconds { get; set; }
+
+        [DataMember(Order = 29)]
+        public int RuntimeFineWaitYieldThresholdMicroseconds { get; set; }
+
+        [DataMember(Order = 30)]
+        public bool RuntimeMessageDeferralEnabled { get; set; }
+
+        [DataMember(Order = 31)]
+        public int RuntimeMessageDeferralMicroseconds { get; set; }
+
+        [DataMember(Order = 32)]
+        public bool RuntimeThreadLatencyProfileEnabled { get; set; }
+
         public static CursorMirrorSettings Default()
         {
             return new CursorMirrorSettings();
@@ -200,7 +230,13 @@ namespace CursorMirror
                 DwmAdaptiveOscillationLatchMilliseconds = DwmAdaptiveOscillationLatchMilliseconds,
                 DwmPredictionModel = DwmPredictionModel,
                 DwmPredictionTargetOffsetMilliseconds = DwmPredictionTargetOffsetMilliseconds,
-                DistilledMlpPostStopBrakeEnabled = DistilledMlpPostStopBrakeEnabled
+                DistilledMlpPostStopBrakeEnabled = DistilledMlpPostStopBrakeEnabled,
+                RuntimeSetWaitableTimerExEnabled = RuntimeSetWaitableTimerExEnabled,
+                RuntimeFineWaitAdvanceMicroseconds = RuntimeFineWaitAdvanceMicroseconds,
+                RuntimeFineWaitYieldThresholdMicroseconds = RuntimeFineWaitYieldThresholdMicroseconds,
+                RuntimeMessageDeferralEnabled = RuntimeMessageDeferralEnabled,
+                RuntimeMessageDeferralMicroseconds = RuntimeMessageDeferralMicroseconds,
+                RuntimeThreadLatencyProfileEnabled = RuntimeThreadLatencyProfileEnabled
             };
         }
 
@@ -233,7 +269,16 @@ namespace CursorMirror
                 DwmAdaptiveOscillationLatchMilliseconds = Clamp(DwmAdaptiveOscillationLatchMilliseconds, MinimumDwmAdaptiveOscillationLatchMilliseconds, MaximumDwmAdaptiveOscillationLatchMilliseconds),
                 DwmPredictionModel = Clamp(DwmPredictionModel, MinimumDwmPredictionModel, MaximumDwmPredictionModel),
                 DwmPredictionTargetOffsetMilliseconds = Clamp(DwmPredictionTargetOffsetMilliseconds, MinimumDwmPredictionTargetOffsetMilliseconds, MaximumDwmPredictionTargetOffsetMilliseconds),
-                DistilledMlpPostStopBrakeEnabled = DistilledMlpPostStopBrakeEnabled
+                DistilledMlpPostStopBrakeEnabled = DistilledMlpPostStopBrakeEnabled,
+                RuntimeSetWaitableTimerExEnabled = RuntimeSetWaitableTimerExEnabled,
+                RuntimeFineWaitAdvanceMicroseconds = Clamp(RuntimeFineWaitAdvanceMicroseconds, MinimumRuntimeFineWaitAdvanceMicroseconds, MaximumRuntimeFineWaitAdvanceMicroseconds),
+                RuntimeFineWaitYieldThresholdMicroseconds = Clamp(
+                    RuntimeFineWaitYieldThresholdMicroseconds,
+                    MinimumRuntimeFineWaitYieldThresholdMicroseconds,
+                    Math.Min(MaximumRuntimeFineWaitYieldThresholdMicroseconds, Clamp(RuntimeFineWaitAdvanceMicroseconds, MinimumRuntimeFineWaitAdvanceMicroseconds, MaximumRuntimeFineWaitAdvanceMicroseconds))),
+                RuntimeMessageDeferralEnabled = RuntimeMessageDeferralEnabled,
+                RuntimeMessageDeferralMicroseconds = Clamp(RuntimeMessageDeferralMicroseconds, MinimumRuntimeMessageDeferralMicroseconds, MaximumRuntimeMessageDeferralMicroseconds),
+                RuntimeThreadLatencyProfileEnabled = RuntimeThreadLatencyProfileEnabled
             };
         }
 
@@ -271,6 +316,12 @@ namespace CursorMirror
             DwmPredictionModel = DefaultDwmPredictionModel;
             DwmPredictionTargetOffsetMilliseconds = DefaultDwmPredictionTargetOffsetMilliseconds;
             DistilledMlpPostStopBrakeEnabled = DefaultDistilledMlpPostStopBrakeEnabled;
+            RuntimeSetWaitableTimerExEnabled = DefaultRuntimeSetWaitableTimerExEnabled;
+            RuntimeFineWaitAdvanceMicroseconds = DefaultRuntimeFineWaitAdvanceMicroseconds;
+            RuntimeFineWaitYieldThresholdMicroseconds = DefaultRuntimeFineWaitYieldThresholdMicroseconds;
+            RuntimeMessageDeferralEnabled = DefaultRuntimeMessageDeferralEnabled;
+            RuntimeMessageDeferralMicroseconds = DefaultRuntimeMessageDeferralMicroseconds;
+            RuntimeThreadLatencyProfileEnabled = DefaultRuntimeThreadLatencyProfileEnabled;
         }
 
         private static int Clamp(int value, int minimum, int maximum)

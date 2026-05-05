@@ -17,6 +17,7 @@ namespace CursorMirror.Tests
             suite.Add("COT-MSU-16", PredictionModelSelection);
             suite.Add("COT-MSU-17", PredictionTargetOffsetControl);
             suite.Add("COT-MSU-18", DistilledMlpPostStopBrakeControl);
+            suite.Add("COT-MSU-19", RuntimeSchedulerControls);
         }
 
         // Movement translucency dependent controls [COT-MSU-13]
@@ -289,6 +290,67 @@ namespace CursorMirror.Tests
 
                         TestAssert.False(postStopBrakeCheckBox.Enabled, "post-stop brake disabled after leaving DistilledMLP");
                         TestAssert.True(controller.CurrentSettings.DistilledMlpPostStopBrakeEnabled, "post-stop brake value preserved while disabled");
+                    }
+                }
+                finally
+                {
+                    DeleteDirectory(directory);
+                }
+            });
+        }
+
+        // Runtime scheduler controls [COT-MSU-19]
+        private static void RuntimeSchedulerControls()
+        {
+            RunOnStaThread(delegate
+            {
+                string directory = NewTestDirectory();
+                try
+                {
+                    SettingsController controller = new SettingsController(
+                        new SettingsStore(Path.Combine(directory, "settings.json")),
+                        CursorMirrorSettings.Default(),
+                        delegate { },
+                        delegate { });
+
+                    using (SettingsWindow window = new SettingsWindow(controller))
+                    {
+                        CheckBox setExCheckBox = GetField<CheckBox>(window, "_runtimeSetWaitableTimerExCheckBox");
+                        NumericUpDown fineWaitInput = GetField<NumericUpDown>(window, "_runtimeFineWaitInput");
+                        NumericUpDown spinThresholdInput = GetField<NumericUpDown>(window, "_runtimeSpinThresholdInput");
+                        CheckBox messageDeferralCheckBox = GetField<CheckBox>(window, "_runtimeMessageDeferralCheckBox");
+                        Label messageDeferralLabel = GetField<Label>(window, "_runtimeMessageDeferralLabel");
+                        NumericUpDown messageDeferralInput = GetField<NumericUpDown>(window, "_runtimeMessageDeferralInput");
+                        CheckBox threadLatencyProfileCheckBox = GetField<CheckBox>(window, "_runtimeThreadLatencyProfileCheckBox");
+
+                        TestAssert.True(setExCheckBox.Checked, "set waitable timer ex default checked");
+                        TestAssert.Equal(1000, (int)fineWaitInput.Value, "fine wait default displayed");
+                        TestAssert.Equal(250, (int)spinThresholdInput.Value, "spin threshold default displayed");
+                        TestAssert.False(messageDeferralCheckBox.Checked, "message deferral default unchecked");
+                        TestAssert.False(messageDeferralLabel.Enabled, "message deferral label initially disabled");
+                        TestAssert.False(messageDeferralInput.Enabled, "message deferral input initially disabled");
+                        TestAssert.False(threadLatencyProfileCheckBox.Checked, "thread latency default unchecked");
+
+                        setExCheckBox.Checked = false;
+                        fineWaitInput.Value = 800;
+                        spinThresholdInput.Value = 300;
+                        messageDeferralCheckBox.Checked = true;
+                        messageDeferralInput.Value = 700;
+                        threadLatencyProfileCheckBox.Checked = true;
+
+                        TestAssert.False(controller.CurrentSettings.RuntimeSetWaitableTimerExEnabled, "set waitable timer ex setting applied");
+                        TestAssert.Equal(800, controller.CurrentSettings.RuntimeFineWaitAdvanceMicroseconds, "fine wait setting applied");
+                        TestAssert.Equal(300, controller.CurrentSettings.RuntimeFineWaitYieldThresholdMicroseconds, "spin threshold setting applied");
+                        TestAssert.True(controller.CurrentSettings.RuntimeMessageDeferralEnabled, "message deferral setting applied");
+                        TestAssert.Equal(700, controller.CurrentSettings.RuntimeMessageDeferralMicroseconds, "message deferral window setting applied");
+                        TestAssert.True(controller.CurrentSettings.RuntimeThreadLatencyProfileEnabled, "thread latency setting applied");
+                        TestAssert.True(messageDeferralLabel.Enabled, "message deferral label enabled");
+                        TestAssert.True(messageDeferralInput.Enabled, "message deferral input enabled");
+
+                        fineWaitInput.Value = 200;
+
+                        TestAssert.Equal(200, (int)spinThresholdInput.Value, "spin threshold capped by fine wait");
+                        TestAssert.Equal(200, controller.CurrentSettings.RuntimeFineWaitYieldThresholdMicroseconds, "capped spin threshold setting applied");
                     }
                 }
                 finally

@@ -55,6 +55,41 @@ namespace CursorMirror
             get { return Get("DistilledMlpPostStopBrakeLabel"); }
         }
 
+        public static string RuntimeSchedulerHeaderLabel
+        {
+            get { return Get("RuntimeSchedulerHeaderLabel"); }
+        }
+
+        public static string RuntimeSetWaitableTimerExLabel
+        {
+            get { return Get("RuntimeSetWaitableTimerExLabel"); }
+        }
+
+        public static string RuntimeFineWaitLabel
+        {
+            get { return Get("RuntimeFineWaitLabel"); }
+        }
+
+        public static string RuntimeSpinThresholdLabel
+        {
+            get { return Get("RuntimeSpinThresholdLabel"); }
+        }
+
+        public static string RuntimeMessageDeferralLabel
+        {
+            get { return Get("RuntimeMessageDeferralLabel"); }
+        }
+
+        public static string RuntimeMessageDeferralWindowLabel
+        {
+            get { return Get("RuntimeMessageDeferralWindowLabel"); }
+        }
+
+        public static string RuntimeThreadLatencyProfileLabel
+        {
+            get { return Get("RuntimeThreadLatencyProfileLabel"); }
+        }
+
         public static string MovingOpacityLabel
         {
             get { return Get("MovingOpacityLabel"); }
@@ -512,6 +547,20 @@ namespace CursorMirror
                     return "Target offset (ms)";
                 case "DistilledMlpPostStopBrakeLabel":
                     return "Post-stop brake (experimental)";
+                case "RuntimeSchedulerHeaderLabel":
+                    return "Runtime scheduler";
+                case "RuntimeSetWaitableTimerExLabel":
+                    return "Use SetWaitableTimerEx";
+                case "RuntimeFineWaitLabel":
+                    return "Fine wait (us)";
+                case "RuntimeSpinThresholdLabel":
+                    return "Spin threshold (us)";
+                case "RuntimeMessageDeferralLabel":
+                    return "Defer messages near deadline";
+                case "RuntimeMessageDeferralWindowLabel":
+                    return "Deferral window (us)";
+                case "RuntimeThreadLatencyProfileLabel":
+                    return "MMCSS thread profile";
                 case "MovingOpacityLabel":
                     return "Moving opacity (%)";
                 case "FadeDurationLabel":
@@ -687,6 +736,20 @@ namespace CursorMirror
                     return "ターゲット補正 (ms)";
                 case "DistilledMlpPostStopBrakeLabel":
                     return "停止直後ブレーキ（実験）";
+                case "RuntimeSchedulerHeaderLabel":
+                    return "実行時スケジューラー";
+                case "RuntimeSetWaitableTimerExLabel":
+                    return "SetWaitableTimerEx を使う";
+                case "RuntimeFineWaitLabel":
+                    return "fine wait (us)";
+                case "RuntimeSpinThresholdLabel":
+                    return "spin threshold (us)";
+                case "RuntimeMessageDeferralLabel":
+                    return "期限直前のメッセージ処理を遅延";
+                case "RuntimeMessageDeferralWindowLabel":
+                    return "遅延幅 (us)";
+                case "RuntimeThreadLatencyProfileLabel":
+                    return "MMCSS スレッドプロファイル";
                 case "MovingOpacityLabel":
                     return "移動中の不透明度 (%)";
                 case "FadeDurationLabel":
