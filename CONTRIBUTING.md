@@ -54,6 +54,8 @@ CursorMirror.Core.dll
 CursorMirror.TraceTool.exe
 CursorMirror.Demo.exe
 CursorMirror.Calibrator.exe
+CursorMirror.MotionLab.exe
+CursorMirror.LoadGen.exe
 README.md
 CONTRIBUTING.md
 LICENSE
@@ -86,6 +88,8 @@ The release package includes these additional tools:
 CursorMirror.TraceTool.exe
 CursorMirror.Demo.exe
 CursorMirror.Calibrator.exe
+CursorMirror.MotionLab.exe
+CursorMirror.LoadGen.exe
 ```
 
 ### Trace Tool
@@ -121,6 +125,12 @@ CursorMirror.Calibrator.exe --auto-run --duration-seconds 5 --output calibration
 ```
 
 During calibration, low-level mouse input is blocked so accidental mouse movement does not corrupt the run. Pressing any keyboard key stops calibration and releases the mouse hook.
+
+### Motion Lab
+
+`CursorMirror.MotionLab.exe` generates compact Bezier motion scripts for prediction research. It can preview a random bounded path, play it by moving the real Windows cursor, optionally start `CursorMirror.LoadGen.exe`, and save a `.zip` package containing `motion-script.json`, `motion-samples.csv`, and `metadata.json`.
+
+`CursorMirror.LoadGen.exe` creates controlled CPU load in a separate process. It is intended for Motion Lab and scripted experiments, not for normal app use.
 
 ## Settings Persistence
 

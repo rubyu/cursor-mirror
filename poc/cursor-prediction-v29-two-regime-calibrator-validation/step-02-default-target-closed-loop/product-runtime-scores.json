@@ -1,0 +1,297 @@
+﻿{
+    "generatedAt":  "2026-05-05T10:55:55.6529227Z",
+    "packageCount":  3,
+    "packages":  [
+                     {
+                         "variantName":  "constantvelocity-displayoffset0-50s",
+                         "eventCount":  26394,
+                         "schedulerCount":  3002,
+                         "controllerCount":  3002,
+                         "overlayMoveCount":  2431,
+                         "overlayUpdateLayerCount":  3123,
+                         "wakeLateMicroseconds":  {
+                                                      "count":  3002,
+                                                      "avg":  30.542971352431714,
+                                                      "p50":  0,
+                                                      "p95":  2,
+                                                      "p99":  782,
+                                                      "max":  13965
+                                                  },
+                         "controllerTickTotalMicroseconds":  {
+                                                                 "count":  3002,
+                                                                 "avg":  391.89197201865392,
+                                                                 "p50":  324.2,
+                                                                 "p95":  968.1,
+                                                                 "p99":  1340.9,
+                                                                 "max":  4858.1
+                                                             },
+                         "controllerPredictMicroseconds":  {
+                                                               "count":  3002,
+                                                               "avg":  3.3603264490339861,
+                                                               "p50":  1.7,
+                                                               "p95":  5.8,
+                                                               "p99":  7.9,
+                                                               "max":  1277
+                                                           },
+                         "controllerMoveOverlayMicroseconds":  {
+                                                                   "count":  3002,
+                                                                   "avg":  369.85276482345012,
+                                                                   "p50":  304.2,
+                                                                   "p95":  933.3,
+                                                                   "p99":  1296.6,
+                                                                   "max":  3656.9
+                                                               },
+                         "overlayUpdateLayerMicroseconds":  {
+                                                                "count":  3123,
+                                                                "avg":  389.10902977905874,
+                                                                "p50":  298.9,
+                                                                "p95":  915.9,
+                                                                "p99":  1302.1,
+                                                                "max":  3639.6
+                                                            },
+                         "overlayTotalMicroseconds":  {
+                                                          "count":  3123,
+                                                          "avg":  435.55875760486697,
+                                                          "p50":  373.4,
+                                                          "p95":  959.1,
+                                                          "p99":  1531.2,
+                                                          "max":  3650.3
+                                                      },
+                         "vBlankLeadMicroseconds":  {
+                                                        "count":  3002,
+                                                        "avg":  3969.4570286475682,
+                                                        "p50":  4000,
+                                                        "p95":  4000,
+                                                        "p99":  4000,
+                                                        "max":  4000
+                                                    },
+                         "messageWakeCount":  {
+                                                  "count":  3002,
+                                                  "avg":  3.4070619586942037,
+                                                  "p50":  4,
+                                                  "p95":  7,
+                                                  "p99":  9,
+                                                  "max":  16
+                                              },
+                         "fineSleepZeroCount":  {
+                                                    "count":  3002,
+                                                    "avg":  6646.4783477681549,
+                                                    "p50":  7019,
+                                                    "p95":  8982,
+                                                    "p99":  9437,
+                                                    "max":  9794
+                                                },
+                         "fineSpinCount":  {
+                                               "count":  3002,
+                                               "avg":  281.43437708194534,
+                                               "p50":  296,
+                                               "p95":  307,
+                                               "p99":  308,
+                                               "max":  321
+                                           },
+                         "latestMouseMoveAgeMicroseconds":  {
+                                                                "count":  2431,
+                                                                "avg":  0,
+                                                                "p50":  0,
+                                                                "p95":  0,
+                                                                "p99":  0,
+                                                                "max":  0
+                                                            },
+                         "overlayMoveSkippedCount":  0
+                     },
+                     {
+                         "variantName":  "smoothpredictor-displayoffset0-50s",
+                         "eventCount":  26028,
+                         "schedulerCount":  3003,
+                         "controllerCount":  3003,
+                         "overlayMoveCount":  2249,
+                         "overlayUpdateLayerCount":  2950,
+                         "wakeLateMicroseconds":  {
+                                                      "count":  3003,
+                                                      "avg":  53.67832167832168,
+                                                      "p50":  0,
+                                                      "p95":  12,
+                                                      "p99":  1496,
+                                                      "max":  17715
+                                                  },
+                         "controllerTickTotalMicroseconds":  {
+                                                                 "count":  3003,
+                                                                 "avg":  454.71468531468287,
+                                                                 "p50":  315.8,
+                                                                 "p95":  1253.3,
+                                                                 "p99":  1664.7,
+                                                                 "max":  7882.9
+                                                             },
+                         "controllerPredictMicroseconds":  {
+                                                               "count":  3003,
+                                                               "avg":  17.333966033966021,
+                                                               "p50":  10.7,
+                                                               "p95":  35,
+                                                               "p99":  48.4,
+                                                               "max":  7821.6
+                                                           },
+                         "controllerMoveOverlayMicroseconds":  {
+                                                                   "count":  3003,
+                                                                   "avg":  413.38315018315393,
+                                                                   "p50":  283.2,
+                                                                   "p95":  1186.7,
+                                                                   "p99":  1581,
+                                                                   "max":  3466.9
+                                                               },
+                         "overlayUpdateLayerMicroseconds":  {
+                                                                "count":  2950,
+                                                                "avg":  457.38216949152564,
+                                                                "p50":  310.6,
+                                                                "p95":  1175.1,
+                                                                "p99":  1563.2,
+                                                                "max":  3453.3
+                                                            },
+                         "overlayTotalMicroseconds":  {
+                                                          "count":  2950,
+                                                          "avg":  510.17030508474591,
+                                                          "p50":  397.7,
+                                                          "p95":  1207.4,
+                                                          "p99":  1613.4,
+                                                          "max":  5023.8
+                                                      },
+                         "vBlankLeadMicroseconds":  {
+                                                        "count":  3003,
+                                                        "avg":  3946.3216783216785,
+                                                        "p50":  4000,
+                                                        "p95":  4000,
+                                                        "p99":  4000,
+                                                        "max":  4000
+                                                    },
+                         "messageWakeCount":  {
+                                                  "count":  3003,
+                                                  "avg":  3.3986013986013988,
+                                                  "p50":  3,
+                                                  "p95":  7,
+                                                  "p99":  9,
+                                                  "max":  27
+                                              },
+                         "fineSleepZeroCount":  {
+                                                    "count":  3003,
+                                                    "avg":  6479.4209124209128,
+                                                    "p50":  6948,
+                                                    "p95":  8952,
+                                                    "p99":  9325,
+                                                    "max":  9658
+                                                },
+                         "fineSpinCount":  {
+                                               "count":  3003,
+                                               "avg":  266.02697302697305,
+                                               "p50":  286,
+                                               "p95":  296,
+                                               "p99":  298,
+                                               "max":  301
+                                           },
+                         "latestMouseMoveAgeMicroseconds":  {
+                                                                "count":  2249,
+                                                                "avg":  0,
+                                                                "p50":  0,
+                                                                "p95":  0,
+                                                                "p99":  0,
+                                                                "max":  0
+                                                            },
+                         "overlayMoveSkippedCount":  0
+                     },
+                     {
+                         "variantName":  "tworegime-smoothpredictor-displayoffset0-50s",
+                         "eventCount":  26273,
+                         "schedulerCount":  3002,
+                         "controllerCount":  3002,
+                         "overlayMoveCount":  2386,
+                         "overlayUpdateLayerCount":  3083,
+                         "wakeLateMicroseconds":  {
+                                                      "count":  3002,
+                                                      "avg":  32.315789473684212,
+                                                      "p50":  0,
+                                                      "p95":  6,
+                                                      "p99":  727,
+                                                      "max":  13674
+                                                  },
+                         "controllerTickTotalMicroseconds":  {
+                                                                 "count":  3002,
+                                                                 "avg":  449.24560293137932,
+                                                                 "p50":  336.6,
+                                                                 "p95":  1118.8,
+                                                                 "p99":  1508.1,
+                                                                 "max":  6452.1
+                                                             },
+                         "controllerPredictMicroseconds":  {
+                                                               "count":  3002,
+                                                               "avg":  24.130446369087256,
+                                                               "p50":  14.9,
+                                                               "p95":  47.8,
+                                                               "p99":  61.5,
+                                                               "max":  6418.8
+                                                           },
+                         "controllerMoveOverlayMicroseconds":  {
+                                                                   "count":  3002,
+                                                                   "avg":  402.28297801466022,
+                                                                   "p50":  296.4,
+                                                                   "p95":  1046.4,
+                                                                   "p99":  1390.1,
+                                                                   "max":  3094.1
+                                                               },
+                         "overlayUpdateLayerMicroseconds":  {
+                                                                "count":  3083,
+                                                                "avg":  429.30360038923129,
+                                                                "p50":  310.4,
+                                                                "p95":  1029.1,
+                                                                "p99":  1433.8,
+                                                                "max":  3083.8
+                                                            },
+                         "overlayTotalMicroseconds":  {
+                                                          "count":  3083,
+                                                          "avg":  478.07658125202772,
+                                                          "p50":  380.4,
+                                                          "p95":  1066.4,
+                                                          "p99":  1477.8,
+                                                          "max":  3618.1
+                                                      },
+                         "vBlankLeadMicroseconds":  {
+                                                        "count":  3002,
+                                                        "avg":  3967.6842105263158,
+                                                        "p50":  4000,
+                                                        "p95":  4000,
+                                                        "p99":  4000,
+                                                        "max":  4000
+                                                    },
+                         "messageWakeCount":  {
+                                                  "count":  3002,
+                                                  "avg":  3.4143904063957362,
+                                                  "p50":  3,
+                                                  "p95":  7,
+                                                  "p99":  9,
+                                                  "max":  24
+                                              },
+                         "fineSleepZeroCount":  {
+                                                    "count":  3002,
+                                                    "avg":  6544.8054630246506,
+                                                    "p50":  6988,
+                                                    "p95":  8966,
+                                                    "p99":  9363,
+                                                    "max":  9657
+                                                },
+                         "fineSpinCount":  {
+                                               "count":  3002,
+                                               "avg":  270.36042638241173,
+                                               "p50":  287,
+                                               "p95":  295,
+                                               "p99":  297,
+                                               "max":  298
+                                           },
+                         "latestMouseMoveAgeMicroseconds":  {
+                                                                "count":  2386,
+                                                                "avg":  0,
+                                                                "p50":  0,
+                                                                "p95":  0,
+                                                                "p99":  0,
+                                                                "max":  0
+                                                            },
+                         "overlayMoveSkippedCount":  0
+                     }
+                 ]
+}

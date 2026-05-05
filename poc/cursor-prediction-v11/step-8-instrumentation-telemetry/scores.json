@@ -1,0 +1,32 @@
+{
+  "step": 8,
+  "name": "instrumentation-telemetry",
+  "traceFormatVersion": 9,
+  "motionSampleFormatVersion": 2,
+  "implementedTraceFields": [
+    "warmupSample",
+    "predictionTargetTicks",
+    "presentReferenceTicks",
+    "schedulerProvenance",
+    "sampleRecordedToPredictionTargetMicroseconds",
+    "runtimeSchedulerMissing"
+  ],
+  "implementedMotionSampleFields": [
+    "movementPhase",
+    "holdIndex",
+    "phaseElapsedMilliseconds"
+  ],
+  "verification": {
+    "command": "scripts\\test.ps1 -Configuration Debug",
+    "totalTests": 133,
+    "failedTests": 0
+  },
+  "nextStep": {
+    "requiresFreshData": true,
+    "recommendedPackages": [
+      "normal-load Motion Lab Play and Record",
+      "stress-load Motion Lab Play and Record"
+    ],
+    "rerunFromStep": 3
+  }
+}

@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using CursorMirror.ProductRuntimeTelemetry;
 
 namespace CursorMirror
 {
@@ -27,7 +28,19 @@ namespace CursorMirror
         private long _lastPollSampleTimestampTicks;
         private bool _hasLastDisplayPointer;
         private Point _lastDisplayPointer;
+        private bool _hasLastOverlayLocation;
+        private Point _lastOverlayLocation;
         private bool _disposed;
+        private long _lastTickPollDurationTicks;
+        private long _lastTickSelectTargetDurationTicks;
+        private long _lastTickPredictDurationTicks;
+        private long _lastTickMoveOverlayDurationTicks;
+        private bool _lastTickPollSampleAvailable;
+        private bool _lastTickStalePollSample;
+        private bool _lastTickPredictionEnabled;
+        private bool _lastTickOverlayMoveSkipped;
+        private Point _lastTickRawPointer;
+        private Point _lastTickDisplayPointer;
 
         public CursorMirrorController(ICursorImageProvider cursorImageProvider, IOverlayPresenter overlayPresenter, IUiDispatcher dispatcher)
             : this(cursorImageProvider, overlayPresenter, dispatcher, CursorMirrorSettings.Default(), new SystemClock())
@@ -109,6 +122,7 @@ namespace CursorMirror
                 {
                     Point location = OverlayPlacement.FromPointerAndHotSpot(displayPointer, capture.HotSpot);
                     _overlayPresenter.ShowCursor(capture.Bitmap, location);
+                    StoreLastOverlayLocation(location);
                     _lastCursorHandle = capture.CursorHandle;
                     _lastCursorImageRefreshMilliseconds = now;
                     _lastHotSpot = capture.HotSpot;
@@ -118,7 +132,9 @@ namespace CursorMirror
             }
             else if (_hasLastImage)
             {
-                _overlayPresenter.Move(OverlayPlacement.FromPointerAndHotSpot(displayPointer, _lastHotSpot));
+                Point location = OverlayPlacement.FromPointerAndHotSpot(displayPointer, _lastHotSpot);
+                _overlayPresenter.Move(location);
+                StoreLastOverlayLocation(location);
                 StoreLastDisplayPointer(displayPointer);
             }
         }
@@ -149,7 +165,8 @@ namespace CursorMirror
                 _settings.DwmAdaptiveOscillationMaximumSpanPixels != normalized.DwmAdaptiveOscillationMaximumSpanPixels ||
                 _settings.DwmAdaptiveOscillationMaximumEfficiencyPercent != normalized.DwmAdaptiveOscillationMaximumEfficiencyPercent ||
                 _settings.DwmAdaptiveOscillationLatchMilliseconds != normalized.DwmAdaptiveOscillationLatchMilliseconds ||
-                _settings.DwmPredictionModel != normalized.DwmPredictionModel;
+                _settings.DwmPredictionModel != normalized.DwmPredictionModel ||
+                _settings.DwmPredictionTargetOffsetMilliseconds != normalized.DwmPredictionTargetOffsetMilliseconds;
 
             _settings = normalized;
             _opacityController.ApplySettings(_settings);
@@ -170,9 +187,46 @@ namespace CursorMirror
         public void Tick(long targetVBlankTicks, long refreshPeriodTicks)
         {
             ThrowIfDisposed();
+            ProductRuntimeOutlierRecorder recorder = ProductRuntimeOutlierRecorder.Current;
+            bool telemetryEnabled = recorder.IsEnabled;
+            long tickStartedTicks = 0;
+            long opacityStartedTicks = 0;
+            long opacityCompletedTicks = 0;
+            int gen0Before = 0;
+            int gen1Before = 0;
+            int gen2Before = 0;
+
+            if (telemetryEnabled)
+            {
+                ResetTickTelemetry();
+                tickStartedTicks = Stopwatch.GetTimestamp();
+                gen0Before = GC.CollectionCount(0);
+                gen1Before = GC.CollectionCount(1);
+                gen2Before = GC.CollectionCount(2);
+            }
+
             long now = _clock.Milliseconds;
             PollAndMove(now, targetVBlankTicks, refreshPeriodTicks);
+            if (telemetryEnabled)
+            {
+                opacityStartedTicks = Stopwatch.GetTimestamp();
+            }
+
             ApplyOpacity(now);
+            if (telemetryEnabled)
+            {
+                opacityCompletedTicks = Stopwatch.GetTimestamp();
+                RecordControllerTickTelemetry(
+                    recorder,
+                    tickStartedTicks,
+                    opacityStartedTicks,
+                    opacityCompletedTicks,
+                    targetVBlankTicks,
+                    refreshPeriodTicks,
+                    gen0Before,
+                    gen1Before,
+                    gen2Before);
+            }
         }
 
         public void Hide()
@@ -185,6 +239,7 @@ namespace CursorMirror
             _hasLastPointer = false;
             _hasLastPollSample = false;
             _hasLastDisplayPointer = false;
+            _hasLastOverlayLocation = false;
             _opacityController.Reset();
             _positionPredictor.Reset();
             _pollPositionPredictor.Reset();
@@ -256,6 +311,7 @@ namespace CursorMirror
                 {
                     Point location = OverlayPlacement.FromPointerAndHotSpot(displayPointer, capture.HotSpot);
                     _overlayPresenter.ShowCursor(capture.Bitmap, location);
+                    StoreLastOverlayLocation(location);
                     _lastCursorHandle = capture.CursorHandle;
                     _lastCursorImageRefreshMilliseconds = now;
                     _lastHotSpot = capture.HotSpot;
@@ -265,20 +321,42 @@ namespace CursorMirror
             }
             else if (_hasLastImage)
             {
-                _overlayPresenter.Move(OverlayPlacement.FromPointerAndHotSpot(displayPointer, _lastHotSpot));
+                Point location = OverlayPlacement.FromPointerAndHotSpot(displayPointer, _lastHotSpot);
+                _overlayPresenter.Move(location);
+                StoreLastOverlayLocation(location);
             }
         }
 
         private void PollAndMove(long now, long targetVBlankTicks, long refreshPeriodTicks)
         {
+            bool telemetryEnabled = ProductRuntimeOutlierRecorder.Current.IsEnabled;
+            long phaseStartedTicks = telemetryEnabled ? Stopwatch.GetTimestamp() : 0;
             CursorPollSample sample;
             if (!_cursorPoller.TryGetSample(out sample))
             {
+                if (telemetryEnabled)
+                {
+                    _lastTickPollDurationTicks = Stopwatch.GetTimestamp() - phaseStartedTicks;
+                    _lastTickPollSampleAvailable = false;
+                }
+
                 return;
+            }
+
+            if (telemetryEnabled)
+            {
+                _lastTickPollDurationTicks = Stopwatch.GetTimestamp() - phaseStartedTicks;
+                _lastTickPollSampleAvailable = true;
+                _lastTickRawPointer = sample.Position;
             }
 
             if (IsStalePollSample(sample))
             {
+                if (telemetryEnabled)
+                {
+                    _lastTickStalePollSample = true;
+                }
+
                 _predictionCounters.StalePollSamples++;
                 return;
             }
@@ -286,18 +364,39 @@ namespace CursorMirror
             _lastPollSampleTimestampTicks = sample.TimestampTicks;
             _hasLastPollSample = true;
             RecordMovementIfPointerChanged(sample.Position, now);
+
+            phaseStartedTicks = telemetryEnabled ? Stopwatch.GetTimestamp() : 0;
             long effectiveTargetVBlankTicks = SelectEffectiveTargetVBlank(sample, targetVBlankTicks, refreshPeriodTicks);
             long effectiveRefreshPeriodTicks = ResolveRefreshPeriodTicks(sample, refreshPeriodTicks);
+            if (telemetryEnabled)
+            {
+                _lastTickSelectTargetDurationTicks = Stopwatch.GetTimestamp() - phaseStartedTicks;
+            }
 
             Point displayPointer;
             if (_settings.PredictionEnabled)
             {
+                phaseStartedTicks = telemetryEnabled ? Stopwatch.GetTimestamp() : 0;
                 displayPointer = _pollPositionPredictor.PredictRounded(sample, _predictionCounters, effectiveTargetVBlankTicks, effectiveRefreshPeriodTicks);
+                if (telemetryEnabled)
+                {
+                    _lastTickPredictDurationTicks = Stopwatch.GetTimestamp() - phaseStartedTicks;
+                    _lastTickPredictionEnabled = true;
+                }
             }
             else
             {
                 _pollPositionPredictor.Reset();
                 displayPointer = sample.Position;
+                if (telemetryEnabled)
+                {
+                    _lastTickPredictionEnabled = false;
+                }
+            }
+
+            if (telemetryEnabled)
+            {
+                _lastTickDisplayPointer = displayPointer;
             }
 
             StoreLastDisplayPointer(displayPointer);
@@ -342,7 +441,26 @@ namespace CursorMirror
 
         private void MoveOverlay(Point location, long targetVBlankTicks)
         {
+            bool telemetryEnabled = ProductRuntimeOutlierRecorder.Current.IsEnabled;
+            long startedTicks = telemetryEnabled ? Stopwatch.GetTimestamp() : 0;
+            if (_hasLastOverlayLocation && _lastOverlayLocation == location)
+            {
+                if (telemetryEnabled)
+                {
+                    _lastTickMoveOverlayDurationTicks = Stopwatch.GetTimestamp() - startedTicks;
+                    _lastTickOverlayMoveSkipped = true;
+                }
+
+                return;
+            }
+
             _overlayPresenter.Move(location);
+            StoreLastOverlayLocation(location);
+            if (telemetryEnabled)
+            {
+                _lastTickMoveOverlayDurationTicks = Stopwatch.GetTimestamp() - startedTicks;
+            }
+
             RecordOverlayUpdateTiming(targetVBlankTicks);
         }
 
@@ -393,6 +511,70 @@ namespace CursorMirror
             return (long)Math.Round(ticks);
         }
 
+        private void ResetTickTelemetry()
+        {
+            _lastTickPollDurationTicks = 0;
+            _lastTickSelectTargetDurationTicks = 0;
+            _lastTickPredictDurationTicks = 0;
+            _lastTickMoveOverlayDurationTicks = 0;
+            _lastTickPollSampleAvailable = false;
+            _lastTickStalePollSample = false;
+            _lastTickPredictionEnabled = false;
+            _lastTickOverlayMoveSkipped = false;
+            _lastTickRawPointer = Point.Empty;
+            _lastTickDisplayPointer = Point.Empty;
+        }
+
+        private void RecordControllerTickTelemetry(
+            ProductRuntimeOutlierRecorder recorder,
+            long tickStartedTicks,
+            long opacityStartedTicks,
+            long opacityCompletedTicks,
+            long targetVBlankTicks,
+            long refreshPeriodTicks,
+            int gen0Before,
+            int gen1Before,
+            int gen2Before)
+        {
+            long completedTicks = Stopwatch.GetTimestamp();
+            ProductRuntimeOutlierEvent runtimeEvent = new ProductRuntimeOutlierEvent();
+            runtimeEvent.EventKind = (int)ProductRuntimeOutlierEventKind.ControllerTick;
+            runtimeEvent.StopwatchTicks = completedTicks;
+            runtimeEvent.TargetVBlankTicks = targetVBlankTicks;
+            runtimeEvent.RefreshPeriodTicks = refreshPeriodTicks;
+            runtimeEvent.PollDurationTicks = _lastTickPollDurationTicks;
+            runtimeEvent.SelectTargetDurationTicks = _lastTickSelectTargetDurationTicks;
+            runtimeEvent.PredictDurationTicks = _lastTickPredictDurationTicks;
+            runtimeEvent.MoveOverlayDurationTicks = _lastTickMoveOverlayDurationTicks;
+            runtimeEvent.ApplyOpacityDurationTicks = opacityCompletedTicks - opacityStartedTicks;
+            runtimeEvent.TickTotalDurationTicks = completedTicks - tickStartedTicks;
+            runtimeEvent.PollSampleAvailable = _lastTickPollSampleAvailable ? 1 : 0;
+            runtimeEvent.StalePollSample = _lastTickStalePollSample ? 1 : 0;
+            runtimeEvent.PredictionEnabled = _lastTickPredictionEnabled ? 1 : 0;
+            runtimeEvent.OverlayMoveSkipped = _lastTickOverlayMoveSkipped ? 1 : 0;
+            runtimeEvent.RawX = _lastTickRawPointer.X;
+            runtimeEvent.RawY = _lastTickRawPointer.Y;
+            runtimeEvent.DisplayX = _lastTickDisplayPointer.X;
+            runtimeEvent.DisplayY = _lastTickDisplayPointer.Y;
+            runtimeEvent.Gen0Before = gen0Before;
+            runtimeEvent.Gen0After = GC.CollectionCount(0);
+            runtimeEvent.Gen1Before = gen1Before;
+            runtimeEvent.Gen1After = GC.CollectionCount(1);
+            runtimeEvent.Gen2Before = gen2Before;
+            runtimeEvent.Gen2After = GC.CollectionCount(2);
+            if (targetVBlankTicks > 0)
+            {
+                runtimeEvent.VBlankLeadMicroseconds = ProductRuntimeOutlierRecorder.TicksToMicroseconds(targetVBlankTicks - completedTicks);
+            }
+
+            int currentProcessForeground;
+            int foregroundWindowProcessId;
+            ForegroundWindowTelemetry.Capture(out currentProcessForeground, out foregroundWindowProcessId);
+            runtimeEvent.CurrentProcessForeground = currentProcessForeground;
+            runtimeEvent.ForegroundWindowProcessId = foregroundWindowProcessId;
+            recorder.Record(ref runtimeEvent);
+        }
+
         private void RecordMovementIfPointerChanged(Point pointer, long now)
         {
             if (!_hasLastPointer || _lastPointer != pointer)
@@ -412,6 +594,12 @@ namespace CursorMirror
         {
             _lastDisplayPointer = displayPointer;
             _hasLastDisplayPointer = true;
+        }
+
+        private void StoreLastOverlayLocation(Point location)
+        {
+            _lastOverlayLocation = location;
+            _hasLastOverlayLocation = true;
         }
 
         private void ApplyOpacity(long now)

@@ -15,6 +15,9 @@ namespace CursorMirror.Tests
             suite.Add("COT-MSU-14", SettingsWindowUsesApplicationIcon);
             suite.Add("COT-MSU-15", PredictionGainDependentControlDisabled);
             suite.Add("COT-MSU-16", PredictionModelSelection);
+            suite.Add("COT-MSU-17", PredictionTargetOffsetControl);
+            suite.Add("COT-MSU-19", RuntimeSchedulerControls);
+            suite.Add("COT-MSU-20", SettingsWindowGroupedLayout);
         }
 
         // Movement translucency dependent controls [COT-MSU-13]
@@ -40,10 +43,17 @@ namespace CursorMirror.Tests
                         NumericUpDown fadeDurationInput = GetField<NumericUpDown>(window, "_fadeDurationInput");
                         Label idleDelayLabel = GetField<Label>(window, "_idleDelayLabel");
                         NumericUpDown idleDelayInput = GetField<NumericUpDown>(window, "_idleDelayInput");
+                        CheckBox idleFadeCheckBox = GetField<CheckBox>(window, "_idleFadeCheckBox");
+                        Label idleFadeDurationLabel = GetField<Label>(window, "_idleFadeDurationLabel");
+                        NumericUpDown idleFadeDurationInput = GetField<NumericUpDown>(window, "_idleFadeDurationInput");
+                        Label idleFadeDelayLabel = GetField<Label>(window, "_idleFadeDelayLabel");
+                        NumericUpDown idleFadeDelayInput = GetField<NumericUpDown>(window, "_idleFadeDelayInput");
 
                         TestAssert.True(movingOpacityInput.Enabled, "moving opacity initially enabled");
                         TestAssert.True(fadeDurationInput.Enabled, "fade duration initially enabled");
                         TestAssert.True(idleDelayInput.Enabled, "idle delay initially enabled");
+                        TestAssert.True(idleFadeDurationInput.Enabled, "idle fade duration initially enabled");
+                        TestAssert.True(idleFadeDelayInput.Enabled, "idle fade delay initially enabled");
 
                         movementCheckBox.Checked = false;
 
@@ -63,6 +73,13 @@ namespace CursorMirror.Tests
                         TestAssert.True(fadeDurationInput.Enabled, "fade duration input re-enabled");
                         TestAssert.True(idleDelayLabel.Enabled, "idle delay label re-enabled");
                         TestAssert.True(idleDelayInput.Enabled, "idle delay input re-enabled");
+
+                        idleFadeCheckBox.Checked = false;
+
+                        TestAssert.False(idleFadeDurationLabel.Enabled, "idle fade duration label disabled");
+                        TestAssert.False(idleFadeDurationInput.Enabled, "idle fade duration input disabled");
+                        TestAssert.False(idleFadeDelayLabel.Enabled, "idle fade delay label disabled");
+                        TestAssert.False(idleFadeDelayInput.Enabled, "idle fade delay input disabled");
                     }
                 }
                 finally
@@ -120,11 +137,15 @@ namespace CursorMirror.Tests
                         ComboBox predictionModelInput = GetField<ComboBox>(window, "_predictionModelInput");
                         Label predictionGainLabel = GetField<Label>(window, "_predictionGainLabel");
                         NumericUpDown predictionGainInput = GetField<NumericUpDown>(window, "_predictionGainInput");
+                        Label predictionTargetOffsetLabel = GetField<Label>(window, "_predictionTargetOffsetLabel");
+                        NumericUpDown predictionTargetOffsetInput = GetField<NumericUpDown>(window, "_predictionTargetOffsetInput");
 
                         TestAssert.True(predictionModelLabel.Enabled, "prediction model label initially enabled");
                         TestAssert.True(predictionModelInput.Enabled, "prediction model input initially enabled");
                         TestAssert.True(predictionGainLabel.Enabled, "prediction gain label initially enabled");
                         TestAssert.True(predictionGainInput.Enabled, "prediction gain input initially enabled");
+                        TestAssert.True(predictionTargetOffsetLabel.Enabled, "prediction target offset label initially enabled");
+                        TestAssert.True(predictionTargetOffsetInput.Enabled, "prediction target offset input initially enabled");
 
                         predictionCheckBox.Checked = false;
 
@@ -132,6 +153,8 @@ namespace CursorMirror.Tests
                         TestAssert.False(predictionModelInput.Enabled, "prediction model input disabled");
                         TestAssert.False(predictionGainLabel.Enabled, "prediction gain label disabled");
                         TestAssert.False(predictionGainInput.Enabled, "prediction gain input disabled");
+                        TestAssert.False(predictionTargetOffsetLabel.Enabled, "prediction target offset label disabled");
+                        TestAssert.False(predictionTargetOffsetInput.Enabled, "prediction target offset input disabled");
                         TestAssert.False(controller.CurrentSettings.PredictionEnabled, "prediction setting updated");
 
                         predictionCheckBox.Checked = true;
@@ -140,6 +163,8 @@ namespace CursorMirror.Tests
                         TestAssert.True(predictionModelInput.Enabled, "prediction model input re-enabled");
                         TestAssert.True(predictionGainLabel.Enabled, "prediction gain label re-enabled");
                         TestAssert.True(predictionGainInput.Enabled, "prediction gain input re-enabled");
+                        TestAssert.True(predictionTargetOffsetLabel.Enabled, "prediction target offset label re-enabled");
+                        TestAssert.True(predictionTargetOffsetInput.Enabled, "prediction target offset input re-enabled");
                     }
                 }
                 finally
@@ -166,19 +191,17 @@ namespace CursorMirror.Tests
                     using (SettingsWindow window = new SettingsWindow(controller))
                     {
                         ComboBox predictionModelInput = GetField<ComboBox>(window, "_predictionModelInput");
+                        NumericUpDown predictionTargetOffsetInput = GetField<NumericUpDown>(window, "_predictionTargetOffsetInput");
 
-                        TestAssert.Equal(2, predictionModelInput.Items.Count, "prediction model option count");
+                        TestAssert.Equal(1, predictionModelInput.Items.Count, "prediction model option count");
                         TestAssert.Equal("ConstantVelocity (default)", predictionModelInput.Items[0].ToString(), "constant velocity default option");
-                        TestAssert.Equal("LeastSquares", predictionModelInput.Items[1].ToString(), "least-squares option");
                         TestAssert.Equal(0, predictionModelInput.SelectedIndex, "constant velocity selected by default");
-
-                        predictionModelInput.SelectedIndex = 1;
-
-                        TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelLeastSquares, controller.CurrentSettings.DwmPredictionModel, "least-squares selection applied");
 
                         predictionModelInput.SelectedIndex = 0;
 
                         TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, controller.CurrentSettings.DwmPredictionModel, "constant velocity selection applied");
+                        TestAssert.Equal(CursorMirrorSettings.DefaultDwmPredictionTargetOffsetMilliseconds, controller.CurrentSettings.DwmPredictionTargetOffsetMilliseconds, "constant velocity selection preserves target offset");
+                        TestAssert.Equal(CursorMirrorSettings.DefaultDwmPredictionTargetOffsetDisplayMilliseconds, (int)predictionTargetOffsetInput.Value, "constant velocity target offset input preserved");
                     }
                 }
                 finally
@@ -186,6 +209,180 @@ namespace CursorMirror.Tests
                     DeleteDirectory(directory);
                 }
             });
+        }
+
+        // Prediction target offset control [COT-MSU-17]
+        private static void PredictionTargetOffsetControl()
+        {
+            RunOnStaThread(delegate
+            {
+                string directory = NewTestDirectory();
+                try
+                {
+                    SettingsController controller = new SettingsController(
+                        new SettingsStore(Path.Combine(directory, "settings.json")),
+                        CursorMirrorSettings.Default(),
+                        delegate { },
+                        delegate { });
+
+                    using (SettingsWindow window = new SettingsWindow(controller))
+                    {
+                        NumericUpDown predictionTargetOffsetInput = GetField<NumericUpDown>(window, "_predictionTargetOffsetInput");
+
+                        TestAssert.Equal(CursorMirrorSettings.MinimumDwmPredictionTargetOffsetDisplayMilliseconds, (int)predictionTargetOffsetInput.Minimum, "target offset display minimum");
+                        TestAssert.Equal(CursorMirrorSettings.MaximumDwmPredictionTargetOffsetDisplayMilliseconds, (int)predictionTargetOffsetInput.Maximum, "target offset display maximum");
+                        TestAssert.Equal(CursorMirrorSettings.DefaultDwmPredictionTargetOffsetDisplayMilliseconds, (int)predictionTargetOffsetInput.Value, "target offset default displayed");
+
+                        predictionTargetOffsetInput.Value = -4;
+
+                        TestAssert.Equal(4, controller.CurrentSettings.DwmPredictionTargetOffsetMilliseconds, "target offset selection applied");
+                    }
+                }
+                finally
+                {
+                    DeleteDirectory(directory);
+                }
+            });
+        }
+
+        // Runtime scheduler controls [COT-MSU-19]
+        private static void RuntimeSchedulerControls()
+        {
+            RunOnStaThread(delegate
+            {
+                string directory = NewTestDirectory();
+                try
+                {
+                    SettingsController controller = new SettingsController(
+                        new SettingsStore(Path.Combine(directory, "settings.json")),
+                        CursorMirrorSettings.Default(),
+                        delegate { },
+                        delegate { });
+
+                    using (SettingsWindow window = new SettingsWindow(controller))
+                    {
+                        CheckBox setExCheckBox = GetField<CheckBox>(window, "_runtimeSetWaitableTimerExCheckBox");
+                        NumericUpDown fineWaitInput = GetField<NumericUpDown>(window, "_runtimeFineWaitInput");
+                        NumericUpDown spinThresholdInput = GetField<NumericUpDown>(window, "_runtimeSpinThresholdInput");
+                        CheckBox messageDeferralCheckBox = GetField<CheckBox>(window, "_runtimeMessageDeferralCheckBox");
+                        Label messageDeferralLabel = GetField<Label>(window, "_runtimeMessageDeferralLabel");
+                        NumericUpDown messageDeferralInput = GetField<NumericUpDown>(window, "_runtimeMessageDeferralInput");
+                        CheckBox threadLatencyProfileCheckBox = GetField<CheckBox>(window, "_runtimeThreadLatencyProfileCheckBox");
+
+                        TestAssert.True(setExCheckBox.Checked, "set waitable timer ex default checked");
+                        TestAssert.Equal(2000, (int)fineWaitInput.Value, "fine wait default displayed");
+                        TestAssert.Equal(100, (int)spinThresholdInput.Value, "spin threshold default displayed");
+                        TestAssert.True(messageDeferralCheckBox.Checked, "message deferral default checked");
+                        TestAssert.True(messageDeferralLabel.Enabled, "message deferral label initially enabled");
+                        TestAssert.True(messageDeferralInput.Enabled, "message deferral input initially enabled");
+                        TestAssert.True(threadLatencyProfileCheckBox.Checked, "thread latency default checked");
+
+                        setExCheckBox.Checked = false;
+                        fineWaitInput.Value = 800;
+                        spinThresholdInput.Value = 300;
+                        messageDeferralCheckBox.Checked = true;
+                        messageDeferralInput.Value = 700;
+                        threadLatencyProfileCheckBox.Checked = false;
+
+                        TestAssert.False(controller.CurrentSettings.RuntimeSetWaitableTimerExEnabled, "set waitable timer ex setting applied");
+                        TestAssert.Equal(800, controller.CurrentSettings.RuntimeFineWaitAdvanceMicroseconds, "fine wait setting applied");
+                        TestAssert.Equal(300, controller.CurrentSettings.RuntimeFineWaitYieldThresholdMicroseconds, "spin threshold setting applied");
+                        TestAssert.True(controller.CurrentSettings.RuntimeMessageDeferralEnabled, "message deferral setting applied");
+                        TestAssert.Equal(700, controller.CurrentSettings.RuntimeMessageDeferralMicroseconds, "message deferral window setting applied");
+                        TestAssert.False(controller.CurrentSettings.RuntimeThreadLatencyProfileEnabled, "thread latency setting applied");
+                        TestAssert.True(messageDeferralLabel.Enabled, "message deferral label enabled");
+                        TestAssert.True(messageDeferralInput.Enabled, "message deferral input enabled");
+
+                        fineWaitInput.Value = 200;
+
+                        TestAssert.Equal(200, (int)spinThresholdInput.Value, "spin threshold capped by fine wait");
+                        TestAssert.Equal(200, controller.CurrentSettings.RuntimeFineWaitYieldThresholdMicroseconds, "capped spin threshold setting applied");
+                    }
+                }
+                finally
+                {
+                    DeleteDirectory(directory);
+                }
+            });
+        }
+
+        // Settings window grouped layout [COT-MSU-20]
+        private static void SettingsWindowGroupedLayout()
+        {
+            RunOnStaThread(delegate
+            {
+                string directory = NewTestDirectory();
+                try
+                {
+                    SettingsController controller = new SettingsController(
+                        new SettingsStore(Path.Combine(directory, "settings.json")),
+                        CursorMirrorSettings.Default(),
+                        delegate { },
+                        delegate { });
+
+                    using (SettingsWindow window = new SettingsWindow(controller))
+                    {
+                        TestAssert.True(window.ClientSize.Width >= 860, "settings window width should fit two-column grouped controls");
+                        TestAssert.True(ContainsGroupBox(window, LocalizedStrings.PredictionCategoryLabel), "prediction group visible");
+                        TestAssert.True(ContainsGroupBox(window, LocalizedStrings.RuntimeSchedulerHeaderLabel), "runtime scheduler group visible");
+                        TestAssert.True(ContainsGroupBox(window, LocalizedStrings.MovementCategoryLabel), "movement group visible");
+                        TestAssert.True(ContainsGroupBox(window, LocalizedStrings.IdleFadeCategoryLabel), "idle fade group visible");
+
+                        TestGroupPosition(window, LocalizedStrings.PredictionCategoryLabel, 0, 0, "prediction group position");
+                        TestGroupPosition(window, LocalizedStrings.RuntimeSchedulerHeaderLabel, 1, 0, "runtime scheduler group position");
+                        TestGroupPosition(window, LocalizedStrings.MovementCategoryLabel, 0, 1, "movement group position");
+                        TestGroupPosition(window, LocalizedStrings.IdleFadeCategoryLabel, 1, 1, "idle fade group position");
+                    }
+                }
+                finally
+                {
+                    DeleteDirectory(directory);
+                }
+            });
+        }
+
+        private static bool ContainsGroupBox(Control parent, string text)
+        {
+            return FindGroupBox(parent, text) != null;
+        }
+
+        private static void TestGroupPosition(Control parent, string text, int expectedColumn, int expectedRow, string message)
+        {
+            GroupBox groupBox = FindGroupBox(parent, text);
+            if (groupBox == null)
+            {
+                throw new InvalidOperationException("Group box not found: " + text);
+            }
+
+            TableLayoutPanel layout = groupBox.Parent as TableLayoutPanel;
+            if (layout == null)
+            {
+                throw new InvalidOperationException("Group box parent is not a table layout: " + text);
+            }
+
+            TableLayoutPanelCellPosition position = layout.GetPositionFromControl(groupBox);
+            TestAssert.Equal(expectedColumn, position.Column, message + " column");
+            TestAssert.Equal(expectedRow, position.Row, message + " row");
+        }
+
+        private static GroupBox FindGroupBox(Control parent, string text)
+        {
+            foreach (Control child in parent.Controls)
+            {
+                GroupBox groupBox = child as GroupBox;
+                if (groupBox != null && groupBox.Text == text)
+                {
+                    return groupBox;
+                }
+
+                GroupBox nested = FindGroupBox(child, text);
+                if (nested != null)
+                {
+                    return nested;
+                }
+            }
+
+            return null;
         }
 
         private static T GetField<T>(object instance, string fieldName)

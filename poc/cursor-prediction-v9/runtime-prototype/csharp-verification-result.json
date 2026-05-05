@@ -1,0 +1,1 @@
+{"sampleCount":128,"maxTeacherAbsDiff":1.52587890625E-05,"maxGateProbabilityAbsDiff":8.9406967163085938E-08,"maxFinalAbsDiff":9.5367431640625E-07,"applyMismatches":0,"throughputEvaluations":8192,"throughputSeconds":0.36966499999999997,"rowsPerSecond":22160.604871978685,"vectorHardwareAccelerated":false,"sink":0}

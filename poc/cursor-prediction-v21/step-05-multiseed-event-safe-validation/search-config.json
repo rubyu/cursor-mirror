@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "cursor-prediction-v21-step-05-search-config/1",
+  "generatedAtUtc": "2026-05-04T12:00:00Z",
+  "inputs": {
+    "step04": "../step-04-sequence-event-penalty/",
+    "manifest": "../step-02-balanced-evaluation/split-manifest.json",
+    "metricPolicy": "../step-02-balanced-evaluation/metric-policy.json",
+    "zipSource": "repo-root package paths from split-manifest.json"
+  },
+  "loader": {
+    "base": "copied step04 harness, modified only under step05",
+    "zipExtraction": false,
+    "entriesRead": [
+      "trace.csv",
+      "motion-trace-alignment.csv"
+    ],
+    "predictionRows": "traceEvent == runtimeSchedulerPoll",
+    "warmupMilliseconds": 1500,
+    "scenarioWindow": "row-level scenarioElapsedMilliseconds; no fixed 12000 ms assumption"
+  },
+  "training": {
+    "execution": "CPU-only serialized",
+    "seeds": [
+      2105,
+      2205,
+      2305
+    ],
+    "trainSplitOnly": true,
+    "trainSampleCap": 120000,
+    "capBehavior": "full train split used because manifest train rows after loader = 91215",
+    "stratifiedSampler": "implemented for lower caps with normal-moving/event-or-stop/static/other strata; not active because cap exceeded train rows",
+    "hidden": 32,
+    "maxEpochs": 60,
+    "learningRate": 0.003
+  },
+  "candidates": [
+    "product_distilled_lag0_offset_minus4_brake",
+    "mlp_h32_event_safe_fulltrain",
+    "mlp_h32_event_safe_seq_latch_cap0p35",
+    "mlp_h32_event_safe_seq_latch_cap0p35_gain1p08",
+    "mlp_h32_event_safe_seq_latch_cap0p25_gain1p08",
+    "mlp_h32_event_safe_seq_latch_cap0p35_productblend0p25"
+  ],
+  "futureLagGate": {
+    "productReferenceP95": 0.0,
+    "allowedRegressionEpsilonPx": 0.005,
+    "passRule": "candidate overall.futureLag.p95 <= product + epsilon"
+  },
+  "gateComparison": [
+    "test.normal.visual.p95",
+    "test.normal.visual.p99",
+    "robustness.peakLead.max",
+    "robustness.otr.gt1px.rate",
+    "robustness.returnMotion.max",
+    "overall.futureLead.p99",
+    "overall.futureLag.p95"
+  ]
+}

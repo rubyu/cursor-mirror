@@ -35,6 +35,11 @@ namespace CursorMirror
             get { return Get("PredictiveOverlayPositioningLabel"); }
         }
 
+        public static string PredictionCategoryLabel
+        {
+            get { return Get("PredictionCategoryLabel"); }
+        }
+
         public static string PredictionGainLabel
         {
             get { return Get("PredictionGainLabel"); }
@@ -45,9 +50,54 @@ namespace CursorMirror
             get { return Get("PredictionModelLabel"); }
         }
 
+        public static string PredictionTargetOffsetLabel
+        {
+            get { return Get("PredictionTargetOffsetLabel"); }
+        }
+
+        public static string RuntimeSchedulerHeaderLabel
+        {
+            get { return Get("RuntimeSchedulerHeaderLabel"); }
+        }
+
+        public static string RuntimeSetWaitableTimerExLabel
+        {
+            get { return Get("RuntimeSetWaitableTimerExLabel"); }
+        }
+
+        public static string RuntimeFineWaitLabel
+        {
+            get { return Get("RuntimeFineWaitLabel"); }
+        }
+
+        public static string RuntimeSpinThresholdLabel
+        {
+            get { return Get("RuntimeSpinThresholdLabel"); }
+        }
+
+        public static string RuntimeMessageDeferralLabel
+        {
+            get { return Get("RuntimeMessageDeferralLabel"); }
+        }
+
+        public static string RuntimeMessageDeferralWindowLabel
+        {
+            get { return Get("RuntimeMessageDeferralWindowLabel"); }
+        }
+
+        public static string RuntimeThreadLatencyProfileLabel
+        {
+            get { return Get("RuntimeThreadLatencyProfileLabel"); }
+        }
+
         public static string MovingOpacityLabel
         {
             get { return Get("MovingOpacityLabel"); }
+        }
+
+        public static string MovementCategoryLabel
+        {
+            get { return Get("MovementCategoryLabel"); }
         }
 
         public static string FadeDurationLabel
@@ -65,9 +115,19 @@ namespace CursorMirror
             get { return Get("IdleFadeLabel"); }
         }
 
+        public static string IdleFadeCategoryLabel
+        {
+            get { return Get("IdleFadeCategoryLabel"); }
+        }
+
         public static string IdleOpacityLabel
         {
             get { return Get("IdleOpacityLabel"); }
+        }
+
+        public static string IdleFadeDurationLabel
+        {
+            get { return Get("IdleFadeDurationLabel"); }
         }
 
         public static string IdleFadeDelayLabel
@@ -403,8 +463,9 @@ namespace CursorMirror
 
         public static string PredictionModelOptionText(int predictionModel)
         {
-            string name = PredictionModelName(predictionModel);
-            if (predictionModel == CursorMirrorSettings.DefaultDwmPredictionModel)
+            int normalized = CursorMirrorSettings.NormalizeDwmPredictionModel(predictionModel);
+            string name = PredictionModelName(normalized);
+            if (normalized == CursorMirrorSettings.DefaultDwmPredictionModel)
             {
                 return name + " (default)";
             }
@@ -414,11 +475,6 @@ namespace CursorMirror
 
         public static string PredictionModelName(int predictionModel)
         {
-            if (predictionModel == CursorMirrorSettings.DwmPredictionModelLeastSquares)
-            {
-                return "LeastSquares";
-            }
-
             return "ConstantVelocity";
         }
 
@@ -479,10 +535,30 @@ namespace CursorMirror
                     return "Movement translucency";
                 case "PredictiveOverlayPositioningLabel":
                     return "Predict cursor position";
+                case "PredictionCategoryLabel":
+                    return "Prediction";
                 case "PredictionGainLabel":
                     return "Prediction gain (%)";
                 case "PredictionModelLabel":
                     return "Prediction model";
+                case "PredictionTargetOffsetLabel":
+                    return "Target offset (ms)";
+                case "RuntimeSchedulerHeaderLabel":
+                    return "Runtime scheduler";
+                case "RuntimeSetWaitableTimerExLabel":
+                    return "Use SetWaitableTimerEx";
+                case "RuntimeFineWaitLabel":
+                    return "Fine wait (us)";
+                case "RuntimeSpinThresholdLabel":
+                    return "Spin threshold (us)";
+                case "RuntimeMessageDeferralLabel":
+                    return "Defer messages near deadline";
+                case "RuntimeMessageDeferralWindowLabel":
+                    return "Deferral window (us)";
+                case "RuntimeThreadLatencyProfileLabel":
+                    return "Low latency runtime profile";
+                case "MovementCategoryLabel":
+                    return "Movement translucency";
                 case "MovingOpacityLabel":
                     return "Moving opacity (%)";
                 case "FadeDurationLabel":
@@ -491,10 +567,14 @@ namespace CursorMirror
                     return "Idle delay (ms)";
                 case "IdleFadeLabel":
                     return "Fade when idle";
+                case "IdleFadeCategoryLabel":
+                    return "Idle fade";
                 case "IdleOpacityLabel":
                     return "Idle opacity (%)";
+                case "IdleFadeDurationLabel":
+                    return "Fade duration (ms)";
                 case "IdleFadeDelayLabel":
-                    return "Idle fade delay (s)";
+                    return "Idle delay (ms)";
                 case "VersionMenuLabel":
                     return "Version";
                 case "UpdateStatusChecking":
@@ -650,10 +730,30 @@ namespace CursorMirror
                     return "移動中に半透明にする";
                 case "PredictiveOverlayPositioningLabel":
                     return "カーソル位置を予測する";
+                case "PredictionCategoryLabel":
+                    return "予測";
                 case "PredictionGainLabel":
                     return "予測ゲイン (%)";
                 case "PredictionModelLabel":
                     return "予測モデル";
+                case "PredictionTargetOffsetLabel":
+                    return "ターゲット補正 (ms)";
+                case "RuntimeSchedulerHeaderLabel":
+                    return "実行時スケジューラー";
+                case "RuntimeSetWaitableTimerExLabel":
+                    return "SetWaitableTimerEx を使う";
+                case "RuntimeFineWaitLabel":
+                    return "fine wait (us)";
+                case "RuntimeSpinThresholdLabel":
+                    return "spin threshold (us)";
+                case "RuntimeMessageDeferralLabel":
+                    return "期限直前のメッセージ処理を遅延";
+                case "RuntimeMessageDeferralWindowLabel":
+                    return "遅延幅 (us)";
+                case "RuntimeThreadLatencyProfileLabel":
+                    return "低遅延ランタイムプロファイル";
+                case "MovementCategoryLabel":
+                    return "移動中の半透明化";
                 case "MovingOpacityLabel":
                     return "移動中の不透明度 (%)";
                 case "FadeDurationLabel":
@@ -662,10 +762,14 @@ namespace CursorMirror
                     return "待機時間 (ms)";
                 case "IdleFadeLabel":
                     return "停止後にフェードする";
+                case "IdleFadeCategoryLabel":
+                    return "停止後のフェード";
                 case "IdleOpacityLabel":
                     return "停止後の不透明度 (%)";
+                case "IdleFadeDurationLabel":
+                    return "フェード時間 (ms)";
                 case "IdleFadeDelayLabel":
-                    return "停止後フェード待機 (秒)";
+                    return "待機時間 (ms)";
                 case "VersionMenuLabel":
                     return "バージョン";
                 case "UpdateStatusChecking":

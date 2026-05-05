@@ -1,5 +1,11 @@
 # Cursor Mirror
 
+[![Build and test](https://github.com/rubyu/cursor-mirror/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/rubyu/cursor-mirror/actions/workflows/ci.yml)
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rubyu/cursor-mirror/main/assets/icons/icon.jpg" alt="Cursor Mirror icon" width="160">
+</p>
+
 Cursor Mirror is a tiny Windows tray app that renders a clean mirrored cursor overlay for remote-viewer apps where the real cursor may disappear.
 
 ## Why Cursor Mirror?

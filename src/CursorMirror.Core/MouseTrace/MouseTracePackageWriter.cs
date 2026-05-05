@@ -13,9 +13,15 @@ namespace CursorMirror.MouseTrace
 {
     public sealed class MouseTracePackageWriter
     {
+        public const int WarmupDurationMilliseconds = 500;
         private static readonly Encoding Utf8NoBom = new UTF8Encoding(false);
 
         public void Write(string path, MouseTraceSnapshot snapshot)
+        {
+            Write(path, snapshot, LocalizedStrings.TraceToolTitle);
+        }
+
+        public void Write(string path, MouseTraceSnapshot snapshot, string productName)
         {
             if (string.IsNullOrWhiteSpace(path))
             {
@@ -46,9 +52,34 @@ namespace CursorMirror.MouseTrace
             using (FileStream file = File.Open(path, FileMode.CreateNew, FileAccess.ReadWrite))
             using (ZipArchive archive = new ZipArchive(file, ZipArchiveMode.Create))
             {
-                WriteTraceCsv(archive, snapshot);
-                WriteMetadata(archive, snapshot);
+                Write(archive, snapshot, productName);
             }
+        }
+
+        public void Write(ZipArchive archive, MouseTraceSnapshot snapshot)
+        {
+            Write(archive, snapshot, LocalizedStrings.TraceToolTitle);
+        }
+
+        public void Write(ZipArchive archive, MouseTraceSnapshot snapshot, string productName)
+        {
+            if (archive == null)
+            {
+                throw new ArgumentNullException("archive");
+            }
+
+            if (snapshot == null)
+            {
+                throw new ArgumentNullException("snapshot");
+            }
+
+            if (snapshot.Samples.Length == 0)
+            {
+                throw new InvalidOperationException("Cannot save an empty mouse trace.");
+            }
+
+            WriteTraceCsv(archive, snapshot);
+            WriteMetadata(archive, snapshot, productName);
         }
 
         private static void WriteTraceCsv(ZipArchive archive, MouseTraceSnapshot snapshot)
@@ -57,7 +88,8 @@ namespace CursorMirror.MouseTrace
             using (Stream stream = entry.Open())
             using (StreamWriter writer = new StreamWriter(stream, Utf8NoBom))
             {
-                writer.WriteLine("sequence,stopwatchTicks,elapsedMicroseconds,x,y,event,hookX,hookY,cursorX,cursorY,hookMouseData,hookFlags,hookTimeMilliseconds,hookExtraInfo,dwmTimingAvailable,dwmRateRefreshNumerator,dwmRateRefreshDenominator,dwmQpcRefreshPeriod,dwmQpcVBlank,dwmRefreshCount,dwmQpcCompose,dwmFrame,dwmRefreshFrame,dwmFrameDisplayed,dwmQpcFrameDisplayed,dwmRefreshFrameDisplayed,dwmFrameComplete,dwmQpcFrameComplete,dwmFramePending,dwmQpcFramePending,dwmRefreshNextDisplayed,dwmRefreshNextPresented,dwmFramesDisplayed,dwmFramesDropped,dwmFramesMissed,runtimeSchedulerTimingUsable,runtimeSchedulerTargetVBlankTicks,runtimeSchedulerPlannedTickTicks,runtimeSchedulerActualTickTicks,runtimeSchedulerVBlankLeadMicroseconds,runtimeSchedulerQueuedTickTicks,runtimeSchedulerDispatchStartedTicks,runtimeSchedulerCursorReadStartedTicks,runtimeSchedulerCursorReadCompletedTicks,runtimeSchedulerSampleRecordedTicks,runtimeSchedulerLoopIteration,runtimeSchedulerLoopStartedTicks,runtimeSchedulerTimingReadStartedTicks,runtimeSchedulerTimingReadCompletedTicks,runtimeSchedulerDecisionCompletedTicks,runtimeSchedulerTickRequested,runtimeSchedulerSleepRequestedMilliseconds,runtimeSchedulerWaitMethod,runtimeSchedulerWaitTargetTicks,runtimeSchedulerSleepStartedTicks,runtimeSchedulerSleepCompletedTicks");
+                writer.WriteLine("sequence,stopwatchTicks,elapsedMicroseconds,x,y,event,hookX,hookY,cursorX,cursorY,hookMouseData,hookFlags,hookTimeMilliseconds,hookExtraInfo,dwmTimingAvailable,dwmRateRefreshNumerator,dwmRateRefreshDenominator,dwmQpcRefreshPeriod,dwmQpcVBlank,dwmRefreshCount,dwmQpcCompose,dwmFrame,dwmRefreshFrame,dwmFrameDisplayed,dwmQpcFrameDisplayed,dwmRefreshFrameDisplayed,dwmFrameComplete,dwmQpcFrameComplete,dwmFramePending,dwmQpcFramePending,dwmRefreshNextDisplayed,dwmRefreshNextPresented,dwmFramesDisplayed,dwmFramesDropped,dwmFramesMissed,runtimeSchedulerTimingUsable,runtimeSchedulerTargetVBlankTicks,runtimeSchedulerPlannedTickTicks,runtimeSchedulerActualTickTicks,runtimeSchedulerVBlankLeadMicroseconds,runtimeSchedulerQueuedTickTicks,runtimeSchedulerDispatchStartedTicks,runtimeSchedulerCursorReadStartedTicks,runtimeSchedulerCursorReadCompletedTicks,runtimeSchedulerSampleRecordedTicks,runtimeSchedulerLoopIteration,runtimeSchedulerLoopStartedTicks,runtimeSchedulerTimingReadStartedTicks,runtimeSchedulerTimingReadCompletedTicks,runtimeSchedulerDecisionCompletedTicks,runtimeSchedulerTickRequested,runtimeSchedulerSleepRequestedMilliseconds,runtimeSchedulerWaitMethod,runtimeSchedulerWaitTargetTicks,runtimeSchedulerSleepStartedTicks,runtimeSchedulerSleepCompletedTicks,warmupSample,predictionTargetTicks,presentReferenceTicks,schedulerProvenance,sampleRecordedToPredictionTargetMicroseconds,runtimeSchedulerMissing,runtimeSchedulerCursorReadLatencyMicroseconds,runtimeSchedulerDispatchToReadStartedMicroseconds,runtimeSchedulerQueueToDispatchMicroseconds,runtimeSchedulerReadCompletedToSampleRecordedMicroseconds,runtimeSchedulerDuplicateHoldRunLength,runtimeSchedulerLastMovementAgeMicroseconds,runtimeSchedulerPollCadenceGapMicroseconds,runtimeSchedulerMissedCadence,runtimeSchedulerSampleToTargetMicroseconds,runtimeSchedulerReadCompletedToTargetMicroseconds");
+                RuntimeSchedulerDerivedTelemetryState runtimeTelemetry = new RuntimeSchedulerDerivedTelemetryState();
                 foreach (MouseTraceEvent sample in snapshot.Samples)
                 {
                     writer.Write(sample.Sequence.ToString(CultureInfo.InvariantCulture));
@@ -140,16 +172,30 @@ namespace CursorMirror.MouseTrace
                     WriteNullable(writer, sample.RuntimeSchedulerSleepStartedTicks);
                     writer.Write(",");
                     WriteNullable(writer, sample.RuntimeSchedulerSleepCompletedTicks);
+                    writer.Write(",");
+                    writer.Write(IsWarmupSample(sample) ? "true" : "false");
+                    writer.Write(",");
+                    WriteNullable(writer, PredictionTargetTicks(sample));
+                    writer.Write(",");
+                    WriteNullable(writer, PresentReferenceTicks(sample));
+                    writer.Write(",");
+                    writer.Write(EscapeCsv(SchedulerProvenance(sample)));
+                    writer.Write(",");
+                    WriteNullable(writer, SampleRecordedToPredictionTargetMicroseconds(sample));
+                    writer.Write(",");
+                    writer.Write(IsRuntimeSchedulerMissing(sample) ? "true" : "false");
+                    writer.Write(",");
+                    WriteRuntimeSchedulerDerivedTelemetry(writer, runtimeTelemetry.Next(sample));
                     writer.WriteLine();
                 }
             }
         }
 
-        private static void WriteMetadata(ZipArchive archive, MouseTraceSnapshot snapshot)
+        private static void WriteMetadata(ZipArchive archive, MouseTraceSnapshot snapshot, string productName)
         {
             MouseTraceMetadata metadata = new MouseTraceMetadata();
-            metadata.TraceFormatVersion = 8;
-            metadata.ProductName = LocalizedStrings.TraceToolTitle;
+            metadata.TraceFormatVersion = 10;
+            metadata.ProductName = string.IsNullOrWhiteSpace(productName) ? LocalizedStrings.TraceToolTitle : productName;
             metadata.ProductVersion = BuildVersion.InformationalVersion;
             metadata.CreatedUtc = DateTime.UtcNow.ToString("o", CultureInfo.InvariantCulture);
             metadata.SampleCount = snapshot.Samples.Length;
@@ -169,6 +215,7 @@ namespace CursorMirror.MouseTrace
             metadata.RuntimeSchedulerCoalescedTickCount = snapshot.RuntimeSchedulerCoalescedTickCount;
             metadata.RuntimeSchedulerThreadProfile = snapshot.RuntimeSchedulerThreadProfile;
             metadata.RuntimeSchedulerCaptureThreadProfile = snapshot.RuntimeSchedulerCaptureThreadProfile;
+            metadata.WarmupDurationMilliseconds = WarmupDurationMilliseconds;
             metadata.DurationMicroseconds = snapshot.DurationMicroseconds;
             metadata.StopwatchFrequency = Stopwatch.Frequency.ToString(CultureInfo.InvariantCulture);
             metadata.HookMoveIntervalStats = CalculateIntervalStats(snapshot, "move");
@@ -284,6 +331,221 @@ namespace CursorMirror.MouseTrace
             {
                 writer.Write(value.Value ? "true" : "false");
             }
+        }
+
+        private static bool IsWarmupSample(MouseTraceEvent sample)
+        {
+            return sample != null && sample.ElapsedMicroseconds >= 0 && sample.ElapsedMicroseconds <= WarmupDurationMilliseconds * 1000L;
+        }
+
+        private static long? PredictionTargetTicks(MouseTraceEvent sample)
+        {
+            if (sample == null)
+            {
+                return null;
+            }
+
+            if (sample.RuntimeSchedulerTargetVBlankTicks.HasValue)
+            {
+                return sample.RuntimeSchedulerTargetVBlankTicks.Value;
+            }
+
+            return sample.RuntimeSchedulerPlannedTickTicks;
+        }
+
+        private static long? PresentReferenceTicks(MouseTraceEvent sample)
+        {
+            if (sample == null)
+            {
+                return null;
+            }
+
+            if (sample.DwmTimingAvailable)
+            {
+                return sample.DwmTiming.QpcVBlank <= long.MaxValue ? (long)sample.DwmTiming.QpcVBlank : (long?)null;
+            }
+
+            return sample.RuntimeSchedulerTargetVBlankTicks;
+        }
+
+        private static string SchedulerProvenance(MouseTraceEvent sample)
+        {
+            if (sample == null || (!string.Equals(sample.EventType, "runtimeSchedulerPoll", StringComparison.Ordinal) && !string.Equals(sample.EventType, "runtimeSchedulerLoop", StringComparison.Ordinal)))
+            {
+                return "";
+            }
+
+            if (sample.RuntimeSchedulerTimingUsable.HasValue && sample.RuntimeSchedulerTimingUsable.Value && sample.RuntimeSchedulerTargetVBlankTicks.HasValue)
+            {
+                return "dwm";
+            }
+
+            if (sample.RuntimeSchedulerPlannedTickTicks.HasValue)
+            {
+                return "fallback";
+            }
+
+            return "missing";
+        }
+
+        private static long? SampleRecordedToPredictionTargetMicroseconds(MouseTraceEvent sample)
+        {
+            long? targetTicks = PredictionTargetTicks(sample);
+            if (!targetTicks.HasValue)
+            {
+                return null;
+            }
+
+            long recordedTicks = sample.RuntimeSchedulerSampleRecordedTicks.HasValue
+                ? sample.RuntimeSchedulerSampleRecordedTicks.Value
+                : sample.StopwatchTicks;
+            return MouseTraceSession.TicksToMicroseconds(recordedTicks - targetTicks.Value);
+        }
+
+        private static bool IsRuntimeSchedulerMissing(MouseTraceEvent sample)
+        {
+            return sample != null
+                && (string.Equals(sample.EventType, "runtimeSchedulerPoll", StringComparison.Ordinal) || string.Equals(sample.EventType, "runtimeSchedulerLoop", StringComparison.Ordinal))
+                && !sample.RuntimeSchedulerTargetVBlankTicks.HasValue
+                && !sample.RuntimeSchedulerPlannedTickTicks.HasValue;
+        }
+
+        private static void WriteRuntimeSchedulerDerivedTelemetry(StreamWriter writer, RuntimeSchedulerDerivedTelemetry telemetry)
+        {
+            WriteNullable(writer, telemetry.CursorReadLatencyMicroseconds);
+            writer.Write(",");
+            WriteNullable(writer, telemetry.DispatchToReadStartedMicroseconds);
+            writer.Write(",");
+            WriteNullable(writer, telemetry.QueueToDispatchMicroseconds);
+            writer.Write(",");
+            WriteNullable(writer, telemetry.ReadCompletedToSampleRecordedMicroseconds);
+            writer.Write(",");
+            WriteNullable(writer, telemetry.DuplicateHoldRunLength);
+            writer.Write(",");
+            WriteNullable(writer, telemetry.LastMovementAgeMicroseconds);
+            writer.Write(",");
+            WriteNullable(writer, telemetry.PollCadenceGapMicroseconds);
+            writer.Write(",");
+            WriteNullable(writer, telemetry.MissedCadence);
+            writer.Write(",");
+            WriteNullable(writer, telemetry.SampleToTargetMicroseconds);
+            writer.Write(",");
+            WriteNullable(writer, telemetry.ReadCompletedToTargetMicroseconds);
+        }
+
+        private sealed class RuntimeSchedulerDerivedTelemetryState
+        {
+            private bool _hasPreviousPoll;
+            private bool _hasLastMovement;
+            private int _previousX;
+            private int _previousY;
+            private long _previousRecordedTicks;
+            private long _lastMovementRecordedTicks;
+            private int _duplicateHoldRunLength;
+
+            public RuntimeSchedulerDerivedTelemetry Next(MouseTraceEvent sample)
+            {
+                RuntimeSchedulerDerivedTelemetry telemetry = new RuntimeSchedulerDerivedTelemetry();
+                if (sample == null || !string.Equals(sample.EventType, "runtimeSchedulerPoll", StringComparison.Ordinal))
+                {
+                    return telemetry;
+                }
+
+                long recordedTicks = sample.RuntimeSchedulerSampleRecordedTicks.HasValue
+                    ? sample.RuntimeSchedulerSampleRecordedTicks.Value
+                    : sample.StopwatchTicks;
+                long? targetTicks = PredictionTargetTicks(sample);
+
+                telemetry.CursorReadLatencyMicroseconds = DeltaMicroseconds(
+                    sample.RuntimeSchedulerCursorReadStartedTicks,
+                    sample.RuntimeSchedulerCursorReadCompletedTicks);
+                telemetry.DispatchToReadStartedMicroseconds = DeltaMicroseconds(
+                    sample.RuntimeSchedulerDispatchStartedTicks,
+                    sample.RuntimeSchedulerCursorReadStartedTicks);
+                telemetry.QueueToDispatchMicroseconds = DeltaMicroseconds(
+                    sample.RuntimeSchedulerQueuedTickTicks,
+                    sample.RuntimeSchedulerDispatchStartedTicks);
+                telemetry.ReadCompletedToSampleRecordedMicroseconds = DeltaMicroseconds(
+                    sample.RuntimeSchedulerCursorReadCompletedTicks,
+                    sample.RuntimeSchedulerSampleRecordedTicks);
+                if (targetTicks.HasValue)
+                {
+                    telemetry.SampleToTargetMicroseconds = MouseTraceSession.TicksToMicroseconds(targetTicks.Value - recordedTicks);
+                    if (sample.RuntimeSchedulerCursorReadCompletedTicks.HasValue)
+                    {
+                        telemetry.ReadCompletedToTargetMicroseconds = MouseTraceSession.TicksToMicroseconds(targetTicks.Value - sample.RuntimeSchedulerCursorReadCompletedTicks.Value);
+                    }
+                }
+
+                bool moved = !_hasPreviousPoll || sample.X != _previousX || sample.Y != _previousY;
+                if (moved)
+                {
+                    _duplicateHoldRunLength = 0;
+                    _lastMovementRecordedTicks = recordedTicks;
+                    _hasLastMovement = true;
+                }
+                else
+                {
+                    _duplicateHoldRunLength++;
+                }
+
+                telemetry.DuplicateHoldRunLength = _duplicateHoldRunLength;
+                if (_hasLastMovement)
+                {
+                    telemetry.LastMovementAgeMicroseconds = MouseTraceSession.TicksToMicroseconds(recordedTicks - _lastMovementRecordedTicks);
+                }
+
+                if (_hasPreviousPoll)
+                {
+                    long intervalTicks = recordedTicks - _previousRecordedTicks;
+                    long? expectedCadenceTicks = ExpectedRuntimeSchedulerCadenceTicks(sample);
+                    if (expectedCadenceTicks.HasValue)
+                    {
+                        telemetry.PollCadenceGapMicroseconds = MouseTraceSession.TicksToMicroseconds(intervalTicks - expectedCadenceTicks.Value);
+                        telemetry.MissedCadence = intervalTicks > expectedCadenceTicks.Value + (expectedCadenceTicks.Value / 2);
+                    }
+                }
+
+                _previousX = sample.X;
+                _previousY = sample.Y;
+                _previousRecordedTicks = recordedTicks;
+                _hasPreviousPoll = true;
+                return telemetry;
+            }
+
+            private static long? ExpectedRuntimeSchedulerCadenceTicks(MouseTraceEvent sample)
+            {
+                if (sample.DwmTimingAvailable && sample.DwmTiming.QpcRefreshPeriod > 0 && sample.DwmTiming.QpcRefreshPeriod <= (ulong)long.MaxValue)
+                {
+                    return (long)sample.DwmTiming.QpcRefreshPeriod;
+                }
+
+                return null;
+            }
+        }
+
+        private sealed class RuntimeSchedulerDerivedTelemetry
+        {
+            public long? CursorReadLatencyMicroseconds;
+            public long? DispatchToReadStartedMicroseconds;
+            public long? QueueToDispatchMicroseconds;
+            public long? ReadCompletedToSampleRecordedMicroseconds;
+            public int? DuplicateHoldRunLength;
+            public long? LastMovementAgeMicroseconds;
+            public long? PollCadenceGapMicroseconds;
+            public bool? MissedCadence;
+            public long? SampleToTargetMicroseconds;
+            public long? ReadCompletedToTargetMicroseconds;
+        }
+
+        private static long? DeltaMicroseconds(long? startTicks, long? endTicks)
+        {
+            if (!startTicks.HasValue || !endTicks.HasValue)
+            {
+                return null;
+            }
+
+            return MouseTraceSession.TicksToMicroseconds(endTicks.Value - startTicks.Value);
         }
 
         private static int CountByEvent(MouseTraceSnapshot snapshot, string eventType)

@@ -16,7 +16,11 @@ namespace CursorMirror
             Dictionary<string, List<int>> patternSeparations = new Dictionary<string, List<int>>();
             Dictionary<string, int> patternFrameCounts = new Dictionary<string, int>();
             Dictionary<string, int> patternDarkFrameCounts = new Dictionary<string, int>();
+            Dictionary<string, List<int>> phaseSeparations = new Dictionary<string, List<int>>();
+            Dictionary<string, int> phaseFrameCounts = new Dictionary<string, int>();
+            Dictionary<string, int> phaseDarkFrameCounts = new Dictionary<string, int>();
             List<string> patternOrder = new List<string>();
+            List<string> phaseOrder = new List<string>();
             int baselineWidth = 0;
             int baselineHeight = 0;
             int darkFrameCount = 0;
@@ -44,10 +48,17 @@ namespace CursorMirror
             {
                 CalibrationFrameAnalysis frame = frames[i];
                 string patternName = frame == null ? string.Empty : frame.PatternName;
+                string phaseName = frame == null ? string.Empty : frame.PhaseName;
                 if (!string.IsNullOrEmpty(patternName))
                 {
                     EnsurePattern(patternName, patternOrder, patternSeparations, patternFrameCounts, patternDarkFrameCounts);
                     patternFrameCounts[patternName] = patternFrameCounts[patternName] + 1;
+                }
+
+                if (!string.IsNullOrEmpty(phaseName))
+                {
+                    EnsurePattern(phaseName, phaseOrder, phaseSeparations, phaseFrameCounts, phaseDarkFrameCounts);
+                    phaseFrameCounts[phaseName] = phaseFrameCounts[phaseName] + 1;
                 }
 
                 if (frame != null && frame.HasDarkPixels)
@@ -60,6 +71,12 @@ namespace CursorMirror
                     {
                         patternSeparations[patternName].Add(separation);
                         patternDarkFrameCounts[patternName] = patternDarkFrameCounts[patternName] + 1;
+                    }
+
+                    if (!string.IsNullOrEmpty(phaseName))
+                    {
+                        phaseSeparations[phaseName].Add(separation);
+                        phaseDarkFrameCounts[phaseName] = phaseDarkFrameCounts[phaseName] + 1;
                     }
                 }
             }
@@ -76,6 +93,7 @@ namespace CursorMirror
             summary.MaximumEstimatedSeparationPixels = separations.Count == 0 ? 0 : separations[separations.Count - 1];
             summary.CaptureSource = captureSource ?? string.Empty;
             summary.PatternSummaries = BuildPatternSummaries(patternOrder, patternSeparations, patternFrameCounts, patternDarkFrameCounts);
+            summary.PhaseSummaries = BuildPatternSummaries(phaseOrder, phaseSeparations, phaseFrameCounts, phaseDarkFrameCounts);
             return summary;
         }
 

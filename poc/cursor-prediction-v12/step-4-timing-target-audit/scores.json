@@ -1,0 +1,3151 @@
+{
+  "schemaVersion": "cursor-prediction-v12-step3-step4/1/step-4",
+  "generatedAtUtc": "2026-05-03T22:52:33.603Z",
+  "constraints": {
+    "gpuUsed": false,
+    "trainingRun": false,
+    "rawZipCopied": false,
+    "largePerFrameCacheWritten": false,
+    "execution": "single-process CPU-only sequential audit"
+  },
+  "telemetryColumns": [
+    "predictionTargetTicks",
+    "presentReferenceTicks",
+    "sampleRecordedToPredictionTargetMicroseconds",
+    "schedulerProvenance",
+    "dwmQpcRefreshPeriod"
+  ],
+  "timingScores": {
+    "counts": {
+      "anchorRows": 0,
+      "cleanAnchorRows": 518655,
+      "targetTicksAvailable": 136337,
+      "presentTicksAvailable": 518655,
+      "targetResolvedRows": 518655,
+      "presentCorrectedRows": 518655,
+      "targetLateRows": 0,
+      "presentRawPastRows": 84765,
+      "predictionTargetMissingRows": 382318
+    },
+    "sections": {
+      "overall": [
+        {
+          "targetHorizonMs": {
+            "count": 518655,
+            "mean": 10.1235,
+            "min": 0.0001,
+            "p50": 7.0883,
+            "p90": 23.8669,
+            "p95": 28.5239,
+            "p99": 32.5214,
+            "max": 33.5319
+          },
+          "presentRawHorizonMs": {
+            "count": 518655,
+            "mean": 6.4154,
+            "min": -35.222,
+            "p50": 6.9994,
+            "p90": 23.7889,
+            "p95": 28.4183,
+            "p99": 32.421,
+            "max": 33.5319
+          },
+          "presentCorrectedHorizonMs": {
+            "count": 518655,
+            "mean": 10.1235,
+            "min": 0.0001,
+            "p50": 7.0883,
+            "p90": 23.8669,
+            "p95": 28.5239,
+            "p99": 32.5214,
+            "max": 33.5319
+          },
+          "targetMinusRawPresentMs": {
+            "count": 518655,
+            "mean": 3.7081,
+            "min": 0,
+            "p50": 0,
+            "p90": 16.6681,
+            "p95": 33.3332,
+            "p99": 33.3332,
+            "max": 66.6666
+          },
+          "targetMinusCorrectedPresentMs": {
+            "count": 518655,
+            "mean": 0,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "sampleRecordedToPredictionTargetMicroseconds": {
+            "count": 136337,
+            "mean": -3731.8317,
+            "min": -3980,
+            "p50": -3883,
+            "p90": -3423,
+            "p95": -3067,
+            "p99": -1335.72,
+            "max": 12442
+          }
+        }
+      ],
+      "byEventRefresh": [
+        {
+          "anchorEvent": "poll",
+          "refreshBucket": "30Hz",
+          "targetHorizonMs": {
+            "count": 190466,
+            "mean": 16.4812,
+            "min": 0.0009,
+            "p50": 16.561,
+            "p90": 29.9018,
+            "p95": 31.6715,
+            "p99": 33.0766,
+            "max": 33.5319
+          },
+          "presentRawHorizonMs": {
+            "count": 190466,
+            "mean": 16.4074,
+            "min": -0.1359,
+            "p50": 16.484,
+            "p90": 29.8253,
+            "p95": 31.6057,
+            "p99": 33.0137,
+            "max": 33.5319
+          },
+          "presentCorrectedHorizonMs": {
+            "count": 190466,
+            "mean": 16.4812,
+            "min": 0.0009,
+            "p50": 16.561,
+            "p90": 29.9018,
+            "p95": 31.6715,
+            "p99": 33.0766,
+            "max": 33.5319
+          },
+          "targetMinusRawPresentMs": {
+            "count": 190466,
+            "mean": 0.0739,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 33.3334
+          },
+          "targetMinusCorrectedPresentMs": {
+            "count": 190466,
+            "mean": 0,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "sampleRecordedToPredictionTargetMicroseconds": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "p95": null,
+            "p99": null,
+            "max": null
+          }
+        },
+        {
+          "anchorEvent": "poll",
+          "refreshBucket": "60Hz",
+          "targetHorizonMs": {
+            "count": 191852,
+            "mean": 8.3345,
+            "min": 0.0001,
+            "p50": 8.3342,
+            "p90": 15.0186,
+            "p95": 15.8428,
+            "p99": 16.5162,
+            "max": 21.8824
+          },
+          "presentRawHorizonMs": {
+            "count": 191852,
+            "mean": 8.2581,
+            "min": -4.872,
+            "p50": 8.2587,
+            "p90": 14.9449,
+            "p95": 15.768,
+            "p99": 16.4427,
+            "max": 21.8824
+          },
+          "presentCorrectedHorizonMs": {
+            "count": 191852,
+            "mean": 8.3345,
+            "min": 0.0001,
+            "p50": 8.3342,
+            "p90": 15.0186,
+            "p95": 15.8428,
+            "p99": 16.5162,
+            "max": 21.8824
+          },
+          "targetMinusRawPresentMs": {
+            "count": 191852,
+            "mean": 0.0764,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 16.6683
+          },
+          "targetMinusCorrectedPresentMs": {
+            "count": 191852,
+            "mean": 0,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "sampleRecordedToPredictionTargetMicroseconds": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "p95": null,
+            "p99": null,
+            "max": null
+          }
+        },
+        {
+          "anchorEvent": "runtimeSchedulerPoll",
+          "refreshBucket": "30Hz",
+          "targetHorizonMs": {
+            "count": 45712,
+            "mean": 3.7858,
+            "min": 0.0856,
+            "p50": 3.87,
+            "p90": 3.8974,
+            "p95": 3.9103,
+            "p99": 3.9258,
+            "max": 33.1624
+          },
+          "presentRawHorizonMs": {
+            "count": 45712,
+            "mean": -18.1916,
+            "min": -35.222,
+            "p50": -29.4436,
+            "p90": 3.8819,
+            "p95": 3.8931,
+            "p99": 3.9146,
+            "max": 3.935
+          },
+          "presentCorrectedHorizonMs": {
+            "count": 45712,
+            "mean": 3.7858,
+            "min": 0.0856,
+            "p50": 3.87,
+            "p90": 3.8974,
+            "p95": 3.9103,
+            "p99": 3.9258,
+            "max": 33.1624
+          },
+          "targetMinusRawPresentMs": {
+            "count": 45712,
+            "mean": 21.9774,
+            "min": 0,
+            "p50": 33.3332,
+            "p90": 33.3332,
+            "p95": 33.3333,
+            "p99": 33.3333,
+            "max": 66.6666
+          },
+          "targetMinusCorrectedPresentMs": {
+            "count": 45712,
+            "mean": 0,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "sampleRecordedToPredictionTargetMicroseconds": {
+            "count": 45712,
+            "mean": -3773.7021,
+            "min": -3939,
+            "p50": -3870,
+            "p90": -3503,
+            "p95": -3291,
+            "p99": -2907,
+            "max": 6740
+          }
+        },
+        {
+          "anchorEvent": "runtimeSchedulerPoll",
+          "refreshBucket": "60Hz",
+          "targetHorizonMs": {
+            "count": 90625,
+            "mean": 3.7458,
+            "min": 0.0036,
+            "p50": 3.9112,
+            "p90": 3.9527,
+            "p95": 3.9573,
+            "p99": 3.9638,
+            "max": 16.6674
+          },
+          "presentRawHorizonMs": {
+            "count": 90625,
+            "mean": -6.0737,
+            "min": -29.11,
+            "p50": -12.7188,
+            "p90": 3.9406,
+            "p95": 3.9505,
+            "p99": 3.959,
+            "max": 3.9806
+          },
+          "presentCorrectedHorizonMs": {
+            "count": 90625,
+            "mean": 3.7458,
+            "min": 0.0036,
+            "p50": 3.9112,
+            "p90": 3.9527,
+            "p95": 3.9573,
+            "p99": 3.9638,
+            "max": 16.6674
+          },
+          "targetMinusRawPresentMs": {
+            "count": 90625,
+            "mean": 9.8195,
+            "min": 0,
+            "p50": 16.6669,
+            "p90": 16.6681,
+            "p95": 16.6681,
+            "p99": 16.6681,
+            "max": 33.3364
+          },
+          "targetMinusCorrectedPresentMs": {
+            "count": 90625,
+            "mean": 0,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "sampleRecordedToPredictionTargetMicroseconds": {
+            "count": 90625,
+            "mean": -3710.7119,
+            "min": -3980,
+            "p50": -3910,
+            "p90": -3373,
+            "p95": -2785,
+            "p99": -1085.24,
+            "max": 12442
+          }
+        }
+      ],
+      "byEventRefreshProvenance": [
+        {
+          "anchorEvent": "poll",
+          "refreshBucket": "30Hz",
+          "schedulerProvenance": "(blank)",
+          "targetHorizonMs": {
+            "count": 190466,
+            "mean": 16.4812,
+            "min": 0.0009,
+            "p50": 16.561,
+            "p90": 29.9018,
+            "p95": 31.6715,
+            "p99": 33.0766,
+            "max": 33.5319
+          },
+          "presentRawHorizonMs": {
+            "count": 190466,
+            "mean": 16.4074,
+            "min": -0.1359,
+            "p50": 16.484,
+            "p90": 29.8253,
+            "p95": 31.6057,
+            "p99": 33.0137,
+            "max": 33.5319
+          },
+          "presentCorrectedHorizonMs": {
+            "count": 190466,
+            "mean": 16.4812,
+            "min": 0.0009,
+            "p50": 16.561,
+            "p90": 29.9018,
+            "p95": 31.6715,
+            "p99": 33.0766,
+            "max": 33.5319
+          },
+          "targetMinusRawPresentMs": {
+            "count": 190466,
+            "mean": 0.0739,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 33.3334
+          },
+          "targetMinusCorrectedPresentMs": {
+            "count": 190466,
+            "mean": 0,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "sampleRecordedToPredictionTargetMicroseconds": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "p95": null,
+            "p99": null,
+            "max": null
+          }
+        },
+        {
+          "anchorEvent": "poll",
+          "refreshBucket": "60Hz",
+          "schedulerProvenance": "(blank)",
+          "targetHorizonMs": {
+            "count": 191852,
+            "mean": 8.3345,
+            "min": 0.0001,
+            "p50": 8.3342,
+            "p90": 15.0186,
+            "p95": 15.8428,
+            "p99": 16.5162,
+            "max": 21.8824
+          },
+          "presentRawHorizonMs": {
+            "count": 191852,
+            "mean": 8.2581,
+            "min": -4.872,
+            "p50": 8.2587,
+            "p90": 14.9449,
+            "p95": 15.768,
+            "p99": 16.4427,
+            "max": 21.8824
+          },
+          "presentCorrectedHorizonMs": {
+            "count": 191852,
+            "mean": 8.3345,
+            "min": 0.0001,
+            "p50": 8.3342,
+            "p90": 15.0186,
+            "p95": 15.8428,
+            "p99": 16.5162,
+            "max": 21.8824
+          },
+          "targetMinusRawPresentMs": {
+            "count": 191852,
+            "mean": 0.0764,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 16.6683
+          },
+          "targetMinusCorrectedPresentMs": {
+            "count": 191852,
+            "mean": 0,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "sampleRecordedToPredictionTargetMicroseconds": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "p95": null,
+            "p99": null,
+            "max": null
+          }
+        },
+        {
+          "anchorEvent": "runtimeSchedulerPoll",
+          "refreshBucket": "30Hz",
+          "schedulerProvenance": "dwm",
+          "targetHorizonMs": {
+            "count": 45712,
+            "mean": 3.7858,
+            "min": 0.0856,
+            "p50": 3.87,
+            "p90": 3.8974,
+            "p95": 3.9103,
+            "p99": 3.9258,
+            "max": 33.1624
+          },
+          "presentRawHorizonMs": {
+            "count": 45712,
+            "mean": -18.1916,
+            "min": -35.222,
+            "p50": -29.4436,
+            "p90": 3.8819,
+            "p95": 3.8931,
+            "p99": 3.9146,
+            "max": 3.935
+          },
+          "presentCorrectedHorizonMs": {
+            "count": 45712,
+            "mean": 3.7858,
+            "min": 0.0856,
+            "p50": 3.87,
+            "p90": 3.8974,
+            "p95": 3.9103,
+            "p99": 3.9258,
+            "max": 33.1624
+          },
+          "targetMinusRawPresentMs": {
+            "count": 45712,
+            "mean": 21.9774,
+            "min": 0,
+            "p50": 33.3332,
+            "p90": 33.3332,
+            "p95": 33.3333,
+            "p99": 33.3333,
+            "max": 66.6666
+          },
+          "targetMinusCorrectedPresentMs": {
+            "count": 45712,
+            "mean": 0,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "sampleRecordedToPredictionTargetMicroseconds": {
+            "count": 45712,
+            "mean": -3773.7021,
+            "min": -3939,
+            "p50": -3870,
+            "p90": -3503,
+            "p95": -3291,
+            "p99": -2907,
+            "max": 6740
+          }
+        },
+        {
+          "anchorEvent": "runtimeSchedulerPoll",
+          "refreshBucket": "60Hz",
+          "schedulerProvenance": "dwm",
+          "targetHorizonMs": {
+            "count": 90625,
+            "mean": 3.7458,
+            "min": 0.0036,
+            "p50": 3.9112,
+            "p90": 3.9527,
+            "p95": 3.9573,
+            "p99": 3.9638,
+            "max": 16.6674
+          },
+          "presentRawHorizonMs": {
+            "count": 90625,
+            "mean": -6.0737,
+            "min": -29.11,
+            "p50": -12.7188,
+            "p90": 3.9406,
+            "p95": 3.9505,
+            "p99": 3.959,
+            "max": 3.9806
+          },
+          "presentCorrectedHorizonMs": {
+            "count": 90625,
+            "mean": 3.7458,
+            "min": 0.0036,
+            "p50": 3.9112,
+            "p90": 3.9527,
+            "p95": 3.9573,
+            "p99": 3.9638,
+            "max": 16.6674
+          },
+          "targetMinusRawPresentMs": {
+            "count": 90625,
+            "mean": 9.8195,
+            "min": 0,
+            "p50": 16.6669,
+            "p90": 16.6681,
+            "p95": 16.6681,
+            "p99": 16.6681,
+            "max": 33.3364
+          },
+          "targetMinusCorrectedPresentMs": {
+            "count": 90625,
+            "mean": 0,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "sampleRecordedToPredictionTargetMicroseconds": {
+            "count": 90625,
+            "mean": -3710.7119,
+            "min": -3980,
+            "p50": -3910,
+            "p90": -3373,
+            "p95": -2785,
+            "p99": -1085.24,
+            "max": 12442
+          }
+        }
+      ],
+      "byPackage": [
+        {
+          "packageId": "m070055",
+          "anchorEvent": "poll",
+          "refreshBucket": "30Hz",
+          "machineKey": "6cpu_3840x2160_1mon_30Hz",
+          "targetHorizonMs": {
+            "count": 94512,
+            "mean": 16.5989,
+            "min": 0.0009,
+            "p50": 16.6258,
+            "p90": 29.9524,
+            "p95": 31.6848,
+            "p99": 33.0747,
+            "max": 33.4959
+          },
+          "presentRawHorizonMs": {
+            "count": 94512,
+            "mean": 16.5281,
+            "min": -0.1359,
+            "p50": 16.5577,
+            "p90": 29.8805,
+            "p95": 31.6248,
+            "p99": 33.0182,
+            "max": 33.4959
+          },
+          "presentCorrectedHorizonMs": {
+            "count": 94512,
+            "mean": 16.5989,
+            "min": 0.0009,
+            "p50": 16.6258,
+            "p90": 29.9524,
+            "p95": 31.6848,
+            "p99": 33.0747,
+            "max": 33.4959
+          },
+          "targetMinusRawPresentMs": {
+            "count": 94512,
+            "mean": 0.0709,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 33.3333
+          },
+          "targetMinusCorrectedPresentMs": {
+            "count": 94512,
+            "mean": 0,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "sampleRecordedToPredictionTargetMicroseconds": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "p95": null,
+            "p99": null,
+            "max": null
+          }
+        },
+        {
+          "packageId": "m070211",
+          "anchorEvent": "poll",
+          "refreshBucket": "30Hz",
+          "machineKey": "6cpu_3840x2160_1mon_30Hz",
+          "targetHorizonMs": {
+            "count": 95954,
+            "mean": 16.3653,
+            "min": 0.0014,
+            "p50": 16.4966,
+            "p90": 29.8586,
+            "p95": 31.6577,
+            "p99": 33.0773,
+            "max": 33.5319
+          },
+          "presentRawHorizonMs": {
+            "count": 95954,
+            "mean": 16.2885,
+            "min": -0.1096,
+            "p50": 16.416,
+            "p90": 29.7712,
+            "p95": 31.5799,
+            "p99": 33.0098,
+            "max": 33.5319
+          },
+          "presentCorrectedHorizonMs": {
+            "count": 95954,
+            "mean": 16.3653,
+            "min": 0.0014,
+            "p50": 16.4966,
+            "p90": 29.8586,
+            "p95": 31.6577,
+            "p99": 33.0773,
+            "max": 33.5319
+          },
+          "targetMinusRawPresentMs": {
+            "count": 95954,
+            "mean": 0.0768,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 33.3334
+          },
+          "targetMinusCorrectedPresentMs": {
+            "count": 95954,
+            "mean": 0,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "sampleRecordedToPredictionTargetMicroseconds": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "p95": null,
+            "p99": null,
+            "max": null
+          }
+        },
+        {
+          "packageId": "m070248",
+          "anchorEvent": "poll",
+          "refreshBucket": "60Hz",
+          "machineKey": "24cpu_2560x1440_1mon_60Hz",
+          "targetHorizonMs": {
+            "count": 95907,
+            "mean": 8.3327,
+            "min": 0.0007,
+            "p50": 8.3228,
+            "p90": 14.998,
+            "p95": 15.8299,
+            "p99": 16.4949,
+            "max": 16.8815
+          },
+          "presentRawHorizonMs": {
+            "count": 95907,
+            "mean": 8.2969,
+            "min": -0.4933,
+            "p50": 8.2918,
+            "p90": 14.9679,
+            "p95": 15.795,
+            "p99": 16.4644,
+            "max": 16.8815
+          },
+          "presentCorrectedHorizonMs": {
+            "count": 95907,
+            "mean": 8.3327,
+            "min": 0.0007,
+            "p50": 8.3228,
+            "p90": 14.998,
+            "p95": 15.8299,
+            "p99": 16.4949,
+            "max": 16.8815
+          },
+          "targetMinusRawPresentMs": {
+            "count": 95907,
+            "mean": 0.0358,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 16.667
+          },
+          "targetMinusCorrectedPresentMs": {
+            "count": 95907,
+            "mean": 0,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "sampleRecordedToPredictionTargetMicroseconds": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "p95": null,
+            "p99": null,
+            "max": null
+          }
+        },
+        {
+          "packageId": "m070307",
+          "anchorEvent": "poll",
+          "refreshBucket": "60Hz",
+          "machineKey": "32cpu_7680x1440_3mon_60Hz",
+          "targetHorizonMs": {
+            "count": 95945,
+            "mean": 8.3362,
+            "min": 0.0001,
+            "p50": 8.3492,
+            "p90": 15.0392,
+            "p95": 15.8566,
+            "p99": 16.5363,
+            "max": 21.8824
+          },
+          "presentRawHorizonMs": {
+            "count": 95945,
+            "mean": 8.2193,
+            "min": -4.872,
+            "p50": 8.2282,
+            "p90": 14.9261,
+            "p95": 15.7422,
+            "p99": 16.4216,
+            "max": 21.8824
+          },
+          "presentCorrectedHorizonMs": {
+            "count": 95945,
+            "mean": 8.3362,
+            "min": 0.0001,
+            "p50": 8.3492,
+            "p90": 15.0392,
+            "p95": 15.8566,
+            "p99": 16.5363,
+            "max": 21.8824
+          },
+          "targetMinusRawPresentMs": {
+            "count": 95945,
+            "mean": 0.1169,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 16.6683
+          },
+          "targetMinusCorrectedPresentMs": {
+            "count": 95945,
+            "mean": 0,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "sampleRecordedToPredictionTargetMicroseconds": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "p95": null,
+            "p99": null,
+            "max": null
+          }
+        },
+        {
+          "packageId": "m070055",
+          "anchorEvent": "runtimeSchedulerPoll",
+          "refreshBucket": "30Hz",
+          "machineKey": "6cpu_3840x2160_1mon_30Hz",
+          "targetHorizonMs": {
+            "count": 22683,
+            "mean": 3.8166,
+            "min": 0.1174,
+            "p50": 3.8769,
+            "p90": 3.8989,
+            "p95": 3.9143,
+            "p99": 3.9284,
+            "max": 33.1624
+          },
+          "presentRawHorizonMs": {
+            "count": 22683,
+            "mean": -18.0837,
+            "min": -35.222,
+            "p50": -29.4407,
+            "p90": 3.8844,
+            "p95": 3.8941,
+            "p99": 3.9167,
+            "max": 3.935
+          },
+          "presentCorrectedHorizonMs": {
+            "count": 22683,
+            "mean": 3.8166,
+            "min": 0.1174,
+            "p50": 3.8769,
+            "p90": 3.8989,
+            "p95": 3.9143,
+            "p99": 3.9284,
+            "max": 33.1624
+          },
+          "targetMinusRawPresentMs": {
+            "count": 22683,
+            "mean": 21.9003,
+            "min": 0,
+            "p50": 33.3332,
+            "p90": 33.3333,
+            "p95": 33.3333,
+            "p99": 33.3333,
+            "max": 66.6666
+          },
+          "targetMinusCorrectedPresentMs": {
+            "count": 22683,
+            "mean": 0,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "sampleRecordedToPredictionTargetMicroseconds": {
+            "count": 22683,
+            "mean": -3802.9838,
+            "min": -3939,
+            "p50": -3876,
+            "p90": -3611,
+            "p95": -3428,
+            "p99": -3101,
+            "max": 2306
+          }
+        },
+        {
+          "packageId": "m070211",
+          "anchorEvent": "runtimeSchedulerPoll",
+          "refreshBucket": "30Hz",
+          "machineKey": "6cpu_3840x2160_1mon_30Hz",
+          "targetHorizonMs": {
+            "count": 23029,
+            "mean": 3.7554,
+            "min": 0.0856,
+            "p50": 3.8646,
+            "p90": 3.8946,
+            "p95": 3.9065,
+            "p99": 3.9232,
+            "max": 33.0477
+          },
+          "presentRawHorizonMs": {
+            "count": 23029,
+            "mean": -18.2978,
+            "min": -34.1407,
+            "p50": -29.447,
+            "p90": 3.8779,
+            "p95": 3.8914,
+            "p99": 3.9116,
+            "max": 3.9307
+          },
+          "presentCorrectedHorizonMs": {
+            "count": 23029,
+            "mean": 3.7554,
+            "min": 0.0856,
+            "p50": 3.8646,
+            "p90": 3.8946,
+            "p95": 3.9065,
+            "p99": 3.9232,
+            "max": 33.0477
+          },
+          "targetMinusRawPresentMs": {
+            "count": 23029,
+            "mean": 22.0533,
+            "min": 0,
+            "p50": 33.3332,
+            "p90": 33.3332,
+            "p95": 33.3332,
+            "p99": 33.3333,
+            "max": 66.6664
+          },
+          "targetMinusCorrectedPresentMs": {
+            "count": 23029,
+            "mean": 0,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "sampleRecordedToPredictionTargetMicroseconds": {
+            "count": 23029,
+            "mean": -3744.8603,
+            "min": -3935,
+            "p50": -3864,
+            "p90": -3398.8,
+            "p95": -3183.4,
+            "p99": -2834,
+            "max": 6740
+          }
+        },
+        {
+          "packageId": "m070248",
+          "anchorEvent": "runtimeSchedulerPoll",
+          "refreshBucket": "60Hz",
+          "machineKey": "24cpu_2560x1440_1mon_60Hz",
+          "targetHorizonMs": {
+            "count": 45857,
+            "mean": 3.8006,
+            "min": 0.0086,
+            "p50": 3.9334,
+            "p90": 3.9571,
+            "p95": 3.9601,
+            "p99": 3.965,
+            "max": 16.6547
+          },
+          "presentRawHorizonMs": {
+            "count": 45857,
+            "mean": -6.0454,
+            "min": -18.8276,
+            "p50": -12.7123,
+            "p90": 3.9501,
+            "p95": 3.9554,
+            "p99": 3.9609,
+            "max": 3.9806
+          },
+          "presentCorrectedHorizonMs": {
+            "count": 45857,
+            "mean": 3.8006,
+            "min": 0.0086,
+            "p50": 3.9334,
+            "p90": 3.9571,
+            "p95": 3.9601,
+            "p99": 3.965,
+            "max": 16.6547
+          },
+          "targetMinusRawPresentMs": {
+            "count": 45857,
+            "mean": 9.846,
+            "min": 0,
+            "p50": 16.6669,
+            "p90": 16.667,
+            "p95": 16.667,
+            "p99": 16.667,
+            "max": 33.334
+          },
+          "targetMinusCorrectedPresentMs": {
+            "count": 45857,
+            "mean": 0,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "sampleRecordedToPredictionTargetMicroseconds": {
+            "count": 45857,
+            "mean": -3790.5044,
+            "min": -3980,
+            "p50": -3933,
+            "p90": -3560,
+            "p95": -3224.8,
+            "p99": -1406,
+            "max": 2161
+          }
+        },
+        {
+          "packageId": "m070307",
+          "anchorEvent": "runtimeSchedulerPoll",
+          "refreshBucket": "60Hz",
+          "machineKey": "32cpu_7680x1440_3mon_60Hz",
+          "targetHorizonMs": {
+            "count": 44768,
+            "mean": 3.6897,
+            "min": 0.0036,
+            "p50": 3.881,
+            "p90": 3.9366,
+            "p95": 3.9409,
+            "p99": 3.9487,
+            "max": 16.6674
+          },
+          "presentRawHorizonMs": {
+            "count": 44768,
+            "mean": -6.1027,
+            "min": -29.11,
+            "p50": -12.7376,
+            "p90": 3.928,
+            "p95": 3.9371,
+            "p99": 3.9456,
+            "max": 3.9604
+          },
+          "presentCorrectedHorizonMs": {
+            "count": 44768,
+            "mean": 3.6897,
+            "min": 0.0036,
+            "p50": 3.881,
+            "p90": 3.9366,
+            "p95": 3.9409,
+            "p99": 3.9487,
+            "max": 16.6674
+          },
+          "targetMinusRawPresentMs": {
+            "count": 44768,
+            "mean": 9.7924,
+            "min": 0,
+            "p50": 16.668,
+            "p90": 16.6681,
+            "p95": 16.6681,
+            "p99": 16.6681,
+            "max": 33.3364
+          },
+          "targetMinusCorrectedPresentMs": {
+            "count": 44768,
+            "mean": 0,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "sampleRecordedToPredictionTargetMicroseconds": {
+            "count": 44768,
+            "mean": -3628.9784,
+            "min": -3962,
+            "p50": -3879,
+            "p90": -3145.7,
+            "p95": -2129.7,
+            "p99": -823,
+            "max": 12442
+          }
+        }
+      ]
+    }
+  },
+  "selectedBaselineLagAudit": [
+    {
+      "horizonMode": "fixed_16p67ms",
+      "anchorEvent": "poll",
+      "split": "test",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 28437,
+        "mean": 2.8183,
+        "median": 1.25,
+        "p95": 7,
+        "p99": 32.75,
+        "max": 119.708,
+        "signedMean": -3.8194,
+        "lagRate": 1
+      },
+      "signedAlongMotion": {
+        "count": 2496,
+        "mean": -3.8194,
+        "meanAbs": 3.8194,
+        "lagRate": 1,
+        "leadRate": 0
+      }
+    },
+    {
+      "horizonMode": "fixed_16p67ms",
+      "anchorEvent": "poll",
+      "split": "test",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 29837,
+        "mean": 1.817,
+        "median": 1,
+        "p95": 4.75,
+        "p99": 18.5,
+        "max": 86.0706,
+        "signedMean": -3.1066,
+        "lagRate": 0.99789
+      },
+      "signedAlongMotion": {
+        "count": 2843,
+        "mean": -3.1066,
+        "meanAbs": 3.1447,
+        "lagRate": 0.99789,
+        "leadRate": 0.00211
+      }
+    },
+    {
+      "horizonMode": "fixed_16p67ms",
+      "anchorEvent": "poll",
+      "split": "validation",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 29998,
+        "mean": 2.963,
+        "median": 2,
+        "p95": 9,
+        "p99": 30.75,
+        "max": 94.3663,
+        "signedMean": -3.4163,
+        "lagRate": 0.999114
+      },
+      "signedAlongMotion": {
+        "count": 2257,
+        "mean": -3.4163,
+        "meanAbs": 3.4202,
+        "lagRate": 0.999114,
+        "leadRate": 0.000886
+      }
+    },
+    {
+      "horizonMode": "fixed_16p67ms",
+      "anchorEvent": "poll",
+      "split": "validation",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 29998,
+        "mean": 1.8538,
+        "median": 1,
+        "p95": 5.5,
+        "p99": 23,
+        "max": 103.4698,
+        "signedMean": -3.2995,
+        "lagRate": 0.99689
+      },
+      "signedAlongMotion": {
+        "count": 2572,
+        "mean": -3.2995,
+        "meanAbs": 3.3899,
+        "lagRate": 0.99689,
+        "leadRate": 0.00311
+      }
+    },
+    {
+      "horizonMode": "fixed_16p67ms",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "test",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 6826,
+        "mean": 2.5429,
+        "median": 1.25,
+        "p95": 6.5,
+        "p99": 29.75,
+        "max": 119.708,
+        "signedMean": -3.9465,
+        "lagRate": 0.998638
+      },
+      "signedAlongMotion": {
+        "count": 734,
+        "mean": -3.9465,
+        "meanAbs": 3.9754,
+        "lagRate": 0.998638,
+        "leadRate": 0.001362
+      }
+    },
+    {
+      "horizonMode": "fixed_16p67ms",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "test",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 14178,
+        "mean": 1.7627,
+        "median": 1,
+        "p95": 4.5,
+        "p99": 18.25,
+        "max": 62.2896,
+        "signedMean": -2.9509,
+        "lagRate": 0.997674
+      },
+      "signedAlongMotion": {
+        "count": 1290,
+        "mean": -2.9509,
+        "meanAbs": 2.9961,
+        "lagRate": 0.997674,
+        "leadRate": 0.002326
+      }
+    },
+    {
+      "horizonMode": "fixed_16p67ms",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "validation",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 7200,
+        "mean": 2.5085,
+        "median": 1.25,
+        "p95": 8.75,
+        "p99": 24.5,
+        "max": 94.3663,
+        "signedMean": -3.2003,
+        "lagRate": 0.998721
+      },
+      "signedAlongMotion": {
+        "count": 782,
+        "mean": -3.2003,
+        "meanAbs": 3.2016,
+        "lagRate": 0.998721,
+        "leadRate": 0.001279
+      }
+    },
+    {
+      "horizonMode": "fixed_16p67ms",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "validation",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 14220,
+        "mean": 1.7432,
+        "median": 1,
+        "p95": 5,
+        "p99": 22,
+        "max": 103.4698,
+        "signedMean": -3.3655,
+        "lagRate": 0.999173
+      },
+      "signedAlongMotion": {
+        "count": 1209,
+        "mean": -3.3655,
+        "meanAbs": 3.3789,
+        "lagRate": 0.999173,
+        "leadRate": 0.000827
+      }
+    },
+    {
+      "horizonMode": "fixed_8ms",
+      "anchorEvent": "poll",
+      "split": "test",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 28437,
+        "mean": 1.3487,
+        "median": 0,
+        "p95": 5,
+        "p99": 16.25,
+        "max": 119.708,
+        "signedMean": -1.7329,
+        "lagRate": 1
+      },
+      "signedAlongMotion": {
+        "count": 5132,
+        "mean": -1.7329,
+        "meanAbs": 1.7329,
+        "lagRate": 1,
+        "leadRate": 0
+      }
+    },
+    {
+      "horizonMode": "fixed_8ms",
+      "anchorEvent": "poll",
+      "split": "test",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 29837,
+        "mean": 1.1352,
+        "median": 0,
+        "p95": 4,
+        "p99": 11.25,
+        "max": 55.143,
+        "signedMean": -2.0496,
+        "lagRate": 0.998769
+      },
+      "signedAlongMotion": {
+        "count": 2438,
+        "mean": -2.0496,
+        "meanAbs": 2.0679,
+        "lagRate": 0.998769,
+        "leadRate": 0.001231
+      }
+    },
+    {
+      "horizonMode": "fixed_8ms",
+      "anchorEvent": "poll",
+      "split": "validation",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 29998,
+        "mean": 1.3809,
+        "median": 0,
+        "p95": 5.5,
+        "p99": 15.5,
+        "max": 90.4268,
+        "signedMean": -1.4245,
+        "lagRate": 0.999555
+      },
+      "signedAlongMotion": {
+        "count": 6743,
+        "mean": -1.4245,
+        "meanAbs": 1.4249,
+        "lagRate": 0.999555,
+        "leadRate": 0.000445
+      }
+    },
+    {
+      "horizonMode": "fixed_8ms",
+      "anchorEvent": "poll",
+      "split": "validation",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 29998,
+        "mean": 1.2849,
+        "median": 0,
+        "p95": 4.25,
+        "p99": 18.25,
+        "max": 98.4733,
+        "signedMean": -2.6011,
+        "lagRate": 0.997626
+      },
+      "signedAlongMotion": {
+        "count": 2106,
+        "mean": -2.6011,
+        "meanAbs": 2.7563,
+        "lagRate": 0.997626,
+        "leadRate": 0.002374
+      }
+    },
+    {
+      "horizonMode": "fixed_8ms",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "test",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 6826,
+        "mean": 1.1454,
+        "median": 0,
+        "p95": 4.75,
+        "p99": 13.25,
+        "max": 119.708,
+        "signedMean": -2.557,
+        "lagRate": 1
+      },
+      "signedAlongMotion": {
+        "count": 477,
+        "mean": -2.557,
+        "meanAbs": 2.557,
+        "lagRate": 1,
+        "leadRate": 0
+      }
+    },
+    {
+      "horizonMode": "fixed_8ms",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "test",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 14178,
+        "mean": 0.8989,
+        "median": 0,
+        "p95": 2.75,
+        "p99": 10,
+        "max": 62.2896,
+        "signedMean": -1.6682,
+        "lagRate": 0.999274
+      },
+      "signedAlongMotion": {
+        "count": 1378,
+        "mean": -1.6682,
+        "meanAbs": 1.6882,
+        "lagRate": 0.999274,
+        "leadRate": 0.000726
+      }
+    },
+    {
+      "horizonMode": "fixed_8ms",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "validation",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 7200,
+        "mean": 1.1958,
+        "median": 0,
+        "p95": 4,
+        "p99": 15,
+        "max": 94.3663,
+        "signedMean": -2.1204,
+        "lagRate": 1
+      },
+      "signedAlongMotion": {
+        "count": 604,
+        "mean": -2.1204,
+        "meanAbs": 2.1204,
+        "lagRate": 1,
+        "leadRate": 0
+      }
+    },
+    {
+      "horizonMode": "fixed_8ms",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "validation",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 14220,
+        "mean": 0.9151,
+        "median": 0,
+        "p95": 2.75,
+        "p99": 13.25,
+        "max": 103.4698,
+        "signedMean": -1.8285,
+        "lagRate": 0.999209
+      },
+      "signedAlongMotion": {
+        "count": 1265,
+        "mean": -1.8285,
+        "meanAbs": 1.941,
+        "lagRate": 0.999209,
+        "leadRate": 0.000791
+      }
+    },
+    {
+      "horizonMode": "v9_present_corrected",
+      "anchorEvent": "poll",
+      "split": "test",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 28437,
+        "mean": 2.7205,
+        "median": 1.25,
+        "p95": 7.25,
+        "p99": 31.75,
+        "max": 127.4402,
+        "signedMean": -4.0986,
+        "lagRate": 0.99861
+      },
+      "signedAlongMotion": {
+        "count": 2877,
+        "mean": -4.0986,
+        "meanAbs": 4.1661,
+        "lagRate": 0.99861,
+        "leadRate": 0.00139
+      }
+    },
+    {
+      "horizonMode": "v9_present_corrected",
+      "anchorEvent": "poll",
+      "split": "test",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 29837,
+        "mean": 1.0852,
+        "median": 0,
+        "p95": 3.5,
+        "p99": 11.5,
+        "max": 62.9198,
+        "signedMean": -2.1477,
+        "lagRate": 1
+      },
+      "signedAlongMotion": {
+        "count": 2544,
+        "mean": -2.1477,
+        "meanAbs": 2.1477,
+        "lagRate": 1,
+        "leadRate": 0
+      }
+    },
+    {
+      "horizonMode": "v9_present_corrected",
+      "anchorEvent": "poll",
+      "split": "validation",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 29998,
+        "mean": 2.8437,
+        "median": 1.75,
+        "p95": 9,
+        "p99": 29.25,
+        "max": 163.2483,
+        "signedMean": -3.8319,
+        "lagRate": 0.99807
+      },
+      "signedAlongMotion": {
+        "count": 3109,
+        "mean": -3.8319,
+        "meanAbs": 3.8653,
+        "lagRate": 0.99807,
+        "leadRate": 0.00193
+      }
+    },
+    {
+      "horizonMode": "v9_present_corrected",
+      "anchorEvent": "poll",
+      "split": "validation",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 29998,
+        "mean": 1.1778,
+        "median": 0,
+        "p95": 4,
+        "p99": 17.75,
+        "max": 96.1644,
+        "signedMean": -2.0783,
+        "lagRate": 0.997072
+      },
+      "signedAlongMotion": {
+        "count": 2391,
+        "mean": -2.0783,
+        "meanAbs": 2.2269,
+        "lagRate": 0.997072,
+        "leadRate": 0.002928
+      }
+    },
+    {
+      "horizonMode": "v9_present_corrected",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "test",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 6826,
+        "mean": 0.6699,
+        "median": 0,
+        "p95": 3,
+        "p99": 7.5,
+        "max": 80.6536,
+        "signedMean": -2.2261,
+        "lagRate": 0.99854
+      },
+      "signedAlongMotion": {
+        "count": 685,
+        "mean": -2.2261,
+        "meanAbs": 2.2677,
+        "lagRate": 0.99854,
+        "leadRate": 0.00146
+      }
+    },
+    {
+      "horizonMode": "v9_present_corrected",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "test",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 14178,
+        "mean": 0.493,
+        "median": 0,
+        "p95": 2,
+        "p99": 6,
+        "max": 47.4,
+        "signedMean": -1.7963,
+        "lagRate": 1
+      },
+      "signedAlongMotion": {
+        "count": 1220,
+        "mean": -1.7963,
+        "meanAbs": 1.7963,
+        "lagRate": 1,
+        "leadRate": 0
+      }
+    },
+    {
+      "horizonMode": "v9_present_corrected",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "validation",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 7200,
+        "mean": 0.7284,
+        "median": 0,
+        "p95": 3,
+        "p99": 9.5,
+        "max": 94.3663,
+        "signedMean": -2.1869,
+        "lagRate": 0.998645
+      },
+      "signedAlongMotion": {
+        "count": 738,
+        "mean": -2.1869,
+        "meanAbs": 2.1925,
+        "lagRate": 0.998645,
+        "leadRate": 0.001355
+      }
+    },
+    {
+      "horizonMode": "v9_present_corrected",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "validation",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 14220,
+        "mean": 0.5126,
+        "median": 0,
+        "p95": 2,
+        "p99": 7,
+        "max": 96.1644,
+        "signedMean": -1.7866,
+        "lagRate": 0.99827
+      },
+      "signedAlongMotion": {
+        "count": 1156,
+        "mean": -1.7866,
+        "meanAbs": 1.9204,
+        "lagRate": 0.99827,
+        "leadRate": 0.00173
+      }
+    },
+    {
+      "horizonMode": "v9_target",
+      "anchorEvent": "poll",
+      "split": "test",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 28437,
+        "mean": 2.7205,
+        "median": 1.25,
+        "p95": 7.25,
+        "p99": 31.75,
+        "max": 127.4402,
+        "signedMean": -4.0986,
+        "lagRate": 0.99861
+      },
+      "signedAlongMotion": {
+        "count": 2877,
+        "mean": -4.0986,
+        "meanAbs": 4.1661,
+        "lagRate": 0.99861,
+        "leadRate": 0.00139
+      }
+    },
+    {
+      "horizonMode": "v9_target",
+      "anchorEvent": "poll",
+      "split": "test",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 29837,
+        "mean": 1.0852,
+        "median": 0,
+        "p95": 3.5,
+        "p99": 11.5,
+        "max": 62.9198,
+        "signedMean": -2.1477,
+        "lagRate": 1
+      },
+      "signedAlongMotion": {
+        "count": 2544,
+        "mean": -2.1477,
+        "meanAbs": 2.1477,
+        "lagRate": 1,
+        "leadRate": 0
+      }
+    },
+    {
+      "horizonMode": "v9_target",
+      "anchorEvent": "poll",
+      "split": "validation",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 29998,
+        "mean": 2.8437,
+        "median": 1.75,
+        "p95": 9,
+        "p99": 29.25,
+        "max": 163.2483,
+        "signedMean": -3.8319,
+        "lagRate": 0.99807
+      },
+      "signedAlongMotion": {
+        "count": 3109,
+        "mean": -3.8319,
+        "meanAbs": 3.8653,
+        "lagRate": 0.99807,
+        "leadRate": 0.00193
+      }
+    },
+    {
+      "horizonMode": "v9_target",
+      "anchorEvent": "poll",
+      "split": "validation",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 29998,
+        "mean": 1.1778,
+        "median": 0,
+        "p95": 4,
+        "p99": 17.75,
+        "max": 96.1644,
+        "signedMean": -2.0783,
+        "lagRate": 0.997072
+      },
+      "signedAlongMotion": {
+        "count": 2391,
+        "mean": -2.0783,
+        "meanAbs": 2.2269,
+        "lagRate": 0.997072,
+        "leadRate": 0.002928
+      }
+    },
+    {
+      "horizonMode": "v9_target",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "test",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 6826,
+        "mean": 0.6699,
+        "median": 0,
+        "p95": 3,
+        "p99": 7.5,
+        "max": 80.6536,
+        "signedMean": -2.2261,
+        "lagRate": 0.99854
+      },
+      "signedAlongMotion": {
+        "count": 685,
+        "mean": -2.2261,
+        "meanAbs": 2.2677,
+        "lagRate": 0.99854,
+        "leadRate": 0.00146
+      }
+    },
+    {
+      "horizonMode": "v9_target",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "test",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 14178,
+        "mean": 0.493,
+        "median": 0,
+        "p95": 2,
+        "p99": 6,
+        "max": 47.4,
+        "signedMean": -1.7963,
+        "lagRate": 1
+      },
+      "signedAlongMotion": {
+        "count": 1220,
+        "mean": -1.7963,
+        "meanAbs": 1.7963,
+        "lagRate": 1,
+        "leadRate": 0
+      }
+    },
+    {
+      "horizonMode": "v9_target",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "validation",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 7200,
+        "mean": 0.7284,
+        "median": 0,
+        "p95": 3,
+        "p99": 9.5,
+        "max": 94.3663,
+        "signedMean": -2.1869,
+        "lagRate": 0.998645
+      },
+      "signedAlongMotion": {
+        "count": 738,
+        "mean": -2.1869,
+        "meanAbs": 2.1925,
+        "lagRate": 0.998645,
+        "leadRate": 0.001355
+      }
+    },
+    {
+      "horizonMode": "v9_target",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "validation",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 14220,
+        "mean": 0.5126,
+        "median": 0,
+        "p95": 2,
+        "p99": 7,
+        "max": 96.1644,
+        "signedMean": -1.7866,
+        "lagRate": 0.99827
+      },
+      "signedAlongMotion": {
+        "count": 1156,
+        "mean": -1.7866,
+        "meanAbs": 1.9204,
+        "lagRate": 0.99827,
+        "leadRate": 0.00173
+      }
+    }
+  ],
+  "selectedPredictionCandidateLagAudit": [
+    {
+      "horizonMode": "fixed_16p67ms",
+      "anchorEvent": "poll",
+      "split": "test",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 28437,
+        "mean": 1.8689,
+        "median": 1,
+        "p95": 4.5,
+        "p99": 22.5,
+        "max": 117.2843,
+        "signedMean": -0.8496,
+        "lagRate": 0.579327
+      },
+      "signedAlongMotion": {
+        "count": 2496,
+        "mean": -0.8496,
+        "meanAbs": 2.0697,
+        "lagRate": 0.579327,
+        "leadRate": 0.420673
+      }
+    },
+    {
+      "horizonMode": "fixed_16p67ms",
+      "anchorEvent": "poll",
+      "split": "test",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 29837,
+        "mean": 1.3348,
+        "median": 1,
+        "p95": 3,
+        "p99": 10,
+        "max": 66.4147,
+        "signedMean": -0.8461,
+        "lagRate": 0.587408
+      },
+      "signedAlongMotion": {
+        "count": 2843,
+        "mean": -0.8461,
+        "meanAbs": 1.6057,
+        "lagRate": 0.587408,
+        "leadRate": 0.412592
+      }
+    },
+    {
+      "horizonMode": "fixed_16p67ms",
+      "anchorEvent": "poll",
+      "split": "validation",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 29998,
+        "mean": 2.0006,
+        "median": 1,
+        "p95": 6,
+        "p99": 20.25,
+        "max": 70.3681,
+        "signedMean": -0.4945,
+        "lagRate": 0.493576
+      },
+      "signedAlongMotion": {
+        "count": 2257,
+        "mean": -0.4945,
+        "meanAbs": 1.9065,
+        "lagRate": 0.493576,
+        "leadRate": 0.506424
+      }
+    },
+    {
+      "horizonMode": "fixed_16p67ms",
+      "anchorEvent": "poll",
+      "split": "validation",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 29998,
+        "mean": 1.4504,
+        "median": 0.75,
+        "p95": 3.5,
+        "p99": 16,
+        "max": 85.6456,
+        "signedMean": -1.0624,
+        "lagRate": 0.604977
+      },
+      "signedAlongMotion": {
+        "count": 2572,
+        "mean": -1.0624,
+        "meanAbs": 2.0403,
+        "lagRate": 0.604977,
+        "leadRate": 0.395023
+      }
+    },
+    {
+      "horizonMode": "fixed_16p67ms",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "test",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 6826,
+        "mean": 1.8028,
+        "median": 1,
+        "p95": 4.5,
+        "p99": 21.25,
+        "max": 116.7175,
+        "signedMean": -0.6586,
+        "lagRate": 0.513624
+      },
+      "signedAlongMotion": {
+        "count": 734,
+        "mean": -0.6586,
+        "meanAbs": 2.2012,
+        "lagRate": 0.513624,
+        "leadRate": 0.486376
+      }
+    },
+    {
+      "horizonMode": "fixed_16p67ms",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "test",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 14178,
+        "mean": 1.318,
+        "median": 1,
+        "p95": 2.75,
+        "p99": 10.25,
+        "max": 69.8184,
+        "signedMean": -0.7095,
+        "lagRate": 0.521705
+      },
+      "signedAlongMotion": {
+        "count": 1290,
+        "mean": -0.7095,
+        "meanAbs": 1.6973,
+        "lagRate": 0.521705,
+        "leadRate": 0.478295
+      }
+    },
+    {
+      "horizonMode": "fixed_16p67ms",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "validation",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 7200,
+        "mean": 1.8929,
+        "median": 1,
+        "p95": 6,
+        "p99": 18.75,
+        "max": 70.3677,
+        "signedMean": -0.3628,
+        "lagRate": 0.468031
+      },
+      "signedAlongMotion": {
+        "count": 782,
+        "mean": -0.3628,
+        "meanAbs": 1.8646,
+        "lagRate": 0.468031,
+        "leadRate": 0.531969
+      }
+    },
+    {
+      "horizonMode": "fixed_16p67ms",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "validation",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 14220,
+        "mean": 1.4196,
+        "median": 0.75,
+        "p95": 3.5,
+        "p99": 16.25,
+        "max": 83.972,
+        "signedMean": -1.109,
+        "lagRate": 0.591398
+      },
+      "signedAlongMotion": {
+        "count": 1209,
+        "mean": -1.109,
+        "meanAbs": 2.1017,
+        "lagRate": 0.591398,
+        "leadRate": 0.408602
+      }
+    },
+    {
+      "horizonMode": "fixed_8ms",
+      "anchorEvent": "poll",
+      "split": "test",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 28437,
+        "mean": 1.5338,
+        "median": 0.75,
+        "p95": 4.5,
+        "p99": 14.75,
+        "max": 118.386,
+        "signedMean": -0.1848,
+        "lagRate": 0.370811
+      },
+      "signedAlongMotion": {
+        "count": 5132,
+        "mean": -0.1848,
+        "meanAbs": 1.574,
+        "lagRate": 0.370811,
+        "leadRate": 0.629189
+      }
+    },
+    {
+      "horizonMode": "fixed_8ms",
+      "anchorEvent": "poll",
+      "split": "test",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 29837,
+        "mean": 1.1518,
+        "median": 0.75,
+        "p95": 3,
+        "p99": 9,
+        "max": 47.1755,
+        "signedMean": -0.9358,
+        "lagRate": 0.797785
+      },
+      "signedAlongMotion": {
+        "count": 2438,
+        "mean": -0.9358,
+        "meanAbs": 1.316,
+        "lagRate": 0.797785,
+        "leadRate": 0.202215
+      }
+    },
+    {
+      "horizonMode": "fixed_8ms",
+      "anchorEvent": "poll",
+      "split": "validation",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 29998,
+        "mean": 1.5616,
+        "median": 0.75,
+        "p95": 5,
+        "p99": 12.5,
+        "max": 76.9915,
+        "signedMean": -0.0135,
+        "lagRate": 0.35637
+      },
+      "signedAlongMotion": {
+        "count": 6743,
+        "mean": -0.0135,
+        "meanAbs": 1.3941,
+        "lagRate": 0.35637,
+        "leadRate": 0.64363
+      }
+    },
+    {
+      "horizonMode": "fixed_8ms",
+      "anchorEvent": "poll",
+      "split": "validation",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 29998,
+        "mean": 1.288,
+        "median": 0.5,
+        "p95": 3.5,
+        "p99": 14.25,
+        "max": 91.1752,
+        "signedMean": -1.364,
+        "lagRate": 0.741216
+      },
+      "signedAlongMotion": {
+        "count": 2106,
+        "mean": -1.364,
+        "meanAbs": 2.0688,
+        "lagRate": 0.741216,
+        "leadRate": 0.258784
+      }
+    },
+    {
+      "horizonMode": "fixed_8ms",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "test",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 6826,
+        "mean": 1.4676,
+        "median": 0.75,
+        "p95": 4.25,
+        "p99": 14,
+        "max": 118.2727,
+        "signedMean": -0.7698,
+        "lagRate": 0.60587
+      },
+      "signedAlongMotion": {
+        "count": 477,
+        "mean": -0.7698,
+        "meanAbs": 1.8264,
+        "lagRate": 0.60587,
+        "leadRate": 0.39413
+      }
+    },
+    {
+      "horizonMode": "fixed_8ms",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "test",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 14178,
+        "mean": 1.0401,
+        "median": 0.5,
+        "p95": 2.75,
+        "p99": 8.25,
+        "max": 40.1075,
+        "signedMean": -0.5511,
+        "lagRate": 0.63135
+      },
+      "signedAlongMotion": {
+        "count": 1378,
+        "mean": -0.5511,
+        "meanAbs": 1.153,
+        "lagRate": 0.63135,
+        "leadRate": 0.36865
+      }
+    },
+    {
+      "horizonMode": "fixed_8ms",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "validation",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 7200,
+        "mean": 1.5002,
+        "median": 0.75,
+        "p95": 4.75,
+        "p99": 11.75,
+        "max": 79.1744,
+        "signedMean": -0.7745,
+        "lagRate": 0.678808
+      },
+      "signedAlongMotion": {
+        "count": 604,
+        "mean": -0.7745,
+        "meanAbs": 1.3564,
+        "lagRate": 0.678808,
+        "leadRate": 0.321192
+      }
+    },
+    {
+      "horizonMode": "fixed_8ms",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "validation",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 14220,
+        "mean": 1.0891,
+        "median": 0.5,
+        "p95": 3,
+        "p99": 11.5,
+        "max": 90.5063,
+        "signedMean": -0.7264,
+        "lagRate": 0.668775
+      },
+      "signedAlongMotion": {
+        "count": 1265,
+        "mean": -0.7264,
+        "meanAbs": 1.4699,
+        "lagRate": 0.668775,
+        "leadRate": 0.331225
+      }
+    },
+    {
+      "horizonMode": "v9_present_corrected",
+      "anchorEvent": "poll",
+      "split": "test",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 28437,
+        "mean": 1.7264,
+        "median": 0.75,
+        "p95": 4.5,
+        "p99": 21.75,
+        "max": 103.5613,
+        "signedMean": -1.3541,
+        "lagRate": 0.644074
+      },
+      "signedAlongMotion": {
+        "count": 2877,
+        "mean": -1.3541,
+        "meanAbs": 2.4486,
+        "lagRate": 0.644074,
+        "leadRate": 0.355926
+      }
+    },
+    {
+      "horizonMode": "v9_present_corrected",
+      "anchorEvent": "poll",
+      "split": "test",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 29837,
+        "mean": 1.0072,
+        "median": 0.5,
+        "p95": 2.75,
+        "p99": 7.75,
+        "max": 55.2642,
+        "signedMean": -1.0947,
+        "lagRate": 0.763758
+      },
+      "signedAlongMotion": {
+        "count": 2544,
+        "mean": -1.0947,
+        "meanAbs": 1.4896,
+        "lagRate": 0.763758,
+        "leadRate": 0.236242
+      }
+    },
+    {
+      "horizonMode": "v9_present_corrected",
+      "anchorEvent": "poll",
+      "split": "validation",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 29998,
+        "mean": 1.7686,
+        "median": 0.75,
+        "p95": 5.25,
+        "p99": 19,
+        "max": 139.2483,
+        "signedMean": -1.203,
+        "lagRate": 0.64651
+      },
+      "signedAlongMotion": {
+        "count": 3109,
+        "mean": -1.203,
+        "meanAbs": 2.1484,
+        "lagRate": 0.64651,
+        "leadRate": 0.35349
+      }
+    },
+    {
+      "horizonMode": "v9_present_corrected",
+      "anchorEvent": "poll",
+      "split": "validation",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 29998,
+        "mean": 1.1153,
+        "median": 0.5,
+        "p95": 3,
+        "p99": 13,
+        "max": 92.421,
+        "signedMean": -1.1663,
+        "lagRate": 0.762024
+      },
+      "signedAlongMotion": {
+        "count": 2391,
+        "mean": -1.1663,
+        "meanAbs": 1.7927,
+        "lagRate": 0.762024,
+        "leadRate": 0.237976
+      }
+    },
+    {
+      "horizonMode": "v9_present_corrected",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "test",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 6826,
+        "mean": 0.9472,
+        "median": 0.25,
+        "p95": 3.25,
+        "p99": 8,
+        "max": 71.6355,
+        "signedMean": -1.4982,
+        "lagRate": 0.79562
+      },
+      "signedAlongMotion": {
+        "count": 685,
+        "mean": -1.4982,
+        "meanAbs": 1.8246,
+        "lagRate": 0.79562,
+        "leadRate": 0.20438
+      }
+    },
+    {
+      "horizonMode": "v9_present_corrected",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "test",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 14178,
+        "mean": 0.6606,
+        "median": 0.25,
+        "p95": 2,
+        "p99": 5.25,
+        "max": 41.3615,
+        "signedMean": -1.2983,
+        "lagRate": 0.853279
+      },
+      "signedAlongMotion": {
+        "count": 1220,
+        "mean": -1.2983,
+        "meanAbs": 1.426,
+        "lagRate": 0.853279,
+        "leadRate": 0.146721
+      }
+    },
+    {
+      "horizonMode": "v9_present_corrected",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "validation",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 7200,
+        "mean": 0.986,
+        "median": 0.25,
+        "p95": 3.25,
+        "p99": 8.25,
+        "max": 89.4454,
+        "signedMean": -1.5312,
+        "lagRate": 0.780488
+      },
+      "signedAlongMotion": {
+        "count": 738,
+        "mean": -1.5312,
+        "meanAbs": 1.7611,
+        "lagRate": 0.780488,
+        "leadRate": 0.219512
+      }
+    },
+    {
+      "horizonMode": "v9_present_corrected",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "validation",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 14220,
+        "mean": 0.6901,
+        "median": 0,
+        "p95": 2,
+        "p99": 7,
+        "max": 93.64,
+        "signedMean": -1.302,
+        "lagRate": 0.844291
+      },
+      "signedAlongMotion": {
+        "count": 1156,
+        "mean": -1.302,
+        "meanAbs": 1.6341,
+        "lagRate": 0.844291,
+        "leadRate": 0.155709
+      }
+    },
+    {
+      "horizonMode": "v9_target",
+      "anchorEvent": "poll",
+      "split": "test",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 28437,
+        "mean": 1.7264,
+        "median": 0.75,
+        "p95": 4.5,
+        "p99": 21.75,
+        "max": 103.5613,
+        "signedMean": -1.3541,
+        "lagRate": 0.644074
+      },
+      "signedAlongMotion": {
+        "count": 2877,
+        "mean": -1.3541,
+        "meanAbs": 2.4486,
+        "lagRate": 0.644074,
+        "leadRate": 0.355926
+      }
+    },
+    {
+      "horizonMode": "v9_target",
+      "anchorEvent": "poll",
+      "split": "test",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 29837,
+        "mean": 1.0072,
+        "median": 0.5,
+        "p95": 2.75,
+        "p99": 7.75,
+        "max": 55.2642,
+        "signedMean": -1.0947,
+        "lagRate": 0.763758
+      },
+      "signedAlongMotion": {
+        "count": 2544,
+        "mean": -1.0947,
+        "meanAbs": 1.4896,
+        "lagRate": 0.763758,
+        "leadRate": 0.236242
+      }
+    },
+    {
+      "horizonMode": "v9_target",
+      "anchorEvent": "poll",
+      "split": "validation",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 29998,
+        "mean": 1.7686,
+        "median": 0.75,
+        "p95": 5.25,
+        "p99": 19,
+        "max": 139.2483,
+        "signedMean": -1.203,
+        "lagRate": 0.64651
+      },
+      "signedAlongMotion": {
+        "count": 3109,
+        "mean": -1.203,
+        "meanAbs": 2.1484,
+        "lagRate": 0.64651,
+        "leadRate": 0.35349
+      }
+    },
+    {
+      "horizonMode": "v9_target",
+      "anchorEvent": "poll",
+      "split": "validation",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 29998,
+        "mean": 1.1153,
+        "median": 0.5,
+        "p95": 3,
+        "p99": 13,
+        "max": 92.421,
+        "signedMean": -1.1663,
+        "lagRate": 0.762024
+      },
+      "signedAlongMotion": {
+        "count": 2391,
+        "mean": -1.1663,
+        "meanAbs": 1.7927,
+        "lagRate": 0.762024,
+        "leadRate": 0.237976
+      }
+    },
+    {
+      "horizonMode": "v9_target",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "test",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 6826,
+        "mean": 0.9472,
+        "median": 0.25,
+        "p95": 3.25,
+        "p99": 8,
+        "max": 71.6355,
+        "signedMean": -1.4982,
+        "lagRate": 0.79562
+      },
+      "signedAlongMotion": {
+        "count": 685,
+        "mean": -1.4982,
+        "meanAbs": 1.8246,
+        "lagRate": 0.79562,
+        "leadRate": 0.20438
+      }
+    },
+    {
+      "horizonMode": "v9_target",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "test",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 14178,
+        "mean": 0.6606,
+        "median": 0.25,
+        "p95": 2,
+        "p99": 5.25,
+        "max": 41.3615,
+        "signedMean": -1.2983,
+        "lagRate": 0.853279
+      },
+      "signedAlongMotion": {
+        "count": 1220,
+        "mean": -1.2983,
+        "meanAbs": 1.426,
+        "lagRate": 0.853279,
+        "leadRate": 0.146721
+      }
+    },
+    {
+      "horizonMode": "v9_target",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "validation",
+      "refreshBucket": "30Hz",
+      "error": {
+        "count": 7200,
+        "mean": 0.986,
+        "median": 0.25,
+        "p95": 3.25,
+        "p99": 8.25,
+        "max": 89.4454,
+        "signedMean": -1.5312,
+        "lagRate": 0.780488
+      },
+      "signedAlongMotion": {
+        "count": 738,
+        "mean": -1.5312,
+        "meanAbs": 1.7611,
+        "lagRate": 0.780488,
+        "leadRate": 0.219512
+      }
+    },
+    {
+      "horizonMode": "v9_target",
+      "anchorEvent": "runtimeSchedulerPoll",
+      "split": "validation",
+      "refreshBucket": "60Hz",
+      "error": {
+        "count": 14220,
+        "mean": 0.6901,
+        "median": 0,
+        "p95": 2,
+        "p99": 7,
+        "max": 93.64,
+        "signedMean": -1.302,
+        "lagRate": 0.844291
+      },
+      "signedAlongMotion": {
+        "count": 1156,
+        "mean": -1.302,
+        "meanAbs": 1.6341,
+        "lagRate": 0.844291,
+        "leadRate": 0.155709
+      }
+    }
+  ],
+  "horizonModeComparison": [
+    {
+      "horizonMode": "fixed_16p67ms",
+      "split": "test",
+      "error": {
+        "count": 21004,
+        "mean": 2.0163,
+        "median": 1,
+        "p95": 6,
+        "p99": 21,
+        "max": 119.708,
+        "signedMean": -3.312,
+        "lagRate": 0.998024
+      },
+      "signedAlongMotion": {
+        "count": 2024,
+        "mean": -3.312,
+        "meanAbs": 3.3512,
+        "lagRate": 0.998024,
+        "leadRate": 0.001976
+      }
+    },
+    {
+      "horizonMode": "fixed_8ms",
+      "split": "test",
+      "error": {
+        "count": 21004,
+        "mean": 0.979,
+        "median": 0,
+        "p95": 3.5,
+        "p99": 11,
+        "max": 119.708,
+        "signedMean": -1.8968,
+        "lagRate": 0.999461
+      },
+      "signedAlongMotion": {
+        "count": 1855,
+        "mean": -1.8968,
+        "meanAbs": 1.9116,
+        "lagRate": 0.999461,
+        "leadRate": 0.000539
+      }
+    },
+    {
+      "horizonMode": "v9_present_corrected",
+      "split": "test",
+      "error": {
+        "count": 21004,
+        "mean": 0.5505,
+        "median": 0,
+        "p95": 2.25,
+        "p99": 6.25,
+        "max": 80.6536,
+        "signedMean": -1.9509,
+        "lagRate": 0.999475
+      },
+      "signedAlongMotion": {
+        "count": 1905,
+        "mean": -1.9509,
+        "meanAbs": 1.9658,
+        "lagRate": 0.999475,
+        "leadRate": 0.000525
+      }
+    },
+    {
+      "horizonMode": "v9_target",
+      "split": "test",
+      "error": {
+        "count": 21004,
+        "mean": 0.5505,
+        "median": 0,
+        "p95": 2.25,
+        "p99": 6.25,
+        "max": 80.6536,
+        "signedMean": -1.9509,
+        "lagRate": 0.999475
+      },
+      "signedAlongMotion": {
+        "count": 1905,
+        "mean": -1.9509,
+        "meanAbs": 1.9658,
+        "lagRate": 0.999475,
+        "leadRate": 0.000525
+      }
+    },
+    {
+      "horizonMode": "fixed_16p67ms",
+      "split": "train",
+      "error": {
+        "count": 93912,
+        "mean": 1.9859,
+        "median": 1,
+        "p95": 6.25,
+        "p99": 21.5,
+        "max": 159.4522,
+        "signedMean": -3.2845,
+        "lagRate": 0.999526
+      },
+      "signedAlongMotion": {
+        "count": 8435,
+        "mean": -3.2845,
+        "meanAbs": 3.29,
+        "lagRate": 0.999526,
+        "leadRate": 0.000474
+      }
+    },
+    {
+      "horizonMode": "fixed_8ms",
+      "split": "train",
+      "error": {
+        "count": 93912,
+        "mean": 1,
+        "median": 0,
+        "p95": 4,
+        "p99": 12.75,
+        "max": 159.4522,
+        "signedMean": -2.1326,
+        "lagRate": 0.99908
+      },
+      "signedAlongMotion": {
+        "count": 7609,
+        "mean": -2.1326,
+        "meanAbs": 2.1484,
+        "lagRate": 0.99908,
+        "leadRate": 0.00092
+      }
+    },
+    {
+      "horizonMode": "v9_present_corrected",
+      "split": "train",
+      "error": {
+        "count": 93913,
+        "mean": 0.5655,
+        "median": 0,
+        "p95": 2.5,
+        "p99": 7.25,
+        "max": 159.4522,
+        "signedMean": -2.1739,
+        "lagRate": 0.999474
+      },
+      "signedAlongMotion": {
+        "count": 7609,
+        "mean": -2.1739,
+        "meanAbs": 2.1784,
+        "lagRate": 0.999474,
+        "leadRate": 0.000526
+      }
+    },
+    {
+      "horizonMode": "v9_target",
+      "split": "train",
+      "error": {
+        "count": 93913,
+        "mean": 0.5655,
+        "median": 0,
+        "p95": 2.5,
+        "p99": 7.25,
+        "max": 159.4522,
+        "signedMean": -2.1739,
+        "lagRate": 0.999474
+      },
+      "signedAlongMotion": {
+        "count": 7609,
+        "mean": -2.1739,
+        "meanAbs": 2.1784,
+        "lagRate": 0.999474,
+        "leadRate": 0.000526
+      }
+    },
+    {
+      "horizonMode": "fixed_16p67ms",
+      "split": "validation",
+      "error": {
+        "count": 21420,
+        "mean": 2.0005,
+        "median": 1,
+        "p95": 6.25,
+        "p99": 22.5,
+        "max": 103.4698,
+        "signedMean": -3.3006,
+        "lagRate": 0.998995
+      },
+      "signedAlongMotion": {
+        "count": 1991,
+        "mean": -3.3006,
+        "meanAbs": 3.3092,
+        "lagRate": 0.998995,
+        "leadRate": 0.001005
+      }
+    },
+    {
+      "horizonMode": "fixed_8ms",
+      "split": "validation",
+      "error": {
+        "count": 21420,
+        "mean": 1.0094,
+        "median": 0,
+        "p95": 3.5,
+        "p99": 14,
+        "max": 103.4698,
+        "signedMean": -1.9228,
+        "lagRate": 0.999465
+      },
+      "signedAlongMotion": {
+        "count": 1869,
+        "mean": -1.9228,
+        "meanAbs": 1.999,
+        "lagRate": 0.999465,
+        "leadRate": 0.000535
+      }
+    },
+    {
+      "horizonMode": "v9_present_corrected",
+      "split": "validation",
+      "error": {
+        "count": 21420,
+        "mean": 0.5851,
+        "median": 0,
+        "p95": 2,
+        "p99": 8.25,
+        "max": 96.1644,
+        "signedMean": -1.9426,
+        "lagRate": 0.998416
+      },
+      "signedAlongMotion": {
+        "count": 1894,
+        "mean": -1.9426,
+        "meanAbs": 2.0264,
+        "lagRate": 0.998416,
+        "leadRate": 0.001584
+      }
+    },
+    {
+      "horizonMode": "v9_target",
+      "split": "validation",
+      "error": {
+        "count": 21420,
+        "mean": 0.5851,
+        "median": 0,
+        "p95": 2,
+        "p99": 8.25,
+        "max": 96.1644,
+        "signedMean": -1.9426,
+        "lagRate": 0.998416
+      },
+      "signedAlongMotion": {
+        "count": 1894,
+        "mean": -1.9426,
+        "meanAbs": 2.0264,
+        "lagRate": 0.998416,
+        "leadRate": 0.001584
+      }
+    }
+  ],
+  "predictionCandidateHorizonModeComparison": [
+    {
+      "horizonMode": "fixed_16p67ms",
+      "split": "test",
+      "error": {
+        "count": 21004,
+        "mean": 1.4756,
+        "median": 1,
+        "p95": 3.5,
+        "p99": 14,
+        "max": 116.7175,
+        "signedMean": -0.6911,
+        "lagRate": 0.518775
+      },
+      "signedAlongMotion": {
+        "count": 2024,
+        "mean": -0.6911,
+        "meanAbs": 1.88,
+        "lagRate": 0.518775,
+        "leadRate": 0.481225
+      }
+    },
+    {
+      "horizonMode": "fixed_8ms",
+      "split": "test",
+      "error": {
+        "count": 21004,
+        "mean": 1.179,
+        "median": 0.5,
+        "p95": 3.25,
+        "p99": 10.5,
+        "max": 118.2727,
+        "signedMean": -0.6074,
+        "lagRate": 0.624798
+      },
+      "signedAlongMotion": {
+        "count": 1855,
+        "mean": -0.6074,
+        "meanAbs": 1.3262,
+        "lagRate": 0.624798,
+        "leadRate": 0.375202
+      }
+    },
+    {
+      "horizonMode": "v9_present_corrected",
+      "split": "test",
+      "error": {
+        "count": 21004,
+        "mean": 0.7537,
+        "median": 0.25,
+        "p95": 2.5,
+        "p99": 6.5,
+        "max": 71.6355,
+        "signedMean": -1.3702,
+        "lagRate": 0.832546
+      },
+      "signedAlongMotion": {
+        "count": 1905,
+        "mean": -1.3702,
+        "meanAbs": 1.5693,
+        "lagRate": 0.832546,
+        "leadRate": 0.167454
+      }
+    },
+    {
+      "horizonMode": "v9_target",
+      "split": "test",
+      "error": {
+        "count": 21004,
+        "mean": 0.7537,
+        "median": 0.25,
+        "p95": 2.5,
+        "p99": 6.5,
+        "max": 71.6355,
+        "signedMean": -1.3702,
+        "lagRate": 0.832546
+      },
+      "signedAlongMotion": {
+        "count": 1905,
+        "mean": -1.3702,
+        "meanAbs": 1.5693,
+        "lagRate": 0.832546,
+        "leadRate": 0.167454
+      }
+    },
+    {
+      "horizonMode": "fixed_16p67ms",
+      "split": "train",
+      "error": {
+        "count": 93912,
+        "mean": 1.5404,
+        "median": 0.75,
+        "p95": 4,
+        "p99": 15.75,
+        "max": 141.7159,
+        "signedMean": -0.594,
+        "lagRate": 0.545821
+      },
+      "signedAlongMotion": {
+        "count": 8435,
+        "mean": -0.594,
+        "meanAbs": 1.8944,
+        "lagRate": 0.545821,
+        "leadRate": 0.454179
+      }
+    },
+    {
+      "horizonMode": "fixed_8ms",
+      "split": "train",
+      "error": {
+        "count": 93912,
+        "mean": 1.2055,
+        "median": 0.5,
+        "p95": 3.5,
+        "p99": 11.25,
+        "max": 147.7202,
+        "signedMean": -0.852,
+        "lagRate": 0.656065
+      },
+      "signedAlongMotion": {
+        "count": 7609,
+        "mean": -0.852,
+        "meanAbs": 1.4908,
+        "lagRate": 0.656065,
+        "leadRate": 0.343935
+      }
+    },
+    {
+      "horizonMode": "v9_present_corrected",
+      "split": "train",
+      "error": {
+        "count": 93913,
+        "mean": 0.7633,
+        "median": 0.25,
+        "p95": 2.5,
+        "p99": 7,
+        "max": 153.82,
+        "signedMean": -1.5578,
+        "lagRate": 0.85596
+      },
+      "signedAlongMotion": {
+        "count": 7609,
+        "mean": -1.5578,
+        "meanAbs": 1.7636,
+        "lagRate": 0.85596,
+        "leadRate": 0.14404
+      }
+    },
+    {
+      "horizonMode": "v9_target",
+      "split": "train",
+      "error": {
+        "count": 93913,
+        "mean": 0.7633,
+        "median": 0.25,
+        "p95": 2.5,
+        "p99": 7,
+        "max": 153.82,
+        "signedMean": -1.5578,
+        "lagRate": 0.85596
+      },
+      "signedAlongMotion": {
+        "count": 7609,
+        "mean": -1.5578,
+        "meanAbs": 1.7636,
+        "lagRate": 0.85596,
+        "leadRate": 0.14404
+      }
+    },
+    {
+      "horizonMode": "fixed_16p67ms",
+      "split": "validation",
+      "error": {
+        "count": 21420,
+        "mean": 1.5787,
+        "median": 0.75,
+        "p95": 4.75,
+        "p99": 17,
+        "max": 83.972,
+        "signedMean": -0.8159,
+        "lagRate": 0.542943
+      },
+      "signedAlongMotion": {
+        "count": 1991,
+        "mean": -0.8159,
+        "meanAbs": 2.0086,
+        "lagRate": 0.542943,
+        "leadRate": 0.457057
+      }
+    },
+    {
+      "horizonMode": "fixed_8ms",
+      "split": "validation",
+      "error": {
+        "count": 21420,
+        "mean": 1.2273,
+        "median": 0.5,
+        "p95": 3.5,
+        "p99": 11.5,
+        "max": 90.5063,
+        "signedMean": -0.7419,
+        "lagRate": 0.672017
+      },
+      "signedAlongMotion": {
+        "count": 1869,
+        "mean": -0.7419,
+        "meanAbs": 1.4332,
+        "lagRate": 0.672017,
+        "leadRate": 0.327983
+      }
+    },
+    {
+      "horizonMode": "v9_present_corrected",
+      "split": "validation",
+      "error": {
+        "count": 21420,
+        "mean": 0.7896,
+        "median": 0.25,
+        "p95": 2.5,
+        "p99": 7.75,
+        "max": 93.64,
+        "signedMean": -1.3913,
+        "lagRate": 0.81943
+      },
+      "signedAlongMotion": {
+        "count": 1894,
+        "mean": -1.3913,
+        "meanAbs": 1.6836,
+        "lagRate": 0.81943,
+        "leadRate": 0.18057
+      }
+    },
+    {
+      "horizonMode": "v9_target",
+      "split": "validation",
+      "error": {
+        "count": 21420,
+        "mean": 0.7896,
+        "median": 0.25,
+        "p95": 2.5,
+        "p99": 7.75,
+        "max": 93.64,
+        "signedMean": -1.3913,
+        "lagRate": 0.81943
+      },
+      "signedAlongMotion": {
+        "count": 1894,
+        "mean": -1.3913,
+        "meanAbs": 1.6836,
+        "lagRate": 0.81943,
+        "leadRate": 0.18057
+      }
+    }
+  ],
+  "conclusion": {
+    "runtimeSchedulerTargetHorizonP50ByRefreshMs": {
+      "30Hz": 3.87,
+      "60Hz": 3.9112
+    },
+    "runtimeSchedulerSampleRecordedToTargetP50Us": {
+      "30Hz": -3870,
+      "60Hz": -3910
+    },
+    "selectedValidationRuntimeSchedulerP95": {
+      "fixed16p67": 6.25,
+      "v9Target": 2,
+      "deltaTargetMinusFixed": -4.25
+    },
+    "qualitative": [
+      "Runtime scheduler anchors are recorded shortly before the resolved DWM target; the target-derived horizon is therefore much shorter than a full refresh interval.",
+      "A fixed 16.67 ms horizon is not refresh-aware and is expected to over-project for scheduler anchors that are already near vblank.",
+      "Raw presentReferenceTicks often describes the current or previous DWM vblank; it must be advanced to a future vblank before use as a prediction target."
+    ]
+  }
+}

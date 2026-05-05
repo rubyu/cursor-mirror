@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "cursor-mirror-calibrator-verification-lab-data/1",
+  "createdUtc": "2026-05-05T00:16:43.7014952Z",
+  "package": "calibrator-verification-v22.zip",
+  "sampleRateHz": 240,
+  "totalDurationMilliseconds": 50000.0,
+  "bounds": {
+    "x": 256,
+    "y": 259,
+    "width": 2048,
+    "height": 922,
+    "sourceScreen": {
+      "x": 0,
+      "y": 0,
+      "width": 2560,
+      "height": 1440
+    }
+  },
+  "scenarios": [
+    {
+      "index": 0,
+      "name": "slow-short-hold-floor",
+      "durationMilliseconds": 5000.0,
+      "controlPointCount": 3,
+      "speedPointCount": 2,
+      "holdSegmentCount": 1
+    },
+    {
+      "index": 1,
+      "name": "constant-medium-horizontal",
+      "durationMilliseconds": 5000.0,
+      "controlPointCount": 4,
+      "speedPointCount": 2,
+      "holdSegmentCount": 0
+    },
+    {
+      "index": 2,
+      "name": "fast-horizontal-late-stop",
+      "durationMilliseconds": 5000.0,
+      "controlPointCount": 4,
+      "speedPointCount": 3,
+      "holdSegmentCount": 1
+    },
+    {
+      "index": 3,
+      "name": "reverse-s-curve",
+      "durationMilliseconds": 5000.0,
+      "controlPointCount": 4,
+      "speedPointCount": 3,
+      "holdSegmentCount": 0
+    },
+    {
+      "index": 4,
+      "name": "fast-diagonal",
+      "durationMilliseconds": 5000.0,
+      "controlPointCount": 4,
+      "speedPointCount": 2,
+      "holdSegmentCount": 0
+    },
+    {
+      "index": 5,
+      "name": "low-speed-curve",
+      "durationMilliseconds": 5000.0,
+      "controlPointCount": 6,
+      "speedPointCount": 3,
+      "holdSegmentCount": 0
+    },
+    {
+      "index": 6,
+      "name": "repeated-stop-resume",
+      "durationMilliseconds": 5000.0,
+      "controlPointCount": 5,
+      "speedPointCount": 3,
+      "holdSegmentCount": 3
+    },
+    {
+      "index": 7,
+      "name": "abrupt-stop-near-end",
+      "durationMilliseconds": 5000.0,
+      "controlPointCount": 4,
+      "speedPointCount": 3,
+      "holdSegmentCount": 1
+    },
+    {
+      "index": 8,
+      "name": "micro-adjustments",
+      "durationMilliseconds": 5000.0,
+      "controlPointCount": 6,
+      "speedPointCount": 3,
+      "holdSegmentCount": 2
+    },
+    {
+      "index": 9,
+      "name": "mixed-speed-wide-sweep",
+      "durationMilliseconds": 5000.0,
+      "controlPointCount": 5,
+      "speedPointCount": 4,
+      "holdSegmentCount": 1
+    }
+  ]
+}

@@ -62,9 +62,9 @@ Recommended extended window styles:
 - The enter and exit transitions MUST use linear easing.
 - Overlay position updates MUST remain immediate; easing applies only to opacity.
 - Normal opacity MUST be `100%`.
-- The default moving opacity SHOULD be `70%`.
-- The default fade duration SHOULD be `80ms`.
-- The default idle delay SHOULD be `120ms`.
+- The default moving opacity SHOULD be `20%`.
+- The default fade duration SHOULD be `100ms`.
+- The default idle delay SHOULD be `100ms`.
 - Moving opacity MUST be configurable within `1%` to `100%`.
 - Fade duration MUST be configurable within `0ms` to `300ms`.
 - Idle delay MUST be configurable within `50ms` to `500ms`.
@@ -78,20 +78,24 @@ Recommended extended window styles:
 - Idle fade mode MUST be independent from movement translucency mode.
 - After no pointer movement has been observed for the configured idle fade delay, the overlay MUST transition from its current opacity to the configured idle opacity.
 - The idle fade transition MUST use the same linear easing behavior as movement translucency transitions.
-- The default idle fade delay SHOULD be `3s`.
-- The default idle opacity SHOULD be `0%`.
+- Idle fade MUST have separate controls for idle opacity, fade duration, and idle delay, matching the shape of movement translucency controls.
+- The default idle fade duration SHOULD be `300ms`.
+- The default idle fade delay SHOULD be `3000ms`.
+- The default idle opacity SHOULD be `10%`.
 - Idle opacity MUST be configurable within `0%` to `99%`.
-- Idle fade delay MUST be configurable within `0s` to `60s`.
+- Idle fade duration MUST be configurable within `0ms` to `300ms`.
+- Idle fade delay MUST be configurable within `0ms` to `60000ms`.
 - Any new pointer movement after idle fade starts MUST transition the overlay back toward the appropriate active opacity for the current movement-translucency settings.
 - Values outside supported ranges MUST be rejected or clamped consistently at the settings boundary.
 
 #### 4.4.2 Predictive Overlay Positioning
 - Predictive overlay positioning MUST be enabled by default.
 - The settings UI MUST allow the user to disable predictive overlay positioning.
-- The settings UI MUST allow the user to choose the prediction model.
-- User-facing prediction model names MUST be `ConstantVelocity` and `LeastSquares`.
+- The settings UI MUST expose only the `ConstantVelocity` prediction model for release builds.
+- User-facing prediction model names MUST include `ConstantVelocity`.
 - The user-facing prediction model option for the default model MUST append ` (default)` to the model name.
 - The settings UI MUST allow the user to tune the prediction gain as a percentage.
+- The settings UI MUST allow the user to tune the DWM prediction target offset in milliseconds.
 - Prediction MUST affect only the displayed overlay position.
 - Prediction MUST NOT move the real system cursor, cancel input, remap input, or change click targets.
 - The low-level hook path SHOULD trigger cursor image refresh.
@@ -103,7 +107,7 @@ Recommended extended window styles:
   - `velocity = (currentPosition - previousPosition) / dt`;
   - `predictedPosition = currentPosition + velocity * horizonMs * gain`.
 - The default product prediction model SHOULD be `ConstantVelocity`.
-- The `LeastSquares` prediction model SHOULD fit velocity from a bounded recent sample window, remain allocation-free after construction, fall back to exact positioning when the fit is low-confidence, reset stale history after discontinuous cursor samples, and honor the configured DWM horizon cap.
+- Persisted settings that reference removed prediction model IDs MUST normalize to `ConstantVelocity`.
 - The default prediction gain SHOULD be `100%`.
 - Prediction gain MUST be configurable within `50%` to `150%`.
 - The configured prediction gain SHOULD apply to both the DWM-aware polling predictor and the fixed-horizon fallback predictor.
@@ -120,8 +124,10 @@ Recommended extended window styles:
 - If an experimental DWM prediction horizon cap is configured, the DWM-aware polling predictor SHOULD clamp the next-vblank horizon to that cap after validating the DWM horizon.
 - The DWM-aware polling predictor MAY apply a small signed target-time offset after selecting the scheduler target vblank, to compensate for measured capture/composition phase mismatch.
 - The default DWM prediction horizon cap SHOULD be `10ms`.
-- The default DWM prediction target offset SHOULD be `2ms`.
-- The DWM prediction target offset MUST be normalized within `-8ms` to `8ms`.
+- The default user-facing DWM prediction target offset SHOULD be `0ms`.
+- The user-facing DWM prediction target offset MUST be configurable within `-32ms` to `32ms`.
+- The user-facing `0ms` offset MUST map to an internal `+8ms` target-time offset for compatibility with the validated baseline.
+- The internal DWM prediction target offset MUST be normalized within `-24ms` to `40ms`.
 - The DWM prediction target offset MUST affect only the prediction horizon; it MUST NOT change the scheduler's overlay update deadline counters.
 - If experimental DWM adaptive gain is enabled, the DWM-aware polling predictor SHOULD apply the alternate gain only when recent motion exceeds the configured speed threshold, direction remains consistent, and acceleration remains within the configured acceleration threshold.
 - If experimental DWM adaptive gain is enabled with a reversal cooldown, the DWM-aware polling predictor SHOULD keep using the normal gain for the configured number of samples after a direction reversal.
@@ -136,6 +142,7 @@ Recommended extended window styles:
 - The scheduler SHOULD calculate an absolute wait target for each DWM one-shot wait.
 - When an absolute loop wait target is available, the scheduler SHOULD use the waitable timer until slightly before that target and then use a bounded yield/spin fine wait for the final sub-millisecond segment.
 - The bounded fine wait MUST be short enough to avoid sustained CPU load and MUST preserve the normal waitable timer and `Thread.Sleep` fallback behavior.
+- The default runtime scheduler settings SHOULD use `SetWaitableTimerEx`, `2000us` fine wait, `100us` spin threshold, enabled message deferral, and a `100us` deferral window.
 - The normal overlay hot path SHOULD avoid dispatching through the tray or settings UI thread.
 - The overlay runtime thread SHOULD own the overlay window, cursor polling, prediction, opacity updates, and layered-window movement.
 - The overlay runtime thread SHOULD run the normal DWM-synchronized scheduler tick itself, using a message-aware wait, rather than posting every scheduler tick from a separate scheduler thread to the overlay runtime thread.
@@ -145,9 +152,10 @@ Recommended extended window styles:
 - The default latest-position sampler interval SHOULD be `1ms` so blocking waits do not reduce the freshness of samples consumed by the product runtime scheduler.
 - The high-frequency latest-position sampler MUST use a blocking wait for positive remaining intervals and MUST NOT burn CPU with a tight `Sleep(0)` or spin loop between polls.
 - Runtime scheduler and latest-position sampler threads SHOULD use a priority appropriate for latency-sensitive cursor display work without requiring administrator privileges.
-- The overlay runtime thread and high-frequency latest-position sampler SHOULD NOT request managed `Highest` thread priority by default.
-- Cursor display threads SHOULD NOT request MMCSS by default. MMCSS and managed-priority experiments MAY be implemented as opt-in diagnostics, but the default runtime SHOULD avoid competing with other desktop latency-sensitive workloads.
-- Any optional MMCSS or elevated managed-priority request MUST be best-effort: failure MUST NOT prevent startup, MUST NOT require administrator privileges, and MUST fall back to the existing scheduler behavior.
+- The default runtime SHOULD enable a low-latency runtime profile for both the overlay runtime thread and the high-frequency latest-position sampler so tray-only operation does not depend on foreground-window scheduler behavior.
+- The low-latency runtime profile MAY request managed `Highest` thread priority, MMCSS, and `AboveNormal` process priority as best-effort latency hints.
+- Any MMCSS, elevated managed-priority, or process-priority request MUST be best-effort: failure MUST NOT prevent startup, MUST NOT require administrator privileges, and MUST fall back to the existing scheduler behavior.
+- Runtime telemetry SHOULD record whether the Cursor Mirror process is the foreground process when scheduler, controller, or overlay events are recorded, so tray-only and settings-window-visible runs can be compared.
 - The scheduler MUST avoid overlapping queued runtime ticks.
 - After the scheduler requests a tick for a target vblank, it MUST suppress duplicate ticks for that target. It MAY schedule the following distinct target before the prior target has passed when the next one-shot wait target is unambiguous.
 - If the current target vblank is already too close to the overlay update deadline, the controller SHOULD predict for a later distinct vblank instead of knowingly submitting a stale current-frame prediction.
@@ -180,16 +188,20 @@ Recommended extended window styles:
 #### 4.5.1 Settings Window
 - The settings window MUST be a small utility UI, not a primary application workspace.
 - The settings window MUST use the Cursor Mirror application icon rather than the default Windows Forms icon.
+- The settings window SHOULD be wide enough to avoid clipping localized labels at the documented default size.
+- The settings window MUST group related settings in visible framed categories, including prediction, runtime scheduler, movement translucency, and idle fade.
+- The settings window SHOULD arrange these categories as a two-column grid: prediction next to runtime scheduler, and movement translucency next to idle fade.
 - The settings window MUST provide a control for enabling or disabling movement translucency mode.
 - The settings window MUST provide a control for enabling or disabling predictive overlay positioning.
 - The settings window MUST provide a control for selecting the prediction model.
 - The settings window MUST provide a control for prediction gain.
-- When predictive overlay positioning is disabled in the settings window, the prediction model and prediction gain controls MUST be disabled visually and functionally.
+- The settings window MUST provide a control for the DWM prediction target offset.
+- When predictive overlay positioning is disabled in the settings window, the prediction model, prediction gain, and prediction target offset controls MUST be disabled visually and functionally.
 - The settings window MUST provide controls for moving opacity, fade duration, and idle delay.
 - When movement translucency mode is disabled in the settings window, moving opacity, fade duration, and idle delay controls MUST be disabled visually and functionally.
-- The settings window MUST provide controls for idle fade enablement, idle opacity, and idle fade delay.
-- When idle fade mode is disabled in the settings window, idle opacity and idle fade delay controls MUST be disabled visually and functionally.
-- Settings controls MUST expose values in user-understandable units: percent for opacity, milliseconds for short movement timing, and seconds for long idle-fade timing.
+- The settings window MUST provide controls for idle fade enablement, idle opacity, idle fade duration, and idle fade delay.
+- When idle fade mode is disabled in the settings window, idle opacity, idle fade duration, and idle fade delay controls MUST be disabled visually and functionally.
+- Settings controls MUST expose values in user-understandable units: percent for opacity and milliseconds for timing.
 - The settings window MUST provide `Reset`, `Close`, and `Exit Cursor Mirror` commands.
 - The `Reset` command MUST restore documented default settings.
 - The `Close` command MUST close or hide the settings window without shutting down Cursor Mirror.

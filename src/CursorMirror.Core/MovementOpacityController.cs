@@ -7,6 +7,7 @@ namespace CursorMirror
         private CursorMirrorSettings _settings;
         private int _transitionStartOpacityPercent;
         private int _transitionTargetOpacityPercent;
+        private int _transitionDurationMilliseconds;
         private long _transitionStartMilliseconds;
         private long _lastMovementMilliseconds;
         private bool _hasMovement;
@@ -38,6 +39,7 @@ namespace CursorMirror
         {
             _transitionStartOpacityPercent = 100;
             _transitionTargetOpacityPercent = 100;
+            _transitionDurationMilliseconds = 0;
             _transitionStartMilliseconds = 0;
             _lastMovementMilliseconds = 0;
             _hasMovement = false;
@@ -55,13 +57,13 @@ namespace CursorMirror
 
             if (!_settings.MovementTranslucencyEnabled)
             {
-                StartTransition(current, 100, nowMilliseconds);
+                StartTransition(current, 100, nowMilliseconds, _settings.FadeDurationMilliseconds);
                 return;
             }
 
             if (_transitionTargetOpacityPercent != _settings.MovingOpacityPercent)
             {
-                StartTransition(current, _settings.MovingOpacityPercent, nowMilliseconds);
+                StartTransition(current, _settings.MovingOpacityPercent, nowMilliseconds, _settings.FadeDurationMilliseconds);
             }
         }
 
@@ -78,7 +80,7 @@ namespace CursorMirror
                 if (nowMilliseconds >= idleStart)
                 {
                     int exitStartOpacity = CalculateOpacityPercent(idleStart);
-                    StartTransition(exitStartOpacity, 100, idleStart);
+                    StartTransition(exitStartOpacity, 100, idleStart, _settings.FadeDurationMilliseconds);
                     _exitStarted = true;
                 }
             }
@@ -89,7 +91,7 @@ namespace CursorMirror
                 if (nowMilliseconds >= idleFadeStart)
                 {
                     int idleFadeStartOpacity = CalculateOpacityPercent(idleFadeStart);
-                    StartTransition(idleFadeStartOpacity, _settings.IdleOpacityPercent, idleFadeStart);
+                    StartTransition(idleFadeStartOpacity, _settings.IdleOpacityPercent, idleFadeStart, _settings.IdleFadeDurationMilliseconds);
                     _idleFadeStarted = true;
                 }
             }
@@ -103,16 +105,17 @@ namespace CursorMirror
             return (byte)Math.Round((percent * 255.0) / 100.0);
         }
 
-        private void StartTransition(int startOpacityPercent, int targetOpacityPercent, long nowMilliseconds)
+        private void StartTransition(int startOpacityPercent, int targetOpacityPercent, long nowMilliseconds, int durationMilliseconds)
         {
             _transitionStartOpacityPercent = ClampPercent(startOpacityPercent);
             _transitionTargetOpacityPercent = ClampPercent(targetOpacityPercent);
+            _transitionDurationMilliseconds = Math.Max(0, durationMilliseconds);
             _transitionStartMilliseconds = nowMilliseconds;
         }
 
         private int CalculateOpacityPercent(long nowMilliseconds)
         {
-            int duration = _settings.FadeDurationMilliseconds;
+            int duration = _transitionDurationMilliseconds;
             if (duration <= 0)
             {
                 return _transitionTargetOpacityPercent;

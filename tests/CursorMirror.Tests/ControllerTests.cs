@@ -27,12 +27,12 @@ namespace CursorMirror.Tests
             suite.Add("COT-MOU-40", DwmAdaptiveGainCooldownHoldsBaseGainAfterReversal);
             suite.Add("COT-MOU-41", DwmAdaptiveGainOscillationLatchHoldsBaseGain);
             suite.Add("COT-MOU-42", DwmAdaptiveGainFastLinearOverrideBypassesOscillationLatch);
-            suite.Add("COT-MOU-43", DwmLeastSquaresPredictionFitsLinearMotion);
             suite.Add("COT-MOU-45", ScheduledDwmTargetControlsPrediction);
             suite.Add("COT-MOU-46", NearScheduledDwmTargetUsesNextVBlank);
             suite.Add("COT-MOU-47", OverlayUpdateTimingCountersDeadlineMiss);
             suite.Add("COT-MOU-48", DwmPredictionTargetOffsetControlsProjection);
             suite.Add("COT-MOU-49", ConstantVelocityHighSpeedLinearMotionUsesWiderCap);
+            suite.Add("COT-MOU-55", PollingSkipsOverlayMoveWhenLocationIsUnchanged);
             suite.Add("COT-MRU-1", HookCallbackExceptionContainment);
             suite.Add("COT-MDU-3", DispatcherMarshalsToUiThread);
         }
@@ -485,39 +485,6 @@ namespace CursorMirror.Tests
             controller.Dispose();
         }
 
-        // DWM least-squares prediction [COT-MOU-43]
-        private static void DwmLeastSquaresPredictionFitsLinearMotion()
-        {
-            FakeCursorImageProvider provider = new FakeCursorImageProvider();
-            FakeOverlayPresenter overlay = new FakeOverlayPresenter();
-            FakeClock clock = new FakeClock();
-            FakeCursorPoller poller = new FakeCursorPoller();
-            CursorMirrorSettings settings = CursorMirrorSettings.Default();
-            settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelLeastSquares;
-            settings.DwmPredictionHorizonCapMilliseconds = 0;
-            settings.DwmPredictionTargetOffsetMilliseconds = 0;
-            provider.EnqueueCapture(new CursorCapture(new IntPtr(1), new Bitmap(16, 16), new Point(0, 0)));
-            CursorMirrorController controller = new CursorMirrorController(provider, overlay, new ImmediateDispatcher(), settings, clock, poller);
-
-            controller.UpdateAt(new Point(0, 0));
-            poller.EnqueueSample(PollSample(new Point(0, 0), 100, true, 110, 16));
-            poller.EnqueueSample(PollSample(new Point(10, 0), 110, true, 120, 16));
-            poller.EnqueueSample(PollSample(new Point(20, 0), 120, true, 130, 16));
-            poller.EnqueueSample(PollSample(new Point(30, 0), 130, true, 140, 16));
-            poller.EnqueueSample(PollSample(new Point(40, 0), 140, true, 150, 16));
-            poller.EnqueueSample(PollSample(new Point(50, 0), 150, true, 160, 16));
-            clock.Now = 10;
-            controller.Tick();
-            controller.Tick();
-            controller.Tick();
-            controller.Tick();
-            controller.Tick();
-            controller.Tick();
-
-            TestAssert.Equal(new Point(58, 0), overlay.LastLocation, "least-squares model predicts linear motion with its default horizon cap");
-            controller.Dispose();
-        }
-
         // Scheduled DWM target controls prediction horizon [COT-MOU-45]
         private static void ScheduledDwmTargetControlsPrediction()
         {
@@ -655,6 +622,34 @@ namespace CursorMirror.Tests
             }
 
             TestAssert.Equal(new Point(204, 0), overlay.LastLocation, "high-speed one-directional motion should use the wider ConstantVelocity cap");
+            controller.Dispose();
+        }
+
+        // Same-location polling should not call the layered-window move path [COT-MOU-55]
+        private static void PollingSkipsOverlayMoveWhenLocationIsUnchanged()
+        {
+            FakeCursorImageProvider provider = new FakeCursorImageProvider();
+            FakeOverlayPresenter overlay = new FakeOverlayPresenter();
+            FakeClock clock = new FakeClock();
+            FakeCursorPoller poller = new FakeCursorPoller();
+            CursorMirrorSettings settings = CursorMirrorSettings.Default();
+            settings.PredictionEnabled = false;
+            provider.EnqueueCapture(new CursorCapture(new IntPtr(1), new Bitmap(16, 16), new Point(2, 3)));
+            CursorMirrorController controller = new CursorMirrorController(provider, overlay, new ImmediateDispatcher(), settings, clock, poller);
+
+            controller.UpdateAt(new Point(10, 10));
+            poller.EnqueueSample(PollSample(new Point(10, 10), 100, false, 0, 0));
+            clock.Now = 16;
+            controller.Tick();
+
+            TestAssert.Equal(0, overlay.MoveCount, "same overlay location must skip move");
+
+            poller.EnqueueSample(PollSample(new Point(11, 10), 110, false, 0, 0));
+            clock.Now = 32;
+            controller.Tick();
+
+            TestAssert.Equal(1, overlay.MoveCount, "changed overlay location must move");
+            TestAssert.Equal(new Point(9, 7), overlay.LastLocation, "changed overlay location");
             controller.Dispose();
         }
 

@@ -8,9 +8,6 @@ namespace CursorMirror.MouseTrace
         [DllImport("user32.dll", EntryPoint = "GetCursorPos", SetLastError = true)]
         private static extern bool GetCursorPosNative(out NativePoint point);
 
-        [DllImport("dwmapi.dll", EntryPoint = "DwmGetCompositionTimingInfo", PreserveSig = true)]
-        private static extern int DwmGetCompositionTimingInfoNative(IntPtr hwnd, ref DwmTimingInfo timingInfo);
-
         [DllImport("winmm.dll", EntryPoint = "timeBeginPeriod", PreserveSig = true)]
         private static extern uint TimeBeginPeriodNative(uint milliseconds);
 
@@ -24,9 +21,7 @@ namespace CursorMirror.MouseTrace
 
         public bool TryGetDwmTimingInfo(out DwmTimingInfo timingInfo)
         {
-            timingInfo = new DwmTimingInfo();
-            timingInfo.Size = (uint)Marshal.SizeOf(typeof(DwmTimingInfo));
-            return DwmGetCompositionTimingInfoNative(IntPtr.Zero, ref timingInfo) == 0;
+            return CursorMirror.DwmNative.TryGetCompositionTimingInfo(out timingInfo);
         }
 
         public bool TryBeginTimerResolution(int milliseconds)

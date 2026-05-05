@@ -1,0 +1,2392 @@
+{
+  "schemaVersion": "cursor-prediction-v14-60hz-teacher-distillation/1",
+  "generatedAtUtc": "2026-05-04T01:24:13.272429+00:00",
+  "environment": {
+    "device": "cuda",
+    "gpuUsed": true,
+    "torchVersion": "2.11.0+cu128",
+    "cudaVersion": "12.8",
+    "gpuName": "NVIDIA GeForce RTX 5090"
+  },
+  "constraints": {
+    "rawZipCopied": false,
+    "expandedCsvWritten": false,
+    "checkpointWritten": false,
+    "featureCacheWritten": false,
+    "tensorboardWritten": false,
+    "modelWeightsWritten": false
+  },
+  "dataset": {
+    "rows": 90621,
+    "bySplit": {
+      "test": 14174,
+      "validation": 14220,
+      "train": 62227
+    },
+    "byPackage": {
+      "m070248": 45855,
+      "m070307": 44766
+    },
+    "byRefresh": {
+      "60Hz": 90621
+    },
+    "byPhase": {
+      "moving": 70667,
+      "hold": 15720,
+      "resume": 4231,
+      "unknown": 3
+    },
+    "bySpeedBin": {
+      "1000-2000": 2843,
+      ">=2000": 770,
+      "0-25": 83314,
+      "500-1000": 2996,
+      "250-500": 120,
+      "100-250": 217,
+      "25-100": 361
+    },
+    "scalarDim": 25,
+    "sequenceShape": [
+      16,
+      9
+    ],
+    "targetScale": [
+      3.0,
+      2.0
+    ],
+    "correctionScale": [
+      2.43149995803833,
+      1.5
+    ]
+  },
+  "buildSummary": {
+    "skipped": {
+      "insufficient_history": 6
+    }
+  },
+  "step5": {
+    "metrics": {
+      "bySplit": {
+        "train": {
+          "count": 62227,
+          "mean": 0.5721,
+          "rmse": 1.8813,
+          "median": 0.1353,
+          "p95": 2.1396,
+          "p99": 5.8142,
+          "max": 96.5519,
+          "gt5Rate": 0.012004,
+          "gt10Rate": 0.004676,
+          "signed": {
+            "count": 4932,
+            "mean": -1.6259,
+            "lagRate": 0.945661,
+            "leadRate": 0.054339
+          }
+        },
+        "validation": {
+          "count": 14220,
+          "mean": 0.5882,
+          "rmse": 2.3353,
+          "median": 0.1189,
+          "p95": 2.0724,
+          "p99": 6.2295,
+          "max": 94.9456,
+          "gt5Rate": 0.012658,
+          "gt10Rate": 0.007595,
+          "signed": {
+            "count": 1156,
+            "mean": -1.5618,
+            "lagRate": 0.933391,
+            "leadRate": 0.066609
+          }
+        },
+        "test": {
+          "count": 14174,
+          "mean": 0.5637,
+          "rmse": 1.7018,
+          "median": 0.1497,
+          "p95": 2.1173,
+          "p99": 5.1897,
+          "max": 44.4325,
+          "gt5Rate": 0.010442,
+          "gt10Rate": 0.004727,
+          "signed": {
+            "count": 1219,
+            "mean": -1.5618,
+            "lagRate": 0.934372,
+            "leadRate": 0.065628
+          }
+        }
+      }
+    }
+  },
+  "teachers": {
+    "teacher_transformer_residual_d96": {
+      "family": "Transformer",
+      "target": "label",
+      "objective": "residual",
+      "parameterCount": 217378,
+      "training": {
+        "bestValidationLoss": 0.072955,
+        "bestEpoch": 18,
+        "epochsRun": 30,
+        "trainSeconds": 51.383,
+        "historyTail": [
+          {
+            "epoch": 23,
+            "trainLoss": 0.048038,
+            "validationLoss": 0.074182
+          },
+          {
+            "epoch": 24,
+            "trainLoss": 0.049096,
+            "validationLoss": 0.074889
+          },
+          {
+            "epoch": 25,
+            "trainLoss": 0.048804,
+            "validationLoss": 0.075939
+          },
+          {
+            "epoch": 26,
+            "trainLoss": 0.049208,
+            "validationLoss": 0.07683
+          },
+          {
+            "epoch": 27,
+            "trainLoss": 0.048833,
+            "validationLoss": 0.07403
+          },
+          {
+            "epoch": 28,
+            "trainLoss": 0.046854,
+            "validationLoss": 0.073405
+          },
+          {
+            "epoch": 29,
+            "trainLoss": 0.046374,
+            "validationLoss": 0.073769
+          },
+          {
+            "epoch": 30,
+            "trainLoss": 0.047039,
+            "validationLoss": 0.07408
+          }
+        ]
+      },
+      "metrics": {
+        "bySplit": {
+          "train": {
+            "count": 62227,
+            "mean": 0.452,
+            "rmse": 1.4038,
+            "median": 0.1194,
+            "p95": 1.7387,
+            "p99": 3.5886,
+            "max": 93.7265,
+            "gt5Rate": 0.006075,
+            "gt10Rate": 0.002153,
+            "signed": {
+              "count": 4932,
+              "mean": -0.9287,
+              "lagRate": 0.816099,
+              "leadRate": 0.183901
+            }
+          },
+          "validation": {
+            "count": 14220,
+            "mean": 0.5008,
+            "rmse": 1.8855,
+            "median": 0.113,
+            "p95": 1.6702,
+            "p99": 5.4194,
+            "max": 87.8024,
+            "gt5Rate": 0.010619,
+            "gt10Rate": 0.004993,
+            "signed": {
+              "count": 1156,
+              "mean": -0.9566,
+              "lagRate": 0.819204,
+              "leadRate": 0.180796
+            }
+          },
+          "test": {
+            "count": 14174,
+            "mean": 0.5063,
+            "rmse": 1.4577,
+            "median": 0.1445,
+            "p95": 1.8094,
+            "p99": 4.094,
+            "max": 37.1085,
+            "gt5Rate": 0.007761,
+            "gt10Rate": 0.003034,
+            "signed": {
+              "count": 1219,
+              "mean": -0.9728,
+              "lagRate": 0.819524,
+              "leadRate": 0.180476
+            }
+          }
+        }
+      }
+    },
+    "teacher_gru_residual_h128": {
+      "family": "GRU",
+      "target": "label",
+      "objective": "residual",
+      "parameterCount": 200738,
+      "training": {
+        "bestValidationLoss": 0.073162,
+        "bestEpoch": 33,
+        "epochsRun": 45,
+        "trainSeconds": 71.554,
+        "historyTail": [
+          {
+            "epoch": 38,
+            "trainLoss": 0.039042,
+            "validationLoss": 0.073958
+          },
+          {
+            "epoch": 39,
+            "trainLoss": 0.038567,
+            "validationLoss": 0.073982
+          },
+          {
+            "epoch": 40,
+            "trainLoss": 0.038511,
+            "validationLoss": 0.075195
+          },
+          {
+            "epoch": 41,
+            "trainLoss": 0.038553,
+            "validationLoss": 0.07396
+          },
+          {
+            "epoch": 42,
+            "trainLoss": 0.03891,
+            "validationLoss": 0.074552
+          },
+          {
+            "epoch": 43,
+            "trainLoss": 0.036705,
+            "validationLoss": 0.073803
+          },
+          {
+            "epoch": 44,
+            "trainLoss": 0.036194,
+            "validationLoss": 0.073931
+          },
+          {
+            "epoch": 45,
+            "trainLoss": 0.036244,
+            "validationLoss": 0.073867
+          }
+        ]
+      },
+      "metrics": {
+        "bySplit": {
+          "train": {
+            "count": 62227,
+            "mean": 0.4069,
+            "rmse": 1.2079,
+            "median": 0.1124,
+            "p95": 1.6357,
+            "p99": 2.9274,
+            "max": 89.9883,
+            "gt5Rate": 0.003809,
+            "gt10Rate": 0.00135,
+            "signed": {
+              "count": 4932,
+              "mean": -0.7775,
+              "lagRate": 0.790754,
+              "leadRate": 0.209246
+            }
+          },
+          "validation": {
+            "count": 14220,
+            "mean": 0.4918,
+            "rmse": 1.9216,
+            "median": 0.1086,
+            "p95": 1.6927,
+            "p99": 5.1493,
+            "max": 88.7828,
+            "gt5Rate": 0.010549,
+            "gt10Rate": 0.005063,
+            "signed": {
+              "count": 1156,
+              "mean": -0.9675,
+              "lagRate": 0.814014,
+              "leadRate": 0.185986
+            }
+          },
+          "test": {
+            "count": 14174,
+            "mean": 0.4932,
+            "rmse": 1.4785,
+            "median": 0.1496,
+            "p95": 1.8302,
+            "p99": 4.0248,
+            "max": 42.544,
+            "gt5Rate": 0.007408,
+            "gt10Rate": 0.003034,
+            "signed": {
+              "count": 1219,
+              "mean": -0.9104,
+              "lagRate": 0.812961,
+              "leadRate": 0.187039
+            }
+          }
+        }
+      }
+    },
+    "teacher_tcn_residual_c96": {
+      "family": "TCN",
+      "target": "label",
+      "objective": "residual",
+      "parameterCount": 126338,
+      "training": {
+        "bestValidationLoss": 0.081237,
+        "bestEpoch": 15,
+        "epochsRun": 27,
+        "trainSeconds": 41.724,
+        "historyTail": [
+          {
+            "epoch": 20,
+            "trainLoss": 0.044931,
+            "validationLoss": 0.082639
+          },
+          {
+            "epoch": 21,
+            "trainLoss": 0.045406,
+            "validationLoss": 0.083164
+          },
+          {
+            "epoch": 22,
+            "trainLoss": 0.045778,
+            "validationLoss": 0.084111
+          },
+          {
+            "epoch": 23,
+            "trainLoss": 0.044501,
+            "validationLoss": 0.082937
+          },
+          {
+            "epoch": 24,
+            "trainLoss": 0.04409,
+            "validationLoss": 0.082782
+          },
+          {
+            "epoch": 25,
+            "trainLoss": 0.044907,
+            "validationLoss": 0.084075
+          },
+          {
+            "epoch": 26,
+            "trainLoss": 0.04379,
+            "validationLoss": 0.081917
+          },
+          {
+            "epoch": 27,
+            "trainLoss": 0.042821,
+            "validationLoss": 0.081614
+          }
+        ]
+      },
+      "metrics": {
+        "bySplit": {
+          "train": {
+            "count": 62227,
+            "mean": 0.4402,
+            "rmse": 1.3565,
+            "median": 0.1111,
+            "p95": 1.7882,
+            "p99": 3.3536,
+            "max": 85.3487,
+            "gt5Rate": 0.005078,
+            "gt10Rate": 0.001928,
+            "signed": {
+              "count": 4932,
+              "mean": -0.8849,
+              "lagRate": 0.811638,
+              "leadRate": 0.188362
+            }
+          },
+          "validation": {
+            "count": 14220,
+            "mean": 0.5247,
+            "rmse": 2.0411,
+            "median": 0.098,
+            "p95": 1.8415,
+            "p99": 5.8579,
+            "max": 88.3302,
+            "gt5Rate": 0.011744,
+            "gt10Rate": 0.006188,
+            "signed": {
+              "count": 1156,
+              "mean": -1.0498,
+              "lagRate": 0.844291,
+              "leadRate": 0.155709
+            }
+          },
+          "test": {
+            "count": 14174,
+            "mean": 0.5123,
+            "rmse": 1.5167,
+            "median": 0.1313,
+            "p95": 1.9337,
+            "p99": 4.362,
+            "max": 45.1786,
+            "gt5Rate": 0.008537,
+            "gt10Rate": 0.003175,
+            "signed": {
+              "count": 1219,
+              "mean": -0.9896,
+              "lagRate": 0.843314,
+              "leadRate": 0.156686
+            }
+          }
+        }
+      }
+    }
+  },
+  "teacherRanking": [
+    {
+      "modelId": "teacher_gru_residual_h128",
+      "family": "GRU",
+      "objective": 3.25398,
+      "validation": {
+        "count": 14220,
+        "mean": 0.4918,
+        "rmse": 1.9216,
+        "median": 0.1086,
+        "p95": 1.6927,
+        "p99": 5.1493,
+        "max": 88.7828,
+        "gt5Rate": 0.010549,
+        "gt10Rate": 0.005063,
+        "signed": {
+          "count": 1156,
+          "mean": -0.9675,
+          "lagRate": 0.814014,
+          "leadRate": 0.185986
+        }
+      },
+      "test": {
+        "count": 14174,
+        "mean": 0.4932,
+        "rmse": 1.4785,
+        "median": 0.1496,
+        "p95": 1.8302,
+        "p99": 4.0248,
+        "max": 42.544,
+        "gt5Rate": 0.007408,
+        "gt10Rate": 0.003034,
+        "signed": {
+          "count": 1219,
+          "mean": -0.9104,
+          "lagRate": 0.812961,
+          "leadRate": 0.187039
+        }
+      }
+    },
+    {
+      "modelId": "teacher_transformer_residual_d96",
+      "family": "Transformer",
+      "objective": 3.295465,
+      "validation": {
+        "count": 14220,
+        "mean": 0.5008,
+        "rmse": 1.8855,
+        "median": 0.113,
+        "p95": 1.6702,
+        "p99": 5.4194,
+        "max": 87.8024,
+        "gt5Rate": 0.010619,
+        "gt10Rate": 0.004993,
+        "signed": {
+          "count": 1156,
+          "mean": -0.9566,
+          "lagRate": 0.819204,
+          "leadRate": 0.180796
+        }
+      },
+      "test": {
+        "count": 14174,
+        "mean": 0.5063,
+        "rmse": 1.4577,
+        "median": 0.1445,
+        "p95": 1.8094,
+        "p99": 4.094,
+        "max": 37.1085,
+        "gt5Rate": 0.007761,
+        "gt10Rate": 0.003034,
+        "signed": {
+          "count": 1219,
+          "mean": -0.9728,
+          "lagRate": 0.819524,
+          "leadRate": 0.180476
+        }
+      }
+    },
+    {
+      "modelId": "teacher_tcn_residual_c96",
+      "family": "TCN",
+      "objective": 3.627535,
+      "validation": {
+        "count": 14220,
+        "mean": 0.5247,
+        "rmse": 2.0411,
+        "median": 0.098,
+        "p95": 1.8415,
+        "p99": 5.8579,
+        "max": 88.3302,
+        "gt5Rate": 0.011744,
+        "gt10Rate": 0.006188,
+        "signed": {
+          "count": 1156,
+          "mean": -1.0498,
+          "lagRate": 0.844291,
+          "leadRate": 0.155709
+        }
+      },
+      "test": {
+        "count": 14174,
+        "mean": 0.5123,
+        "rmse": 1.5167,
+        "median": 0.1313,
+        "p95": 1.9337,
+        "p99": 4.362,
+        "max": 45.1786,
+        "gt5Rate": 0.008537,
+        "gt10Rate": 0.003175,
+        "signed": {
+          "count": 1219,
+          "mean": -0.9896,
+          "lagRate": 0.843314,
+          "leadRate": 0.156686
+        }
+      }
+    }
+  ],
+  "selectedTeacher": "teacher_gru_residual_h128",
+  "students": {
+    "ridge_scalar_teacher": {
+      "family": "ridge_scalar",
+      "target": "teacher",
+      "lambda": 0.0001,
+      "featureDim": 25,
+      "parameterCount": 52,
+      "training": {
+        "validationTeacherRmse": 0.810548
+      },
+      "metrics": {
+        "bySplit": {
+          "train": {
+            "count": 62227,
+            "mean": 0.6459,
+            "rmse": 1.7837,
+            "median": 0.2809,
+            "p95": 2.1355,
+            "p99": 5.5457,
+            "max": 93.5065,
+            "gt5Rate": 0.011892,
+            "gt10Rate": 0.00405,
+            "signed": {
+              "count": 4932,
+              "mean": -1.2624,
+              "lagRate": 0.846918,
+              "leadRate": 0.153082
+            }
+          },
+          "validation": {
+            "count": 14220,
+            "mean": 0.6781,
+            "rmse": 2.2433,
+            "median": 0.2515,
+            "p95": 2.0546,
+            "p99": 7.7093,
+            "max": 92.9147,
+            "gt5Rate": 0.015331,
+            "gt10Rate": 0.007454,
+            "signed": {
+              "count": 1156,
+              "mean": -1.2758,
+              "lagRate": 0.844291,
+              "leadRate": 0.155709
+            }
+          },
+          "test": {
+            "count": 14174,
+            "mean": 0.6705,
+            "rmse": 1.6578,
+            "median": 0.3463,
+            "p95": 2.1434,
+            "p99": 5.1605,
+            "max": 41.2407,
+            "gt5Rate": 0.010653,
+            "gt10Rate": 0.00388,
+            "signed": {
+              "count": 1219,
+              "mean": -1.1967,
+              "lagRate": 0.826907,
+              "leadRate": 0.173093
+            }
+          }
+        },
+        "teacherImitation": {
+          "train": {
+            "count": 62227,
+            "mean": 0.4395,
+            "rmse": 1.2665,
+            "median": 0.2106,
+            "p95": 1.4325,
+            "p99": 4.2424,
+            "max": 43.4771,
+            "gt5Rate": 0.008051,
+            "gt10Rate": 0.003021
+          },
+          "validation": {
+            "count": 14220,
+            "mean": 0.4179,
+            "rmse": 1.1463,
+            "median": 0.201,
+            "p95": 1.2458,
+            "p99": 4.477,
+            "max": 26.0167,
+            "gt5Rate": 0.008298,
+            "gt10Rate": 0.002743
+          },
+          "test": {
+            "count": 14174,
+            "mean": 0.3974,
+            "rmse": 0.9804,
+            "median": 0.2279,
+            "p95": 1.1948,
+            "p99": 3.4731,
+            "max": 33.443,
+            "gt5Rate": 0.006067,
+            "gt10Rate": 0.001199
+          }
+        }
+      }
+    },
+    "ridge_scalar_label": {
+      "family": "ridge_scalar",
+      "target": "label",
+      "lambda": 10.0,
+      "featureDim": 25,
+      "parameterCount": 52,
+      "training": {
+        "validationTeacherRmse": 1.589562
+      },
+      "metrics": {
+        "bySplit": {
+          "train": {
+            "count": 62227,
+            "mean": 0.6527,
+            "rmse": 1.7783,
+            "median": 0.292,
+            "p95": 2.1538,
+            "p99": 5.5896,
+            "max": 93.5899,
+            "gt5Rate": 0.012053,
+            "gt10Rate": 0.004066,
+            "signed": {
+              "count": 4932,
+              "mean": -1.2464,
+              "lagRate": 0.842457,
+              "leadRate": 0.157543
+            }
+          },
+          "validation": {
+            "count": 14220,
+            "mean": 0.6841,
+            "rmse": 2.248,
+            "median": 0.256,
+            "p95": 2.0676,
+            "p99": 7.8029,
+            "max": 92.603,
+            "gt5Rate": 0.015893,
+            "gt10Rate": 0.007384,
+            "signed": {
+              "count": 1156,
+              "mean": -1.2559,
+              "lagRate": 0.8391,
+              "leadRate": 0.1609
+            }
+          },
+          "test": {
+            "count": 14174,
+            "mean": 0.6764,
+            "rmse": 1.6556,
+            "median": 0.3573,
+            "p95": 2.1715,
+            "p99": 5.0992,
+            "max": 41.9767,
+            "gt5Rate": 0.010794,
+            "gt10Rate": 0.003951,
+            "signed": {
+              "count": 1219,
+              "mean": -1.1759,
+              "lagRate": 0.822806,
+              "leadRate": 0.177194
+            }
+          }
+        },
+        "teacherImitation": {
+          "train": {
+            "count": 62227,
+            "mean": 0.4496,
+            "rmse": 1.274,
+            "median": 0.2206,
+            "p95": 1.4658,
+            "p99": 4.2582,
+            "max": 43.7954,
+            "gt5Rate": 0.008132,
+            "gt10Rate": 0.002989
+          },
+          "validation": {
+            "count": 14220,
+            "mean": 0.4274,
+            "rmse": 1.1644,
+            "median": 0.2053,
+            "p95": 1.2834,
+            "p99": 4.5603,
+            "max": 26.1669,
+            "gt5Rate": 0.008861,
+            "gt10Rate": 0.002813
+          },
+          "test": {
+            "count": 14174,
+            "mean": 0.4074,
+            "rmse": 0.9967,
+            "median": 0.2351,
+            "p95": 1.2417,
+            "p99": 3.5794,
+            "max": 33.397,
+            "gt5Rate": 0.006279,
+            "gt10Rate": 0.00134
+          }
+        }
+      }
+    },
+    "ridge_fsmn_teacher": {
+      "family": "ridge_fsmn",
+      "target": "teacher",
+      "lambda": 10.0,
+      "featureDim": 79,
+      "parameterCount": 160,
+      "training": {
+        "validationTeacherRmse": 0.789093
+      },
+      "metrics": {
+        "bySplit": {
+          "train": {
+            "count": 62227,
+            "mean": 0.655,
+            "rmse": 1.7525,
+            "median": 0.3007,
+            "p95": 2.1376,
+            "p99": 5.5686,
+            "max": 93.4151,
+            "gt5Rate": 0.011876,
+            "gt10Rate": 0.004034,
+            "signed": {
+              "count": 4932,
+              "mean": -1.2277,
+              "lagRate": 0.842457,
+              "leadRate": 0.157543
+            }
+          },
+          "validation": {
+            "count": 14220,
+            "mean": 0.6829,
+            "rmse": 2.2315,
+            "median": 0.2598,
+            "p95": 2.0472,
+            "p99": 7.424,
+            "max": 90.7385,
+            "gt5Rate": 0.015049,
+            "gt10Rate": 0.006962,
+            "signed": {
+              "count": 1156,
+              "mean": -1.2866,
+              "lagRate": 0.859862,
+              "leadRate": 0.140138
+            }
+          },
+          "test": {
+            "count": 14174,
+            "mean": 0.6596,
+            "rmse": 1.6005,
+            "median": 0.3323,
+            "p95": 2.107,
+            "p99": 5.0051,
+            "max": 38.1963,
+            "gt5Rate": 0.010018,
+            "gt10Rate": 0.003951,
+            "signed": {
+              "count": 1219,
+              "mean": -1.2255,
+              "lagRate": 0.847416,
+              "leadRate": 0.152584
+            }
+          }
+        },
+        "teacherImitation": {
+          "train": {
+            "count": 62227,
+            "mean": 0.4375,
+            "rmse": 1.2228,
+            "median": 0.2183,
+            "p95": 1.3461,
+            "p99": 4.3061,
+            "max": 41.5783,
+            "gt5Rate": 0.007939,
+            "gt10Rate": 0.002812
+          },
+          "validation": {
+            "count": 14220,
+            "mean": 0.4169,
+            "rmse": 1.1159,
+            "median": 0.2059,
+            "p95": 1.1871,
+            "p99": 4.4615,
+            "max": 24.4658,
+            "gt5Rate": 0.00865,
+            "gt10Rate": 0.002672
+          },
+          "test": {
+            "count": 14174,
+            "mean": 0.3826,
+            "rmse": 0.9183,
+            "median": 0.2228,
+            "p95": 1.1029,
+            "p99": 3.2639,
+            "max": 29.2252,
+            "gt5Rate": 0.006067,
+            "gt10Rate": 0.001411
+          }
+        }
+      }
+    },
+    "ridge_fsmn_label": {
+      "family": "ridge_fsmn",
+      "target": "label",
+      "lambda": 1000.0,
+      "featureDim": 79,
+      "parameterCount": 160,
+      "training": {
+        "validationTeacherRmse": 1.581462
+      },
+      "metrics": {
+        "bySplit": {
+          "train": {
+            "count": 62227,
+            "mean": 0.6502,
+            "rmse": 1.7452,
+            "median": 0.2988,
+            "p95": 2.1404,
+            "p99": 5.6103,
+            "max": 92.568,
+            "gt5Rate": 0.011956,
+            "gt10Rate": 0.003969,
+            "signed": {
+              "count": 4932,
+              "mean": -1.2321,
+              "lagRate": 0.844079,
+              "leadRate": 0.155921
+            }
+          },
+          "validation": {
+            "count": 14220,
+            "mean": 0.6753,
+            "rmse": 2.2365,
+            "median": 0.2503,
+            "p95": 2.0356,
+            "p99": 7.3717,
+            "max": 90.4586,
+            "gt5Rate": 0.015752,
+            "gt10Rate": 0.006892,
+            "signed": {
+              "count": 1156,
+              "mean": -1.2689,
+              "lagRate": 0.846021,
+              "leadRate": 0.153979
+            }
+          },
+          "test": {
+            "count": 14174,
+            "mean": 0.6541,
+            "rmse": 1.6012,
+            "median": 0.3271,
+            "p95": 2.1117,
+            "p99": 5.0952,
+            "max": 38.7296,
+            "gt5Rate": 0.01023,
+            "gt10Rate": 0.004163,
+            "signed": {
+              "count": 1219,
+              "mean": -1.2323,
+              "lagRate": 0.844135,
+              "leadRate": 0.155865
+            }
+          }
+        },
+        "teacherImitation": {
+          "train": {
+            "count": 62227,
+            "mean": 0.439,
+            "rmse": 1.2418,
+            "median": 0.2197,
+            "p95": 1.3757,
+            "p99": 4.3253,
+            "max": 40.9206,
+            "gt5Rate": 0.008228,
+            "gt10Rate": 0.002925
+          },
+          "validation": {
+            "count": 14220,
+            "mean": 0.4137,
+            "rmse": 1.1328,
+            "median": 0.1995,
+            "p95": 1.195,
+            "p99": 4.4601,
+            "max": 25.0694,
+            "gt5Rate": 0.008439,
+            "gt10Rate": 0.002743
+          },
+          "test": {
+            "count": 14174,
+            "mean": 0.3824,
+            "rmse": 0.9359,
+            "median": 0.224,
+            "p95": 1.0986,
+            "p99": 3.2895,
+            "max": 29.4821,
+            "gt5Rate": 0.006138,
+            "gt10Rate": 0.001623
+          }
+        }
+      }
+    },
+    "ridge_dense_teacher": {
+      "family": "ridge_dense",
+      "target": "teacher",
+      "lambda": 1000.0,
+      "featureDim": 169,
+      "parameterCount": 340,
+      "training": {
+        "validationTeacherRmse": 0.793081
+      },
+      "metrics": {
+        "bySplit": {
+          "train": {
+            "count": 62227,
+            "mean": 0.6573,
+            "rmse": 1.7492,
+            "median": 0.3038,
+            "p95": 2.1367,
+            "p99": 5.5979,
+            "max": 92.9455,
+            "gt5Rate": 0.011924,
+            "gt10Rate": 0.003953,
+            "signed": {
+              "count": 4932,
+              "mean": -1.2465,
+              "lagRate": 0.848946,
+              "leadRate": 0.151054
+            }
+          },
+          "validation": {
+            "count": 14220,
+            "mean": 0.6857,
+            "rmse": 2.2364,
+            "median": 0.2595,
+            "p95": 2.0531,
+            "p99": 7.5858,
+            "max": 90.649,
+            "gt5Rate": 0.015823,
+            "gt10Rate": 0.007173,
+            "signed": {
+              "count": 1156,
+              "mean": -1.2871,
+              "lagRate": 0.856401,
+              "leadRate": 0.143599
+            }
+          },
+          "test": {
+            "count": 14174,
+            "mean": 0.6584,
+            "rmse": 1.6081,
+            "median": 0.3268,
+            "p95": 2.1101,
+            "p99": 5.0199,
+            "max": 38.347,
+            "gt5Rate": 0.010089,
+            "gt10Rate": 0.00381,
+            "signed": {
+              "count": 1219,
+              "mean": -1.2506,
+              "lagRate": 0.849877,
+              "leadRate": 0.150123
+            }
+          }
+        },
+        "teacherImitation": {
+          "train": {
+            "count": 62227,
+            "mean": 0.4404,
+            "rmse": 1.2178,
+            "median": 0.2203,
+            "p95": 1.3569,
+            "p99": 4.3615,
+            "max": 40.7273,
+            "gt5Rate": 0.008196,
+            "gt10Rate": 0.002812
+          },
+          "validation": {
+            "count": 14220,
+            "mean": 0.4201,
+            "rmse": 1.1216,
+            "median": 0.2078,
+            "p95": 1.201,
+            "p99": 4.5671,
+            "max": 25.4489,
+            "gt5Rate": 0.008509,
+            "gt10Rate": 0.002672
+          },
+          "test": {
+            "count": 14174,
+            "mean": 0.3822,
+            "rmse": 0.9161,
+            "median": 0.2232,
+            "p95": 1.1119,
+            "p99": 3.1707,
+            "max": 28.4305,
+            "gt5Rate": 0.005856,
+            "gt10Rate": 0.001411
+          }
+        }
+      }
+    },
+    "ridge_dense_label": {
+      "family": "ridge_dense",
+      "target": "label",
+      "lambda": 1000.0,
+      "featureDim": 169,
+      "parameterCount": 340,
+      "training": {
+        "validationTeacherRmse": 1.592291
+      },
+      "metrics": {
+        "bySplit": {
+          "train": {
+            "count": 62227,
+            "mean": 0.6598,
+            "rmse": 1.7325,
+            "median": 0.3094,
+            "p95": 2.1668,
+            "p99": 5.6375,
+            "max": 91.6242,
+            "gt5Rate": 0.012037,
+            "gt10Rate": 0.003873,
+            "signed": {
+              "count": 4932,
+              "mean": -1.2289,
+              "lagRate": 0.846715,
+              "leadRate": 0.153285
+            }
+          },
+          "validation": {
+            "count": 14220,
+            "mean": 0.6897,
+            "rmse": 2.2518,
+            "median": 0.2612,
+            "p95": 2.0671,
+            "p99": 7.779,
+            "max": 90.3969,
+            "gt5Rate": 0.015963,
+            "gt10Rate": 0.007173,
+            "signed": {
+              "count": 1156,
+              "mean": -1.2629,
+              "lagRate": 0.84083,
+              "leadRate": 0.15917
+            }
+          },
+          "test": {
+            "count": 14174,
+            "mean": 0.6616,
+            "rmse": 1.6047,
+            "median": 0.3293,
+            "p95": 2.1305,
+            "p99": 5.0768,
+            "max": 38.5728,
+            "gt5Rate": 0.010159,
+            "gt10Rate": 0.004021,
+            "signed": {
+              "count": 1219,
+              "mean": -1.2381,
+              "lagRate": 0.840033,
+              "leadRate": 0.159967
+            }
+          }
+        },
+        "teacherImitation": {
+          "train": {
+            "count": 62227,
+            "mean": 0.4508,
+            "rmse": 1.2346,
+            "median": 0.2293,
+            "p95": 1.3967,
+            "p99": 4.4008,
+            "max": 39.8047,
+            "gt5Rate": 0.008308,
+            "gt10Rate": 0.002925
+          },
+          "validation": {
+            "count": 14220,
+            "mean": 0.4282,
+            "rmse": 1.1522,
+            "median": 0.2135,
+            "p95": 1.2108,
+            "p99": 4.598,
+            "max": 26.692,
+            "gt5Rate": 0.008861,
+            "gt10Rate": 0.002813
+          },
+          "test": {
+            "count": 14174,
+            "mean": 0.3932,
+            "rmse": 0.9343,
+            "median": 0.2299,
+            "p95": 1.1394,
+            "p99": 3.2777,
+            "max": 27.8447,
+            "gt5Rate": 0.005856,
+            "gt10Rate": 0.001623
+          }
+        }
+      }
+    },
+    "tiny_mlp_fsmn_teacher": {
+      "family": "tiny_mlp",
+      "target": "teacher",
+      "featureDim": 79,
+      "parameterCount": 6290,
+      "training": {
+        "bestValidationLoss": 0.022689,
+        "bestEpoch": 62
+      },
+      "metrics": {
+        "bySplit": {
+          "train": {
+            "count": 62227,
+            "mean": 0.4724,
+            "rmse": 1.448,
+            "median": 0.1272,
+            "p95": 1.8556,
+            "p99": 3.7321,
+            "max": 89.0278,
+            "gt5Rate": 0.006749,
+            "gt10Rate": 0.002507,
+            "signed": {
+              "count": 4932,
+              "mean": -0.9314,
+              "lagRate": 0.823601,
+              "leadRate": 0.176399
+            }
+          },
+          "validation": {
+            "count": 14220,
+            "mean": 0.5323,
+            "rmse": 1.9564,
+            "median": 0.1236,
+            "p95": 1.8662,
+            "p99": 5.9313,
+            "max": 82.8352,
+            "gt5Rate": 0.012025,
+            "gt10Rate": 0.005696,
+            "signed": {
+              "count": 1156,
+              "mean": -1.0685,
+              "lagRate": 0.851211,
+              "leadRate": 0.148789
+            }
+          },
+          "test": {
+            "count": 14174,
+            "mean": 0.523,
+            "rmse": 1.4835,
+            "median": 0.1457,
+            "p95": 1.9473,
+            "p99": 4.2647,
+            "max": 41.0347,
+            "gt5Rate": 0.008043,
+            "gt10Rate": 0.002822,
+            "signed": {
+              "count": 1219,
+              "mean": -1.0337,
+              "lagRate": 0.845775,
+              "leadRate": 0.154225
+            }
+          }
+        },
+        "teacherImitation": {
+          "train": {
+            "count": 62227,
+            "mean": 0.1915,
+            "rmse": 0.694,
+            "median": 0.0783,
+            "p95": 0.5714,
+            "p99": 1.5729,
+            "max": 33.8994,
+            "gt5Rate": 0.002539,
+            "gt10Rate": 0.000964
+          },
+          "validation": {
+            "count": 14220,
+            "mean": 0.2031,
+            "rmse": 0.6189,
+            "median": 0.0765,
+            "p95": 0.6171,
+            "p99": 2.1405,
+            "max": 15.5988,
+            "gt5Rate": 0.003376,
+            "gt10Rate": 0.000492
+          },
+          "test": {
+            "count": 14174,
+            "mean": 0.1959,
+            "rmse": 0.522,
+            "median": 0.0899,
+            "p95": 0.6086,
+            "p99": 1.5229,
+            "max": 13.8057,
+            "gt5Rate": 0.001905,
+            "gt10Rate": 0.000494
+          }
+        }
+      }
+    }
+  },
+  "studentRanking": [
+    {
+      "modelId": "tiny_mlp_fsmn_teacher",
+      "family": "tiny_mlp",
+      "target": "teacher",
+      "objective": 3.655235,
+      "validation": {
+        "count": 14220,
+        "mean": 0.5323,
+        "rmse": 1.9564,
+        "median": 0.1236,
+        "p95": 1.8662,
+        "p99": 5.9313,
+        "max": 82.8352,
+        "gt5Rate": 0.012025,
+        "gt10Rate": 0.005696,
+        "signed": {
+          "count": 1156,
+          "mean": -1.0685,
+          "lagRate": 0.851211,
+          "leadRate": 0.148789
+        }
+      },
+      "test": {
+        "count": 14174,
+        "mean": 0.523,
+        "rmse": 1.4835,
+        "median": 0.1457,
+        "p95": 1.9473,
+        "p99": 4.2647,
+        "max": 41.0347,
+        "gt5Rate": 0.008043,
+        "gt10Rate": 0.002822,
+        "signed": {
+          "count": 1219,
+          "mean": -1.0337,
+          "lagRate": 0.845775,
+          "leadRate": 0.154225
+        }
+      }
+    },
+    {
+      "modelId": "ridge_fsmn_label",
+      "family": "ridge_fsmn",
+      "target": "label",
+      "objective": 4.246635,
+      "validation": {
+        "count": 14220,
+        "mean": 0.6753,
+        "rmse": 2.2365,
+        "median": 0.2503,
+        "p95": 2.0356,
+        "p99": 7.3717,
+        "max": 90.4586,
+        "gt5Rate": 0.015752,
+        "gt10Rate": 0.006892,
+        "signed": {
+          "count": 1156,
+          "mean": -1.2689,
+          "lagRate": 0.846021,
+          "leadRate": 0.153979
+        }
+      },
+      "test": {
+        "count": 14174,
+        "mean": 0.6541,
+        "rmse": 1.6012,
+        "median": 0.3271,
+        "p95": 2.1117,
+        "p99": 5.0952,
+        "max": 38.7296,
+        "gt5Rate": 0.01023,
+        "gt10Rate": 0.004163,
+        "signed": {
+          "count": 1219,
+          "mean": -1.2323,
+          "lagRate": 0.844135,
+          "leadRate": 0.155865
+        }
+      }
+    },
+    {
+      "modelId": "ridge_fsmn_teacher",
+      "family": "ridge_fsmn",
+      "target": "teacher",
+      "objective": 4.27553,
+      "validation": {
+        "count": 14220,
+        "mean": 0.6829,
+        "rmse": 2.2315,
+        "median": 0.2598,
+        "p95": 2.0472,
+        "p99": 7.424,
+        "max": 90.7385,
+        "gt5Rate": 0.015049,
+        "gt10Rate": 0.006962,
+        "signed": {
+          "count": 1156,
+          "mean": -1.2866,
+          "lagRate": 0.859862,
+          "leadRate": 0.140138
+        }
+      },
+      "test": {
+        "count": 14174,
+        "mean": 0.6596,
+        "rmse": 1.6005,
+        "median": 0.3323,
+        "p95": 2.107,
+        "p99": 5.0051,
+        "max": 38.1963,
+        "gt5Rate": 0.010018,
+        "gt10Rate": 0.003951,
+        "signed": {
+          "count": 1219,
+          "mean": -1.2255,
+          "lagRate": 0.847416,
+          "leadRate": 0.152584
+        }
+      }
+    },
+    {
+      "modelId": "ridge_dense_teacher",
+      "family": "ridge_dense",
+      "target": "teacher",
+      "objective": 4.329315,
+      "validation": {
+        "count": 14220,
+        "mean": 0.6857,
+        "rmse": 2.2364,
+        "median": 0.2595,
+        "p95": 2.0531,
+        "p99": 7.5858,
+        "max": 90.649,
+        "gt5Rate": 0.015823,
+        "gt10Rate": 0.007173,
+        "signed": {
+          "count": 1156,
+          "mean": -1.2871,
+          "lagRate": 0.856401,
+          "leadRate": 0.143599
+        }
+      },
+      "test": {
+        "count": 14174,
+        "mean": 0.6584,
+        "rmse": 1.6081,
+        "median": 0.3268,
+        "p95": 2.1101,
+        "p99": 5.0199,
+        "max": 38.347,
+        "gt5Rate": 0.010089,
+        "gt10Rate": 0.00381,
+        "signed": {
+          "count": 1219,
+          "mean": -1.2506,
+          "lagRate": 0.849877,
+          "leadRate": 0.150123
+        }
+      }
+    },
+    {
+      "modelId": "ridge_scalar_teacher",
+      "family": "ridge_scalar",
+      "target": "teacher",
+      "objective": 4.370395,
+      "validation": {
+        "count": 14220,
+        "mean": 0.6781,
+        "rmse": 2.2433,
+        "median": 0.2515,
+        "p95": 2.0546,
+        "p99": 7.7093,
+        "max": 92.9147,
+        "gt5Rate": 0.015331,
+        "gt10Rate": 0.007454,
+        "signed": {
+          "count": 1156,
+          "mean": -1.2758,
+          "lagRate": 0.844291,
+          "leadRate": 0.155709
+        }
+      },
+      "test": {
+        "count": 14174,
+        "mean": 0.6705,
+        "rmse": 1.6578,
+        "median": 0.3463,
+        "p95": 2.1434,
+        "p99": 5.1605,
+        "max": 41.2407,
+        "gt5Rate": 0.010653,
+        "gt10Rate": 0.00388,
+        "signed": {
+          "count": 1219,
+          "mean": -1.1967,
+          "lagRate": 0.826907,
+          "leadRate": 0.173093
+        }
+      }
+    },
+    {
+      "modelId": "ridge_dense_label",
+      "family": "ridge_dense",
+      "target": "label",
+      "objective": 4.389195,
+      "validation": {
+        "count": 14220,
+        "mean": 0.6897,
+        "rmse": 2.2518,
+        "median": 0.2612,
+        "p95": 2.0671,
+        "p99": 7.779,
+        "max": 90.3969,
+        "gt5Rate": 0.015963,
+        "gt10Rate": 0.007173,
+        "signed": {
+          "count": 1156,
+          "mean": -1.2629,
+          "lagRate": 0.84083,
+          "leadRate": 0.15917
+        }
+      },
+      "test": {
+        "count": 14174,
+        "mean": 0.6616,
+        "rmse": 1.6047,
+        "median": 0.3293,
+        "p95": 2.1305,
+        "p99": 5.0768,
+        "max": 38.5728,
+        "gt5Rate": 0.010159,
+        "gt10Rate": 0.004021,
+        "signed": {
+          "count": 1219,
+          "mean": -1.2381,
+          "lagRate": 0.840033,
+          "leadRate": 0.159967
+        }
+      }
+    },
+    {
+      "modelId": "ridge_scalar_label",
+      "family": "ridge_scalar",
+      "target": "label",
+      "objective": 4.402355,
+      "validation": {
+        "count": 14220,
+        "mean": 0.6841,
+        "rmse": 2.248,
+        "median": 0.256,
+        "p95": 2.0676,
+        "p99": 7.8029,
+        "max": 92.603,
+        "gt5Rate": 0.015893,
+        "gt10Rate": 0.007384,
+        "signed": {
+          "count": 1156,
+          "mean": -1.2559,
+          "lagRate": 0.8391,
+          "leadRate": 0.1609
+        }
+      },
+      "test": {
+        "count": 14174,
+        "mean": 0.6764,
+        "rmse": 1.6556,
+        "median": 0.3573,
+        "p95": 2.1715,
+        "p99": 5.0992,
+        "max": 41.9767,
+        "gt5Rate": 0.010794,
+        "gt10Rate": 0.003951,
+        "signed": {
+          "count": 1219,
+          "mean": -1.1759,
+          "lagRate": 0.822806,
+          "leadRate": 0.177194
+        }
+      }
+    }
+  ],
+  "selectedStudent": "tiny_mlp_fsmn_teacher",
+  "packageHoldouts": [
+    {
+      "heldoutPackage": "m070248",
+      "rows": {
+        "test": 45855,
+        "train": 37728,
+        "validation": 7038
+      },
+      "teacher": {
+        "test": {
+          "count": 45855,
+          "mean": 0.4746,
+          "rmse": 1.5264,
+          "median": 0.1242,
+          "p95": 1.6363,
+          "p99": 4.5522,
+          "max": 90.3717,
+          "gt5Rate": 0.009094,
+          "gt10Rate": 0.003446,
+          "signed": {
+            "count": 3868,
+            "mean": -1.0798,
+            "lagRate": 0.869183,
+            "leadRate": 0.130817
+          }
+        },
+        "training": {
+          "bestValidationLoss": 0.084148,
+          "bestEpoch": 35,
+          "epochsRun": 47,
+          "trainSeconds": 49.509,
+          "historyTail": [
+            {
+              "epoch": 40,
+              "trainLoss": 0.043691,
+              "validationLoss": 0.085685
+            },
+            {
+              "epoch": 41,
+              "trainLoss": 0.042759,
+              "validationLoss": 0.085024
+            },
+            {
+              "epoch": 42,
+              "trainLoss": 0.04176,
+              "validationLoss": 0.085522
+            },
+            {
+              "epoch": 43,
+              "trainLoss": 0.043725,
+              "validationLoss": 0.085456
+            },
+            {
+              "epoch": 44,
+              "trainLoss": 0.042945,
+              "validationLoss": 0.085494
+            },
+            {
+              "epoch": 45,
+              "trainLoss": 0.042202,
+              "validationLoss": 0.086019
+            },
+            {
+              "epoch": 46,
+              "trainLoss": 0.040994,
+              "validationLoss": 0.086577
+            },
+            {
+              "epoch": 47,
+              "trainLoss": 0.042076,
+              "validationLoss": 0.086152
+            }
+          ]
+        }
+      },
+      "step5": {
+        "test": {
+          "count": 45855,
+          "mean": 0.5627,
+          "rmse": 1.8079,
+          "median": 0.142,
+          "p95": 2.1032,
+          "p99": 5.7807,
+          "max": 94.9456,
+          "gt5Rate": 0.011951,
+          "gt10Rate": 0.005038,
+          "signed": {
+            "count": 3868,
+            "mean": -1.4241,
+            "lagRate": 0.924509,
+            "leadRate": 0.075491
+          }
+        }
+      },
+      "bestStudent": {
+        "modelId": "tiny_mlp_fsmn_teacher",
+        "family": "tiny_mlp",
+        "target": "teacher",
+        "validation": {
+          "count": 7038,
+          "mean": 0.6233,
+          "rmse": 2.1709,
+          "median": 0.143,
+          "p95": 2.0264,
+          "p99": 7.3102,
+          "max": 62.1442,
+          "gt5Rate": 0.014777,
+          "gt10Rate": 0.007246,
+          "signed": {
+            "count": 559,
+            "mean": -1.2987,
+            "lagRate": 0.844365,
+            "leadRate": 0.155635
+          }
+        },
+        "test": {
+          "count": 45855,
+          "mean": 0.5051,
+          "rmse": 1.6164,
+          "median": 0.1568,
+          "p95": 1.6678,
+          "p99": 4.7893,
+          "max": 91.848,
+          "gt5Rate": 0.009595,
+          "gt10Rate": 0.00386,
+          "signed": {
+            "count": 3868,
+            "mean": -1.0624,
+            "lagRate": 0.870993,
+            "leadRate": 0.129007
+          }
+        }
+      },
+      "studentRanking": [
+        {
+          "modelId": "tiny_mlp_fsmn_teacher",
+          "family": "tiny_mlp",
+          "target": "teacher",
+          "objective": 4.23743,
+          "validation": {
+            "count": 7038,
+            "mean": 0.6233,
+            "rmse": 2.1709,
+            "median": 0.143,
+            "p95": 2.0264,
+            "p99": 7.3102,
+            "max": 62.1442,
+            "gt5Rate": 0.014777,
+            "gt10Rate": 0.007246,
+            "signed": {
+              "count": 559,
+              "mean": -1.2987,
+              "lagRate": 0.844365,
+              "leadRate": 0.155635
+            }
+          },
+          "test": {
+            "count": 45855,
+            "mean": 0.5051,
+            "rmse": 1.6164,
+            "median": 0.1568,
+            "p95": 1.6678,
+            "p99": 4.7893,
+            "max": 91.848,
+            "gt5Rate": 0.009595,
+            "gt10Rate": 0.00386,
+            "signed": {
+              "count": 3868,
+              "mean": -1.0624,
+              "lagRate": 0.870993,
+              "leadRate": 0.129007
+            }
+          }
+        },
+        {
+          "modelId": "ridge_scalar_label",
+          "family": "ridge_scalar",
+          "target": "label",
+          "objective": 4.926775,
+          "validation": {
+            "count": 7038,
+            "mean": 0.7471,
+            "rmse": 2.4186,
+            "median": 0.2466,
+            "p95": 2.4135,
+            "p99": 8.2614,
+            "max": 65.9198,
+            "gt5Rate": 0.017619,
+            "gt10Rate": 0.008099,
+            "signed": {
+              "count": 559,
+              "mean": -1.6446,
+              "lagRate": 0.912343,
+              "leadRate": 0.087657
+            }
+          },
+          "test": {
+            "count": 45855,
+            "mean": 0.6312,
+            "rmse": 1.716,
+            "median": 0.2751,
+            "p95": 2.08,
+            "p99": 5.6931,
+            "max": 93.6459,
+            "gt5Rate": 0.012278,
+            "gt10Rate": 0.004383,
+            "signed": {
+              "count": 3868,
+              "mean": -1.1422,
+              "lagRate": 0.839969,
+              "leadRate": 0.160031
+            }
+          }
+        },
+        {
+          "modelId": "ridge_scalar_teacher",
+          "family": "ridge_scalar",
+          "target": "teacher",
+          "objective": 4.93265,
+          "validation": {
+            "count": 7038,
+            "mean": 0.7328,
+            "rmse": 2.4232,
+            "median": 0.2315,
+            "p95": 2.3554,
+            "p99": 8.5047,
+            "max": 65.9502,
+            "gt5Rate": 0.01705,
+            "gt10Rate": 0.008099,
+            "signed": {
+              "count": 559,
+              "mean": -1.6761,
+              "lagRate": 0.919499,
+              "leadRate": 0.080501
+            }
+          },
+          "test": {
+            "count": 45855,
+            "mean": 0.6152,
+            "rmse": 1.7125,
+            "median": 0.2608,
+            "p95": 2.0625,
+            "p99": 5.5576,
+            "max": 93.7,
+            "gt5Rate": 0.011907,
+            "gt10Rate": 0.004449,
+            "signed": {
+              "count": 3868,
+              "mean": -1.1777,
+              "lagRate": 0.850827,
+              "leadRate": 0.149173
+            }
+          }
+        },
+        {
+          "modelId": "ridge_fsmn_teacher",
+          "family": "ridge_fsmn",
+          "target": "teacher",
+          "objective": 4.991095,
+          "validation": {
+            "count": 7038,
+            "mean": 0.7713,
+            "rmse": 2.3786,
+            "median": 0.269,
+            "p95": 2.4465,
+            "p99": 8.421,
+            "max": 62.5511,
+            "gt5Rate": 0.017761,
+            "gt10Rate": 0.008099,
+            "signed": {
+              "count": 559,
+              "mean": -1.5588,
+              "lagRate": 0.898032,
+              "leadRate": 0.101968
+            }
+          },
+          "test": {
+            "count": 45855,
+            "mean": 0.665,
+            "rmse": 1.7492,
+            "median": 0.3016,
+            "p95": 2.0853,
+            "p99": 6.2152,
+            "max": 91.387,
+            "gt5Rate": 0.013717,
+            "gt10Rate": 0.00482,
+            "signed": {
+              "count": 3868,
+              "mean": -1.1346,
+              "lagRate": 0.842554,
+              "leadRate": 0.157446
+            }
+          }
+        },
+        {
+          "modelId": "ridge_fsmn_label",
+          "family": "ridge_fsmn",
+          "target": "label",
+          "objective": 5.054705,
+          "validation": {
+            "count": 7038,
+            "mean": 0.7793,
+            "rmse": 2.3621,
+            "median": 0.2785,
+            "p95": 2.4409,
+            "p99": 8.644,
+            "max": 61.706,
+            "gt5Rate": 0.018187,
+            "gt10Rate": 0.008525,
+            "signed": {
+              "count": 559,
+              "mean": -1.5443,
+              "lagRate": 0.892665,
+              "leadRate": 0.107335
+            }
+          },
+          "test": {
+            "count": 45855,
+            "mean": 0.6795,
+            "rmse": 1.7535,
+            "median": 0.3062,
+            "p95": 2.125,
+            "p99": 6.3927,
+            "max": 90.5337,
+            "gt5Rate": 0.014568,
+            "gt10Rate": 0.004885,
+            "signed": {
+              "count": 3868,
+              "mean": -1.1119,
+              "lagRate": 0.835832,
+              "leadRate": 0.164168
+            }
+          }
+        },
+        {
+          "modelId": "ridge_dense_teacher",
+          "family": "ridge_dense",
+          "target": "teacher",
+          "objective": 5.10921,
+          "validation": {
+            "count": 7038,
+            "mean": 0.7766,
+            "rmse": 2.3959,
+            "median": 0.2702,
+            "p95": 2.4447,
+            "p99": 8.8407,
+            "max": 62.5033,
+            "gt5Rate": 0.017903,
+            "gt10Rate": 0.008525,
+            "signed": {
+              "count": 559,
+              "mean": -1.5596,
+              "lagRate": 0.906977,
+              "leadRate": 0.093023
+            }
+          },
+          "test": {
+            "count": 45855,
+            "mean": 0.6678,
+            "rmse": 1.7616,
+            "median": 0.3019,
+            "p95": 2.0992,
+            "p99": 6.3539,
+            "max": 91.1278,
+            "gt5Rate": 0.014044,
+            "gt10Rate": 0.004885,
+            "signed": {
+              "count": 3868,
+              "mean": -1.1328,
+              "lagRate": 0.844623,
+              "leadRate": 0.155377
+            }
+          }
+        },
+        {
+          "modelId": "ridge_dense_label",
+          "family": "ridge_dense",
+          "target": "label",
+          "objective": 5.142585,
+          "validation": {
+            "count": 7038,
+            "mean": 0.7879,
+            "rmse": 2.3857,
+            "median": 0.2814,
+            "p95": 2.4467,
+            "p99": 8.9544,
+            "max": 61.8148,
+            "gt5Rate": 0.019039,
+            "gt10Rate": 0.008667,
+            "signed": {
+              "count": 559,
+              "mean": -1.5394,
+              "lagRate": 0.890877,
+              "leadRate": 0.109123
+            }
+          },
+          "test": {
+            "count": 45855,
+            "mean": 0.6835,
+            "rmse": 1.7702,
+            "median": 0.306,
+            "p95": 2.1214,
+            "p99": 6.5482,
+            "max": 90.4549,
+            "gt5Rate": 0.014895,
+            "gt10Rate": 0.004972,
+            "signed": {
+              "count": 3868,
+              "mean": -1.1021,
+              "lagRate": 0.834798,
+              "leadRate": 0.165202
+            }
+          }
+        }
+      ]
+    },
+    {
+      "heldoutPackage": "m070307",
+      "rows": {
+        "train": 38673,
+        "validation": 7182,
+        "test": 44766
+      },
+      "teacher": {
+        "test": {
+          "count": 44766,
+          "mean": 0.5707,
+          "rmse": 1.8377,
+          "median": 0.1433,
+          "p95": 2.0376,
+          "p99": 4.9726,
+          "max": 88.2782,
+          "gt5Rate": 0.009918,
+          "gt10Rate": 0.004267,
+          "signed": {
+            "count": 3439,
+            "mean": -0.8472,
+            "lagRate": 0.747892,
+            "leadRate": 0.252108
+          }
+        },
+        "training": {
+          "bestValidationLoss": 0.054952,
+          "bestEpoch": 17,
+          "epochsRun": 29,
+          "trainSeconds": 32.99,
+          "historyTail": [
+            {
+              "epoch": 22,
+              "trainLoss": 0.042144,
+              "validationLoss": 0.055933
+            },
+            {
+              "epoch": 23,
+              "trainLoss": 0.041534,
+              "validationLoss": 0.055037
+            },
+            {
+              "epoch": 24,
+              "trainLoss": 0.04111,
+              "validationLoss": 0.055612
+            },
+            {
+              "epoch": 25,
+              "trainLoss": 0.040405,
+              "validationLoss": 0.056442
+            },
+            {
+              "epoch": 26,
+              "trainLoss": 0.039679,
+              "validationLoss": 0.056107
+            },
+            {
+              "epoch": 27,
+              "trainLoss": 0.039672,
+              "validationLoss": 0.055939
+            },
+            {
+              "epoch": 28,
+              "trainLoss": 0.039792,
+              "validationLoss": 0.0577
+            },
+            {
+              "epoch": 29,
+              "trainLoss": 0.039802,
+              "validationLoss": 0.055494
+            }
+          ]
+        }
+      },
+      "step5": {
+        "test": {
+          "count": 44766,
+          "mean": 0.5841,
+          "rmse": 2.0545,
+          "median": 0.1301,
+          "p95": 2.1649,
+          "p99": 5.7992,
+          "max": 96.5519,
+          "gt5Rate": 0.011772,
+          "gt10Rate": 0.00525,
+          "signed": {
+            "count": 3439,
+            "mean": -1.8085,
+            "lagRate": 0.961326,
+            "leadRate": 0.038674
+          }
+        }
+      },
+      "bestStudent": {
+        "modelId": "tiny_mlp_fsmn_teacher",
+        "family": "tiny_mlp",
+        "target": "teacher",
+        "validation": {
+          "count": 7182,
+          "mean": 0.4868,
+          "rmse": 1.7275,
+          "median": 0.1541,
+          "p95": 1.6519,
+          "p99": 4.5929,
+          "max": 79.6502,
+          "gt5Rate": 0.008911,
+          "gt10Rate": 0.003899,
+          "signed": {
+            "count": 597,
+            "mean": -0.8757,
+            "lagRate": 0.862647,
+            "leadRate": 0.137353
+          }
+        },
+        "test": {
+          "count": 44766,
+          "mean": 0.6101,
+          "rmse": 1.8952,
+          "median": 0.1941,
+          "p95": 2.0564,
+          "p99": 5.1511,
+          "max": 90.0643,
+          "gt5Rate": 0.010387,
+          "gt10Rate": 0.004378,
+          "signed": {
+            "count": 3439,
+            "mean": -1.0139,
+            "lagRate": 0.796743,
+            "leadRate": 0.203257
+          }
+        }
+      },
+      "studentRanking": [
+        {
+          "modelId": "tiny_mlp_fsmn_teacher",
+          "family": "tiny_mlp",
+          "target": "teacher",
+          "objective": 3.02416,
+          "validation": {
+            "count": 7182,
+            "mean": 0.4868,
+            "rmse": 1.7275,
+            "median": 0.1541,
+            "p95": 1.6519,
+            "p99": 4.5929,
+            "max": 79.6502,
+            "gt5Rate": 0.008911,
+            "gt10Rate": 0.003899,
+            "signed": {
+              "count": 597,
+              "mean": -0.8757,
+              "lagRate": 0.862647,
+              "leadRate": 0.137353
+            }
+          },
+          "test": {
+            "count": 44766,
+            "mean": 0.6101,
+            "rmse": 1.8952,
+            "median": 0.1941,
+            "p95": 2.0564,
+            "p99": 5.1511,
+            "max": 90.0643,
+            "gt5Rate": 0.010387,
+            "gt10Rate": 0.004378,
+            "signed": {
+              "count": 3439,
+              "mean": -1.0139,
+              "lagRate": 0.796743,
+              "leadRate": 0.203257
+            }
+          }
+        },
+        {
+          "modelId": "ridge_scalar_teacher",
+          "family": "ridge_scalar",
+          "target": "teacher",
+          "objective": 3.711405,
+          "validation": {
+            "count": 7182,
+            "mean": 0.6088,
+            "rmse": 2.0829,
+            "median": 0.2483,
+            "p95": 1.8233,
+            "p99": 6.2819,
+            "max": 92.0415,
+            "gt5Rate": 0.013228,
+            "gt10Rate": 0.006266,
+            "signed": {
+              "count": 597,
+              "mean": -0.9832,
+              "lagRate": 0.812395,
+              "leadRate": 0.187605
+            }
+          },
+          "test": {
+            "count": 44766,
+            "mean": 0.7123,
+            "rmse": 2.0317,
+            "median": 0.3211,
+            "p95": 2.2563,
+            "p99": 6.0818,
+            "max": 92.4145,
+            "gt5Rate": 0.012889,
+            "gt10Rate": 0.00516,
+            "signed": {
+              "count": 3439,
+              "mean": -1.4579,
+              "lagRate": 0.871474,
+              "leadRate": 0.128526
+            }
+          }
+        },
+        {
+          "modelId": "ridge_scalar_label",
+          "family": "ridge_scalar",
+          "target": "label",
+          "objective": 3.79112,
+          "validation": {
+            "count": 7182,
+            "mean": 0.6278,
+            "rmse": 2.1007,
+            "median": 0.2551,
+            "p95": 1.8359,
+            "p99": 6.5139,
+            "max": 91.9422,
+            "gt5Rate": 0.013506,
+            "gt10Rate": 0.006683,
+            "signed": {
+              "count": 597,
+              "mean": -0.9284,
+              "lagRate": 0.777219,
+              "leadRate": 0.222781
+            }
+          },
+          "test": {
+            "count": 44766,
+            "mean": 0.727,
+            "rmse": 2.0297,
+            "median": 0.3311,
+            "p95": 2.3051,
+            "p99": 6.1704,
+            "max": 92.4067,
+            "gt5Rate": 0.013157,
+            "gt10Rate": 0.005205,
+            "signed": {
+              "count": 3439,
+              "mean": -1.4087,
+              "lagRate": 0.857517,
+              "leadRate": 0.142483
+            }
+          }
+        },
+        {
+          "modelId": "ridge_dense_teacher",
+          "family": "ridge_dense",
+          "target": "teacher",
+          "objective": 3.80266,
+          "validation": {
+            "count": 7182,
+            "mean": 0.6321,
+            "rmse": 2.12,
+            "median": 0.2609,
+            "p95": 1.8446,
+            "p99": 6.5362,
+            "max": 89.6633,
+            "gt5Rate": 0.013367,
+            "gt10Rate": 0.006266,
+            "signed": {
+              "count": 597,
+              "mean": -1.047,
+              "lagRate": 0.819095,
+              "leadRate": 0.180905
+            }
+          },
+          "test": {
+            "count": 44766,
+            "mean": 0.7542,
+            "rmse": 2.054,
+            "median": 0.3691,
+            "p95": 2.3108,
+            "p99": 6.292,
+            "max": 90.659,
+            "gt5Rate": 0.013917,
+            "gt10Rate": 0.005205,
+            "signed": {
+              "count": 3439,
+              "mean": -1.3795,
+              "lagRate": 0.85141,
+              "leadRate": 0.14859
+            }
+          }
+        },
+        {
+          "modelId": "ridge_fsmn_teacher",
+          "family": "ridge_fsmn",
+          "target": "teacher",
+          "objective": 3.853055,
+          "validation": {
+            "count": 7182,
+            "mean": 0.6378,
+            "rmse": 2.1188,
+            "median": 0.2738,
+            "p95": 1.8614,
+            "p99": 6.7299,
+            "max": 89.6727,
+            "gt5Rate": 0.013367,
+            "gt10Rate": 0.005848,
+            "signed": {
+              "count": 597,
+              "mean": -1.045,
+              "lagRate": 0.825796,
+              "leadRate": 0.174204
+            }
+          },
+          "test": {
+            "count": 44766,
+            "mean": 0.7398,
+            "rmse": 2.0345,
+            "median": 0.3567,
+            "p95": 2.2815,
+            "p99": 6.1555,
+            "max": 90.8438,
+            "gt5Rate": 0.013314,
+            "gt10Rate": 0.005071,
+            "signed": {
+              "count": 3439,
+              "mean": -1.4062,
+              "lagRate": 0.857517,
+              "leadRate": 0.142483
+            }
+          }
+        },
+        {
+          "modelId": "ridge_dense_label",
+          "family": "ridge_dense",
+          "target": "label",
+          "objective": 3.91266,
+          "validation": {
+            "count": 7182,
+            "mean": 0.6345,
+            "rmse": 2.1791,
+            "median": 0.2599,
+            "p95": 1.8571,
+            "p99": 6.9004,
+            "max": 89.2239,
+            "gt5Rate": 0.013924,
+            "gt10Rate": 0.006544,
+            "signed": {
+              "count": 597,
+              "mean": -1.0142,
+              "lagRate": 0.81407,
+              "leadRate": 0.18593
+            }
+          },
+          "test": {
+            "count": 44766,
+            "mean": 0.7602,
+            "rmse": 2.0756,
+            "median": 0.3569,
+            "p95": 2.3374,
+            "p99": 6.5028,
+            "max": 90.5817,
+            "gt5Rate": 0.014475,
+            "gt10Rate": 0.005361,
+            "signed": {
+              "count": 3439,
+              "mean": -1.3485,
+              "lagRate": 0.837744,
+              "leadRate": 0.162256
+            }
+          }
+        },
+        {
+          "modelId": "ridge_fsmn_label",
+          "family": "ridge_fsmn",
+          "target": "label",
+          "objective": 3.993325,
+          "validation": {
+            "count": 7182,
+            "mean": 0.6309,
+            "rmse": 2.16,
+            "median": 0.2584,
+            "p95": 1.9027,
+            "p99": 7.0228,
+            "max": 89.0026,
+            "gt5Rate": 0.014063,
+            "gt10Rate": 0.006683,
+            "signed": {
+              "count": 597,
+              "mean": -1.0102,
+              "lagRate": 0.798995,
+              "leadRate": 0.201005
+            }
+          },
+          "test": {
+            "count": 44766,
+            "mean": 0.7293,
+            "rmse": 2.0392,
+            "median": 0.3407,
+            "p95": 2.2811,
+            "p99": 6.2285,
+            "max": 90.9638,
+            "gt5Rate": 0.013582,
+            "gt10Rate": 0.005048,
+            "signed": {
+              "count": 3439,
+              "mean": -1.3792,
+              "lagRate": 0.853155,
+              "leadRate": 0.146845
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "interpretation": "The 60Hz-only deep teacher is learnable and at least one CPU-friendly student beats the Step 5 gate on the standard 60Hz split. Package holdout remains the promotion gate: regressions there should block direct product integration. The teacher itself is a clear upper-bound improvement over Step 5 in the 60Hz standard split.",
+  "elapsedSeconds": 523.236
+}

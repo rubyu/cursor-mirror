@@ -28,10 +28,11 @@ namespace CursorMirror
             bool movementTranslucencyEnabled,
             bool idleFadeEnabled)
         {
+            bool predictionInputsEnabled = mirrorCursorEnabled && predictionEnabled;
             return new DemoOverlayControlState(
                 mirrorCursorEnabled,
-                mirrorCursorEnabled && predictionEnabled,
-                mirrorCursorEnabled && predictionEnabled,
+                predictionInputsEnabled,
+                predictionInputsEnabled,
                 mirrorCursorEnabled && movementTranslucencyEnabled,
                 mirrorCursorEnabled && idleFadeEnabled);
         }

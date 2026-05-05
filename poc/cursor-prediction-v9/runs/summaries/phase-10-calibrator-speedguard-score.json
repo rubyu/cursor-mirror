@@ -1,0 +1,957 @@
+{
+  "schemaVersion": "cursor-prediction-v7-score/1",
+  "generatedAt": "2026-05-03T05:38:41.512Z",
+  "baselineCandidate": "constant-velocity",
+  "objective": {
+    "sourceColumn": "estimatedSeparationPixels",
+    "darkFramesOnly": true,
+    "lowerIsBetter": true,
+    "patternScoreFormula": "0.50*p95 + 0.35*p99 + 0.15*max",
+    "candidateScore": "weighted mean of pattern scores",
+    "patternWeights": {
+      "linear-slow": 1,
+      "hold-right": 0.75,
+      "linear-fast": 1.4,
+      "hold-left": 0.75,
+      "quadratic-ease-in": 1.2,
+      "quadratic-ease-out": 1.2,
+      "cubic-smoothstep": 1.2,
+      "cubic-in-out": 1.25,
+      "rapid-reversal": 1.6,
+      "sine-sweep": 1.4,
+      "short-jitter": 1.4
+    }
+  },
+  "requiredColumns": [
+    "frameIndex",
+    "timestampTicks",
+    "elapsedMilliseconds",
+    "patternName",
+    "phaseName",
+    "expectedX",
+    "expectedY",
+    "expectedVelocityPixelsPerSecond",
+    "width",
+    "height",
+    "darkPixelCount",
+    "hasDarkPixels",
+    "darkBoundsX",
+    "darkBoundsY",
+    "darkBoundsWidth",
+    "darkBoundsHeight",
+    "estimatedSeparationPixels"
+  ],
+  "defaultPatterns": [
+    "linear-slow",
+    "hold-right",
+    "linear-fast",
+    "hold-left",
+    "quadratic-ease-in",
+    "quadratic-ease-out",
+    "cubic-smoothstep",
+    "cubic-in-out",
+    "rapid-reversal",
+    "sine-sweep",
+    "short-jitter"
+  ],
+  "runs": [
+    {
+      "candidateId": "constant-velocity",
+      "packagePath": "C:\\Users\\seigl\\OneDrive\\my\\ドキュメント\\projects\\cursor\\poc\\cursor-prediction-v9\\runs\\raw\\constant-velocity-30s.zip",
+      "entries": [
+        "frames.csv",
+        "metrics.json"
+      ],
+      "metricsJson": {
+        "frameCount": 696,
+        "darkFrameCount": 696,
+        "captureSource": "Windows Graphics Capture",
+        "averageEstimatedSeparationPixels": 3.7557471264367814,
+        "p95EstimatedSeparationPixels": 12,
+        "maximumEstimatedSeparationPixels": 26
+      },
+      "qualityWarnings": [],
+      "overall": {
+        "scorePx": 14.1,
+        "stats": {
+          "frameCount": 696,
+          "darkFrameCount": 696,
+          "meanPx": 3.7557471264367814,
+          "p50Px": 0,
+          "p90Px": 12,
+          "p95Px": 12,
+          "p99Px": 12,
+          "maxPx": 26
+        }
+      },
+      "patterns": [
+        {
+          "patternName": "linear-slow",
+          "weight": 1,
+          "scorePx": 8.3,
+          "stats": {
+            "frameCount": 106,
+            "darkFrameCount": 106,
+            "meanPx": 3.8867924528301887,
+            "p50Px": 6,
+            "p90Px": 7,
+            "p95Px": 8,
+            "p99Px": 8,
+            "maxPx": 10
+          }
+        },
+        {
+          "patternName": "hold-right",
+          "weight": 0.75,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 18,
+            "darkFrameCount": 18,
+            "meanPx": 9.5,
+            "p50Px": 12,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "linear-fast",
+          "weight": 1.4,
+          "scorePx": 20.5,
+          "stats": {
+            "frameCount": 46,
+            "darkFrameCount": 46,
+            "meanPx": 3,
+            "p50Px": 0,
+            "p90Px": 12,
+            "p95Px": 15,
+            "p99Px": 26,
+            "maxPx": 26
+          }
+        },
+        {
+          "patternName": "hold-left",
+          "weight": 0.75,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 18,
+            "darkFrameCount": 18,
+            "meanPx": 6,
+            "p50Px": 0,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "quadratic-ease-in",
+          "weight": 1.2,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 87,
+            "darkFrameCount": 87,
+            "meanPx": 6.011494252873563,
+            "p50Px": 7,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "quadratic-ease-out",
+          "weight": 1.2,
+          "scorePx": 11,
+          "stats": {
+            "frameCount": 86,
+            "darkFrameCount": 86,
+            "meanPx": 1.744186046511628,
+            "p50Px": 0,
+            "p90Px": 8,
+            "p95Px": 10,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "cubic-smoothstep",
+          "weight": 1.2,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 101,
+            "darkFrameCount": 101,
+            "meanPx": 5.3861386138613865,
+            "p50Px": 7,
+            "p90Px": 11,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "cubic-in-out",
+          "weight": 1.25,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 70,
+            "darkFrameCount": 70,
+            "meanPx": 3.6857142857142855,
+            "p50Px": 0,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "rapid-reversal",
+          "weight": 1.6,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 48,
+            "darkFrameCount": 48,
+            "meanPx": 2.125,
+            "p50Px": 0,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "sine-sweep",
+          "weight": 1.4,
+          "scorePx": 11.5,
+          "stats": {
+            "frameCount": 68,
+            "darkFrameCount": 68,
+            "meanPx": 1.588235294117647,
+            "p50Px": 0,
+            "p90Px": 9,
+            "p95Px": 11,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "short-jitter",
+          "weight": 1.4,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 48,
+            "darkFrameCount": 48,
+            "meanPx": 2.0833333333333335,
+            "p50Px": 0,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        }
+      ]
+    },
+    {
+      "candidateId": "experimental-mlp-speedguard",
+      "packagePath": "C:\\Users\\seigl\\OneDrive\\my\\ドキュメント\\projects\\cursor\\poc\\cursor-prediction-v9\\runs\\raw\\experimental-mlp-speedguard-30s.zip",
+      "entries": [
+        "frames.csv",
+        "metrics.json"
+      ],
+      "metricsJson": {
+        "frameCount": 696,
+        "darkFrameCount": 696,
+        "captureSource": "Windows Graphics Capture",
+        "averageEstimatedSeparationPixels": 3.728448275862069,
+        "p95EstimatedSeparationPixels": 12,
+        "maximumEstimatedSeparationPixels": 74
+      },
+      "qualityWarnings": [],
+      "overall": {
+        "scorePx": 21.299999999999997,
+        "stats": {
+          "frameCount": 696,
+          "darkFrameCount": 696,
+          "meanPx": 3.728448275862069,
+          "p50Px": 0,
+          "p90Px": 12,
+          "p95Px": 12,
+          "p99Px": 12,
+          "maxPx": 74
+        }
+      },
+      "patterns": [
+        {
+          "patternName": "linear-slow",
+          "weight": 1,
+          "scorePx": 11,
+          "stats": {
+            "frameCount": 105,
+            "darkFrameCount": 105,
+            "meanPx": 4.866666666666666,
+            "p50Px": 7,
+            "p90Px": 8,
+            "p95Px": 10,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "hold-right",
+          "weight": 0.75,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 18,
+            "darkFrameCount": 18,
+            "meanPx": 8.055555555555555,
+            "p50Px": 7,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "linear-fast",
+          "weight": 1.4,
+          "scorePx": 45.5,
+          "stats": {
+            "frameCount": 47,
+            "darkFrameCount": 47,
+            "meanPx": 5,
+            "p50Px": 0,
+            "p90Px": 12,
+            "p95Px": 17,
+            "p99Px": 74,
+            "maxPx": 74
+          }
+        },
+        {
+          "patternName": "hold-left",
+          "weight": 0.75,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 18,
+            "darkFrameCount": 18,
+            "meanPx": 5.777777777777778,
+            "p50Px": 2,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "quadratic-ease-in",
+          "weight": 1.2,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 87,
+            "darkFrameCount": 87,
+            "meanPx": 5.149425287356322,
+            "p50Px": 6,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "quadratic-ease-out",
+          "weight": 1.2,
+          "scorePx": 11.5,
+          "stats": {
+            "frameCount": 86,
+            "darkFrameCount": 86,
+            "meanPx": 2.1627906976744184,
+            "p50Px": 0,
+            "p90Px": 8,
+            "p95Px": 11,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "cubic-smoothstep",
+          "weight": 1.2,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 101,
+            "darkFrameCount": 101,
+            "meanPx": 4.366336633663367,
+            "p50Px": 0,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "cubic-in-out",
+          "weight": 1.25,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 71,
+            "darkFrameCount": 71,
+            "meanPx": 4,
+            "p50Px": 0,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "rapid-reversal",
+          "weight": 1.6,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 48,
+            "darkFrameCount": 48,
+            "meanPx": 1.6666666666666667,
+            "p50Px": 0,
+            "p90Px": 11,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "sine-sweep",
+          "weight": 1.4,
+          "scorePx": 11,
+          "stats": {
+            "frameCount": 67,
+            "darkFrameCount": 67,
+            "meanPx": 1.1940298507462686,
+            "p50Px": 0,
+            "p90Px": 7,
+            "p95Px": 10,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        },
+        {
+          "patternName": "short-jitter",
+          "weight": 1.4,
+          "scorePx": 11.5,
+          "stats": {
+            "frameCount": 48,
+            "darkFrameCount": 48,
+            "meanPx": 1.6875,
+            "p50Px": 0,
+            "p90Px": 9,
+            "p95Px": 11,
+            "p99Px": 12,
+            "maxPx": 12
+          }
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "candidateId": "constant-velocity",
+      "runCount": 1,
+      "visualScorePx": 12.47908745247148,
+      "qualityWarnings": [],
+      "patterns": [
+        {
+          "patternName": "linear-slow",
+          "weight": 1,
+          "scorePx": 8.3,
+          "stats": {
+            "frameCount": 106,
+            "darkFrameCount": 106,
+            "meanPx": 3.8867924528301887,
+            "p50Px": 6,
+            "p90Px": 7,
+            "p95Px": 8,
+            "p99Px": 8,
+            "maxPx": 10
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": 0,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "hold-right",
+          "weight": 0.75,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 18,
+            "darkFrameCount": 18,
+            "meanPx": 9.5,
+            "p50Px": 12,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": 0,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "linear-fast",
+          "weight": 1.4,
+          "scorePx": 20.5,
+          "stats": {
+            "frameCount": 46,
+            "darkFrameCount": 46,
+            "meanPx": 3,
+            "p50Px": 0,
+            "p90Px": 12,
+            "p95Px": 15,
+            "p99Px": 26,
+            "maxPx": 26
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": 0,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "hold-left",
+          "weight": 0.75,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 18,
+            "darkFrameCount": 18,
+            "meanPx": 6,
+            "p50Px": 0,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": 0,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "quadratic-ease-in",
+          "weight": 1.2,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 87,
+            "darkFrameCount": 87,
+            "meanPx": 6.011494252873563,
+            "p50Px": 7,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": 0,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "quadratic-ease-out",
+          "weight": 1.2,
+          "scorePx": 11,
+          "stats": {
+            "frameCount": 86,
+            "darkFrameCount": 86,
+            "meanPx": 1.744186046511628,
+            "p50Px": 0,
+            "p90Px": 8,
+            "p95Px": 10,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": 0,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "cubic-smoothstep",
+          "weight": 1.2,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 101,
+            "darkFrameCount": 101,
+            "meanPx": 5.3861386138613865,
+            "p50Px": 7,
+            "p90Px": 11,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": 0,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "cubic-in-out",
+          "weight": 1.25,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 70,
+            "darkFrameCount": 70,
+            "meanPx": 3.6857142857142855,
+            "p50Px": 0,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": 0,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "rapid-reversal",
+          "weight": 1.6,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 48,
+            "darkFrameCount": 48,
+            "meanPx": 2.125,
+            "p50Px": 0,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": 0,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "sine-sweep",
+          "weight": 1.4,
+          "scorePx": 11.5,
+          "stats": {
+            "frameCount": 68,
+            "darkFrameCount": 68,
+            "meanPx": 1.588235294117647,
+            "p50Px": 0,
+            "p90Px": 9,
+            "p95Px": 11,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": 0,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "short-jitter",
+          "weight": 1.4,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 48,
+            "darkFrameCount": 48,
+            "meanPx": 2.0833333333333335,
+            "p50Px": 0,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": 0,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        }
+      ],
+      "deltaToBaselineScorePx": 0
+    },
+    {
+      "candidateId": "experimental-mlp-speedguard",
+      "runCount": 1,
+      "visualScorePx": 15.285171102661597,
+      "qualityWarnings": [],
+      "patterns": [
+        {
+          "patternName": "linear-slow",
+          "weight": 1,
+          "scorePx": 11,
+          "stats": {
+            "frameCount": 105,
+            "darkFrameCount": 105,
+            "meanPx": 4.866666666666666,
+            "p50Px": 7,
+            "p90Px": 8,
+            "p95Px": 10,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": 2.6999999999999993,
+            "meanPx": 0.9798742138364775,
+            "p95Px": 2,
+            "p99Px": 4,
+            "maxPx": 2
+          }
+        },
+        {
+          "patternName": "hold-right",
+          "weight": 0.75,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 18,
+            "darkFrameCount": 18,
+            "meanPx": 8.055555555555555,
+            "p50Px": 7,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": -1.4444444444444446,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "linear-fast",
+          "weight": 1.4,
+          "scorePx": 45.5,
+          "stats": {
+            "frameCount": 47,
+            "darkFrameCount": 47,
+            "meanPx": 5,
+            "p50Px": 0,
+            "p90Px": 12,
+            "p95Px": 17,
+            "p99Px": 74,
+            "maxPx": 74
+          },
+          "deltaToBaseline": {
+            "scorePx": 25,
+            "meanPx": 2,
+            "p95Px": 2,
+            "p99Px": 48,
+            "maxPx": 48
+          }
+        },
+        {
+          "patternName": "hold-left",
+          "weight": 0.75,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 18,
+            "darkFrameCount": 18,
+            "meanPx": 5.777777777777778,
+            "p50Px": 2,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": -0.22222222222222232,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "quadratic-ease-in",
+          "weight": 1.2,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 87,
+            "darkFrameCount": 87,
+            "meanPx": 5.149425287356322,
+            "p50Px": 6,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": -0.8620689655172411,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "quadratic-ease-out",
+          "weight": 1.2,
+          "scorePx": 11.5,
+          "stats": {
+            "frameCount": 86,
+            "darkFrameCount": 86,
+            "meanPx": 2.1627906976744184,
+            "p50Px": 0,
+            "p90Px": 8,
+            "p95Px": 11,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": 0.5,
+            "meanPx": 0.41860465116279055,
+            "p95Px": 1,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "cubic-smoothstep",
+          "weight": 1.2,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 101,
+            "darkFrameCount": 101,
+            "meanPx": 4.366336633663367,
+            "p50Px": 0,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": -1.0198019801980198,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "cubic-in-out",
+          "weight": 1.25,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 71,
+            "darkFrameCount": 71,
+            "meanPx": 4,
+            "p50Px": 0,
+            "p90Px": 12,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": 0.3142857142857145,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "rapid-reversal",
+          "weight": 1.6,
+          "scorePx": 12,
+          "stats": {
+            "frameCount": 48,
+            "darkFrameCount": 48,
+            "meanPx": 1.6666666666666667,
+            "p50Px": 0,
+            "p90Px": 11,
+            "p95Px": 12,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": 0,
+            "meanPx": -0.45833333333333326,
+            "p95Px": 0,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "sine-sweep",
+          "weight": 1.4,
+          "scorePx": 11,
+          "stats": {
+            "frameCount": 67,
+            "darkFrameCount": 67,
+            "meanPx": 1.1940298507462686,
+            "p50Px": 0,
+            "p90Px": 7,
+            "p95Px": 10,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": -0.5,
+            "meanPx": -0.3942054433713784,
+            "p95Px": -1,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        },
+        {
+          "patternName": "short-jitter",
+          "weight": 1.4,
+          "scorePx": 11.5,
+          "stats": {
+            "frameCount": 48,
+            "darkFrameCount": 48,
+            "meanPx": 1.6875,
+            "p50Px": 0,
+            "p90Px": 9,
+            "p95Px": 11,
+            "p99Px": 12,
+            "maxPx": 12
+          },
+          "deltaToBaseline": {
+            "scorePx": -0.5,
+            "meanPx": -0.3958333333333335,
+            "p95Px": -1,
+            "p99Px": 0,
+            "maxPx": 0
+          }
+        }
+      ],
+      "deltaToBaselineScorePx": 2.806083650190116
+    }
+  ]
+}

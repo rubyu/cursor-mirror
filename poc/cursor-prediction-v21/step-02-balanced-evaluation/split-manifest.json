@@ -1,0 +1,254 @@
+{
+  "schemaVersion": "cursor-prediction-v21-step-02-split-manifest/1",
+  "generatedAtUtc": "2026-05-04T12:00:00Z",
+  "sourceAudit": "../step-01-data-audit/audit.json",
+  "targetPattern": "cursor-mirror-motion-recording-20260504-19*.zip",
+  "splitUnit": "file",
+  "deterministicPolicy": {
+    "sortKey": "file name ascending",
+    "fixed12000msAssumptionValid": false,
+    "timingSource": "motion-metadata.json plus row-level motion-trace-alignment.csv scenarioElapsedMilliseconds",
+    "primaryHoldoutRule": "reserve the only normal 4s file for test/normal",
+    "trainRule": "one poll-delayed file each from 4s, 6s, 8s, and 12s buckets; avoid row-count dominance by 12s files",
+    "validationRule": "hold one remaining 12s poll-delayed file for model-selection diagnostics",
+    "robustnessRule": "hold a mixed 6s, 8s, 10s, and severe 12s poll-delayed set for stress-only scoring"
+  },
+  "requiredZipEntries": [
+    "metadata.json",
+    "motion-metadata.json",
+    "motion-script.json",
+    "motion-samples.csv",
+    "motion-trace-alignment.csv",
+    "trace.csv"
+  ],
+  "loaderRequiredColumns": {
+    "motion-samples.csv": [
+      "elapsedMilliseconds",
+      "scenarioIndex",
+      "scenarioElapsedMilliseconds",
+      "x",
+      "y",
+      "velocityPixelsPerSecond",
+      "movementPhase",
+      "holdIndex",
+      "phaseElapsedMilliseconds"
+    ],
+    "motion-trace-alignment.csv": [
+      "traceEvent",
+      "traceElapsedMicroseconds",
+      "generatedElapsedMilliseconds",
+      "scenarioIndex",
+      "scenarioElapsedMilliseconds",
+      "generatedX",
+      "generatedY",
+      "velocityPixelsPerSecond",
+      "movementPhase",
+      "holdIndex",
+      "phaseElapsedMilliseconds"
+    ]
+  },
+  "splitSummary": {
+    "train": {
+      "packageCount": 4,
+      "durationBuckets": {
+        "4s": 1,
+        "6s": 1,
+        "8s": 1,
+        "12s": 1
+      },
+      "qualityBuckets": {
+        "poll-delayed": 4
+      },
+      "motionRows": 460804,
+      "alignmentRows": 1673498
+    },
+    "validation": {
+      "packageCount": 1,
+      "durationBuckets": {
+        "12s": 1
+      },
+      "qualityBuckets": {
+        "poll-delayed": 1
+      },
+      "motionRows": 184321,
+      "alignmentRows": 567051
+    },
+    "test": {
+      "packageCount": 1,
+      "durationBuckets": {
+        "4s": 1
+      },
+      "qualityBuckets": {
+        "normal": 1
+      },
+      "motionRows": 61441,
+      "alignmentRows": 252111
+    },
+    "robustness": {
+      "packageCount": 4,
+      "durationBuckets": {
+        "6s": 1,
+        "8s": 1,
+        "10s": 1,
+        "12s": 1
+      },
+      "qualityBuckets": {
+        "poll-delayed": 4
+      },
+      "motionRows": 552964,
+      "alignmentRows": 1689643
+    }
+  },
+  "packages": [
+    {
+      "packageId": "m191827",
+      "file": "cursor-mirror-motion-recording-20260504-191827.zip",
+      "path": "cursor-mirror-motion-recording-20260504-191827.zip",
+      "split": "train",
+      "qualityBucket": "poll-delayed",
+      "durationBucket": "12s",
+      "scenarioDurationMilliseconds": 12000,
+      "durationMilliseconds": 768000,
+      "scenarioCount": 64,
+      "motionRows": 184321,
+      "alignmentRows": 558923,
+      "holdRatio": 0.242631,
+      "rationale": "12s train representative with moderate poll-delay warnings; keeps only one 12s file in train."
+    },
+    {
+      "packageId": "m192020",
+      "file": "cursor-mirror-motion-recording-20260504-192020.zip",
+      "path": "cursor-mirror-motion-recording-20260504-192020.zip",
+      "split": "validation",
+      "qualityBucket": "poll-delayed",
+      "durationBucket": "12s",
+      "scenarioDurationMilliseconds": 12000,
+      "durationMilliseconds": 768000,
+      "scenarioCount": 64,
+      "motionRows": 184321,
+      "alignmentRows": 567051,
+      "holdRatio": 0.213182,
+      "rationale": "12s validation holdout with scheduler-loop delay warnings; not used for fitting."
+    },
+    {
+      "packageId": "m192107",
+      "file": "cursor-mirror-motion-recording-20260504-192107.zip",
+      "path": "cursor-mirror-motion-recording-20260504-192107.zip",
+      "split": "robustness",
+      "qualityBucket": "poll-delayed",
+      "durationBucket": "12s",
+      "scenarioDurationMilliseconds": 12000,
+      "durationMilliseconds": 768000,
+      "scenarioCount": 64,
+      "motionRows": 184321,
+      "alignmentRows": 500785,
+      "holdRatio": 0.22559,
+      "rationale": "Severe 12s poll/scheduler-delay file reserved for robustness stress."
+    },
+    {
+      "packageId": "m193433",
+      "file": "cursor-mirror-motion-recording-20260504-193433.zip",
+      "path": "cursor-mirror-motion-recording-20260504-193433.zip",
+      "split": "robustness",
+      "qualityBucket": "poll-delayed",
+      "durationBucket": "8s",
+      "scenarioDurationMilliseconds": 8000,
+      "durationMilliseconds": 512000,
+      "scenarioCount": 64,
+      "motionRows": 122881,
+      "alignmentRows": 443361,
+      "holdRatio": 0.186074,
+      "rationale": "8s robustness member to keep duration-change stress outside fitting."
+    },
+    {
+      "packageId": "m193508",
+      "file": "cursor-mirror-motion-recording-20260504-193508.zip",
+      "path": "cursor-mirror-motion-recording-20260504-193508.zip",
+      "split": "train",
+      "qualityBucket": "poll-delayed",
+      "durationBucket": "6s",
+      "scenarioDurationMilliseconds": 6000,
+      "durationMilliseconds": 384000,
+      "scenarioCount": 64,
+      "motionRows": 92161,
+      "alignmentRows": 320451,
+      "holdRatio": 0.161999,
+      "rationale": "6s train representative; balances train duration exposure."
+    },
+    {
+      "packageId": "m194149",
+      "file": "cursor-mirror-motion-recording-20260504-194149.zip",
+      "path": "cursor-mirror-motion-recording-20260504-194149.zip",
+      "split": "train",
+      "qualityBucket": "poll-delayed",
+      "durationBucket": "4s",
+      "scenarioDurationMilliseconds": 4000,
+      "durationMilliseconds": 256000,
+      "scenarioCount": 64,
+      "motionRows": 61441,
+      "alignmentRows": 239096,
+      "holdRatio": 0.239303,
+      "rationale": "4s poll-delayed train representative while preserving the normal 4s file for final test."
+    },
+    {
+      "packageId": "m194623",
+      "file": "cursor-mirror-motion-recording-20260504-194623.zip",
+      "path": "cursor-mirror-motion-recording-20260504-194623.zip",
+      "split": "robustness",
+      "qualityBucket": "poll-delayed",
+      "durationBucket": "10s",
+      "scenarioDurationMilliseconds": 10000,
+      "durationMilliseconds": 640000,
+      "scenarioCount": 64,
+      "motionRows": 153601,
+      "alignmentRows": 508234,
+      "holdRatio": 0.206372,
+      "rationale": "Only 10s package; held out so the changed-duration path is tested explicitly."
+    },
+    {
+      "packageId": "m194657",
+      "file": "cursor-mirror-motion-recording-20260504-194657.zip",
+      "path": "cursor-mirror-motion-recording-20260504-194657.zip",
+      "split": "robustness",
+      "qualityBucket": "poll-delayed",
+      "durationBucket": "6s",
+      "scenarioDurationMilliseconds": 6000,
+      "durationMilliseconds": 384000,
+      "scenarioCount": 64,
+      "motionRows": 92161,
+      "alignmentRows": 362328,
+      "holdRatio": 0.167956,
+      "rationale": "Cleaner 6s poll-delayed file reserved for robustness contrast against 6s train."
+    },
+    {
+      "packageId": "m195438",
+      "file": "cursor-mirror-motion-recording-20260504-195438.zip",
+      "path": "cursor-mirror-motion-recording-20260504-195438.zip",
+      "split": "test",
+      "qualityBucket": "normal",
+      "durationBucket": "4s",
+      "scenarioDurationMilliseconds": 4000,
+      "durationMilliseconds": 256000,
+      "scenarioCount": 64,
+      "motionRows": 61441,
+      "alignmentRows": 252111,
+      "holdRatio": 0.227796,
+      "rationale": "Only normal package in the audit; reserved as untouched test/normal."
+    },
+    {
+      "packageId": "m195750",
+      "file": "cursor-mirror-motion-recording-20260504-195750.zip",
+      "path": "cursor-mirror-motion-recording-20260504-195750.zip",
+      "split": "train",
+      "qualityBucket": "poll-delayed",
+      "durationBucket": "8s",
+      "scenarioDurationMilliseconds": 8000,
+      "durationMilliseconds": 512000,
+      "scenarioCount": 64,
+      "motionRows": 122881,
+      "alignmentRows": 429963,
+      "holdRatio": 0.189297,
+      "rationale": "8s train representative; selected instead of the larger 8s robustness holdout."
+    }
+  ]
+}

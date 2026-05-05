@@ -67,6 +67,7 @@ This section defines the scope and intent of each test family. Code definitions 
 - S: Settings UI and persistence - Settings defaults, validation, persistence, reset, immediate application, and settings-window command behavior.
 - D: DPI and multi-monitor coordinates - DPI awareness, virtual screen coordinates, negative coordinates, and scaling behavior.
 - L: Mouse trace tooling - Trace session state, sample collection, UI state derivation, package writing, and manual trace capture.
+- N: Motion Lab tooling - Bezier motion generation, speed-profile sampling, CPU-load helper parsing, kernel benchmark feature detection, and package writing.
 - E: Demo application and virtual pointer stream - Demo startup controls, deterministic synthetic signal generation, and demo-scene behavior.
 - P: Packaging and runtime dependencies - Target runtime, artifact shape, and no-install expectations.
 - R: Resource management and failure handling - Native handle disposal, exception containment, and cleanup under failure.
@@ -132,12 +133,24 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Section 13.2.
 
 - COT-MCU-8 - Calibration pattern summary separation
-  Verify that calibration summary calculation includes per-pattern frame counts and estimated separation metrics from synthetic frame measurements.
+  Verify that calibration summary calculation includes per-pattern and per-phase frame counts and estimated separation metrics from synthetic frame measurements.
   Refs: Section 13.4.
 
 - COT-MCU-9 - Calibration runtime mode parsing
   Verify that calibrator runtime mode names parse and normalize to `ProductRuntime` by default while keeping `SimpleTimer` available for diagnostics.
   Refs: Sections 13.2, 13.4.
+
+- COT-MCU-10 - Real cursor driver marker separation
+  Verify that the shared real cursor driver exposes distinct injection markers for the calibrator, demo, and Motion Lab.
+  Refs: Sections 12.5, 13.3, 14.
+
+- COT-MCU-11 - Motion Lab package-backed calibration source
+  Verify that the calibrator can load a Motion Lab package, sample the compact scenario definition without using precomputed frames, and preserve scenario index and generation profile context.
+  Refs: Sections 13.2, 13.4.
+
+- COT-MCU-12 - Calibration package Motion Lab context
+  Verify that calibration output packages include Motion Lab source, generation profile, scenario, phase, progress, and motion summary fields in `frames.csv` and `metrics.json`.
+  Refs: Section 13.4.
 
 #### A.4.O Overlay Window Behavior
 ##### Unit
@@ -309,10 +322,6 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that experimental DWM adaptive gain can resume the alternate gain during a high-speed, high-efficiency, one-directional motion even when an oscillation suppression latch is still active.
   Refs: Section 4.4.2.
 
-- COT-MOU-43 - DWM least-squares prediction
-  Verify that the experimental DWM least-squares prediction model fits a linear recent sample window and predicts using the DWM horizon.
-  Refs: Section 4.4.2.
-
 - COT-MOU-44 - High-frequency poller blocking wait
   Verify that the high-frequency cursor poller fallback uses a blocking wait interval instead of yielding in a tight loop for positive remaining time.
   Refs: Sections 3.3, 4.4.2.
@@ -336,6 +345,18 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 - COT-MOU-49 - ConstantVelocity high-speed linear motion uses wider cap
   Verify that high-speed, high-efficiency, one-directional `ConstantVelocity` motion can use a wider prediction displacement cap while ordinary motion remains bounded by the conservative cap.
   Refs: Section 4.4.2.
+
+- COT-MOU-55 - Same-location polling skips overlay movement
+  Verify that polling a fresh sample whose overlay location has not changed does not call the layered-window move path.
+  Refs: Sections 3.3, 4.4.2.
+
+- COT-MOU-56 - Runtime scheduler options are projected from settings
+  Verify that persisted runtime scheduler settings are normalized and projected into runtime scheduler options.
+  Refs: Section 4.4.2.
+
+- COT-MOU-57 - Idle fade uses dedicated duration
+  Verify that idle fade uses its configured fade duration rather than the movement-translucency fade duration.
+  Refs: Sections 4.4.1.1, 6.1.
 
 #### A.4.T Tray and Application Lifetime
 ##### Unit
@@ -378,7 +399,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 #### A.4.S Settings UI and Persistence
 ##### Unit
 - COT-MSU-1 - Settings defaults
-  Verify documented default settings: movement translucency enabled, predictive overlay positioning enabled, prediction model `ConstantVelocity`, prediction gain `100%`, DWM horizon cap `10ms`, DWM prediction target offset `2ms`, idle fade enabled, moving opacity `70%`, fade duration `80ms`, movement idle delay `120ms`, idle fade delay `3s`, and idle opacity `0%`.
+  Verify documented default settings: movement translucency enabled, predictive overlay positioning enabled, prediction model `ConstantVelocity`, prediction gain `100%`, DWM horizon cap `10ms`, DWM prediction target offset display `0ms` with internal `8ms`, runtime fine wait `2000us`, runtime spin threshold `100us`, runtime message deferral enabled with a `100us` window, idle fade enabled, moving opacity `20%`, fade duration `100ms`, movement idle delay `100ms`, idle fade duration `300ms`, idle fade delay `3000ms`, and idle opacity `10%`.
   Refs: Sections 4.4.1, 4.4.1.1, 4.4.2, 4.5.1.
 
 - COT-MSU-2 - Moving opacity validation
@@ -386,7 +407,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Section 4.4.1.
 
 - COT-MSU-3 - Timing validation
-  Verify that fade duration, movement idle delay, idle fade delay, idle opacity, prediction gain, prediction timing, DWM target offset, and experimental DWM adaptive prediction values outside their documented ranges are rejected or clamped consistently at the settings boundary.
+  Verify that fade duration, movement idle delay, idle fade duration, idle fade delay, idle opacity, prediction gain, prediction timing, DWM target offset, and experimental DWM adaptive prediction values outside their documented ranges are rejected or clamped consistently at the settings boundary.
   Refs: Sections 4.4.1, 4.4.1.1, 4.4.2.
 
 - COT-MSU-4 - Settings serialization round trip
@@ -425,8 +446,12 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that a failed temporary-file validation or replacement failure leaves the previous active settings readable when possible.
   Refs: Section 5.6.
 
+- COT-MSU-21 - Setting range metadata
+  Verify that centralized setting range metadata matches normalization behavior, including dependent runtime spin-threshold clamping.
+  Refs: Sections 4.4.1, 4.4.1.1, 4.4.2, 4.5.1.
+
 - COT-MSU-13 - Movement translucency dependent controls
-  Verify that disabling movement translucency in the settings window disables its moving opacity, fade duration, and idle delay controls, and that re-enabling movement translucency re-enables those controls.
+  Verify that disabling movement translucency in the settings window disables its moving opacity, fade duration, and idle delay controls, and that disabling idle fade disables its idle opacity, fade duration, and idle delay controls.
   Refs: Sections 4.5.1, 6.1.
 
 - COT-MSU-14 - Settings window application icon
@@ -438,8 +463,20 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Sections 4.4.2, 4.5.1, 6.1.
 
 - COT-MSU-16 - Prediction model selection
-  Verify that the settings window exposes `ConstantVelocity (default)` and `LeastSquares`, selects `ConstantVelocity` by default, applies model changes immediately, and disables the prediction model control when prediction is disabled.
+  Verify that the settings window exposes only `ConstantVelocity (default)`, selects `ConstantVelocity` by default, applies the model value immediately, and disables the prediction model control when prediction is disabled.
   Refs: Sections 4.4.2, 4.5.1, 6.1.
+
+- COT-MSU-17 - Prediction target offset control
+  Verify that the settings window exposes the user-facing DWM prediction target offset range, applies edited values immediately with the documented `+8ms` origin, disables the control when prediction is disabled, and preserves the current target offset when the prediction model changes.
+  Refs: Sections 4.4.2, 4.5.1, 6.1.
+
+- COT-MSU-19 - Runtime scheduler controls
+  Verify that runtime scheduler controls expose persisted defaults including the low-latency runtime profile, apply edited values immediately, disable the message-deferral window unless message deferral is enabled, and clamp spin threshold to the fine-wait advance.
+  Refs: Sections 4.4.2, 4.5.1, 6.1.
+
+- COT-MSU-20 - Settings window grouped layout
+  Verify that the settings window is wide enough for grouped controls and shows framed prediction, runtime scheduler, movement translucency, and idle fade categories in the documented two-column grid.
+  Refs: Section 4.5.1.
 
 #### A.4.D DPI and Multi-Monitor Coordinates
 ##### Unit
@@ -558,6 +595,60 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 - COT-MLU-19 - Trace tool window chrome and label layout
   Verify that the trace tool form uses the application icon and keeps status labels single-line in the default layout without installing a real hook.
   Refs: Sections 11.2, 11.3, 11.8.
+
+- COT-MLU-20 - Trace derived telemetry fields
+  Verify that trace packages include derived warm-up, prediction target, present reference, scheduler provenance, sample-recorded delta, runtime scheduler missing fields, and warm-up metadata.
+  Refs: Sections 11.5, 11.6, 11.8.
+
+#### A.4.N Motion Lab Tooling
+##### Unit
+- COT-MNU-1 - Deterministic Bezier generation
+  Verify that generating a motion script with the same seed, bounds, start point, point count, speed-point count, duration, and sample rate produces identical control points and speed points.
+  Refs: Section 14.2.
+
+- COT-MNU-2 - Generation clips to bounds
+  Verify that the generated start point and all generated control points are clipped into the requested recording bounds.
+  Refs: Section 14.2.
+
+- COT-MNU-3 - Speed profile influences sampling
+  Verify that a speed profile changes elapsed-time-to-curve-progress mapping while keeping deterministic start and end samples.
+  Refs: Section 14.2.
+
+- COT-MNU-4 - Motion package contents
+  Verify that saving a motion package writes `motion-script.json`, `motion-samples.csv`, and `metadata.json`.
+  Refs: Sections 14.2, 14.6.
+
+- COT-MNU-5 - Real-trace weighted generation profile
+  Verify that the real-trace-weighted generation profile emits low-speed-biased speed points and explicit hold segments deterministically.
+  Refs: Section 14.2.
+
+- COT-MNU-6 - Motion package with trace contents
+  Verify that saving a Motion Lab package with a trace writes motion script, motion samples, trace CSV, trace-compatible metadata, and Motion Lab metadata.
+  Refs: Sections 14.3, 14.6.
+
+- COT-MNU-7 - Scenario set generation and sampling
+  Verify that generated scenario sets preserve scenario count, per-scenario duration, total duration, and scenario selection during sampling.
+  Refs: Section 14.2.
+
+- COT-MNU-8 - Scenario set package contents
+  Verify that scenario-set packages contain scenario metadata and sampled rows with scenario-local timing.
+  Refs: Sections 14.2, 14.6.
+
+- COT-MNU-9 - Scenario set seed splitting is deterministic
+  Verify that scenario seeds are distinct and deterministic for a fixed root seed.
+  Refs: Section 14.2.
+
+- COT-MNU-10 - Hold segments pause sampling
+  Verify that hold segments pause progress, report zero velocity while held, and resume motion with transition telemetry.
+  Refs: Section 14.2.
+
+- COT-MNU-11 - Motion samples include transition telemetry
+  Verify that Motion Lab sampled CSV output includes movement phase, hold index, phase elapsed time, and motion sample format metadata.
+  Refs: Sections 14.2, 14.6.
+
+- COT-MNU-12 - Motion Lab input blocker allows only generated mouse input
+  Verify that the Play and Record input blocker passes Motion Lab-generated mouse input and cancels external user mouse input without calling the next hook.
+  Refs: Sections 14.3, 14.7.
 
 #### A.4.E Demo Application and Virtual Pointer Stream
 ##### Unit
@@ -795,5 +886,5 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Sections 4.5.1, 6.3.
 
 - COT-BVM-9 - Prediction settings manual pass
-  Verify that predictive overlay positioning is enabled by default, `ConstantVelocity (default)` and `LeastSquares` can be selected from the settings window, and disabling prediction returns to exact pointer positioning.
+  Verify that predictive overlay positioning is enabled by default, `ConstantVelocity (default)` is the only prediction model exposed in the settings window, and disabling prediction returns to exact pointer positioning.
   Refs: Sections 2.3, 4.4.2, 4.5.1, 6.3.

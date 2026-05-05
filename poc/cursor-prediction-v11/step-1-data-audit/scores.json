@@ -1,0 +1,5889 @@
+{
+  "schemaVersion": "cursor-prediction-v11-step1-audit/1",
+  "generatedAtUtc": "2026-05-03T13:30:04.636Z",
+  "root": "C:\\Users\\seigl\\OneDrive\\my\\ドキュメント\\projects\\cursor",
+  "constraints": {
+    "gpuUsed": false,
+    "trainingRun": false,
+    "rawZipCopied": false,
+    "longBenchmarkRun": false
+  },
+  "packages": [
+    {
+      "id": "normal",
+      "label": "normal load",
+      "sourceZip": "cursor-mirror-motion-recording-20260503-212556.zip",
+      "relativePath": "cursor-mirror-motion-recording-20260503-212556.zip",
+      "bytes": 15177846,
+      "note": null,
+      "entries": [
+        {
+          "name": "motion-script.json",
+          "compressionMethod": 8,
+          "compressedSize": 40077,
+          "uncompressedSize": 139936
+        },
+        {
+          "name": "motion-samples.csv",
+          "compressionMethod": 8,
+          "compressedSize": 3529899,
+          "uncompressedSize": 11058225
+        },
+        {
+          "name": "trace.csv",
+          "compressionMethod": 8,
+          "compressedSize": 11606082,
+          "uncompressedSize": 94917432
+        },
+        {
+          "name": "metadata.json",
+          "compressionMethod": 8,
+          "compressedSize": 964,
+          "uncompressedSize": 2768
+        },
+        {
+          "name": "motion-metadata.json",
+          "compressionMethod": 8,
+          "compressedSize": 266,
+          "uncompressedSize": 424
+        }
+      ],
+      "metadata": {
+        "traceFormatVersion": 8,
+        "productName": "Cursor Mirror Motion Lab",
+        "productVersion": "v1.6.0-dev+20260503.249d22ced965.dirty",
+        "createdUtc": "2026-05-03T12:38:58.4046674Z",
+        "durationMicroseconds": 768068482,
+        "sampleCount": 571320,
+        "hookSampleCount": 137685,
+        "pollSampleCount": 96007,
+        "referencePollSampleCount": 246757,
+        "dwmTimingSampleCount": 186878,
+        "pollIntervalMilliseconds": 8,
+        "referencePollIntervalMilliseconds": 2,
+        "timerResolutionMilliseconds": 1,
+        "timerResolutionSucceeded": true,
+        "dwmTimingAvailabilityPercent": 100,
+        "processorCount": 32,
+        "monitorCount": 3,
+        "virtualScreen": {
+          "x": -2560,
+          "y": 0,
+          "width": 7680,
+          "height": 1440
+        },
+        "qualityWarnings": [
+          "reference_poll_interval_p95_exceeds_requested_interval"
+        ],
+        "hookMoveIntervalStats": {
+          "Count": 137684,
+          "MeanMilliseconds": 5.5778983861596805,
+          "P50Milliseconds": 1.1067,
+          "P95Milliseconds": 23.01317,
+          "MaxMilliseconds": 63.5578
+        },
+        "productPollIntervalStats": {
+          "Count": 96006,
+          "MeanMilliseconds": 8.0000534393685,
+          "P50Milliseconds": 8,
+          "P95Milliseconds": 16.336475,
+          "MaxMilliseconds": 34.7202
+        },
+        "referencePollIntervalStats": {
+          "Count": 246756,
+          "MeanMilliseconds": 3.112603289485104,
+          "P50Milliseconds": 2,
+          "P95Milliseconds": 15.8735,
+          "MaxMilliseconds": 36.7945
+        },
+        "runtimeSchedulerPollSampleCount": 45435,
+        "runtimeSchedulerPollIntervalStats": {
+          "Count": 45434,
+          "MeanMilliseconds": 16.903927794163213,
+          "P50Milliseconds": 16.6664,
+          "P95Milliseconds": 18.235004999999997,
+          "MaxMilliseconds": 34.0304
+        },
+        "runtimeSchedulerLoopSampleCount": 45436,
+        "runtimeSchedulerLoopIntervalStats": {
+          "Count": 45435,
+          "MeanMilliseconds": 16.904137090348833,
+          "P50Milliseconds": 16.8243,
+          "P95Milliseconds": 27.54889,
+          "MaxMilliseconds": 46.002
+        },
+        "runtimeSchedulerWakeAdvanceMilliseconds": 4,
+        "runtimeSchedulerFallbackIntervalMilliseconds": 8,
+        "runtimeSchedulerMaximumDwmSleepMilliseconds": 2,
+        "runtimeSchedulerCoalescedTickCount": 0,
+        "runtimeSchedulerThreadProfile": "managed=unavailable;mmcss=unavailable",
+        "runtimeSchedulerCaptureThreadProfile": "managed=unavailable;mmcss=unavailable"
+      },
+      "motionMetadata": {
+        "productName": "Cursor Mirror Motion Lab",
+        "productVersion": "v1.6.0-dev+20260503.249d22ced965.dirty",
+        "createdUtc": "2026-05-03T12:38:58.5587440Z",
+        "generationProfile": "real-trace-weighted",
+        "seed": 1730702171,
+        "scenarioCount": 64,
+        "controlPointCount": 512,
+        "speedPointCount": 512,
+        "holdSegmentCount": 326,
+        "holdDurationMilliseconds": 139351.741,
+        "durationMilliseconds": 768000,
+        "scenarioDurationMilliseconds": 12000,
+        "sampleRateHz": 240
+      },
+      "motionScript": {
+        "schemaVersion": "cursor-mirror-motion-scenarios/1",
+        "seed": 1730702171,
+        "generationProfile": "real-trace-weighted",
+        "durationMilliseconds": 768000,
+        "scenarioDurationMilliseconds": 12000,
+        "sampleRateHz": 240,
+        "scenarioCount": 64,
+        "controlPointCount": 512,
+        "speedPointCount": 512,
+        "holdSegmentCount": 326,
+        "holdDurationMilliseconds": 139351.741,
+        "resumeDurationMilliseconds": 36653.346,
+        "holdSegmentsPerScenario": {
+          "count": 64,
+          "mean": 5.094,
+          "min": 4,
+          "p50": 5,
+          "p90": 6,
+          "p95": 6,
+          "p99": 6,
+          "max": 6
+        },
+        "holdDurationByScenarioMilliseconds": {
+          "count": 64,
+          "mean": 2177.371,
+          "min": 730.876,
+          "p50": 1862.441,
+          "p90": 3668.25,
+          "p95": 3799.895,
+          "p99": 4881.921,
+          "max": 4898.7
+        },
+        "resumeDurationByScenarioMilliseconds": {
+          "count": 64,
+          "mean": 572.709,
+          "min": 343.098,
+          "p50": 557.653,
+          "p90": 738.416,
+          "p95": 769.868,
+          "p99": 786.695,
+          "max": 806.257
+        },
+        "holdSegmentDurationMilliseconds": {
+          "count": 326,
+          "mean": 427.459,
+          "min": 80.292,
+          "p50": 234.134,
+          "p90": 900.07,
+          "p95": 1553.151,
+          "p99": 2090.82,
+          "max": 2168.191
+        },
+        "resumeSegmentDurationMilliseconds": {
+          "count": 326,
+          "mean": 112.434,
+          "min": 10.655,
+          "p50": 111.081,
+          "p90": 163.305,
+          "p95": 172.269,
+          "p99": 177.361,
+          "max": 178.437
+        },
+        "scenarios": [
+          {
+            "index": 0,
+            "seed": 1749846326,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1576.573,
+            "resumeDurationMilliseconds": 576.477,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 967,
+              "y": 812
+            },
+            "lastPoint": {
+              "x": 990.373,
+              "y": 588.842
+            }
+          },
+          {
+            "index": 1,
+            "seed": 558383609,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 2889.352,
+            "resumeDurationMilliseconds": 519.998,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 990,
+              "y": 589
+            },
+            "lastPoint": {
+              "x": 352.028,
+              "y": 637.36
+            }
+          },
+          {
+            "index": 2,
+            "seed": 162900122,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 2612.036,
+            "resumeDurationMilliseconds": 754.381,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 352,
+              "y": 637
+            },
+            "lastPoint": {
+              "x": 2333.591,
+              "y": 206.193
+            }
+          },
+          {
+            "index": 3,
+            "seed": 1967223746,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 4872.067,
+            "resumeDurationMilliseconds": 610.527,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2334,
+              "y": 206
+            },
+            "lastPoint": {
+              "x": 2092.489,
+              "y": 792.843
+            }
+          },
+          {
+            "index": 4,
+            "seed": 1282321526,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 3156.635,
+            "resumeDurationMilliseconds": 677.314,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2092,
+              "y": 793
+            },
+            "lastPoint": {
+              "x": 1966.751,
+              "y": 1306.891
+            }
+          },
+          {
+            "index": 5,
+            "seed": 982793892,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1521.102,
+            "resumeDurationMilliseconds": 377.797,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1967,
+              "y": 1307
+            },
+            "lastPoint": {
+              "x": 782.383,
+              "y": 202.146
+            }
+          },
+          {
+            "index": 6,
+            "seed": 247792927,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1532.957,
+            "resumeDurationMilliseconds": 555.625,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 782,
+              "y": 202
+            },
+            "lastPoint": {
+              "x": 2296.644,
+              "y": 272.431
+            }
+          },
+          {
+            "index": 7,
+            "seed": 824093185,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 739.704,
+            "resumeDurationMilliseconds": 548.529,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2297,
+              "y": 272
+            },
+            "lastPoint": {
+              "x": 1983.214,
+              "y": 1028.415
+            }
+          },
+          {
+            "index": 8,
+            "seed": 1950433461,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 730.876,
+            "resumeDurationMilliseconds": 343.098,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1983,
+              "y": 1028
+            },
+            "lastPoint": {
+              "x": 977.646,
+              "y": 484.417
+            }
+          },
+          {
+            "index": 9,
+            "seed": 818682401,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 2909.35,
+            "resumeDurationMilliseconds": 593.571,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 978,
+              "y": 484
+            },
+            "lastPoint": {
+              "x": 1020.023,
+              "y": 1100.451
+            }
+          },
+          {
+            "index": 10,
+            "seed": 558622834,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 3297.183,
+            "resumeDurationMilliseconds": 622.929,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1020,
+              "y": 1100
+            },
+            "lastPoint": {
+              "x": 1365.943,
+              "y": 980.424
+            }
+          },
+          {
+            "index": 11,
+            "seed": 648075748,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 946.958,
+            "resumeDurationMilliseconds": 480.337,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1366,
+              "y": 980
+            },
+            "lastPoint": {
+              "x": 1488.421,
+              "y": 914.067
+            }
+          },
+          {
+            "index": 12,
+            "seed": 1529551077,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 782.841,
+            "resumeDurationMilliseconds": 482.812,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1488,
+              "y": 914
+            },
+            "lastPoint": {
+              "x": 887.468,
+              "y": 1079.155
+            }
+          },
+          {
+            "index": 13,
+            "seed": 1148587237,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 1713.754,
+            "resumeDurationMilliseconds": 599.078,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 887,
+              "y": 1079
+            },
+            "lastPoint": {
+              "x": 522.475,
+              "y": 614.596
+            }
+          },
+          {
+            "index": 14,
+            "seed": 796671465,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 1876.788,
+            "resumeDurationMilliseconds": 489.157,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 522,
+              "y": 615
+            },
+            "lastPoint": {
+              "x": 1280.515,
+              "y": 891.851
+            }
+          },
+          {
+            "index": 15,
+            "seed": 1953010550,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1337.064,
+            "resumeDurationMilliseconds": 638.058,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1281,
+              "y": 892
+            },
+            "lastPoint": {
+              "x": 1806.33,
+              "y": 327.093
+            }
+          },
+          {
+            "index": 16,
+            "seed": 32280860,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 1793.364,
+            "resumeDurationMilliseconds": 772.601,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1806,
+              "y": 327
+            },
+            "lastPoint": {
+              "x": 1537.015,
+              "y": 1249.722
+            }
+          },
+          {
+            "index": 17,
+            "seed": 1022534847,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 2454.892,
+            "resumeDurationMilliseconds": 466.684,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1537,
+              "y": 1250
+            },
+            "lastPoint": {
+              "x": 1579.527,
+              "y": 323.98
+            }
+          },
+          {
+            "index": 18,
+            "seed": 1051616338,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 2098.02,
+            "resumeDurationMilliseconds": 703.16,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1580,
+              "y": 324
+            },
+            "lastPoint": {
+              "x": 701.513,
+              "y": 1071.865
+            }
+          },
+          {
+            "index": 19,
+            "seed": 79711969,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 839.378,
+            "resumeDurationMilliseconds": 652.737,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 702,
+              "y": 1072
+            },
+            "lastPoint": {
+              "x": 2079.781,
+              "y": 902.838
+            }
+          },
+          {
+            "index": 20,
+            "seed": 2072397917,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1518.588,
+            "resumeDurationMilliseconds": 589.485,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2080,
+              "y": 903
+            },
+            "lastPoint": {
+              "x": 2336.637,
+              "y": 921.164
+            }
+          },
+          {
+            "index": 21,
+            "seed": 592360353,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 2266.966,
+            "resumeDurationMilliseconds": 773.508,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2337,
+              "y": 921
+            },
+            "lastPoint": {
+              "x": 461.211,
+              "y": 1101.34
+            }
+          },
+          {
+            "index": 22,
+            "seed": 1735358251,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 847.051,
+            "resumeDurationMilliseconds": 589.445,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 461,
+              "y": 1101
+            },
+            "lastPoint": {
+              "x": 2399.997,
+              "y": 1039.233
+            }
+          },
+          {
+            "index": 23,
+            "seed": 870739960,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 1382.796,
+            "resumeDurationMilliseconds": 775.206,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2400,
+              "y": 1039
+            },
+            "lastPoint": {
+              "x": 700.265,
+              "y": 1035.15
+            }
+          },
+          {
+            "index": 24,
+            "seed": 111795338,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 3813.549,
+            "resumeDurationMilliseconds": 642.741,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 700,
+              "y": 1035
+            },
+            "lastPoint": {
+              "x": 889.887,
+              "y": 202.591
+            }
+          },
+          {
+            "index": 25,
+            "seed": 216822268,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1338.094,
+            "resumeDurationMilliseconds": 474.781,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 890,
+              "y": 203
+            },
+            "lastPoint": {
+              "x": 662.975,
+              "y": 1244.149
+            }
+          },
+          {
+            "index": 26,
+            "seed": 117714554,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 2856.706,
+            "resumeDurationMilliseconds": 683.446,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 663,
+              "y": 1244
+            },
+            "lastPoint": {
+              "x": 2460.005,
+              "y": 671.362
+            }
+          },
+          {
+            "index": 27,
+            "seed": 30201784,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 3062.481,
+            "resumeDurationMilliseconds": 579.032,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2460,
+              "y": 671
+            },
+            "lastPoint": {
+              "x": 899.125,
+              "y": 1021.954
+            }
+          },
+          {
+            "index": 28,
+            "seed": 1148623368,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 1464.719,
+            "resumeDurationMilliseconds": 357.423,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 899,
+              "y": 1022
+            },
+            "lastPoint": {
+              "x": 1980.855,
+              "y": 253.851
+            }
+          },
+          {
+            "index": 29,
+            "seed": 102354011,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 4032.515,
+            "resumeDurationMilliseconds": 618.239,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1981,
+              "y": 254
+            },
+            "lastPoint": {
+              "x": 2242.09,
+              "y": 195.715
+            }
+          },
+          {
+            "index": 30,
+            "seed": 1721048971,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 3576.17,
+            "resumeDurationMilliseconds": 440.28,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2242,
+              "y": 196
+            },
+            "lastPoint": {
+              "x": 1144.028,
+              "y": 1212.928
+            }
+          },
+          {
+            "index": 31,
+            "seed": 706823663,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 2796.971,
+            "resumeDurationMilliseconds": 543.987,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1144,
+              "y": 1213
+            },
+            "lastPoint": {
+              "x": 2458.875,
+              "y": 1099.849
+            }
+          },
+          {
+            "index": 32,
+            "seed": 1799709834,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 832.764,
+            "resumeDurationMilliseconds": 535.726,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2459,
+              "y": 1100
+            },
+            "lastPoint": {
+              "x": 1206.821,
+              "y": 979.038
+            }
+          },
+          {
+            "index": 33,
+            "seed": 1458469430,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 3194.051,
+            "resumeDurationMilliseconds": 649.922,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1207,
+              "y": 979
+            },
+            "lastPoint": {
+              "x": 1511.286,
+              "y": 785.847
+            }
+          },
+          {
+            "index": 34,
+            "seed": 292838479,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 806.536,
+            "resumeDurationMilliseconds": 551.801,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1511,
+              "y": 786
+            },
+            "lastPoint": {
+              "x": 564.77,
+              "y": 903.632
+            }
+          },
+          {
+            "index": 35,
+            "seed": 1959264685,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 1520.824,
+            "resumeDurationMilliseconds": 741.478,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 565,
+              "y": 904
+            },
+            "lastPoint": {
+              "x": 1308.995,
+              "y": 1048.232
+            }
+          },
+          {
+            "index": 36,
+            "seed": 749803377,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 3680.391,
+            "resumeDurationMilliseconds": 541.421,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1309,
+              "y": 1048
+            },
+            "lastPoint": {
+              "x": 110.267,
+              "y": 755.182
+            }
+          },
+          {
+            "index": 37,
+            "seed": 1707212040,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 2339.471,
+            "resumeDurationMilliseconds": 731.273,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 110,
+              "y": 755
+            },
+            "lastPoint": {
+              "x": 541.893,
+              "y": 1128.298
+            }
+          },
+          {
+            "index": 38,
+            "seed": 164104837,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 3308.38,
+            "resumeDurationMilliseconds": 654.473,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 542,
+              "y": 1128
+            },
+            "lastPoint": {
+              "x": 1158.795,
+              "y": 138.442
+            }
+          },
+          {
+            "index": 39,
+            "seed": 558306786,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 894.906,
+            "resumeDurationMilliseconds": 429.527,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1159,
+              "y": 138
+            },
+            "lastPoint": {
+              "x": 2400.041,
+              "y": 1189.771
+            }
+          },
+          {
+            "index": 40,
+            "seed": 1326266058,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 1324.882,
+            "resumeDurationMilliseconds": 518.887,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2400,
+              "y": 1190
+            },
+            "lastPoint": {
+              "x": 736.843,
+              "y": 446.476
+            }
+          },
+          {
+            "index": 41,
+            "seed": 273899662,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1050.574,
+            "resumeDurationMilliseconds": 418.236,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 737,
+              "y": 446
+            },
+            "lastPoint": {
+              "x": 507.383,
+              "y": 941.993
+            }
+          },
+          {
+            "index": 42,
+            "seed": 2015196128,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 3110.874,
+            "resumeDurationMilliseconds": 594.083,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 507,
+              "y": 942
+            },
+            "lastPoint": {
+              "x": 445.68,
+              "y": 812.812
+            }
+          },
+          {
+            "index": 43,
+            "seed": 922480014,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 3696.934,
+            "resumeDurationMilliseconds": 543.104,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 446,
+              "y": 813
+            },
+            "lastPoint": {
+              "x": 2293.141,
+              "y": 97.998
+            }
+          },
+          {
+            "index": 44,
+            "seed": 936839602,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1071.296,
+            "resumeDurationMilliseconds": 474.925,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2293,
+              "y": 98
+            },
+            "lastPoint": {
+              "x": 708.769,
+              "y": 1038.901
+            }
+          },
+          {
+            "index": 45,
+            "seed": 1777540472,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1784.008,
+            "resumeDurationMilliseconds": 517.662,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 709,
+              "y": 1039
+            },
+            "lastPoint": {
+              "x": 1133.36,
+              "y": 1112.476
+            }
+          },
+          {
+            "index": 46,
+            "seed": 1231792325,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1621.089,
+            "resumeDurationMilliseconds": 548.086,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1133,
+              "y": 1112
+            },
+            "lastPoint": {
+              "x": 1975.807,
+              "y": 680.682
+            }
+          },
+          {
+            "index": 47,
+            "seed": 1693156090,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 845.008,
+            "resumeDurationMilliseconds": 374.263,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1976,
+              "y": 681
+            },
+            "lastPoint": {
+              "x": 2077.208,
+              "y": 1303.863
+            }
+          },
+          {
+            "index": 48,
+            "seed": 1336040312,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 1053.255,
+            "resumeDurationMilliseconds": 546.476,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2077,
+              "y": 1304
+            },
+            "lastPoint": {
+              "x": 2207.213,
+              "y": 554.027
+            }
+          },
+          {
+            "index": 49,
+            "seed": 420765155,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 2968.615,
+            "resumeDurationMilliseconds": 515.173,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2207,
+              "y": 554
+            },
+            "lastPoint": {
+              "x": 2107.221,
+              "y": 967.789
+            }
+          },
+          {
+            "index": 50,
+            "seed": 791196215,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 4898.7,
+            "resumeDurationMilliseconds": 806.257,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2107,
+              "y": 968
+            },
+            "lastPoint": {
+              "x": 1294.167,
+              "y": 891.745
+            }
+          },
+          {
+            "index": 51,
+            "seed": 1349029226,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 1962.32,
+            "resumeDurationMilliseconds": 744.452,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1294,
+              "y": 892
+            },
+            "lastPoint": {
+              "x": 1544.59,
+              "y": 386.91
+            }
+          },
+          {
+            "index": 52,
+            "seed": 1694486979,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 1148.315,
+            "resumeDurationMilliseconds": 444.138,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1545,
+              "y": 387
+            },
+            "lastPoint": {
+              "x": 2399.784,
+              "y": 1181.368
+            }
+          },
+          {
+            "index": 53,
+            "seed": 1140452446,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 3722.52,
+            "resumeDurationMilliseconds": 547.433,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2400,
+              "y": 1181
+            },
+            "lastPoint": {
+              "x": 1111.889,
+              "y": 1205.204
+            }
+          },
+          {
+            "index": 54,
+            "seed": 931888478,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1739.461,
+            "resumeDurationMilliseconds": 629.539,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1112,
+              "y": 1205
+            },
+            "lastPoint": {
+              "x": 1085.322,
+              "y": 602.471
+            }
+          },
+          {
+            "index": 55,
+            "seed": 1618560294,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1848.094,
+            "resumeDurationMilliseconds": 649.418,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1085,
+              "y": 602
+            },
+            "lastPoint": {
+              "x": 81.965,
+              "y": 616.024
+            }
+          },
+          {
+            "index": 56,
+            "seed": 547335411,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 2443.462,
+            "resumeDurationMilliseconds": 559.804,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 82,
+              "y": 616
+            },
+            "lastPoint": {
+              "x": 2451.056,
+              "y": 582.305
+            }
+          },
+          {
+            "index": 57,
+            "seed": 1729314836,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1478.256,
+            "resumeDurationMilliseconds": 545.413,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2451,
+              "y": 582
+            },
+            "lastPoint": {
+              "x": 1967.549,
+              "y": 1139.487
+            }
+          },
+          {
+            "index": 58,
+            "seed": 897375849,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 2732.31,
+            "resumeDurationMilliseconds": 661.379,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1968,
+              "y": 1139
+            },
+            "lastPoint": {
+              "x": 1295.939,
+              "y": 1216.614
+            }
+          },
+          {
+            "index": 59,
+            "seed": 1244281729,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1158.145,
+            "resumeDurationMilliseconds": 608.493,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1296,
+              "y": 1217
+            },
+            "lastPoint": {
+              "x": 237.829,
+              "y": 272.701
+            }
+          },
+          {
+            "index": 60,
+            "seed": 213610856,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 3134.081,
+            "resumeDurationMilliseconds": 552.32,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 238,
+              "y": 273
+            },
+            "lastPoint": {
+              "x": 565.583,
+              "y": 355.426
+            }
+          },
+          {
+            "index": 61,
+            "seed": 496674899,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 3639.921,
+            "resumeDurationMilliseconds": 461.695,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 566,
+              "y": 355
+            },
+            "lastPoint": {
+              "x": 2334.227,
+              "y": 1090.743
+            }
+          },
+          {
+            "index": 62,
+            "seed": 506600319,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 2941.652,
+            "resumeDurationMilliseconds": 559.68,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2334,
+              "y": 1091
+            },
+            "lastPoint": {
+              "x": 216.673,
+              "y": 1159.266
+            }
+          },
+          {
+            "index": 63,
+            "seed": 1966080766,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 2763.142,
+            "resumeDurationMilliseconds": 464.367,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 217,
+              "y": 1159
+            },
+            "lastPoint": {
+              "x": 932.266,
+              "y": 933.85
+            }
+          }
+        ]
+      },
+      "motionSamples": {
+        "present": true,
+        "header": [
+          "sequence",
+          "elapsedMilliseconds",
+          "scenarioIndex",
+          "scenarioElapsedMilliseconds",
+          "progress",
+          "x",
+          "y",
+          "velocityPixelsPerSecond"
+        ],
+        "rowCount": 184321,
+        "expectedRows": 184321,
+        "rowsMinusExpected": 0,
+        "scenarioCounts": {
+          "0": 2880,
+          "1": 2880,
+          "2": 2880,
+          "3": 2880,
+          "4": 2880,
+          "5": 2880,
+          "6": 2880,
+          "7": 2880,
+          "8": 2880,
+          "9": 2880,
+          "10": 2880,
+          "11": 2880,
+          "12": 2880,
+          "13": 2880,
+          "14": 2880,
+          "15": 2880,
+          "16": 2880,
+          "17": 2880,
+          "18": 2880,
+          "19": 2880,
+          "20": 2880,
+          "21": 2880,
+          "22": 2880,
+          "23": 2880,
+          "24": 2880,
+          "25": 2880,
+          "26": 2880,
+          "27": 2880,
+          "28": 2880,
+          "29": 2880,
+          "30": 2880,
+          "31": 2880,
+          "32": 2880,
+          "33": 2880,
+          "34": 2880,
+          "35": 2880,
+          "36": 2880,
+          "37": 2880,
+          "38": 2880,
+          "39": 2880,
+          "40": 2880,
+          "41": 2880,
+          "42": 2880,
+          "43": 2880,
+          "44": 2880,
+          "45": 2880,
+          "46": 2880,
+          "47": 2880,
+          "48": 2880,
+          "49": 2880,
+          "50": 2880,
+          "51": 2880,
+          "52": 2880,
+          "53": 2880,
+          "54": 2880,
+          "55": 2880,
+          "56": 2880,
+          "57": 2880,
+          "58": 2880,
+          "59": 2880,
+          "60": 2880,
+          "61": 2880,
+          "62": 2880,
+          "63": 2881
+        },
+        "categoryCounts": {
+          "moving": 142086,
+          "hold": 33454,
+          "resume": 8781
+        },
+        "categoryPercent": {
+          "moving": 77.086,
+          "hold": 18.15,
+          "resume": 4.764
+        },
+        "velocityPixelsPerSecond": {
+          "count": 184321,
+          "mean": 96.611,
+          "min": 0,
+          "p50": 57.994,
+          "p90": 154.038,
+          "p95": 240.434,
+          "p99": 1076.492,
+          "max": 47908.769
+        },
+        "velocityByCategory": {
+          "moving": {
+            "count": 142086,
+            "mean": 106.585,
+            "min": 13.771,
+            "p50": 71.994,
+            "p90": 154.401,
+            "p95": 232.97,
+            "p99": 948.834,
+            "max": 4253.124
+          },
+          "hold": {
+            "count": 33454,
+            "mean": 1.259,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 19503.233
+          },
+          "resume": {
+            "count": 8781,
+            "mean": 298.497,
+            "min": 0.002,
+            "p50": 98.285,
+            "p90": 799.341,
+            "p95": 1317.882,
+            "p99": 2486.877,
+            "max": 47908.769
+          }
+        },
+        "xRange": {
+          "count": 184321,
+          "mean": 1345.873,
+          "min": 82,
+          "p50": 1329.689,
+          "p90": 2029.92,
+          "p95": 2132.948,
+          "p99": 2300.296,
+          "max": 2460
+        },
+        "yRange": {
+          "count": 184321,
+          "mean": 784.65,
+          "min": 98,
+          "p50": 821.818,
+          "p90": 1077.43,
+          "p95": 1115.811,
+          "p99": 1210.662,
+          "max": 1307
+        },
+        "scenarioCategoryCounts": {
+          "0": {
+            "moving": 2363,
+            "hold": 378,
+            "resume": 139
+          },
+          "1": {
+            "moving": 2062,
+            "hold": 693,
+            "resume": 125
+          },
+          "2": {
+            "moving": 2073,
+            "hold": 628,
+            "resume": 179
+          },
+          "3": {
+            "moving": 1564,
+            "hold": 1170,
+            "resume": 146
+          },
+          "4": {
+            "moving": 1960,
+            "hold": 758,
+            "resume": 162
+          },
+          "5": {
+            "moving": 2424,
+            "hold": 365,
+            "resume": 91
+          },
+          "6": {
+            "moving": 2379,
+            "hold": 367,
+            "resume": 134
+          },
+          "7": {
+            "moving": 2570,
+            "hold": 178,
+            "resume": 132
+          },
+          "8": {
+            "moving": 2622,
+            "hold": 175,
+            "resume": 83
+          },
+          "9": {
+            "moving": 2038,
+            "hold": 700,
+            "resume": 142
+          },
+          "10": {
+            "moving": 1939,
+            "hold": 793,
+            "resume": 148
+          },
+          "11": {
+            "moving": 2539,
+            "hold": 227,
+            "resume": 114
+          },
+          "12": {
+            "moving": 2576,
+            "hold": 189,
+            "resume": 115
+          },
+          "13": {
+            "moving": 2325,
+            "hold": 411,
+            "resume": 144
+          },
+          "14": {
+            "moving": 2312,
+            "hold": 450,
+            "resume": 118
+          },
+          "15": {
+            "moving": 2406,
+            "hold": 321,
+            "resume": 153
+          },
+          "16": {
+            "moving": 2265,
+            "hold": 430,
+            "resume": 185
+          },
+          "17": {
+            "moving": 2179,
+            "hold": 591,
+            "resume": 110
+          },
+          "18": {
+            "moving": 2208,
+            "hold": 504,
+            "resume": 168
+          },
+          "19": {
+            "moving": 2523,
+            "hold": 201,
+            "resume": 156
+          },
+          "20": {
+            "moving": 2374,
+            "hold": 364,
+            "resume": 142
+          },
+          "21": {
+            "moving": 2151,
+            "hold": 542,
+            "resume": 187
+          },
+          "22": {
+            "moving": 2535,
+            "hold": 204,
+            "resume": 141
+          },
+          "23": {
+            "moving": 2362,
+            "hold": 332,
+            "resume": 186
+          },
+          "24": {
+            "moving": 1813,
+            "hold": 913,
+            "resume": 154
+          },
+          "25": {
+            "moving": 2446,
+            "hold": 321,
+            "resume": 113
+          },
+          "26": {
+            "moving": 2028,
+            "hold": 686,
+            "resume": 166
+          },
+          "27": {
+            "moving": 2006,
+            "hold": 736,
+            "resume": 138
+          },
+          "28": {
+            "moving": 2443,
+            "hold": 353,
+            "resume": 84
+          },
+          "29": {
+            "moving": 1763,
+            "hold": 968,
+            "resume": 149
+          },
+          "30": {
+            "moving": 1916,
+            "hold": 859,
+            "resume": 105
+          },
+          "31": {
+            "moving": 2078,
+            "hold": 671,
+            "resume": 131
+          },
+          "32": {
+            "moving": 2551,
+            "hold": 200,
+            "resume": 129
+          },
+          "33": {
+            "moving": 1959,
+            "hold": 765,
+            "resume": 156
+          },
+          "34": {
+            "moving": 2553,
+            "hold": 194,
+            "resume": 133
+          },
+          "35": {
+            "moving": 2338,
+            "hold": 365,
+            "resume": 177
+          },
+          "36": {
+            "moving": 1867,
+            "hold": 883,
+            "resume": 130
+          },
+          "37": {
+            "moving": 2143,
+            "hold": 561,
+            "resume": 176
+          },
+          "38": {
+            "moving": 1929,
+            "hold": 792,
+            "resume": 159
+          },
+          "39": {
+            "moving": 2562,
+            "hold": 215,
+            "resume": 103
+          },
+          "40": {
+            "moving": 2436,
+            "hold": 320,
+            "resume": 124
+          },
+          "41": {
+            "moving": 2528,
+            "hold": 251,
+            "resume": 101
+          },
+          "42": {
+            "moving": 1989,
+            "hold": 748,
+            "resume": 143
+          },
+          "43": {
+            "moving": 1863,
+            "hold": 889,
+            "resume": 128
+          },
+          "44": {
+            "moving": 2510,
+            "hold": 258,
+            "resume": 112
+          },
+          "45": {
+            "moving": 2328,
+            "hold": 428,
+            "resume": 124
+          },
+          "46": {
+            "moving": 2359,
+            "hold": 390,
+            "resume": 131
+          },
+          "47": {
+            "moving": 2587,
+            "hold": 202,
+            "resume": 91
+          },
+          "48": {
+            "moving": 2496,
+            "hold": 252,
+            "resume": 132
+          },
+          "49": {
+            "moving": 2044,
+            "hold": 712,
+            "resume": 124
+          },
+          "50": {
+            "moving": 1512,
+            "hold": 1175,
+            "resume": 193
+          },
+          "51": {
+            "moving": 2231,
+            "hold": 472,
+            "resume": 177
+          },
+          "52": {
+            "moving": 2497,
+            "hold": 277,
+            "resume": 106
+          },
+          "53": {
+            "moving": 1856,
+            "hold": 894,
+            "resume": 130
+          },
+          "54": {
+            "moving": 2312,
+            "hold": 418,
+            "resume": 150
+          },
+          "55": {
+            "moving": 2281,
+            "hold": 445,
+            "resume": 154
+          },
+          "56": {
+            "moving": 2160,
+            "hold": 587,
+            "resume": 133
+          },
+          "57": {
+            "moving": 2394,
+            "hold": 357,
+            "resume": 129
+          },
+          "58": {
+            "moving": 2064,
+            "hold": 656,
+            "resume": 160
+          },
+          "59": {
+            "moving": 2456,
+            "hold": 278,
+            "resume": 146
+          },
+          "60": {
+            "moving": 1996,
+            "hold": 752,
+            "resume": 132
+          },
+          "61": {
+            "moving": 1895,
+            "hold": 873,
+            "resume": 112
+          },
+          "62": {
+            "moving": 2041,
+            "hold": 705,
+            "resume": 134
+          },
+          "63": {
+            "moving": 2107,
+            "hold": 662,
+            "resume": 112
+          }
+        }
+      },
+      "trace": {
+        "present": true,
+        "header": [
+          "sequence",
+          "stopwatchTicks",
+          "elapsedMicroseconds",
+          "x",
+          "y",
+          "event",
+          "hookX",
+          "hookY",
+          "cursorX",
+          "cursorY",
+          "hookMouseData",
+          "hookFlags",
+          "hookTimeMilliseconds",
+          "hookExtraInfo",
+          "dwmTimingAvailable",
+          "dwmRateRefreshNumerator",
+          "dwmRateRefreshDenominator",
+          "dwmQpcRefreshPeriod",
+          "dwmQpcVBlank",
+          "dwmRefreshCount",
+          "dwmQpcCompose",
+          "dwmFrame",
+          "dwmRefreshFrame",
+          "dwmFrameDisplayed",
+          "dwmQpcFrameDisplayed",
+          "dwmRefreshFrameDisplayed",
+          "dwmFrameComplete",
+          "dwmQpcFrameComplete",
+          "dwmFramePending",
+          "dwmQpcFramePending",
+          "dwmRefreshNextDisplayed",
+          "dwmRefreshNextPresented",
+          "dwmFramesDisplayed",
+          "dwmFramesDropped",
+          "dwmFramesMissed",
+          "runtimeSchedulerTimingUsable",
+          "runtimeSchedulerTargetVBlankTicks",
+          "runtimeSchedulerPlannedTickTicks",
+          "runtimeSchedulerActualTickTicks",
+          "runtimeSchedulerVBlankLeadMicroseconds",
+          "runtimeSchedulerQueuedTickTicks",
+          "runtimeSchedulerDispatchStartedTicks",
+          "runtimeSchedulerCursorReadStartedTicks",
+          "runtimeSchedulerCursorReadCompletedTicks",
+          "runtimeSchedulerSampleRecordedTicks",
+          "runtimeSchedulerLoopIteration",
+          "runtimeSchedulerLoopStartedTicks",
+          "runtimeSchedulerTimingReadStartedTicks",
+          "runtimeSchedulerTimingReadCompletedTicks",
+          "runtimeSchedulerDecisionCompletedTicks",
+          "runtimeSchedulerTickRequested",
+          "runtimeSchedulerSleepRequestedMilliseconds",
+          "runtimeSchedulerWaitMethod",
+          "runtimeSchedulerWaitTargetTicks",
+          "runtimeSchedulerSleepStartedTicks",
+          "runtimeSchedulerSleepCompletedTicks"
+        ],
+        "rowCount": 571320,
+        "rowsMinusMetadataSampleCount": 0,
+        "eventCounts": {
+          "poll": 96007,
+          "referencePoll": 246757,
+          "runtimeSchedulerLoop": 45436,
+          "runtimeSchedulerPoll": 45435,
+          "move": 137685
+        },
+        "scenarioCounts": {
+          "0": 11815,
+          "1": 11818,
+          "2": 11823,
+          "3": 11820,
+          "4": 11820,
+          "5": 11820,
+          "6": 11820,
+          "7": 11820,
+          "8": 11820,
+          "9": 11818,
+          "10": 11821,
+          "11": 11819,
+          "12": 11821,
+          "13": 11818,
+          "14": 11819,
+          "15": 11817,
+          "16": 11782,
+          "17": 11812,
+          "18": 11774,
+          "19": 11611,
+          "20": 11957,
+          "21": 11542,
+          "22": 10886,
+          "23": 11541,
+          "24": 11056,
+          "25": 10721,
+          "26": 10267,
+          "27": 9741,
+          "28": 9403,
+          "29": 8445,
+          "30": 8170,
+          "31": 7504,
+          "32": 7433,
+          "33": 7967,
+          "34": 7714,
+          "35": 7406,
+          "36": 7296,
+          "37": 6865,
+          "38": 6945,
+          "39": 7136,
+          "40": 7083,
+          "41": 6924,
+          "42": 6645,
+          "43": 7141,
+          "44": 7022,
+          "45": 6918,
+          "46": 6864,
+          "47": 6371,
+          "48": 6333,
+          "49": 6327,
+          "50": 6688,
+          "51": 7045,
+          "52": 6388,
+          "53": 6180,
+          "54": 6712,
+          "55": 6419,
+          "56": 6422,
+          "57": 6016,
+          "58": 5942,
+          "59": 6156,
+          "60": 5879,
+          "61": 6102,
+          "62": 5838,
+          "63": 5822
+        },
+        "dwmTimingAvailableRows": 186878,
+        "dwmTimingAvailableRowPercent": 32.71,
+        "eventIntervalMilliseconds": {
+          "referencePoll": {
+            "count": 246756,
+            "mean": 3.113,
+            "min": 0,
+            "p50": 2,
+            "p90": 8.009,
+            "p95": 15.873,
+            "p99": 21.214,
+            "max": 36.794
+          },
+          "poll": {
+            "count": 96006,
+            "mean": 8,
+            "min": 0.001,
+            "p50": 8,
+            "p90": 13.521,
+            "p95": 16.337,
+            "p99": 21.225,
+            "max": 34.721
+          },
+          "runtimeSchedulerLoop": {
+            "count": 45435,
+            "mean": 16.904,
+            "min": 0.008,
+            "p50": 16.824,
+            "p90": 25.495,
+            "p95": 27.549,
+            "p99": 30.319,
+            "max": 46.002
+          },
+          "runtimeSchedulerPoll": {
+            "count": 45434,
+            "mean": 16.904,
+            "min": 6.463,
+            "p50": 16.666,
+            "p90": 17.218,
+            "p95": 18.235,
+            "p99": 33.308,
+            "max": 34.03
+          },
+          "move": {
+            "count": 137684,
+            "mean": 5.578,
+            "min": 0.011,
+            "p50": 1.107,
+            "p90": 19.168,
+            "p95": 23.013,
+            "p99": 27.523,
+            "max": 63.557
+          }
+        },
+        "schedulerDelayMilliseconds": {
+          "count": 45435,
+          "mean": 0.283,
+          "min": 0.026,
+          "p50": 0.093,
+          "p90": 0.595,
+          "p95": 1.26,
+          "p99": 2.657,
+          "max": 10.273
+        },
+        "schedulerVBlankLeadMicroseconds": {
+          "count": 90871,
+          "mean": 3823.026,
+          "min": -6273,
+          "p50": 3945,
+          "p90": 4000,
+          "p95": 4000,
+          "p99": 4000,
+          "max": 4000
+        },
+        "schedulerSleepRequestedMilliseconds": {
+          "count": 45436,
+          "mean": 6.945,
+          "min": 1,
+          "p50": 8,
+          "p90": 8,
+          "p95": 8,
+          "p99": 8,
+          "max": 8
+        },
+        "schedulerCursorReadMilliseconds": {
+          "count": 45435,
+          "mean": 0.013,
+          "min": 0.001,
+          "p50": 0.002,
+          "p90": 0.023,
+          "p95": 0.034,
+          "p99": 0.342,
+          "max": 3.501
+        },
+        "schedulerWaitMethodCounts": {
+          "highResolutionWaitableTimer+fineWait": 43297,
+          "fineWait": 552,
+          "none": 1587
+        }
+      },
+      "consistency": {
+        "metadataSampleCountMatchesTraceRows": true,
+        "motionMetadataScenarioCountMatchesScript": true,
+        "motionMetadataControlPointsMatchScript": true,
+        "motionMetadataSpeedPointsMatchScript": true,
+        "motionMetadataHoldSegmentsMatchScript": true,
+        "motionSampleRowsMatchExpectedRate": true
+      }
+    },
+    {
+      "id": "stress",
+      "label": "stress load",
+      "sourceZip": "cursor-mirror-motion-recording-20260503-215632.zip",
+      "relativePath": "cursor-mirror-motion-recording-20260503-215632.zip",
+      "bytes": 14922386,
+      "note": "User supplied context: CursorMirror.LoadGen at 90%, 32 threads.",
+      "entries": [
+        {
+          "name": "motion-script.json",
+          "compressionMethod": 8,
+          "compressedSize": 39746,
+          "uncompressedSize": 139110
+        },
+        {
+          "name": "motion-samples.csv",
+          "compressionMethod": 8,
+          "compressedSize": 3536896,
+          "uncompressedSize": 11037410
+        },
+        {
+          "name": "trace.csv",
+          "compressionMethod": 8,
+          "compressedSize": 11343944,
+          "uncompressedSize": 90018228
+        },
+        {
+          "name": "metadata.json",
+          "compressionMethod": 8,
+          "compressedSize": 977,
+          "uncompressedSize": 2854
+        },
+        {
+          "name": "motion-metadata.json",
+          "compressionMethod": 8,
+          "compressedSize": 265,
+          "uncompressedSize": 423
+        }
+      ],
+      "metadata": {
+        "traceFormatVersion": 8,
+        "productName": "Cursor Mirror Motion Lab",
+        "productVersion": "v1.6.0-dev+20260503.249d22ced965.dirty",
+        "createdUtc": "2026-05-03T13:09:33.1747876Z",
+        "durationMicroseconds": 768483608,
+        "sampleCount": 544571,
+        "hookSampleCount": 127497,
+        "pollSampleCount": 96037,
+        "referencePollSampleCount": 236420,
+        "dwmTimingSampleCount": 180654,
+        "pollIntervalMilliseconds": 8,
+        "referencePollIntervalMilliseconds": 2,
+        "timerResolutionMilliseconds": 1,
+        "timerResolutionSucceeded": true,
+        "dwmTimingAvailabilityPercent": 100,
+        "processorCount": 32,
+        "monitorCount": 3,
+        "virtualScreen": {
+          "x": -2560,
+          "y": 0,
+          "width": 7680,
+          "height": 1440
+        },
+        "qualityWarnings": [
+          "product_poll_interval_p95_exceeds_requested_interval",
+          "reference_poll_interval_p95_exceeds_requested_interval"
+        ],
+        "hookMoveIntervalStats": {
+          "Count": 127496,
+          "MeanMilliseconds": 6.023585688178483,
+          "P50Milliseconds": 1.4718499999999999,
+          "P95Milliseconds": 28.531875,
+          "MaxMilliseconds": 69.4641
+        },
+        "productPollIntervalStats": {
+          "Count": 96036,
+          "MeanMilliseconds": 8.001847366612528,
+          "P50Milliseconds": 7.9999,
+          "P95Milliseconds": 22.540550000000003,
+          "MaxMilliseconds": 53.1202
+        },
+        "referencePollIntervalStats": {
+          "Count": 236419,
+          "MeanMilliseconds": 3.250426557510505,
+          "P50Milliseconds": 2,
+          "P95Milliseconds": 14.8784,
+          "MaxMilliseconds": 54.0874
+        },
+        "runtimeSchedulerPollSampleCount": 42308,
+        "runtimeSchedulerPollIntervalStats": {
+          "Count": 42307,
+          "MeanMilliseconds": 18.16356440069024,
+          "P50Milliseconds": 16.6733,
+          "P95Milliseconds": 33.3416,
+          "MaxMilliseconds": 51.1556
+        },
+        "runtimeSchedulerLoopSampleCount": 42309,
+        "runtimeSchedulerLoopIntervalStats": {
+          "Count": 42308,
+          "MeanMilliseconds": 18.163183305757787,
+          "P50Milliseconds": 16.69845,
+          "P95Milliseconds": 37.16652500000001,
+          "MaxMilliseconds": 62.0008
+        },
+        "runtimeSchedulerWakeAdvanceMilliseconds": 4,
+        "runtimeSchedulerFallbackIntervalMilliseconds": 8,
+        "runtimeSchedulerMaximumDwmSleepMilliseconds": 2,
+        "runtimeSchedulerCoalescedTickCount": 0,
+        "runtimeSchedulerThreadProfile": "managed=unavailable;mmcss=unavailable",
+        "runtimeSchedulerCaptureThreadProfile": "managed=unavailable;mmcss=unavailable"
+      },
+      "motionMetadata": {
+        "productName": "Cursor Mirror Motion Lab",
+        "productVersion": "v1.6.0-dev+20260503.249d22ced965.dirty",
+        "createdUtc": "2026-05-03T13:09:33.3368969Z",
+        "generationProfile": "real-trace-weighted",
+        "seed": 693303690,
+        "scenarioCount": 64,
+        "controlPointCount": 512,
+        "speedPointCount": 512,
+        "holdSegmentCount": 320,
+        "holdDurationMilliseconds": 137235.056,
+        "durationMilliseconds": 768000,
+        "scenarioDurationMilliseconds": 12000,
+        "sampleRateHz": 240
+      },
+      "motionScript": {
+        "schemaVersion": "cursor-mirror-motion-scenarios/1",
+        "seed": 693303690,
+        "generationProfile": "real-trace-weighted",
+        "durationMilliseconds": 768000,
+        "scenarioDurationMilliseconds": 12000,
+        "sampleRateHz": 240,
+        "scenarioCount": 64,
+        "controlPointCount": 512,
+        "speedPointCount": 512,
+        "holdSegmentCount": 320,
+        "holdDurationMilliseconds": 137235.056,
+        "resumeDurationMilliseconds": 35420.415,
+        "holdSegmentsPerScenario": {
+          "count": 64,
+          "mean": 5,
+          "min": 4,
+          "p50": 5,
+          "p90": 6,
+          "p95": 6,
+          "p99": 6,
+          "max": 6
+        },
+        "holdDurationByScenarioMilliseconds": {
+          "count": 64,
+          "mean": 2144.298,
+          "min": 786.336,
+          "p50": 1976.985,
+          "p90": 3417.199,
+          "p95": 3672.443,
+          "p99": 5027.46,
+          "max": 5400
+        },
+        "resumeDurationByScenarioMilliseconds": {
+          "count": 64,
+          "mean": 553.444,
+          "min": 272.923,
+          "p50": 553.197,
+          "p90": 702.35,
+          "p95": 730.682,
+          "p99": 768.383,
+          "max": 791.008
+        },
+        "holdSegmentDurationMilliseconds": {
+          "count": 320,
+          "mean": 428.86,
+          "min": 83.543,
+          "p50": 222.718,
+          "p90": 853.94,
+          "p95": 1657.429,
+          "p99": 2042.63,
+          "max": 2168.948
+        },
+        "resumeSegmentDurationMilliseconds": {
+          "count": 320,
+          "mean": 110.689,
+          "min": 11.928,
+          "p50": 111.318,
+          "p90": 162.644,
+          "p95": 169.527,
+          "p99": 175.394,
+          "max": 178.303
+        },
+        "scenarios": [
+          {
+            "index": 0,
+            "seed": 1075410250,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 2382.421,
+            "resumeDurationMilliseconds": 615.137,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 977,
+              "y": 811
+            },
+            "lastPoint": {
+              "x": 1825.954,
+              "y": 308.251
+            }
+          },
+          {
+            "index": 1,
+            "seed": 1419726404,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 2809.98,
+            "resumeDurationMilliseconds": 422.45,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1826,
+              "y": 308
+            },
+            "lastPoint": {
+              "x": 1884.669,
+              "y": 1072.365
+            }
+          },
+          {
+            "index": 2,
+            "seed": 1681849851,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1655.029,
+            "resumeDurationMilliseconds": 507.243,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1885,
+              "y": 1072
+            },
+            "lastPoint": {
+              "x": 1053.45,
+              "y": 993.951
+            }
+          },
+          {
+            "index": 3,
+            "seed": 1060928144,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 1309.5,
+            "resumeDurationMilliseconds": 590.567,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1053,
+              "y": 994
+            },
+            "lastPoint": {
+              "x": 1814.199,
+              "y": 547.451
+            }
+          },
+          {
+            "index": 4,
+            "seed": 1827232308,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 3075.532,
+            "resumeDurationMilliseconds": 569.114,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1814,
+              "y": 547
+            },
+            "lastPoint": {
+              "x": 2322.36,
+              "y": 929.312
+            }
+          },
+          {
+            "index": 5,
+            "seed": 69494643,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 790.798,
+            "resumeDurationMilliseconds": 422.895,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2322,
+              "y": 929
+            },
+            "lastPoint": {
+              "x": 2436.68,
+              "y": 144.86
+            }
+          },
+          {
+            "index": 6,
+            "seed": 2120918104,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 2585.284,
+            "resumeDurationMilliseconds": 474.95,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2437,
+              "y": 145
+            },
+            "lastPoint": {
+              "x": 1968.318,
+              "y": 843.025
+            }
+          },
+          {
+            "index": 7,
+            "seed": 54874018,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 1021.021,
+            "resumeDurationMilliseconds": 523.135,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1968,
+              "y": 843
+            },
+            "lastPoint": {
+              "x": 2096.703,
+              "y": 1216.891
+            }
+          },
+          {
+            "index": 8,
+            "seed": 1799884996,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1671.006,
+            "resumeDurationMilliseconds": 626.905,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2097,
+              "y": 1217
+            },
+            "lastPoint": {
+              "x": 610.848,
+              "y": 499.606
+            }
+          },
+          {
+            "index": 9,
+            "seed": 4190232,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 1391.687,
+            "resumeDurationMilliseconds": 480.3,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 611,
+              "y": 500
+            },
+            "lastPoint": {
+              "x": 91.169,
+              "y": 899.277
+            }
+          },
+          {
+            "index": 10,
+            "seed": 1557278728,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1964.701,
+            "resumeDurationMilliseconds": 700.109,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 91,
+              "y": 899
+            },
+            "lastPoint": {
+              "x": 1923.661,
+              "y": 635.411
+            }
+          },
+          {
+            "index": 11,
+            "seed": 1192958052,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1462.008,
+            "resumeDurationMilliseconds": 709.683,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1924,
+              "y": 635
+            },
+            "lastPoint": {
+              "x": 360.426,
+              "y": 233.079
+            }
+          },
+          {
+            "index": 12,
+            "seed": 589715771,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1226.986,
+            "resumeDurationMilliseconds": 641.942,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 360,
+              "y": 233
+            },
+            "lastPoint": {
+              "x": 1447.986,
+              "y": 795.095
+            }
+          },
+          {
+            "index": 13,
+            "seed": 57496171,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 1029.104,
+            "resumeDurationMilliseconds": 412.248,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1448,
+              "y": 795
+            },
+            "lastPoint": {
+              "x": 1069.432,
+              "y": 367.48
+            }
+          },
+          {
+            "index": 14,
+            "seed": 497251094,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 1807.321,
+            "resumeDurationMilliseconds": 361.122,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1069,
+              "y": 367
+            },
+            "lastPoint": {
+              "x": 523.294,
+              "y": 101.91
+            }
+          },
+          {
+            "index": 15,
+            "seed": 1571925931,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 2778.649,
+            "resumeDurationMilliseconds": 685.422,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 523,
+              "y": 102
+            },
+            "lastPoint": {
+              "x": 905.402,
+              "y": 668.935
+            }
+          },
+          {
+            "index": 16,
+            "seed": 706738540,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 1552.572,
+            "resumeDurationMilliseconds": 736.069,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 905,
+              "y": 669
+            },
+            "lastPoint": {
+              "x": 1365.763,
+              "y": 458.622
+            }
+          },
+          {
+            "index": 17,
+            "seed": 1134091882,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 1236.508,
+            "resumeDurationMilliseconds": 272.923,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1366,
+              "y": 459
+            },
+            "lastPoint": {
+              "x": 431.259,
+              "y": 350.213
+            }
+          },
+          {
+            "index": 18,
+            "seed": 1639844153,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 2606.103,
+            "resumeDurationMilliseconds": 589.362,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 431,
+              "y": 350
+            },
+            "lastPoint": {
+              "x": 1331.471,
+              "y": 859.292
+            }
+          },
+          {
+            "index": 19,
+            "seed": 1900198249,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 5400,
+            "resumeDurationMilliseconds": 492.97,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1331,
+              "y": 859
+            },
+            "lastPoint": {
+              "x": 1856.734,
+              "y": 1095.303
+            }
+          },
+          {
+            "index": 20,
+            "seed": 1886002857,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 2219.198,
+            "resumeDurationMilliseconds": 463.898,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1857,
+              "y": 1095
+            },
+            "lastPoint": {
+              "x": 793.212,
+              "y": 401.05
+            }
+          },
+          {
+            "index": 21,
+            "seed": 1229387913,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 4808.666,
+            "resumeDurationMilliseconds": 565.291,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 793,
+              "y": 401
+            },
+            "lastPoint": {
+              "x": 93.576,
+              "y": 1128.858
+            }
+          },
+          {
+            "index": 22,
+            "seed": 1818759339,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1727.985,
+            "resumeDurationMilliseconds": 527.753,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 94,
+              "y": 1129
+            },
+            "lastPoint": {
+              "x": 2292.748,
+              "y": 778.267
+            }
+          },
+          {
+            "index": 23,
+            "seed": 296847432,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 928.201,
+            "resumeDurationMilliseconds": 636.748,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2293,
+              "y": 778
+            },
+            "lastPoint": {
+              "x": 658.194,
+              "y": 1145.241
+            }
+          },
+          {
+            "index": 24,
+            "seed": 1997009436,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 4535.375,
+            "resumeDurationMilliseconds": 732.529,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 658,
+              "y": 1145
+            },
+            "lastPoint": {
+              "x": 923.317,
+              "y": 113.053
+            }
+          },
+          {
+            "index": 25,
+            "seed": 871268998,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 2413.191,
+            "resumeDurationMilliseconds": 720.219,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 923,
+              "y": 113
+            },
+            "lastPoint": {
+              "x": 2464.512,
+              "y": 978.175
+            }
+          },
+          {
+            "index": 26,
+            "seed": 35246189,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 2245.89,
+            "resumeDurationMilliseconds": 523.038,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2465,
+              "y": 978
+            },
+            "lastPoint": {
+              "x": 1426.906,
+              "y": 522.895
+            }
+          },
+          {
+            "index": 27,
+            "seed": 2109245214,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 2753.663,
+            "resumeDurationMilliseconds": 602.778,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1427,
+              "y": 523
+            },
+            "lastPoint": {
+              "x": 299.005,
+              "y": 1181.527
+            }
+          },
+          {
+            "index": 28,
+            "seed": 1153989185,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 3049.96,
+            "resumeDurationMilliseconds": 584.815,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 299,
+              "y": 1182
+            },
+            "lastPoint": {
+              "x": 2196.258,
+              "y": 1188.552
+            }
+          },
+          {
+            "index": 29,
+            "seed": 356962394,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1298.422,
+            "resumeDurationMilliseconds": 548.782,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2196,
+              "y": 1189
+            },
+            "lastPoint": {
+              "x": 1699.313,
+              "y": 586.715
+            }
+          },
+          {
+            "index": 30,
+            "seed": 471573151,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 2064.023,
+            "resumeDurationMilliseconds": 555.737,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1699,
+              "y": 587
+            },
+            "lastPoint": {
+              "x": 635.069,
+              "y": 594.643
+            }
+          },
+          {
+            "index": 31,
+            "seed": 1427969767,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1411.41,
+            "resumeDurationMilliseconds": 575.709,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 635,
+              "y": 595
+            },
+            "lastPoint": {
+              "x": 1088.22,
+              "y": 608.907
+            }
+          },
+          {
+            "index": 32,
+            "seed": 1995537060,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 3441.444,
+            "resumeDurationMilliseconds": 703.31,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1088,
+              "y": 609
+            },
+            "lastPoint": {
+              "x": 1650.629,
+              "y": 224.806
+            }
+          },
+          {
+            "index": 33,
+            "seed": 1980919698,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 3676.699,
+            "resumeDurationMilliseconds": 791.008,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1651,
+              "y": 225
+            },
+            "lastPoint": {
+              "x": 1549.343,
+              "y": 421.893
+            }
+          },
+          {
+            "index": 34,
+            "seed": 961904639,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 2255.135,
+            "resumeDurationMilliseconds": 388.29,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1549,
+              "y": 422
+            },
+            "lastPoint": {
+              "x": 1951.501,
+              "y": 847.19
+            }
+          },
+          {
+            "index": 35,
+            "seed": 918555235,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 2970.246,
+            "resumeDurationMilliseconds": 390.558,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1952,
+              "y": 847
+            },
+            "lastPoint": {
+              "x": 352.413,
+              "y": 1041.975
+            }
+          },
+          {
+            "index": 36,
+            "seed": 2010650825,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 2648.957,
+            "resumeDurationMilliseconds": 593.818,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 352,
+              "y": 1042
+            },
+            "lastPoint": {
+              "x": 566.335,
+              "y": 411.973
+            }
+          },
+          {
+            "index": 37,
+            "seed": 491326064,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 2888.862,
+            "resumeDurationMilliseconds": 399.772,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 566,
+              "y": 412
+            },
+            "lastPoint": {
+              "x": 861.063,
+              "y": 681.081
+            }
+          },
+          {
+            "index": 38,
+            "seed": 1955821505,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 3648.324,
+            "resumeDurationMilliseconds": 576.417,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 861,
+              "y": 681
+            },
+            "lastPoint": {
+              "x": 769.743,
+              "y": 143.685
+            }
+          },
+          {
+            "index": 39,
+            "seed": 856900433,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 887.309,
+            "resumeDurationMilliseconds": 466.336,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 770,
+              "y": 144
+            },
+            "lastPoint": {
+              "x": 407.698,
+              "y": 320.736
+            }
+          },
+          {
+            "index": 40,
+            "seed": 613935955,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 1005.038,
+            "resumeDurationMilliseconds": 538.249,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 408,
+              "y": 321
+            },
+            "lastPoint": {
+              "x": 350.477,
+              "y": 1260.323
+            }
+          },
+          {
+            "index": 41,
+            "seed": 832729452,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 2050.158,
+            "resumeDurationMilliseconds": 609.894,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 350,
+              "y": 1260
+            },
+            "lastPoint": {
+              "x": 1372.933,
+              "y": 897.713
+            }
+          },
+          {
+            "index": 42,
+            "seed": 1776252023,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 2600.009,
+            "resumeDurationMilliseconds": 466.962,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1373,
+              "y": 898
+            },
+            "lastPoint": {
+              "x": 1528.479,
+              "y": 156.91
+            }
+          },
+          {
+            "index": 43,
+            "seed": 271908635,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 3608.163,
+            "resumeDurationMilliseconds": 755.095,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1528,
+              "y": 157
+            },
+            "lastPoint": {
+              "x": 809.409,
+              "y": 502.416
+            }
+          },
+          {
+            "index": 44,
+            "seed": 1396517719,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 3247.677,
+            "resumeDurationMilliseconds": 589.006,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 809,
+              "y": 502
+            },
+            "lastPoint": {
+              "x": 1729.546,
+              "y": 1240.018
+            }
+          },
+          {
+            "index": 45,
+            "seed": 1937338614,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 1456.899,
+            "resumeDurationMilliseconds": 367.611,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1730,
+              "y": 1240
+            },
+            "lastPoint": {
+              "x": 1665.584,
+              "y": 970.112
+            }
+          },
+          {
+            "index": 46,
+            "seed": 774075384,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 967.469,
+            "resumeDurationMilliseconds": 600.845,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1666,
+              "y": 970
+            },
+            "lastPoint": {
+              "x": 1693.974,
+              "y": 123.473
+            }
+          },
+          {
+            "index": 47,
+            "seed": 1847516732,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 1989.269,
+            "resumeDurationMilliseconds": 623.065,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1694,
+              "y": 123
+            },
+            "lastPoint": {
+              "x": 378.801,
+              "y": 875.407
+            }
+          },
+          {
+            "index": 48,
+            "seed": 668570216,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1869.009,
+            "resumeDurationMilliseconds": 492.652,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 379,
+              "y": 875
+            },
+            "lastPoint": {
+              "x": 254.005,
+              "y": 1055.35
+            }
+          },
+          {
+            "index": 49,
+            "seed": 1602881913,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 797.884,
+            "resumeDurationMilliseconds": 450.465,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 254,
+              "y": 1055
+            },
+            "lastPoint": {
+              "x": 192.527,
+              "y": 1242.899
+            }
+          },
+          {
+            "index": 50,
+            "seed": 676748735,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 803.223,
+            "resumeDurationMilliseconds": 385.199,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 193,
+              "y": 1243
+            },
+            "lastPoint": {
+              "x": 2172.828,
+              "y": 321.518
+            }
+          },
+          {
+            "index": 51,
+            "seed": 1988025816,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 2183.1,
+            "resumeDurationMilliseconds": 537.116,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2173,
+              "y": 322
+            },
+            "lastPoint": {
+              "x": 1353.376,
+              "y": 208.228
+            }
+          },
+          {
+            "index": 52,
+            "seed": 684273733,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 1512.556,
+            "resumeDurationMilliseconds": 438.442,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1353,
+              "y": 208
+            },
+            "lastPoint": {
+              "x": 1533.778,
+              "y": 1000.51
+            }
+          },
+          {
+            "index": 53,
+            "seed": 855198946,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 1688.918,
+            "resumeDurationMilliseconds": 546.796,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1534,
+              "y": 1001
+            },
+            "lastPoint": {
+              "x": 1519.162,
+              "y": 425.204
+            }
+          },
+          {
+            "index": 54,
+            "seed": 197456290,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 1011.762,
+            "resumeDurationMilliseconds": 651.639,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1519,
+              "y": 425
+            },
+            "lastPoint": {
+              "x": 167.103,
+              "y": 831.392
+            }
+          },
+          {
+            "index": 55,
+            "seed": 1203239911,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 3360.626,
+            "resumeDurationMilliseconds": 541.92,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 167,
+              "y": 831
+            },
+            "lastPoint": {
+              "x": 1023.011,
+              "y": 81.435
+            }
+          },
+          {
+            "index": 56,
+            "seed": 1751047643,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 786.336,
+            "resumeDurationMilliseconds": 505.818,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1023,
+              "y": 81
+            },
+            "lastPoint": {
+              "x": 2274.394,
+              "y": 441.934
+            }
+          },
+          {
+            "index": 57,
+            "seed": 1033333950,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1686.072,
+            "resumeDurationMilliseconds": 664.447,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2274,
+              "y": 442
+            },
+            "lastPoint": {
+              "x": 1988.094,
+              "y": 182.255
+            }
+          },
+          {
+            "index": 58,
+            "seed": 707943846,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 1448.845,
+            "resumeDurationMilliseconds": 669.933,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1988,
+              "y": 182
+            },
+            "lastPoint": {
+              "x": 1201.321,
+              "y": 1029.239
+            }
+          },
+          {
+            "index": 59,
+            "seed": 1557693000,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 2694.939,
+            "resumeDurationMilliseconds": 522.789,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1201,
+              "y": 1029
+            },
+            "lastPoint": {
+              "x": 2148.414,
+              "y": 892.821
+            }
+          },
+          {
+            "index": 60,
+            "seed": 363523253,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 3083.893,
+            "resumeDurationMilliseconds": 617.626,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2148,
+              "y": 893
+            },
+            "lastPoint": {
+              "x": 2337.759,
+              "y": 1300.469
+            }
+          },
+          {
+            "index": 61,
+            "seed": 496802230,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 4,
+            "holdDurationMilliseconds": 1137.68,
+            "resumeDurationMilliseconds": 507.31,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2338,
+              "y": 1300
+            },
+            "lastPoint": {
+              "x": 2236.058,
+              "y": 221.996
+            }
+          },
+          {
+            "index": 62,
+            "seed": 1044253822,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1488.624,
+            "resumeDurationMilliseconds": 550.658,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2236,
+              "y": 222
+            },
+            "lastPoint": {
+              "x": 1087.745,
+              "y": 138.783
+            }
+          },
+          {
+            "index": 63,
+            "seed": 2015695043,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 3127.734,
+            "resumeDurationMilliseconds": 605.526,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1088,
+              "y": 139
+            },
+            "lastPoint": {
+              "x": 2467.322,
+              "y": 133.174
+            }
+          }
+        ]
+      },
+      "motionSamples": {
+        "present": true,
+        "header": [
+          "sequence",
+          "elapsedMilliseconds",
+          "scenarioIndex",
+          "scenarioElapsedMilliseconds",
+          "progress",
+          "x",
+          "y",
+          "velocityPixelsPerSecond"
+        ],
+        "rowCount": 184321,
+        "expectedRows": 184321,
+        "rowsMinusExpected": 0,
+        "scenarioCounts": {
+          "0": 2880,
+          "1": 2880,
+          "2": 2880,
+          "3": 2880,
+          "4": 2880,
+          "5": 2880,
+          "6": 2880,
+          "7": 2880,
+          "8": 2880,
+          "9": 2880,
+          "10": 2880,
+          "11": 2880,
+          "12": 2880,
+          "13": 2880,
+          "14": 2880,
+          "15": 2880,
+          "16": 2880,
+          "17": 2880,
+          "18": 2880,
+          "19": 2880,
+          "20": 2880,
+          "21": 2880,
+          "22": 2880,
+          "23": 2880,
+          "24": 2880,
+          "25": 2880,
+          "26": 2880,
+          "27": 2880,
+          "28": 2880,
+          "29": 2880,
+          "30": 2880,
+          "31": 2880,
+          "32": 2880,
+          "33": 2880,
+          "34": 2880,
+          "35": 2880,
+          "36": 2880,
+          "37": 2880,
+          "38": 2880,
+          "39": 2880,
+          "40": 2880,
+          "41": 2880,
+          "42": 2880,
+          "43": 2880,
+          "44": 2880,
+          "45": 2880,
+          "46": 2880,
+          "47": 2880,
+          "48": 2880,
+          "49": 2880,
+          "50": 2880,
+          "51": 2880,
+          "52": 2880,
+          "53": 2880,
+          "54": 2880,
+          "55": 2880,
+          "56": 2880,
+          "57": 2880,
+          "58": 2880,
+          "59": 2880,
+          "60": 2880,
+          "61": 2880,
+          "62": 2880,
+          "63": 2881
+        },
+        "categoryCounts": {
+          "moving": 142890,
+          "hold": 32927,
+          "resume": 8504
+        },
+        "categoryPercent": {
+          "moving": 77.522,
+          "hold": 17.864,
+          "resume": 4.614
+        },
+        "velocityPixelsPerSecond": {
+          "count": 184321,
+          "mean": 89.483,
+          "min": 0,
+          "p50": 56.121,
+          "p90": 150.926,
+          "p95": 263.32,
+          "p99": 874.993,
+          "max": 23141.368
+        },
+        "velocityByCategory": {
+          "moving": {
+            "count": 142890,
+            "mean": 100.12,
+            "min": 5.972,
+            "p50": 70.99,
+            "p90": 161.096,
+            "p95": 267.392,
+            "p99": 776.191,
+            "max": 2904.931
+          },
+          "hold": {
+            "count": 32927,
+            "mean": 1.186,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 23141.368
+          },
+          "resume": {
+            "count": 8504,
+            "mean": 252.626,
+            "min": 0.003,
+            "p50": 94.861,
+            "p90": 772.346,
+            "p95": 1126.087,
+            "p99": 2017.077,
+            "max": 4333.562
+          }
+        },
+        "xRange": {
+          "count": 184321,
+          "mean": 1286.462,
+          "min": 91,
+          "p50": 1347.404,
+          "p90": 1989.633,
+          "p95": 2115.839,
+          "p99": 2231.876,
+          "max": 2467.322
+        },
+        "yRange": {
+          "count": 184321,
+          "mean": 670.498,
+          "min": 81,
+          "p50": 671.919,
+          "p90": 1005.8,
+          "p95": 1065.677,
+          "p99": 1186.355,
+          "max": 1300.396
+        },
+        "scenarioCategoryCounts": {
+          "0": {
+            "moving": 2162,
+            "hold": 571,
+            "resume": 147
+          },
+          "1": {
+            "moving": 2103,
+            "hold": 675,
+            "resume": 102
+          },
+          "2": {
+            "moving": 2362,
+            "hold": 396,
+            "resume": 122
+          },
+          "3": {
+            "moving": 2424,
+            "hold": 314,
+            "resume": 142
+          },
+          "4": {
+            "moving": 2006,
+            "hold": 737,
+            "resume": 137
+          },
+          "5": {
+            "moving": 2590,
+            "hold": 189,
+            "resume": 101
+          },
+          "6": {
+            "moving": 2145,
+            "hold": 620,
+            "resume": 115
+          },
+          "7": {
+            "moving": 2510,
+            "hold": 246,
+            "resume": 124
+          },
+          "8": {
+            "moving": 2329,
+            "hold": 402,
+            "resume": 149
+          },
+          "9": {
+            "moving": 2431,
+            "hold": 335,
+            "resume": 114
+          },
+          "10": {
+            "moving": 2240,
+            "hold": 473,
+            "resume": 167
+          },
+          "11": {
+            "moving": 2359,
+            "hold": 350,
+            "resume": 171
+          },
+          "12": {
+            "moving": 2432,
+            "hold": 293,
+            "resume": 155
+          },
+          "13": {
+            "moving": 2534,
+            "hold": 247,
+            "resume": 99
+          },
+          "14": {
+            "moving": 2361,
+            "hold": 433,
+            "resume": 86
+          },
+          "15": {
+            "moving": 2049,
+            "hold": 668,
+            "resume": 163
+          },
+          "16": {
+            "moving": 2331,
+            "hold": 373,
+            "resume": 176
+          },
+          "17": {
+            "moving": 2518,
+            "hold": 296,
+            "resume": 66
+          },
+          "18": {
+            "moving": 2114,
+            "hold": 625,
+            "resume": 141
+          },
+          "19": {
+            "moving": 1466,
+            "hold": 1295,
+            "resume": 119
+          },
+          "20": {
+            "moving": 2236,
+            "hold": 533,
+            "resume": 111
+          },
+          "21": {
+            "moving": 1590,
+            "hold": 1152,
+            "resume": 138
+          },
+          "22": {
+            "moving": 2339,
+            "hold": 414,
+            "resume": 127
+          },
+          "23": {
+            "moving": 2504,
+            "hold": 222,
+            "resume": 154
+          },
+          "24": {
+            "moving": 1617,
+            "hold": 1089,
+            "resume": 174
+          },
+          "25": {
+            "moving": 2127,
+            "hold": 578,
+            "resume": 175
+          },
+          "26": {
+            "moving": 2214,
+            "hold": 540,
+            "resume": 126
+          },
+          "27": {
+            "moving": 2074,
+            "hold": 661,
+            "resume": 145
+          },
+          "28": {
+            "moving": 2008,
+            "hold": 731,
+            "resume": 141
+          },
+          "29": {
+            "moving": 2437,
+            "hold": 310,
+            "resume": 133
+          },
+          "30": {
+            "moving": 2252,
+            "hold": 495,
+            "resume": 133
+          },
+          "31": {
+            "moving": 2403,
+            "hold": 338,
+            "resume": 139
+          },
+          "32": {
+            "moving": 1886,
+            "hold": 825,
+            "resume": 169
+          },
+          "33": {
+            "moving": 1807,
+            "hold": 883,
+            "resume": 190
+          },
+          "34": {
+            "moving": 2245,
+            "hold": 543,
+            "resume": 92
+          },
+          "35": {
+            "moving": 2073,
+            "hold": 713,
+            "resume": 94
+          },
+          "36": {
+            "moving": 2102,
+            "hold": 636,
+            "resume": 142
+          },
+          "37": {
+            "moving": 2089,
+            "hold": 694,
+            "resume": 97
+          },
+          "38": {
+            "moving": 1865,
+            "hold": 877,
+            "resume": 138
+          },
+          "39": {
+            "moving": 2556,
+            "hold": 212,
+            "resume": 112
+          },
+          "40": {
+            "moving": 2511,
+            "hold": 241,
+            "resume": 128
+          },
+          "41": {
+            "moving": 2244,
+            "hold": 491,
+            "resume": 145
+          },
+          "42": {
+            "moving": 2144,
+            "hold": 624,
+            "resume": 112
+          },
+          "43": {
+            "moving": 1835,
+            "hold": 866,
+            "resume": 179
+          },
+          "44": {
+            "moving": 1958,
+            "hold": 780,
+            "resume": 142
+          },
+          "45": {
+            "moving": 2441,
+            "hold": 351,
+            "resume": 88
+          },
+          "46": {
+            "moving": 2504,
+            "hold": 232,
+            "resume": 144
+          },
+          "47": {
+            "moving": 2253,
+            "hold": 477,
+            "resume": 150
+          },
+          "48": {
+            "moving": 2312,
+            "hold": 449,
+            "resume": 119
+          },
+          "49": {
+            "moving": 2580,
+            "hold": 192,
+            "resume": 108
+          },
+          "50": {
+            "moving": 2594,
+            "hold": 193,
+            "resume": 93
+          },
+          "51": {
+            "moving": 2226,
+            "hold": 524,
+            "resume": 130
+          },
+          "52": {
+            "moving": 2411,
+            "hold": 363,
+            "resume": 106
+          },
+          "53": {
+            "moving": 2343,
+            "hold": 406,
+            "resume": 131
+          },
+          "54": {
+            "moving": 2480,
+            "hold": 243,
+            "resume": 157
+          },
+          "55": {
+            "moving": 1944,
+            "hold": 807,
+            "resume": 129
+          },
+          "56": {
+            "moving": 2569,
+            "hold": 189,
+            "resume": 122
+          },
+          "57": {
+            "moving": 2316,
+            "hold": 403,
+            "resume": 161
+          },
+          "58": {
+            "moving": 2372,
+            "hold": 348,
+            "resume": 160
+          },
+          "59": {
+            "moving": 2109,
+            "hold": 646,
+            "resume": 125
+          },
+          "60": {
+            "moving": 1993,
+            "hold": 738,
+            "resume": 149
+          },
+          "61": {
+            "moving": 2485,
+            "hold": 273,
+            "resume": 122
+          },
+          "62": {
+            "moving": 2391,
+            "hold": 357,
+            "resume": 132
+          },
+          "63": {
+            "moving": 1985,
+            "hold": 750,
+            "resume": 146
+          }
+        }
+      },
+      "trace": {
+        "present": true,
+        "header": [
+          "sequence",
+          "stopwatchTicks",
+          "elapsedMicroseconds",
+          "x",
+          "y",
+          "event",
+          "hookX",
+          "hookY",
+          "cursorX",
+          "cursorY",
+          "hookMouseData",
+          "hookFlags",
+          "hookTimeMilliseconds",
+          "hookExtraInfo",
+          "dwmTimingAvailable",
+          "dwmRateRefreshNumerator",
+          "dwmRateRefreshDenominator",
+          "dwmQpcRefreshPeriod",
+          "dwmQpcVBlank",
+          "dwmRefreshCount",
+          "dwmQpcCompose",
+          "dwmFrame",
+          "dwmRefreshFrame",
+          "dwmFrameDisplayed",
+          "dwmQpcFrameDisplayed",
+          "dwmRefreshFrameDisplayed",
+          "dwmFrameComplete",
+          "dwmQpcFrameComplete",
+          "dwmFramePending",
+          "dwmQpcFramePending",
+          "dwmRefreshNextDisplayed",
+          "dwmRefreshNextPresented",
+          "dwmFramesDisplayed",
+          "dwmFramesDropped",
+          "dwmFramesMissed",
+          "runtimeSchedulerTimingUsable",
+          "runtimeSchedulerTargetVBlankTicks",
+          "runtimeSchedulerPlannedTickTicks",
+          "runtimeSchedulerActualTickTicks",
+          "runtimeSchedulerVBlankLeadMicroseconds",
+          "runtimeSchedulerQueuedTickTicks",
+          "runtimeSchedulerDispatchStartedTicks",
+          "runtimeSchedulerCursorReadStartedTicks",
+          "runtimeSchedulerCursorReadCompletedTicks",
+          "runtimeSchedulerSampleRecordedTicks",
+          "runtimeSchedulerLoopIteration",
+          "runtimeSchedulerLoopStartedTicks",
+          "runtimeSchedulerTimingReadStartedTicks",
+          "runtimeSchedulerTimingReadCompletedTicks",
+          "runtimeSchedulerDecisionCompletedTicks",
+          "runtimeSchedulerTickRequested",
+          "runtimeSchedulerSleepRequestedMilliseconds",
+          "runtimeSchedulerWaitMethod",
+          "runtimeSchedulerWaitTargetTicks",
+          "runtimeSchedulerSleepStartedTicks",
+          "runtimeSchedulerSleepCompletedTicks"
+        ],
+        "rowCount": 544571,
+        "rowsMinusMetadataSampleCount": 0,
+        "eventCounts": {
+          "poll": 96037,
+          "referencePoll": 236420,
+          "runtimeSchedulerLoop": 42309,
+          "runtimeSchedulerPoll": 42308,
+          "move": 127497
+        },
+        "scenarioCounts": {
+          "0": 11725,
+          "1": 11817,
+          "2": 11821,
+          "3": 11820,
+          "4": 11820,
+          "5": 11819,
+          "6": 11821,
+          "7": 11820,
+          "8": 11820,
+          "9": 11820,
+          "10": 11814,
+          "11": 11814,
+          "12": 11819,
+          "13": 11801,
+          "14": 11808,
+          "15": 11760,
+          "16": 11720,
+          "17": 11639,
+          "18": 11547,
+          "19": 11541,
+          "20": 11546,
+          "21": 11423,
+          "22": 11452,
+          "23": 11180,
+          "24": 10938,
+          "25": 10371,
+          "26": 9946,
+          "27": 9139,
+          "28": 8764,
+          "29": 8416,
+          "30": 8234,
+          "31": 7954,
+          "32": 7883,
+          "33": 7382,
+          "34": 7126,
+          "35": 7324,
+          "36": 7038,
+          "37": 7043,
+          "38": 7110,
+          "39": 6292,
+          "40": 6502,
+          "41": 6475,
+          "42": 6448,
+          "43": 6220,
+          "44": 6228,
+          "45": 5694,
+          "46": 5899,
+          "47": 5728,
+          "48": 5488,
+          "49": 5356,
+          "50": 5554,
+          "51": 5171,
+          "52": 5671,
+          "53": 5791,
+          "54": 5495,
+          "55": 5106,
+          "56": 5062,
+          "57": 4929,
+          "58": 5353,
+          "59": 4968,
+          "60": 4859,
+          "61": 4851,
+          "62": 4790,
+          "63": 5006
+        },
+        "dwmTimingAvailableRows": 180654,
+        "dwmTimingAvailableRowPercent": 33.174,
+        "eventIntervalMilliseconds": {
+          "referencePoll": {
+            "count": 236419,
+            "mean": 3.25,
+            "min": 0,
+            "p50": 2,
+            "p90": 3.607,
+            "p95": 14.878,
+            "p99": 29.996,
+            "max": 54.088
+          },
+          "poll": {
+            "count": 96036,
+            "mean": 8.002,
+            "min": 0.001,
+            "p50": 8,
+            "p90": 14.746,
+            "p95": 22.54,
+            "p99": 31.938,
+            "max": 53.12
+          },
+          "runtimeSchedulerLoop": {
+            "count": 42308,
+            "mean": 18.163,
+            "min": 0.01,
+            "p50": 16.699,
+            "p90": 32.877,
+            "p95": 37.167,
+            "p99": 45.053,
+            "max": 62
+          },
+          "runtimeSchedulerPoll": {
+            "count": 42307,
+            "mean": 18.164,
+            "min": 0.12,
+            "p50": 16.673,
+            "p90": 20.273,
+            "p95": 33.341,
+            "p99": 34.068,
+            "max": 51.155
+          },
+          "move": {
+            "count": 127496,
+            "mean": 6.024,
+            "min": 0.027,
+            "p50": 1.472,
+            "p90": 19.487,
+            "p95": 28.532,
+            "p99": 38.779,
+            "max": 69.464
+          }
+        },
+        "schedulerDelayMilliseconds": {
+          "count": 42308,
+          "mean": 0.339,
+          "min": 0.019,
+          "p50": 0.086,
+          "p90": 0.723,
+          "p95": 1.444,
+          "p99": 3.949,
+          "max": 26.594
+        },
+        "schedulerVBlankLeadMicroseconds": {
+          "count": 84617,
+          "mean": 3753.019,
+          "min": -22594,
+          "p50": 3953,
+          "p90": 4000,
+          "p95": 4000,
+          "p99": 4000,
+          "max": 4000
+        },
+        "schedulerSleepRequestedMilliseconds": {
+          "count": 42309,
+          "mean": 6.896,
+          "min": 1,
+          "p50": 8,
+          "p90": 8,
+          "p95": 8,
+          "p99": 8,
+          "max": 8
+        },
+        "schedulerCursorReadMilliseconds": {
+          "count": 42308,
+          "mean": 0.01,
+          "min": 0.001,
+          "p50": 0.002,
+          "p90": 0.022,
+          "p95": 0.035,
+          "p99": 0.179,
+          "max": 1.494
+        },
+        "schedulerWaitMethodCounts": {
+          "none": 2726,
+          "highResolutionWaitableTimer+fineWait": 39456,
+          "fineWait": 127
+        }
+      },
+      "consistency": {
+        "metadataSampleCountMatchesTraceRows": true,
+        "motionMetadataScenarioCountMatchesScript": true,
+        "motionMetadataControlPointsMatchScript": true,
+        "motionMetadataSpeedPointsMatchScript": true,
+        "motionMetadataHoldSegmentsMatchScript": true,
+        "motionSampleRowsMatchExpectedRate": true
+      }
+    },
+    {
+      "id": "sanity",
+      "label": "short sanity",
+      "sourceZip": "cursor-mirror-motion-recording-20260503-212102.zip",
+      "relativePath": "cursor-mirror-motion-recording-20260503-212102.zip",
+      "bytes": 2180276,
+      "note": null,
+      "entries": [
+        {
+          "name": "motion-script.json",
+          "compressionMethod": 8,
+          "compressedSize": 5602,
+          "uncompressedSize": 18059
+        },
+        {
+          "name": "motion-samples.csv",
+          "compressionMethod": 8,
+          "compressedSize": 442363,
+          "uncompressedSize": 1325940
+        },
+        {
+          "name": "trace.csv",
+          "compressionMethod": 8,
+          "compressedSize": 1730559,
+          "uncompressedSize": 14484426
+        },
+        {
+          "name": "metadata.json",
+          "compressionMethod": 8,
+          "compressedSize": 931,
+          "uncompressedSize": 2719
+        },
+        {
+          "name": "motion-metadata.json",
+          "compressionMethod": 8,
+          "compressedSize": 263,
+          "uncompressedSize": 418
+        }
+      ],
+      "metadata": {
+        "traceFormatVersion": 8,
+        "productName": "Cursor Mirror Motion Lab",
+        "productVersion": "v1.6.0-dev+20260503.249d22ced965.dirty",
+        "createdUtc": "2026-05-03T12:22:42.0115812Z",
+        "durationMicroseconds": 96044176,
+        "sampleCount": 94580,
+        "hookSampleCount": 23044,
+        "pollSampleCount": 12003,
+        "referencePollSampleCount": 48010,
+        "dwmTimingSampleCount": 23526,
+        "pollIntervalMilliseconds": 8,
+        "referencePollIntervalMilliseconds": 2,
+        "timerResolutionMilliseconds": 1,
+        "timerResolutionSucceeded": true,
+        "dwmTimingAvailabilityPercent": 100,
+        "processorCount": 32,
+        "monitorCount": 3,
+        "virtualScreen": {
+          "x": -2560,
+          "y": 0,
+          "width": 7680,
+          "height": 1440
+        },
+        "qualityWarnings": [],
+        "hookMoveIntervalStats": {
+          "Count": 23043,
+          "MeanMilliseconds": 4.165069305211973,
+          "P50Milliseconds": 4.0441,
+          "P95Milliseconds": 9.376819999999995,
+          "MaxMilliseconds": 53.1768
+        },
+        "productPollIntervalStats": {
+          "Count": 12002,
+          "MeanMilliseconds": 8.000520546575375,
+          "P50Milliseconds": 8,
+          "P95Milliseconds": 8.729574999999999,
+          "MaxMilliseconds": 14.0292
+        },
+        "referencePollIntervalStats": {
+          "Count": 48009,
+          "MeanMilliseconds": 2.0000264200471594,
+          "P50Milliseconds": 2,
+          "P95Milliseconds": 2.67086,
+          "MaxMilliseconds": 9.8369
+        },
+        "runtimeSchedulerPollSampleCount": 5761,
+        "runtimeSchedulerPollIntervalStats": {
+          "Count": 5760,
+          "MeanMilliseconds": 16.66763256944446,
+          "P50Milliseconds": 16.6684,
+          "P95Milliseconds": 17.208505000000002,
+          "MaxMilliseconds": 20.8385
+        },
+        "runtimeSchedulerLoopSampleCount": 5762,
+        "runtimeSchedulerLoopIntervalStats": {
+          "Count": 5761,
+          "MeanMilliseconds": 16.665485558062798,
+          "P50Milliseconds": 16.6679,
+          "P95Milliseconds": 19.213,
+          "MaxMilliseconds": 24.0699
+        },
+        "runtimeSchedulerWakeAdvanceMilliseconds": 4,
+        "runtimeSchedulerFallbackIntervalMilliseconds": 8,
+        "runtimeSchedulerMaximumDwmSleepMilliseconds": 2,
+        "runtimeSchedulerCoalescedTickCount": 0,
+        "runtimeSchedulerThreadProfile": "managed=unavailable;mmcss=unavailable",
+        "runtimeSchedulerCaptureThreadProfile": "managed=unavailable;mmcss=unavailable"
+      },
+      "motionMetadata": {
+        "productName": "Cursor Mirror Motion Lab",
+        "productVersion": "v1.6.0-dev+20260503.249d22ced965.dirty",
+        "createdUtc": "2026-05-03T12:22:42.0325805Z",
+        "generationProfile": "real-trace-weighted",
+        "seed": 858727816,
+        "scenarioCount": 8,
+        "controlPointCount": 64,
+        "speedPointCount": 64,
+        "holdSegmentCount": 44,
+        "holdDurationMilliseconds": 15757.281,
+        "durationMilliseconds": 96000,
+        "scenarioDurationMilliseconds": 12000,
+        "sampleRateHz": 240
+      },
+      "motionScript": {
+        "schemaVersion": "cursor-mirror-motion-scenarios/1",
+        "seed": 858727816,
+        "generationProfile": "real-trace-weighted",
+        "durationMilliseconds": 96000,
+        "scenarioDurationMilliseconds": 12000,
+        "sampleRateHz": 240,
+        "scenarioCount": 8,
+        "controlPointCount": 64,
+        "speedPointCount": 64,
+        "holdSegmentCount": 44,
+        "holdDurationMilliseconds": 15757.281,
+        "resumeDurationMilliseconds": 4517.249,
+        "holdSegmentsPerScenario": {
+          "count": 8,
+          "mean": 5.5,
+          "min": 5,
+          "p50": 5.5,
+          "p90": 6,
+          "p95": 6,
+          "p99": 6,
+          "max": 6
+        },
+        "holdDurationByScenarioMilliseconds": {
+          "count": 8,
+          "mean": 1969.66,
+          "min": 931.261,
+          "p50": 1468.391,
+          "p90": 3358.416,
+          "p95": 3505.085,
+          "p99": 3622.421,
+          "max": 3651.755
+        },
+        "resumeDurationByScenarioMilliseconds": {
+          "count": 8,
+          "mean": 564.656,
+          "min": 349.489,
+          "p50": 573.971,
+          "p90": 731.893,
+          "p95": 764,
+          "p99": 789.685,
+          "max": 796.106
+        },
+        "holdSegmentDurationMilliseconds": {
+          "count": 44,
+          "mean": 358.12,
+          "min": 90.259,
+          "p50": 194.823,
+          "p90": 925.486,
+          "p95": 1020.808,
+          "p99": 1412.17,
+          "max": 1505.225
+        },
+        "resumeSegmentDurationMilliseconds": {
+          "count": 44,
+          "mean": 102.665,
+          "min": 51.836,
+          "p50": 89.907,
+          "p90": 165.492,
+          "p95": 169.682,
+          "p99": 173.934,
+          "max": 176.586
+        },
+        "scenarios": [
+          {
+            "index": 0,
+            "seed": 370819074,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 3651.755,
+            "resumeDurationMilliseconds": 544.913,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 972,
+              "y": 804
+            },
+            "lastPoint": {
+              "x": 2017.965,
+              "y": 487.661
+            }
+          },
+          {
+            "index": 1,
+            "seed": 1026019187,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 1548.189,
+            "resumeDurationMilliseconds": 492.25,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2018,
+              "y": 488
+            },
+            "lastPoint": {
+              "x": 805.994,
+              "y": 1165.167
+            }
+          },
+          {
+            "index": 2,
+            "seed": 266323085,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 3232.699,
+            "resumeDurationMilliseconds": 349.489,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 806,
+              "y": 1165
+            },
+            "lastPoint": {
+              "x": 2374.162,
+              "y": 393.249
+            }
+          },
+          {
+            "index": 3,
+            "seed": 1634540292,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1319.713,
+            "resumeDurationMilliseconds": 621.422,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2374,
+              "y": 393
+            },
+            "lastPoint": {
+              "x": 2168.732,
+              "y": 981.708
+            }
+          },
+          {
+            "index": 4,
+            "seed": 117515854,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 1320.364,
+            "resumeDurationMilliseconds": 405.667,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 2169,
+              "y": 982
+            },
+            "lastPoint": {
+              "x": 86.745,
+              "y": 780.667
+            }
+          },
+          {
+            "index": 5,
+            "seed": 49740661,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 1388.594,
+            "resumeDurationMilliseconds": 796.106,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 87,
+              "y": 781
+            },
+            "lastPoint": {
+              "x": 1502.494,
+              "y": 1009.779
+            }
+          },
+          {
+            "index": 6,
+            "seed": 140650683,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 6,
+            "holdDurationMilliseconds": 2364.706,
+            "resumeDurationMilliseconds": 704.372,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1502,
+              "y": 1010
+            },
+            "lastPoint": {
+              "x": 1048.425,
+              "y": 662.294
+            }
+          },
+          {
+            "index": 7,
+            "seed": 533575835,
+            "durationMilliseconds": 12000,
+            "controlPointCount": 8,
+            "speedPointCount": 8,
+            "holdSegmentCount": 5,
+            "holdDurationMilliseconds": 931.261,
+            "resumeDurationMilliseconds": 603.029,
+            "bounds": {
+              "X": 80,
+              "Y": 80,
+              "Width": 2400,
+              "Height": 1232
+            },
+            "firstPoint": {
+              "x": 1048,
+              "y": 662
+            },
+            "lastPoint": {
+              "x": 1083.461,
+              "y": 469.361
+            }
+          }
+        ]
+      },
+      "motionSamples": {
+        "present": true,
+        "header": [
+          "sequence",
+          "elapsedMilliseconds",
+          "scenarioIndex",
+          "scenarioElapsedMilliseconds",
+          "progress",
+          "x",
+          "y",
+          "velocityPixelsPerSecond"
+        ],
+        "rowCount": 23041,
+        "expectedRows": 23041,
+        "rowsMinusExpected": 0,
+        "scenarioCounts": {
+          "0": 2880,
+          "1": 2880,
+          "2": 2880,
+          "3": 2880,
+          "4": 2880,
+          "5": 2880,
+          "6": 2880,
+          "7": 2881
+        },
+        "categoryCounts": {
+          "moving": 18178,
+          "hold": 3780,
+          "resume": 1083
+        },
+        "categoryPercent": {
+          "moving": 78.894,
+          "hold": 16.406,
+          "resume": 4.7
+        },
+        "velocityPixelsPerSecond": {
+          "count": 23041,
+          "mean": 101.51,
+          "min": 0,
+          "p50": 70.265,
+          "p90": 159.949,
+          "p95": 242.665,
+          "p99": 892.911,
+          "max": 7889.678
+        },
+        "velocityByCategory": {
+          "moving": {
+            "count": 18178,
+            "mean": 114.519,
+            "min": 19.735,
+            "p50": 108.812,
+            "p90": 159.954,
+            "p95": 209.766,
+            "p99": 935.467,
+            "max": 2551.94
+          },
+          "hold": {
+            "count": 3780,
+            "mean": 2.31,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 7889.678
+          },
+          "resume": {
+            "count": 1083,
+            "mean": 229.393,
+            "min": 0.018,
+            "p50": 117.118,
+            "p90": 611.236,
+            "p95": 797.978,
+            "p99": 1990.465,
+            "max": 2332.6
+          }
+        },
+        "xRange": {
+          "count": 23041,
+          "mean": 1308.14,
+          "min": 87,
+          "p50": 1240.883,
+          "p90": 2025.387,
+          "p95": 2078.069,
+          "p99": 2305.397,
+          "max": 2374
+        },
+        "yRange": {
+          "count": 23041,
+          "mean": 775.999,
+          "min": 393,
+          "p50": 790.917,
+          "p90": 989.618,
+          "p95": 1051.598,
+          "p99": 1106.065,
+          "max": 1165
+        },
+        "scenarioCategoryCounts": {
+          "0": {
+            "moving": 1873,
+            "hold": 876,
+            "resume": 131
+          },
+          "1": {
+            "moving": 2392,
+            "hold": 372,
+            "resume": 116
+          },
+          "2": {
+            "moving": 2020,
+            "hold": 776,
+            "resume": 84
+          },
+          "3": {
+            "moving": 2415,
+            "hold": 316,
+            "resume": 149
+          },
+          "4": {
+            "moving": 2466,
+            "hold": 317,
+            "resume": 97
+          },
+          "5": {
+            "moving": 2355,
+            "hold": 333,
+            "resume": 192
+          },
+          "6": {
+            "moving": 2144,
+            "hold": 567,
+            "resume": 169
+          },
+          "7": {
+            "moving": 2513,
+            "hold": 223,
+            "resume": 145
+          }
+        }
+      },
+      "trace": {
+        "present": true,
+        "header": [
+          "sequence",
+          "stopwatchTicks",
+          "elapsedMicroseconds",
+          "x",
+          "y",
+          "event",
+          "hookX",
+          "hookY",
+          "cursorX",
+          "cursorY",
+          "hookMouseData",
+          "hookFlags",
+          "hookTimeMilliseconds",
+          "hookExtraInfo",
+          "dwmTimingAvailable",
+          "dwmRateRefreshNumerator",
+          "dwmRateRefreshDenominator",
+          "dwmQpcRefreshPeriod",
+          "dwmQpcVBlank",
+          "dwmRefreshCount",
+          "dwmQpcCompose",
+          "dwmFrame",
+          "dwmRefreshFrame",
+          "dwmFrameDisplayed",
+          "dwmQpcFrameDisplayed",
+          "dwmRefreshFrameDisplayed",
+          "dwmFrameComplete",
+          "dwmQpcFrameComplete",
+          "dwmFramePending",
+          "dwmQpcFramePending",
+          "dwmRefreshNextDisplayed",
+          "dwmRefreshNextPresented",
+          "dwmFramesDisplayed",
+          "dwmFramesDropped",
+          "dwmFramesMissed",
+          "runtimeSchedulerTimingUsable",
+          "runtimeSchedulerTargetVBlankTicks",
+          "runtimeSchedulerPlannedTickTicks",
+          "runtimeSchedulerActualTickTicks",
+          "runtimeSchedulerVBlankLeadMicroseconds",
+          "runtimeSchedulerQueuedTickTicks",
+          "runtimeSchedulerDispatchStartedTicks",
+          "runtimeSchedulerCursorReadStartedTicks",
+          "runtimeSchedulerCursorReadCompletedTicks",
+          "runtimeSchedulerSampleRecordedTicks",
+          "runtimeSchedulerLoopIteration",
+          "runtimeSchedulerLoopStartedTicks",
+          "runtimeSchedulerTimingReadStartedTicks",
+          "runtimeSchedulerTimingReadCompletedTicks",
+          "runtimeSchedulerDecisionCompletedTicks",
+          "runtimeSchedulerTickRequested",
+          "runtimeSchedulerSleepRequestedMilliseconds",
+          "runtimeSchedulerWaitMethod",
+          "runtimeSchedulerWaitTargetTicks",
+          "runtimeSchedulerSleepStartedTicks",
+          "runtimeSchedulerSleepCompletedTicks"
+        ],
+        "rowCount": 94580,
+        "rowsMinusMetadataSampleCount": 0,
+        "eventCounts": {
+          "poll": 12003,
+          "referencePoll": 48010,
+          "runtimeSchedulerLoop": 5762,
+          "runtimeSchedulerPoll": 5761,
+          "move": 23044
+        },
+        "scenarioCounts": {
+          "0": 11813,
+          "1": 11820,
+          "2": 11820,
+          "3": 11820,
+          "4": 11718,
+          "5": 11922,
+          "6": 11820,
+          "7": 11847
+        },
+        "dwmTimingAvailableRows": 23526,
+        "dwmTimingAvailableRowPercent": 24.874,
+        "eventIntervalMilliseconds": {
+          "referencePoll": {
+            "count": 48009,
+            "mean": 2,
+            "min": 0,
+            "p50": 2,
+            "p90": 2,
+            "p95": 2.671,
+            "p99": 3.561,
+            "max": 9.837
+          },
+          "poll": {
+            "count": 12002,
+            "mean": 8.001,
+            "min": 3.014,
+            "p50": 8,
+            "p90": 8.522,
+            "p95": 8.729,
+            "p99": 9.108,
+            "max": 14.029
+          },
+          "runtimeSchedulerLoop": {
+            "count": 5761,
+            "mean": 16.665,
+            "min": 4.016,
+            "p50": 16.668,
+            "p90": 17.215,
+            "p95": 19.213,
+            "p99": 20.074,
+            "max": 24.069
+          },
+          "runtimeSchedulerPoll": {
+            "count": 5760,
+            "mean": 16.668,
+            "min": 12.556,
+            "p50": 16.668,
+            "p90": 16.993,
+            "p95": 17.209,
+            "p99": 17.823,
+            "max": 20.839
+          },
+          "move": {
+            "count": 23043,
+            "mean": 4.165,
+            "min": 0.011,
+            "p50": 4.044,
+            "p90": 8.17,
+            "p95": 9.377,
+            "p99": 11.512,
+            "max": 53.177
+          }
+        },
+        "schedulerDelayMilliseconds": {
+          "count": 5761,
+          "mean": 0.209,
+          "min": 0.033,
+          "p50": 0.087,
+          "p90": 0.474,
+          "p95": 0.736,
+          "p99": 1.387,
+          "max": 3.947
+        },
+        "schedulerVBlankLeadMicroseconds": {
+          "count": 11523,
+          "mean": 3889.496,
+          "min": 53,
+          "p50": 3948,
+          "p90": 4000,
+          "p95": 4000,
+          "p99": 4000,
+          "max": 4000
+        },
+        "schedulerSleepRequestedMilliseconds": {
+          "count": 5762,
+          "mean": 7.999,
+          "min": 1,
+          "p50": 8,
+          "p90": 8,
+          "p95": 8,
+          "p99": 8,
+          "max": 8
+        },
+        "schedulerCursorReadMilliseconds": {
+          "count": 5761,
+          "mean": 0.01,
+          "min": 0.001,
+          "p50": 0.002,
+          "p90": 0.022,
+          "p95": 0.03,
+          "p99": 0.08,
+          "max": 0.629
+        },
+        "schedulerWaitMethodCounts": {
+          "highResolutionWaitableTimer+fineWait": 5762
+        }
+      },
+      "consistency": {
+        "metadataSampleCountMatchesTraceRows": true,
+        "motionMetadataScenarioCountMatchesScript": true,
+        "motionMetadataControlPointsMatchScript": true,
+        "motionMetadataSpeedPointsMatchScript": true,
+        "motionMetadataHoldSegmentsMatchScript": true,
+        "motionSampleRowsMatchExpectedRate": true
+      }
+    }
+  ],
+  "normalStressDelta": [
+    {
+      "metric": "trace rows",
+      "normal": 571320,
+      "stress": 544571,
+      "absoluteDelta": -26749,
+      "relativeDeltaPercent": -4.682
+    },
+    {
+      "metric": "hook samples",
+      "normal": 137685,
+      "stress": 127497,
+      "absoluteDelta": -10188,
+      "relativeDeltaPercent": -7.399
+    },
+    {
+      "metric": "product poll p95 ms",
+      "normal": 16.336,
+      "stress": 22.541,
+      "absoluteDelta": 6.204,
+      "relativeDeltaPercent": 37.977
+    },
+    {
+      "metric": "reference poll p95 ms",
+      "normal": 15.874,
+      "stress": 14.878,
+      "absoluteDelta": -0.995,
+      "relativeDeltaPercent": -6.269
+    },
+    {
+      "metric": "hook move p95 ms",
+      "normal": 23.013,
+      "stress": 28.532,
+      "absoluteDelta": 5.519,
+      "relativeDeltaPercent": 23.981
+    },
+    {
+      "metric": "scheduler poll p95 ms",
+      "normal": 18.235,
+      "stress": 33.342,
+      "absoluteDelta": 15.107,
+      "relativeDeltaPercent": 82.844
+    },
+    {
+      "metric": "scheduler loop p95 ms",
+      "normal": 27.549,
+      "stress": 37.167,
+      "absoluteDelta": 9.618,
+      "relativeDeltaPercent": 34.911
+    },
+    {
+      "metric": "scheduler delay p95 ms",
+      "normal": 1.26,
+      "stress": 1.444,
+      "absoluteDelta": 0.184,
+      "relativeDeltaPercent": 14.603
+    },
+    {
+      "metric": "scheduler delay max ms",
+      "normal": 10.273,
+      "stress": 26.594,
+      "absoluteDelta": 16.321,
+      "relativeDeltaPercent": 158.873
+    }
+  ],
+  "splitProposal": {
+    "method": "Stable Fisher-Yates shuffle over scenario indices using Mulberry32 seed 0xc0def00d.",
+    "scenarioCount": 64,
+    "ratio": "70/15/15",
+    "counts": {
+      "train": 44,
+      "validation": 10,
+      "test": 10
+    },
+    "train": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      13,
+      15,
+      16,
+      17,
+      19,
+      20,
+      22,
+      25,
+      27,
+      28,
+      31,
+      33,
+      36,
+      38,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      54,
+      55,
+      56,
+      57,
+      58,
+      60,
+      62,
+      63
+    ],
+    "validation": [
+      1,
+      21,
+      24,
+      26,
+      30,
+      32,
+      35,
+      39,
+      53,
+      61
+    ],
+    "test": [
+      0,
+      11,
+      12,
+      14,
+      18,
+      23,
+      29,
+      34,
+      37,
+      59
+    ],
+    "selectionOrder": [
+      3,
+      4,
+      57,
+      49,
+      8,
+      63,
+      28,
+      58,
+      46,
+      55,
+      36,
+      43,
+      47,
+      27,
+      22,
+      16,
+      20,
+      45,
+      5,
+      2,
+      25,
+      9,
+      7,
+      51,
+      40,
+      33,
+      50,
+      44,
+      6,
+      17,
+      10,
+      41,
+      52,
+      60,
+      48,
+      42,
+      38,
+      54,
+      56,
+      62,
+      13,
+      15,
+      19,
+      31,
+      35,
+      26,
+      32,
+      39,
+      61,
+      21,
+      24,
+      1,
+      53,
+      30,
+      23,
+      29,
+      37,
+      0,
+      18,
+      11,
+      14,
+      12,
+      59,
+      34
+    ],
+    "applyTo": [
+      "Use the same index buckets for normal and stress recordings.",
+      "The short sanity recording has only 8 scenarios and is excluded from model selection splits."
+    ],
+    "leakageRationale": [
+      "A sample-level random split would leak adjacent 4.167 ms samples from the same 12 s curve into train and evaluation.",
+      "A scenario-level split keeps each Bezier path, speed profile, hold timing, and resume timing wholly inside one bucket.",
+      "Using the same bucket indices across normal and stress keeps load-condition comparisons aligned and prevents tuning on a stress scenario index that later appears in test under the other load condition."
+    ]
+  },
+  "categoryDefinitions": {
+    "moving": {
+      "definition": "Scripted sample time outside hold and resume intervals.",
+      "primaryFields": [
+        "motion-samples.csv scenarioIndex",
+        "scenarioElapsedMilliseconds",
+        "velocityPixelsPerSecond"
+      ],
+      "suggestedUse": "Default regression/tracking class. Can be binned further by velocity."
+    },
+    "hold": {
+      "definition": "Script-derived interval [holdStartMs, holdEndMs] for each HoldSegments entry after MotionLabSampler timing normalization.",
+      "primaryFields": [
+        "motion-script.json Scenarios[].HoldSegments[].Progress",
+        "DurationMilliseconds"
+      ],
+      "suggestedUse": "Stationary target class. Evaluation should emphasize no overshoot and low jitter."
+    },
+    "resume": {
+      "definition": "First ResumeEasingMilliseconds after a hold ends, clipped before the next hold or scenario end.",
+      "primaryFields": [
+        "motion-script.json Scenarios[].HoldSegments[].ResumeEasingMilliseconds"
+      ],
+      "suggestedUse": "Transition class. Evaluate separately because acceleration after hold is a distinct failure mode."
+    },
+    "stress": {
+      "definition": "All rows from cursor-mirror-motion-recording-20260503-215632.zip. Load generator context is external to the ZIP metadata: 90%, 32 threads.",
+      "primaryFields": [
+        "source zip id"
+      ],
+      "suggestedUse": "Load condition label, orthogonal to movement state."
+    },
+    "schedulerDelay": {
+      "definition": "Rows with runtimeSchedulerPlannedTickTicks and runtimeSchedulerActualTickTicks; delayMs = (actual - planned) / StopwatchFrequency * 1000.",
+      "primaryFields": [
+        "trace.csv runtimeSchedulerPlannedTickTicks",
+        "runtimeSchedulerActualTickTicks",
+        "StopwatchFrequency"
+      ],
+      "suggestedUse": "Scheduler health feature and stratification bin. Suggested bins: <=1 ms, 1-4 ms, 4-8 ms, >8 ms."
+    }
+  },
+  "auditScores": {
+    "overallAuditReadiness": 1,
+    "completeness": 1,
+    "consistency": 1,
+    "traceUsability": 1,
+    "splitReadiness": 1,
+    "cautionFlags": [
+      "stress package contains poll interval quality warnings",
+      "stress load-generator setting is not embedded in metadata; preserve source filename/context in downstream manifests",
+      "runtime scheduler thread profile is unavailable in all packages"
+    ]
+  }
+}

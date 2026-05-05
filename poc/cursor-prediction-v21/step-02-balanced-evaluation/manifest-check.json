@@ -1,0 +1,450 @@
+{
+  "schemaVersion": "cursor-prediction-v21-step-02-manifest-check/1",
+  "generatedAtUtc": "2026-05-04T11:31:03.3641430Z",
+  "root": "C:\\Users\\seigl\\OneDrive\\my\\ドキュメント\\projects\\cursor",
+  "manifest": "poc/cursor-prediction-v21/step-02-balanced-evaluation/split-manifest.json",
+  "availableZipCount": 10,
+  "manifestPackageCount": 10,
+  "duplicatePackageIds": [],
+  "duplicateFiles": [],
+  "missingFromManifest": [],
+  "constraints": {
+    "rawCsvExtractedToDisk": false,
+    "modelTrainingRun": false,
+    "cpuGpuMeasurementRun": false
+  },
+  "packages": [
+    {
+      "file": "cursor-mirror-motion-recording-20260504-191827.zip",
+      "packageId": "m191827",
+      "split": "train",
+      "qualityBucket": "poll-delayed",
+      "durationBucket": "12s",
+      "exists": true,
+      "requiredEntriesPresent": true,
+      "entrySizes": [
+        {
+          "name": "metadata.json",
+          "uncompressedBytes": 2362,
+          "compressedBytes": 937
+        },
+        {
+          "name": "motion-metadata.json",
+          "uncompressedBytes": 454,
+          "compressedBytes": 281
+        },
+        {
+          "name": "motion-samples.csv",
+          "uncompressedBytes": 14216290,
+          "compressedBytes": 4123295
+        },
+        {
+          "name": "motion-script.json",
+          "uncompressedBytes": 140343,
+          "compressedBytes": 40166
+        },
+        {
+          "name": "motion-trace-alignment.csv",
+          "uncompressedBytes": 56052977,
+          "compressedBytes": 15018593
+        },
+        {
+          "name": "trace.csv",
+          "uncompressedBytes": 111001881,
+          "compressedBytes": 13191845
+        }
+      ],
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "cursor-mirror-motion-recording-20260504-192020.zip",
+      "packageId": "m192020",
+      "split": "validation",
+      "qualityBucket": "poll-delayed",
+      "durationBucket": "12s",
+      "exists": true,
+      "requiredEntriesPresent": true,
+      "entrySizes": [
+        {
+          "name": "metadata.json",
+          "uncompressedBytes": 2380,
+          "compressedBytes": 937
+        },
+        {
+          "name": "motion-metadata.json",
+          "uncompressedBytes": 453,
+          "compressedBytes": 280
+        },
+        {
+          "name": "motion-samples.csv",
+          "uncompressedBytes": 14191797,
+          "compressedBytes": 4130907
+        },
+        {
+          "name": "motion-script.json",
+          "uncompressedBytes": 139348,
+          "compressedBytes": 39893
+        },
+        {
+          "name": "motion-trace-alignment.csv",
+          "uncompressedBytes": 57143523,
+          "compressedBytes": 15243105
+        },
+        {
+          "name": "trace.csv",
+          "uncompressedBytes": 111355171,
+          "compressedBytes": 13147215
+        }
+      ],
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "cursor-mirror-motion-recording-20260504-192107.zip",
+      "packageId": "m192107",
+      "split": "robustness",
+      "qualityBucket": "poll-delayed",
+      "durationBucket": "12s",
+      "exists": true,
+      "requiredEntriesPresent": true,
+      "entrySizes": [
+        {
+          "name": "metadata.json",
+          "uncompressedBytes": 2873,
+          "compressedBytes": 987
+        },
+        {
+          "name": "motion-metadata.json",
+          "uncompressedBytes": 453,
+          "compressedBytes": 281
+        },
+        {
+          "name": "motion-samples.csv",
+          "uncompressedBytes": 14253312,
+          "compressedBytes": 4168617
+        },
+        {
+          "name": "motion-script.json",
+          "uncompressedBytes": 139630,
+          "compressedBytes": 39887
+        },
+        {
+          "name": "motion-trace-alignment.csv",
+          "uncompressedBytes": 50413055,
+          "compressedBytes": 13619784
+        },
+        {
+          "name": "trace.csv",
+          "uncompressedBytes": 102925220,
+          "compressedBytes": 12139351
+        }
+      ],
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "cursor-mirror-motion-recording-20260504-193433.zip",
+      "packageId": "m193433",
+      "split": "robustness",
+      "qualityBucket": "poll-delayed",
+      "durationBucket": "8s",
+      "exists": true,
+      "requiredEntriesPresent": true,
+      "entrySizes": [
+        {
+          "name": "metadata.json",
+          "uncompressedBytes": 2370,
+          "compressedBytes": 938
+        },
+        {
+          "name": "motion-metadata.json",
+          "uncompressedBytes": 453,
+          "compressedBytes": 280
+        },
+        {
+          "name": "motion-samples.csv",
+          "uncompressedBytes": 9487725,
+          "compressedBytes": 2887630
+        },
+        {
+          "name": "motion-script.json",
+          "uncompressedBytes": 123437,
+          "compressedBytes": 35319
+        },
+        {
+          "name": "motion-trace-alignment.csv",
+          "uncompressedBytes": 44822356,
+          "compressedBytes": 12235074
+        },
+        {
+          "name": "trace.csv",
+          "uncompressedBytes": 85012821,
+          "compressedBytes": 9971598
+        }
+      ],
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "cursor-mirror-motion-recording-20260504-193508.zip",
+      "packageId": "m193508",
+      "split": "train",
+      "qualityBucket": "poll-delayed",
+      "durationBucket": "6s",
+      "exists": true,
+      "requiredEntriesPresent": true,
+      "entrySizes": [
+        {
+          "name": "metadata.json",
+          "uncompressedBytes": 2795,
+          "compressedBytes": 971
+        },
+        {
+          "name": "motion-metadata.json",
+          "uncompressedBytes": 452,
+          "compressedBytes": 280
+        },
+        {
+          "name": "motion-samples.csv",
+          "uncompressedBytes": 7124550,
+          "compressedBytes": 2216537
+        },
+        {
+          "name": "motion-script.json",
+          "uncompressedBytes": 114883,
+          "compressedBytes": 32839
+        },
+        {
+          "name": "motion-trace-alignment.csv",
+          "uncompressedBytes": 32493433,
+          "compressedBytes": 8919285
+        },
+        {
+          "name": "trace.csv",
+          "uncompressedBytes": 62871079,
+          "compressedBytes": 7315334
+        }
+      ],
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "cursor-mirror-motion-recording-20260504-194149.zip",
+      "packageId": "m194149",
+      "split": "train",
+      "qualityBucket": "poll-delayed",
+      "durationBucket": "4s",
+      "exists": true,
+      "requiredEntriesPresent": true,
+      "entrySizes": [
+        {
+          "name": "metadata.json",
+          "uncompressedBytes": 2807,
+          "compressedBytes": 972
+        },
+        {
+          "name": "motion-metadata.json",
+          "uncompressedBytes": 453,
+          "compressedBytes": 279
+        },
+        {
+          "name": "motion-samples.csv",
+          "uncompressedBytes": 4681379,
+          "compressedBytes": 1453235
+        },
+        {
+          "name": "motion-script.json",
+          "uncompressedBytes": 115634,
+          "compressedBytes": 33020
+        },
+        {
+          "name": "motion-trace-alignment.csv",
+          "uncompressedBytes": 23904529,
+          "compressedBytes": 6690711
+        },
+        {
+          "name": "trace.csv",
+          "uncompressedBytes": 45638564,
+          "compressedBytes": 5309077
+        }
+      ],
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "cursor-mirror-motion-recording-20260504-194623.zip",
+      "packageId": "m194623",
+      "split": "robustness",
+      "qualityBucket": "poll-delayed",
+      "durationBucket": "10s",
+      "exists": true,
+      "requiredEntriesPresent": true,
+      "entrySizes": [
+        {
+          "name": "metadata.json",
+          "uncompressedBytes": 2370,
+          "compressedBytes": 939
+        },
+        {
+          "name": "motion-metadata.json",
+          "uncompressedBytes": 453,
+          "compressedBytes": 278
+        },
+        {
+          "name": "motion-samples.csv",
+          "uncompressedBytes": 11790072,
+          "compressedBytes": 3504194
+        },
+        {
+          "name": "motion-script.json",
+          "uncompressedBytes": 131685,
+          "compressedBytes": 37743
+        },
+        {
+          "name": "motion-trace-alignment.csv",
+          "uncompressedBytes": 51175397,
+          "compressedBytes": 13717400
+        },
+        {
+          "name": "trace.csv",
+          "uncompressedBytes": 98705334,
+          "compressedBytes": 11555482
+        }
+      ],
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "cursor-mirror-motion-recording-20260504-194657.zip",
+      "packageId": "m194657",
+      "split": "robustness",
+      "qualityBucket": "poll-delayed",
+      "durationBucket": "6s",
+      "exists": true,
+      "requiredEntriesPresent": true,
+      "entrySizes": [
+        {
+          "name": "metadata.json",
+          "uncompressedBytes": 2367,
+          "compressedBytes": 935
+        },
+        {
+          "name": "motion-metadata.json",
+          "uncompressedBytes": 452,
+          "compressedBytes": 278
+        },
+        {
+          "name": "motion-samples.csv",
+          "uncompressedBytes": 7099819,
+          "compressedBytes": 2207435
+        },
+        {
+          "name": "motion-script.json",
+          "uncompressedBytes": 116567,
+          "compressedBytes": 33359
+        },
+        {
+          "name": "motion-trace-alignment.csv",
+          "uncompressedBytes": 36651140,
+          "compressedBytes": 10078692
+        },
+        {
+          "name": "trace.csv",
+          "uncompressedBytes": 67979035,
+          "compressedBytes": 7927381
+        }
+      ],
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "cursor-mirror-motion-recording-20260504-195438.zip",
+      "packageId": "m195438",
+      "split": "test",
+      "qualityBucket": "normal",
+      "durationBucket": "4s",
+      "exists": true,
+      "requiredEntriesPresent": true,
+      "entrySizes": [
+        {
+          "name": "metadata.json",
+          "uncompressedBytes": 2294,
+          "compressedBytes": 893
+        },
+        {
+          "name": "motion-metadata.json",
+          "uncompressedBytes": 452,
+          "compressedBytes": 278
+        },
+        {
+          "name": "motion-samples.csv",
+          "uncompressedBytes": 4685157,
+          "compressedBytes": 1458308
+        },
+        {
+          "name": "motion-script.json",
+          "uncompressedBytes": 115533,
+          "compressedBytes": 32956
+        },
+        {
+          "name": "motion-trace-alignment.csv",
+          "uncompressedBytes": 25269336,
+          "compressedBytes": 7064626
+        },
+        {
+          "name": "trace.csv",
+          "uncompressedBytes": 46797694,
+          "compressedBytes": 5551521
+        }
+      ],
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "cursor-mirror-motion-recording-20260504-195750.zip",
+      "packageId": "m195750",
+      "split": "train",
+      "qualityBucket": "poll-delayed",
+      "durationBucket": "8s",
+      "exists": true,
+      "requiredEntriesPresent": true,
+      "entrySizes": [
+        {
+          "name": "metadata.json",
+          "uncompressedBytes": 2401,
+          "compressedBytes": 941
+        },
+        {
+          "name": "motion-metadata.json",
+          "uncompressedBytes": 451,
+          "compressedBytes": 279
+        },
+        {
+          "name": "motion-samples.csv",
+          "uncompressedBytes": 9417631,
+          "compressedBytes": 2842259
+        },
+        {
+          "name": "motion-script.json",
+          "uncompressedBytes": 122817,
+          "compressedBytes": 35161
+        },
+        {
+          "name": "motion-trace-alignment.csv",
+          "uncompressedBytes": 43311054,
+          "compressedBytes": 11801145
+        },
+        {
+          "name": "trace.csv",
+          "uncompressedBytes": 82348948,
+          "compressedBytes": 9595745
+        }
+      ],
+      "errors": [],
+      "warnings": []
+    }
+  ],
+  "ok": true,
+  "errors": []
+}

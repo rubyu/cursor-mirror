@@ -1,0 +1,45 @@
+﻿{
+  "generatedUtc": "2026-05-04T22:41:08.3031139Z",
+  "scenarios": [
+    {
+      "name": "moving-every-frame",
+      "package": "product-runtime-outlier-moving-every-frame.zip",
+      "syntheticFrameCount": 360,
+      "eventCount": 1440,
+      "droppedCount": 0,
+      "controllerEvents": 359,
+      "overlayEvents": 1081,
+      "updateLayerEvents": 360,
+      "overlayMoveSkipped": 0,
+      "updateLayerFailures": 0,
+      "controllerTickUs": { "count": 359, "p50": 1872.1, "p95": 3283, "p99": 3510.6, "max": 4372 },
+      "controllerMoveOverlayUs": { "count": 359, "p50": 1856.8, "p95": 3228.8, "p99": 3502.5, "max": 4358 },
+      "overlayMoveUs": { "count": 359, "p50": 1855.4, "p95": 3227.6, "p99": 3500.5, "max": 4355 },
+      "updateLayerUs": { "count": 360, "p50": 1852.1, "p95": 3224.2, "p99": 3495.1, "max": 4349.3 },
+      "getDcUs": { "count": 360, "p50": 1188.6, "p95": 2258.7, "p99": 2515.8, "max": 3032.3 },
+      "getHbitmapUs": { "count": 1, "p50": 325.9, "p95": 325.9, "p99": 325.9, "max": 325.9 },
+      "updateLayeredWindowUs": { "count": 360, "p50": 579.6, "p95": 1082.7, "p99": 1290.1, "max": 1436 }
+
+    },
+    {
+      "name": "hold-heavy-repeated-positions",
+      "package": "product-runtime-outlier-hold-heavy-repeated-positions.zip",
+      "syntheticFrameCount": 360,
+      "eventCount": 780,
+      "droppedCount": 0,
+      "controllerEvents": 359,
+      "overlayEvents": 421,
+      "updateLayerEvents": 30,
+      "overlayMoveSkipped": 330,
+      "updateLayerFailures": 0,
+      "controllerTickUs": { "count": 359, "p50": 14.8, "p95": 2657.3, "p99": 3515, "max": 3697.5 },
+      "controllerMoveOverlayUs": { "count": 184, "p50": 0.1, "p95": 3093, "p99": 3607.3, "max": 3683.4 },
+      "overlayMoveUs": { "count": 29, "p50": 2767.5, "p95": 3604.6, "p99": 3617.2, "max": 3680.1 },
+      "updateLayerUs": { "count": 30, "p50": 2693.5, "p95": 3597.3, "p99": 3607.1, "max": 3673.8 },
+      "getDcUs": { "count": 30, "p50": 1743.3, "p95": 2540.6, "p99": 2553.3, "max": 2569.3 },
+      "getHbitmapUs": { "count": 1, "p50": 79.7, "p95": 79.7, "p99": 79.7, "max": 79.7 },
+      "updateLayeredWindowUs": { "count": 30, "p50": 816.9, "p95": 1193.8, "p99": 1262.4, "max": 1304.1 }
+
+    }
+  ]
+}

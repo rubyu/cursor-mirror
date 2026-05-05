@@ -72,6 +72,14 @@ The key words `MUST`, `MUST NOT`, `SHOULD`, and `MAY` are to be interpreted as d
   - 13.3 Input Safety
   - 13.4 Output
   - 13.5 Testing
+- 14. Motion Lab and CPU Kernel Benchmarking - [14-motion-lab.md](14-motion-lab.md)
+  - 14.1 Purpose
+  - 14.2 Motion Generation
+  - 14.3 Load Generation
+  - 14.4 Kernel Benchmarking
+  - 14.5 Product Runtime Constraints
+  - 14.6 Packaging
+  - 14.7 Testing
 - Appendix A. Test Coverage Checklist - [A-test-coverage.md](A-test-coverage.md)
   - A.1 Overview
   - A.2 Identifiers and Conventions

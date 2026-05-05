@@ -1,0 +1,29 @@
+{
+  "outputPath": "C:/Users/seigl/OneDrive/my/ドキュメント/projects/cursor/poc/cursor-prediction-v19/step-08-missing-signal-oracle/scores.json",
+  "realPackages": [
+    {
+      "packageId": "m070248",
+      "zipPath": "cursor-mirror-motion-recording-20260504-070248.zip",
+      "warmupMs": 1500.0,
+      "split": "train",
+      "excludeMs": [
+        { "startMs": 0.0, "endMs": 795.648 }
+      ]
+    },
+    {
+      "packageId": "m070307",
+      "zipPath": "cursor-mirror-motion-recording-20260504-070307.zip",
+      "warmupMs": 1500.0,
+      "split": "test",
+      "excludeMs": []
+    }
+  ],
+  "syntheticSet": {
+    "id": "step04b_explicit_poll_stream",
+    "scenarioPath": "C:/Users/seigl/OneDrive/my/ドキュメント/projects/cursor/poc/cursor-prediction-v19/step-04b-generator-revision/abrupt-stop-scenarios-revised.json",
+    "metadataPath": "C:/Users/seigl/OneDrive/my/ドキュメント/projects/cursor/poc/cursor-prediction-v19/step-04b-generator-revision/scenario-metadata-revised.json"
+  },
+  "callRateHz": 60,
+  "refreshMs": 16.6666667,
+  "phaseOffsetsMs": [0, 4.1666667, 8.3333333, 12.5]
+}

@@ -5,7 +5,11 @@ namespace CursorMirror.Calibrator
         public bool AutoRun { get; set; }
         public bool ExitAfterRun { get; set; }
         public int DurationSeconds { get; set; }
+        public bool DurationSecondsSpecified { get; set; }
         public string OutputPath { get; set; }
+        public string ProductRuntimeOutlierOutputPath { get; set; }
+        public string MotionPackagePath { get; set; }
+        public bool DisableDisplayCapture { get; set; }
         public bool? PredictionEnabled { get; set; }
         public int? PredictionGainPercent { get; set; }
         public int? PredictionHorizonMilliseconds { get; set; }
@@ -25,6 +29,13 @@ namespace CursorMirror.Calibrator
         public int? DwmPredictionModel { get; set; }
         public int? DwmPredictionTargetOffsetMilliseconds { get; set; }
         public int RuntimeMode { get; set; }
+        public int? RuntimeWakeAdvanceMilliseconds { get; set; }
+        public int? RuntimeFallbackIntervalMilliseconds { get; set; }
+        public int? RuntimeFineWaitAdvanceMicroseconds { get; set; }
+        public int? RuntimeFineWaitYieldThresholdMicroseconds { get; set; }
+        public int? RuntimeDeadlineMessageDeferralMicroseconds { get; set; }
+        public bool? RuntimePreferSetWaitableTimerEx { get; set; }
+        public bool? RuntimeUseThreadLatencyProfile { get; set; }
 
         public static CalibratorRunOptions FromArguments(string[] args)
         {
@@ -54,6 +65,7 @@ namespace CursorMirror.Calibrator
                     if (int.TryParse(args[i + 1], out seconds))
                     {
                         options.DurationSeconds = seconds;
+                        options.DurationSecondsSpecified = true;
                     }
 
                     i++;
@@ -62,6 +74,20 @@ namespace CursorMirror.Calibrator
                 {
                     options.OutputPath = args[i + 1];
                     i++;
+                }
+                else if ((argument == "--product-runtime-outlier-output" || argument == "--product-runtime-outlier-output-path") && i + 1 < args.Length)
+                {
+                    options.ProductRuntimeOutlierOutputPath = args[i + 1];
+                    i++;
+                }
+                else if ((argument == "--motion-package" || argument == "--motion-package-path") && i + 1 < args.Length)
+                {
+                    options.MotionPackagePath = args[i + 1];
+                    i++;
+                }
+                else if (argument == "--no-display-capture")
+                {
+                    options.DisableDisplayCapture = true;
                 }
                 else if (argument == "--prediction-enabled" && i + 1 < args.Length)
                 {
@@ -250,7 +276,7 @@ namespace CursorMirror.Calibrator
                 }
                 else if (argument == "--dwm-lsq-predictor")
                 {
-                    options.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelLeastSquares;
+                    options.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelConstantVelocity;
                 }
                 else if (argument == "--runtime-mode" && i + 1 < args.Length)
                 {
@@ -269,6 +295,84 @@ namespace CursorMirror.Calibrator
                 else if (argument == "--simple-runtime")
                 {
                     options.RuntimeMode = CalibrationRuntimeMode.SimpleTimer;
+                }
+                else if ((argument == "--runtime-wake-advance-ms" || argument == "--runtime-wake-advance-milliseconds") && i + 1 < args.Length)
+                {
+                    int milliseconds;
+                    if (int.TryParse(args[i + 1], out milliseconds))
+                    {
+                        options.RuntimeWakeAdvanceMilliseconds = milliseconds;
+                    }
+
+                    i++;
+                }
+                else if ((argument == "--runtime-fallback-interval-ms" || argument == "--runtime-fallback-interval-milliseconds") && i + 1 < args.Length)
+                {
+                    int milliseconds;
+                    if (int.TryParse(args[i + 1], out milliseconds))
+                    {
+                        options.RuntimeFallbackIntervalMilliseconds = milliseconds;
+                    }
+
+                    i++;
+                }
+                else if ((argument == "--runtime-fine-wait-us" || argument == "--runtime-fine-wait-microseconds") && i + 1 < args.Length)
+                {
+                    int microseconds;
+                    if (int.TryParse(args[i + 1], out microseconds))
+                    {
+                        options.RuntimeFineWaitAdvanceMicroseconds = microseconds;
+                    }
+
+                    i++;
+                }
+                else if ((argument == "--runtime-yield-threshold-us" || argument == "--runtime-yield-threshold-microseconds") && i + 1 < args.Length)
+                {
+                    int microseconds;
+                    if (int.TryParse(args[i + 1], out microseconds))
+                    {
+                        options.RuntimeFineWaitYieldThresholdMicroseconds = microseconds;
+                    }
+
+                    i++;
+                }
+                else if ((argument == "--runtime-deadline-message-deferral-us" || argument == "--runtime-deadline-message-deferral-microseconds") && i + 1 < args.Length)
+                {
+                    int microseconds;
+                    if (int.TryParse(args[i + 1], out microseconds))
+                    {
+                        options.RuntimeDeadlineMessageDeferralMicroseconds = microseconds;
+                    }
+
+                    i++;
+                }
+                else if (argument == "--runtime-use-set-waitable-timer-ex" && i + 1 < args.Length)
+                {
+                    bool enabled;
+                    if (TryParseBoolean(args[i + 1], out enabled))
+                    {
+                        options.RuntimePreferSetWaitableTimerEx = enabled;
+                    }
+
+                    i++;
+                }
+                else if (argument == "--runtime-set-waitable-timer-ex")
+                {
+                    options.RuntimePreferSetWaitableTimerEx = true;
+                }
+                else if (argument == "--runtime-use-thread-latency-profile" && i + 1 < args.Length)
+                {
+                    bool enabled;
+                    if (TryParseBoolean(args[i + 1], out enabled))
+                    {
+                        options.RuntimeUseThreadLatencyProfile = enabled;
+                    }
+
+                    i++;
+                }
+                else if (argument == "--runtime-thread-latency-profile")
+                {
+                    options.RuntimeUseThreadLatencyProfile = true;
                 }
             }
 
@@ -315,7 +419,31 @@ namespace CursorMirror.Calibrator
             string normalized = (value ?? string.Empty).Trim().ToLowerInvariant();
             if (normalized == "lsq" || normalized == "leastsquares" || normalized == "least-squares" || normalized == "least_squares")
             {
-                model = CursorMirrorSettings.DwmPredictionModelLeastSquares;
+                model = CursorMirrorSettings.DwmPredictionModelConstantVelocity;
+                return true;
+            }
+
+            if (normalized == "smoothpredictor" ||
+                normalized == "smooth-predictor" ||
+                normalized == "smooth_predictor" ||
+                normalized == "smooth" ||
+                normalized == "experimentalmlp" ||
+                normalized == "experimental-mlp" ||
+                normalized == "experimental_mlp" ||
+                normalized == "mlp" ||
+                normalized == "distilledmlp" ||
+                normalized == "distilled-mlp" ||
+                normalized == "distilled_mlp" ||
+                normalized == "distilled" ||
+                normalized == "v16" ||
+                normalized == "runtimeeventsafemlp" ||
+                normalized == "runtime-event-safe-mlp" ||
+                normalized == "runtime_event_safe_mlp" ||
+                normalized == "event-safe-mlp" ||
+                normalized == "event_safe_mlp" ||
+                normalized == "v21")
+            {
+                model = CursorMirrorSettings.DwmPredictionModelConstantVelocity;
                 return true;
             }
 
@@ -325,8 +453,34 @@ namespace CursorMirror.Calibrator
                 return true;
             }
 
+            if (normalized == "constantvelocityhighspeedswitch" ||
+                normalized == "constant-velocity-high-speed-switch" ||
+                normalized == "constant_velocity_high_speed_switch" ||
+                normalized == "cv-high-speed-switch" ||
+                normalized == "cv_high_speed_switch" ||
+                normalized == "switch-highspeed-cv2" ||
+                normalized == "switch_highspeed_cv2")
+            {
+                model = CursorMirrorSettings.DwmPredictionModelConstantVelocity;
+                return true;
+            }
+
+            if (normalized == "tworegimesmoothpredictor" ||
+                normalized == "two-regime-smooth-predictor" ||
+                normalized == "two_regime_smooth_predictor" ||
+                normalized == "two-regime" ||
+                normalized == "two_regime" ||
+                normalized == "gated-smooth" ||
+                normalized == "gated_smooth" ||
+                normalized == "v28")
+            {
+                model = CursorMirrorSettings.DwmPredictionModelConstantVelocity;
+                return true;
+            }
+
             if (int.TryParse(value, out model))
             {
+                model = CursorMirrorSettings.NormalizeDwmPredictionModel(model);
                 return true;
             }
 

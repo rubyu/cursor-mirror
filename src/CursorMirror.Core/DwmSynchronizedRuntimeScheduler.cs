@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.InteropServices;
 using CursorMirror.MouseTrace;
 
 namespace CursorMirror
@@ -10,12 +9,9 @@ namespace CursorMirror
         public const int WakeAdvanceMilliseconds = 4;
         public const int FallbackIntervalMilliseconds = 8;
         public const int MaximumDwmSleepMilliseconds = 2;
-        public const int FineWaitAdvanceMicroseconds = 500;
-        public const int FineWaitYieldThresholdMicroseconds = 200;
+        public const int FineWaitAdvanceMicroseconds = 2000;
+        public const int FineWaitYieldThresholdMicroseconds = 100;
         public const int DisplayDeadlineGuardMicroseconds = 500;
-
-        [DllImport("dwmapi.dll", EntryPoint = "DwmGetCompositionTimingInfo", PreserveSig = true)]
-        private static extern int DwmGetCompositionTimingInfoNative(IntPtr hwnd, ref DwmTimingInfo timingInfo);
 
         public static DwmSynchronizedRuntimeScheduleDecision EvaluateDwmTiming(
             long nowTicks,
@@ -91,17 +87,16 @@ namespace CursorMirror
 
         public static bool TryGetDwmTiming(out long lastDwmVBlankTicks, out long refreshPeriodTicks)
         {
-            DwmTimingInfo timingInfo = new DwmTimingInfo();
-            timingInfo.Size = (uint)Marshal.SizeOf(typeof(DwmTimingInfo));
-            if (DwmGetCompositionTimingInfoNative(IntPtr.Zero, ref timingInfo) != 0)
+            DwmTimingInfo timingInfo;
+            if (!DwmNative.TryGetCompositionTimingInfo(out timingInfo))
             {
                 lastDwmVBlankTicks = 0;
                 refreshPeriodTicks = 0;
                 return false;
             }
 
-            lastDwmVBlankTicks = ToSignedTicks(timingInfo.QpcVBlank);
-            refreshPeriodTicks = ToSignedTicks(timingInfo.QpcRefreshPeriod);
+            lastDwmVBlankTicks = DwmNative.ToSignedTicks(timingInfo.QpcVBlank);
+            refreshPeriodTicks = DwmNative.ToSignedTicks(timingInfo.QpcRefreshPeriod);
             return lastDwmVBlankTicks > 0 && refreshPeriodTicks > 0;
         }
 
@@ -241,15 +236,6 @@ namespace CursorMirror
             return startTicks + ticks;
         }
 
-        private static long ToSignedTicks(ulong value)
-        {
-            if (value > long.MaxValue)
-            {
-                return long.MaxValue;
-            }
-
-            return (long)value;
-        }
     }
 
     public struct DwmSynchronizedRuntimeScheduleDecision

@@ -1,0 +1,1192 @@
+{
+  "schemaVersion": "cursor-prediction-v17-step-02-overshoot-metrics/1",
+  "generatedAtUtc": "2026-05-04T04:39:53.250061+00:00",
+  "constraints": {
+    "rawDataCopied": false,
+    "expandedCsvWritten": false,
+    "checkpointWritten": false,
+    "tensorDumpWritten": false,
+    "gpuTrainingRun": false,
+    "analysis": "CPU-only data load and fixed runtime inference"
+  },
+  "inputs": {
+    "manifest": "poc\\cursor-prediction-v12\\step-2-clean-split\\split-manifest.json",
+    "runtimeDescriptor": "poc\\cursor-prediction-v16\\runtime\\selected-candidate.json",
+    "loader": "poc/cursor-prediction-v13/scripts/run-deep-learning-gpu.py"
+  },
+  "dataset": {
+    "rows": 90621,
+    "bySplit": {
+      "test": 14174,
+      "validation": 14220,
+      "train": 62227
+    },
+    "byPackage": {
+      "m070248": 45855,
+      "m070307": 44766
+    },
+    "byRefresh": {
+      "60Hz": 90621
+    },
+    "byPhase": {
+      "moving": 70667,
+      "hold": 15720,
+      "resume": 4231,
+      "unknown": 3
+    },
+    "bySpeedBin": {
+      "1000-2000": 2843,
+      ">=2000": 770,
+      "0-25": 83314,
+      "500-1000": 2996,
+      "250-500": 120,
+      "100-250": 217,
+      "25-100": 361
+    },
+    "scalarDim": 25,
+    "sequenceShape": [
+      16,
+      9
+    ],
+    "targetScale": [
+      3.0,
+      2.0
+    ],
+    "correctionScale": [
+      2.43149995803833,
+      1.5
+    ]
+  },
+  "buildSummary": {
+    "skipped": {
+      "insufficient_history": 6
+    }
+  },
+  "sliceCounts": {
+    "all": 90621,
+    "stopApproach": 1994,
+    "hardStopApproach": 645,
+    "postStopHold": 14353,
+    "directionFlip": 19
+  },
+  "slicePackageCounts": {
+    "all": {
+      "m070248": 45855,
+      "m070307": 44766
+    },
+    "stopApproach": {
+      "m070248": 1095,
+      "m070307": 899
+    },
+    "hardStopApproach": {
+      "m070248": 354,
+      "m070307": 291
+    },
+    "postStopHold": {
+      "m070248": 7704,
+      "m070307": 6649
+    },
+    "directionFlip": {
+      "m070248": 12,
+      "m070307": 7
+    }
+  },
+  "models": {
+    "step5_gate": {
+      "modelId": "step5_gate",
+      "bySlice": {
+        "all": {
+          "rows": 90621,
+          "errorPx": {
+            "count": 90621,
+            "mean": 0.5733,
+            "median": 0.136,
+            "p95": 2.1269,
+            "p99": 5.7868,
+            "max": 96.5519
+          },
+          "signedAlongMotionError": {
+            "count": 71634,
+            "mean": -0.3158,
+            "p95": 0.3945,
+            "p99": 1.4152,
+            "leadRate": 0.699291,
+            "lagRate": 0.233786
+          },
+          "overshootPx": {
+            "count": 71634,
+            "mean": 0.1524,
+            "median": 0.1024,
+            "p95": 0.3945,
+            "p99": 1.4152,
+            "max": 40.4318
+          },
+          "overshootRateGt0p5": 0.029805,
+          "overshootRateGt1": 0.013121,
+          "overshootRateGt2": 0.004248,
+          "predictionMagnitude": {
+            "count": 90621,
+            "mean": 0.1675,
+            "median": 0.1089,
+            "p95": 0.5044,
+            "p99": 1.6808,
+            "max": 12.0
+          }
+        },
+        "stopApproach": {
+          "rows": 1994,
+          "errorPx": {
+            "count": 1994,
+            "mean": 3.6098,
+            "median": 1.6132,
+            "p95": 15.916,
+            "p99": 31.2828,
+            "max": 94.9456
+          },
+          "signedAlongMotionError": {
+            "count": 1994,
+            "mean": -1.1979,
+            "p95": 3.2887,
+            "p99": 4.86,
+            "leadRate": 0.683551,
+            "lagRate": 0.290873
+          },
+          "overshootPx": {
+            "count": 1994,
+            "mean": 1.1671,
+            "median": 1.0945,
+            "p95": 3.2887,
+            "p99": 4.86,
+            "max": 23.3142
+          },
+          "overshootRateGt0p5": 0.647944,
+          "overshootRateGt1": 0.565697,
+          "overshootRateGt2": 0.175527,
+          "predictionMagnitude": {
+            "count": 1994,
+            "mean": 1.6751,
+            "median": 1.4076,
+            "p95": 3.5137,
+            "p99": 4.799,
+            "max": 12.0
+          }
+        },
+        "hardStopApproach": {
+          "rows": 645,
+          "errorPx": {
+            "count": 645,
+            "mean": 4.6271,
+            "median": 2.541,
+            "p95": 19.3959,
+            "p99": 30.8131,
+            "max": 52.7672
+          },
+          "signedAlongMotionError": {
+            "count": 645,
+            "mean": -0.9862,
+            "p95": 4.0844,
+            "p99": 6.7067,
+            "leadRate": 0.685271,
+            "lagRate": 0.291473
+          },
+          "overshootPx": {
+            "count": 645,
+            "mean": 1.7931,
+            "median": 2.0492,
+            "p95": 4.0844,
+            "p99": 6.7067,
+            "max": 18.1536
+          },
+          "overshootRateGt0p5": 0.660465,
+          "overshootRateGt1": 0.635659,
+          "overshootRateGt2": 0.52093,
+          "predictionMagnitude": {
+            "count": 645,
+            "mean": 2.5652,
+            "median": 2.3788,
+            "p95": 4.33,
+            "p99": 6.3572,
+            "max": 12.0
+          }
+        },
+        "postStopHold": {
+          "rows": 14353,
+          "errorPx": {
+            "count": 14353,
+            "mean": 0.0104,
+            "median": 0.0,
+            "p95": 0.0844,
+            "p99": 0.1648,
+            "max": 1.0073
+          },
+          "signedAlongMotionError": {
+            "count": 1384,
+            "mean": 0.066,
+            "p95": 0.1744,
+            "p99": 0.1894,
+            "leadRate": 0.773121,
+            "lagRate": 0.021676
+          },
+          "overshootPx": {
+            "count": 1384,
+            "mean": 0.0822,
+            "median": 0.084,
+            "p95": 0.1744,
+            "p99": 0.1894,
+            "max": 0.6774
+          },
+          "overshootRateGt0p5": 0.000139,
+          "overshootRateGt1": 0.0,
+          "overshootRateGt2": 0.0,
+          "predictionMagnitude": {
+            "count": 14353,
+            "mean": 0.0082,
+            "median": 0.0,
+            "p95": 0.0839,
+            "p99": 0.1586,
+            "max": 0.6774
+          },
+          "postStopJitter": {
+            "count": 14353,
+            "mean": 0.0082,
+            "median": 0.0,
+            "p95": 0.0839,
+            "p99": 0.1586,
+            "max": 0.6774
+          }
+        },
+        "directionFlip": {
+          "rows": 19,
+          "errorPx": {
+            "count": 19,
+            "mean": 13.9268,
+            "median": 5.4994,
+            "p95": 49.4427,
+            "p99": 85.845,
+            "max": 94.9456
+          },
+          "signedAlongMotionError": {
+            "count": 19,
+            "mean": 0.4452,
+            "p95": 23.8979,
+            "p99": 28.1006,
+            "leadRate": 0.736842,
+            "lagRate": 0.263158
+          },
+          "overshootPx": {
+            "count": 19,
+            "mean": 6.151,
+            "median": 3.9352,
+            "p95": 23.8979,
+            "p99": 28.1006,
+            "max": 29.1513
+          },
+          "overshootRateGt0p5": 0.684211,
+          "overshootRateGt1": 0.631579,
+          "overshootRateGt2": 0.526316,
+          "predictionMagnitude": {
+            "count": 19,
+            "mean": 1.6789,
+            "median": 1.2256,
+            "p95": 3.7869,
+            "p99": 4.1462,
+            "max": 4.236
+          },
+          "directionFlipPenalty": {
+            "count": 19,
+            "mean": 6.151,
+            "median": 3.9352,
+            "p95": 23.8979,
+            "p99": 28.1006,
+            "max": 29.1513
+          }
+        }
+      },
+      "bySplit": {
+        "test": {
+          "rows": 14174,
+          "errorPx": {
+            "count": 14174,
+            "mean": 0.5637,
+            "median": 0.1497,
+            "p95": 2.1173,
+            "p99": 5.1897,
+            "max": 44.4325
+          },
+          "signedAlongMotionError": {
+            "count": 11189,
+            "mean": -0.2609,
+            "p95": 0.3447,
+            "p99": 1.3594,
+            "leadRate": 0.735454,
+            "lagRate": 0.222183
+          },
+          "overshootPx": {
+            "count": 11189,
+            "mean": 0.1589,
+            "median": 0.1189,
+            "p95": 0.3447,
+            "p99": 1.3594,
+            "max": 29.1513
+          },
+          "overshootRateGt0p5": 0.024199,
+          "overshootRateGt1": 0.011712,
+          "overshootRateGt2": 0.004374,
+          "predictionMagnitude": {
+            "count": 14174,
+            "mean": 0.1711,
+            "median": 0.1218,
+            "p95": 0.4234,
+            "p99": 1.7076,
+            "max": 11.2079
+          }
+        },
+        "train": {
+          "rows": 62227,
+          "errorPx": {
+            "count": 62227,
+            "mean": 0.5721,
+            "median": 0.1353,
+            "p95": 2.1396,
+            "p99": 5.8142,
+            "max": 96.5519
+          },
+          "signedAlongMotionError": {
+            "count": 49186,
+            "mean": -0.324,
+            "p95": 0.4049,
+            "p99": 1.3307,
+            "leadRate": 0.693531,
+            "lagRate": 0.237263
+          },
+          "overshootPx": {
+            "count": 49186,
+            "mean": 0.1494,
+            "median": 0.1015,
+            "p95": 0.4049,
+            "p99": 1.3307,
+            "max": 40.4318
+          },
+          "overshootRateGt0p5": 0.030148,
+          "overshootRateGt1": 0.012663,
+          "overshootRateGt2": 0.003568,
+          "predictionMagnitude": {
+            "count": 62227,
+            "mean": 0.1672,
+            "median": 0.1087,
+            "p95": 0.5187,
+            "p99": 1.6338,
+            "max": 12.0
+          }
+        },
+        "validation": {
+          "rows": 14220,
+          "errorPx": {
+            "count": 14220,
+            "mean": 0.5882,
+            "median": 0.1189,
+            "p95": 2.0724,
+            "p99": 6.2295,
+            "max": 94.9456
+          },
+          "signedAlongMotionError": {
+            "count": 11259,
+            "mean": -0.3343,
+            "p95": 0.4205,
+            "p99": 1.8497,
+            "leadRate": 0.688516,
+            "lagRate": 0.230127
+          },
+          "overshootPx": {
+            "count": 11259,
+            "mean": 0.1589,
+            "median": 0.0886,
+            "p95": 0.4205,
+            "p99": 1.8497,
+            "max": 37.0467
+          },
+          "overshootRateGt0p5": 0.033896,
+          "overshootRateGt1": 0.016526,
+          "overshootRateGt2": 0.007103,
+          "predictionMagnitude": {
+            "count": 14220,
+            "mean": 0.1649,
+            "median": 0.0945,
+            "p95": 0.5125,
+            "p99": 1.893,
+            "max": 9.7687
+          }
+        }
+      },
+      "byPackageStopApproach": {
+        "m070248": {
+          "rows": 1095,
+          "errorPx": {
+            "count": 1095,
+            "mean": 3.6637,
+            "median": 1.6898,
+            "p95": 15.4332,
+            "p99": 30.9403,
+            "max": 94.9456
+          },
+          "signedAlongMotionError": {
+            "count": 1095,
+            "mean": -1.38,
+            "p95": 3.2239,
+            "p99": 4.35,
+            "leadRate": 0.645662,
+            "lagRate": 0.341553
+          },
+          "overshootPx": {
+            "count": 1095,
+            "mean": 1.1135,
+            "median": 1.0892,
+            "p95": 3.2239,
+            "p99": 4.35,
+            "max": 18.1536
+          },
+          "overshootRateGt0p5": 0.621005,
+          "overshootRateGt1": 0.553425,
+          "overshootRateGt2": 0.16895,
+          "predictionMagnitude": {
+            "count": 1095,
+            "mean": 1.7275,
+            "median": 1.4655,
+            "p95": 3.5138,
+            "p99": 4.6214,
+            "max": 9.7687
+          }
+        },
+        "m070307": {
+          "rows": 899,
+          "errorPx": {
+            "count": 899,
+            "mean": 3.5442,
+            "median": 1.4804,
+            "p95": 16.0667,
+            "p99": 31.9614,
+            "max": 61.3091
+          },
+          "signedAlongMotionError": {
+            "count": 899,
+            "mean": -0.9761,
+            "p95": 3.3091,
+            "p99": 5.0058,
+            "leadRate": 0.7297,
+            "lagRate": 0.229143
+          },
+          "overshootPx": {
+            "count": 899,
+            "mean": 1.2323,
+            "median": 1.1098,
+            "p95": 3.3091,
+            "p99": 5.0058,
+            "max": 23.3142
+          },
+          "overshootRateGt0p5": 0.680756,
+          "overshootRateGt1": 0.580645,
+          "overshootRateGt2": 0.183537,
+          "predictionMagnitude": {
+            "count": 899,
+            "mean": 1.6114,
+            "median": 1.3441,
+            "p95": 3.5058,
+            "p99": 5.0058,
+            "max": 12.0
+          }
+        }
+      },
+      "worstStopApproachExamples": [
+        {
+          "packageId": "m070307",
+          "split": "test",
+          "phase": "moving",
+          "speedBin": "500-1000",
+          "recentSpeed": 2524.2798,
+          "labelSpeed": 500.0,
+          "targetDx": 19.6446,
+          "targetDy": -4.0,
+          "predDx": -4.2097,
+          "predDy": -0.4709,
+          "signedAlongMotionError": 23.3142,
+          "overshootPx": 23.3142
+        },
+        {
+          "packageId": "m070248",
+          "split": "validation",
+          "phase": "moving",
+          "speedBin": "0-25",
+          "recentSpeed": 1956.4492,
+          "labelSpeed": 0.0,
+          "targetDx": -14.0,
+          "targetDy": -6.0,
+          "predDx": 2.772,
+          "predDy": 2.4806,
+          "signedAlongMotionError": 18.1536,
+          "overshootPx": 18.1536
+        },
+        {
+          "packageId": "m070307",
+          "split": "test",
+          "phase": "moving",
+          "speedBin": "0-25",
+          "recentSpeed": 7107.0928,
+          "labelSpeed": 0.0,
+          "targetDx": 0.0,
+          "targetDy": 0.0,
+          "predDx": -11.2064,
+          "predDy": -0.1846,
+          "signedAlongMotionError": 11.2079,
+          "overshootPx": 11.2079
+        },
+        {
+          "packageId": "m070248",
+          "split": "validation",
+          "phase": "hold",
+          "speedBin": "0-25",
+          "recentSpeed": 5038.0317,
+          "labelSpeed": 0.0,
+          "targetDx": 0.0,
+          "targetDy": 0.0,
+          "predDx": -8.2466,
+          "predDy": -5.2367,
+          "signedAlongMotionError": 9.7687,
+          "overshootPx": 9.7687
+        },
+        {
+          "packageId": "m070307",
+          "split": "train",
+          "phase": "moving",
+          "speedBin": "0-25",
+          "recentSpeed": 1118.4104,
+          "labelSpeed": 0.0,
+          "targetDx": 4.0,
+          "targetDy": 10.0,
+          "predDx": -2.1385,
+          "predDy": -0.4028,
+          "signedAlongMotionError": 7.9579,
+          "overshootPx": 7.9579
+        },
+        {
+          "packageId": "m070248",
+          "split": "train",
+          "phase": "moving",
+          "speedBin": "0-25",
+          "recentSpeed": 629.6893,
+          "labelSpeed": 0.0,
+          "targetDx": -8.0,
+          "targetDy": 2.0,
+          "predDx": 0.9533,
+          "predDy": 0.3277,
+          "signedAlongMotionError": 7.9233,
+          "overshootPx": 7.9233
+        },
+        {
+          "packageId": "m070307",
+          "split": "train",
+          "phase": "moving",
+          "speedBin": "0-25",
+          "recentSpeed": 4103.1885,
+          "labelSpeed": 0.0,
+          "targetDx": 0.0,
+          "targetDy": 0.0,
+          "predDx": 7.5661,
+          "predDy": -1.6209,
+          "signedAlongMotionError": 7.7378,
+          "overshootPx": 7.7378
+        },
+        {
+          "packageId": "m070307",
+          "split": "train",
+          "phase": "moving",
+          "speedBin": "0-25",
+          "recentSpeed": 4411.0713,
+          "labelSpeed": 0.0,
+          "targetDx": 0.0,
+          "targetDy": 0.0,
+          "predDx": -6.9259,
+          "predDy": -3.2894,
+          "signedAlongMotionError": 7.6673,
+          "overshootPx": 7.6673
+        },
+        {
+          "packageId": "m070307",
+          "split": "train",
+          "phase": "hold",
+          "speedBin": "0-25",
+          "recentSpeed": 529.084,
+          "labelSpeed": 0.0,
+          "targetDx": 0.0,
+          "targetDy": 0.0,
+          "predDx": -6.8581,
+          "predDy": 3.1787,
+          "signedAlongMotionError": 7.5589,
+          "overshootPx": 7.5589
+        },
+        {
+          "packageId": "m070248",
+          "split": "validation",
+          "phase": "hold",
+          "speedBin": "0-25",
+          "recentSpeed": 3508.2234,
+          "labelSpeed": 0.0,
+          "targetDx": 0.0,
+          "targetDy": 0.0,
+          "predDx": -4.6252,
+          "predDy": -5.0177,
+          "signedAlongMotionError": 6.8242,
+          "overshootPx": 6.8242
+        }
+      ]
+    },
+    "mlp_fsmn_h8_hardtanh_label_q0p125_lag0p5": {
+      "modelId": "mlp_fsmn_h8_hardtanh_label_q0p125_lag0p5",
+      "bySlice": {
+        "all": {
+          "rows": 90621,
+          "errorPx": {
+            "count": 90621,
+            "mean": 0.7909,
+            "median": 0.609,
+            "p95": 1.8975,
+            "p99": 4.3629,
+            "max": 93.8281
+          },
+          "signedAlongMotionError": {
+            "count": 71634,
+            "mean": 0.3774,
+            "p95": 1.375,
+            "p99": 2.2892,
+            "leadRate": 0.844417,
+            "lagRate": 0.147807
+          },
+          "overshootPx": {
+            "count": 71634,
+            "mean": 0.6127,
+            "median": 0.5675,
+            "p95": 1.375,
+            "p99": 2.2892,
+            "max": 42.6272
+          },
+          "overshootRateGt0p5": 0.427693,
+          "overshootRateGt1": 0.107403,
+          "overshootRateGt2": 0.011521,
+          "predictionMagnitude": {
+            "count": 90621,
+            "mean": 0.754,
+            "median": 0.6232,
+            "p95": 1.9899,
+            "p99": 3.8811,
+            "max": 7.4534
+          }
+        },
+        "stopApproach": {
+          "rows": 1994,
+          "errorPx": {
+            "count": 1994,
+            "mean": 3.0962,
+            "median": 1.1839,
+            "p95": 12.9103,
+            "p99": 29.0009,
+            "max": 90.7263
+          },
+          "signedAlongMotionError": {
+            "count": 1994,
+            "mean": -0.9397,
+            "p95": 3.773,
+            "p99": 5.788,
+            "leadRate": 0.703611,
+            "lagRate": 0.296389
+          },
+          "overshootPx": {
+            "count": 1994,
+            "mean": 1.012,
+            "median": 0.669,
+            "p95": 3.773,
+            "p99": 5.788,
+            "max": 24.9477
+          },
+          "overshootRateGt0p5": 0.565196,
+          "overshootRateGt1": 0.2999,
+          "overshootRateGt2": 0.153962,
+          "predictionMagnitude": {
+            "count": 1994,
+            "mean": 2.0059,
+            "median": 1.3684,
+            "p95": 5.4528,
+            "p99": 6.63,
+            "max": 7.3767
+          }
+        },
+        "hardStopApproach": {
+          "rows": 645,
+          "errorPx": {
+            "count": 645,
+            "mean": 3.7139,
+            "median": 1.4832,
+            "p95": 16.203,
+            "p99": 28.2635,
+            "max": 52.8324
+          },
+          "signedAlongMotionError": {
+            "count": 645,
+            "mean": -1.4299,
+            "p95": 3.9468,
+            "p99": 6.2633,
+            "leadRate": 0.668217,
+            "lagRate": 0.331783
+          },
+          "overshootPx": {
+            "count": 645,
+            "mean": 1.0878,
+            "median": 0.6316,
+            "p95": 3.9468,
+            "p99": 6.2633,
+            "max": 16.4194
+          },
+          "overshootRateGt0p5": 0.536434,
+          "overshootRateGt1": 0.322481,
+          "overshootRateGt2": 0.176744,
+          "predictionMagnitude": {
+            "count": 645,
+            "mean": 2.205,
+            "median": 1.5396,
+            "p95": 5.8292,
+            "p99": 6.8526,
+            "max": 7.3767
+          }
+        },
+        "postStopHold": {
+          "rows": 14353,
+          "errorPx": {
+            "count": 14353,
+            "mean": 0.1629,
+            "median": 0.125,
+            "p95": 0.75,
+            "p99": 1.5509,
+            "max": 3.9731
+          },
+          "signedAlongMotionError": {
+            "count": 1384,
+            "mean": 0.8469,
+            "p95": 1.801,
+            "p99": 2.6466,
+            "leadRate": 0.985549,
+            "lagRate": 0.010116
+          },
+          "overshootPx": {
+            "count": 1384,
+            "mean": 0.8493,
+            "median": 0.6855,
+            "p95": 1.801,
+            "p99": 2.6466,
+            "max": 3.9731
+          },
+          "overshootRateGt0p5": 0.069672,
+          "overshootRateGt1": 0.025082,
+          "overshootRateGt2": 0.003484,
+          "predictionMagnitude": {
+            "count": 14353,
+            "mean": 0.1637,
+            "median": 0.125,
+            "p95": 0.7563,
+            "p99": 1.5706,
+            "max": 3.9731
+          },
+          "postStopJitter": {
+            "count": 14353,
+            "mean": 0.1637,
+            "median": 0.125,
+            "p95": 0.7563,
+            "p99": 1.5706,
+            "max": 3.9731
+          }
+        },
+        "directionFlip": {
+          "rows": 19,
+          "errorPx": {
+            "count": 19,
+            "mean": 13.9715,
+            "median": 5.2423,
+            "p95": 49.9381,
+            "p99": 82.5686,
+            "max": 90.7263
+          },
+          "signedAlongMotionError": {
+            "count": 19,
+            "mean": 1.3654,
+            "p95": 25.7779,
+            "p99": 31.7559,
+            "leadRate": 0.789474,
+            "lagRate": 0.210526
+          },
+          "overshootPx": {
+            "count": 19,
+            "mean": 6.6353,
+            "median": 3.003,
+            "p95": 25.7779,
+            "p99": 31.7559,
+            "max": 33.2504
+          },
+          "overshootRateGt0p5": 0.736842,
+          "overshootRateGt1": 0.684211,
+          "overshootRateGt2": 0.684211,
+          "predictionMagnitude": {
+            "count": 19,
+            "mean": 2.6778,
+            "median": 2.281,
+            "p95": 5.8968,
+            "p99": 6.0186,
+            "max": 6.049
+          },
+          "directionFlipPenalty": {
+            "count": 19,
+            "mean": 6.6353,
+            "median": 3.003,
+            "p95": 25.7779,
+            "p99": 31.7559,
+            "max": 33.2504
+          }
+        }
+      },
+      "bySplit": {
+        "test": {
+          "rows": 14174,
+          "errorPx": {
+            "count": 14174,
+            "mean": 0.8199,
+            "median": 0.6374,
+            "p95": 1.9795,
+            "p99": 4.1232,
+            "max": 44.5557
+          },
+          "signedAlongMotionError": {
+            "count": 11189,
+            "mean": 0.4229,
+            "p95": 1.3839,
+            "p99": 2.2841,
+            "leadRate": 0.844937,
+            "lagRate": 0.147556
+          },
+          "overshootPx": {
+            "count": 11189,
+            "mean": 0.6435,
+            "median": 0.6224,
+            "p95": 1.3839,
+            "p99": 2.2841,
+            "max": 33.2504
+          },
+          "overshootRateGt0p5": 0.463101,
+          "overshootRateGt1": 0.126781,
+          "overshootRateGt2": 0.010724,
+          "predictionMagnitude": {
+            "count": 14174,
+            "mean": 0.7495,
+            "median": 0.6374,
+            "p95": 1.7864,
+            "p99": 3.5286,
+            "max": 6.8883
+          }
+        },
+        "train": {
+          "rows": 62227,
+          "errorPx": {
+            "count": 62227,
+            "mean": 0.7791,
+            "median": 0.6038,
+            "p95": 1.9072,
+            "p99": 4.2469,
+            "max": 93.8281
+          },
+          "signedAlongMotionError": {
+            "count": 49186,
+            "mean": 0.3818,
+            "p95": 1.375,
+            "p99": 2.2693,
+            "leadRate": 0.845017,
+            "lagRate": 0.147359
+          },
+          "overshootPx": {
+            "count": 49186,
+            "mean": 0.6093,
+            "median": 0.5596,
+            "p95": 1.375,
+            "p99": 2.2693,
+            "max": 42.6272
+          },
+          "overshootRateGt0p5": 0.424366,
+          "overshootRateGt1": 0.104022,
+          "overshootRateGt2": 0.011699,
+          "predictionMagnitude": {
+            "count": 62227,
+            "mean": 0.7625,
+            "median": 0.6227,
+            "p95": 2.0202,
+            "p99": 3.9571,
+            "max": 7.4534
+          }
+        },
+        "validation": {
+          "rows": 14220,
+          "errorPx": {
+            "count": 14220,
+            "mean": 0.8131,
+            "median": 0.5752,
+            "p95": 1.7843,
+            "p99": 5.2377,
+            "max": 90.7263
+          },
+          "signedAlongMotionError": {
+            "count": 11259,
+            "mean": 0.3132,
+            "p95": 1.375,
+            "p99": 2.4038,
+            "leadRate": 0.841283,
+            "lagRate": 0.150013
+          },
+          "overshootPx": {
+            "count": 11259,
+            "mean": 0.597,
+            "median": 0.5295,
+            "p95": 1.375,
+            "p99": 2.4038,
+            "max": 36.9924
+          },
+          "overshootRateGt0p5": 0.406962,
+          "overshootRateGt1": 0.102883,
+          "overshootRateGt2": 0.011533,
+          "predictionMagnitude": {
+            "count": 14220,
+            "mean": 0.7211,
+            "median": 0.6041,
+            "p95": 1.7679,
+            "p99": 3.8536,
+            "max": 7.3217
+          }
+        }
+      },
+      "byPackageStopApproach": {
+        "m070248": {
+          "rows": 1095,
+          "errorPx": {
+            "count": 1095,
+            "mean": 3.0149,
+            "median": 1.1871,
+            "p95": 12.655,
+            "p99": 28.4056,
+            "max": 90.7263
+          },
+          "signedAlongMotionError": {
+            "count": 1095,
+            "mean": -1.0652,
+            "p95": 3.5986,
+            "p99": 5.4417,
+            "leadRate": 0.659361,
+            "lagRate": 0.340639
+          },
+          "overshootPx": {
+            "count": 1095,
+            "mean": 0.918,
+            "median": 0.5627,
+            "p95": 3.5986,
+            "p99": 5.4417,
+            "max": 16.4194
+          },
+          "overshootRateGt0p5": 0.526027,
+          "overshootRateGt1": 0.283105,
+          "overshootRateGt2": 0.140639,
+          "predictionMagnitude": {
+            "count": 1095,
+            "mean": 2.1034,
+            "median": 1.4919,
+            "p95": 5.5452,
+            "p99": 6.8179,
+            "max": 7.3217
+          }
+        },
+        "m070307": {
+          "rows": 899,
+          "errorPx": {
+            "count": 899,
+            "mean": 3.1952,
+            "median": 1.173,
+            "p95": 13.9386,
+            "p99": 28.9869,
+            "max": 60.7309
+          },
+          "signedAlongMotionError": {
+            "count": 899,
+            "mean": -0.7867,
+            "p95": 4.3027,
+            "p99": 5.9474,
+            "leadRate": 0.757508,
+            "lagRate": 0.242492
+          },
+          "overshootPx": {
+            "count": 899,
+            "mean": 1.1265,
+            "median": 0.7907,
+            "p95": 4.3027,
+            "p99": 5.9474,
+            "max": 24.9477
+          },
+          "overshootRateGt0p5": 0.612903,
+          "overshootRateGt1": 0.320356,
+          "overshootRateGt2": 0.170189,
+          "predictionMagnitude": {
+            "count": 899,
+            "mean": 1.8872,
+            "median": 1.1582,
+            "p95": 5.3839,
+            "p99": 6.4579,
+            "max": 7.3767
+          }
+        }
+      },
+      "worstStopApproachExamples": [
+        {
+          "packageId": "m070307",
+          "split": "test",
+          "phase": "moving",
+          "speedBin": "500-1000",
+          "recentSpeed": 2524.2798,
+          "labelSpeed": 500.0,
+          "targetDx": 19.6446,
+          "targetDy": -4.0,
+          "predDx": -5.8719,
+          "predDy": -0.3056,
+          "signedAlongMotionError": 24.9477,
+          "overshootPx": 24.9477
+        },
+        {
+          "packageId": "m070248",
+          "split": "validation",
+          "phase": "moving",
+          "speedBin": "0-25",
+          "recentSpeed": 1956.4492,
+          "labelSpeed": 0.0,
+          "targetDx": -14.0,
+          "targetDy": -6.0,
+          "predDx": 1.2476,
+          "predDy": 1.5834,
+          "signedAlongMotionError": 16.4194,
+          "overshootPx": 16.4194
+        },
+        {
+          "packageId": "m070248",
+          "split": "test",
+          "phase": "moving",
+          "speedBin": "0-25",
+          "recentSpeed": 1138.0779,
+          "labelSpeed": 0.0,
+          "targetDx": 2.0,
+          "targetDy": 2.0,
+          "predDx": -5.9372,
+          "predDy": -3.4925,
+          "signedAlongMotionError": 9.6052,
+          "overshootPx": 9.6052
+        },
+        {
+          "packageId": "m070307",
+          "split": "train",
+          "phase": "moving",
+          "speedBin": "0-25",
+          "recentSpeed": 1118.4104,
+          "labelSpeed": 0.0,
+          "targetDx": 4.0,
+          "targetDy": 10.0,
+          "predDx": -2.9914,
+          "predDy": -1.3425,
+          "signedAlongMotionError": 8.9699,
+          "overshootPx": 8.9699
+        },
+        {
+          "packageId": "m070248",
+          "split": "train",
+          "phase": "moving",
+          "speedBin": "0-25",
+          "recentSpeed": 629.6893,
+          "labelSpeed": 0.0,
+          "targetDx": -8.0,
+          "targetDy": 2.0,
+          "predDx": 0.9728,
+          "predDy": 0.5375,
+          "signedAlongMotionError": 8.0101,
+          "overshootPx": 8.0101
+        },
+        {
+          "packageId": "m070248",
+          "split": "validation",
+          "phase": "hold",
+          "speedBin": "0-25",
+          "recentSpeed": 2463.3911,
+          "labelSpeed": 0.0,
+          "targetDx": 0.0,
+          "targetDy": 0.0,
+          "predDx": -6.4599,
+          "predDy": -3.4463,
+          "signedAlongMotionError": 7.2941,
+          "overshootPx": 7.2941
+        },
+        {
+          "packageId": "m070307",
+          "split": "validation",
+          "phase": "moving",
+          "speedBin": "0-25",
+          "recentSpeed": 830.835,
+          "labelSpeed": 0.0,
+          "targetDx": -10.0,
+          "targetDy": 0.0,
+          "predDx": 0.3998,
+          "predDy": -4.352,
+          "signedAlongMotionError": 7.268,
+          "overshootPx": 7.268
+        },
+        {
+          "packageId": "m070248",
+          "split": "train",
+          "phase": "moving",
+          "speedBin": "0-25",
+          "recentSpeed": 669.6797,
+          "labelSpeed": 0.0,
+          "targetDx": -2.0,
+          "targetDy": 0.0,
+          "predDx": 5.247,
+          "predDy": -0.4298,
+          "signedAlongMotionError": 7.2504,
+          "overshootPx": 7.2504
+        },
+        {
+          "packageId": "m070248",
+          "split": "train",
+          "phase": "moving",
+          "speedBin": "0-25",
+          "recentSpeed": 1178.0765,
+          "labelSpeed": 0.0,
+          "targetDx": 1.0,
+          "targetDy": 1.0,
+          "predDx": -6.1241,
+          "predDy": -0.6548,
+          "signedAlongMotionError": 7.21,
+          "overshootPx": 7.21
+        },
+        {
+          "packageId": "m070307",
+          "split": "validation",
+          "phase": "hold",
+          "speedBin": "0-25",
+          "recentSpeed": 1306.9452,
+          "labelSpeed": 0.0,
+          "targetDx": 0.0,
+          "targetDy": 0.0,
+          "predDx": 6.3177,
+          "predDy": 2.3574,
+          "signedAlongMotionError": 6.6895,
+          "overshootPx": 6.6895
+        }
+      ]
+    }
+  },
+  "interpretation": "DistilledMLP shows higher stop-approach overshoot p95 than Step5 by 0.4843px; v17 should prioritize deceleration/lag-compensation gating.",
+  "elapsedSeconds": 34.643
+}

@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "cursor-prediction-v9-phase/1",
+  "phase": 10,
+  "name": "cpu-only-product-integration",
+  "status": "completed",
+  "productConstraint": {
+    "runtimeGpuAllowed": false,
+    "runtimeMachineLearningFrameworkAllowed": false,
+    "offlineGpuTrainingAllowed": true,
+    "runtimeAccelerationAllowed": "CPU-only, including SIMD when available"
+  },
+  "implementation": {
+    "modelName": "ExperimentalMLP",
+    "defaultModel": "ConstantVelocity",
+    "teacherWeights": "embedded fixed C# arrays",
+    "allocationPolicy": "preallocated per-predictor buffers",
+    "earlyGuards": {
+      "latestSpeedPixelsPerSecond": 1000,
+      "pathWindowMilliseconds": 72,
+      "pathNetSpeedPixelsPerSecond": 1000
+    },
+    "diagnostics": [
+      "skippedByRecentSpeed",
+      "skippedByPathSpeed",
+      "evaluated",
+      "rejected",
+      "applied"
+    ]
+  },
+  "verification": {
+    "unitTests": {
+      "command": "powershell -ExecutionPolicy Bypass -File scripts\\test.ps1",
+      "passed": 119,
+      "failed": 0
+    },
+    "releaseBuild": {
+      "command": "powershell -ExecutionPolicy Bypass -File scripts\\build.ps1 -Configuration Release",
+      "passed": true
+    }
+  },
+  "calibrator": {
+    "scorer": "poc/cursor-prediction-v7/scripts/score-calibration.js",
+    "scoreFiles": [
+      "runs/summaries/phase-10-calibrator-score.json",
+      "runs/summaries/phase-10-calibrator-speedguard-score.json",
+      "runs/summaries/phase-10-calibrator-pathguard-score.json",
+      "runs/summaries/phase-10-calibrator-rerun-score.json",
+      "runs/summaries/phase-10-calibrator-counters-score.json"
+    ],
+    "runs": [
+      {
+        "candidate": "constant-velocity",
+        "frames": 696,
+        "score": 14.1,
+        "mean": 3.7557471264367814,
+        "p95": 12,
+        "p99": 12,
+        "max": 26
+      },
+      {
+        "candidate": "experimental-mlp",
+        "frames": 696,
+        "score": 22.5,
+        "mean": 3.718390804597701,
+        "p95": 12,
+        "p99": 12,
+        "max": 82
+      },
+      {
+        "candidate": "experimental-mlp-speedguard",
+        "frames": 696,
+        "score": 21.3,
+        "mean": 3.728448275862069,
+        "p95": 12,
+        "p99": 12,
+        "max": 74
+      },
+      {
+        "candidate": "experimental-mlp-pathguard",
+        "frames": 696,
+        "score": 20.85,
+        "mean": 3.778735632183908,
+        "p95": 12,
+        "p99": 12,
+        "max": 71
+      },
+      {
+        "candidate": "constant-velocity-rerun",
+        "frames": 697,
+        "score": 23.1,
+        "mean": 4.2625538020086085,
+        "p95": 12,
+        "p99": 12,
+        "max": 86
+      },
+      {
+        "candidate": "experimental-mlp-counters",
+        "frames": 696,
+        "score": 23.25,
+        "mean": 3.992816091954023,
+        "p95": 12,
+        "p99": 12,
+        "max": 87,
+        "counters": {
+          "skippedByRecentSpeed": 1151,
+          "skippedByPathSpeed": 137,
+          "evaluated": 510,
+          "rejected": 453,
+          "applied": 57
+        }
+      }
+    ],
+    "decision": "Keep ExperimentalMLP as non-default experimental. Do not promote to default; Calibrator results are noisy and not a stable win."
+  }
+}

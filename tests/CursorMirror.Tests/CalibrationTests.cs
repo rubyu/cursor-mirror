@@ -1,6 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
+using System.IO.Compression;
 using CursorMirror.Calibrator;
+using CursorMirror.MotionLab;
 
 namespace CursorMirror.Tests
 {
@@ -13,6 +17,9 @@ namespace CursorMirror.Tests
             suite.Add("COT-MCU-7", CalibrationMotionPatternCoverage);
             suite.Add("COT-MCU-8", CalibrationPatternSummarySeparation);
             suite.Add("COT-MCU-9", CalibrationRuntimeModeParsing);
+            suite.Add("COT-MCU-10", RealCursorDriverMarkersAreDistinct);
+            suite.Add("COT-MCU-11", MotionLabCalibrationMotionSourceLoadsPackage);
+            suite.Add("COT-MCU-12", CalibrationPackageIncludesMotionLabContext);
         }
 
         // Dark pixel bounds detection [COT-MCU-5]
@@ -73,8 +80,11 @@ namespace CursorMirror.Tests
             TestAssert.True(Contains(names, "rapid-reversal"), "rapid reversal pattern");
             TestAssert.True(Contains(names, "sine-sweep"), "sine sweep pattern");
             TestAssert.True(Contains(names, "short-jitter"), "short jitter pattern");
+            TestAssert.True(Contains(names, "transition-to-start"), "transition to start pattern");
 
             double maximumVelocity = 0;
+            double maximumFourMillisecondStep = 0;
+            CalibrationMotionSample previousSample = suite.GetSample(0);
             for (double elapsed = 0; elapsed < suite.TotalDurationMilliseconds; elapsed += 50)
             {
                 CalibrationMotionSample sample = suite.GetSample(elapsed);
@@ -85,7 +95,24 @@ namespace CursorMirror.Tests
                 }
             }
 
+            for (double elapsed = 4; elapsed <= suite.TotalDurationMilliseconds; elapsed += 4)
+            {
+                CalibrationMotionSample sample = suite.GetSample(elapsed);
+                maximumFourMillisecondStep = Math.Max(maximumFourMillisecondStep, Math.Abs(sample.ExpectedX - previousSample.ExpectedX));
+                previousSample = sample;
+            }
+
+            CalibrationMotionSample finalSample = suite.GetSample(suite.TotalDurationMilliseconds);
+            CalibrationMotionSample afterFinalSample = suite.GetSample(suite.TotalDurationMilliseconds + 1000);
+            CalibrationMotionSample beforeWrapSample = suite.GetSample(suite.TotalDurationMilliseconds - 4);
+            CalibrationMotionSample afterWrapSample = suite.GetSample(suite.TotalDurationMilliseconds + 4);
+
             TestAssert.True(maximumVelocity > 1000, "fast speed range");
+            TestAssert.True(maximumFourMillisecondStep <= 25, "default pattern has no discontinuous cursor jumps");
+            TestAssert.Equal(suite.GetSample(0).ExpectedX, finalSample.ExpectedX, "default pattern loops back to its start");
+            TestAssert.True(Math.Abs(finalSample.ExpectedX - beforeWrapSample.ExpectedX) <= 25, "default pattern enters loop boundary smoothly");
+            TestAssert.True(Math.Abs(afterWrapSample.ExpectedX - finalSample.ExpectedX) <= 25, "default pattern leaves loop boundary smoothly");
+            TestAssert.True(afterFinalSample.ExpectedX != finalSample.ExpectedX, "default pattern continues after one duration");
         }
 
         // Calibration pattern summary separation [COT-MCU-8]
@@ -100,11 +127,127 @@ namespace CursorMirror.Tests
 
             TestAssert.True(summary.PatternSummaries != null, "pattern summaries");
             TestAssert.Equal(2, summary.PatternSummaries.Length, "pattern count");
+            TestAssert.True(summary.PhaseSummaries != null, "phase summaries");
+            TestAssert.Equal(2, summary.PhaseSummaries.Length, "phase count");
             TestAssert.Equal("linear-slow", summary.PatternSummaries[0].PatternName, "first pattern");
             TestAssert.Equal(2, summary.PatternSummaries[0].FrameCount, "first pattern frame count");
             TestAssert.Equal(2.0, summary.PatternSummaries[0].MaximumEstimatedSeparationPixels, "first pattern maximum separation");
             TestAssert.Equal("rapid-reversal", summary.PatternSummaries[1].PatternName, "second pattern");
             TestAssert.Equal(15.0, summary.PatternSummaries[1].MaximumEstimatedSeparationPixels, "second pattern maximum separation");
+        }
+
+        // Real cursor driver marker separation [COT-MCU-10]
+        private static void RealCursorDriverMarkersAreDistinct()
+        {
+            TestAssert.False(RealCursorDriver.CalibratorInjectionExtraInfo == IntPtr.Zero, "calibrator marker");
+            TestAssert.False(RealCursorDriver.DemoInjectionExtraInfo == IntPtr.Zero, "demo marker");
+            TestAssert.False(RealCursorDriver.MotionLabInjectionExtraInfo == IntPtr.Zero, "motion lab marker");
+            TestAssert.False(RealCursorDriver.CalibratorInjectionExtraInfo == RealCursorDriver.DemoInjectionExtraInfo, "calibrator/demo marker distinct");
+            TestAssert.False(RealCursorDriver.CalibratorInjectionExtraInfo == RealCursorDriver.MotionLabInjectionExtraInfo, "calibrator/motion lab marker distinct");
+            TestAssert.False(RealCursorDriver.DemoInjectionExtraInfo == RealCursorDriver.MotionLabInjectionExtraInfo, "demo/motion lab marker distinct");
+        }
+
+        // MotionLab package-backed calibration source [COT-MCU-11]
+        private static void MotionLabCalibrationMotionSourceLoadsPackage()
+        {
+            string path = Path.Combine(Path.GetTempPath(), "cursor-mirror-motionlab-calibration-" + Guid.NewGuid().ToString("N") + ".zip");
+            try
+            {
+                MotionLabScenarioSet scenarioSet = MotionLabGenerator.GenerateScenarioSet(
+                    2468,
+                    new Rectangle(100, 200, 320, 240),
+                    new Point(120, 220),
+                    2,
+                    4,
+                    3,
+                    600,
+                    60,
+                    MotionLabGenerationProfile.RealTraceWeighted);
+                new MotionLabPackageWriter().Write(path, scenarioSet);
+
+                MotionLabCalibrationMotionSource source = MotionLabCalibrationMotionSource.LoadPackage(path);
+                CalibrationMotionSample first = source.GetSample(0);
+                CalibrationMotionSample second = source.GetSample(700);
+
+                TestAssert.Equal("motion-lab", source.SourceName, "source name");
+                TestAssert.Equal(MotionLabGenerationProfile.RealTraceWeighted, source.GenerationProfile, "generation profile");
+                TestAssert.Equal(2, source.ScenarioCount, "scenario count");
+                TestAssert.Equal(60, source.SampleRateHz, "motion source sample rate");
+                TestAssert.True(source.TotalDurationMilliseconds >= 1200, "total duration");
+                TestAssert.Equal("scenario-000", first.PatternName, "first scenario pattern");
+                TestAssert.Equal(0, first.ScenarioIndex, "first scenario index");
+                TestAssert.Equal("scenario-001", second.PatternName, "second scenario pattern");
+                TestAssert.Equal(1, second.ScenarioIndex, "second scenario index");
+                TestAssert.Equal("motion-lab", first.MotionSourceName, "sample source name");
+                TestAssert.True(first.ExpectedX >= 100 && first.ExpectedX <= 420, "expected x within bounds");
+            }
+            finally
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
+        }
+
+        // Calibration packages include MotionLab alignment context [COT-MCU-12]
+        private static void CalibrationPackageIncludesMotionLabContext()
+        {
+            string path = Path.Combine(Path.GetTempPath(), "cursor-mirror-calibration-context-" + Guid.NewGuid().ToString("N") + ".zip");
+            try
+            {
+                List<CalibrationFrameAnalysis> frames = new List<CalibrationFrameAnalysis>();
+                frames.Add(new CalibrationFrameAnalysis(0, 0, 100, 100, 12, true, 10, 10, 10, 20).WithMotion(new CalibrationMotionSample(
+                    0,
+                    "scenario-000",
+                    MotionLabMovementPhase.Hold,
+                    10,
+                    20,
+                    0,
+                    "motion-lab",
+                    MotionLabGenerationProfile.RealTraceWeighted,
+                    0,
+                    0,
+                    0.25,
+                    2,
+                    100)));
+
+                CalibrationSummary summary = CalibrationRunAnalyzer.Summarize(frames, "test");
+                summary.MotionSourceName = "motion-lab";
+                summary.MotionGenerationProfile = MotionLabGenerationProfile.RealTraceWeighted;
+                summary.MotionScenarioCount = 1;
+                summary.MotionDurationMilliseconds = 600;
+                new CalibrationPackageWriter().Write(path, frames, summary);
+
+                using (FileStream file = File.OpenRead(path))
+                using (ZipArchive archive = new ZipArchive(file, ZipArchiveMode.Read))
+                {
+                    string framesCsv;
+                    using (StreamReader reader = new StreamReader(archive.GetEntry("frames.csv").Open()))
+                    {
+                        framesCsv = reader.ReadToEnd();
+                    }
+
+                    string metricsJson;
+                    using (StreamReader reader = new StreamReader(archive.GetEntry("metrics.json").Open()))
+                    {
+                        metricsJson = reader.ReadToEnd();
+                    }
+
+                    TestAssert.True(framesCsv.Contains("motionSourceName,generationProfile,patternName,phaseName,scenarioIndex"), "MotionLab frame header");
+                    TestAssert.True(framesCsv.Contains("motion-lab,real-trace-weighted,scenario-000,hold,0"), "MotionLab frame row");
+                    TestAssert.True(metricsJson.Contains("\"MotionSourceName\":\"motion-lab\""), "summary motion source");
+                    TestAssert.True(metricsJson.Contains("\"MotionScenarioCount\":1"), "summary scenario count");
+                    TestAssert.True(metricsJson.Contains("\"PhaseSummaries\""), "summary phase groups");
+                }
+            }
+            finally
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
         }
 
         private static byte[] WhiteBgra(int width, int height)
@@ -168,6 +311,43 @@ namespace CursorMirror.Tests
 
             CalibratorRunOptions predictionOptions = CalibratorRunOptions.FromArguments(new[] { "--dwm-target-offset-ms", "3" });
             TestAssert.Equal(3, predictionOptions.DwmPredictionTargetOffsetMilliseconds.Value, "DWM prediction target offset option");
+
+            CalibratorRunOptions smoothOptions = CalibratorRunOptions.FromArguments(new[] { "--dwm-prediction-model", "SmoothPredictor" });
+            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, smoothOptions.DwmPredictionModel.Value, "removed SmoothPredictor prediction model option normalizes to ConstantVelocity");
+
+            CalibratorRunOptions constantVelocitySwitchOptions = CalibratorRunOptions.FromArguments(new[] { "--dwm-prediction-model", "cv-high-speed-switch" });
+            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, constantVelocitySwitchOptions.DwmPredictionModel.Value, "removed ConstantVelocityHighSpeedSwitch prediction model option normalizes to ConstantVelocity");
+
+            CalibratorRunOptions twoRegimeOptions = CalibratorRunOptions.FromArguments(new[] { "--dwm-prediction-model", "v28" });
+            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, twoRegimeOptions.DwmPredictionModel.Value, "removed TwoRegimeSmoothPredictor prediction model option normalizes to ConstantVelocity");
+
+            CalibratorRunOptions oldAliasOptions = CalibratorRunOptions.FromArguments(new[] { "--dwm-prediction-model", "RuntimeEventSafeMLP" });
+            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, oldAliasOptions.DwmPredictionModel.Value, "old runtime event-safe MLP alias migrates to ConstantVelocity");
+
+            CalibratorRunOptions outlierOptions = CalibratorRunOptions.FromArguments(new[] { "--product-runtime-outlier-output", "product-runtime.zip" });
+            TestAssert.Equal("product-runtime.zip", outlierOptions.ProductRuntimeOutlierOutputPath, "product runtime outlier output option");
+
+            CalibratorRunOptions noDisplayCaptureOptions = CalibratorRunOptions.FromArguments(new[] { "--no-display-capture" });
+            TestAssert.True(noDisplayCaptureOptions.DisableDisplayCapture, "no display capture option");
+
+            CalibratorRunOptions motionPackageOptions = CalibratorRunOptions.FromArguments(new[] { "--motion-package", "motion.zip" });
+            TestAssert.Equal("motion.zip", motionPackageOptions.MotionPackagePath, "motion package option");
+
+            CalibratorRunOptions runtimeSchedulerOptions = CalibratorRunOptions.FromArguments(new[]
+            {
+                "--runtime-wake-advance-ms", "3",
+                "--runtime-fine-wait-us", "1000",
+                "--runtime-yield-threshold-us", "250",
+                "--runtime-deadline-message-deferral-us", "750",
+                "--runtime-set-waitable-timer-ex",
+                "--runtime-thread-latency-profile"
+            });
+            TestAssert.Equal(3, runtimeSchedulerOptions.RuntimeWakeAdvanceMilliseconds.Value, "runtime wake advance option");
+            TestAssert.Equal(1000, runtimeSchedulerOptions.RuntimeFineWaitAdvanceMicroseconds.Value, "runtime fine wait option");
+            TestAssert.Equal(250, runtimeSchedulerOptions.RuntimeFineWaitYieldThresholdMicroseconds.Value, "runtime yield threshold option");
+            TestAssert.Equal(750, runtimeSchedulerOptions.RuntimeDeadlineMessageDeferralMicroseconds.Value, "runtime deadline message deferral option");
+            TestAssert.True(runtimeSchedulerOptions.RuntimePreferSetWaitableTimerEx.Value, "runtime set waitable timer ex option");
+            TestAssert.True(runtimeSchedulerOptions.RuntimeUseThreadLatencyProfile.Value, "runtime thread latency profile option");
         }
     }
 }

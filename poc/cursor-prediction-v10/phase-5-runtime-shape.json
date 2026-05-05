@@ -1,0 +1,196 @@
+{
+  "schemaVersion": "cursor-prediction-v10-phase5-runtime-shape/1",
+  "generatedAt": "2026-05-03T09:09:12.049Z",
+  "scriptCount": 3000,
+  "rowSummary": {
+    "evaluatedRows": 1152000,
+    "rowsBySplit": {
+      "train": 806400,
+      "validation": 172800,
+      "test": 172800
+    }
+  },
+  "featureContract": {
+    "causalOnly": true,
+    "historyTaps": 12,
+    "sequenceChannels": [
+      "dx",
+      "dy",
+      "dt",
+      "speed",
+      "acceleration_proxy",
+      "curvature_proxy",
+      "valid"
+    ],
+    "globalFeatures": [
+      "observedSpeed",
+      "acceleration",
+      "curvature",
+      "edgeNear",
+      "jitterProxy",
+      "historyCount",
+      "horizon",
+      "missing one-hot",
+      "tag bits"
+    ],
+    "featureDims": 103
+  },
+  "runtimeShapes": [
+    {
+      "teacherId": "linear_ridge_residual",
+      "family": "linear_ridge",
+      "featureDims": 103,
+      "historyTaps": 12,
+      "parameters": 208,
+      "coefficientBytesFloat32": 832,
+      "estimatedMacsPerPrediction": 206,
+      "outputCapPx": 24,
+      "cpuViability": "high",
+      "simdNotes": "excellent contiguous dot products",
+      "checkpointPolicy": "no checkpoint written; report keeps coefficient sample only"
+    },
+    {
+      "teacherId": "fsmn_lite_ridge",
+      "family": "FSMN-lite",
+      "featureDims": 103,
+      "historyTaps": 12,
+      "parameters": 110,
+      "coefficientBytesFloat32": 440,
+      "estimatedMacsPerPrediction": 150,
+      "outputCapPx": 24,
+      "cpuViability": "high",
+      "simdNotes": "excellent fixed tap reductions plus dot products",
+      "checkpointPolicy": "no checkpoint written; report keeps coefficient sample only"
+    },
+    {
+      "teacherId": "csfsmn_lite_ridge",
+      "family": "CSFSMN-lite",
+      "featureDims": 103,
+      "historyTaps": 12,
+      "parameters": 134,
+      "coefficientBytesFloat32": 536,
+      "estimatedMacsPerPrediction": 186,
+      "outputCapPx": 24,
+      "cpuViability": "high",
+      "simdNotes": "excellent compact memory state and shared taps",
+      "checkpointPolicy": "no checkpoint written; report keeps coefficient sample only"
+    },
+    {
+      "teacherId": "tcn_small_ridge",
+      "family": "1D-CNN/TCN-small",
+      "featureDims": 103,
+      "historyTaps": 12,
+      "parameters": 142,
+      "coefficientBytesFloat32": 568,
+      "estimatedMacsPerPrediction": 420,
+      "outputCapPx": 24,
+      "cpuViability": "high",
+      "simdNotes": "good fixed kernels over short history",
+      "checkpointPolicy": "no checkpoint written; report keeps coefficient sample only"
+    },
+    {
+      "teacherId": "rfn_rbf_48_ridge",
+      "family": "RFN/RBF-ridge",
+      "featureDims": 103,
+      "historyTaps": 12,
+      "parameters": 182,
+      "coefficientBytesFloat32": 728,
+      "estimatedMacsPerPrediction": 2196,
+      "outputCapPx": 24,
+      "cpuViability": "high",
+      "simdNotes": "good random projection plus sin/cos",
+      "checkpointPolicy": "no checkpoint written; report keeps coefficient sample only"
+    },
+    {
+      "teacherId": "mlp_small_ridge",
+      "family": "MLP-small",
+      "featureDims": 103,
+      "historyTaps": 12,
+      "parameters": 150,
+      "coefficientBytesFloat32": 600,
+      "estimatedMacsPerPrediction": 1492,
+      "outputCapPx": 24,
+      "cpuViability": "high",
+      "simdNotes": "fair dense hidden layer; batch SIMD recommended",
+      "checkpointPolicy": "no checkpoint written; report keeps coefficient sample only"
+    },
+    {
+      "teacherId": "mlp_medium_ridge",
+      "family": "MLP-medium",
+      "featureDims": 103,
+      "historyTaps": 12,
+      "parameters": 214,
+      "coefficientBytesFloat32": 856,
+      "estimatedMacsPerPrediction": 2900,
+      "outputCapPx": 24,
+      "cpuViability": "high",
+      "simdNotes": "fair larger dense hidden layer; still CPU-only viable at 64 hidden",
+      "checkpointPolicy": "no checkpoint written; report keeps coefficient sample only"
+    }
+  ],
+  "productCandidateRanking": [
+    {
+      "teacherId": "linear_ridge_residual",
+      "family": "linear_ridge",
+      "strictMean": 11.87721,
+      "strictRegressionsOver5Over10": "0/0",
+      "parameters": 208,
+      "estimatedMacsPerPrediction": 206,
+      "cpuViability": "high"
+    },
+    {
+      "teacherId": "fsmn_lite_ridge",
+      "family": "FSMN-lite",
+      "strictMean": 11.878289,
+      "strictRegressionsOver5Over10": "0/0",
+      "parameters": 110,
+      "estimatedMacsPerPrediction": 150,
+      "cpuViability": "high"
+    },
+    {
+      "teacherId": "tcn_small_ridge",
+      "family": "1D-CNN/TCN-small",
+      "strictMean": 11.880219,
+      "strictRegressionsOver5Over10": "1/0",
+      "parameters": 142,
+      "estimatedMacsPerPrediction": 420,
+      "cpuViability": "high"
+    },
+    {
+      "teacherId": "rfn_rbf_48_ridge",
+      "family": "RFN/RBF-ridge",
+      "strictMean": 11.895551,
+      "strictRegressionsOver5Over10": "2/0",
+      "parameters": 182,
+      "estimatedMacsPerPrediction": 2196,
+      "cpuViability": "high"
+    },
+    {
+      "teacherId": "mlp_small_ridge",
+      "family": "MLP-small",
+      "strictMean": 11.895723,
+      "strictRegressionsOver5Over10": "0/0",
+      "parameters": 150,
+      "estimatedMacsPerPrediction": 1492,
+      "cpuViability": "high"
+    },
+    {
+      "teacherId": "mlp_medium_ridge",
+      "family": "MLP-medium",
+      "strictMean": 11.898661,
+      "strictRegressionsOver5Over10": "0/0",
+      "parameters": 214,
+      "estimatedMacsPerPrediction": 2900,
+      "cpuViability": "high"
+    },
+    {
+      "teacherId": "csfsmn_lite_ridge",
+      "family": "CSFSMN-lite",
+      "strictMean": 11.979363,
+      "strictRegressionsOver5Over10": "0/0",
+      "parameters": 134,
+      "estimatedMacsPerPrediction": 186,
+      "cpuViability": "high"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "cursor-prediction-v21-step-04-search-config/1",
+  "generatedAtUtc": "2026-05-04T12:00:00Z",
+  "inputs": {
+    "step03": "../step-03-balanced-reevaluation/",
+    "manifest": "../step-02-balanced-evaluation/split-manifest.json",
+    "metricPolicy": "../step-02-balanced-evaluation/metric-policy.json",
+    "zipSource": "repo-root package paths from split-manifest.json"
+  },
+  "loader": {
+    "base": "copied step03 harness, modified only under step04",
+    "zipExtraction": false,
+    "entriesRead": [
+      "trace.csv",
+      "motion-trace-alignment.csv"
+    ],
+    "predictionRows": "traceEvent == runtimeSchedulerPoll",
+    "warmupMilliseconds": 1500,
+    "scenarioWindow": "row-level scenarioElapsedMilliseconds; no fixed 12000 ms assumption"
+  },
+  "learnedSearch": {
+    "seed": 2104,
+    "trainSplitOnly": true,
+    "trainSampleCap": 80000,
+    "hidden": 32,
+    "maxEpochs": 60,
+    "learningRate": 0.003,
+    "candidates": [
+      "mlp_h32_event_safe_sampled",
+      "mlp_h32_asymmetric_lead_sampled",
+      "mlp_h32_event_peaklead_hinge_stoprows",
+      "mlp_h32_event_returnmotion_proxy",
+      "mlp_h32_asym_lagguard_jitter",
+      "mlp_h32_stop_safety_target_cap"
+    ]
+  },
+  "postModelSequenceGuards": [
+    "mlp_h32_event_safe_seq_latch_cap0p35",
+    "mlp_h32_asym_seq_latch_blend0p50_cap0p45"
+  ],
+  "fixedCandidates": [
+    "product_distilled_lag0_offset_minus4_brake",
+    "rule_hybrid_latch_v5_300_high400_latest2p5",
+    "rule_hybrid_cap0p5_v2_150_high400_latest2p0"
+  ],
+  "gateComparison": [
+    "test.normal.visual.p95",
+    "test.normal.visual.p99",
+    "robustness.peakLead.max",
+    "robustness.otr.gt1px.rate",
+    "robustness.returnMotion.max",
+    "overall.futureLead.p99",
+    "overall.futureLag.p95"
+  ]
+}

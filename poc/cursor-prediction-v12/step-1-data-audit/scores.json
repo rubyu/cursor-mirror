@@ -1,0 +1,2536 @@
+{
+  "schemaVersion": "cursor-prediction-v12-audit-clean-split/1/step-1",
+  "generatedAtUtc": "2026-05-03T22:36:47.425Z",
+  "root": "C:\\Users\\seigl\\OneDrive\\my\\ドキュメント\\projects\\cursor",
+  "constraints": {
+    "gpuUsed": false,
+    "trainingRun": false,
+    "rawZipCopied": false,
+    "largePerFrameCacheWritten": false
+  },
+  "inputPackages": [
+    {
+      "id": "m070055",
+      "file": "cursor-mirror-motion-recording-20260504-070055.zip"
+    },
+    {
+      "id": "m070211",
+      "file": "cursor-mirror-motion-recording-20260504-070211.zip"
+    },
+    {
+      "id": "m070248",
+      "file": "cursor-mirror-motion-recording-20260504-070248.zip"
+    },
+    {
+      "id": "m070307",
+      "file": "cursor-mirror-motion-recording-20260504-070307.zip"
+    }
+  ],
+  "motionLabExtraInfo": 1129139532,
+  "contaminationNearMilliseconds": 250,
+  "packages": [
+    {
+      "id": "m070055",
+      "sourceZip": "cursor-mirror-motion-recording-20260504-070055.zip",
+      "relativePath": "cursor-mirror-motion-recording-20260504-070055.zip",
+      "bytes": 14747412,
+      "entries": [
+        {
+          "name": "motion-script.json",
+          "compressionMethod": 8,
+          "compressedSize": 39706,
+          "uncompressedSize": 139073
+        },
+        {
+          "name": "motion-samples.csv",
+          "compressionMethod": 8,
+          "compressedSize": 4269907,
+          "uncompressedSize": 14437389
+        },
+        {
+          "name": "trace.csv",
+          "compressionMethod": 8,
+          "compressedSize": 10436030,
+          "uncompressedSize": 93700122
+        },
+        {
+          "name": "metadata.json",
+          "compressionMethod": 8,
+          "compressedSize": 929,
+          "uncompressedSize": 2371
+        },
+        {
+          "name": "motion-metadata.json",
+          "compressionMethod": 8,
+          "compressedSize": 282,
+          "uncompressedSize": 454
+        }
+      ],
+      "metadata": {
+        "traceFormatVersion": 9,
+        "motionSampleFormatVersion": 2,
+        "productVersion": "v1.6.0-dev+20260503.249d22ced965.dirty",
+        "createdUtc": "2026-05-03T22:13:58.5287434Z",
+        "durationMicroseconds": 768105199,
+        "sampleCount": 544097,
+        "hookSampleCount": 121909,
+        "pollSampleCount": 96011,
+        "referencePollSampleCount": 280092,
+        "dwmTimingSampleCount": 142096,
+        "dwmTimingAvailabilityPercent": 100,
+        "timerResolutionMilliseconds": 1,
+        "timerResolutionSucceeded": true,
+        "processorCount": 6,
+        "monitorCount": 1,
+        "virtualScreen": {
+          "x": 0,
+          "y": 0,
+          "width": 3840,
+          "height": 2160
+        },
+        "refreshHz": 29.999,
+        "refreshBucket": "30Hz",
+        "machineKey": "6cpu_3840x2160_1mon_30Hz",
+        "qualityWarnings": [
+          "reference_poll_interval_p95_exceeds_requested_interval"
+        ],
+        "runtimeSchedulerPollIntervalStats": {
+          "Count": 23041,
+          "MeanMilliseconds": 33.3330972223427,
+          "P50Milliseconds": 33.3341,
+          "P95Milliseconds": 33.7359,
+          "MaxMilliseconds": 39.5043
+        },
+        "runtimeSchedulerLoopIntervalStats": {
+          "Count": 23042,
+          "MeanMilliseconds": 33.333062828747565,
+          "P50Milliseconds": 33.2869,
+          "P95Milliseconds": 47.124215,
+          "MaxMilliseconds": 55.0666
+        },
+        "hookMoveIntervalStats": {
+          "Count": 121908,
+          "MeanMilliseconds": 6.300209618728912,
+          "P50Milliseconds": 1.109,
+          "P95Milliseconds": 25.835794999999997,
+          "MaxMilliseconds": 146.5136
+        },
+        "productPollIntervalStats": {
+          "Count": 96010,
+          "MeanMilliseconds": 8.00009200083371,
+          "P50Milliseconds": 8.0002,
+          "P95Milliseconds": 14.868550000000003,
+          "MaxMilliseconds": 23.1181
+        },
+        "referencePollIntervalStats": {
+          "Count": 280091,
+          "MeanMilliseconds": 2.7422571432172567,
+          "P50Milliseconds": 2,
+          "P95Milliseconds": 12.31845,
+          "MaxMilliseconds": 23.7611
+        },
+        "warmupDurationMilliseconds": 500
+      },
+      "motionMetadata": {
+        "generationProfile": "real-trace-weighted",
+        "seed": 1456281681,
+        "scenarioCount": 64,
+        "controlPointCount": 512,
+        "speedPointCount": 512,
+        "holdSegmentCount": 318,
+        "holdDurationMilliseconds": 126243.187,
+        "durationMilliseconds": 768000,
+        "scenarioDurationMilliseconds": 12000,
+        "sampleRateHz": 240
+      },
+      "motionScript": {
+        "schemaVersion": "cursor-mirror-motion-scenarios/1",
+        "generationProfile": "real-trace-weighted",
+        "seed": 1456281681,
+        "scenarioCount": 64,
+        "controlPointsPerScenario": {
+          "count": 64,
+          "mean": 8,
+          "min": 8,
+          "p50": 8,
+          "p90": 8,
+          "p95": 8,
+          "p99": 8,
+          "max": 8
+        },
+        "speedPointsPerScenario": {
+          "count": 64,
+          "mean": 8,
+          "min": 8,
+          "p50": 8,
+          "p90": 8,
+          "p95": 8,
+          "p99": 8,
+          "max": 8
+        },
+        "holdSegmentsPerScenario": {
+          "count": 64,
+          "mean": 4.969,
+          "min": 4,
+          "p50": 5,
+          "p90": 6,
+          "p95": 6,
+          "p99": 6,
+          "max": 6
+        },
+        "scenarioDurationMilliseconds": {
+          "count": 64,
+          "mean": 12000,
+          "min": 12000,
+          "p50": 12000,
+          "p90": 12000,
+          "p95": 12000,
+          "p99": 12000,
+          "max": 12000
+        }
+      },
+      "trace": {
+        "header": [
+          "sequence",
+          "stopwatchTicks",
+          "elapsedMicroseconds",
+          "x",
+          "y",
+          "event",
+          "hookX",
+          "hookY",
+          "cursorX",
+          "cursorY",
+          "hookMouseData",
+          "hookFlags",
+          "hookTimeMilliseconds",
+          "hookExtraInfo",
+          "dwmTimingAvailable",
+          "dwmRateRefreshNumerator",
+          "dwmRateRefreshDenominator",
+          "dwmQpcRefreshPeriod",
+          "dwmQpcVBlank",
+          "dwmRefreshCount",
+          "dwmQpcCompose",
+          "dwmFrame",
+          "dwmRefreshFrame",
+          "dwmFrameDisplayed",
+          "dwmQpcFrameDisplayed",
+          "dwmRefreshFrameDisplayed",
+          "dwmFrameComplete",
+          "dwmQpcFrameComplete",
+          "dwmFramePending",
+          "dwmQpcFramePending",
+          "dwmRefreshNextDisplayed",
+          "dwmRefreshNextPresented",
+          "dwmFramesDisplayed",
+          "dwmFramesDropped",
+          "dwmFramesMissed",
+          "runtimeSchedulerTimingUsable",
+          "runtimeSchedulerTargetVBlankTicks",
+          "runtimeSchedulerPlannedTickTicks",
+          "runtimeSchedulerActualTickTicks",
+          "runtimeSchedulerVBlankLeadMicroseconds",
+          "runtimeSchedulerQueuedTickTicks",
+          "runtimeSchedulerDispatchStartedTicks",
+          "runtimeSchedulerCursorReadStartedTicks",
+          "runtimeSchedulerCursorReadCompletedTicks",
+          "runtimeSchedulerSampleRecordedTicks",
+          "runtimeSchedulerLoopIteration",
+          "runtimeSchedulerLoopStartedTicks",
+          "runtimeSchedulerTimingReadStartedTicks",
+          "runtimeSchedulerTimingReadCompletedTicks",
+          "runtimeSchedulerDecisionCompletedTicks",
+          "runtimeSchedulerTickRequested",
+          "runtimeSchedulerSleepRequestedMilliseconds",
+          "runtimeSchedulerWaitMethod",
+          "runtimeSchedulerWaitTargetTicks",
+          "runtimeSchedulerSleepStartedTicks",
+          "runtimeSchedulerSleepCompletedTicks",
+          "warmupSample",
+          "predictionTargetTicks",
+          "presentReferenceTicks",
+          "schedulerProvenance",
+          "sampleRecordedToPredictionTargetMicroseconds",
+          "runtimeSchedulerMissing"
+        ],
+        "requiredV9FieldsPresent": {
+          "warmupSample": true,
+          "predictionTargetTicks": true,
+          "presentReferenceTicks": true,
+          "schedulerProvenance": true,
+          "sampleRecordedToPredictionTargetMicroseconds": true,
+          "runtimeSchedulerMissing": true
+        },
+        "rowCount": 544097,
+        "eventCounts": {
+          "poll": 96011,
+          "referencePoll": 280092,
+          "move": 121909,
+          "runtimeSchedulerLoop": 23043,
+          "runtimeSchedulerPoll": 23042
+        },
+        "warmupRows": 480,
+        "moveRows": 121909,
+        "motionLabMoveRows": 121760,
+        "externalMoveRows": 149,
+        "externalMoveWarmupRows": 37,
+        "externalMoveNonWarmupRows": 112,
+        "externalMoveScenarios": {
+          "0": 149
+        },
+        "externalMoveNonWarmupScenarios": {
+          "0": 112
+        },
+        "externalMoveElapsedMilliseconds": {
+          "count": 149,
+          "mean": 1255.312,
+          "min": 16.756,
+          "p50": 1222.709,
+          "p90": 2186.216,
+          "p95": 2245.947,
+          "p99": 2444.281,
+          "max": 2461.235
+        },
+        "externalMoveNonWarmupElapsedMilliseconds": {
+          "count": 112,
+          "mean": 1590.908,
+          "min": 500.907,
+          "p50": 1812.17,
+          "p90": 2217.394,
+          "p95": 2260.959,
+          "p99": 2448.569,
+          "max": 2461.235
+        },
+        "extraInfoCounts": {
+          "0": 149,
+          "1129139532": 121760
+        },
+        "contaminationWindows": [
+          {
+            "startMs": 0,
+            "endMs": 2711.235,
+            "durationMs": 2711.235
+          }
+        ],
+        "candidateCleaning": {
+          "proximityOnly": {
+            "totalRows": 544097,
+            "cleanRows": 541457,
+            "excludedRows": 2640,
+            "excludedPercent": 0.4852,
+            "warmupExcludedRows": 480,
+            "contaminationWindowExcludedRows": 2640,
+            "droppedScenarioExcludedRows": 0,
+            "bySplit": {
+              "train": 365509,
+              "validation": 84221,
+              "test": 94367,
+              "unassigned": 0
+            },
+            "cleanBySplit": {
+              "train": 365509,
+              "validation": 84221,
+              "test": 91727,
+              "unassigned": 0
+            },
+            "excludedBySplit": {
+              "train": 0,
+              "validation": 0,
+              "test": 2640,
+              "unassigned": 0
+            }
+          },
+          "dropScenario0PlusProximity": {
+            "totalRows": 544097,
+            "cleanRows": 532866,
+            "excludedRows": 11231,
+            "excludedPercent": 2.0642,
+            "warmupExcludedRows": 480,
+            "contaminationWindowExcludedRows": 2640,
+            "droppedScenarioExcludedRows": 11231,
+            "bySplit": {
+              "train": 365509,
+              "validation": 84221,
+              "test": 94367,
+              "unassigned": 0
+            },
+            "cleanBySplit": {
+              "train": 365509,
+              "validation": 84221,
+              "test": 83136,
+              "unassigned": 0
+            },
+            "excludedBySplit": {
+              "train": 0,
+              "validation": 0,
+              "test": 11231,
+              "unassigned": 0
+            }
+          }
+        },
+        "schedulerProvenanceCounts": {
+          "dwm": 46085
+        },
+        "runtimeSchedulerMissingCounts": {
+          "false": 544097
+        },
+        "sampleRecordedToPredictionTargetMicroseconds": {
+          "count": 46085,
+          "mean": -18696.147,
+          "min": -37314,
+          "p50": -15555,
+          "p90": -3775,
+          "p95": -3608,
+          "p99": -3226,
+          "max": 2306
+        },
+        "schedulerDelayMilliseconds": {
+          "count": 23042,
+          "mean": 0.186,
+          "min": 0.056,
+          "p50": 0.118,
+          "p90": 0.368,
+          "p95": 0.531,
+          "p99": 0.835,
+          "max": 6.301
+        }
+      },
+      "finalCleaningRule": {
+        "id": "drop-scenario-0-plus-contamination-windows",
+        "dropScenarios": [
+          0
+        ],
+        "contaminationWindows": [
+          {
+            "startMs": 0,
+            "endMs": 2711.235,
+            "durationMs": 2711.235
+          }
+        ],
+        "rationale": [
+          "Non-warmup external move rows continue until roughly 2.46 s in the first scenario.",
+          "Dropping the whole first scenario costs about 1/64 of one package and avoids training on an unknown recovery period.",
+          "The contamination windows are retained in the manifest for transparency, but scenario 0 is the effective exclusion."
+        ]
+      },
+      "cleanTrace": {
+        "totalRows": 544097,
+        "cleanRows": 532866,
+        "excludedRows": 11231,
+        "excludedPercent": 2.0642,
+        "warmupExcludedRows": 480,
+        "contaminationWindowExcludedRows": 2640,
+        "droppedScenarioExcludedRows": 11231,
+        "bySplit": {
+          "train": 365509,
+          "validation": 84221,
+          "test": 94367,
+          "unassigned": 0
+        },
+        "cleanBySplit": {
+          "train": 365509,
+          "validation": 84221,
+          "test": 83136,
+          "unassigned": 0
+        },
+        "excludedBySplit": {
+          "train": 0,
+          "validation": 0,
+          "test": 11231,
+          "unassigned": 0
+        }
+      },
+      "motionSamples": {
+        "header": [
+          "sequence",
+          "elapsedMilliseconds",
+          "scenarioIndex",
+          "scenarioElapsedMilliseconds",
+          "progress",
+          "x",
+          "y",
+          "velocityPixelsPerSecond",
+          "movementPhase",
+          "holdIndex",
+          "phaseElapsedMilliseconds"
+        ],
+        "requiredV2FieldsPresent": {
+          "movementPhase": true,
+          "holdIndex": true,
+          "phaseElapsedMilliseconds": true
+        },
+        "rowCount": 184321,
+        "phaseCounts": {
+          "moving": 145573,
+          "hold": 30301,
+          "resume": 8447
+        },
+        "scenarioCounts": {
+          "0": 2880,
+          "1": 2880,
+          "2": 2880,
+          "3": 2880,
+          "4": 2880,
+          "5": 2880,
+          "6": 2880,
+          "7": 2880,
+          "8": 2880,
+          "9": 2880,
+          "10": 2880,
+          "11": 2880,
+          "12": 2880,
+          "13": 2880,
+          "14": 2880,
+          "15": 2880,
+          "16": 2880,
+          "17": 2880,
+          "18": 2880,
+          "19": 2880,
+          "20": 2880,
+          "21": 2880,
+          "22": 2880,
+          "23": 2880,
+          "24": 2880,
+          "25": 2880,
+          "26": 2880,
+          "27": 2880,
+          "28": 2880,
+          "29": 2880,
+          "30": 2880,
+          "31": 2880,
+          "32": 2880,
+          "33": 2880,
+          "34": 2880,
+          "35": 2880,
+          "36": 2880,
+          "37": 2880,
+          "38": 2880,
+          "39": 2880,
+          "40": 2880,
+          "41": 2880,
+          "42": 2880,
+          "43": 2880,
+          "44": 2880,
+          "45": 2880,
+          "46": 2880,
+          "47": 2880,
+          "48": 2880,
+          "49": 2880,
+          "50": 2880,
+          "51": 2880,
+          "52": 2880,
+          "53": 2880,
+          "54": 2880,
+          "55": 2880,
+          "56": 2880,
+          "57": 2880,
+          "58": 2880,
+          "59": 2880,
+          "60": 2880,
+          "61": 2880,
+          "62": 2880,
+          "63": 2881
+        },
+        "velocityPixelsPerSecond": {
+          "count": 184321,
+          "mean": 145.279,
+          "min": 0,
+          "p50": 90.318,
+          "p90": 257.383,
+          "p95": 460.875,
+          "p99": 1523.179,
+          "max": 23414.784
+        },
+        "clean": {
+          "totalRows": 184321,
+          "cleanRows": 181441,
+          "excludedRows": 2880,
+          "excludedPercent": 1.5625,
+          "warmupExcludedRows": 120,
+          "contaminationWindowExcludedRows": 651,
+          "droppedScenarioExcludedRows": 2880,
+          "bySplit": {
+            "train": 126721,
+            "validation": 28800,
+            "test": 28800,
+            "unassigned": 0
+          },
+          "cleanBySplit": {
+            "train": 126721,
+            "validation": 28800,
+            "test": 25920,
+            "unassigned": 0
+          },
+          "excludedBySplit": {
+            "train": 0,
+            "validation": 0,
+            "test": 2880,
+            "unassigned": 0
+          },
+          "phaseCounts": {
+            "moving": 143400,
+            "hold": 29762,
+            "resume": 8279
+          },
+          "scenarioCounts": {
+            "1": 2880,
+            "2": 2880,
+            "3": 2880,
+            "4": 2880,
+            "5": 2880,
+            "6": 2880,
+            "7": 2880,
+            "8": 2880,
+            "9": 2880,
+            "10": 2880,
+            "11": 2880,
+            "12": 2880,
+            "13": 2880,
+            "14": 2880,
+            "15": 2880,
+            "16": 2880,
+            "17": 2880,
+            "18": 2880,
+            "19": 2880,
+            "20": 2880,
+            "21": 2880,
+            "22": 2880,
+            "23": 2880,
+            "24": 2880,
+            "25": 2880,
+            "26": 2880,
+            "27": 2880,
+            "28": 2880,
+            "29": 2880,
+            "30": 2880,
+            "31": 2880,
+            "32": 2880,
+            "33": 2880,
+            "34": 2880,
+            "35": 2880,
+            "36": 2880,
+            "37": 2880,
+            "38": 2880,
+            "39": 2880,
+            "40": 2880,
+            "41": 2880,
+            "42": 2880,
+            "43": 2880,
+            "44": 2880,
+            "45": 2880,
+            "46": 2880,
+            "47": 2880,
+            "48": 2880,
+            "49": 2880,
+            "50": 2880,
+            "51": 2880,
+            "52": 2880,
+            "53": 2880,
+            "54": 2880,
+            "55": 2880,
+            "56": 2880,
+            "57": 2880,
+            "58": 2880,
+            "59": 2880,
+            "60": 2880,
+            "61": 2880,
+            "62": 2880,
+            "63": 2881
+          },
+          "velocityPixelsPerSecond": {
+            "count": 181441,
+            "mean": 146.281,
+            "min": 0,
+            "p50": 91.869,
+            "p90": 257.501,
+            "p95": 462.842,
+            "p99": 1535.447,
+            "max": 23414.784
+          }
+        }
+      },
+      "consistency": {
+        "traceFormatIsV9": true,
+        "motionSampleFormatIsV2": true,
+        "traceRowsMatchMetadata": true,
+        "motionScenarioCountIs64": true,
+        "requiredTraceV9FieldsPresent": true,
+        "requiredMotionV2FieldsPresent": true,
+        "dwmTimingFullyAvailable": true,
+        "timerResolutionSucceededAt1ms": true
+      }
+    },
+    {
+      "id": "m070211",
+      "sourceZip": "cursor-mirror-motion-recording-20260504-070211.zip",
+      "relativePath": "cursor-mirror-motion-recording-20260504-070211.zip",
+      "bytes": 13885506,
+      "entries": [
+        {
+          "name": "motion-script.json",
+          "compressionMethod": 8,
+          "compressedSize": 39994,
+          "uncompressedSize": 140051
+        },
+        {
+          "name": "motion-samples.csv",
+          "compressionMethod": 8,
+          "compressedSize": 4221401,
+          "uncompressedSize": 14409089
+        },
+        {
+          "name": "trace.csv",
+          "compressionMethod": 8,
+          "compressedSize": 9622337,
+          "uncompressedSize": 85124257
+        },
+        {
+          "name": "metadata.json",
+          "compressionMethod": 8,
+          "compressedSize": 935,
+          "uncompressedSize": 2376
+        },
+        {
+          "name": "motion-metadata.json",
+          "compressionMethod": 8,
+          "compressedSize": 281,
+          "uncompressedSize": 453
+        }
+      ],
+      "metadata": {
+        "traceFormatVersion": 9,
+        "motionSampleFormatVersion": 2,
+        "productVersion": "v1.6.0-dev+20260503.249d22ced965.dirty",
+        "createdUtc": "2026-05-03T22:15:13.4199910Z",
+        "durationMicroseconds": 768135999,
+        "sampleCount": 494249,
+        "hookSampleCount": 92312,
+        "pollSampleCount": 96014,
+        "referencePollSampleCount": 259836,
+        "dwmTimingSampleCount": 142101,
+        "dwmTimingAvailabilityPercent": 100,
+        "timerResolutionMilliseconds": 1,
+        "timerResolutionSucceeded": true,
+        "processorCount": 6,
+        "monitorCount": 1,
+        "virtualScreen": {
+          "x": 0,
+          "y": 0,
+          "width": 3840,
+          "height": 2160
+        },
+        "refreshHz": 30,
+        "refreshBucket": "30Hz",
+        "machineKey": "6cpu_3840x2160_1mon_30Hz",
+        "qualityWarnings": [
+          "reference_poll_interval_p95_exceeds_requested_interval"
+        ],
+        "runtimeSchedulerPollIntervalStats": {
+          "Count": 23042,
+          "MeanMilliseconds": 33.33305646211253,
+          "P50Milliseconds": 33.3333,
+          "P95Milliseconds": 33.925,
+          "MaxMilliseconds": 43.9615
+        },
+        "runtimeSchedulerLoopIntervalStats": {
+          "Count": 23043,
+          "MeanMilliseconds": 33.33270856225329,
+          "P50Milliseconds": 33.3343,
+          "P95Milliseconds": 43.66309999999997,
+          "MaxMilliseconds": 57.5509
+        },
+        "hookMoveIntervalStats": {
+          "Count": 92311,
+          "MeanMilliseconds": 8.317712073317413,
+          "P50Milliseconds": 1.6095,
+          "P95Milliseconds": 31.6691,
+          "MaxMilliseconds": 7626.2246
+        },
+        "productPollIntervalStats": {
+          "Count": 96013,
+          "MeanMilliseconds": 8.000138099007906,
+          "P50Milliseconds": 8,
+          "P95Milliseconds": 18.084659999999996,
+          "MaxMilliseconds": 35.7485
+        },
+        "referencePollIntervalStats": {
+          "Count": 259835,
+          "MeanMilliseconds": 2.956145299904917,
+          "P50Milliseconds": 2,
+          "P95Milliseconds": 13.526819999999972,
+          "MaxMilliseconds": 36.1042
+        },
+        "warmupDurationMilliseconds": 500
+      },
+      "motionMetadata": {
+        "generationProfile": "real-trace-weighted",
+        "seed": 677855728,
+        "scenarioCount": 64,
+        "controlPointCount": 512,
+        "speedPointCount": 512,
+        "holdSegmentCount": 326,
+        "holdDurationMilliseconds": 139758.659,
+        "durationMilliseconds": 768000,
+        "scenarioDurationMilliseconds": 12000,
+        "sampleRateHz": 240
+      },
+      "motionScript": {
+        "schemaVersion": "cursor-mirror-motion-scenarios/1",
+        "generationProfile": "real-trace-weighted",
+        "seed": 677855728,
+        "scenarioCount": 64,
+        "controlPointsPerScenario": {
+          "count": 64,
+          "mean": 8,
+          "min": 8,
+          "p50": 8,
+          "p90": 8,
+          "p95": 8,
+          "p99": 8,
+          "max": 8
+        },
+        "speedPointsPerScenario": {
+          "count": 64,
+          "mean": 8,
+          "min": 8,
+          "p50": 8,
+          "p90": 8,
+          "p95": 8,
+          "p99": 8,
+          "max": 8
+        },
+        "holdSegmentsPerScenario": {
+          "count": 64,
+          "mean": 5.094,
+          "min": 4,
+          "p50": 5,
+          "p90": 6,
+          "p95": 6,
+          "p99": 6,
+          "max": 6
+        },
+        "scenarioDurationMilliseconds": {
+          "count": 64,
+          "mean": 12000,
+          "min": 12000,
+          "p50": 12000,
+          "p90": 12000,
+          "p95": 12000,
+          "p99": 12000,
+          "max": 12000
+        }
+      },
+      "trace": {
+        "header": [
+          "sequence",
+          "stopwatchTicks",
+          "elapsedMicroseconds",
+          "x",
+          "y",
+          "event",
+          "hookX",
+          "hookY",
+          "cursorX",
+          "cursorY",
+          "hookMouseData",
+          "hookFlags",
+          "hookTimeMilliseconds",
+          "hookExtraInfo",
+          "dwmTimingAvailable",
+          "dwmRateRefreshNumerator",
+          "dwmRateRefreshDenominator",
+          "dwmQpcRefreshPeriod",
+          "dwmQpcVBlank",
+          "dwmRefreshCount",
+          "dwmQpcCompose",
+          "dwmFrame",
+          "dwmRefreshFrame",
+          "dwmFrameDisplayed",
+          "dwmQpcFrameDisplayed",
+          "dwmRefreshFrameDisplayed",
+          "dwmFrameComplete",
+          "dwmQpcFrameComplete",
+          "dwmFramePending",
+          "dwmQpcFramePending",
+          "dwmRefreshNextDisplayed",
+          "dwmRefreshNextPresented",
+          "dwmFramesDisplayed",
+          "dwmFramesDropped",
+          "dwmFramesMissed",
+          "runtimeSchedulerTimingUsable",
+          "runtimeSchedulerTargetVBlankTicks",
+          "runtimeSchedulerPlannedTickTicks",
+          "runtimeSchedulerActualTickTicks",
+          "runtimeSchedulerVBlankLeadMicroseconds",
+          "runtimeSchedulerQueuedTickTicks",
+          "runtimeSchedulerDispatchStartedTicks",
+          "runtimeSchedulerCursorReadStartedTicks",
+          "runtimeSchedulerCursorReadCompletedTicks",
+          "runtimeSchedulerSampleRecordedTicks",
+          "runtimeSchedulerLoopIteration",
+          "runtimeSchedulerLoopStartedTicks",
+          "runtimeSchedulerTimingReadStartedTicks",
+          "runtimeSchedulerTimingReadCompletedTicks",
+          "runtimeSchedulerDecisionCompletedTicks",
+          "runtimeSchedulerTickRequested",
+          "runtimeSchedulerSleepRequestedMilliseconds",
+          "runtimeSchedulerWaitMethod",
+          "runtimeSchedulerWaitTargetTicks",
+          "runtimeSchedulerSleepStartedTicks",
+          "runtimeSchedulerSleepCompletedTicks",
+          "warmupSample",
+          "predictionTargetTicks",
+          "presentReferenceTicks",
+          "schedulerProvenance",
+          "sampleRecordedToPredictionTargetMicroseconds",
+          "runtimeSchedulerMissing"
+        ],
+        "requiredV9FieldsPresent": {
+          "warmupSample": true,
+          "predictionTargetTicks": true,
+          "presentReferenceTicks": true,
+          "schedulerProvenance": true,
+          "sampleRecordedToPredictionTargetMicroseconds": true,
+          "runtimeSchedulerMissing": true
+        },
+        "rowCount": 494249,
+        "eventCounts": {
+          "poll": 96014,
+          "referencePoll": 259836,
+          "runtimeSchedulerLoop": 23044,
+          "runtimeSchedulerPoll": 23043,
+          "move": 92312
+        },
+        "warmupRows": 400,
+        "moveRows": 92312,
+        "motionLabMoveRows": 92312,
+        "externalMoveRows": 0,
+        "externalMoveWarmupRows": 0,
+        "externalMoveNonWarmupRows": 0,
+        "externalMoveScenarios": {},
+        "externalMoveNonWarmupScenarios": {},
+        "externalMoveElapsedMilliseconds": {
+          "count": 0,
+          "mean": null,
+          "min": null,
+          "p50": null,
+          "p90": null,
+          "p95": null,
+          "p99": null,
+          "max": null
+        },
+        "externalMoveNonWarmupElapsedMilliseconds": {
+          "count": 0,
+          "mean": null,
+          "min": null,
+          "p50": null,
+          "p90": null,
+          "p95": null,
+          "p99": null,
+          "max": null
+        },
+        "extraInfoCounts": {
+          "1129139532": 92312
+        },
+        "contaminationWindows": [],
+        "candidateCleaning": {
+          "proximityOnly": {
+            "totalRows": 494249,
+            "cleanRows": 493849,
+            "excludedRows": 400,
+            "excludedPercent": 0.0809,
+            "warmupExcludedRows": 400,
+            "contaminationWindowExcludedRows": 0,
+            "droppedScenarioExcludedRows": 0,
+            "bySplit": {
+              "train": 336555,
+              "validation": 73942,
+              "test": 83752,
+              "unassigned": 0
+            },
+            "cleanBySplit": {
+              "train": 336555,
+              "validation": 73942,
+              "test": 83352,
+              "unassigned": 0
+            },
+            "excludedBySplit": {
+              "train": 0,
+              "validation": 0,
+              "test": 400,
+              "unassigned": 0
+            }
+          },
+          "dropScenario0PlusProximity": {
+            "totalRows": 494249,
+            "cleanRows": 484749,
+            "excludedRows": 9500,
+            "excludedPercent": 1.9221,
+            "warmupExcludedRows": 400,
+            "contaminationWindowExcludedRows": 0,
+            "droppedScenarioExcludedRows": 9500,
+            "bySplit": {
+              "train": 336555,
+              "validation": 73942,
+              "test": 83752,
+              "unassigned": 0
+            },
+            "cleanBySplit": {
+              "train": 336555,
+              "validation": 73942,
+              "test": 74252,
+              "unassigned": 0
+            },
+            "excludedBySplit": {
+              "train": 0,
+              "validation": 0,
+              "test": 9500,
+              "unassigned": 0
+            }
+          }
+        },
+        "schedulerProvenanceCounts": {
+          "dwm": 46087
+        },
+        "runtimeSchedulerMissingCounts": {
+          "false": 494249
+        },
+        "sampleRecordedToPredictionTargetMicroseconds": {
+          "count": 46087,
+          "mean": -18193.309,
+          "min": -37312,
+          "p50": -6622,
+          "p90": -3653,
+          "p95": -3397.3,
+          "p99": -2966,
+          "max": 6740
+        },
+        "schedulerDelayMilliseconds": {
+          "count": 23043,
+          "mean": 0.241,
+          "min": 0.061,
+          "p50": 0.129,
+          "p90": 0.565,
+          "p95": 0.762,
+          "p99": 1.103,
+          "max": 10.734
+        }
+      },
+      "finalCleaningRule": {
+        "id": "warmup-only",
+        "dropScenarios": [],
+        "contaminationWindows": [],
+        "rationale": [
+          "No external move rows were found; only warmup rows are removed."
+        ]
+      },
+      "cleanTrace": {
+        "totalRows": 494249,
+        "cleanRows": 493849,
+        "excludedRows": 400,
+        "excludedPercent": 0.0809,
+        "warmupExcludedRows": 400,
+        "contaminationWindowExcludedRows": 0,
+        "droppedScenarioExcludedRows": 0,
+        "bySplit": {
+          "train": 336555,
+          "validation": 73942,
+          "test": 83752,
+          "unassigned": 0
+        },
+        "cleanBySplit": {
+          "train": 336555,
+          "validation": 73942,
+          "test": 83352,
+          "unassigned": 0
+        },
+        "excludedBySplit": {
+          "train": 0,
+          "validation": 0,
+          "test": 400,
+          "unassigned": 0
+        }
+      },
+      "motionSamples": {
+        "header": [
+          "sequence",
+          "elapsedMilliseconds",
+          "scenarioIndex",
+          "scenarioElapsedMilliseconds",
+          "progress",
+          "x",
+          "y",
+          "velocityPixelsPerSecond",
+          "movementPhase",
+          "holdIndex",
+          "phaseElapsedMilliseconds"
+        ],
+        "requiredV2FieldsPresent": {
+          "movementPhase": true,
+          "holdIndex": true,
+          "phaseElapsedMilliseconds": true
+        },
+        "rowCount": 184321,
+        "phaseCounts": {
+          "moving": 141882,
+          "hold": 33532,
+          "resume": 8907
+        },
+        "scenarioCounts": {
+          "0": 2880,
+          "1": 2880,
+          "2": 2880,
+          "3": 2880,
+          "4": 2880,
+          "5": 2880,
+          "6": 2880,
+          "7": 2880,
+          "8": 2880,
+          "9": 2880,
+          "10": 2880,
+          "11": 2880,
+          "12": 2880,
+          "13": 2880,
+          "14": 2880,
+          "15": 2880,
+          "16": 2880,
+          "17": 2880,
+          "18": 2880,
+          "19": 2880,
+          "20": 2880,
+          "21": 2880,
+          "22": 2880,
+          "23": 2880,
+          "24": 2880,
+          "25": 2880,
+          "26": 2880,
+          "27": 2880,
+          "28": 2880,
+          "29": 2880,
+          "30": 2880,
+          "31": 2880,
+          "32": 2880,
+          "33": 2880,
+          "34": 2880,
+          "35": 2880,
+          "36": 2880,
+          "37": 2880,
+          "38": 2880,
+          "39": 2880,
+          "40": 2880,
+          "41": 2880,
+          "42": 2880,
+          "43": 2880,
+          "44": 2880,
+          "45": 2880,
+          "46": 2880,
+          "47": 2880,
+          "48": 2880,
+          "49": 2880,
+          "50": 2880,
+          "51": 2880,
+          "52": 2880,
+          "53": 2880,
+          "54": 2880,
+          "55": 2880,
+          "56": 2880,
+          "57": 2880,
+          "58": 2880,
+          "59": 2880,
+          "60": 2880,
+          "61": 2880,
+          "62": 2880,
+          "63": 2881
+        },
+        "velocityPixelsPerSecond": {
+          "count": 184321,
+          "mean": 139.937,
+          "min": 0,
+          "p50": 71.673,
+          "p90": 235.236,
+          "p95": 429.865,
+          "p99": 1382.77,
+          "max": 57427.595
+        },
+        "clean": {
+          "totalRows": 184321,
+          "cleanRows": 184201,
+          "excludedRows": 120,
+          "excludedPercent": 0.0651,
+          "warmupExcludedRows": 120,
+          "contaminationWindowExcludedRows": 0,
+          "droppedScenarioExcludedRows": 0,
+          "bySplit": {
+            "train": 126721,
+            "validation": 28800,
+            "test": 28800,
+            "unassigned": 0
+          },
+          "cleanBySplit": {
+            "train": 126721,
+            "validation": 28800,
+            "test": 28680,
+            "unassigned": 0
+          },
+          "excludedBySplit": {
+            "train": 0,
+            "validation": 0,
+            "test": 120,
+            "unassigned": 0
+          },
+          "phaseCounts": {
+            "moving": 141762,
+            "hold": 33532,
+            "resume": 8907
+          },
+          "scenarioCounts": {
+            "0": 2760,
+            "1": 2880,
+            "2": 2880,
+            "3": 2880,
+            "4": 2880,
+            "5": 2880,
+            "6": 2880,
+            "7": 2880,
+            "8": 2880,
+            "9": 2880,
+            "10": 2880,
+            "11": 2880,
+            "12": 2880,
+            "13": 2880,
+            "14": 2880,
+            "15": 2880,
+            "16": 2880,
+            "17": 2880,
+            "18": 2880,
+            "19": 2880,
+            "20": 2880,
+            "21": 2880,
+            "22": 2880,
+            "23": 2880,
+            "24": 2880,
+            "25": 2880,
+            "26": 2880,
+            "27": 2880,
+            "28": 2880,
+            "29": 2880,
+            "30": 2880,
+            "31": 2880,
+            "32": 2880,
+            "33": 2880,
+            "34": 2880,
+            "35": 2880,
+            "36": 2880,
+            "37": 2880,
+            "38": 2880,
+            "39": 2880,
+            "40": 2880,
+            "41": 2880,
+            "42": 2880,
+            "43": 2880,
+            "44": 2880,
+            "45": 2880,
+            "46": 2880,
+            "47": 2880,
+            "48": 2880,
+            "49": 2880,
+            "50": 2880,
+            "51": 2880,
+            "52": 2880,
+            "53": 2880,
+            "54": 2880,
+            "55": 2880,
+            "56": 2880,
+            "57": 2880,
+            "58": 2880,
+            "59": 2880,
+            "60": 2880,
+            "61": 2880,
+            "62": 2880,
+            "63": 2881
+          },
+          "velocityPixelsPerSecond": {
+            "count": 184201,
+            "mean": 139.679,
+            "min": 0,
+            "p50": 71.661,
+            "p90": 234.954,
+            "p95": 428.835,
+            "p99": 1376.565,
+            "max": 57427.595
+          }
+        }
+      },
+      "consistency": {
+        "traceFormatIsV9": true,
+        "motionSampleFormatIsV2": true,
+        "traceRowsMatchMetadata": true,
+        "motionScenarioCountIs64": true,
+        "requiredTraceV9FieldsPresent": true,
+        "requiredMotionV2FieldsPresent": true,
+        "dwmTimingFullyAvailable": true,
+        "timerResolutionSucceededAt1ms": true
+      }
+    },
+    {
+      "id": "m070248",
+      "sourceZip": "cursor-mirror-motion-recording-20260504-070248.zip",
+      "relativePath": "cursor-mirror-motion-recording-20260504-070248.zip",
+      "bytes": 17311725,
+      "entries": [
+        {
+          "name": "motion-script.json",
+          "compressionMethod": 8,
+          "compressedSize": 39495,
+          "uncompressedSize": 138196
+        },
+        {
+          "name": "motion-samples.csv",
+          "compressionMethod": 8,
+          "compressedSize": 4167926,
+          "uncompressedSize": 14265290
+        },
+        {
+          "name": "trace.csv",
+          "compressionMethod": 8,
+          "compressedSize": 13102531,
+          "uncompressedSize": 112929588
+        },
+        {
+          "name": "metadata.json",
+          "compressionMethod": 8,
+          "compressedSize": 935,
+          "uncompressedSize": 2355
+        },
+        {
+          "name": "motion-metadata.json",
+          "compressionMethod": 8,
+          "compressedSize": 280,
+          "uncompressedSize": 454
+        }
+      ],
+      "metadata": {
+        "traceFormatVersion": 9,
+        "motionSampleFormatVersion": 2,
+        "productVersion": "v1.6.0-dev+20260503.249d22ced965.dirty",
+        "createdUtc": "2026-05-03T22:15:42.8726389Z",
+        "durationMicroseconds": 768064161,
+        "sampleCount": 601297,
+        "hookSampleCount": 154395,
+        "pollSampleCount": 96006,
+        "referencePollSampleCount": 259087,
+        "dwmTimingSampleCount": 187815,
+        "dwmTimingAvailabilityPercent": 100,
+        "timerResolutionMilliseconds": 1,
+        "timerResolutionSucceeded": true,
+        "processorCount": 24,
+        "monitorCount": 1,
+        "virtualScreen": {
+          "x": 0,
+          "y": 0,
+          "width": 2560,
+          "height": 1440
+        },
+        "refreshHz": 60.003,
+        "refreshBucket": "60Hz",
+        "machineKey": "24cpu_2560x1440_1mon_60Hz",
+        "qualityWarnings": [
+          "reference_poll_interval_p95_exceeds_requested_interval"
+        ],
+        "runtimeSchedulerPollIntervalStats": {
+          "Count": 45903,
+          "MeanMilliseconds": 16.731603840707475,
+          "P50Milliseconds": 16.6658,
+          "P95Milliseconds": 17.3635,
+          "MaxMilliseconds": 33.9053
+        },
+        "runtimeSchedulerLoopIntervalStats": {
+          "Count": 45904,
+          "MeanMilliseconds": 16.731335223509866,
+          "P50Milliseconds": 16.6947,
+          "P95Milliseconds": 26.0751,
+          "MaxMilliseconds": 38.501
+        },
+        "hookMoveIntervalStats": {
+          "Count": 154394,
+          "MeanMilliseconds": 4.974105379095015,
+          "P50Milliseconds": 1.2418,
+          "P95Milliseconds": 21.121485000000007,
+          "MaxMilliseconds": 35.793
+        },
+        "productPollIntervalStats": {
+          "Count": 96005,
+          "MeanMilliseconds": 8.000060632258805,
+          "P50Milliseconds": 8,
+          "P95Milliseconds": 16.5072,
+          "MaxMilliseconds": 31.2259
+        },
+        "referencePollIntervalStats": {
+          "Count": 259086,
+          "MeanMilliseconds": 2.964437614537939,
+          "P50Milliseconds": 2,
+          "P95Milliseconds": 14.49305,
+          "MaxMilliseconds": 30.6247
+        },
+        "warmupDurationMilliseconds": 500
+      },
+      "motionMetadata": {
+        "generationProfile": "real-trace-weighted",
+        "seed": 1972402072,
+        "scenarioCount": 64,
+        "controlPointCount": 512,
+        "speedPointCount": 512,
+        "holdSegmentCount": 311,
+        "holdDurationMilliseconds": 139620.088,
+        "durationMilliseconds": 768000,
+        "scenarioDurationMilliseconds": 12000,
+        "sampleRateHz": 240
+      },
+      "motionScript": {
+        "schemaVersion": "cursor-mirror-motion-scenarios/1",
+        "generationProfile": "real-trace-weighted",
+        "seed": 1972402072,
+        "scenarioCount": 64,
+        "controlPointsPerScenario": {
+          "count": 64,
+          "mean": 8,
+          "min": 8,
+          "p50": 8,
+          "p90": 8,
+          "p95": 8,
+          "p99": 8,
+          "max": 8
+        },
+        "speedPointsPerScenario": {
+          "count": 64,
+          "mean": 8,
+          "min": 8,
+          "p50": 8,
+          "p90": 8,
+          "p95": 8,
+          "p99": 8,
+          "max": 8
+        },
+        "holdSegmentsPerScenario": {
+          "count": 64,
+          "mean": 4.859,
+          "min": 4,
+          "p50": 5,
+          "p90": 6,
+          "p95": 6,
+          "p99": 6,
+          "max": 6
+        },
+        "scenarioDurationMilliseconds": {
+          "count": 64,
+          "mean": 12000,
+          "min": 12000,
+          "p50": 12000,
+          "p90": 12000,
+          "p95": 12000,
+          "p99": 12000,
+          "max": 12000
+        }
+      },
+      "trace": {
+        "header": [
+          "sequence",
+          "stopwatchTicks",
+          "elapsedMicroseconds",
+          "x",
+          "y",
+          "event",
+          "hookX",
+          "hookY",
+          "cursorX",
+          "cursorY",
+          "hookMouseData",
+          "hookFlags",
+          "hookTimeMilliseconds",
+          "hookExtraInfo",
+          "dwmTimingAvailable",
+          "dwmRateRefreshNumerator",
+          "dwmRateRefreshDenominator",
+          "dwmQpcRefreshPeriod",
+          "dwmQpcVBlank",
+          "dwmRefreshCount",
+          "dwmQpcCompose",
+          "dwmFrame",
+          "dwmRefreshFrame",
+          "dwmFrameDisplayed",
+          "dwmQpcFrameDisplayed",
+          "dwmRefreshFrameDisplayed",
+          "dwmFrameComplete",
+          "dwmQpcFrameComplete",
+          "dwmFramePending",
+          "dwmQpcFramePending",
+          "dwmRefreshNextDisplayed",
+          "dwmRefreshNextPresented",
+          "dwmFramesDisplayed",
+          "dwmFramesDropped",
+          "dwmFramesMissed",
+          "runtimeSchedulerTimingUsable",
+          "runtimeSchedulerTargetVBlankTicks",
+          "runtimeSchedulerPlannedTickTicks",
+          "runtimeSchedulerActualTickTicks",
+          "runtimeSchedulerVBlankLeadMicroseconds",
+          "runtimeSchedulerQueuedTickTicks",
+          "runtimeSchedulerDispatchStartedTicks",
+          "runtimeSchedulerCursorReadStartedTicks",
+          "runtimeSchedulerCursorReadCompletedTicks",
+          "runtimeSchedulerSampleRecordedTicks",
+          "runtimeSchedulerLoopIteration",
+          "runtimeSchedulerLoopStartedTicks",
+          "runtimeSchedulerTimingReadStartedTicks",
+          "runtimeSchedulerTimingReadCompletedTicks",
+          "runtimeSchedulerDecisionCompletedTicks",
+          "runtimeSchedulerTickRequested",
+          "runtimeSchedulerSleepRequestedMilliseconds",
+          "runtimeSchedulerWaitMethod",
+          "runtimeSchedulerWaitTargetTicks",
+          "runtimeSchedulerSleepStartedTicks",
+          "runtimeSchedulerSleepCompletedTicks",
+          "warmupSample",
+          "predictionTargetTicks",
+          "presentReferenceTicks",
+          "schedulerProvenance",
+          "sampleRecordedToPredictionTargetMicroseconds",
+          "runtimeSchedulerMissing"
+        ],
+        "requiredV9FieldsPresent": {
+          "warmupSample": true,
+          "predictionTargetTicks": true,
+          "presentReferenceTicks": true,
+          "schedulerProvenance": true,
+          "sampleRecordedToPredictionTargetMicroseconds": true,
+          "runtimeSchedulerMissing": true
+        },
+        "rowCount": 601297,
+        "eventCounts": {
+          "poll": 96006,
+          "referencePoll": 259087,
+          "runtimeSchedulerLoop": 45905,
+          "runtimeSchedulerPoll": 45904,
+          "move": 154395
+        },
+        "warmupRows": 517,
+        "moveRows": 154395,
+        "motionLabMoveRows": 154362,
+        "externalMoveRows": 33,
+        "externalMoveWarmupRows": 32,
+        "externalMoveNonWarmupRows": 1,
+        "externalMoveScenarios": {
+          "0": 33
+        },
+        "externalMoveNonWarmupScenarios": {
+          "0": 1
+        },
+        "externalMoveElapsedMilliseconds": {
+          "count": 33,
+          "mean": 198.426,
+          "min": 55.369,
+          "p50": 190.578,
+          "p90": 300.491,
+          "p95": 313.364,
+          "p99": 472.711,
+          "max": 545.648
+        },
+        "externalMoveNonWarmupElapsedMilliseconds": {
+          "count": 1,
+          "mean": 545.648,
+          "min": 545.648,
+          "p50": 545.648,
+          "p90": 545.648,
+          "p95": 545.648,
+          "p99": 545.648,
+          "max": 545.648
+        },
+        "extraInfoCounts": {
+          "0": 33,
+          "1129139532": 154362
+        },
+        "contaminationWindows": [
+          {
+            "startMs": 0,
+            "endMs": 795.648,
+            "durationMs": 795.648
+          }
+        ],
+        "candidateCleaning": {
+          "proximityOnly": {
+            "totalRows": 601297,
+            "cleanRows": 600489,
+            "excludedRows": 808,
+            "excludedPercent": 0.1344,
+            "warmupExcludedRows": 517,
+            "contaminationWindowExcludedRows": 808,
+            "droppedScenarioExcludedRows": 0,
+            "bySplit": {
+              "train": 401102,
+              "validation": 95570,
+              "test": 104625,
+              "unassigned": 0
+            },
+            "cleanBySplit": {
+              "train": 401102,
+              "validation": 95570,
+              "test": 103817,
+              "unassigned": 0
+            },
+            "excludedBySplit": {
+              "train": 0,
+              "validation": 0,
+              "test": 808,
+              "unassigned": 0
+            }
+          },
+          "dropScenario0PlusProximity": {
+            "totalRows": 601297,
+            "cleanRows": 589451,
+            "excludedRows": 11846,
+            "excludedPercent": 1.9701,
+            "warmupExcludedRows": 517,
+            "contaminationWindowExcludedRows": 808,
+            "droppedScenarioExcludedRows": 11846,
+            "bySplit": {
+              "train": 401102,
+              "validation": 95570,
+              "test": 104625,
+              "unassigned": 0
+            },
+            "cleanBySplit": {
+              "train": 401102,
+              "validation": 95570,
+              "test": 92779,
+              "unassigned": 0
+            },
+            "excludedBySplit": {
+              "train": 0,
+              "validation": 0,
+              "test": 11846,
+              "unassigned": 0
+            }
+          }
+        },
+        "schedulerProvenanceCounts": {
+          "dwm": 91809
+        },
+        "runtimeSchedulerMissingCounts": {
+          "false": 601297
+        },
+        "sampleRecordedToPredictionTargetMicroseconds": {
+          "count": 91809,
+          "mean": -9984.889,
+          "min": -20664,
+          "p50": -3961,
+          "p90": -3716,
+          "p95": -3444,
+          "p99": -1541.08,
+          "max": 2161
+        },
+        "schedulerDelayMilliseconds": {
+          "count": 45904,
+          "mean": 0.203,
+          "min": 0.017,
+          "p50": 0.064,
+          "p90": 0.424,
+          "p95": 0.754,
+          "p99": 2.559,
+          "max": 6.103
+        }
+      },
+      "finalCleaningRule": {
+        "id": "warmup-plus-contamination-windows",
+        "dropScenarios": [],
+        "contaminationWindows": [
+          {
+            "startMs": 0,
+            "endMs": 795.648,
+            "durationMs": 795.648
+          }
+        ],
+        "rationale": [
+          "External move rows are sparse, so +/- 250 ms windows remove the local contamination without discarding a complete scenario."
+        ]
+      },
+      "cleanTrace": {
+        "totalRows": 601297,
+        "cleanRows": 600489,
+        "excludedRows": 808,
+        "excludedPercent": 0.1344,
+        "warmupExcludedRows": 517,
+        "contaminationWindowExcludedRows": 808,
+        "droppedScenarioExcludedRows": 0,
+        "bySplit": {
+          "train": 401102,
+          "validation": 95570,
+          "test": 104625,
+          "unassigned": 0
+        },
+        "cleanBySplit": {
+          "train": 401102,
+          "validation": 95570,
+          "test": 103817,
+          "unassigned": 0
+        },
+        "excludedBySplit": {
+          "train": 0,
+          "validation": 0,
+          "test": 808,
+          "unassigned": 0
+        }
+      },
+      "motionSamples": {
+        "header": [
+          "sequence",
+          "elapsedMilliseconds",
+          "scenarioIndex",
+          "scenarioElapsedMilliseconds",
+          "progress",
+          "x",
+          "y",
+          "velocityPixelsPerSecond",
+          "movementPhase",
+          "holdIndex",
+          "phaseElapsedMilliseconds"
+        ],
+        "requiredV2FieldsPresent": {
+          "movementPhase": true,
+          "holdIndex": true,
+          "phaseElapsedMilliseconds": true
+        },
+        "rowCount": 184321,
+        "phaseCounts": {
+          "moving": 142429,
+          "hold": 33514,
+          "resume": 8378
+        },
+        "scenarioCounts": {
+          "0": 2880,
+          "1": 2880,
+          "2": 2880,
+          "3": 2880,
+          "4": 2880,
+          "5": 2880,
+          "6": 2880,
+          "7": 2880,
+          "8": 2880,
+          "9": 2880,
+          "10": 2880,
+          "11": 2880,
+          "12": 2880,
+          "13": 2880,
+          "14": 2880,
+          "15": 2880,
+          "16": 2880,
+          "17": 2880,
+          "18": 2880,
+          "19": 2880,
+          "20": 2880,
+          "21": 2880,
+          "22": 2880,
+          "23": 2880,
+          "24": 2880,
+          "25": 2880,
+          "26": 2880,
+          "27": 2880,
+          "28": 2880,
+          "29": 2880,
+          "30": 2880,
+          "31": 2880,
+          "32": 2880,
+          "33": 2880,
+          "34": 2880,
+          "35": 2880,
+          "36": 2880,
+          "37": 2880,
+          "38": 2880,
+          "39": 2880,
+          "40": 2880,
+          "41": 2880,
+          "42": 2880,
+          "43": 2880,
+          "44": 2880,
+          "45": 2880,
+          "46": 2880,
+          "47": 2880,
+          "48": 2880,
+          "49": 2880,
+          "50": 2880,
+          "51": 2880,
+          "52": 2880,
+          "53": 2880,
+          "54": 2880,
+          "55": 2880,
+          "56": 2880,
+          "57": 2880,
+          "58": 2880,
+          "59": 2880,
+          "60": 2880,
+          "61": 2880,
+          "62": 2880,
+          "63": 2881
+        },
+        "velocityPixelsPerSecond": {
+          "count": 184321,
+          "mean": 98.683,
+          "min": 0,
+          "p50": 62.591,
+          "p90": 166.535,
+          "p95": 313.473,
+          "p99": 1009.813,
+          "max": 9533.336
+        },
+        "clean": {
+          "totalRows": 184321,
+          "cleanRows": 184130,
+          "excludedRows": 191,
+          "excludedPercent": 0.1036,
+          "warmupExcludedRows": 120,
+          "contaminationWindowExcludedRows": 191,
+          "droppedScenarioExcludedRows": 0,
+          "bySplit": {
+            "train": 126721,
+            "validation": 28800,
+            "test": 28800,
+            "unassigned": 0
+          },
+          "cleanBySplit": {
+            "train": 126721,
+            "validation": 28800,
+            "test": 28609,
+            "unassigned": 0
+          },
+          "excludedBySplit": {
+            "train": 0,
+            "validation": 0,
+            "test": 191,
+            "unassigned": 0
+          },
+          "phaseCounts": {
+            "moving": 142238,
+            "hold": 33514,
+            "resume": 8378
+          },
+          "scenarioCounts": {
+            "0": 2689,
+            "1": 2880,
+            "2": 2880,
+            "3": 2880,
+            "4": 2880,
+            "5": 2880,
+            "6": 2880,
+            "7": 2880,
+            "8": 2880,
+            "9": 2880,
+            "10": 2880,
+            "11": 2880,
+            "12": 2880,
+            "13": 2880,
+            "14": 2880,
+            "15": 2880,
+            "16": 2880,
+            "17": 2880,
+            "18": 2880,
+            "19": 2880,
+            "20": 2880,
+            "21": 2880,
+            "22": 2880,
+            "23": 2880,
+            "24": 2880,
+            "25": 2880,
+            "26": 2880,
+            "27": 2880,
+            "28": 2880,
+            "29": 2880,
+            "30": 2880,
+            "31": 2880,
+            "32": 2880,
+            "33": 2880,
+            "34": 2880,
+            "35": 2880,
+            "36": 2880,
+            "37": 2880,
+            "38": 2880,
+            "39": 2880,
+            "40": 2880,
+            "41": 2880,
+            "42": 2880,
+            "43": 2880,
+            "44": 2880,
+            "45": 2880,
+            "46": 2880,
+            "47": 2880,
+            "48": 2880,
+            "49": 2880,
+            "50": 2880,
+            "51": 2880,
+            "52": 2880,
+            "53": 2880,
+            "54": 2880,
+            "55": 2880,
+            "56": 2880,
+            "57": 2880,
+            "58": 2880,
+            "59": 2880,
+            "60": 2880,
+            "61": 2880,
+            "62": 2880,
+            "63": 2881
+          },
+          "velocityPixelsPerSecond": {
+            "count": 184130,
+            "mean": 98.605,
+            "min": 0,
+            "p50": 62.561,
+            "p90": 165.84,
+            "p95": 313.012,
+            "p99": 1010.405,
+            "max": 9533.336
+          }
+        }
+      },
+      "consistency": {
+        "traceFormatIsV9": true,
+        "motionSampleFormatIsV2": true,
+        "traceRowsMatchMetadata": true,
+        "motionScenarioCountIs64": true,
+        "requiredTraceV9FieldsPresent": true,
+        "requiredMotionV2FieldsPresent": true,
+        "dwmTimingFullyAvailable": true,
+        "timerResolutionSucceededAt1ms": true
+      }
+    },
+    {
+      "id": "m070307",
+      "sourceZip": "cursor-mirror-motion-recording-20260504-070307.zip",
+      "relativePath": "cursor-mirror-motion-recording-20260504-070307.zip",
+      "bytes": 16564685,
+      "entries": [
+        {
+          "name": "motion-script.json",
+          "compressionMethod": 8,
+          "compressedSize": 39906,
+          "uncompressedSize": 139253
+        },
+        {
+          "name": "motion-samples.csv",
+          "compressionMethod": 8,
+          "compressedSize": 4212642,
+          "uncompressedSize": 14281573
+        },
+        {
+          "name": "trace.csv",
+          "compressionMethod": 8,
+          "compressedSize": 12310322,
+          "uncompressedSize": 105093523
+        },
+        {
+          "name": "metadata.json",
+          "compressionMethod": 8,
+          "compressedSize": 976,
+          "uncompressedSize": 2809
+        },
+        {
+          "name": "motion-metadata.json",
+          "compressionMethod": 8,
+          "compressedSize": 281,
+          "uncompressedSize": 453
+        }
+      ],
+      "metadata": {
+        "traceFormatVersion": 9,
+        "motionSampleFormatVersion": 2,
+        "productVersion": "v1.6.0-dev+20260503.249d22ced965.dirty",
+        "createdUtc": "2026-05-03T22:16:02.0424099Z",
+        "durationMicroseconds": 768072863,
+        "sampleCount": 550536,
+        "hookSampleCount": 129730,
+        "pollSampleCount": 96007,
+        "referencePollSampleCount": 235204,
+        "dwmTimingSampleCount": 185602,
+        "dwmTimingAvailabilityPercent": 100,
+        "timerResolutionMilliseconds": 1,
+        "timerResolutionSucceeded": true,
+        "processorCount": 32,
+        "monitorCount": 3,
+        "virtualScreen": {
+          "x": -2560,
+          "y": 0,
+          "width": 7680,
+          "height": 1440
+        },
+        "refreshHz": 59.994,
+        "refreshBucket": "60Hz",
+        "machineKey": "32cpu_7680x1440_3mon_60Hz",
+        "qualityWarnings": [
+          "reference_poll_interval_p95_exceeds_requested_interval"
+        ],
+        "runtimeSchedulerPollIntervalStats": {
+          "Count": 44796,
+          "MeanMilliseconds": 17.14464411331365,
+          "P50Milliseconds": 16.6684,
+          "P95Milliseconds": 19.0805,
+          "MaxMilliseconds": 40.2953
+        },
+        "runtimeSchedulerLoopIntervalStats": {
+          "Count": 44797,
+          "MeanMilliseconds": 17.14490418331585,
+          "P50Milliseconds": 16.8903,
+          "P95Milliseconds": 29.937919999999995,
+          "MaxMilliseconds": 48.2006
+        },
+        "hookMoveIntervalStats": {
+          "Count": 129729,
+          "MeanMilliseconds": 5.919866734500364,
+          "P50Milliseconds": 1.1533,
+          "P95Milliseconds": 25.854979999999998,
+          "MaxMilliseconds": 66.4184
+        },
+        "productPollIntervalStats": {
+          "Count": 96006,
+          "MeanMilliseconds": 8.000072641293313,
+          "P50Milliseconds": 8,
+          "P95Milliseconds": 18.54645,
+          "MaxMilliseconds": 33.22
+        },
+        "referencePollIntervalStats": {
+          "Count": 235203,
+          "MeanMilliseconds": 3.265501488077027,
+          "P50Milliseconds": 2,
+          "P95Milliseconds": 16.2423,
+          "MaxMilliseconds": 37.7785
+        },
+        "warmupDurationMilliseconds": 500
+      },
+      "motionMetadata": {
+        "generationProfile": "real-trace-weighted",
+        "seed": 932223179,
+        "scenarioCount": 64,
+        "controlPointCount": 512,
+        "speedPointCount": 512,
+        "holdSegmentCount": 321,
+        "holdDurationMilliseconds": 127230.255,
+        "durationMilliseconds": 768000,
+        "scenarioDurationMilliseconds": 12000,
+        "sampleRateHz": 240
+      },
+      "motionScript": {
+        "schemaVersion": "cursor-mirror-motion-scenarios/1",
+        "generationProfile": "real-trace-weighted",
+        "seed": 932223179,
+        "scenarioCount": 64,
+        "controlPointsPerScenario": {
+          "count": 64,
+          "mean": 8,
+          "min": 8,
+          "p50": 8,
+          "p90": 8,
+          "p95": 8,
+          "p99": 8,
+          "max": 8
+        },
+        "speedPointsPerScenario": {
+          "count": 64,
+          "mean": 8,
+          "min": 8,
+          "p50": 8,
+          "p90": 8,
+          "p95": 8,
+          "p99": 8,
+          "max": 8
+        },
+        "holdSegmentsPerScenario": {
+          "count": 64,
+          "mean": 5.016,
+          "min": 4,
+          "p50": 5,
+          "p90": 6,
+          "p95": 6,
+          "p99": 6,
+          "max": 6
+        },
+        "scenarioDurationMilliseconds": {
+          "count": 64,
+          "mean": 12000,
+          "min": 12000,
+          "p50": 12000,
+          "p90": 12000,
+          "p95": 12000,
+          "p99": 12000,
+          "max": 12000
+        }
+      },
+      "trace": {
+        "header": [
+          "sequence",
+          "stopwatchTicks",
+          "elapsedMicroseconds",
+          "x",
+          "y",
+          "event",
+          "hookX",
+          "hookY",
+          "cursorX",
+          "cursorY",
+          "hookMouseData",
+          "hookFlags",
+          "hookTimeMilliseconds",
+          "hookExtraInfo",
+          "dwmTimingAvailable",
+          "dwmRateRefreshNumerator",
+          "dwmRateRefreshDenominator",
+          "dwmQpcRefreshPeriod",
+          "dwmQpcVBlank",
+          "dwmRefreshCount",
+          "dwmQpcCompose",
+          "dwmFrame",
+          "dwmRefreshFrame",
+          "dwmFrameDisplayed",
+          "dwmQpcFrameDisplayed",
+          "dwmRefreshFrameDisplayed",
+          "dwmFrameComplete",
+          "dwmQpcFrameComplete",
+          "dwmFramePending",
+          "dwmQpcFramePending",
+          "dwmRefreshNextDisplayed",
+          "dwmRefreshNextPresented",
+          "dwmFramesDisplayed",
+          "dwmFramesDropped",
+          "dwmFramesMissed",
+          "runtimeSchedulerTimingUsable",
+          "runtimeSchedulerTargetVBlankTicks",
+          "runtimeSchedulerPlannedTickTicks",
+          "runtimeSchedulerActualTickTicks",
+          "runtimeSchedulerVBlankLeadMicroseconds",
+          "runtimeSchedulerQueuedTickTicks",
+          "runtimeSchedulerDispatchStartedTicks",
+          "runtimeSchedulerCursorReadStartedTicks",
+          "runtimeSchedulerCursorReadCompletedTicks",
+          "runtimeSchedulerSampleRecordedTicks",
+          "runtimeSchedulerLoopIteration",
+          "runtimeSchedulerLoopStartedTicks",
+          "runtimeSchedulerTimingReadStartedTicks",
+          "runtimeSchedulerTimingReadCompletedTicks",
+          "runtimeSchedulerDecisionCompletedTicks",
+          "runtimeSchedulerTickRequested",
+          "runtimeSchedulerSleepRequestedMilliseconds",
+          "runtimeSchedulerWaitMethod",
+          "runtimeSchedulerWaitTargetTicks",
+          "runtimeSchedulerSleepStartedTicks",
+          "runtimeSchedulerSleepCompletedTicks",
+          "warmupSample",
+          "predictionTargetTicks",
+          "presentReferenceTicks",
+          "schedulerProvenance",
+          "sampleRecordedToPredictionTargetMicroseconds",
+          "runtimeSchedulerMissing"
+        ],
+        "requiredV9FieldsPresent": {
+          "warmupSample": true,
+          "predictionTargetTicks": true,
+          "presentReferenceTicks": true,
+          "schedulerProvenance": true,
+          "sampleRecordedToPredictionTargetMicroseconds": true,
+          "runtimeSchedulerMissing": true
+        },
+        "rowCount": 550536,
+        "eventCounts": {
+          "poll": 96007,
+          "referencePoll": 235204,
+          "runtimeSchedulerLoop": 44798,
+          "runtimeSchedulerPoll": 44797,
+          "move": 129730
+        },
+        "warmupRows": 480,
+        "moveRows": 129730,
+        "motionLabMoveRows": 129730,
+        "externalMoveRows": 0,
+        "externalMoveWarmupRows": 0,
+        "externalMoveNonWarmupRows": 0,
+        "externalMoveScenarios": {},
+        "externalMoveNonWarmupScenarios": {},
+        "externalMoveElapsedMilliseconds": {
+          "count": 0,
+          "mean": null,
+          "min": null,
+          "p50": null,
+          "p90": null,
+          "p95": null,
+          "p99": null,
+          "max": null
+        },
+        "externalMoveNonWarmupElapsedMilliseconds": {
+          "count": 0,
+          "mean": null,
+          "min": null,
+          "p50": null,
+          "p90": null,
+          "p95": null,
+          "p99": null,
+          "max": null
+        },
+        "extraInfoCounts": {
+          "1129139532": 129730
+        },
+        "contaminationWindows": [],
+        "candidateCleaning": {
+          "proximityOnly": {
+            "totalRows": 550536,
+            "cleanRows": 550056,
+            "excludedRows": 480,
+            "excludedPercent": 0.0872,
+            "warmupExcludedRows": 480,
+            "contaminationWindowExcludedRows": 0,
+            "droppedScenarioExcludedRows": 0,
+            "bySplit": {
+              "train": 371918,
+              "validation": 82527,
+              "test": 96091,
+              "unassigned": 0
+            },
+            "cleanBySplit": {
+              "train": 371918,
+              "validation": 82527,
+              "test": 95611,
+              "unassigned": 0
+            },
+            "excludedBySplit": {
+              "train": 0,
+              "validation": 0,
+              "test": 480,
+              "unassigned": 0
+            }
+          },
+          "dropScenario0PlusProximity": {
+            "totalRows": 550536,
+            "cleanRows": 538729,
+            "excludedRows": 11807,
+            "excludedPercent": 2.1446,
+            "warmupExcludedRows": 480,
+            "contaminationWindowExcludedRows": 0,
+            "droppedScenarioExcludedRows": 11807,
+            "bySplit": {
+              "train": 371918,
+              "validation": 82527,
+              "test": 96091,
+              "unassigned": 0
+            },
+            "cleanBySplit": {
+              "train": 371918,
+              "validation": 82527,
+              "test": 84284,
+              "unassigned": 0
+            },
+            "excludedBySplit": {
+              "train": 0,
+              "validation": 0,
+              "test": 11807,
+              "unassigned": 0
+            }
+          }
+        },
+        "schedulerProvenanceCounts": {
+          "dwm": 89595
+        },
+        "runtimeSchedulerMissingCounts": {
+          "false": 550536
+        },
+        "sampleRecordedToPredictionTargetMicroseconds": {
+          "count": 89595,
+          "mean": -9712.872,
+          "min": -20662,
+          "p50": -3941,
+          "p90": -3465.4,
+          "p95": -2563.7,
+          "p99": -1156,
+          "max": 12442
+        },
+        "schedulerDelayMilliseconds": {
+          "count": 44797,
+          "mean": 0.354,
+          "min": 0.027,
+          "p50": 0.116,
+          "p90": 0.807,
+          "p95": 1.835,
+          "p99": 2.978,
+          "max": 16.433
+        }
+      },
+      "finalCleaningRule": {
+        "id": "warmup-only",
+        "dropScenarios": [],
+        "contaminationWindows": [],
+        "rationale": [
+          "No external move rows were found; only warmup rows are removed."
+        ]
+      },
+      "cleanTrace": {
+        "totalRows": 550536,
+        "cleanRows": 550056,
+        "excludedRows": 480,
+        "excludedPercent": 0.0872,
+        "warmupExcludedRows": 480,
+        "contaminationWindowExcludedRows": 0,
+        "droppedScenarioExcludedRows": 0,
+        "bySplit": {
+          "train": 371918,
+          "validation": 82527,
+          "test": 96091,
+          "unassigned": 0
+        },
+        "cleanBySplit": {
+          "train": 371918,
+          "validation": 82527,
+          "test": 95611,
+          "unassigned": 0
+        },
+        "excludedBySplit": {
+          "train": 0,
+          "validation": 0,
+          "test": 480,
+          "unassigned": 0
+        }
+      },
+      "motionSamples": {
+        "header": [
+          "sequence",
+          "elapsedMilliseconds",
+          "scenarioIndex",
+          "scenarioElapsedMilliseconds",
+          "progress",
+          "x",
+          "y",
+          "velocityPixelsPerSecond",
+          "movementPhase",
+          "holdIndex",
+          "phaseElapsedMilliseconds"
+        ],
+        "requiredV2FieldsPresent": {
+          "movementPhase": true,
+          "holdIndex": true,
+          "phaseElapsedMilliseconds": true
+        },
+        "rowCount": 184321,
+        "phaseCounts": {
+          "moving": 145039,
+          "hold": 30530,
+          "resume": 8752
+        },
+        "scenarioCounts": {
+          "0": 2880,
+          "1": 2880,
+          "2": 2880,
+          "3": 2880,
+          "4": 2880,
+          "5": 2880,
+          "6": 2880,
+          "7": 2880,
+          "8": 2880,
+          "9": 2880,
+          "10": 2880,
+          "11": 2880,
+          "12": 2880,
+          "13": 2880,
+          "14": 2880,
+          "15": 2880,
+          "16": 2880,
+          "17": 2880,
+          "18": 2880,
+          "19": 2880,
+          "20": 2880,
+          "21": 2880,
+          "22": 2880,
+          "23": 2880,
+          "24": 2880,
+          "25": 2880,
+          "26": 2880,
+          "27": 2880,
+          "28": 2880,
+          "29": 2880,
+          "30": 2880,
+          "31": 2880,
+          "32": 2880,
+          "33": 2880,
+          "34": 2880,
+          "35": 2880,
+          "36": 2880,
+          "37": 2880,
+          "38": 2880,
+          "39": 2880,
+          "40": 2880,
+          "41": 2880,
+          "42": 2880,
+          "43": 2880,
+          "44": 2880,
+          "45": 2880,
+          "46": 2880,
+          "47": 2880,
+          "48": 2880,
+          "49": 2880,
+          "50": 2880,
+          "51": 2880,
+          "52": 2880,
+          "53": 2880,
+          "54": 2880,
+          "55": 2880,
+          "56": 2880,
+          "57": 2880,
+          "58": 2880,
+          "59": 2880,
+          "60": 2880,
+          "61": 2880,
+          "62": 2880,
+          "63": 2881
+        },
+        "velocityPixelsPerSecond": {
+          "count": 184321,
+          "mean": 94.086,
+          "min": 0,
+          "p50": 60.099,
+          "p90": 154.223,
+          "p95": 265.36,
+          "p99": 972.351,
+          "max": 7833.317
+        },
+        "clean": {
+          "totalRows": 184321,
+          "cleanRows": 184201,
+          "excludedRows": 120,
+          "excludedPercent": 0.0651,
+          "warmupExcludedRows": 120,
+          "contaminationWindowExcludedRows": 0,
+          "droppedScenarioExcludedRows": 0,
+          "bySplit": {
+            "train": 126721,
+            "validation": 28800,
+            "test": 28800,
+            "unassigned": 0
+          },
+          "cleanBySplit": {
+            "train": 126721,
+            "validation": 28800,
+            "test": 28680,
+            "unassigned": 0
+          },
+          "excludedBySplit": {
+            "train": 0,
+            "validation": 0,
+            "test": 120,
+            "unassigned": 0
+          },
+          "phaseCounts": {
+            "moving": 144919,
+            "hold": 30530,
+            "resume": 8752
+          },
+          "scenarioCounts": {
+            "0": 2760,
+            "1": 2880,
+            "2": 2880,
+            "3": 2880,
+            "4": 2880,
+            "5": 2880,
+            "6": 2880,
+            "7": 2880,
+            "8": 2880,
+            "9": 2880,
+            "10": 2880,
+            "11": 2880,
+            "12": 2880,
+            "13": 2880,
+            "14": 2880,
+            "15": 2880,
+            "16": 2880,
+            "17": 2880,
+            "18": 2880,
+            "19": 2880,
+            "20": 2880,
+            "21": 2880,
+            "22": 2880,
+            "23": 2880,
+            "24": 2880,
+            "25": 2880,
+            "26": 2880,
+            "27": 2880,
+            "28": 2880,
+            "29": 2880,
+            "30": 2880,
+            "31": 2880,
+            "32": 2880,
+            "33": 2880,
+            "34": 2880,
+            "35": 2880,
+            "36": 2880,
+            "37": 2880,
+            "38": 2880,
+            "39": 2880,
+            "40": 2880,
+            "41": 2880,
+            "42": 2880,
+            "43": 2880,
+            "44": 2880,
+            "45": 2880,
+            "46": 2880,
+            "47": 2880,
+            "48": 2880,
+            "49": 2880,
+            "50": 2880,
+            "51": 2880,
+            "52": 2880,
+            "53": 2880,
+            "54": 2880,
+            "55": 2880,
+            "56": 2880,
+            "57": 2880,
+            "58": 2880,
+            "59": 2880,
+            "60": 2880,
+            "61": 2880,
+            "62": 2880,
+            "63": 2881
+          },
+          "velocityPixelsPerSecond": {
+            "count": 184201,
+            "mean": 94.087,
+            "min": 0,
+            "p50": 60.06,
+            "p90": 154.231,
+            "p95": 265.553,
+            "p99": 972.733,
+            "max": 7833.317
+          }
+        }
+      },
+      "consistency": {
+        "traceFormatIsV9": true,
+        "motionSampleFormatIsV2": true,
+        "traceRowsMatchMetadata": true,
+        "motionScenarioCountIs64": true,
+        "requiredTraceV9FieldsPresent": true,
+        "requiredMotionV2FieldsPresent": true,
+        "dwmTimingFullyAvailable": true,
+        "timerResolutionSucceededAt1ms": true
+      }
+    }
+  ],
+  "summary": {
+    "packageCount": 4,
+    "totalDurationSeconds": 3072.378,
+    "totalTraceRows": 2190179,
+    "totalMotionSampleRows": 737284,
+    "totalExternalMoveRows": 182,
+    "totalExternalMoveNonWarmupRows": 113,
+    "refreshBuckets": {
+      "30Hz": 2,
+      "60Hz": 2
+    },
+    "machineKeys": {
+      "6cpu_3840x2160_1mon_30Hz": 2,
+      "24cpu_2560x1440_1mon_60Hz": 1,
+      "32cpu_7680x1440_3mon_60Hz": 1
+    },
+    "allConsistencyChecksPassed": true
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "cursor-prediction-v10-phase6-runtime-candidate/1",
+  "generatedAt": "2026-05-03T09:18:27.472Z",
+  "productDecision": "do_not_productize_synthetic_gain_too_small_or_tail_risky",
+  "selectedCandidate": {
+    "id": "bucket_disagreement_gain_offset_scale0p5_cap4",
+    "teacherId": "bucket_disagreement_gain_offset",
+    "family": "scalar_gain_offset_per_horizon_speed",
+    "residualScale": 0.5,
+    "residualCapPx": 4,
+    "runtimeShape": {
+      "teacherId": "bucket_disagreement_gain_offset",
+      "family": "scalar_gain_offset_per_horizon_speed",
+      "parameters": 112,
+      "coefficientBytesFloat32": 448,
+      "estimatedMacsPerPrediction": 1,
+      "cpuViability": "high",
+      "simdNotes": "scalar bucket lookup"
+    },
+    "test": {
+      "metrics": {
+        "count": 172800,
+        "mean": 11.955498775537729,
+        "rmse": 22.495595870599267,
+        "p50": 5.075,
+        "p90": 29.925,
+        "p95": 38.725,
+        "p99": 77.825,
+        "max": 694.3570556640625
+      },
+      "regressionsVsBaseline": {
+        "count": 172800,
+        "worseOver1px": 414,
+        "worseOver3px": 10,
+        "worseOver5px": 0,
+        "worseOver10px": 0,
+        "improvedOver1px": 1063,
+        "improvedOver3px": 795,
+        "meanDeltaPx": -0.04194928242006412
+      },
+      "regressionsVsPhase4": {
+        "count": 172800,
+        "worseOver1px": 53,
+        "worseOver3px": 12,
+        "worseOver5px": 0,
+        "worseOver10px": 0,
+        "improvedOver1px": 475,
+        "improvedOver3px": 347,
+        "meanDeltaPx": -0.01025375625112654
+      },
+      "gateUses": {
+        "advanced": 20034,
+        "fallback": 152766
+      }
+    },
+    "phase4Delta": {
+      "mean": -0.010253756251076496,
+      "rmse": -0.008145406276838685,
+      "p50": -0.04999999999999982,
+      "p90": 0,
+      "p95": 0,
+      "p99": 0,
+      "max": 0
+    },
+    "warnings": []
+  },
+  "integrationContract": {
+    "gate": "reuse phase4 strict monotonic score gate unchanged",
+    "fallbackPredictor": {
+      "id": "constant_velocity_last2_cap24",
+      "family": "constant_velocity_last2",
+      "params": {
+        "gain": 1,
+        "horizonCapMs": 33.33,
+        "displacementCapPx": 24
+      }
+    },
+    "advancedPredictor": {
+      "id": "least_squares_w50_cap36",
+      "family": "least_squares_window",
+      "params": {
+        "windowMs": 50,
+        "horizonCapMs": 33.33,
+        "displacementCapPx": 36
+      }
+    },
+    "residualApplication": "if strict gate advanced, add clipped CPU residual to LS prediction; otherwise keep CV fallback",
+    "requiredFeatures": [
+      "speed",
+      "acceleration",
+      "curvature",
+      "horizon",
+      "edge distance",
+      "missing flags",
+      "LS-vs-CV disagreement"
+    ],
+    "checkpointPolicy": "no checkpoint written; coefficients are reported only as samples"
+  }
+}

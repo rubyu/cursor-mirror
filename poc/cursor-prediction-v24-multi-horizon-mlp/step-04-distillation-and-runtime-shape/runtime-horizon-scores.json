@@ -1,0 +1,537 @@
+{
+    "schemaVersion":  "cursor-prediction-v24-step-04-runtime-horizon-audit/1",
+    "generatedAtUtc":  "2026-05-05T03:54:23.8748152Z",
+    "sourceManifest":  "poc/cursor-prediction-v21/step-02-balanced-evaluation/split-manifest.json",
+    "rows":  308804,
+    "trainingOffsetMilliseconds":  -4,
+    "currentDisplayOriginMilliseconds":  8,
+    "currentDefaultInternalOffsetMilliseconds":  8,
+    "defaultHorizonCapMilliseconds":  10,
+    "generatedModelTrainingNormalizer":  {
+                                             "horizonFeatureMean":  -0.023009097,
+                                             "horizonFeatureStd":  0.05,
+                                             "approximateMeanMilliseconds":  -0.383562,
+                                             "approximateStdMilliseconds":  0.8335
+                                         },
+    "observedSampleToTargetMilliseconds":  {
+                                               "count":  308804,
+                                               "mean":  3.613388,
+                                               "p50":  3.858,
+                                               "p95":  3.926,
+                                               "p99":  3.937,
+                                               "min":  -45.288,
+                                               "max":  3.972
+                                           },
+    "observedRefreshMilliseconds":  {
+                                        "count":  308804,
+                                        "mean":  16.667144,
+                                        "p50":  16.6671,
+                                        "p95":  16.668,
+                                        "p99":  16.6681,
+                                        "min":  16.6665,
+                                        "max":  16.6682
+                                    },
+    "v21TrainingLabelHorizonEstimate":  {
+                                            "count":  308804,
+                                            "mean":  -0.386612,
+                                            "p50":  -0.142,
+                                            "p95":  -0.074,
+                                            "p99":  -0.063,
+                                            "min":  -49.288,
+                                            "max":  -0.028
+                                        },
+    "targetOffsetSweep":  [
+                              {
+                                  "displayOffsetMilliseconds":  -32,
+                                  "internalOffsetMilliseconds":  -24,
+                                  "selectedOffset":  "",
+                                  "horizonBeforeReject":  {
+                                                              "count":  308804,
+                                                              "mean":  -20.386612,
+                                                              "p50":  -20.142,
+                                                              "p95":  -20.074,
+                                                              "p99":  -20.063,
+                                                              "min":  -69.288,
+                                                              "max":  -20.028
+                                                          },
+                                  "usedHorizonAfterCap":  {
+                                                              "count":  0,
+                                                              "mean":  0,
+                                                              "p50":  0,
+                                                              "p95":  0,
+                                                              "p99":  0,
+                                                              "min":  0,
+                                                              "max":  0
+                                                          },
+                                  "expiredRate":  1,
+                                  "excessiveRate":  0,
+                                  "acceptedRate":  0
+                              },
+                              {
+                                  "displayOffsetMilliseconds":  -24,
+                                  "internalOffsetMilliseconds":  -16,
+                                  "selectedOffset":  "",
+                                  "horizonBeforeReject":  {
+                                                              "count":  308804,
+                                                              "mean":  -12.386612,
+                                                              "p50":  -12.142,
+                                                              "p95":  -12.074,
+                                                              "p99":  -12.063,
+                                                              "min":  -61.288,
+                                                              "max":  -12.028
+                                                          },
+                                  "usedHorizonAfterCap":  {
+                                                              "count":  0,
+                                                              "mean":  0,
+                                                              "p50":  0,
+                                                              "p95":  0,
+                                                              "p99":  0,
+                                                              "min":  0,
+                                                              "max":  0
+                                                          },
+                                  "expiredRate":  1,
+                                  "excessiveRate":  0,
+                                  "acceptedRate":  0
+                              },
+                              {
+                                  "displayOffsetMilliseconds":  -16,
+                                  "internalOffsetMilliseconds":  -8,
+                                  "selectedOffset":  "",
+                                  "horizonBeforeReject":  {
+                                                              "count":  308804,
+                                                              "mean":  -4.386612,
+                                                              "p50":  -4.142,
+                                                              "p95":  -4.074,
+                                                              "p99":  -4.063,
+                                                              "min":  -53.288,
+                                                              "max":  -4.028
+                                                          },
+                                  "usedHorizonAfterCap":  {
+                                                              "count":  0,
+                                                              "mean":  0,
+                                                              "p50":  0,
+                                                              "p95":  0,
+                                                              "p99":  0,
+                                                              "min":  0,
+                                                              "max":  0
+                                                          },
+                                  "expiredRate":  1,
+                                  "excessiveRate":  0,
+                                  "acceptedRate":  0
+                              },
+                              {
+                                  "displayOffsetMilliseconds":  -8,
+                                  "internalOffsetMilliseconds":  0,
+                                  "selectedOffset":  "",
+                                  "horizonBeforeReject":  {
+                                                              "count":  308804,
+                                                              "mean":  3.613388,
+                                                              "p50":  3.858,
+                                                              "p95":  3.926,
+                                                              "p99":  3.937,
+                                                              "min":  -45.288,
+                                                              "max":  3.972
+                                                          },
+                                  "usedHorizonAfterCap":  {
+                                                              "count":  307316,
+                                                              "mean":  3.638153,
+                                                              "p50":  3.859,
+                                                              "p95":  3.926,
+                                                              "p99":  3.937,
+                                                              "min":  0.001,
+                                                              "max":  3.972
+                                                          },
+                                  "expiredRate":  0.004819,
+                                  "excessiveRate":  0,
+                                  "acceptedRate":  0.995181
+                              },
+                              {
+                                  "displayOffsetMilliseconds":  0,
+                                  "internalOffsetMilliseconds":  8,
+                                  "selectedOffset":  "current-default-display",
+                                  "horizonBeforeReject":  {
+                                                              "count":  308804,
+                                                              "mean":  11.613388,
+                                                              "p50":  11.858,
+                                                              "p95":  11.926,
+                                                              "p99":  11.937,
+                                                              "min":  -37.288,
+                                                              "max":  11.972
+                                                          },
+                                  "usedHorizonAfterCap":  {
+                                                              "count":  308756,
+                                                              "mean":  9.962191,
+                                                              "p50":  10,
+                                                              "p95":  10,
+                                                              "p99":  10,
+                                                              "min":  0.062,
+                                                              "max":  10
+                                                          },
+                                  "expiredRate":  0.000155,
+                                  "excessiveRate":  0,
+                                  "acceptedRate":  0.999845
+                              },
+                              {
+                                  "displayOffsetMilliseconds":  8,
+                                  "internalOffsetMilliseconds":  16,
+                                  "selectedOffset":  "",
+                                  "horizonBeforeReject":  {
+                                                              "count":  308804,
+                                                              "mean":  19.613388,
+                                                              "p50":  19.858,
+                                                              "p95":  19.926,
+                                                              "p99":  19.937,
+                                                              "min":  -29.288,
+                                                              "max":  19.972
+                                                          },
+                                  "usedHorizonAfterCap":  {
+                                                              "count":  308794,
+                                                              "mean":  9.999285,
+                                                              "p50":  10,
+                                                              "p95":  10,
+                                                              "p99":  10,
+                                                              "min":  0.647,
+                                                              "max":  10
+                                                          },
+                                  "expiredRate":  3.2E-05,
+                                  "excessiveRate":  0,
+                                  "acceptedRate":  0.999968
+                              },
+                              {
+                                  "displayOffsetMilliseconds":  16,
+                                  "internalOffsetMilliseconds":  24,
+                                  "selectedOffset":  "",
+                                  "horizonBeforeReject":  {
+                                                              "count":  308804,
+                                                              "mean":  27.613388,
+                                                              "p50":  27.858,
+                                                              "p95":  27.926,
+                                                              "p99":  27.937,
+                                                              "min":  -21.288,
+                                                              "max":  27.972
+                                                          },
+                                  "usedHorizonAfterCap":  {
+                                                              "count":  172,
+                                                              "mean":  9.790215,
+                                                              "p50":  10,
+                                                              "p95":  10,
+                                                              "p99":  10,
+                                                              "min":  2.04,
+                                                              "max":  10
+                                                          },
+                                  "expiredRate":  1.3E-05,
+                                  "excessiveRate":  0.99943,
+                                  "acceptedRate":  0.000557
+                              },
+                              {
+                                  "displayOffsetMilliseconds":  24,
+                                  "internalOffsetMilliseconds":  32,
+                                  "selectedOffset":  "",
+                                  "horizonBeforeReject":  {
+                                                              "count":  308804,
+                                                              "mean":  35.613388,
+                                                              "p50":  35.858,
+                                                              "p95":  35.926,
+                                                              "p99":  35.937,
+                                                              "min":  -13.288,
+                                                              "max":  35.972
+                                                          },
+                                  "usedHorizonAfterCap":  {
+                                                              "count":  23,
+                                                              "mean":  10,
+                                                              "p50":  10,
+                                                              "p95":  10,
+                                                              "p99":  10,
+                                                              "min":  10,
+                                                              "max":  10
+                                                          },
+                                  "expiredRate":  1.3E-05,
+                                  "excessiveRate":  0.999913,
+                                  "acceptedRate":  7.4E-05
+                              },
+                              {
+                                  "displayOffsetMilliseconds":  32,
+                                  "internalOffsetMilliseconds":  40,
+                                  "selectedOffset":  "",
+                                  "horizonBeforeReject":  {
+                                                              "count":  308804,
+                                                              "mean":  43.613388,
+                                                              "p50":  43.858,
+                                                              "p95":  43.926,
+                                                              "p99":  43.937,
+                                                              "min":  -5.288,
+                                                              "max":  43.972
+                                                          },
+                                  "usedHorizonAfterCap":  {
+                                                              "count":  5,
+                                                              "mean":  7.9182,
+                                                              "p50":  10,
+                                                              "p95":  10,
+                                                              "p99":  10,
+                                                              "min":  3.816,
+                                                              "max":  10
+                                                          },
+                                  "expiredRate":  6E-06,
+                                  "excessiveRate":  0.999977,
+                                  "acceptedRate":  1.6E-05
+                              }
+                          ],
+    "packageSummaries":  [
+                             {
+                                 "packageId":  "m191827",
+                                 "split":  "train",
+                                 "qualityBucket":  "poll-delayed",
+                                 "durationBucket":  "12s",
+                                 "rows":  45070,
+                                 "sampleToTarget":  {
+                                                        "count":  45070,
+                                                        "mean":  3.714026,
+                                                        "p50":  3.882,
+                                                        "p95":  3.929,
+                                                        "p99":  3.938,
+                                                        "min":  -8.312,
+                                                        "max":  3.964
+                                                    },
+                                 "refresh":  {
+                                                 "count":  45070,
+                                                 "mean":  16.667079,
+                                                 "p50":  16.6671,
+                                                 "p95":  16.6671,
+                                                 "p99":  16.6671,
+                                                 "min":  16.667,
+                                                 "max":  16.6671
+                                             }
+                             },
+                             {
+                                 "packageId":  "m192020",
+                                 "split":  "validation",
+                                 "qualityBucket":  "poll-delayed",
+                                 "durationBucket":  "12s",
+                                 "rows":  45065,
+                                 "sampleToTarget":  {
+                                                        "count":  45065,
+                                                        "mean":  3.638398,
+                                                        "p50":  3.871,
+                                                        "p95":  3.921,
+                                                        "p99":  3.929,
+                                                        "min":  -6.326,
+                                                        "max":  3.953
+                                                    },
+                                 "refresh":  {
+                                                 "count":  45065,
+                                                 "mean":  16.666602,
+                                                 "p50":  16.6666,
+                                                 "p95":  16.6666,
+                                                 "p99":  16.6667,
+                                                 "min":  16.6665,
+                                                 "max":  16.6668
+                                             }
+                             },
+                             {
+                                 "packageId":  "m192107",
+                                 "split":  "robustness",
+                                 "qualityBucket":  "poll-delayed",
+                                 "durationBucket":  "12s",
+                                 "rows":  42407,
+                                 "sampleToTarget":  {
+                                                        "count":  42407,
+                                                        "mean":  3.268082,
+                                                        "p50":  3.686,
+                                                        "p95":  3.929,
+                                                        "p99":  3.94,
+                                                        "min":  -21.96,
+                                                        "max":  3.972
+                                                    },
+                                 "refresh":  {
+                                                 "count":  42407,
+                                                 "mean":  16.667997,
+                                                 "p50":  16.668,
+                                                 "p95":  16.6681,
+                                                 "p99":  16.6681,
+                                                 "min":  16.6677,
+                                                 "max":  16.6682
+                                             }
+                             },
+                             {
+                                 "packageId":  "m193433",
+                                 "split":  "robustness",
+                                 "qualityBucket":  "poll-delayed",
+                                 "durationBucket":  "8s",
+                                 "rows":  30679,
+                                 "sampleToTarget":  {
+                                                        "count":  30679,
+                                                        "mean":  3.769711,
+                                                        "p50":  3.877,
+                                                        "p95":  3.929,
+                                                        "p99":  3.938,
+                                                        "min":  -14.603,
+                                                        "max":  3.958
+                                                    },
+                                 "refresh":  {
+                                                 "count":  30679,
+                                                 "mean":  16.667081,
+                                                 "p50":  16.6671,
+                                                 "p95":  16.6671,
+                                                 "p99":  16.6671,
+                                                 "min":  16.667,
+                                                 "max":  16.6671
+                                             }
+                             },
+                             {
+                                 "packageId":  "m193508",
+                                 "split":  "train",
+                                 "qualityBucket":  "poll-delayed",
+                                 "durationBucket":  "6s",
+                                 "rows":  22907,
+                                 "sampleToTarget":  {
+                                                        "count":  22907,
+                                                        "mean":  3.348955,
+                                                        "p50":  3.635,
+                                                        "p95":  3.929,
+                                                        "p99":  3.942,
+                                                        "min":  -45.288,
+                                                        "max":  3.963
+                                                    },
+                                 "refresh":  {
+                                                 "count":  22907,
+                                                 "mean":  16.668004,
+                                                 "p50":  16.668,
+                                                 "p95":  16.6681,
+                                                 "p99":  16.6681,
+                                                 "min":  16.6679,
+                                                 "max":  16.6682
+                                             }
+                             },
+                             {
+                                 "packageId":  "m194149",
+                                 "split":  "train",
+                                 "qualityBucket":  "poll-delayed",
+                                 "durationBucket":  "4s",
+                                 "rows":  15323,
+                                 "sampleToTarget":  {
+                                                        "count":  15323,
+                                                        "mean":  3.401397,
+                                                        "p50":  3.628,
+                                                        "p95":  3.934,
+                                                        "p99":  3.944,
+                                                        "min":  -43.921,
+                                                        "max":  3.956
+                                                    },
+                                 "refresh":  {
+                                                 "count":  15323,
+                                                 "mean":  16.668012,
+                                                 "p50":  16.668,
+                                                 "p95":  16.6681,
+                                                 "p99":  16.6682,
+                                                 "min":  16.6678,
+                                                 "max":  16.6682
+                                             }
+                             },
+                             {
+                                 "packageId":  "m194623",
+                                 "split":  "robustness",
+                                 "qualityBucket":  "poll-delayed",
+                                 "durationBucket":  "10s",
+                                 "rows":  38323,
+                                 "sampleToTarget":  {
+                                                        "count":  38323,
+                                                        "mean":  3.698419,
+                                                        "p50":  3.87,
+                                                        "p95":  3.92,
+                                                        "p99":  3.929,
+                                                        "min":  -36.184,
+                                                        "max":  3.966
+                                                    },
+                                 "refresh":  {
+                                                 "count":  38323,
+                                                 "mean":  16.666601,
+                                                 "p50":  16.6666,
+                                                 "p95":  16.6666,
+                                                 "p99":  16.6667,
+                                                 "min":  16.6665,
+                                                 "max":  16.6667
+                                             }
+                             },
+                             {
+                                 "packageId":  "m194657",
+                                 "split":  "robustness",
+                                 "qualityBucket":  "poll-delayed",
+                                 "durationBucket":  "6s",
+                                 "rows":  23010,
+                                 "sampleToTarget":  {
+                                                        "count":  23010,
+                                                        "mean":  3.784818,
+                                                        "p50":  3.882,
+                                                        "p95":  3.929,
+                                                        "p99":  3.938,
+                                                        "min":  -14.8,
+                                                        "max":  3.956
+                                                    },
+                                 "refresh":  {
+                                                 "count":  23010,
+                                                 "mean":  16.667083,
+                                                 "p50":  16.6671,
+                                                 "p95":  16.6671,
+                                                 "p99":  16.6671,
+                                                 "min":  16.667,
+                                                 "max":  16.6671
+                                             }
+                             },
+                             {
+                                 "packageId":  "m195438",
+                                 "split":  "test",
+                                 "qualityBucket":  "normal",
+                                 "durationBucket":  "4s",
+                                 "rows":  15330,
+                                 "sampleToTarget":  {
+                                                        "count":  15330,
+                                                        "mean":  3.77736,
+                                                        "p50":  3.876,
+                                                        "p95":  3.93,
+                                                        "p99":  3.94,
+                                                        "min":  -1.874,
+                                                        "max":  3.964
+                                                    },
+                                 "refresh":  {
+                                                 "count":  15330,
+                                                 "mean":  16.667082,
+                                                 "p50":  16.6671,
+                                                 "p95":  16.6671,
+                                                 "p99":  16.6671,
+                                                 "min":  16.667,
+                                                 "max":  16.6671
+                                             }
+                             },
+                             {
+                                 "packageId":  "m195750",
+                                 "split":  "train",
+                                 "qualityBucket":  "poll-delayed",
+                                 "durationBucket":  "8s",
+                                 "rows":  30690,
+                                 "sampleToTarget":  {
+                                                        "count":  30690,
+                                                        "mean":  3.736347,
+                                                        "p50":  3.87,
+                                                        "p95":  3.92,
+                                                        "p99":  3.928,
+                                                        "min":  -34.225,
+                                                        "max":  3.949
+                                                    },
+                                 "refresh":  {
+                                                 "count":  30690,
+                                                 "mean":  16.666601,
+                                                 "p50":  16.6666,
+                                                 "p95":  16.6666,
+                                                 "p99":  16.6667,
+                                                 "min":  16.6665,
+                                                 "max":  16.6668
+                                             }
+                             }
+                         ],
+    "findings":  [
+                     "v21 SmoothPredictor training used approximately sample-to-target minus 4ms labels, which centers near the generated normalizer\u0027s horizon mean.",
+                     "Current display offset 0 maps to internal +8ms, so the model is commonly asked for roughly sample-to-target plus 8ms at runtime.",
+                     "This means SmoothPredictor\u0027s learned horizon and current default runtime horizon are likely separated by roughly 12ms.",
+                     "Large positive target offsets can exceed the 1.25x refresh rejection guard before horizon cap is applied."
+                 ]
+}

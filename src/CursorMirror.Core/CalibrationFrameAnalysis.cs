@@ -29,6 +29,13 @@ namespace CursorMirror
                 string.Empty,
                 0,
                 0,
+                0,
+                string.Empty,
+                string.Empty,
+                -1,
+                0,
+                0,
+                -1,
                 0)
         {
         }
@@ -50,6 +57,57 @@ namespace CursorMirror
             int expectedX,
             int expectedY,
             double expectedVelocityPixelsPerSecond)
+            : this(
+                frameIndex,
+                timestampTicks,
+                width,
+                height,
+                darkPixelCount,
+                hasDarkPixels,
+                darkBoundsX,
+                darkBoundsY,
+                darkBoundsWidth,
+                darkBoundsHeight,
+                elapsedMilliseconds,
+                patternName,
+                phaseName,
+                expectedX,
+                expectedY,
+                expectedVelocityPixelsPerSecond,
+                string.Empty,
+                string.Empty,
+                -1,
+                elapsedMilliseconds,
+                0,
+                -1,
+                elapsedMilliseconds)
+        {
+        }
+
+        public CalibrationFrameAnalysis(
+            int frameIndex,
+            long timestampTicks,
+            int width,
+            int height,
+            int darkPixelCount,
+            bool hasDarkPixels,
+            int darkBoundsX,
+            int darkBoundsY,
+            int darkBoundsWidth,
+            int darkBoundsHeight,
+            double elapsedMilliseconds,
+            string patternName,
+            string phaseName,
+            int expectedX,
+            int expectedY,
+            double expectedVelocityPixelsPerSecond,
+            string motionSourceName,
+            string generationProfile,
+            int scenarioIndex,
+            double scenarioElapsedMilliseconds,
+            double progress,
+            int holdIndex,
+            double phaseElapsedMilliseconds)
         {
             FrameIndex = frameIndex;
             TimestampTicks = timestampTicks;
@@ -67,6 +125,13 @@ namespace CursorMirror
             ExpectedX = expectedX;
             ExpectedY = expectedY;
             ExpectedVelocityPixelsPerSecond = expectedVelocityPixelsPerSecond;
+            MotionSourceName = motionSourceName ?? string.Empty;
+            GenerationProfile = generationProfile ?? string.Empty;
+            ScenarioIndex = scenarioIndex;
+            ScenarioElapsedMilliseconds = scenarioElapsedMilliseconds;
+            Progress = progress;
+            HoldIndex = holdIndex;
+            PhaseElapsedMilliseconds = phaseElapsedMilliseconds;
         }
 
         public int FrameIndex { get; private set; }
@@ -85,6 +150,13 @@ namespace CursorMirror
         public int ExpectedX { get; private set; }
         public int ExpectedY { get; private set; }
         public double ExpectedVelocityPixelsPerSecond { get; private set; }
+        public string MotionSourceName { get; private set; }
+        public string GenerationProfile { get; private set; }
+        public int ScenarioIndex { get; private set; }
+        public double ScenarioElapsedMilliseconds { get; private set; }
+        public double Progress { get; private set; }
+        public int HoldIndex { get; private set; }
+        public double PhaseElapsedMilliseconds { get; private set; }
 
         public CalibrationFrameAnalysis WithMotion(CalibrationMotionSample sample)
         {
@@ -109,7 +181,14 @@ namespace CursorMirror
                 sample.PhaseName,
                 sample.ExpectedX,
                 sample.ExpectedY,
-                sample.VelocityPixelsPerSecond);
+                sample.VelocityPixelsPerSecond,
+                sample.MotionSourceName,
+                sample.GenerationProfile,
+                sample.ScenarioIndex,
+                sample.ScenarioElapsedMilliseconds,
+                sample.Progress,
+                sample.HoldIndex,
+                sample.PhaseElapsedMilliseconds);
         }
     }
 }

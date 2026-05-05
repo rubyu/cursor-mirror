@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "cursor-prediction-v10-phase2-distribution/1",
+  "generatedAt": "2026-05-03T08:12:55.220Z",
+  "command": "C:\\Users\\seigl\\AppData\\Local\\OpenAI\\Codex\\bin\\node.exe C:\\Users\\seigl\\OneDrive\\my\\ドキュメント\\projects\\cursor\\poc\\cursor-prediction-v10\\scripts\\run-v10-phase2.js --count 10000 --seed 20020",
+  "environment": {
+    "node": "v24.14.0",
+    "platform": "win32",
+    "arch": "x64",
+    "cpuCount": 32,
+    "gpuUsed": false,
+    "dependencies": "node standard library only"
+  },
+  "policy": {
+    "canonicalData": "script JSONL only",
+    "canonicalDataset": "runs/scripts.synthetic.phase2.jsonl",
+    "scriptSchema": "cursor-mirror-motion-script/1",
+    "rawZipWritten": false,
+    "perFrameCsvWritten": false,
+    "nodeModulesWritten": false,
+    "checkpointsWritten": false,
+    "cacheWritten": false,
+    "deterministic": true,
+    "rootSeed": 20020,
+    "scriptCount": 10000,
+    "horizonsMs": [
+      8.33,
+      16.67,
+      25,
+      33.33
+    ],
+    "missingHistoryScenarios": [
+      {
+        "id": "clean",
+        "dropRate": 0
+      },
+      {
+        "id": "missing_10pct",
+        "dropRate": 0.1
+      },
+      {
+        "id": "missing_25pct",
+        "dropRate": 0.25
+      }
+    ],
+    "evaluation": {
+      "onDemandSamplingOnly": true,
+      "anchorsPerScript": 32,
+      "sampleIntervalMs": 8.33,
+      "historyMs": 200
+    }
+  },
+  "scripts": {
+    "count": 10000,
+    "boundsCounts": {
+      "1920x1080": 4272,
+      "1280x720": 4177,
+      "640x480": 1551
+    },
+    "tagCounts": {
+      "high_speed": 7388,
+      "acute_acceleration": 6167,
+      "edge_proximity": 5275,
+      "near_stop": 4918,
+      "missing_history": 4483,
+      "jitter": 4194,
+      "loop_or_reversal": 3045,
+      "endpoint_stress": 2548,
+      "smooth_reference": 74
+    },
+    "durationMs": {
+      "count": 10000,
+      "mean": 3226.038719,
+      "rmse": 4078.607501,
+      "p50": 2511.012,
+      "p90": 7469.0955,
+      "p95": 9481.15465,
+      "p99": 11043.59134,
+      "max": 11377.514
+    },
+    "controlPointCounts": {
+      "count": 10000,
+      "mean": 6.4774,
+      "rmse": 7.38229,
+      "p50": 6,
+      "p90": 11,
+      "p95": 14,
+      "p99": 17,
+      "max": 17
+    },
+    "speedPointCounts": {
+      "count": 10000,
+      "mean": 5.8733,
+      "rmse": 7.016573,
+      "p50": 5,
+      "p90": 11,
+      "p95": 13,
+      "p99": 19,
+      "max": 33
+    }
+  }
+}

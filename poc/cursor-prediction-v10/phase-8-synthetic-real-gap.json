@@ -1,0 +1,788 @@
+{
+  "schemaVersion": "cursor-prediction-v10-phase8-synthetic-real-gap/1",
+  "generatedAt": "2026-05-03T09:38:00.201Z",
+  "command": "C:\\Users\\seigl\\AppData\\Local\\OpenAI\\Codex\\bin\\node.exe C:\\Users\\seigl\\OneDrive\\my\\ドキュメント\\projects\\cursor\\poc\\cursor-prediction-v10\\scripts\\run-v10-phase8-real-gate.js --zip-limit 6",
+  "environment": {
+    "node": "v24.14.0",
+    "gpuUsed": false,
+    "dependencies": "node standard library only"
+  },
+  "realPhase7": {
+    "rows": 110945,
+    "numeric": {
+      "speed": {
+        "count": 110945,
+        "mean": 885.606505,
+        "p50": 0,
+        "p90": 707.106781,
+        "p95": 4527.692569,
+        "p99": 20876.160494,
+        "max": 107640.605721
+      },
+      "acceleration": {
+        "count": 110945,
+        "mean": 854320.241726,
+        "p50": 0,
+        "p90": 2121320.34356,
+        "p95": 4562071.897724,
+        "p99": 15799525.309325,
+        "max": 69011321.534948
+      },
+      "curvature": {
+        "count": 110945,
+        "mean": 0.058301,
+        "p50": 0,
+        "p90": 0,
+        "p95": 0,
+        "p99": 0,
+        "max": 119.744881
+      },
+      "historyCount": {
+        "count": 110945,
+        "mean": 95.098328,
+        "p50": 101,
+        "p90": 101,
+        "p95": 101,
+        "p99": 102,
+        "max": 105
+      },
+      "horizonMs": {
+        "count": 110945,
+        "mean": 20.832162,
+        "p50": 16.67,
+        "p90": 33.33,
+        "p95": 33.33,
+        "p99": 33.33,
+        "max": 33.33
+      },
+      "lsVsCvDisagreement": {
+        "count": 110945,
+        "mean": 8.895322,
+        "p50": 1.452761,
+        "p90": 36,
+        "p95": 36,
+        "p99": 36,
+        "max": 60
+      },
+      "jitterProxy": {
+        "count": 110945,
+        "mean": 2.886787,
+        "p50": 0,
+        "p90": 7.417102,
+        "p95": 14.36344,
+        "p99": 37.568373,
+        "max": 280.187262
+      }
+    },
+    "speedBins": {
+      "0-25": 97549,
+      "25-100": 8,
+      "100-250": 8,
+      "250-500": 172,
+      "500-1000": 2464,
+      "1000-2000": 2288,
+      ">=2000": 8456
+    },
+    "accelerationBins": {
+      "0-2000": 84537,
+      "2000-8000": 12,
+      "8000-20000": 12,
+      ">=20000": 26384
+    },
+    "curvatureBins": {
+      "0-10": 110761,
+      "10-30": 124,
+      "30-60": 48,
+      ">=60": 12
+    },
+    "historyCountBins": {
+      "1-2": 0,
+      "3-5": 0,
+      "6-12": 0,
+      ">=13": 110945
+    },
+    "horizonBins": {
+      "25": 27736,
+      "8.33": 27738,
+      "16.67": 27736,
+      "33.33": 27735
+    },
+    "missingScenarioBins": {
+      "real_trace_no_synthetic_dropout": 110945
+    }
+  },
+  "synthetic": {
+    "existing": {
+      "phase2FullArtifacts": {
+        "rows": 3840000,
+        "speedBins": {
+          "0-25": 139572,
+          "25-100": 425712,
+          "100-250": 601296,
+          "250-500": 794808,
+          "500-1000": 949968,
+          "1000-2000": 697764,
+          ">=2000": 230880
+        },
+        "accelerationBins": {
+          "0-2000": 1734240,
+          "2000-8000": 342124,
+          "8000-20000": 265476,
+          ">=20000": 1498160
+        },
+        "curvatureBins": {
+          "0-10": 2426736,
+          "10-30": 303976,
+          "30-60": 291060,
+          ">=60": 818228
+        },
+        "historyCountBins": {
+          "1-2": 128,
+          "3-5": 1912,
+          "6-12": 248220,
+          ">=13": 3589740
+        },
+        "horizonBins": {
+          "25": 960000,
+          "8.33": 960000,
+          "16.67": 960000,
+          "33.33": 960000
+        },
+        "missingScenarioBins": {
+          "clean": 1280000,
+          "missing_10pct": 1280000,
+          "missing_25pct": 1280000
+        },
+        "tagBins": {
+          "near_stop": 1888512,
+          "acute_acceleration": 2368128,
+          "edge_proximity": 2025600,
+          "missing_history": 1721472,
+          "jitter": 1610496,
+          "loop_or_reversal": 1169280,
+          "high_speed": 2836992,
+          "endpoint_stress": 978432,
+          "smooth_reference": 28416
+        },
+        "lsVsCvDisagreement": "not present in phase2 artifact; recomputed subset below"
+      },
+      "phase2Distribution": {
+        "scripts": {
+          "count": 10000,
+          "boundsCounts": {
+            "1920x1080": 4272,
+            "1280x720": 4177,
+            "640x480": 1551
+          },
+          "tagCounts": {
+            "high_speed": 7388,
+            "acute_acceleration": 6167,
+            "edge_proximity": 5275,
+            "near_stop": 4918,
+            "missing_history": 4483,
+            "jitter": 4194,
+            "loop_or_reversal": 3045,
+            "endpoint_stress": 2548,
+            "smooth_reference": 74
+          },
+          "durationMs": {
+            "count": 10000,
+            "mean": 3226.038719,
+            "rmse": 4078.607501,
+            "p50": 2511.012,
+            "p90": 7469.0955,
+            "p95": 9481.15465,
+            "p99": 11043.59134,
+            "max": 11377.514
+          },
+          "controlPointCounts": {
+            "count": 10000,
+            "mean": 6.4774,
+            "rmse": 7.38229,
+            "p50": 6,
+            "p90": 11,
+            "p95": 14,
+            "p99": 17,
+            "max": 17
+          },
+          "speedPointCounts": {
+            "count": 10000,
+            "mean": 5.8733,
+            "rmse": 7.016573,
+            "p50": 5,
+            "p90": 11,
+            "p95": 13,
+            "p99": 19,
+            "max": 33
+          }
+        },
+        "policy": {
+          "canonicalData": "script JSONL only",
+          "canonicalDataset": "runs/scripts.synthetic.phase2.jsonl",
+          "scriptSchema": "cursor-mirror-motion-script/1",
+          "rawZipWritten": false,
+          "perFrameCsvWritten": false,
+          "nodeModulesWritten": false,
+          "checkpointsWritten": false,
+          "cacheWritten": false,
+          "deterministic": true,
+          "rootSeed": 20020,
+          "scriptCount": 10000,
+          "horizonsMs": [
+            8.33,
+            16.67,
+            25,
+            33.33
+          ],
+          "missingHistoryScenarios": [
+            {
+              "id": "clean",
+              "dropRate": 0
+            },
+            {
+              "id": "missing_10pct",
+              "dropRate": 0.1
+            },
+            {
+              "id": "missing_25pct",
+              "dropRate": 0.25
+            }
+          ],
+          "evaluation": {
+            "onDemandSamplingOnly": true,
+            "anchorsPerScript": 32,
+            "sampleIntervalMs": 8.33,
+            "historyMs": 200
+          }
+        }
+      },
+      "phase4Artifact": {
+        "scriptCount": 3000,
+        "splitPolicy": {
+          "seed": 33003,
+          "unit": "script",
+          "train": 2100,
+          "validation": 450,
+          "test": 450
+        },
+        "rowSummary": {
+          "evaluatedRows": 1152000,
+          "rowsBySplit": {
+            "train": 806400,
+            "validation": 172800,
+            "test": 172800
+          }
+        },
+        "strict": {
+          "id": "phase4_0020_least_squares_w50_cap36_phase3_best_t1p806727",
+          "candidateId": "least_squares_w50_cap36",
+          "test": {
+            "metrics": {
+              "count": 172800,
+              "mean": 11.965753,
+              "rmse": 22.503741,
+              "p50": 5.125,
+              "p90": 29.925,
+              "p95": 38.725,
+              "p99": 77.825,
+              "max": 694.357029
+            },
+            "regressionsVsBaseline": {
+              "count": 172800,
+              "worseOver1px": 493,
+              "worseOver3px": 13,
+              "worseOver5px": 0,
+              "worseOver10px": 0,
+              "improvedOver1px": 1087,
+              "improvedOver3px": 756,
+              "meanDeltaPx": -0.031696
+            },
+            "gateUses": {
+              "advanced": 20034,
+              "fallback": 152766
+            }
+          }
+        },
+        "balanced": {
+          "id": "phase4_0070_blend_base_least_squares_w50_cap36_adv0p75_phase3_best_t3p538744",
+          "candidateId": "blend_base_least_squares_w50_cap36_adv0p75",
+          "test": {
+            "metrics": {
+              "count": 172800,
+              "mean": 11.940686,
+              "rmse": 22.449161,
+              "p50": 5.125,
+              "p90": 29.825,
+              "p95": 38.575,
+              "p99": 77.575,
+              "max": 694.357029
+            },
+            "regressionsVsBaseline": {
+              "count": 172800,
+              "worseOver1px": 2438,
+              "worseOver3px": 209,
+              "worseOver5px": 30,
+              "worseOver10px": 0,
+              "improvedOver1px": 3152,
+              "improvedOver3px": 2169,
+              "meanDeltaPx": -0.056762
+            },
+            "gateUses": {
+              "advanced": 61763,
+              "fallback": 111037
+            }
+          }
+        }
+      }
+    },
+    "recomputed": {
+      "limitScripts": 3000,
+      "allPhase2Subset": {
+        "rows": 1152000,
+        "numeric": {
+          "speed": {
+            "count": 1152000,
+            "mean": 705.343747,
+            "p50": 476.81328,
+            "p90": 1582.290703,
+            "p95": 2084.341357,
+            "p99": 3775.201573,
+            "max": 16425.658023
+          },
+          "acceleration": {
+            "count": 1152000,
+            "mean": 53887.973158,
+            "p50": 3927.350083,
+            "p90": 182710.761475,
+            "p95": 263639.873272,
+            "p99": 428364.193286,
+            "max": 2068143.881831
+          },
+          "curvature": {
+            "count": 1152000,
+            "mean": 30.666276,
+            "p50": 0.577579,
+            "p90": 122.609871,
+            "p95": 152.300915,
+            "p99": 174.927032,
+            "max": 180
+          },
+          "historyCount": {
+            "count": 1152000,
+            "mean": 19.848361,
+            "p50": 21,
+            "p90": 24,
+            "p95": 24,
+            "p99": 24,
+            "max": 25
+          },
+          "horizonMs": {
+            "count": 1152000,
+            "mean": 20.8325,
+            "p50": 20.835,
+            "p90": 33.33,
+            "p95": 33.33,
+            "p99": 33.33,
+            "max": 33.33
+          },
+          "lsVsCvDisagreement": {
+            "count": 1152000,
+            "mean": 7.547143,
+            "p50": 2.044958,
+            "p90": 23.098924,
+            "p95": 28.701063,
+            "p99": 38.298385,
+            "max": 59.999832
+          },
+          "jitterProxy": {
+            "count": 1152000,
+            "mean": 4.503862,
+            "p50": 1.56753,
+            "p90": 11.813764,
+            "p95": 14.493969,
+            "p99": 30.589623,
+            "max": 202.178423
+          }
+        },
+        "speedBins": {
+          "0-25": 40152,
+          "25-100": 136280,
+          "100-250": 178928,
+          "250-500": 240208,
+          "500-1000": 290888,
+          "1000-2000": 201100,
+          ">=2000": 64444
+        },
+        "accelerationBins": {
+          "0-2000": 522128,
+          "2000-8000": 102764,
+          "8000-20000": 77232,
+          ">=20000": 449876
+        },
+        "curvatureBins": {
+          "0-10": 731144,
+          "10-30": 90816,
+          "30-60": 84320,
+          ">=60": 245720
+        },
+        "historyCountBins": {
+          "1-2": 48,
+          "3-5": 620,
+          "6-12": 74924,
+          ">=13": 1076408
+        },
+        "horizonBins": {
+          "25": 288000,
+          "8.33": 288000,
+          "16.67": 288000,
+          "33.33": 288000
+        },
+        "missingScenarioBins": {
+          "clean": 384000,
+          "missing_10pct": 384000,
+          "missing_25pct": 384000
+        }
+      },
+      "phase4Train": {
+        "rows": 806400,
+        "numeric": {
+          "speed": {
+            "count": 806400,
+            "mean": 700.698915,
+            "p50": 472.624657,
+            "p90": 1588.358896,
+            "p95": 2073.360405,
+            "p99": 3647.87573,
+            "max": 16425.658023
+          },
+          "acceleration": {
+            "count": 806400,
+            "mean": 54422.048288,
+            "p50": 3683.871583,
+            "p90": 186017.648017,
+            "p95": 269032.294755,
+            "p99": 427385.17037,
+            "max": 1412056.709276
+          },
+          "curvature": {
+            "count": 806400,
+            "mean": 30.973071,
+            "p50": 0.559525,
+            "p90": 123.69109,
+            "p95": 152.638135,
+            "p99": 175.038604,
+            "max": 180
+          },
+          "historyCount": {
+            "count": 806400,
+            "mean": 19.853651,
+            "p50": 21,
+            "p90": 24,
+            "p95": 24,
+            "p99": 24,
+            "max": 25
+          },
+          "horizonMs": {
+            "count": 806400,
+            "mean": 20.8325,
+            "p50": 20.835,
+            "p90": 33.33,
+            "p95": 33.33,
+            "p99": 33.33,
+            "max": 33.33
+          },
+          "lsVsCvDisagreement": {
+            "count": 806400,
+            "mean": 7.553133,
+            "p50": 1.953488,
+            "p90": 23.247366,
+            "p95": 28.888099,
+            "p99": 38.496194,
+            "max": 59.999832
+          },
+          "jitterProxy": {
+            "count": 806400,
+            "mean": 4.443869,
+            "p50": 1.476117,
+            "p90": 11.888598,
+            "p95": 14.435504,
+            "p99": 29.414952,
+            "max": 202.178423
+          }
+        },
+        "speedBins": {
+          "0-25": 29100,
+          "25-100": 94052,
+          "100-250": 127176,
+          "250-500": 168836,
+          "500-1000": 200216,
+          "1000-2000": 142344,
+          ">=2000": 44676
+        },
+        "accelerationBins": {
+          "0-2000": 368724,
+          "2000-8000": 71288,
+          "8000-20000": 52876,
+          ">=20000": 313512
+        },
+        "curvatureBins": {
+          "0-10": 511776,
+          "10-30": 61912,
+          "30-60": 58120,
+          ">=60": 174592
+        },
+        "historyCountBins": {
+          "1-2": 32,
+          "3-5": 460,
+          "6-12": 52332,
+          ">=13": 753576
+        },
+        "horizonBins": {
+          "25": 201600,
+          "8.33": 201600,
+          "16.67": 201600,
+          "33.33": 201600
+        },
+        "missingScenarioBins": {
+          "clean": 268800,
+          "missing_10pct": 268800,
+          "missing_25pct": 268800
+        }
+      },
+      "phase4Validation": {
+        "rows": 172800,
+        "numeric": {
+          "speed": {
+            "count": 172800,
+            "mean": 690.573812,
+            "p50": 447.982927,
+            "p90": 1528.785018,
+            "p95": 2113.526623,
+            "p99": 4121.416992,
+            "max": 13826.432746
+          },
+          "acceleration": {
+            "count": 172800,
+            "mean": 47088.58416,
+            "p50": 2125.707907,
+            "p90": 161908.779015,
+            "p95": 240560.773909,
+            "p99": 452081.865399,
+            "max": 860605.809481
+          },
+          "curvature": {
+            "count": 172800,
+            "mean": 25.477405,
+            "p50": 0.388532,
+            "p90": 110.11474,
+            "p95": 147.29538,
+            "p99": 174.175415,
+            "max": 179.973111
+          },
+          "historyCount": {
+            "count": 172800,
+            "mean": 19.825856,
+            "p50": 21,
+            "p90": 24,
+            "p95": 24,
+            "p99": 24,
+            "max": 25
+          },
+          "horizonMs": {
+            "count": 172800,
+            "mean": 20.8325,
+            "p50": 20.835,
+            "p90": 33.33,
+            "p95": 33.33,
+            "p99": 33.33,
+            "max": 33.33
+          },
+          "lsVsCvDisagreement": {
+            "count": 172800,
+            "mean": 6.772907,
+            "p50": 1.183207,
+            "p90": 21.679901,
+            "p95": 27.776109,
+            "p99": 37.484533,
+            "max": 59.683119
+          },
+          "jitterProxy": {
+            "count": 172800,
+            "mean": 4.2476,
+            "p50": 0.862876,
+            "p90": 11.570574,
+            "p95": 14.723214,
+            "p99": 31.484005,
+            "max": 144.099636
+          }
+        },
+        "speedBins": {
+          "0-25": 5976,
+          "25-100": 23272,
+          "100-250": 27500,
+          "250-500": 36300,
+          "500-1000": 42436,
+          "1000-2000": 27588,
+          ">=2000": 9728
+        },
+        "accelerationBins": {
+          "0-2000": 85384,
+          "2000-8000": 16624,
+          "8000-20000": 11052,
+          ">=20000": 59740
+        },
+        "curvatureBins": {
+          "0-10": 119064,
+          "10-30": 12724,
+          "30-60": 11036,
+          ">=60": 29976
+        },
+        "historyCountBins": {
+          "1-2": 0,
+          "3-5": 68,
+          "6-12": 11548,
+          ">=13": 161184
+        },
+        "horizonBins": {
+          "25": 43200,
+          "8.33": 43200,
+          "16.67": 43200,
+          "33.33": 43200
+        },
+        "missingScenarioBins": {
+          "clean": 57600,
+          "missing_10pct": 57600,
+          "missing_25pct": 57600
+        }
+      },
+      "phase4Test": {
+        "rows": 172800,
+        "numeric": {
+          "speed": {
+            "count": 172800,
+            "mean": 741.789565,
+            "p50": 520.724602,
+            "p90": 1604.64024,
+            "p95": 2129.085976,
+            "p99": 3840.336506,
+            "max": 15745.510928
+          },
+          "acceleration": {
+            "count": 172800,
+            "mean": 58195.01155,
+            "p50": 10260.779638,
+            "p90": 186146.545751,
+            "p95": 255725.860528,
+            "p99": 410789.793538,
+            "max": 2068143.881831
+          },
+          "curvature": {
+            "count": 172800,
+            "mean": 34.42344,
+            "p50": 1.490348,
+            "p90": 127.044231,
+            "p95": 154.238875,
+            "p99": 175.043039,
+            "max": 179.994202
+          },
+          "historyCount": {
+            "count": 172800,
+            "mean": 19.846181,
+            "p50": 21,
+            "p90": 24,
+            "p95": 24,
+            "p99": 24,
+            "max": 25
+          },
+          "horizonMs": {
+            "count": 172800,
+            "mean": 20.8325,
+            "p50": 20.835,
+            "p90": 33.33,
+            "p95": 33.33,
+            "p99": 33.33,
+            "max": 33.33
+          },
+          "lsVsCvDisagreement": {
+            "count": 172800,
+            "mean": 8.293421,
+            "p50": 4.007594,
+            "p90": 23.557557,
+            "p95": 28.634686,
+            "p99": 38.145087,
+            "max": 59.951997
+          },
+          "jitterProxy": {
+            "count": 172800,
+            "mean": 5.040091,
+            "p50": 2.927611,
+            "p90": 11.672558,
+            "p95": 14.567561,
+            "p99": 37.391072,
+            "max": 197.192444
+          }
+        },
+        "speedBins": {
+          "0-25": 5076,
+          "25-100": 18956,
+          "100-250": 24252,
+          "250-500": 35072,
+          "500-1000": 48236,
+          "1000-2000": 31168,
+          ">=2000": 10040
+        },
+        "accelerationBins": {
+          "0-2000": 68020,
+          "2000-8000": 14852,
+          "8000-20000": 13304,
+          ">=20000": 76624
+        },
+        "curvatureBins": {
+          "0-10": 100304,
+          "10-30": 16180,
+          "30-60": 15164,
+          ">=60": 41152
+        },
+        "historyCountBins": {
+          "1-2": 16,
+          "3-5": 92,
+          "6-12": 11044,
+          ">=13": 161648
+        },
+        "horizonBins": {
+          "25": 43200,
+          "8.33": 43200,
+          "16.67": 43200,
+          "33.33": 43200
+        },
+        "missingScenarioBins": {
+          "clean": 57600,
+          "missing_10pct": 57600,
+          "missing_25pct": 57600
+        }
+      }
+    }
+  },
+  "findings": [
+    {
+      "feature": "speed",
+      "finding": "real p50 0.000 px/s and p90 707.107 px/s vs synthetic phase4-test p50 520.725 and p90 1604.640; real is dominated by near-stop rows with a small high-speed tail."
+    },
+    {
+      "feature": "history/missingScenario",
+      "finding": "real history is dense (p50 101.000, p95 101.000) and has no synthetic dropout scenarios; phase2 intentionally allocates rows equally across clean/10%/25% missing-history scenarios."
+    },
+    {
+      "feature": "LS-vs-CV disagreement",
+      "finding": "real p50/p95 disagreement 1.453 / 36.000 px vs synthetic phase4-test 4.008 / 28.635 px; real has a lower median but a clamp-heavy p95 tail, so disagreement alone did not separate safe LS adoption."
+    },
+    {
+      "feature": "curvature/acceleration",
+      "finding": "real curvature p95 0.000 deg and acceleration p95 4562071.898 px/s^2 differ from synthetic phase4-test p95 154.239 deg and 255725.861 px/s^2, making phase4's risk score thresholds poorly calibrated."
+    },
+    {
+      "feature": "phase2 speed mix",
+      "finding": "phase2 full artifact has 3.63% in 0-25 px/s vs real 87.93%; the generator overrepresents mid-speed scripted motion relative to the latest real traces."
+    }
+  ]
+}

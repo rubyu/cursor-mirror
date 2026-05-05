@@ -1,0 +1,8 @@
+{
+  "scenarioPath": "C:/Users/seigl/OneDrive/my/ドキュメント/projects/cursor/poc/cursor-prediction-v19/step-04b-generator-revision/abrupt-stop-scenarios-revised.json",
+  "metadataPath": "C:/Users/seigl/OneDrive/my/ドキュメント/projects/cursor/poc/cursor-prediction-v19/step-04b-generator-revision/scenario-metadata-revised.json",
+  "outputPath": "C:/Users/seigl/OneDrive/my/ドキュメント/projects/cursor/poc/cursor-prediction-v19/step-04b-generator-revision/replay-scores.json",
+  "callRateHz": 60,
+  "refreshMs": 16.6666667,
+  "phaseOffsetsMs": [0, 4.1666667, 8.3333333, 12.5]
+}

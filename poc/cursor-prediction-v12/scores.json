@@ -1,0 +1,304 @@
+{
+  "schemaVersion": "cursor-prediction-v12-final/1",
+  "generatedAtUtc": "2026-05-03T23:24:17.8654228Z",
+  "constraints": {
+    "additionalHeavySearch": false,
+    "rawZipCopied": false,
+    "expandedCsvCopied": false,
+    "checkpointWritten": false
+  },
+  "decision": {
+    "primaryCandidate": {
+      "modelId": "gate_s25_net0_eff35_ls12_g100_cap12_off-2",
+      "sourceStep": "step-5-state-gated-search",
+      "horizonSource": "runtimeSchedulerPoll + v9 target-derived horizon",
+      "fixed16p67msForSchedulerAnchors": false,
+      "params": {
+        "speedThreshold": 25,
+        "netThreshold": 0,
+        "efficiencyThreshold": 0.35,
+        "n": 12,
+        "gain": 1,
+        "capPx": 12,
+        "offsetMs": -2,
+        "maxHistoryGapMs": 40,
+        "gateSpeedN": 12
+      }
+    },
+    "nonCandidates": [
+      {
+        "modelId": "step-7-specialist-guards",
+        "reason": "Best high-speed guard worsened 30Hz holdout test p99 from 7 px to 9 px."
+      },
+      {
+        "modelId": "ML/FSMN probes",
+        "reason": "Precision probes were useful, but the best Step 6 validation p95/p99 did not beat the Step 5 gate."
+      }
+    ]
+  },
+  "data": {
+    "inputPackages": [
+      "cursor-mirror-motion-recording-20260504-070055.zip",
+      "cursor-mirror-motion-recording-20260504-070211.zip",
+      "cursor-mirror-motion-recording-20260504-070248.zip",
+      "cursor-mirror-motion-recording-20260504-070307.zip"
+    ],
+    "formatVersions": {
+      "trace": 9,
+      "motionSample": 2
+    },
+    "coverage": {
+      "machineFingerprints": 3,
+      "refreshBuckets": [
+        "30Hz",
+        "60Hz"
+      ]
+    },
+    "cleaning": {
+      "motionLabExtraInfo": 1129139532,
+      "contaminationWindowMilliseconds": 250,
+      "rules": [
+        "Drop trace rows with warmupSample=true.",
+        "Drop motion-sample rows before warmup.",
+        "Drop rows around event=move where hookExtraInfo != 1129139532.",
+        "Drop scenario 0 from m070055."
+      ],
+      "cleanTraceRows": 2177260,
+      "excludedTraceRows": 12919,
+      "cleanMotionRows": 733973,
+      "excludedMotionRows": 3311
+    },
+    "split": {
+      "method": "scenario-level stable 70/15/15 split",
+      "scenarioCounts": {
+        "train": 44,
+        "validation": 10,
+        "test": 10
+      }
+    }
+  },
+  "timing": {
+    "runtimeSchedulerPollTargetHorizonMilliseconds": {
+      "30Hz": {
+        "p50": 3.87,
+        "p95": 3.9103
+      },
+      "60Hz": {
+        "p50": 3.9112,
+        "p95": 3.9573
+      }
+    },
+    "conclusion": "Runtime scheduler rows are already close to target vblank; fixed 16.67 ms is not the scheduler prediction horizon."
+  },
+  "modelComparison": {
+    "runtimeSchedulerPoll_v9Target": [
+      {
+        "modelId": "current_product_equivalent",
+        "validation": {
+          "mean": 2.1193,
+          "p95": 10,
+          "p99": 12,
+          "gt10": 0.050049,
+          "signedMean": -1.33
+        },
+        "test": {
+          "p95": 8.75,
+          "p99": 12
+        }
+      },
+      {
+        "modelId": "constant_position",
+        "validation": {
+          "mean": 0.5847,
+          "p95": 2,
+          "p99": 8.25,
+          "gt10": 0.00831,
+          "signedMean": -1.9382
+        },
+        "test": {
+          "p95": 2.25,
+          "p99": 6.25
+        }
+      },
+      {
+        "modelId": "least_squares_n12_gain100_cap24",
+        "validation": {
+          "mean": 0.7891,
+          "p95": 2.5,
+          "p99": 7.75,
+          "gt10": 0.007237,
+          "signedMean": -1.3866
+        },
+        "test": {
+          "p95": 2.5,
+          "p99": 6.5
+        }
+      },
+      {
+        "modelId": "gate_s25_net0_eff35_ls12_g100_cap12_off-2",
+        "validation": {
+          "mean": 0.6735,
+          "p95": 2,
+          "p99": 7.5,
+          "gt10": 0.007657,
+          "signedMean": -1.681
+        },
+        "test": {
+          "p95": 2.5,
+          "p99": 6
+        }
+      },
+      {
+        "modelId": "VFSMNv2_k12_ridge",
+        "validation": {
+          "mean": 0.7577,
+          "p95": 2.25,
+          "p99": 7.75,
+          "gt10": 0.00733,
+          "signedMean": -1.242
+        },
+        "test": {
+          "p95": 2.25,
+          "p99": 6.25
+        }
+      }
+    ]
+  },
+  "holdout": {
+    "selectedStep5Gate": [
+      {
+        "holdoutId": "machine:24cpu_2560x1440_1mon_60Hz",
+        "kind": "machine",
+        "trainP95": 2.5,
+        "testP95": 2,
+        "deltaP95": -0.5,
+        "trainP99": 7.25,
+        "testP99": 5.75,
+        "deltaP99": -1.5
+      },
+      {
+        "holdoutId": "machine:32cpu_7680x1440_3mon_60Hz",
+        "kind": "machine",
+        "trainP95": 2.5,
+        "testP95": 2,
+        "deltaP95": -0.5,
+        "trainP99": 7.25,
+        "testP99": 5.75,
+        "deltaP99": -1.5
+      },
+      {
+        "holdoutId": "machine:6cpu_3840x2160_1mon_30Hz",
+        "kind": "machine",
+        "trainP95": 2,
+        "testP95": 3,
+        "deltaP95": 1,
+        "trainP99": 5.75,
+        "testP99": 8.75,
+        "deltaP99": 3
+      },
+      {
+        "holdoutId": "refresh:30Hz",
+        "kind": "refresh",
+        "trainP95": 2,
+        "testP95": 3,
+        "deltaP95": 1,
+        "trainP99": 5.75,
+        "testP99": 8.75,
+        "deltaP99": 3
+      },
+      {
+        "holdoutId": "refresh:60Hz",
+        "kind": "refresh",
+        "trainP95": 3,
+        "testP95": 2,
+        "deltaP95": -1,
+        "trainP99": 8.75,
+        "testP99": 5.75,
+        "deltaP99": -3
+      }
+    ]
+  },
+  "step7": {
+    "safeSpecialistCandidates": 0,
+    "bestRejectedSpecialist": {
+      "modelId": "tailguard_spd2000_acc60k_net0_eff0_30Hz_ls8_g150_cap24_off4",
+      "validation": {
+        "p95": 2,
+        "p99": 7.75,
+        "gt10": 0.008077,
+        "highSpeedP95": 21.75,
+        "highSpeedP99": 32
+      },
+      "test": {
+        "p95": 2.5,
+        "p99": 6.25
+      },
+      "guardrailDeltas": {
+        "validationP95": 0,
+        "validationP99": 0.25,
+        "validationGt10": 0.0004,
+        "testP95": 0,
+        "testP99": 0.25,
+        "testGt10": 0.0008,
+        "holdout30P95": 0,
+        "holdout30P99": 2
+      },
+      "rejectionReason": "30Hz holdout p99 worsened by 2 px."
+    },
+    "oracleCeiling": {
+      "phaseSpeedRefreshGroupOracle": {
+        "validation": {
+          "p95": 2,
+          "p99": 7.25,
+          "gt10": 0.007003,
+          "highSpeedP95": 15.75,
+          "highSpeedP99": 27.5,
+          "resumeP95": 3.5,
+          "resumeP99": 14.25
+        },
+        "test": {
+          "p95": 2.25,
+          "p99": 5.75
+        },
+        "analysisOnly": true
+      },
+      "perRowBestPoolLowerBound": {
+        "validation": {
+          "p95": 1.5,
+          "p99": 4.75,
+          "gt10": 0.003782,
+          "highSpeedP95": 13.5,
+          "highSpeedP99": 26.25,
+          "resumeP95": 2,
+          "resumeP99": 9.5
+        },
+        "test": {
+          "p95": 1.75,
+          "p99": 3.25
+        },
+        "analysisOnly": true
+      }
+    }
+  },
+  "zeroErrorAssessment": {
+    "reached": false,
+    "reasons": [
+      "Residual error is concentrated in high-speed and resume tails.",
+      "Causal history alone cannot reliably distinguish future intent changes from similar recent motion.",
+      "The analysis-only per-row lower bound still leaves validation >=2000 px/s p99 at 26.25 px.",
+      "Aggressive specialists reduce part of the tail but worsen 30Hz holdout p99."
+    ]
+  },
+  "nextWork": {
+    "implementation": [
+      "Implement Step 5 gate as the primary product candidate.",
+      "Use runtime scheduler target-derived horizon for scheduler anchors.",
+      "Add counters for gate state, fallback reasons, high-speed rows, and 30Hz behavior."
+    ],
+    "experiments": [
+      "Collect more independent 30Hz and high-speed resume traces.",
+      "Search for causal features that separate future intent changes before label-time phase is known.",
+      "Revisit specialist guards only after the new causal features remove the 30Hz failure mode."
+    ]
+  }
+}

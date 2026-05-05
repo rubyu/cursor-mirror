@@ -6,14 +6,16 @@ namespace CursorMirror
     [DataContract]
     public sealed class CursorMirrorSettings
     {
+        public const int CurrentSettingsSchemaVersion = 1;
         public const bool DefaultMovementTranslucencyEnabled = true;
         public const bool DefaultPredictionEnabled = true;
         public const bool DefaultIdleFadeEnabled = true;
-        public const int DefaultMovingOpacityPercent = 70;
-        public const int DefaultFadeDurationMilliseconds = 80;
-        public const int DefaultIdleDelayMilliseconds = 120;
+        public const int DefaultMovingOpacityPercent = 20;
+        public const int DefaultFadeDurationMilliseconds = 100;
+        public const int DefaultIdleDelayMilliseconds = 100;
+        public const int DefaultIdleFadeDurationMilliseconds = 300;
         public const int DefaultIdleFadeDelayMilliseconds = 3000;
-        public const int DefaultIdleOpacityPercent = 0;
+        public const int DefaultIdleOpacityPercent = 10;
         public const int DefaultPredictionHorizonMilliseconds = 8;
         public const int DefaultPredictionIdleResetMilliseconds = 100;
         public const int DefaultPredictionGainPercent = 100;
@@ -30,9 +32,17 @@ namespace CursorMirror
         public const int DefaultDwmAdaptiveOscillationMaximumEfficiencyPercent = 55;
         public const int DefaultDwmAdaptiveOscillationLatchMilliseconds = 0;
         public const int DwmPredictionModelConstantVelocity = 0;
-        public const int DwmPredictionModelLeastSquares = 1;
         public const int DefaultDwmPredictionModel = DwmPredictionModelConstantVelocity;
-        public const int DefaultDwmPredictionTargetOffsetMilliseconds = 2;
+        public const int DwmPredictionTargetOffsetDisplayOriginMilliseconds = 8;
+        public const int DefaultDwmPredictionTargetOffsetDisplayMilliseconds = 0;
+        public const int DefaultDwmPredictionTargetOffsetMilliseconds =
+            DwmPredictionTargetOffsetDisplayOriginMilliseconds + DefaultDwmPredictionTargetOffsetDisplayMilliseconds;
+        public const bool DefaultRuntimeSetWaitableTimerExEnabled = true;
+        public const int DefaultRuntimeFineWaitAdvanceMicroseconds = 2000;
+        public const int DefaultRuntimeFineWaitYieldThresholdMicroseconds = 100;
+        public const bool DefaultRuntimeMessageDeferralEnabled = true;
+        public const int DefaultRuntimeMessageDeferralMicroseconds = 100;
+        public const bool DefaultRuntimeThreadLatencyProfileEnabled = true;
 
         public const int MinimumMovingOpacityPercent = 1;
         public const int MaximumMovingOpacityPercent = 100;
@@ -40,6 +50,8 @@ namespace CursorMirror
         public const int MaximumFadeDurationMilliseconds = 300;
         public const int MinimumIdleDelayMilliseconds = 50;
         public const int MaximumIdleDelayMilliseconds = 500;
+        public const int MinimumIdleFadeDurationMilliseconds = MinimumFadeDurationMilliseconds;
+        public const int MaximumIdleFadeDurationMilliseconds = MaximumFadeDurationMilliseconds;
         public const int MinimumIdleFadeDelayMilliseconds = 0;
         public const int MaximumIdleFadeDelayMilliseconds = 60000;
         public const int MinimumIdleOpacityPercent = 0;
@@ -72,15 +84,26 @@ namespace CursorMirror
         public const int MaximumDwmAdaptiveOscillationMaximumEfficiencyPercent = 100;
         public const int MinimumDwmAdaptiveOscillationLatchMilliseconds = 0;
         public const int MaximumDwmAdaptiveOscillationLatchMilliseconds = 1000;
-        public const int MinimumDwmPredictionModel = DwmPredictionModelConstantVelocity;
-        public const int MaximumDwmPredictionModel = DwmPredictionModelLeastSquares;
-        public const int MinimumDwmPredictionTargetOffsetMilliseconds = -8;
-        public const int MaximumDwmPredictionTargetOffsetMilliseconds = 8;
+        public const int MinimumDwmPredictionTargetOffsetDisplayMilliseconds = -32;
+        public const int MaximumDwmPredictionTargetOffsetDisplayMilliseconds = 32;
+        public const int MinimumDwmPredictionTargetOffsetMilliseconds =
+            DwmPredictionTargetOffsetDisplayOriginMilliseconds + MinimumDwmPredictionTargetOffsetDisplayMilliseconds;
+        public const int MaximumDwmPredictionTargetOffsetMilliseconds =
+            DwmPredictionTargetOffsetDisplayOriginMilliseconds + MaximumDwmPredictionTargetOffsetDisplayMilliseconds;
+        public const int MinimumRuntimeFineWaitAdvanceMicroseconds = 0;
+        public const int MaximumRuntimeFineWaitAdvanceMicroseconds = 5000;
+        public const int MinimumRuntimeFineWaitYieldThresholdMicroseconds = 0;
+        public const int MaximumRuntimeFineWaitYieldThresholdMicroseconds = 5000;
+        public const int MinimumRuntimeMessageDeferralMicroseconds = 0;
+        public const int MaximumRuntimeMessageDeferralMicroseconds = 5000;
 
         public CursorMirrorSettings()
         {
             ApplyDefaults();
         }
+
+        [DataMember(Order = 0)]
+        public int SettingsSchemaVersion { get; set; }
 
         [DataMember(Order = 1)]
         public bool MovementTranslucencyEnabled { get; set; }
@@ -157,6 +180,27 @@ namespace CursorMirror
         [DataMember(Order = 25)]
         public int DwmPredictionTargetOffsetMilliseconds { get; set; }
 
+        [DataMember(Order = 27)]
+        public bool RuntimeSetWaitableTimerExEnabled { get; set; }
+
+        [DataMember(Order = 28)]
+        public int RuntimeFineWaitAdvanceMicroseconds { get; set; }
+
+        [DataMember(Order = 29)]
+        public int RuntimeFineWaitYieldThresholdMicroseconds { get; set; }
+
+        [DataMember(Order = 30)]
+        public bool RuntimeMessageDeferralEnabled { get; set; }
+
+        [DataMember(Order = 31)]
+        public int RuntimeMessageDeferralMicroseconds { get; set; }
+
+        [DataMember(Order = 32)]
+        public bool RuntimeThreadLatencyProfileEnabled { get; set; }
+
+        [DataMember(Order = 33)]
+        public int IdleFadeDurationMilliseconds { get; set; }
+
         public static CursorMirrorSettings Default()
         {
             return new CursorMirrorSettings();
@@ -166,6 +210,7 @@ namespace CursorMirror
         {
             return new CursorMirrorSettings
             {
+                SettingsSchemaVersion = SettingsSchemaVersion,
                 MovementTranslucencyEnabled = MovementTranslucencyEnabled,
                 PredictionEnabled = PredictionEnabled,
                 MovingOpacityPercent = MovingOpacityPercent,
@@ -174,6 +219,7 @@ namespace CursorMirror
                 PredictionHorizonMilliseconds = PredictionHorizonMilliseconds,
                 PredictionIdleResetMilliseconds = PredictionIdleResetMilliseconds,
                 IdleFadeEnabled = IdleFadeEnabled,
+                IdleFadeDurationMilliseconds = IdleFadeDurationMilliseconds,
                 IdleFadeDelayMilliseconds = IdleFadeDelayMilliseconds,
                 IdleOpacityPercent = IdleOpacityPercent,
                 PredictionGainPercent = PredictionGainPercent,
@@ -190,7 +236,13 @@ namespace CursorMirror
                 DwmAdaptiveOscillationMaximumEfficiencyPercent = DwmAdaptiveOscillationMaximumEfficiencyPercent,
                 DwmAdaptiveOscillationLatchMilliseconds = DwmAdaptiveOscillationLatchMilliseconds,
                 DwmPredictionModel = DwmPredictionModel,
-                DwmPredictionTargetOffsetMilliseconds = DwmPredictionTargetOffsetMilliseconds
+                DwmPredictionTargetOffsetMilliseconds = DwmPredictionTargetOffsetMilliseconds,
+                RuntimeSetWaitableTimerExEnabled = RuntimeSetWaitableTimerExEnabled,
+                RuntimeFineWaitAdvanceMicroseconds = RuntimeFineWaitAdvanceMicroseconds,
+                RuntimeFineWaitYieldThresholdMicroseconds = RuntimeFineWaitYieldThresholdMicroseconds,
+                RuntimeMessageDeferralEnabled = RuntimeMessageDeferralEnabled,
+                RuntimeMessageDeferralMicroseconds = RuntimeMessageDeferralMicroseconds,
+                RuntimeThreadLatencyProfileEnabled = RuntimeThreadLatencyProfileEnabled
             };
         }
 
@@ -198,42 +250,84 @@ namespace CursorMirror
         {
             return new CursorMirrorSettings
             {
+                SettingsSchemaVersion = CurrentSettingsSchemaVersion,
                 MovementTranslucencyEnabled = MovementTranslucencyEnabled,
                 PredictionEnabled = PredictionEnabled,
-                MovingOpacityPercent = Clamp(MovingOpacityPercent, MinimumMovingOpacityPercent, MaximumMovingOpacityPercent),
-                FadeDurationMilliseconds = Clamp(FadeDurationMilliseconds, MinimumFadeDurationMilliseconds, MaximumFadeDurationMilliseconds),
-                IdleDelayMilliseconds = Clamp(IdleDelayMilliseconds, MinimumIdleDelayMilliseconds, MaximumIdleDelayMilliseconds),
-                PredictionHorizonMilliseconds = Clamp(PredictionHorizonMilliseconds, MinimumPredictionHorizonMilliseconds, MaximumPredictionHorizonMilliseconds),
-                PredictionIdleResetMilliseconds = Clamp(PredictionIdleResetMilliseconds, MinimumPredictionIdleResetMilliseconds, MaximumPredictionIdleResetMilliseconds),
+                MovingOpacityPercent = CursorMirrorSettingRanges.MovingOpacity.Clamp(MovingOpacityPercent),
+                FadeDurationMilliseconds = CursorMirrorSettingRanges.FadeDuration.Clamp(FadeDurationMilliseconds),
+                IdleDelayMilliseconds = CursorMirrorSettingRanges.IdleDelay.Clamp(IdleDelayMilliseconds),
+                PredictionHorizonMilliseconds = CursorMirrorSettingRanges.PredictionHorizon.Clamp(PredictionHorizonMilliseconds),
+                PredictionIdleResetMilliseconds = CursorMirrorSettingRanges.PredictionIdleReset.Clamp(PredictionIdleResetMilliseconds),
                 IdleFadeEnabled = IdleFadeEnabled,
-                IdleFadeDelayMilliseconds = Clamp(IdleFadeDelayMilliseconds, MinimumIdleFadeDelayMilliseconds, MaximumIdleFadeDelayMilliseconds),
-                IdleOpacityPercent = Clamp(IdleOpacityPercent, MinimumIdleOpacityPercent, MaximumIdleOpacityPercent),
-                PredictionGainPercent = Clamp(PredictionGainPercent, MinimumPredictionGainPercent, MaximumPredictionGainPercent),
-                DwmPredictionHorizonCapMilliseconds = Clamp(DwmPredictionHorizonCapMilliseconds, MinimumDwmPredictionHorizonCapMilliseconds, MaximumDwmPredictionHorizonCapMilliseconds),
+                IdleFadeDurationMilliseconds = CursorMirrorSettingRanges.IdleFadeDuration.Clamp(IdleFadeDurationMilliseconds),
+                IdleFadeDelayMilliseconds = CursorMirrorSettingRanges.IdleFadeDelay.Clamp(IdleFadeDelayMilliseconds),
+                IdleOpacityPercent = CursorMirrorSettingRanges.IdleOpacity.Clamp(IdleOpacityPercent),
+                PredictionGainPercent = CursorMirrorSettingRanges.PredictionGain.Clamp(PredictionGainPercent),
+                DwmPredictionHorizonCapMilliseconds = CursorMirrorSettingRanges.DwmPredictionHorizonCap.Clamp(DwmPredictionHorizonCapMilliseconds),
                 DwmAdaptiveGainEnabled = DwmAdaptiveGainEnabled,
-                DwmAdaptiveGainPercent = Clamp(DwmAdaptiveGainPercent, MinimumDwmAdaptiveGainPercent, MaximumDwmAdaptiveGainPercent),
-                DwmAdaptiveMinimumSpeedPixelsPerSecond = Clamp(DwmAdaptiveMinimumSpeedPixelsPerSecond, MinimumDwmAdaptiveMinimumSpeedPixelsPerSecond, MaximumDwmAdaptiveMinimumSpeedPixelsPerSecond),
-                DwmAdaptiveMaximumAccelerationPixelsPerSecondSquared = Clamp(DwmAdaptiveMaximumAccelerationPixelsPerSecondSquared, MinimumDwmAdaptiveMaximumAccelerationPixelsPerSecondSquared, MaximumDwmAdaptiveMaximumAccelerationPixelsPerSecondSquared),
-                DwmAdaptiveReversalCooldownSamples = Clamp(DwmAdaptiveReversalCooldownSamples, MinimumDwmAdaptiveReversalCooldownSamples, MaximumDwmAdaptiveReversalCooldownSamples),
-                DwmAdaptiveStableDirectionSamples = Clamp(DwmAdaptiveStableDirectionSamples, MinimumDwmAdaptiveStableDirectionSamples, MaximumDwmAdaptiveStableDirectionSamples),
-                DwmAdaptiveOscillationWindowSamples = Clamp(DwmAdaptiveOscillationWindowSamples, MinimumDwmAdaptiveOscillationWindowSamples, MaximumDwmAdaptiveOscillationWindowSamples),
-                DwmAdaptiveOscillationMinimumReversals = Clamp(DwmAdaptiveOscillationMinimumReversals, MinimumDwmAdaptiveOscillationMinimumReversals, MaximumDwmAdaptiveOscillationMinimumReversals),
-                DwmAdaptiveOscillationMaximumSpanPixels = Clamp(DwmAdaptiveOscillationMaximumSpanPixels, MinimumDwmAdaptiveOscillationMaximumSpanPixels, MaximumDwmAdaptiveOscillationMaximumSpanPixels),
-                DwmAdaptiveOscillationMaximumEfficiencyPercent = Clamp(DwmAdaptiveOscillationMaximumEfficiencyPercent, MinimumDwmAdaptiveOscillationMaximumEfficiencyPercent, MaximumDwmAdaptiveOscillationMaximumEfficiencyPercent),
-                DwmAdaptiveOscillationLatchMilliseconds = Clamp(DwmAdaptiveOscillationLatchMilliseconds, MinimumDwmAdaptiveOscillationLatchMilliseconds, MaximumDwmAdaptiveOscillationLatchMilliseconds),
-                DwmPredictionModel = Clamp(DwmPredictionModel, MinimumDwmPredictionModel, MaximumDwmPredictionModel),
-                DwmPredictionTargetOffsetMilliseconds = Clamp(DwmPredictionTargetOffsetMilliseconds, MinimumDwmPredictionTargetOffsetMilliseconds, MaximumDwmPredictionTargetOffsetMilliseconds)
+                DwmAdaptiveGainPercent = CursorMirrorSettingRanges.DwmAdaptiveGain.Clamp(DwmAdaptiveGainPercent),
+                DwmAdaptiveMinimumSpeedPixelsPerSecond = CursorMirrorSettingRanges.DwmAdaptiveMinimumSpeed.Clamp(DwmAdaptiveMinimumSpeedPixelsPerSecond),
+                DwmAdaptiveMaximumAccelerationPixelsPerSecondSquared = CursorMirrorSettingRanges.DwmAdaptiveMaximumAcceleration.Clamp(DwmAdaptiveMaximumAccelerationPixelsPerSecondSquared),
+                DwmAdaptiveReversalCooldownSamples = CursorMirrorSettingRanges.DwmAdaptiveReversalCooldown.Clamp(DwmAdaptiveReversalCooldownSamples),
+                DwmAdaptiveStableDirectionSamples = CursorMirrorSettingRanges.DwmAdaptiveStableDirection.Clamp(DwmAdaptiveStableDirectionSamples),
+                DwmAdaptiveOscillationWindowSamples = CursorMirrorSettingRanges.DwmAdaptiveOscillationWindow.Clamp(DwmAdaptiveOscillationWindowSamples),
+                DwmAdaptiveOscillationMinimumReversals = CursorMirrorSettingRanges.DwmAdaptiveOscillationMinimumReversals.Clamp(DwmAdaptiveOscillationMinimumReversals),
+                DwmAdaptiveOscillationMaximumSpanPixels = CursorMirrorSettingRanges.DwmAdaptiveOscillationMaximumSpan.Clamp(DwmAdaptiveOscillationMaximumSpanPixels),
+                DwmAdaptiveOscillationMaximumEfficiencyPercent = CursorMirrorSettingRanges.DwmAdaptiveOscillationMaximumEfficiency.Clamp(DwmAdaptiveOscillationMaximumEfficiencyPercent),
+                DwmAdaptiveOscillationLatchMilliseconds = CursorMirrorSettingRanges.DwmAdaptiveOscillationLatch.Clamp(DwmAdaptiveOscillationLatchMilliseconds),
+                DwmPredictionModel = NormalizeDwmPredictionModel(DwmPredictionModel),
+                DwmPredictionTargetOffsetMilliseconds = CursorMirrorSettingRanges.DwmPredictionTargetOffset.Clamp(DwmPredictionTargetOffsetMilliseconds),
+                RuntimeSetWaitableTimerExEnabled = RuntimeSetWaitableTimerExEnabled,
+                RuntimeFineWaitAdvanceMicroseconds = CursorMirrorSettingRanges.RuntimeFineWaitAdvance.Clamp(RuntimeFineWaitAdvanceMicroseconds),
+                RuntimeFineWaitYieldThresholdMicroseconds = CursorMirrorSettingRanges.ClampRuntimeFineWaitYieldThreshold(RuntimeFineWaitYieldThresholdMicroseconds, RuntimeFineWaitAdvanceMicroseconds),
+                RuntimeMessageDeferralEnabled = RuntimeMessageDeferralEnabled,
+                RuntimeMessageDeferralMicroseconds = CursorMirrorSettingRanges.RuntimeMessageDeferral.Clamp(RuntimeMessageDeferralMicroseconds),
+                RuntimeThreadLatencyProfileEnabled = RuntimeThreadLatencyProfileEnabled
             };
+        }
+
+        public static int NormalizeDwmPredictionModel(int predictionModel)
+        {
+            return DefaultDwmPredictionModel;
+        }
+
+        public static int DwmPredictionTargetOffsetToDisplayMilliseconds(int targetOffsetMilliseconds)
+        {
+            return CursorMirrorSettingRanges.DwmPredictionTargetOffsetDisplay.Clamp(
+                targetOffsetMilliseconds - DwmPredictionTargetOffsetDisplayOriginMilliseconds);
+        }
+
+        public static int DwmPredictionTargetOffsetFromDisplayMilliseconds(int displayOffsetMilliseconds)
+        {
+            return DwmPredictionTargetOffsetDisplayOriginMilliseconds +
+                CursorMirrorSettingRanges.DwmPredictionTargetOffsetDisplay.Clamp(displayOffsetMilliseconds);
         }
 
         [OnDeserializing]
         private void OnDeserializing(StreamingContext context)
         {
-            ApplyDefaults();
+            ApplyDefaults(0);
+        }
+
+        [OnDeserialized]
+        private void OnDeserialized(StreamingContext context)
+        {
+            if (SettingsSchemaVersion < CurrentSettingsSchemaVersion)
+            {
+                RuntimeThreadLatencyProfileEnabled = DefaultRuntimeThreadLatencyProfileEnabled;
+            }
+
+            SettingsSchemaVersion = CurrentSettingsSchemaVersion;
         }
 
         private void ApplyDefaults()
         {
+            ApplyDefaults(CurrentSettingsSchemaVersion);
+        }
+
+        private void ApplyDefaults(int settingsSchemaVersion)
+        {
+            SettingsSchemaVersion = settingsSchemaVersion;
             MovementTranslucencyEnabled = DefaultMovementTranslucencyEnabled;
             PredictionEnabled = DefaultPredictionEnabled;
             MovingOpacityPercent = DefaultMovingOpacityPercent;
@@ -242,6 +336,7 @@ namespace CursorMirror
             PredictionHorizonMilliseconds = DefaultPredictionHorizonMilliseconds;
             PredictionIdleResetMilliseconds = DefaultPredictionIdleResetMilliseconds;
             IdleFadeEnabled = DefaultIdleFadeEnabled;
+            IdleFadeDurationMilliseconds = DefaultIdleFadeDurationMilliseconds;
             IdleFadeDelayMilliseconds = DefaultIdleFadeDelayMilliseconds;
             IdleOpacityPercent = DefaultIdleOpacityPercent;
             PredictionGainPercent = DefaultPredictionGainPercent;
@@ -259,11 +354,13 @@ namespace CursorMirror
             DwmAdaptiveOscillationLatchMilliseconds = DefaultDwmAdaptiveOscillationLatchMilliseconds;
             DwmPredictionModel = DefaultDwmPredictionModel;
             DwmPredictionTargetOffsetMilliseconds = DefaultDwmPredictionTargetOffsetMilliseconds;
+            RuntimeSetWaitableTimerExEnabled = DefaultRuntimeSetWaitableTimerExEnabled;
+            RuntimeFineWaitAdvanceMicroseconds = DefaultRuntimeFineWaitAdvanceMicroseconds;
+            RuntimeFineWaitYieldThresholdMicroseconds = DefaultRuntimeFineWaitYieldThresholdMicroseconds;
+            RuntimeMessageDeferralEnabled = DefaultRuntimeMessageDeferralEnabled;
+            RuntimeMessageDeferralMicroseconds = DefaultRuntimeMessageDeferralMicroseconds;
+            RuntimeThreadLatencyProfileEnabled = DefaultRuntimeThreadLatencyProfileEnabled;
         }
 
-        private static int Clamp(int value, int minimum, int maximum)
-        {
-            return Math.Max(minimum, Math.Min(maximum, value));
-        }
     }
 }

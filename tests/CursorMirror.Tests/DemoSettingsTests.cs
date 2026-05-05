@@ -26,6 +26,7 @@ namespace CursorMirror.Tests
             TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, settings.CursorSettings.DwmPredictionModel, "default prediction model");
             TestAssert.Equal(100, settings.CursorSettings.PredictionGainPercent, "default prediction gain");
             TestAssert.True(settings.CursorSettings.IdleFadeEnabled, "default idle fade enabled");
+            TestAssert.Equal(300, settings.CursorSettings.IdleFadeDurationMilliseconds, "default idle fade duration");
 
             settings.Language = "bad";
             settings.DisplayModeIndex = 99;
@@ -57,6 +58,7 @@ namespace CursorMirror.Tests
                 settings.CursorSettings.PredictionGainPercent = 90;
                 settings.CursorSettings.MovingOpacityPercent = 42;
                 settings.CursorSettings.IdleFadeEnabled = false;
+                settings.CursorSettings.IdleFadeDurationMilliseconds = 120;
                 settings.CursorSettings.IdleFadeDelayMilliseconds = 5000;
                 settings.CursorSettings.IdleOpacityPercent = 15;
 
@@ -72,6 +74,7 @@ namespace CursorMirror.Tests
                 TestAssert.Equal(90, loaded.CursorSettings.PredictionGainPercent, "loaded prediction gain");
                 TestAssert.Equal(42, loaded.CursorSettings.MovingOpacityPercent, "loaded moving opacity");
                 TestAssert.False(loaded.CursorSettings.IdleFadeEnabled, "loaded idle fade flag");
+                TestAssert.Equal(120, loaded.CursorSettings.IdleFadeDurationMilliseconds, "loaded idle fade duration");
                 TestAssert.Equal(5000, loaded.CursorSettings.IdleFadeDelayMilliseconds, "loaded idle fade delay");
                 TestAssert.Equal(15, loaded.CursorSettings.IdleOpacityPercent, "loaded idle opacity");
 

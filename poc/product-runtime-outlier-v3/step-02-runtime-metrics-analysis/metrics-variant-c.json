@@ -1,0 +1,385 @@
+{
+  "generatedUtc": "2026-05-04T22:37:41.0311066Z",
+  "packageCount": 1,
+  "packages": [
+    {
+      "package": "product-runtime-outlier-variant-c.zip",
+      "path": "C:\\Users\\seigl\\OneDrive\\my\\ドキュメント\\projects\\cursor\\poc\\product-runtime-outlier-v3\\step-02-runtime-metrics-analysis\\product-runtime-outlier-variant-c.zip",
+      "metadata": {
+        "format": "product-runtime-outlier-v1",
+        "capturedUtc": "2026-05-04T22:34:52.4189501Z",
+        "stopwatchFrequency": 10000000,
+        "capacity": 65536,
+        "droppedCount": 0,
+        "lastSequence": 2444,
+        "eventCount": 2444
+      },
+      "counts": {
+        "scheduler": 601,
+        "controller": 601,
+        "overlay": 1242,
+        "unknown": 0,
+        "updateLayerFailures": 0
+      },
+      "overlayOperations": {
+        "3": 1242
+      },
+      "waitReturnReasons": {
+        "1": 90,
+        "2": 511
+      },
+      "scheduler": {
+        "wakeLateUs": {
+          "count": 601,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 235.0,
+          "p99": 571.0,
+          "max": 990.0
+        },
+        "vBlankLeadUs": {
+          "count": 601,
+          "min": 3010.0,
+          "p50": 4000.0,
+          "p95": 4000.0,
+          "p99": 4000.0,
+          "max": 4000.0
+        },
+        "dwmReadUs": {
+          "count": 601,
+          "min": 2.9,
+          "p50": 8.8,
+          "p95": 16.8,
+          "p99": 28.5,
+          "max": 3327.3
+        },
+        "decisionUs": {
+          "count": 601,
+          "min": 0.3,
+          "p50": 0.8,
+          "p95": 1.6,
+          "p99": 3.3,
+          "max": 510.6
+        },
+        "waitUs": {
+          "count": 601,
+          "min": 2778.8,
+          "p50": 16649.0,
+          "p95": 16858.1,
+          "p99": 17212.2,
+          "max": 17626.6
+        },
+        "tickDurationUs": {
+          "count": 601,
+          "min": 2.0,
+          "p50": 8.7,
+          "p95": 33.7,
+          "p99": 98.8,
+          "max": 3704.6
+        },
+        "loopTotalUs": {
+          "count": 601,
+          "min": 8992.1,
+          "p50": 16667.0,
+          "p95": 16899.8,
+          "p99": 17322.2,
+          "max": 18901.6
+        },
+        "processedMessagesBeforeTick": {
+          "count": 601,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 2.0
+        },
+        "processedMessageDurationUs": {
+          "count": 601,
+          "min": 0.0,
+          "p50": 0.1,
+          "p95": 0.6,
+          "p99": 1.6,
+          "max": 3473.4
+        },
+        "maxMessageDispatchUs": {
+          "count": 601,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 3456.0
+        },
+        "messageWakeCount": {
+          "count": 601,
+          "min": 0.0,
+          "p50": 1.0,
+          "p95": 2.0,
+          "p99": 2.0,
+          "max": 2.0
+        },
+        "fineSleepZeroCount": {
+          "count": 601,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 1133.0,
+          "p99": 1344.0,
+          "max": 1407.0
+        },
+        "fineSpinCount": {
+          "count": 601,
+          "min": 0.0,
+          "p50": 426.0,
+          "p95": 582.0,
+          "p99": 591.0,
+          "max": 604.0
+        }
+      },
+      "controller": {
+        "pollUs": {
+          "count": 601,
+          "min": 0.6,
+          "p50": 2.5,
+          "p95": 24.6,
+          "p99": 76.5,
+          "max": 1257.6
+        },
+        "selectTargetUs": {
+          "count": 601,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        },
+        "predictUs": {
+          "count": 601,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        },
+        "moveOverlayUs": {
+          "count": 601,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        },
+        "applyOpacityUs": {
+          "count": 601,
+          "min": 0.2,
+          "p50": 1.5,
+          "p95": 3.9,
+          "p99": 11.6,
+          "max": 1497.6
+        },
+        "tickTotalUs": {
+          "count": 601,
+          "min": 1.5,
+          "p50": 6.6,
+          "p95": 29.9,
+          "p99": 89.5,
+          "max": 3170.8
+        },
+        "vBlankLeadUs": {
+          "count": 601,
+          "min": 240.0,
+          "p50": 3992.0,
+          "p95": 3997.0,
+          "p99": 3998.0,
+          "max": 3998.0
+        },
+        "pollSampleAvailable": {
+          "count": 601,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        },
+        "stalePollSample": {
+          "count": 601,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        },
+        "predictionEnabled": {
+          "count": 601,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        },
+        "gen0Delta": {
+          "count": 601,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        },
+        "gen1Delta": {
+          "count": 601,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        },
+        "gen2Delta": {
+          "count": 601,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        }
+      },
+      "overlay": {
+        "showCursorUs": {
+          "count": 0,
+          "min": null,
+          "p50": null,
+          "p95": null,
+          "p99": null,
+          "max": null
+        },
+        "moveUs": {
+          "count": 0,
+          "min": null,
+          "p50": null,
+          "p95": null,
+          "p99": null,
+          "max": null
+        },
+        "setOpacityUs": {
+          "count": 1242,
+          "min": 0.0,
+          "p50": 0.1,
+          "p95": 0.7,
+          "p99": 1.0,
+          "max": 3.2
+        },
+        "updateLayerUs": {
+          "count": 0,
+          "min": null,
+          "p50": null,
+          "p95": null,
+          "p99": null,
+          "max": null
+        },
+        "getDcUs": {
+          "count": 0,
+          "min": null,
+          "p50": null,
+          "p95": null,
+          "p99": null,
+          "max": null
+        },
+        "createCompatibleDcUs": {
+          "count": 0,
+          "min": null,
+          "p50": null,
+          "p95": null,
+          "p99": null,
+          "max": null
+        },
+        "getHbitmapUs": {
+          "count": 0,
+          "min": null,
+          "p50": null,
+          "p95": null,
+          "p99": null,
+          "max": null
+        },
+        "selectObjectUs": {
+          "count": 0,
+          "min": null,
+          "p50": null,
+          "p95": null,
+          "p99": null,
+          "max": null
+        },
+        "updateLayeredWindowUs": {
+          "count": 0,
+          "min": null,
+          "p50": null,
+          "p95": null,
+          "p99": null,
+          "max": null
+        },
+        "cleanupUs": {
+          "count": 0,
+          "min": null,
+          "p50": null,
+          "p95": null,
+          "p99": null,
+          "max": null
+        },
+        "alpha": {
+          "count": 1242,
+          "min": 255.0,
+          "p50": 255.0,
+          "p95": 255.0,
+          "p99": 255.0,
+          "max": 255.0
+        }
+      },
+      "coalescing": {
+        "mouseMoveEventsReceived": {
+          "count": 2444,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 1.0,
+          "p99": 2.0,
+          "max": 2.0
+        },
+        "mouseMoveEventsCoalesced": {
+          "count": 2444,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        },
+        "mouseMovePostsQueued": {
+          "count": 2444,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 1.0,
+          "p99": 2.0,
+          "max": 2.0
+        },
+        "mouseMoveCallbacksProcessed": {
+          "count": 2444,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 1.0,
+          "p99": 2.0,
+          "max": 2.0
+        },
+        "latestMouseMoveAgeMicroseconds": {
+          "count": 2444,
+          "min": -619.0,
+          "p50": 0.0,
+          "p95": 12187.0,
+          "p99": 15044.0,
+          "max": 27446.0
+        },
+        "overlayMoveSkipped": {
+          "count": 2444,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        }
+      }
+    }
+  ]
+}

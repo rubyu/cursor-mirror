@@ -25,8 +25,8 @@
 - The startup view MUST allow selecting the demo display language.
 - The startup view MUST include a setting that controls whether the demo-owned mirrored cursor overlay is enabled.
 - The startup view MUST expose the same user-facing movement translucency and predictive positioning controls as the main settings window.
-- The startup view MUST expose idle-fade enablement, idle opacity, and idle-fade delay when the demo-owned mirrored cursor overlay is enabled.
-- The startup view MUST disable mirrored-cursor parameter controls when their parent setting is disabled: prediction model and prediction gain when prediction is off, moving opacity/fade duration/idle delay when movement translucency is off, and idle opacity/idle-fade delay when idle fade is off.
+- The startup view MUST expose idle-fade enablement, idle opacity, idle-fade duration, and idle-fade delay when the demo-owned mirrored cursor overlay is enabled.
+- The startup view MUST disable mirrored-cursor parameter controls when their parent setting is disabled: prediction model, prediction gain, and prediction target offset when prediction is off, moving opacity/fade duration/idle delay when movement translucency is off, and idle opacity/idle-fade duration/idle-fade delay when idle fade is off.
 - The startup view MUST disable all mirrored-cursor parameter controls when the demo-owned mirrored cursor overlay is disabled.
 - The startup view MUST allow selecting one of three pointer speeds: slow, normal, and fast.
 - The demo application MUST persist startup selections per user and restore them on the next launch.
@@ -54,7 +54,9 @@
 
 ### 12.5 Real Cursor Driving and Free Mode
 - Auto mode MUST move the real Windows cursor using injected mouse movement.
-- When the demo-owned mirrored cursor overlay is enabled, Auto mode MUST feed both demo-injected and user-generated mouse movement into Cursor Mirror's overlay controller so the mirrored cursor remains visible.
+- Auto mode MUST use the shared `RealCursorDriver` SendInput path with the demo-specific injection marker.
+- When the demo-owned mirrored cursor overlay is enabled, Auto mode MUST feed demo-injected movement into Cursor Mirror's overlay controller from the playback path, not from inside the low-level hook callback.
+- When the demo-owned mirrored cursor overlay is enabled, user-generated mouse movement MAY be fed from the hook path so Free mode remains responsive.
 - Demo-injected mouse movement MUST carry a recognizable injection marker so the demo can distinguish its own movement from user movement.
 - The demo MUST install a low-level mouse hook only while the demo scene is running.
 - The demo hook MUST treat mouse movement, button, and wheel events without the demo injection marker as user control.

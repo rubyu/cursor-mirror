@@ -4,7 +4,7 @@
 - Hook lifetime tests MUST cover inactive, activate, double activate, unhook, double unhook, and dispose paths.
 - Coordinate calculation tests MUST cover hot spot alignment, negative coordinates, large cursor images, and monitor-edge positions.
 - Cursor image conversion tests MUST cover successful image creation, invalid handle behavior, unchanged-handle refresh skipping, periodic same-handle refresh behavior where practical, and resource disposal behavior.
-- Movement translucency and idle-fade tests MUST cover default settings, disabled behavior, movement entry, movement continuation, idle exit, idle fade after a stopped pointer, movement recovery from idle fade, linear enter easing, linear exit easing, and zero-duration transitions.
+- Movement translucency and idle-fade tests MUST cover default settings, disabled behavior, movement entry, movement continuation, idle exit, idle fade after a stopped pointer, movement recovery from idle fade, dedicated idle-fade duration, linear enter easing, linear exit easing, and zero-duration transitions.
 - Predictive overlay positioning tests MUST cover default settings, disabled behavior, first sample behavior, valid constant-velocity prediction, invalid timestamps, stale or out-of-order poll samples, idle reset, reset behavior, negative coordinates, and hot spot placement after prediction.
 - Settings tests MUST cover defaults, validation, range clamping or rejection, serialization, deserialization, missing settings, corrupt settings, reset behavior, immediate application of changed values, and idle-fade setting persistence.
 - Version freshness tests MUST cover stable up-to-date status, stable behind counts, development snapshot status, and invalid release-tag filtering without performing network access.

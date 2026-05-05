@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "cursor-prediction-v24-step-03-environment/1",
+  "python": {
+    "path": "C:\\Users\\seigl\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "version": "3.12.13",
+    "packages": {
+      "numpy": true,
+      "torch": false,
+      "onnxruntime": false
+    }
+  },
+  "pathAvailability": {
+    "dotnet": false,
+    "python": false,
+    "uv": "installed but default cache/managed-python access failed in sandbox"
+  },
+  "gpu": {
+    "nvidiaSmiAvailable": true,
+    "device": "NVIDIA GeForce RTX 5090",
+    "cudaDriverVersion": "12.9",
+    "note": "GPU memory was heavily occupied during the initial check; recheck before any GPU job."
+  },
+  "decision": "Begin with bundled-Python NumPy/CPU experiments and reserve GPU for a later single-runner teacher search if the training stack is made available."
+}

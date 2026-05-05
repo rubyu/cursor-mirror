@@ -1,0 +1,36 @@
+{
+  "outputPath": "poc/cursor-prediction-v17/step-10-csharp-lag-overlay-grid/output-lag0p5.json",
+  "lagPx": 0.5,
+  "horizonCapMs": 0,
+  "offsetsMs": [
+    -4.5,
+    -4.25,
+    -4.0,
+    -3.75,
+    -3.5,
+    -3.25,
+    -3.0,
+    -2.0,
+    0.0
+  ],
+  "packages": [
+    {
+      "packageId": "m070248",
+      "zipPath": "cursor-mirror-motion-recording-20260504-070248.zip",
+      "warmupMs": 1500.0,
+      "excludeMs": [
+        {
+          "startMs": 0.0,
+          "endMs": 795.648
+        }
+      ]
+    },
+    {
+      "packageId": "m070307",
+      "zipPath": "cursor-mirror-motion-recording-20260504-070307.zip",
+      "warmupMs": 1500.0,
+      "excludeMs": []
+    }
+  ]
+}
+

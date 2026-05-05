@@ -1,0 +1,161 @@
+{
+  "schemaVersion": "cursor-prediction-v21-step-02-metric-policy/1",
+  "generatedAtUtc": "2026-05-04T12:00:00Z",
+  "fixed12000msAssumptionValid": false,
+  "rowEligibility": {
+    "primaryEvaluationRows": "Rows from motion-trace-alignment.csv after the evaluator applies its prediction-call filter.",
+    "requiredRowFields": [
+      "packageId",
+      "split",
+      "qualityBucket",
+      "durationBucket",
+      "scenarioIndex",
+      "scenarioElapsedMilliseconds",
+      "generatedElapsedMilliseconds",
+      "generatedX",
+      "generatedY",
+      "movementPhase"
+    ],
+    "stationaryRows": "movementPhase == hold or velocityPixelsPerSecond < 1",
+    "normalVisualRows": "split == test and qualityBucket == normal",
+    "robustnessRows": "split == robustness"
+  },
+  "aggregationDefinitions": {
+    "rowWeighted": {
+      "description": "Pool all eligible rows/events, then compute the metric once.",
+      "weightInObjective": 0.1,
+      "risk": "Longer files and denser trace rows dominate."
+    },
+    "scenarioBalanced": {
+      "description": "Compute metric per packageId/scenarioIndex, then average scenarios equally within each split or bucket.",
+      "weightInObjective": 0.3,
+      "scenarioKey": [
+        "packageId",
+        "scenarioIndex"
+      ]
+    },
+    "fileBalanced": {
+      "description": "Compute metric per packageId, then average files equally.",
+      "weightInObjective": 0.2
+    },
+    "durationBucketBalanced": {
+      "description": "Compute metric per durationBucket, then average buckets equally when present.",
+      "weightInObjective": 0.2,
+      "durationBuckets": [
+        "4s",
+        "6s",
+        "8s",
+        "10s",
+        "12s"
+      ]
+    },
+    "qualityBucketBalanced": {
+      "description": "Compute metric per qualityBucket, then average using explicit bucket weights.",
+      "weightInObjective": 0.2,
+      "qualityBucketWeights": {
+        "normal": 0.5,
+        "poll-delayed": 0.5
+      }
+    }
+  },
+  "percentiles": {
+    "method": "nearest-rank over non-empty eligible values",
+    "emptyBucketPolicy": "omit bucket from that aggregation and report omittedBuckets"
+  },
+  "eventDefinitions": {
+    "futureLead": "Positive signed error in the recent motion direction at the prediction target time.",
+    "futureLag": "Negative signed error magnitude in the recent motion direction at the prediction target time.",
+    "peakLead": "Maximum positive lead within a post-stop event window.",
+    "returnMotion": "Post-peak reduction in current-distance after a lead peak.",
+    "otrGt1px": "Overshoot-then-return event where peakLead > 1 px and the cursor returns below the event threshold.",
+    "stationaryJitter": "Visual/current displacement on stationary or hold rows."
+  },
+  "finalObjective": {
+    "lowerIsBetter": true,
+    "aggregationBlend": {
+      "rowWeighted": 0.1,
+      "scenarioBalanced": 0.3,
+      "fileBalanced": 0.2,
+      "durationBucketBalanced": 0.2,
+      "qualityBucketBalanced": 0.2
+    },
+    "dimensions": [
+      {
+        "id": "normal.visual.p95",
+        "metric": "visualErrorPixels",
+        "slice": "split == test and qualityBucket == normal",
+        "statistic": "p95",
+        "weight": 90
+      },
+      {
+        "id": "normal.visual.p99",
+        "metric": "visualErrorPixels",
+        "slice": "split == test and qualityBucket == normal",
+        "statistic": "p99",
+        "weight": 45
+      },
+      {
+        "id": "futureLead.p99",
+        "metric": "futureLeadPixels",
+        "slice": "all evaluation splits",
+        "statistic": "p99",
+        "weight": 700
+      },
+      {
+        "id": "futureLag.p95",
+        "metric": "futureLagPixels",
+        "slice": "normal moving rows plus train/validation diagnostics",
+        "statistic": "p95",
+        "weight": 150
+      },
+      {
+        "id": "peakLead.max",
+        "metric": "peakLeadPixels",
+        "slice": "stop events",
+        "statistic": "max",
+        "weight": 1000
+      },
+      {
+        "id": "peakLead.p99",
+        "metric": "peakLeadPixels",
+        "slice": "stop events",
+        "statistic": "p99",
+        "weight": 450
+      },
+      {
+        "id": "returnMotion.max",
+        "metric": "returnMotionPixels",
+        "slice": "stop events",
+        "statistic": "max",
+        "weight": 500
+      },
+      {
+        "id": "returnMotion.p99",
+        "metric": "returnMotionPixels",
+        "slice": "stop events",
+        "statistic": "p99",
+        "weight": 250
+      },
+      {
+        "id": "otr.gt1px.rate",
+        "metric": "overshootThenReturnRate",
+        "slice": "stop events with peakLead > 1 px",
+        "statistic": "rate",
+        "weight": 12000
+      },
+      {
+        "id": "stationaryJitter.p95",
+        "metric": "stationaryJitterPixels",
+        "slice": "stationaryRows",
+        "statistic": "p95",
+        "weight": 50
+      }
+    ]
+  },
+  "reportingRequirements": [
+    "Always emit row counts, file counts, scenario counts, and omitted buckets beside each aggregate.",
+    "Report normal and poll-delayed quality buckets separately before blended objective ranking.",
+    "Report duration buckets separately so changed scenario playback duration cannot be hidden by row weighting.",
+    "Report train, validation, test, and robustness splits separately; robustness is score-only."
+  ]
+}

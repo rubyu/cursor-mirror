@@ -130,6 +130,19 @@ For `runtimeSchedulerLoop` samples, the trace SHOULD include:
 - whether DWM timing was usable for the scheduler decision;
 - target vblank, planned tick, and vblank lead values when available.
 
+Trace samples SHOULD include derived timing and provenance fields for prediction research:
+
+- whether the sample is within the configured recording warm-up window;
+- the prediction target QPC ticks when a runtime scheduler target or planned tick is available;
+- the present/reference QPC ticks when DWM timing or target vblank timing is available;
+- scheduler provenance, such as `dwm`, `fallback`, or `missing`;
+- sample-recorded-to-prediction-target delta in microseconds when computable;
+- whether runtime scheduler timing was missing.
+- runtime scheduler cursor-read, dispatch-to-read, queue-to-dispatch, and read-completed-to-sample-recorded latency in microseconds when computable;
+- runtime scheduler duplicate/hold run length and last movement age in microseconds for detecting stale or held cursor samples;
+- runtime scheduler cadence gap and missed-cadence flag when a DWM refresh-period cadence is available;
+- runtime scheduler sample-to-target and read-completed-to-target phase deltas in microseconds when a prediction target is available.
+
 The product-equivalent `poll` stream SHOULD remain the legacy model input proxy. The `runtimeSchedulerPoll` stream SHOULD be treated as the current trace runtime input proxy. The `referencePoll` stream SHOULD be treated as a higher-resolution reference stream for analysis and target reconstruction, not as product-available runtime input.
 
 For samples where Desktop Window Manager timing is available, the trace SHOULD include:
@@ -159,6 +172,7 @@ Trace metadata SHOULD include:
 - requested high-precision reference polling interval;
 - requested runtime scheduler wake lead, maximum DWM sleep interval, and fallback interval;
 - runtime scheduler and runtime scheduler capture-thread latency profile summaries, including whether managed priority and MMCSS were applied when observable; both SHOULD use no elevated managed priority and no MMCSS by default;
+- configured warm-up duration used by derived trace fields;
 - requested high-resolution timer period and whether it was acquired;
 - product-equivalent poll, reference poll, runtime scheduler poll, runtime scheduler loop, hook move, DWM timing sample counts, and coalesced runtime scheduler tick count;
 - observed interval statistics for hook move, product-equivalent poll, reference poll, runtime scheduler poll, and runtime scheduler loop streams;
@@ -180,12 +194,12 @@ Trace metadata SHOULD include:
 - The default package filename SHOULD use the form `cursor-mirror-trace-YYYYMMDD-HHMMSS.zip`.
 - Saving an empty trace MUST fail clearly or be disabled by UI state.
 
-The trace format version for the fields below MUST be `8`.
+The trace format version for the fields below MUST be `10`.
 
 Example `trace.csv` header:
 
 ```csv
-sequence,stopwatchTicks,elapsedMicroseconds,x,y,event,hookX,hookY,cursorX,cursorY,hookMouseData,hookFlags,hookTimeMilliseconds,hookExtraInfo,dwmTimingAvailable,dwmRateRefreshNumerator,dwmRateRefreshDenominator,dwmQpcRefreshPeriod,dwmQpcVBlank,dwmRefreshCount,dwmQpcCompose,dwmFrame,dwmRefreshFrame,dwmFrameDisplayed,dwmQpcFrameDisplayed,dwmRefreshFrameDisplayed,dwmFrameComplete,dwmQpcFrameComplete,dwmFramePending,dwmQpcFramePending,dwmRefreshNextDisplayed,dwmRefreshNextPresented,dwmFramesDisplayed,dwmFramesDropped,dwmFramesMissed,runtimeSchedulerTimingUsable,runtimeSchedulerTargetVBlankTicks,runtimeSchedulerPlannedTickTicks,runtimeSchedulerActualTickTicks,runtimeSchedulerVBlankLeadMicroseconds,runtimeSchedulerQueuedTickTicks,runtimeSchedulerDispatchStartedTicks,runtimeSchedulerCursorReadStartedTicks,runtimeSchedulerCursorReadCompletedTicks,runtimeSchedulerSampleRecordedTicks,runtimeSchedulerLoopIteration,runtimeSchedulerLoopStartedTicks,runtimeSchedulerTimingReadStartedTicks,runtimeSchedulerTimingReadCompletedTicks,runtimeSchedulerDecisionCompletedTicks,runtimeSchedulerTickRequested,runtimeSchedulerSleepRequestedMilliseconds,runtimeSchedulerWaitMethod,runtimeSchedulerWaitTargetTicks,runtimeSchedulerSleepStartedTicks,runtimeSchedulerSleepCompletedTicks
+sequence,stopwatchTicks,elapsedMicroseconds,x,y,event,hookX,hookY,cursorX,cursorY,hookMouseData,hookFlags,hookTimeMilliseconds,hookExtraInfo,dwmTimingAvailable,dwmRateRefreshNumerator,dwmRateRefreshDenominator,dwmQpcRefreshPeriod,dwmQpcVBlank,dwmRefreshCount,dwmQpcCompose,dwmFrame,dwmRefreshFrame,dwmFrameDisplayed,dwmQpcFrameDisplayed,dwmRefreshFrameDisplayed,dwmFrameComplete,dwmQpcFrameComplete,dwmFramePending,dwmQpcFramePending,dwmRefreshNextDisplayed,dwmRefreshNextPresented,dwmFramesDisplayed,dwmFramesDropped,dwmFramesMissed,runtimeSchedulerTimingUsable,runtimeSchedulerTargetVBlankTicks,runtimeSchedulerPlannedTickTicks,runtimeSchedulerActualTickTicks,runtimeSchedulerVBlankLeadMicroseconds,runtimeSchedulerQueuedTickTicks,runtimeSchedulerDispatchStartedTicks,runtimeSchedulerCursorReadStartedTicks,runtimeSchedulerCursorReadCompletedTicks,runtimeSchedulerSampleRecordedTicks,runtimeSchedulerLoopIteration,runtimeSchedulerLoopStartedTicks,runtimeSchedulerTimingReadStartedTicks,runtimeSchedulerTimingReadCompletedTicks,runtimeSchedulerDecisionCompletedTicks,runtimeSchedulerTickRequested,runtimeSchedulerSleepRequestedMilliseconds,runtimeSchedulerWaitMethod,runtimeSchedulerWaitTargetTicks,runtimeSchedulerSleepStartedTicks,runtimeSchedulerSleepCompletedTicks,warmupSample,predictionTargetTicks,presentReferenceTicks,schedulerProvenance,sampleRecordedToPredictionTargetMicroseconds,runtimeSchedulerMissing,runtimeSchedulerCursorReadLatencyMicroseconds,runtimeSchedulerDispatchToReadStartedMicroseconds,runtimeSchedulerQueueToDispatchMicroseconds,runtimeSchedulerReadCompletedToSampleRecordedMicroseconds,runtimeSchedulerDuplicateHoldRunLength,runtimeSchedulerLastMovementAgeMicroseconds,runtimeSchedulerPollCadenceGapMicroseconds,runtimeSchedulerMissedCadence,runtimeSchedulerSampleToTargetMicroseconds,runtimeSchedulerReadCompletedToTargetMicroseconds
 ```
 
 Example package:
@@ -219,6 +233,6 @@ cursor-mirror-trace-20260430-153012.zip
 
 ### 11.8 Testing
 - Normal CI MUST NOT launch the trace tool or install a real Windows hook.
-- Unit tests MUST cover trace session state transitions, button enabled state derivation, total and per-source sample counting, duration formatting, output package writing, reference polling sample fields, runtime scheduler polling split timing fields, runtime scheduler loop timing fields, runtime scheduler coalesced tick metadata, dedicated STA dispatch behavior, metadata quality fields, and empty-save behavior.
+- Unit tests MUST cover trace session state transitions, button enabled state derivation, total and per-source sample counting, duration formatting, output package writing, reference polling sample fields, runtime scheduler polling split timing fields, runtime scheduler loop timing fields, runtime scheduler coalesced tick metadata, derived telemetry fields, dedicated STA dispatch behavior, metadata quality fields, and empty-save behavior.
 - Unit tests SHOULD cover runtime scheduler latency profile metadata without requiring real priority elevation or MMCSS activation.
 - Manual validation MUST cover visible-window startup, real hook recording, start/stop/save behavior, unsaved exit confirmation, real hook cleanup, and saved package readability.

@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "cursor-prediction-v25-plan/1",
+  "goal": "Search for a best predictor using runtime-shaped multi-horizon labels, then decide whether learned models deserve product integration.",
+  "coreHypothesis": "The previous SmoothPredictor was trained on a narrow future-time convention. A model trained across product target-correction horizons may reduce visible lag without causing stop-side overshoot.",
+  "dataPolicy": {
+    "primaryManifest": "poc/cursor-prediction-v21/step-02-balanced-evaluation/split-manifest.json",
+    "reason": "The manifest provides an existing train/validation/test/robustness split over MotionLab ZIP files with trace and alignment truth.",
+    "largeIntermediateFiles": "forbidden"
+  },
+  "runtimeHorizonPolicy": {
+    "displayOffsetMilliseconds": "integer-like sweep from -32 to +32, first run every 4ms",
+    "displayOffsetOriginMilliseconds": 8,
+    "requestedHorizon": "sampleToTargetMilliseconds + displayOffsetOriginMilliseconds + displayOffsetMilliseconds",
+    "rejectBeforeCap": true,
+    "expiredPolicy": "hold",
+    "excessivePolicy": "hold",
+    "horizonCapMilliseconds": 10
+  },
+  "step01": {
+    "name": "runtime-horizon-model-search",
+    "models": [
+      "constant_velocity_v2",
+      "constant_velocity_v12",
+      "current_smooth_predictor",
+      "horizon-aware MLP",
+      "residual constant-velocity MLP"
+    ],
+    "losses": [
+      "mse",
+      "asymmetric future-lead penalty"
+    ],
+    "metrics": [
+      "visualP95",
+      "visualP99",
+      "leadP99",
+      "lagP95",
+      "stationaryJitterP95",
+      "stopLeadP95",
+      "stopLeadP99",
+      "stopLeadMax",
+      "acceptedVisualP95",
+      "rejectedVisualP95",
+      "by target-correction bucket"
+    ]
+  },
+  "promotionGate": {
+    "offline": "A learned candidate must beat simple velocity baselines and current SmoothPredictor on visual error while not increasing stopLeadP99 or stationaryJitterP95.",
+    "closedLoop": "Calibrator validation is only worth running after the offline gate passes."
+  }
+}
+

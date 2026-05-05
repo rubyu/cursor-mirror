@@ -1,0 +1,1520 @@
+{
+  "schemaVersion": "cursor-prediction-v27-step-01-sequence-stop-loss/1",
+  "generatedAtUtc": "2026-05-05T10:14:33Z",
+  "config": {
+    "seed": 2701,
+    "epochs": 42,
+    "batchSize": 768,
+    "frameMilliseconds": 16.666666666666668,
+    "defaultHorizonMs": 10.0,
+    "horizonsMs": [
+      4.0,
+      8.0,
+      10.0,
+      12.0,
+      16.0
+    ],
+    "runtime": "bundled Python + NumPy, CPU-only"
+  },
+  "dataset": {
+    "rows": 322880,
+    "sequenceCount": 440,
+    "sequenceSplits": {
+      "train": 260,
+      "validation": 80,
+      "test": 100
+    },
+    "splitRows": {
+      "train": 193090,
+      "validation": 56900,
+      "test": 72890
+    },
+    "families": [
+      "abrupt_stop",
+      "curve_stop",
+      "ease_stop",
+      "hook_stop",
+      "micro_resume",
+      "normal_curve",
+      "reverse_stop"
+    ]
+  },
+  "normalizer": {
+    "featureMean0Horizon": 0.5998800239946336,
+    "featureStd0Horizon": 0.23995200959798696
+  },
+  "validationResults": [
+    {
+      "candidate": "constant_velocity_v2",
+      "estimatedMacs": 2,
+      "parameters": 0,
+      "trainingTrace": [],
+      "overall": {
+        "visualP95": 25.535066211693294,
+        "visualP99": 73.32303139661882,
+        "leadP99": 3.7784472352090557,
+        "lagP99": 68.67563605184958,
+        "stationaryJitterP95": 0.17101417525286094
+      },
+      "braking": {
+        "rows": 4275,
+        "visualP95": 8.454663179069346,
+        "visualP99": 18.417481835956618,
+        "leadP99": 12.980564162820762,
+        "lagP99": 7.409262055759054
+      },
+      "stopFamily": {
+        "rows": 49140,
+        "visualP95": 0.9043433732319929,
+        "visualP99": 8.163061190392382,
+        "leadP99": 1.8236266001819745,
+        "lagP99": 4.862749355576381
+      },
+      "normal": {
+        "rows": 7760,
+        "visualP95": 85.34801785384815,
+        "visualP99": 128.30563436261292,
+        "leadP99": 13.743288113057112,
+        "lagP99": 123.79689844276156
+      },
+      "sequence": {
+        "candidate": "constant_velocity_v2",
+        "sequenceCount": 80,
+        "sequenceVisualP95": 97.26894679276589,
+        "normalSequenceVisualP95": 97.26894679276589,
+        "overshootMaxP95": 14.051997658615399,
+        "overshootDurationP95Ms": 166.44971353190786,
+        "overshootFrameP95": 6.0,
+        "stopRecoveryP95Ms": 63.99030466031172,
+        "stationaryJitterP95": 1.6606906691730858
+      }
+    },
+    {
+      "candidate": "constant_velocity_v3",
+      "estimatedMacs": 2,
+      "parameters": 0,
+      "trainingTrace": [],
+      "overall": {
+        "visualP95": 21.331593465353702,
+        "visualP99": 63.01612121674066,
+        "leadP99": 2.976138192110961,
+        "lagP99": 60.918863673506245,
+        "stationaryJitterP95": 0.3322251417709349
+      },
+      "braking": {
+        "rows": 4275,
+        "visualP95": 10.602569510941231,
+        "visualP99": 19.794974541561306,
+        "leadP99": 13.175307342005793,
+        "lagP99": 9.027690064893415
+      },
+      "stopFamily": {
+        "rows": 49140,
+        "visualP95": 1.845105285928209,
+        "visualP99": 9.784675560411108,
+        "leadP99": 2.7572441814437276,
+        "lagP99": 5.832273200236948
+      },
+      "normal": {
+        "rows": 7760,
+        "visualP95": 72.42423176711661,
+        "visualP99": 108.7424067420983,
+        "leadP99": 3.8872468714928012,
+        "lagP99": 106.88639349455948
+      },
+      "sequence": {
+        "candidate": "constant_velocity_v3",
+        "sequenceCount": 80,
+        "sequenceVisualP95": 81.62955539749085,
+        "normalSequenceVisualP95": 81.62955539749085,
+        "overshootMaxP95": 15.736218116206917,
+        "overshootDurationP95Ms": 249.88184711115187,
+        "overshootFrameP95": 7.0,
+        "stopRecoveryP95Ms": 77.92216853453056,
+        "stationaryJitterP95": 2.4768596429976917
+      }
+    },
+    {
+      "candidate": "constant_velocity_v12",
+      "estimatedMacs": 2,
+      "parameters": 0,
+      "trainingTrace": [],
+      "overall": {
+        "visualP95": 20.22622340554689,
+        "visualP99": 56.13887840573624,
+        "leadP99": 7.784471563791805,
+        "lagP99": 54.065314400118716,
+        "stationaryJitterP95": 6.033936354162962
+      },
+      "braking": {
+        "rows": 4275,
+        "visualP95": 16.99370153659674,
+        "visualP99": 26.41913801247571,
+        "leadP99": 19.603746900327216,
+        "lagP99": 7.785548766268961
+      },
+      "stopFamily": {
+        "rows": 49140,
+        "visualP95": 6.395798581812297,
+        "visualP99": 16.163242838644535,
+        "leadP99": 8.76698907811044,
+        "lagP99": 9.18757595885837
+      },
+      "normal": {
+        "rows": 7760,
+        "visualP95": 64.97250060487359,
+        "visualP99": 94.3731022490271,
+        "leadP99": 0.04014091039073461,
+        "lagP99": 92.86983693217186
+      },
+      "sequence": {
+        "candidate": "constant_velocity_v12",
+        "sequenceCount": 80,
+        "sequenceVisualP95": 70.43563190766105,
+        "normalSequenceVisualP95": 70.43563190766105,
+        "overshootMaxP95": 16.65800687400414,
+        "overshootDurationP95Ms": 300.572773521089,
+        "overshootFrameP95": 12.0,
+        "stopRecoveryP95Ms": 190.00990536525114,
+        "stationaryJitterP95": 13.127473684891639
+      }
+    },
+    {
+      "candidate": "accel_aware_cv2_strength0.35",
+      "estimatedMacs": 6,
+      "parameters": 0,
+      "trainingTrace": [],
+      "overall": {
+        "visualP95": 27.76616243320698,
+        "visualP99": 80.65693196801797,
+        "leadP99": 5.079810907533529,
+        "lagP99": 74.43060971654613,
+        "stationaryJitterP95": 0.4399576015715922
+      },
+      "braking": {
+        "rows": 4275,
+        "visualP95": 8.764237252582939,
+        "visualP99": 18.464103554694553,
+        "leadP99": 13.87482999745134,
+        "lagP99": 8.137734228169995
+      },
+      "stopFamily": {
+        "rows": 49140,
+        "visualP95": 1.2925622067560867,
+        "visualP99": 8.066110786486961,
+        "leadP99": 2.114640148141213,
+        "lagP99": 4.9632322924039505
+      },
+      "normal": {
+        "rows": 7760,
+        "visualP95": 94.17420662656222,
+        "visualP99": 142.50117913131987,
+        "leadP99": 20.732880222751906,
+        "lagP99": 137.40231678011128
+      },
+      "sequence": {
+        "candidate": "accel_aware_cv2_strength0.35",
+        "sequenceCount": 80,
+        "sequenceVisualP95": 101.58742867669791,
+        "normalSequenceVisualP95": 101.58742867669791,
+        "overshootMaxP95": 13.874829997451338,
+        "overshootDurationP95Ms": 183.72378334905503,
+        "overshootFrameP95": 7.0,
+        "stopRecoveryP95Ms": 64.39899817069124,
+        "stationaryJitterP95": 2.351521036497924
+      }
+    },
+    {
+      "candidate": "accel_aware_cv2_strength0.7",
+      "estimatedMacs": 6,
+      "parameters": 0,
+      "trainingTrace": [],
+      "overall": {
+        "visualP95": 30.53641729693877,
+        "visualP99": 88.44658029139082,
+        "leadP99": 7.082551845324235,
+        "lagP99": 81.01934421443543,
+        "stationaryJitterP95": 0.6906936040401785
+      },
+      "braking": {
+        "rows": 4275,
+        "visualP95": 10.042706859836638,
+        "visualP99": 20.725854612204458,
+        "leadP99": 14.431745586502883,
+        "lagP99": 10.46218638628866
+      },
+      "stopFamily": {
+        "rows": 49140,
+        "visualP95": 1.9832383305422354,
+        "visualP99": 9.153832624262824,
+        "leadP99": 3.108214836432694,
+        "lagP99": 5.319465504539849
+      },
+      "normal": {
+        "rows": 7760,
+        "visualP95": 104.08390859293482,
+        "visualP99": 158.72852102237314,
+        "leadP99": 28.36509834211688,
+        "lagP99": 152.90913488405414
+      },
+      "sequence": {
+        "candidate": "accel_aware_cv2_strength0.7",
+        "sequenceCount": 80,
+        "sequenceVisualP95": 112.76730585984045,
+        "normalSequenceVisualP95": 112.76730585984045,
+        "overshootMaxP95": 16.193664528682586,
+        "overshootDurationP95Ms": 216.72586225799662,
+        "overshootFrameP95": 8.0,
+        "stopRecoveryP95Ms": 91.48980261256247,
+        "stationaryJitterP95": 3.4645724387512575
+      }
+    },
+    {
+      "candidate": "soft_brake_cv2_gamma1.4",
+      "estimatedMacs": 14,
+      "parameters": 0,
+      "trainingTrace": [],
+      "overall": {
+        "visualP95": 25.52160667387813,
+        "visualP99": 73.32303139661882,
+        "leadP99": 3.032160123028935,
+        "lagP99": 68.72126836435974,
+        "stationaryJitterP95": 0.0
+      },
+      "braking": {
+        "rows": 4275,
+        "visualP95": 8.156072123766004,
+        "visualP99": 16.64270817915475,
+        "leadP99": 11.935711182414945,
+        "lagP99": 10.205598067601008
+      },
+      "stopFamily": {
+        "rows": 49140,
+        "visualP95": 0.8972006436074874,
+        "visualP99": 7.8871048364440135,
+        "leadP99": 0.5923825088426186,
+        "lagP99": 5.46858872244682
+      },
+      "normal": {
+        "rows": 7760,
+        "visualP95": 85.29337659680054,
+        "visualP99": 128.30563436261292,
+        "leadP99": 13.743288113057112,
+        "lagP99": 123.79689844276156
+      },
+      "sequence": {
+        "candidate": "soft_brake_cv2_gamma1.4",
+        "sequenceCount": 80,
+        "sequenceVisualP95": 97.26894679276589,
+        "normalSequenceVisualP95": 97.26894679276589,
+        "overshootMaxP95": 13.49378205617003,
+        "overshootDurationP95Ms": 133.82903304765378,
+        "overshootFrameP95": 3.0,
+        "stopRecoveryP95Ms": 59.526360373982925,
+        "stationaryJitterP95": 0.29090217099246696
+      }
+    },
+    {
+      "candidate": "soft_brake_cv2_gamma2.2",
+      "estimatedMacs": 14,
+      "parameters": 0,
+      "trainingTrace": [],
+      "overall": {
+        "visualP95": 25.52160667387813,
+        "visualP99": 73.2719644280263,
+        "leadP99": 2.892756896500478,
+        "lagP99": 68.67563605184958,
+        "stationaryJitterP95": 0.0
+      },
+      "braking": {
+        "rows": 4275,
+        "visualP95": 8.067664650649613,
+        "visualP99": 16.84119114930153,
+        "leadP99": 11.656496913740447,
+        "lagP99": 11.066075076212256
+      },
+      "stopFamily": {
+        "rows": 49140,
+        "visualP95": 0.9191089180996008,
+        "visualP99": 7.923350643810036,
+        "leadP99": 0.444777388019265,
+        "lagP99": 5.851997414962716
+      },
+      "normal": {
+        "rows": 7760,
+        "visualP95": 85.29337659680054,
+        "visualP99": 128.30563436261292,
+        "leadP99": 13.743288113057112,
+        "lagP99": 123.79689844276156
+      },
+      "sequence": {
+        "candidate": "soft_brake_cv2_gamma2.2",
+        "sequenceCount": 80,
+        "sequenceVisualP95": 97.26894679276589,
+        "normalSequenceVisualP95": 97.26894679276589,
+        "overshootMaxP95": 13.160753737261876,
+        "overshootDurationP95Ms": 133.5893373572541,
+        "overshootFrameP95": 3.0,
+        "stopRecoveryP95Ms": 59.47759587652604,
+        "stationaryJitterP95": 0.14927225413554182
+      }
+    },
+    {
+      "candidate": "current_smooth_predictor",
+      "estimatedMacs": 864,
+      "parameters": 898,
+      "trainingTrace": [],
+      "overall": {
+        "visualP95": 32.505642911500225,
+        "visualP99": 56.78118859531246,
+        "leadP99": 0.3254707967856979,
+        "lagP99": 56.78105048710284,
+        "stationaryJitterP95": 0.5779052364332814
+      },
+      "braking": {
+        "rows": 4275,
+        "visualP95": 27.26782331149893,
+        "visualP99": 37.846012695846724,
+        "leadP99": 0.45251283335765297,
+        "lagP99": 37.83927316573222
+      },
+      "stopFamily": {
+        "rows": 49140,
+        "visualP95": 25.38067696752896,
+        "visualP99": 37.02048872145819,
+        "leadP99": 0.33932103488968135,
+        "lagP99": 37.01841702134918
+      },
+      "normal": {
+        "rows": 7760,
+        "visualP95": 65.12727912678987,
+        "visualP99": 93.06461449155783,
+        "leadP99": 0.0,
+        "lagP99": 93.0642560174912
+      },
+      "sequence": {
+        "candidate": "current_smooth_predictor",
+        "sequenceCount": 80,
+        "sequenceVisualP95": 69.22955376039062,
+        "normalSequenceVisualP95": 69.22955376039062,
+        "overshootMaxP95": 0.7246732880774562,
+        "overshootDurationP95Ms": 0.0,
+        "overshootFrameP95": 0.0,
+        "stopRecoveryP95Ms": 63.99030466031172,
+        "stationaryJitterP95": 0.9577273028036756
+      }
+    },
+    {
+      "candidate": "direct_row_mse_h32",
+      "estimatedMacs": 864,
+      "parameters": 898,
+      "trainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 159.805393279746
+        },
+        {
+          "epoch": 14,
+          "loss": 74.1438749924732
+        },
+        {
+          "epoch": 28,
+          "loss": 70.58815126090002
+        },
+        {
+          "epoch": 42,
+          "loss": 69.44884024489231
+        }
+      ],
+      "overall": {
+        "visualP95": 18.42690261681821,
+        "visualP99": 46.38390293034503,
+        "leadP99": 5.056190536658333,
+        "lagP99": 43.576704232926126,
+        "stationaryJitterP95": 1.2655568242881003
+      },
+      "braking": {
+        "rows": 4275,
+        "visualP95": 11.922574335674149,
+        "visualP99": 22.6812062749707,
+        "leadP99": 10.86724207759197,
+        "lagP99": 12.893539018853794
+      },
+      "stopFamily": {
+        "rows": 49140,
+        "visualP95": 2.801390778943807,
+        "visualP99": 11.337208720439957,
+        "leadP99": 2.1802254293891172,
+        "lagP99": 8.067515060486631
+      },
+      "normal": {
+        "rows": 7760,
+        "visualP95": 54.45048714269184,
+        "visualP99": 78.03210069911722,
+        "leadP99": 17.69063044626735,
+        "lagP99": 76.41090233592139
+      },
+      "sequence": {
+        "candidate": "direct_row_mse_h32",
+        "sequenceCount": 80,
+        "sequenceVisualP95": 50.47222602655657,
+        "normalSequenceVisualP95": 50.47222602655657,
+        "overshootMaxP95": 12.802762191189572,
+        "overshootDurationP95Ms": 350.0094261102709,
+        "overshootFrameP95": 9.0,
+        "stopRecoveryP95Ms": 91.13702933470972,
+        "stationaryJitterP95": 2.918216998932296
+      }
+    },
+    {
+      "candidate": "direct_sequence_stop_h32",
+      "estimatedMacs": 864,
+      "parameters": 898,
+      "trainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 421.5352975735461
+        },
+        {
+          "epoch": 14,
+          "loss": 172.0436815189863
+        },
+        {
+          "epoch": 28,
+          "loss": 159.36084827304276
+        },
+        {
+          "epoch": 42,
+          "loss": 155.22193251979098
+        }
+      ],
+      "overall": {
+        "visualP95": 18.511824061341073,
+        "visualP99": 46.81819499993636,
+        "leadP99": 4.446948172530059,
+        "lagP99": 44.02617590427779,
+        "stationaryJitterP95": 0.5792250193459375
+      },
+      "braking": {
+        "rows": 4275,
+        "visualP95": 8.794553203024977,
+        "visualP99": 17.8765827285208,
+        "leadP99": 10.597803851103972,
+        "lagP99": 11.074629174239988
+      },
+      "stopFamily": {
+        "rows": 49140,
+        "visualP95": 2.485181263836207,
+        "visualP99": 8.815018745379815,
+        "leadP99": 1.332573073950396,
+        "lagP99": 6.0896277161163646
+      },
+      "normal": {
+        "rows": 7760,
+        "visualP95": 55.960684793043235,
+        "visualP99": 77.71752305884108,
+        "leadP99": 13.883152352101025,
+        "lagP99": 76.25014503735495
+      },
+      "sequence": {
+        "candidate": "direct_sequence_stop_h32",
+        "sequenceCount": 80,
+        "sequenceVisualP95": 59.337315729147434,
+        "normalSequenceVisualP95": 59.337315729147434,
+        "overshootMaxP95": 11.229576882386736,
+        "overshootDurationP95Ms": 217.19040064875063,
+        "overshootFrameP95": 4.0,
+        "stopRecoveryP95Ms": 64.3917732064449,
+        "stationaryJitterP95": 1.3058284256436357
+      }
+    },
+    {
+      "candidate": "direct_sequence_stop_h64",
+      "estimatedMacs": 1728,
+      "parameters": 1794,
+      "trainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 399.82001321936116
+        },
+        {
+          "epoch": 14,
+          "loss": 184.98333145459233
+        },
+        {
+          "epoch": 28,
+          "loss": 173.10814001572004
+        },
+        {
+          "epoch": 42,
+          "loss": 167.8175448115823
+        }
+      ],
+      "overall": {
+        "visualP95": 18.46374064507789,
+        "visualP99": 46.51755251204109,
+        "leadP99": 4.114057165860575,
+        "lagP99": 43.77604441676879,
+        "stationaryJitterP95": 0.6243039634695925
+      },
+      "braking": {
+        "rows": 4275,
+        "visualP95": 8.520552238915432,
+        "visualP99": 16.770822901477086,
+        "leadP99": 9.410339603189101,
+        "lagP99": 10.931213752225874
+      },
+      "stopFamily": {
+        "rows": 49140,
+        "visualP95": 2.7259656685595837,
+        "visualP99": 8.705984266614438,
+        "leadP99": 1.100756564749221,
+        "lagP99": 6.475989204486251
+      },
+      "normal": {
+        "rows": 7760,
+        "visualP95": 55.37323509642593,
+        "visualP99": 77.70310031051896,
+        "leadP99": 14.873877897135781,
+        "lagP99": 75.80342429112254
+      },
+      "sequence": {
+        "candidate": "direct_sequence_stop_h64",
+        "sequenceCount": 80,
+        "sequenceVisualP95": 51.609933394206394,
+        "normalSequenceVisualP95": 51.609933394206394,
+        "overshootMaxP95": 11.06937063048814,
+        "overshootDurationP95Ms": 200.2897817436655,
+        "overshootFrameP95": 4.0,
+        "stopRecoveryP95Ms": 63.99030466031172,
+        "stationaryJitterP95": 2.1335874720505457
+      }
+    },
+    {
+      "candidate": "residual_cv2_row_mse_h32",
+      "estimatedMacs": 866,
+      "parameters": 898,
+      "trainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 168.2333610020122
+        },
+        {
+          "epoch": 14,
+          "loss": 74.71128609783015
+        },
+        {
+          "epoch": 28,
+          "loss": 70.91124190738488
+        },
+        {
+          "epoch": 42,
+          "loss": 69.83388111941251
+        }
+      ],
+      "overall": {
+        "visualP95": 18.476412880061233,
+        "visualP99": 47.39191764801437,
+        "leadP99": 4.1329099162734755,
+        "lagP99": 45.39473600134308,
+        "stationaryJitterP95": 1.5940851590587692
+      },
+      "braking": {
+        "rows": 4275,
+        "visualP95": 11.587842788433194,
+        "visualP99": 23.217897511561343,
+        "leadP99": 12.170812104208803,
+        "lagP99": 12.82052218896297
+      },
+      "stopFamily": {
+        "rows": 49140,
+        "visualP95": 2.92277781382565,
+        "visualP99": 10.87904368139371,
+        "leadP99": 2.043935246885483,
+        "lagP99": 7.356053712776828
+      },
+      "normal": {
+        "rows": 7760,
+        "visualP95": 54.50647417725736,
+        "visualP99": 79.88329891863182,
+        "leadP99": 15.237784036610796,
+        "lagP99": 78.66580336565703
+      },
+      "sequence": {
+        "candidate": "residual_cv2_row_mse_h32",
+        "sequenceCount": 80,
+        "sequenceVisualP95": 52.31557504623261,
+        "normalSequenceVisualP95": 52.31557504623261,
+        "overshootMaxP95": 13.43845853807221,
+        "overshootDurationP95Ms": 350.0718295282538,
+        "overshootFrameP95": 8.0,
+        "stopRecoveryP95Ms": 135.1639440694005,
+        "stationaryJitterP95": 2.5539584176961103
+      }
+    },
+    {
+      "candidate": "residual_cv2_sequence_stop_h32",
+      "estimatedMacs": 866,
+      "parameters": 898,
+      "trainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 363.0281593274608
+        },
+        {
+          "epoch": 14,
+          "loss": 182.19776826713493
+        },
+        {
+          "epoch": 28,
+          "loss": 166.45950474467847
+        },
+        {
+          "epoch": 42,
+          "loss": 161.0640415817063
+        }
+      ],
+      "overall": {
+        "visualP95": 18.27283140203272,
+        "visualP99": 48.02604403811224,
+        "leadP99": 4.0295300419126345,
+        "lagP99": 45.439142993964005,
+        "stationaryJitterP95": 0.6719837292100664
+      },
+      "braking": {
+        "rows": 4275,
+        "visualP95": 9.501518506161753,
+        "visualP99": 17.77695748049369,
+        "leadP99": 10.856204526888355,
+        "lagP99": 10.485558915352556
+      },
+      "stopFamily": {
+        "rows": 49140,
+        "visualP95": 2.93616614083145,
+        "visualP99": 9.289018445443915,
+        "leadP99": 1.6288826217497971,
+        "lagP99": 6.372543806031894
+      },
+      "normal": {
+        "rows": 7760,
+        "visualP95": 56.280667434318985,
+        "visualP99": 81.27497708505474,
+        "leadP99": 13.70082326676562,
+        "lagP99": 79.8043630802953
+      },
+      "sequence": {
+        "candidate": "residual_cv2_sequence_stop_h32",
+        "sequenceCount": 80,
+        "sequenceVisualP95": 55.967687101389274,
+        "normalSequenceVisualP95": 55.967687101389274,
+        "overshootMaxP95": 12.324654403140874,
+        "overshootDurationP95Ms": 200.2897817436655,
+        "overshootFrameP95": 5.0,
+        "stopRecoveryP95Ms": 74.03268158203537,
+        "stationaryJitterP95": 1.427804751389912
+      }
+    },
+    {
+      "candidate": "residual_cv2_sequence_stop_h64",
+      "estimatedMacs": 1730,
+      "parameters": 1794,
+      "trainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 384.2069154711158
+        },
+        {
+          "epoch": 14,
+          "loss": 190.47183428293187
+        },
+        {
+          "epoch": 28,
+          "loss": 175.11328064136683
+        },
+        {
+          "epoch": 42,
+          "loss": 169.08349319785196
+        }
+      ],
+      "overall": {
+        "visualP95": 18.143204058511092,
+        "visualP99": 47.217491842606144,
+        "leadP99": 4.005211736194419,
+        "lagP99": 44.92625550460868,
+        "stationaryJitterP95": 0.7854337161848808
+      },
+      "braking": {
+        "rows": 4275,
+        "visualP95": 8.980117216029821,
+        "visualP99": 16.554521085748505,
+        "leadP99": 11.054037915465155,
+        "lagP99": 10.38567551361007
+      },
+      "stopFamily": {
+        "rows": 49140,
+        "visualP95": 2.1352577046637355,
+        "visualP99": 8.862924767950224,
+        "leadP99": 1.8308448829023893,
+        "lagP99": 5.923226069386541
+      },
+      "normal": {
+        "rows": 7760,
+        "visualP95": 56.06472478247009,
+        "visualP99": 80.29457943103611,
+        "leadP99": 12.567242067517691,
+        "lagP99": 78.3468441343775
+      },
+      "sequence": {
+        "candidate": "residual_cv2_sequence_stop_h64",
+        "sequenceCount": 80,
+        "sequenceVisualP95": 56.7668225102794,
+        "normalSequenceVisualP95": 56.7668225102794,
+        "overshootMaxP95": 13.293892469126547,
+        "overshootDurationP95Ms": 233.16014136726474,
+        "overshootFrameP95": 6.0,
+        "stopRecoveryP95Ms": 71.7875601141493,
+        "stationaryJitterP95": 1.7270552657298963
+      }
+    }
+  ],
+  "testResults": [
+    {
+      "candidate": "constant_velocity_v2",
+      "estimatedMacs": 2,
+      "parameters": 0,
+      "trainingTrace": [],
+      "overall": {
+        "visualP95": 18.233223318989616,
+        "visualP99": 53.619778918087185,
+        "leadP99": 2.661764402148664,
+        "lagP99": 46.65919156299652,
+        "stationaryJitterP95": 0.14182049703550778
+      },
+      "braking": {
+        "rows": 5366,
+        "visualP95": 10.063650896077998,
+        "visualP99": 20.205978640842595,
+        "leadP99": 13.978664846179548,
+        "lagP99": 9.254385037078737
+      },
+      "stopFamily": {
+        "rows": 62635,
+        "visualP95": 0.9578014098433025,
+        "visualP99": 9.42394479119573,
+        "leadP99": 2.0592835290472,
+        "lagP99": 5.582125016522574
+      },
+      "normal": {
+        "rows": 10255,
+        "visualP95": 62.982266157832605,
+        "visualP99": 105.1133101396661,
+        "leadP99": 5.432055382157812,
+        "lagP99": 100.16599392775935
+      },
+      "sequence": {
+        "candidate": "constant_velocity_v2",
+        "sequenceCount": 100,
+        "sequenceVisualP95": 54.80865758579815,
+        "normalSequenceVisualP95": 54.80865758579815,
+        "overshootMaxP95": 13.900880090845872,
+        "overshootDurationP95Ms": 249.63902661770638,
+        "overshootFrameP95": 6.0,
+        "stopRecoveryP95Ms": 66.92593559368152,
+        "stationaryJitterP95": 1.3782658450431873
+      }
+    },
+    {
+      "candidate": "constant_velocity_v3",
+      "estimatedMacs": 2,
+      "parameters": 0,
+      "trainingTrace": [],
+      "overall": {
+        "visualP95": 16.11897358971652,
+        "visualP99": 44.827913942567946,
+        "leadP99": 2.5299699485795175,
+        "lagP99": 40.03595673967146,
+        "stationaryJitterP95": 0.33194885044318057
+      },
+      "braking": {
+        "rows": 5366,
+        "visualP95": 12.624386583167134,
+        "visualP99": 22.718542103463474,
+        "leadP99": 16.02360505406838,
+        "lagP99": 11.152319669385278
+      },
+      "stopFamily": {
+        "rows": 62635,
+        "visualP95": 1.9877954419626889,
+        "visualP99": 11.181964229712788,
+        "leadP99": 2.906400271332069,
+        "lagP99": 6.702786079406341
+      },
+      "normal": {
+        "rows": 10255,
+        "visualP95": 52.17874562887064,
+        "visualP99": 91.46618291133133,
+        "leadP99": 1.0492967189992402,
+        "lagP99": 87.58351659916974
+      },
+      "sequence": {
+        "candidate": "constant_velocity_v3",
+        "sequenceCount": 100,
+        "sequenceVisualP95": 44.67049029526788,
+        "normalSequenceVisualP95": 44.67049029526788,
+        "overshootMaxP95": 16.838329895057615,
+        "overshootDurationP95Ms": 250.29662806571642,
+        "overshootFrameP95": 7.0,
+        "stopRecoveryP95Ms": 79.70212522877637,
+        "stationaryJitterP95": 2.9834212926663546
+      }
+    },
+    {
+      "candidate": "constant_velocity_v12",
+      "estimatedMacs": 2,
+      "parameters": 0,
+      "trainingTrace": [],
+      "overall": {
+        "visualP95": 16.18568910375756,
+        "visualP99": 38.884729791450816,
+        "leadP99": 8.117830872293885,
+        "lagP99": 36.04369751057081,
+        "stationaryJitterP95": 6.526948840467653
+      },
+      "braking": {
+        "rows": 5366,
+        "visualP95": 19.406927669660625,
+        "visualP99": 28.478902233707576,
+        "leadP99": 20.483369580782853,
+        "lagP99": 9.631290722481413
+      },
+      "stopFamily": {
+        "rows": 62635,
+        "visualP95": 7.129253719830336,
+        "visualP99": 17.934420795538994,
+        "leadP99": 9.000545551111838,
+        "lagP99": 9.875496128465914
+      },
+      "normal": {
+        "rows": 10255,
+        "visualP95": 45.836848530571274,
+        "visualP99": 80.71171937843383,
+        "leadP99": 0.009153905753339853,
+        "lagP99": 78.5689135204036
+      },
+      "sequence": {
+        "candidate": "constant_velocity_v12",
+        "sequenceCount": 100,
+        "sequenceVisualP95": 42.67271078987474,
+        "normalSequenceVisualP95": 42.67271078987474,
+        "overshootMaxP95": 18.962726320163963,
+        "overshootDurationP95Ms": 299.94660979039185,
+        "overshootFrameP95": 12.0,
+        "stopRecoveryP95Ms": 202.11116276030157,
+        "stationaryJitterP95": 14.820246562632125
+      }
+    },
+    {
+      "candidate": "accel_aware_cv2_strength0.35",
+      "estimatedMacs": 6,
+      "parameters": 0,
+      "trainingTrace": [],
+      "overall": {
+        "visualP95": 19.90973768012837,
+        "visualP99": 58.65267721961666,
+        "leadP99": 3.2905753710818693,
+        "lagP99": 49.84816111181267,
+        "stationaryJitterP95": 0.428876514018855
+      },
+      "braking": {
+        "rows": 5366,
+        "visualP95": 10.410109576779755,
+        "visualP99": 20.85613047815802,
+        "leadP99": 14.79734030200677,
+        "lagP99": 10.745696406811245
+      },
+      "stopFamily": {
+        "rows": 62635,
+        "visualP95": 1.3919453799561499,
+        "visualP99": 9.436543220152306,
+        "leadP99": 2.3964713530458646,
+        "lagP99": 5.614796532376031
+      },
+      "normal": {
+        "rows": 10255,
+        "visualP95": 68.84169792284601,
+        "visualP99": 116.24167833273195,
+        "leadP99": 8.924886921613329,
+        "lagP99": 108.9075300781432
+      },
+      "sequence": {
+        "candidate": "accel_aware_cv2_strength0.35",
+        "sequenceCount": 100,
+        "sequenceVisualP95": 56.23373272876539,
+        "normalSequenceVisualP95": 56.23373272876539,
+        "overshootMaxP95": 15.376044893310409,
+        "overshootDurationP95Ms": 249.70495216384293,
+        "overshootFrameP95": 5.0,
+        "stopRecoveryP95Ms": 68.4488859218593,
+        "stationaryJitterP95": 1.9891956758592584
+      }
+    },
+    {
+      "candidate": "accel_aware_cv2_strength0.7",
+      "estimatedMacs": 6,
+      "parameters": 0,
+      "trainingTrace": [],
+      "overall": {
+        "visualP95": 21.409270360313805,
+        "visualP99": 64.05257260813235,
+        "leadP99": 4.805330598331101,
+        "lagP99": 53.150194491507236,
+        "stationaryJitterP95": 0.6342376557283516
+      },
+      "braking": {
+        "rows": 5366,
+        "visualP95": 12.013502904409352,
+        "visualP99": 22.04763373247574,
+        "leadP99": 16.719305020795836,
+        "lagP99": 12.841475262288935
+      },
+      "stopFamily": {
+        "rows": 62635,
+        "visualP95": 2.1649288653583385,
+        "visualP99": 10.430914747664799,
+        "leadP99": 3.524236662256903,
+        "lagP99": 5.935904911995813
+      },
+      "normal": {
+        "rows": 10255,
+        "visualP95": 75.97348877302966,
+        "visualP99": 127.82557137242848,
+        "leadP99": 13.116100088710663,
+        "lagP99": 120.6007262270704
+      },
+      "sequence": {
+        "candidate": "accel_aware_cv2_strength0.7",
+        "sequenceCount": 100,
+        "sequenceVisualP95": 61.8321573837355,
+        "normalSequenceVisualP95": 61.8321573837355,
+        "overshootMaxP95": 15.955294113213206,
+        "overshootDurationP95Ms": 249.70495216384293,
+        "overshootFrameP95": 8.0,
+        "stopRecoveryP95Ms": 93.90910099273174,
+        "stationaryJitterP95": 3.766265381883494
+      }
+    },
+    {
+      "candidate": "soft_brake_cv2_gamma1.4",
+      "estimatedMacs": 14,
+      "parameters": 0,
+      "trainingTrace": [],
+      "overall": {
+        "visualP95": 18.223578394276082,
+        "visualP99": 53.6146850791277,
+        "leadP99": 1.7336865386251041,
+        "lagP99": 46.65919156299652,
+        "stationaryJitterP95": 0.0
+      },
+      "braking": {
+        "rows": 5366,
+        "visualP95": 9.563135523607418,
+        "visualP99": 19.994155936554723,
+        "leadP99": 12.741692025774341,
+        "lagP99": 12.42739824929418
+      },
+      "stopFamily": {
+        "rows": 62635,
+        "visualP95": 0.9265260131278467,
+        "visualP99": 9.158708049784192,
+        "leadP99": 0.6590384405641537,
+        "lagP99": 6.396924207300244
+      },
+      "normal": {
+        "rows": 10255,
+        "visualP95": 62.84225763019682,
+        "visualP99": 105.06674522408815,
+        "leadP99": 5.432055382157812,
+        "lagP99": 100.16599392775935
+      },
+      "sequence": {
+        "candidate": "soft_brake_cv2_gamma1.4",
+        "sequenceCount": 100,
+        "sequenceVisualP95": 54.80865758579815,
+        "normalSequenceVisualP95": 54.80865758579815,
+        "overshootMaxP95": 13.770862477329223,
+        "overshootDurationP95Ms": 234.05854507784332,
+        "overshootFrameP95": 3.0,
+        "stopRecoveryP95Ms": 61.65672459143093,
+        "stationaryJitterP95": 0.14646676337345513
+      }
+    },
+    {
+      "candidate": "soft_brake_cv2_gamma2.2",
+      "estimatedMacs": 14,
+      "parameters": 0,
+      "trainingTrace": [],
+      "overall": {
+        "visualP95": 18.231517281904832,
+        "visualP99": 53.53023046764657,
+        "leadP99": 1.5138128393083887,
+        "lagP99": 46.65919156299652,
+        "stationaryJitterP95": 0.0
+      },
+      "braking": {
+        "rows": 5366,
+        "visualP95": 9.63190151291862,
+        "visualP99": 19.6800921222947,
+        "leadP99": 12.549187169447048,
+        "lagP99": 12.81339901554103
+      },
+      "stopFamily": {
+        "rows": 62635,
+        "visualP95": 0.9409102017241481,
+        "visualP99": 9.19600420914584,
+        "leadP99": 0.4063543211550744,
+        "lagP99": 6.799616424636016
+      },
+      "normal": {
+        "rows": 10255,
+        "visualP95": 62.84225763019682,
+        "visualP99": 105.06381283981997,
+        "leadP99": 5.432055382157812,
+        "lagP99": 100.16599392775935
+      },
+      "sequence": {
+        "candidate": "soft_brake_cv2_gamma2.2",
+        "sequenceCount": 100,
+        "sequenceVisualP95": 54.80865758579815,
+        "normalSequenceVisualP95": 54.80865758579815,
+        "overshootMaxP95": 13.07387910455355,
+        "overshootDurationP95Ms": 233.77262304411934,
+        "overshootFrameP95": 3.0,
+        "stopRecoveryP95Ms": 61.65672459143093,
+        "stationaryJitterP95": 0.06478847227138151
+      }
+    },
+    {
+      "candidate": "current_smooth_predictor",
+      "estimatedMacs": 864,
+      "parameters": 898,
+      "trainingTrace": [],
+      "overall": {
+        "visualP95": 31.828336892208366,
+        "visualP99": 44.09512900211992,
+        "leadP99": 0.31460496145370637,
+        "lagP99": 44.094799343141815,
+        "stationaryJitterP95": 0.5667093128399138
+      },
+      "braking": {
+        "rows": 5366,
+        "visualP95": 28.77735692761394,
+        "visualP99": 39.92746909700474,
+        "leadP99": 0.42240916143761426,
+        "lagP99": 39.92704738004451
+      },
+      "stopFamily": {
+        "rows": 62635,
+        "visualP95": 27.86098025660075,
+        "visualP99": 37.81633878459724,
+        "leadP99": 0.33014973609962395,
+        "lagP99": 37.81263862764564
+      },
+      "normal": {
+        "rows": 10255,
+        "visualP95": 49.4539750970458,
+        "visualP99": 80.45580525093952,
+        "leadP99": 0.0,
+        "lagP99": 80.45546785709632
+      },
+      "sequence": {
+        "candidate": "current_smooth_predictor",
+        "sequenceCount": 100,
+        "sequenceVisualP95": 44.85917985451958,
+        "normalSequenceVisualP95": 44.85917985451958,
+        "overshootMaxP95": 0.6160601047459044,
+        "overshootDurationP95Ms": 0.0,
+        "overshootFrameP95": 0.0,
+        "stopRecoveryP95Ms": 55.22831509838829,
+        "stationaryJitterP95": 0.8187439697182234
+      }
+    },
+    {
+      "candidate": "direct_row_mse_h32",
+      "estimatedMacs": 864,
+      "parameters": 898,
+      "trainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 159.805393279746
+        },
+        {
+          "epoch": 14,
+          "loss": 74.1438749924732
+        },
+        {
+          "epoch": 28,
+          "loss": 70.58815126090002
+        },
+        {
+          "epoch": 42,
+          "loss": 69.44884024489231
+        }
+      ],
+      "overall": {
+        "visualP95": 14.148622560563501,
+        "visualP99": 34.422805526335814,
+        "leadP99": 3.033067698389794,
+        "lagP99": 30.714257205459504,
+        "stationaryJitterP95": 1.296788270223339
+      },
+      "braking": {
+        "rows": 5366,
+        "visualP95": 14.822405137702606,
+        "visualP99": 26.747559703454208,
+        "leadP99": 12.020020619150841,
+        "lagP99": 16.91803773900139
+      },
+      "stopFamily": {
+        "rows": 62635,
+        "visualP95": 3.2469231657357827,
+        "visualP99": 13.340791544754449,
+        "leadP99": 2.701788787662327,
+        "lagP99": 8.780477803709147
+      },
+      "normal": {
+        "rows": 10255,
+        "visualP95": 39.35628275090429,
+        "visualP99": 64.72643088074116,
+        "leadP99": 7.5458016436121484,
+        "lagP99": 61.72832517617835
+      },
+      "sequence": {
+        "candidate": "direct_row_mse_h32",
+        "sequenceCount": 100,
+        "sequenceVisualP95": 36.643262656006485,
+        "normalSequenceVisualP95": 36.643262656006485,
+        "overshootMaxP95": 13.038368814116675,
+        "overshootDurationP95Ms": 383.0408811540728,
+        "overshootFrameP95": 13.0,
+        "stopRecoveryP95Ms": 97.05730616708342,
+        "stationaryJitterP95": 2.488996045737254
+      }
+    },
+    {
+      "candidate": "direct_sequence_stop_h32",
+      "estimatedMacs": 864,
+      "parameters": 898,
+      "trainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 421.5352975735461
+        },
+        {
+          "epoch": 14,
+          "loss": 172.0436815189863
+        },
+        {
+          "epoch": 28,
+          "loss": 159.36084827304276
+        },
+        {
+          "epoch": 42,
+          "loss": 155.22193251979098
+        }
+      ],
+      "overall": {
+        "visualP95": 14.206802154178733,
+        "visualP99": 34.67810123716962,
+        "leadP99": 2.491051297154238,
+        "lagP99": 30.605447655238656,
+        "stationaryJitterP95": 0.57321775618607
+      },
+      "braking": {
+        "rows": 5366,
+        "visualP95": 11.135699472154586,
+        "visualP99": 21.477340709627896,
+        "leadP99": 10.486294760117932,
+        "lagP99": 12.241621068714302
+      },
+      "stopFamily": {
+        "rows": 62635,
+        "visualP95": 2.7419912818963,
+        "visualP99": 10.483885809689008,
+        "leadP99": 1.9479806498238879,
+        "lagP99": 7.283178078406917
+      },
+      "normal": {
+        "rows": 10255,
+        "visualP95": 39.73401401599142,
+        "visualP99": 64.72187016998922,
+        "leadP99": 8.014358483093229,
+        "lagP99": 61.52819326722347
+      },
+      "sequence": {
+        "candidate": "direct_sequence_stop_h32",
+        "sequenceCount": 100,
+        "sequenceVisualP95": 40.45761098708606,
+        "normalSequenceVisualP95": 40.45761098708606,
+        "overshootMaxP95": 13.079573804616064,
+        "overshootDurationP95Ms": 250.02522031556978,
+        "overshootFrameP95": 4.0,
+        "stopRecoveryP95Ms": 67.08646098644203,
+        "stationaryJitterP95": 1.131132031462753
+      }
+    },
+    {
+      "candidate": "direct_sequence_stop_h64",
+      "estimatedMacs": 1728,
+      "parameters": 1794,
+      "trainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 399.82001321936116
+        },
+        {
+          "epoch": 14,
+          "loss": 184.98333145459233
+        },
+        {
+          "epoch": 28,
+          "loss": 173.10814001572004
+        },
+        {
+          "epoch": 42,
+          "loss": 167.8175448115823
+        }
+      ],
+      "overall": {
+        "visualP95": 14.0222630779353,
+        "visualP99": 34.54048830006436,
+        "leadP99": 2.3944491998819464,
+        "lagP99": 30.407089556032986,
+        "stationaryJitterP95": 0.639504040245743
+      },
+      "braking": {
+        "rows": 5366,
+        "visualP95": 11.013308518933307,
+        "visualP99": 21.14068583460526,
+        "leadP99": 10.246814928506748,
+        "lagP99": 13.405777225249583
+      },
+      "stopFamily": {
+        "rows": 62635,
+        "visualP95": 3.050025253485221,
+        "visualP99": 10.422040940732975,
+        "leadP99": 1.2315133508590337,
+        "lagP99": 7.329511090732939
+      },
+      "normal": {
+        "rows": 10255,
+        "visualP95": 39.689964294616814,
+        "visualP99": 64.40271738533158,
+        "leadP99": 7.807117242503343,
+        "lagP99": 61.54305483671415
+      },
+      "sequence": {
+        "candidate": "direct_sequence_stop_h64",
+        "sequenceCount": 100,
+        "sequenceVisualP95": 36.58803347142216,
+        "normalSequenceVisualP95": 36.58803347142216,
+        "overshootMaxP95": 12.76391813324328,
+        "overshootDurationP95Ms": 182.65876866616546,
+        "overshootFrameP95": 3.0,
+        "stopRecoveryP95Ms": 65.89762606381669,
+        "stationaryJitterP95": 1.3032303755002963
+      }
+    },
+    {
+      "candidate": "residual_cv2_row_mse_h32",
+      "estimatedMacs": 866,
+      "parameters": 898,
+      "trainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 168.2333610020122
+        },
+        {
+          "epoch": 14,
+          "loss": 74.71128609783015
+        },
+        {
+          "epoch": 28,
+          "loss": 70.91124190738488
+        },
+        {
+          "epoch": 42,
+          "loss": 69.83388111941251
+        }
+      ],
+      "overall": {
+        "visualP95": 14.256259040946409,
+        "visualP99": 34.21580833838729,
+        "leadP99": 3.0913387206885257,
+        "lagP99": 30.436311777662958,
+        "stationaryJitterP95": 1.5866485806524082
+      },
+      "braking": {
+        "rows": 5366,
+        "visualP95": 15.151180954227934,
+        "visualP99": 27.27954199120675,
+        "leadP99": 13.443618476299726,
+        "lagP99": 16.753535713219428
+      },
+      "stopFamily": {
+        "rows": 62635,
+        "visualP95": 3.347211180579059,
+        "visualP99": 13.43654556461236,
+        "leadP99": 2.329574992021503,
+        "lagP99": 8.742431554927254
+      },
+      "normal": {
+        "rows": 10255,
+        "visualP95": 39.64134739120561,
+        "visualP99": 64.26538598613877,
+        "leadP99": 8.944258347522698,
+        "lagP99": 60.71082385498928
+      },
+      "sequence": {
+        "candidate": "residual_cv2_row_mse_h32",
+        "sequenceCount": 100,
+        "sequenceVisualP95": 37.373643956631206,
+        "normalSequenceVisualP95": 37.373643956631206,
+        "overshootMaxP95": 13.773511560260003,
+        "overshootDurationP95Ms": 316.6385993762894,
+        "overshootFrameP95": 7.0,
+        "stopRecoveryP95Ms": 163.81406494985868,
+        "stationaryJitterP95": 2.604306651380664
+      }
+    },
+    {
+      "candidate": "residual_cv2_sequence_stop_h32",
+      "estimatedMacs": 866,
+      "parameters": 898,
+      "trainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 363.0281593274608
+        },
+        {
+          "epoch": 14,
+          "loss": 182.19776826713493
+        },
+        {
+          "epoch": 28,
+          "loss": 166.45950474467847
+        },
+        {
+          "epoch": 42,
+          "loss": 161.0640415817063
+        }
+      ],
+      "overall": {
+        "visualP95": 14.008058098768288,
+        "visualP99": 34.605145093571984,
+        "leadP99": 2.8097526986926717,
+        "lagP99": 30.941326209588404,
+        "stationaryJitterP95": 0.7214482998478006
+      },
+      "braking": {
+        "rows": 5366,
+        "visualP95": 11.70985658492913,
+        "visualP99": 21.425769067873762,
+        "leadP99": 10.893157515704505,
+        "lagP99": 13.456141099210297
+      },
+      "stopFamily": {
+        "rows": 62635,
+        "visualP95": 2.8178020924439826,
+        "visualP99": 10.865362536877466,
+        "leadP99": 1.7550248239274011,
+        "lagP99": 7.63245934903289
+      },
+      "normal": {
+        "rows": 10255,
+        "visualP95": 40.3362185673374,
+        "visualP99": 66.57315456766483,
+        "leadP99": 7.84179360853092,
+        "lagP99": 63.71386498615414
+      },
+      "sequence": {
+        "candidate": "residual_cv2_sequence_stop_h32",
+        "sequenceCount": 100,
+        "sequenceVisualP95": 38.03122278624078,
+        "normalSequenceVisualP95": 38.03122278624078,
+        "overshootMaxP95": 12.462884979413726,
+        "overshootDurationP95Ms": 232.98872045551857,
+        "overshootFrameP95": 5.0,
+        "stopRecoveryP95Ms": 71.29299476727056,
+        "stationaryJitterP95": 1.5994181427506413
+      }
+    },
+    {
+      "candidate": "residual_cv2_sequence_stop_h64",
+      "estimatedMacs": 1730,
+      "parameters": 1794,
+      "trainingTrace": [
+        {
+          "epoch": 1,
+          "loss": 384.2069154711158
+        },
+        {
+          "epoch": 14,
+          "loss": 190.47183428293187
+        },
+        {
+          "epoch": 28,
+          "loss": 175.11328064136683
+        },
+        {
+          "epoch": 42,
+          "loss": 169.08349319785196
+        }
+      ],
+      "overall": {
+        "visualP95": 13.756553751530769,
+        "visualP99": 34.39356536548451,
+        "leadP99": 2.934616541957605,
+        "lagP99": 30.284284780864525,
+        "stationaryJitterP95": 0.8251983643767044
+      },
+      "braking": {
+        "rows": 5366,
+        "visualP95": 11.193130102219339,
+        "visualP99": 20.038161471996514,
+        "leadP99": 10.998350518018981,
+        "lagP99": 12.15502183041205
+      },
+      "stopFamily": {
+        "rows": 62635,
+        "visualP95": 2.488416192302128,
+        "visualP99": 10.610684499495878,
+        "leadP99": 1.7803923623403068,
+        "lagP99": 7.399356914637977
+      },
+      "normal": {
+        "rows": 10255,
+        "visualP95": 39.984225902028804,
+        "visualP99": 66.59287191685381,
+        "leadP99": 8.514664591714306,
+        "lagP99": 61.909420467581846
+      },
+      "sequence": {
+        "candidate": "residual_cv2_sequence_stop_h64",
+        "sequenceCount": 100,
+        "sequenceVisualP95": 36.921923128639,
+        "normalSequenceVisualP95": 36.921923128639,
+        "overshootMaxP95": 12.47746607891824,
+        "overshootDurationP95Ms": 233.53117947425235,
+        "overshootFrameP95": 6.0,
+        "stopRecoveryP95Ms": 79.96971097346841,
+        "stationaryJitterP95": 2.3055684234316294
+      }
+    }
+  ],
+  "elapsedSeconds": 59.85310050001135,
+  "limitations": [
+    "Procedural scenarios are not yet collected through Calibrator closed-loop capture.",
+    "Sequence loss is approximated by phase-aware row weighting; a true sequence backpropagation objective is deferred.",
+    "No C# model is emitted from this step."
+  ]
+}

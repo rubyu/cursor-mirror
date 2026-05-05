@@ -11,18 +11,21 @@ namespace CursorMirror
         private const uint WaitObject0 = 0x00000000;
         private const uint WaitInfinite = 0xFFFFFFFF;
         private readonly IntPtr _handle;
-        private readonly string _waitMethod;
+        private readonly string _baseWaitMethod;
+        private bool _preferSetWaitableTimerEx;
+        private bool _setWaitableTimerExUnavailable;
         private bool _disposed;
 
-        private HighResolutionWaitTimer(IntPtr handle, string waitMethod)
+        private HighResolutionWaitTimer(IntPtr handle, string baseWaitMethod, bool preferSetWaitableTimerEx)
         {
             _handle = handle;
-            _waitMethod = waitMethod;
+            _baseWaitMethod = baseWaitMethod;
+            _preferSetWaitableTimerEx = preferSetWaitableTimerEx;
         }
 
         public string WaitMethod
         {
-            get { return _waitMethod; }
+            get { return _preferSetWaitableTimerEx ? _baseWaitMethod + "+setWaitableTimerEx" : _baseWaitMethod; }
         }
 
         public IntPtr Handle
@@ -30,18 +33,35 @@ namespace CursorMirror
             get { return _handle; }
         }
 
+        public bool PreferSetWaitableTimerEx
+        {
+            get { return _preferSetWaitableTimerEx; }
+            set { _preferSetWaitableTimerEx = value; }
+        }
+
         public static HighResolutionWaitTimer CreateBestEffort()
+        {
+            return CreateBestEffort(false);
+        }
+
+        public static HighResolutionWaitTimer CreateBestEffort(bool preferSetWaitableTimerEx)
         {
             IntPtr handle = TryCreate(CreateWaitableTimerHighResolution);
             if (handle != IntPtr.Zero)
             {
-                return new HighResolutionWaitTimer(handle, "highResolutionWaitableTimer");
+                return new HighResolutionWaitTimer(
+                    handle,
+                    "highResolutionWaitableTimer",
+                    preferSetWaitableTimerEx);
             }
 
             handle = TryCreate(0);
             if (handle != IntPtr.Zero)
             {
-                return new HighResolutionWaitTimer(handle, "waitableTimer");
+                return new HighResolutionWaitTimer(
+                    handle,
+                    "waitableTimer",
+                    preferSetWaitableTimerEx);
             }
 
             return null;
@@ -107,6 +127,27 @@ namespace CursorMirror
             if (dueTime == 0)
             {
                 return true;
+            }
+
+            if (_preferSetWaitableTimerEx && !_setWaitableTimerExUnavailable)
+            {
+                try
+                {
+                    if (SetWaitableTimerExNative(_handle, ref dueTime, 0, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, 0))
+                    {
+                        return true;
+                    }
+
+                    _setWaitableTimerExUnavailable = true;
+                }
+                catch (EntryPointNotFoundException)
+                {
+                    _setWaitableTimerExUnavailable = true;
+                }
+                catch (DllNotFoundException)
+                {
+                    _setWaitableTimerExUnavailable = true;
+                }
             }
 
             return SetWaitableTimerNative(_handle, ref dueTime, 0, IntPtr.Zero, IntPtr.Zero, false);
@@ -191,6 +232,9 @@ namespace CursorMirror
 
         [DllImport("kernel32.dll", EntryPoint = "SetWaitableTimer", SetLastError = true)]
         private static extern bool SetWaitableTimerNative(IntPtr timer, ref long dueTime, int period, IntPtr completionRoutine, IntPtr argToCompletionRoutine, bool resume);
+
+        [DllImport("kernel32.dll", EntryPoint = "SetWaitableTimerEx", SetLastError = true)]
+        private static extern bool SetWaitableTimerExNative(IntPtr timer, ref long dueTime, int period, IntPtr completionRoutine, IntPtr argToCompletionRoutine, IntPtr wakeContext, uint tolerableDelay);
 
         [DllImport("kernel32.dll", EntryPoint = "WaitForSingleObject", SetLastError = true)]
         private static extern uint WaitForSingleObjectNative(IntPtr handle, uint milliseconds);

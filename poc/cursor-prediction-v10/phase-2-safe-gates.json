@@ -1,0 +1,1183 @@
+{
+  "schemaVersion": "cursor-prediction-v10-phase2-safe-gates/1",
+  "generatedAt": "2026-05-03T08:12:55.220Z",
+  "baselineId": "constant_velocity_last2_cap24",
+  "selection": "mean + 0.50*p95 + 0.25*p99 + 90*worseOver5Rate",
+  "summary": {
+    "bestSafeGateId": "safe_gate_blend_cv_ls_w50_cap24_ls0p5_g3",
+    "bestSafeGateScore": 48.918556,
+    "testedSafeGates": 20
+  },
+  "safeGates": [
+    {
+      "id": "safe_gate_blend_cv_ls_w50_cap24_ls0p5_g3",
+      "params": {
+        "base": {
+          "family": "blend",
+          "params": {
+            "weightB": 0.5,
+            "a": {
+              "family": "constant_velocity_last2",
+              "params": {
+                "gain": 1,
+                "horizonCapMs": 33.33,
+                "displacementCapPx": 24
+              }
+            },
+            "b": {
+              "family": "least_squares_window",
+              "params": {
+                "windowMs": 50,
+                "horizonCapMs": 33.33,
+                "displacementCapPx": 24
+              }
+            }
+          }
+        },
+        "fallback": {
+          "family": "constant_velocity_last2",
+          "params": {
+            "gain": 1,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "conditions": {
+          "minHistoryCount": 8,
+          "maxAcceleration": 8000,
+          "minEdgeDistance": 12,
+          "maxCurvature": 60,
+          "excludeMissing25": true,
+          "maxObservedSpeed": 3000
+        }
+      },
+      "metrics": {
+        "count": 3840000,
+        "mean": 10.940885,
+        "rmse": 20.724451,
+        "p50": 3.875,
+        "p90": 29.425,
+        "p95": 38.175,
+        "p99": 75.475,
+        "max": 694.357029
+      },
+      "regressionsVsBaseline": {
+        "count": 3840000,
+        "worseOver1px": 49579,
+        "worseOver3px": 3801,
+        "worseOver5px": 914,
+        "worseOver10px": 11,
+        "improvedOver1px": 20668,
+        "improvedOver3px": 5173,
+        "meanDeltaPx": 0.022294
+      },
+      "gateUses": {
+        "advanced": 1362204,
+        "fallback": 2477796
+      },
+      "selectionScore": 48.897135,
+      "safeGateScore": 48.918556
+    },
+    {
+      "id": "safe_gate_blend_cv_ls_w50_cap24_ls0p5_g5",
+      "params": {
+        "base": {
+          "family": "blend",
+          "params": {
+            "weightB": 0.5,
+            "a": {
+              "family": "constant_velocity_last2",
+              "params": {
+                "gain": 1,
+                "horizonCapMs": 33.33,
+                "displacementCapPx": 24
+              }
+            },
+            "b": {
+              "family": "least_squares_window",
+              "params": {
+                "windowMs": 50,
+                "horizonCapMs": 33.33,
+                "displacementCapPx": 24
+              }
+            }
+          }
+        },
+        "fallback": {
+          "family": "constant_velocity_last2",
+          "params": {
+            "gain": 1,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "conditions": {
+          "minHistoryCount": 6,
+          "maxAcceleration": 10000,
+          "minEdgeDistance": 0,
+          "maxCurvature": 45,
+          "excludeMissing25": true,
+          "maxObservedSpeed": 2800
+        }
+      },
+      "metrics": {
+        "count": 3840000,
+        "mean": 10.943725,
+        "rmse": 20.723614,
+        "p50": 3.875,
+        "p90": 29.425,
+        "p95": 38.175,
+        "p99": 75.475,
+        "max": 694.357029
+      },
+      "regressionsVsBaseline": {
+        "count": 3840000,
+        "worseOver1px": 64217,
+        "worseOver3px": 5714,
+        "worseOver5px": 1230,
+        "worseOver10px": 16,
+        "improvedOver1px": 26562,
+        "improvedOver3px": 7660,
+        "meanDeltaPx": 0.025134
+      },
+      "gateUses": {
+        "advanced": 1409736,
+        "fallback": 2430264
+      },
+      "selectionScore": 48.899975,
+      "safeGateScore": 48.928803
+    },
+    {
+      "id": "safe_gate_blend_cv_ls_w50_cap24_ls0p5_g4",
+      "params": {
+        "base": {
+          "family": "blend",
+          "params": {
+            "weightB": 0.5,
+            "a": {
+              "family": "constant_velocity_last2",
+              "params": {
+                "gain": 1,
+                "horizonCapMs": 33.33,
+                "displacementCapPx": 24
+              }
+            },
+            "b": {
+              "family": "least_squares_window",
+              "params": {
+                "windowMs": 50,
+                "horizonCapMs": 33.33,
+                "displacementCapPx": 24
+              }
+            }
+          }
+        },
+        "fallback": {
+          "family": "constant_velocity_last2",
+          "params": {
+            "gain": 1,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "conditions": {
+          "minHistoryCount": 10,
+          "maxAcceleration": 6000,
+          "minEdgeDistance": 24,
+          "maxCurvature": 45,
+          "excludeMissing25": true,
+          "maxObservedSpeed": 2400
+        }
+      },
+      "metrics": {
+        "count": 3840000,
+        "mean": 10.936795,
+        "rmse": 20.724487,
+        "p50": 3.825,
+        "p90": 29.425,
+        "p95": 38.225,
+        "p99": 75.475,
+        "max": 694.357029
+      },
+      "regressionsVsBaseline": {
+        "count": 3840000,
+        "worseOver1px": 33787,
+        "worseOver3px": 2246,
+        "worseOver5px": 515,
+        "worseOver10px": 4,
+        "improvedOver1px": 14341,
+        "improvedOver3px": 3108,
+        "meanDeltaPx": 0.018205
+      },
+      "gateUses": {
+        "advanced": 1287492,
+        "fallback": 2552508
+      },
+      "selectionScore": 48.918045,
+      "safeGateScore": 48.930115
+    },
+    {
+      "id": "safe_gate_blend_cv_ls_w50_cap24_ls0p5_g2",
+      "params": {
+        "base": {
+          "family": "blend",
+          "params": {
+            "weightB": 0.5,
+            "a": {
+              "family": "constant_velocity_last2",
+              "params": {
+                "gain": 1,
+                "horizonCapMs": 33.33,
+                "displacementCapPx": 24
+              }
+            },
+            "b": {
+              "family": "least_squares_window",
+              "params": {
+                "windowMs": 50,
+                "horizonCapMs": 33.33,
+                "displacementCapPx": 24
+              }
+            }
+          }
+        },
+        "fallback": {
+          "family": "constant_velocity_last2",
+          "params": {
+            "gain": 1,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "conditions": {
+          "minHistoryCount": 6,
+          "maxAcceleration": 12000,
+          "minEdgeDistance": 8,
+          "maxCurvature": 90,
+          "excludeMissing25": false,
+          "maxObservedSpeed": 3600
+        }
+      },
+      "metrics": {
+        "count": 3840000,
+        "mean": 10.958231,
+        "rmse": 20.72428,
+        "p50": 3.925,
+        "p90": 29.425,
+        "p95": 38.175,
+        "p99": 75.475,
+        "max": 694.357029
+      },
+      "regressionsVsBaseline": {
+        "count": 3840000,
+        "worseOver1px": 107065,
+        "worseOver3px": 10684,
+        "worseOver5px": 2180,
+        "worseOver10px": 32,
+        "improvedOver1px": 44902,
+        "improvedOver3px": 13739,
+        "meanDeltaPx": 0.039641
+      },
+      "gateUses": {
+        "advanced": 2161188,
+        "fallback": 1678812
+      },
+      "selectionScore": 48.914481,
+      "safeGateScore": 48.965575
+    },
+    {
+      "id": "safe_gate_least_squares_w50_cap24_g4",
+      "params": {
+        "base": {
+          "family": "least_squares_window",
+          "params": {
+            "windowMs": 50,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "fallback": {
+          "family": "constant_velocity_last2",
+          "params": {
+            "gain": 1,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "conditions": {
+          "minHistoryCount": 10,
+          "maxAcceleration": 6000,
+          "minEdgeDistance": 24,
+          "maxCurvature": 45,
+          "excludeMissing25": true,
+          "maxObservedSpeed": 2400
+        }
+      },
+      "metrics": {
+        "count": 3840000,
+        "mean": 10.972902,
+        "rmse": 20.73198,
+        "p50": 3.975,
+        "p90": 29.425,
+        "p95": 38.225,
+        "p99": 75.475,
+        "max": 694.357029
+      },
+      "regressionsVsBaseline": {
+        "count": 3840000,
+        "worseOver1px": 99762,
+        "worseOver3px": 15824,
+        "worseOver5px": 4137,
+        "worseOver10px": 621,
+        "improvedOver1px": 25272,
+        "improvedOver3px": 4722,
+        "meanDeltaPx": 0.054312
+      },
+      "gateUses": {
+        "advanced": 1287492,
+        "fallback": 2552508
+      },
+      "selectionScore": 48.954152,
+      "safeGateScore": 49.051113
+    },
+    {
+      "id": "safe_gate_blend_cv_ls_w50_cap24_ls0p5_g1",
+      "params": {
+        "base": {
+          "family": "blend",
+          "params": {
+            "weightB": 0.5,
+            "a": {
+              "family": "constant_velocity_last2",
+              "params": {
+                "gain": 1,
+                "horizonCapMs": 33.33,
+                "displacementCapPx": 24
+              }
+            },
+            "b": {
+              "family": "least_squares_window",
+              "params": {
+                "windowMs": 50,
+                "horizonCapMs": 33.33,
+                "displacementCapPx": 24
+              }
+            }
+          }
+        },
+        "fallback": {
+          "family": "constant_velocity_last2",
+          "params": {
+            "gain": 1,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "conditions": {
+          "minHistoryCount": 6,
+          "maxAcceleration": 20000,
+          "minEdgeDistance": 0,
+          "maxCurvature": 180,
+          "excludeMissing25": false,
+          "maxObservedSpeed": 4200
+        }
+      },
+      "metrics": {
+        "count": 3840000,
+        "mean": 10.96248,
+        "rmse": 20.714191,
+        "p50": 4.025,
+        "p90": 29.375,
+        "p95": 38.175,
+        "p99": 75.475,
+        "max": 694.357029
+      },
+      "regressionsVsBaseline": {
+        "count": 3840000,
+        "worseOver1px": 173023,
+        "worseOver3px": 30083,
+        "worseOver5px": 5908,
+        "worseOver10px": 103,
+        "improvedOver1px": 82235,
+        "improvedOver3px": 32992,
+        "meanDeltaPx": 0.043889
+      },
+      "gateUses": {
+        "advanced": 2336364,
+        "fallback": 1503636
+      },
+      "selectionScore": 48.91873,
+      "safeGateScore": 49.057198
+    },
+    {
+      "id": "safe_gate_least_squares_w50_cap24_g3",
+      "params": {
+        "base": {
+          "family": "least_squares_window",
+          "params": {
+            "windowMs": 50,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "fallback": {
+          "family": "constant_velocity_last2",
+          "params": {
+            "gain": 1,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "conditions": {
+          "minHistoryCount": 8,
+          "maxAcceleration": 8000,
+          "minEdgeDistance": 12,
+          "maxCurvature": 60,
+          "excludeMissing25": true,
+          "maxObservedSpeed": 3000
+        }
+      },
+      "metrics": {
+        "count": 3840000,
+        "mean": 10.987122,
+        "rmse": 20.735212,
+        "p50": 4.025,
+        "p90": 29.425,
+        "p95": 38.225,
+        "p99": 75.475,
+        "max": 694.357029
+      },
+      "regressionsVsBaseline": {
+        "count": 3840000,
+        "worseOver1px": 126021,
+        "worseOver3px": 26330,
+        "worseOver5px": 7267,
+        "worseOver10px": 1063,
+        "improvedOver1px": 31670,
+        "improvedOver3px": 7447,
+        "meanDeltaPx": 0.068532
+      },
+      "gateUses": {
+        "advanced": 1362204,
+        "fallback": 2477796
+      },
+      "selectionScore": 48.968372,
+      "safeGateScore": 49.138692
+    },
+    {
+      "id": "safe_gate_least_squares_w50_cap24_g5",
+      "params": {
+        "base": {
+          "family": "least_squares_window",
+          "params": {
+            "windowMs": 50,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "fallback": {
+          "family": "constant_velocity_last2",
+          "params": {
+            "gain": 1,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "conditions": {
+          "minHistoryCount": 6,
+          "maxAcceleration": 10000,
+          "minEdgeDistance": 0,
+          "maxCurvature": 45,
+          "excludeMissing25": true,
+          "maxObservedSpeed": 2800
+        }
+      },
+      "metrics": {
+        "count": 3840000,
+        "mean": 10.999301,
+        "rmse": 20.737532,
+        "p50": 4.025,
+        "p90": 29.425,
+        "p95": 38.175,
+        "p99": 75.475,
+        "max": 694.357029
+      },
+      "regressionsVsBaseline": {
+        "count": 3840000,
+        "worseOver1px": 147724,
+        "worseOver3px": 37732,
+        "worseOver5px": 11323,
+        "worseOver10px": 1442,
+        "improvedOver1px": 36903,
+        "improvedOver3px": 10486,
+        "meanDeltaPx": 0.080711
+      },
+      "gateUses": {
+        "advanced": 1409736,
+        "fallback": 2430264
+      },
+      "selectionScore": 48.955551,
+      "safeGateScore": 49.220934
+    },
+    {
+      "id": "safe_gate_least_squares_w70_cap24_g4",
+      "params": {
+        "base": {
+          "family": "least_squares_window",
+          "params": {
+            "windowMs": 70,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "fallback": {
+          "family": "constant_velocity_last2",
+          "params": {
+            "gain": 1,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "conditions": {
+          "minHistoryCount": 10,
+          "maxAcceleration": 6000,
+          "minEdgeDistance": 24,
+          "maxCurvature": 45,
+          "excludeMissing25": true,
+          "maxObservedSpeed": 2400
+        }
+      },
+      "metrics": {
+        "count": 3840000,
+        "mean": 11.031107,
+        "rmse": 20.747946,
+        "p50": 4.125,
+        "p90": 29.425,
+        "p95": 38.225,
+        "p99": 75.475,
+        "max": 694.357029
+      },
+      "regressionsVsBaseline": {
+        "count": 3840000,
+        "worseOver1px": 163088,
+        "worseOver3px": 45343,
+        "worseOver5px": 17449,
+        "worseOver10px": 3528,
+        "improvedOver1px": 33927,
+        "improvedOver3px": 6410,
+        "meanDeltaPx": 0.112517
+      },
+      "gateUses": {
+        "advanced": 1287492,
+        "fallback": 2552508
+      },
+      "selectionScore": 49.012357,
+      "safeGateScore": 49.421318
+    },
+    {
+      "id": "safe_gate_least_squares_w50_cap24_g2",
+      "params": {
+        "base": {
+          "family": "least_squares_window",
+          "params": {
+            "windowMs": 50,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "fallback": {
+          "family": "constant_velocity_last2",
+          "params": {
+            "gain": 1,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "conditions": {
+          "minHistoryCount": 6,
+          "maxAcceleration": 12000,
+          "minEdgeDistance": 8,
+          "maxCurvature": 90,
+          "excludeMissing25": false,
+          "maxObservedSpeed": 3600
+        }
+      },
+      "metrics": {
+        "count": 3840000,
+        "mean": 11.046764,
+        "rmse": 20.748689,
+        "p50": 4.175,
+        "p90": 29.425,
+        "p95": 38.175,
+        "p99": 75.475,
+        "max": 694.357029
+      },
+      "regressionsVsBaseline": {
+        "count": 3840000,
+        "worseOver1px": 233608,
+        "worseOver3px": 66259,
+        "worseOver5px": 21400,
+        "worseOver10px": 2547,
+        "improvedOver1px": 60111,
+        "improvedOver3px": 19210,
+        "meanDeltaPx": 0.128174
+      },
+      "gateUses": {
+        "advanced": 2161188,
+        "fallback": 1678812
+      },
+      "selectionScore": 49.003014,
+      "safeGateScore": 49.504577
+    },
+    {
+      "id": "safe_gate_least_squares_w70_cap24_g3",
+      "params": {
+        "base": {
+          "family": "least_squares_window",
+          "params": {
+            "windowMs": 70,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "fallback": {
+          "family": "constant_velocity_last2",
+          "params": {
+            "gain": 1,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "conditions": {
+          "minHistoryCount": 8,
+          "maxAcceleration": 8000,
+          "minEdgeDistance": 12,
+          "maxCurvature": 60,
+          "excludeMissing25": true,
+          "maxObservedSpeed": 3000
+        }
+      },
+      "metrics": {
+        "count": 3840000,
+        "mean": 11.058092,
+        "rmse": 20.757066,
+        "p50": 4.175,
+        "p90": 29.425,
+        "p95": 38.225,
+        "p99": 75.475,
+        "max": 694.357029
+      },
+      "regressionsVsBaseline": {
+        "count": 3840000,
+        "worseOver1px": 193787,
+        "worseOver3px": 63741,
+        "worseOver5px": 26724,
+        "worseOver10px": 5222,
+        "improvedOver1px": 40111,
+        "improvedOver3px": 9681,
+        "meanDeltaPx": 0.139502
+      },
+      "gateUses": {
+        "advanced": 1362204,
+        "fallback": 2477796
+      },
+      "selectionScore": 49.039342,
+      "safeGateScore": 49.665686
+    },
+    {
+      "id": "safe_gate_least_squares_w70_cap24_g5",
+      "params": {
+        "base": {
+          "family": "least_squares_window",
+          "params": {
+            "windowMs": 70,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "fallback": {
+          "family": "constant_velocity_last2",
+          "params": {
+            "gain": 1,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "conditions": {
+          "minHistoryCount": 6,
+          "maxAcceleration": 10000,
+          "minEdgeDistance": 0,
+          "maxCurvature": 45,
+          "excludeMissing25": true,
+          "maxObservedSpeed": 2800
+        }
+      },
+      "metrics": {
+        "count": 3840000,
+        "mean": 11.079828,
+        "rmse": 20.764038,
+        "p50": 4.225,
+        "p90": 29.425,
+        "p95": 38.225,
+        "p99": 75.475,
+        "max": 694.357029
+      },
+      "regressionsVsBaseline": {
+        "count": 3840000,
+        "worseOver1px": 217471,
+        "worseOver3px": 80484,
+        "worseOver5px": 36406,
+        "worseOver10px": 7002,
+        "improvedOver1px": 45485,
+        "improvedOver3px": 13102,
+        "meanDeltaPx": 0.161237
+      },
+      "gateUses": {
+        "advanced": 1409736,
+        "fallback": 2430264
+      },
+      "selectionScore": 49.061078,
+      "safeGateScore": 49.914343
+    },
+    {
+      "id": "safe_gate_least_squares_w50_cap24_g1",
+      "params": {
+        "base": {
+          "family": "least_squares_window",
+          "params": {
+            "windowMs": 50,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "fallback": {
+          "family": "constant_velocity_last2",
+          "params": {
+            "gain": 1,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "conditions": {
+          "minHistoryCount": 6,
+          "maxAcceleration": 20000,
+          "minEdgeDistance": 0,
+          "maxCurvature": 180,
+          "excludeMissing25": false,
+          "maxObservedSpeed": 4200
+        }
+      },
+      "metrics": {
+        "count": 3840000,
+        "mean": 11.094937,
+        "rmse": 20.761481,
+        "p50": 4.325,
+        "p90": 29.375,
+        "p95": 38.175,
+        "p99": 75.475,
+        "max": 694.357029
+      },
+      "regressionsVsBaseline": {
+        "count": 3840000,
+        "worseOver1px": 322029,
+        "worseOver3px": 127571,
+        "worseOver5px": 56105,
+        "worseOver10px": 7359,
+        "improvedOver1px": 94792,
+        "improvedOver3px": 42022,
+        "meanDeltaPx": 0.176347
+      },
+      "gateUses": {
+        "advanced": 2336364,
+        "fallback": 1503636
+      },
+      "selectionScore": 49.051187,
+      "safeGateScore": 50.366148
+    },
+    {
+      "id": "safe_gate_least_squares_w70_cap24_g2",
+      "params": {
+        "base": {
+          "family": "least_squares_window",
+          "params": {
+            "windowMs": 70,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "fallback": {
+          "family": "constant_velocity_last2",
+          "params": {
+            "gain": 1,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "conditions": {
+          "minHistoryCount": 6,
+          "maxAcceleration": 12000,
+          "minEdgeDistance": 8,
+          "maxCurvature": 90,
+          "excludeMissing25": false,
+          "maxObservedSpeed": 3600
+        }
+      },
+      "metrics": {
+        "count": 3840000,
+        "mean": 11.170425,
+        "rmse": 20.79304,
+        "p50": 4.475,
+        "p90": 29.475,
+        "p95": 38.225,
+        "p99": 75.475,
+        "max": 694.357029
+      },
+      "regressionsVsBaseline": {
+        "count": 3840000,
+        "worseOver1px": 341491,
+        "worseOver3px": 133452,
+        "worseOver5px": 62940,
+        "worseOver10px": 12148,
+        "improvedOver1px": 76625,
+        "improvedOver3px": 25545,
+        "meanDeltaPx": 0.251834
+      },
+      "gateUses": {
+        "advanced": 2161188,
+        "fallback": 1678812
+      },
+      "selectionScore": 49.151675,
+      "safeGateScore": 50.626831
+    },
+    {
+      "id": "safe_gate_least_squares_w100_cap24_g4",
+      "params": {
+        "base": {
+          "family": "least_squares_window",
+          "params": {
+            "windowMs": 100,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "fallback": {
+          "family": "constant_velocity_last2",
+          "params": {
+            "gain": 1,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "conditions": {
+          "minHistoryCount": 10,
+          "maxAcceleration": 6000,
+          "minEdgeDistance": 24,
+          "maxCurvature": 45,
+          "excludeMissing25": true,
+          "maxObservedSpeed": 2400
+        }
+      },
+      "metrics": {
+        "count": 3840000,
+        "mean": 11.200343,
+        "rmse": 20.808374,
+        "p50": 4.475,
+        "p90": 29.475,
+        "p95": 38.225,
+        "p99": 75.475,
+        "max": 694.357029
+      },
+      "regressionsVsBaseline": {
+        "count": 3840000,
+        "worseOver1px": 284830,
+        "worseOver3px": 121694,
+        "worseOver5px": 65696,
+        "worseOver10px": 20157,
+        "improvedOver1px": 41205,
+        "improvedOver3px": 8511,
+        "meanDeltaPx": 0.281752
+      },
+      "gateUses": {
+        "advanced": 1287492,
+        "fallback": 2552508
+      },
+      "selectionScore": 49.181593,
+      "safeGateScore": 50.721343
+    },
+    {
+      "id": "safe_gate_least_squares_w100_cap24_g3",
+      "params": {
+        "base": {
+          "family": "least_squares_window",
+          "params": {
+            "windowMs": 100,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "fallback": {
+          "family": "constant_velocity_last2",
+          "params": {
+            "gain": 1,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "conditions": {
+          "minHistoryCount": 8,
+          "maxAcceleration": 8000,
+          "minEdgeDistance": 12,
+          "maxCurvature": 60,
+          "excludeMissing25": true,
+          "maxObservedSpeed": 3000
+        }
+      },
+      "metrics": {
+        "count": 3840000,
+        "mean": 11.253338,
+        "rmse": 20.83627,
+        "p50": 4.625,
+        "p90": 29.475,
+        "p95": 38.275,
+        "p99": 75.525,
+        "max": 694.357029
+      },
+      "regressionsVsBaseline": {
+        "count": 3840000,
+        "worseOver1px": 320954,
+        "worseOver3px": 148165,
+        "worseOver5px": 84598,
+        "worseOver10px": 27035,
+        "improvedOver1px": 47243,
+        "improvedOver3px": 12052,
+        "meanDeltaPx": 0.334748
+      },
+      "gateUses": {
+        "advanced": 1362204,
+        "fallback": 2477796
+      },
+      "selectionScore": 49.272088,
+      "safeGateScore": 51.254853
+    },
+    {
+      "id": "safe_gate_least_squares_w100_cap24_g5",
+      "params": {
+        "base": {
+          "family": "least_squares_window",
+          "params": {
+            "windowMs": 100,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "fallback": {
+          "family": "constant_velocity_last2",
+          "params": {
+            "gain": 1,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "conditions": {
+          "minHistoryCount": 6,
+          "maxAcceleration": 10000,
+          "minEdgeDistance": 0,
+          "maxCurvature": 45,
+          "excludeMissing25": true,
+          "maxObservedSpeed": 2800
+        }
+      },
+      "metrics": {
+        "count": 3840000,
+        "mean": 11.290107,
+        "rmse": 20.853733,
+        "p50": 4.675,
+        "p90": 29.525,
+        "p95": 38.275,
+        "p99": 75.525,
+        "max": 694.357029
+      },
+      "regressionsVsBaseline": {
+        "count": 3840000,
+        "worseOver1px": 346376,
+        "worseOver3px": 168453,
+        "worseOver5px": 99802,
+        "worseOver10px": 32936,
+        "improvedOver1px": 52915,
+        "improvedOver3px": 15895,
+        "meanDeltaPx": 0.371516
+      },
+      "gateUses": {
+        "advanced": 1409736,
+        "fallback": 2430264
+      },
+      "selectionScore": 49.308857,
+      "safeGateScore": 51.647966
+    },
+    {
+      "id": "safe_gate_least_squares_w70_cap24_g1",
+      "params": {
+        "base": {
+          "family": "least_squares_window",
+          "params": {
+            "windowMs": 70,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "fallback": {
+          "family": "constant_velocity_last2",
+          "params": {
+            "gain": 1,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "conditions": {
+          "minHistoryCount": 6,
+          "maxAcceleration": 20000,
+          "minEdgeDistance": 0,
+          "maxCurvature": 180,
+          "excludeMissing25": false,
+          "maxObservedSpeed": 4200
+        }
+      },
+      "metrics": {
+        "count": 3840000,
+        "mean": 11.241213,
+        "rmse": 20.827401,
+        "p50": 4.625,
+        "p90": 29.425,
+        "p95": 38.225,
+        "p99": 75.575,
+        "max": 694.357029
+      },
+      "regressionsVsBaseline": {
+        "count": 3840000,
+        "worseOver1px": 432369,
+        "worseOver3px": 204212,
+        "worseOver5px": 113871,
+        "worseOver10px": 26880,
+        "improvedOver1px": 117838,
+        "improvedOver3px": 54685,
+        "meanDeltaPx": 0.322622
+      },
+      "gateUses": {
+        "advanced": 2336364,
+        "fallback": 1503636
+      },
+      "selectionScore": 49.247463,
+      "safeGateScore": 51.916314
+    },
+    {
+      "id": "safe_gate_least_squares_w100_cap24_g2",
+      "params": {
+        "base": {
+          "family": "least_squares_window",
+          "params": {
+            "windowMs": 100,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "fallback": {
+          "family": "constant_velocity_last2",
+          "params": {
+            "gain": 1,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "conditions": {
+          "minHistoryCount": 6,
+          "maxAcceleration": 12000,
+          "minEdgeDistance": 8,
+          "maxCurvature": 90,
+          "excludeMissing25": false,
+          "maxObservedSpeed": 3600
+        }
+      },
+      "metrics": {
+        "count": 3840000,
+        "mean": 11.493174,
+        "rmse": 20.946865,
+        "p50": 5.125,
+        "p90": 29.575,
+        "p95": 38.325,
+        "p99": 75.675,
+        "max": 694.357029
+      },
+      "regressionsVsBaseline": {
+        "count": 3840000,
+        "worseOver1px": 536241,
+        "worseOver3px": 266976,
+        "worseOver5px": 161240,
+        "worseOver10px": 54332,
+        "improvedOver1px": 91835,
+        "improvedOver3px": 32190,
+        "meanDeltaPx": 0.574584
+      },
+      "gateUses": {
+        "advanced": 2161188,
+        "fallback": 1678812
+      },
+      "selectionScore": 49.574424,
+      "safeGateScore": 53.353487
+    },
+    {
+      "id": "safe_gate_least_squares_w100_cap24_g1",
+      "params": {
+        "base": {
+          "family": "least_squares_window",
+          "params": {
+            "windowMs": 100,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "fallback": {
+          "family": "constant_velocity_last2",
+          "params": {
+            "gain": 1,
+            "horizonCapMs": 33.33,
+            "displacementCapPx": 24
+          }
+        },
+        "conditions": {
+          "minHistoryCount": 6,
+          "maxAcceleration": 20000,
+          "minEdgeDistance": 0,
+          "maxCurvature": 180,
+          "excludeMissing25": false,
+          "maxObservedSpeed": 4200
+        }
+      },
+      "metrics": {
+        "count": 3840000,
+        "mean": 11.58248,
+        "rmse": 21.029315,
+        "p50": 5.225,
+        "p90": 29.675,
+        "p95": 38.475,
+        "p99": 76.175,
+        "max": 694.357029
+      },
+      "regressionsVsBaseline": {
+        "count": 3840000,
+        "worseOver1px": 622892,
+        "worseOver3px": 336557,
+        "worseOver5px": 216533,
+        "worseOver10px": 80855,
+        "improvedOver1px": 141364,
+        "improvedOver3px": 67734,
+        "meanDeltaPx": 0.663889
+      },
+      "gateUses": {
+        "advanced": 2336364,
+        "fallback": 1503636
+      },
+      "selectionScore": 49.86373,
+      "safeGateScore": 54.938722
+    }
+  ]
+}

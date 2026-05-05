@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "cursor-prediction-v18-step-01-metric-definition/1",
+  "generatedAtUtc": "2026-05-04T06:15:00Z",
+  "primaryMetric": "currentPositionOvershoot",
+  "directionFrames": {
+    "currentPosition": "predictedPosition - currentCursorPosition projected on recent runtime motion direction",
+    "offset0Direction": "prediction error to candidate target projected on offset0 target direction",
+    "candidateTargetDirection": "prediction error to candidate target projected on candidate shifted target direction"
+  },
+  "acuteStopSlices": {
+    "fastThenNearZero": "v12 >= 500 px/s and offset0 target speed <= 150 px/s",
+    "hardBrake": "v12 >= 800 px/s and v2 <= 0.35 * v12",
+    "stopAfterHighSpeed": "v12 >= 1500 px/s and offset0 target speed <= 150 px/s",
+    "oneFrameStop": "v5 >= 500 px/s and v2 <= 100 px/s",
+    "postStopFirstFrames": "v12 >= 500 px/s and v5 <= 250 px/s and v2 <= 100 px/s"
+  },
+  "sideEffectSlices": {
+    "normalMove": "not acute stop and 250 <= v12 < 1800 px/s",
+    "highSpeed": "v12 >= 1800 px/s",
+    "staticHold": "v12 <= 100 px/s and offset0 target speed <= 25 px/s"
+  },
+  "metrics": [
+    "mean",
+    "p95",
+    "p99",
+    "max",
+    "rates >0.5/>1/>2/>4 px",
+    "signed mean",
+    "leadRate",
+    "lagRate"
+  ]
+}

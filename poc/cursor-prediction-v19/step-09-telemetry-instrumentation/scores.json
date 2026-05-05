@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "poc": "cursor-prediction-v19",
+  "step": "step-09-telemetry-instrumentation",
+  "createdDate": "2026-05-04",
+  "purpose": "Add telemetry fields needed to investigate abrupt-stop overshoot/return leaks that Step 08 could not resolve with existing observables.",
+  "implementation": {
+    "predictorBehaviorChanged": false,
+    "traceFormatVersion": {
+      "before": 9,
+      "after": 10
+    },
+    "motionSampleFormatVersion": {
+      "before": 2,
+      "after": 3
+    },
+    "sourceFilesChanged": [
+      "src/CursorMirror.Core/MouseTrace/MouseTracePackageWriter.cs",
+      "src/CursorMirror.Core/MotionLab/MotionLabPackageWriter.cs",
+      "tests/CursorMirror.Tests/MouseTraceTests.cs",
+      "tests/CursorMirror.Tests/MotionLabTests.cs",
+      "spec/11-mouse-trace-tool.md",
+      "spec/14-motion-lab.md"
+    ]
+  },
+  "existingCoverage": {
+    "observedProductPollPosition": "trace.csv poll rows cursorX/cursorY",
+    "referenceHighPrecisionPollPosition": "trace.csv referencePoll rows cursorX/cursorY",
+    "runtimeSchedulerObservedPosition": "trace.csv runtimeSchedulerPoll rows cursorX/cursorY",
+    "cursorReadTicks": "queued/dispatch/read/sample ticks already recorded",
+    "dwmTargetTiming": "runtimeSchedulerTargetVBlankTicks, planned ticks, vblank lead, DWM timing fields",
+    "motionLabGeneratedTruth": "motion-samples.csv"
+  },
+  "newCoverage": {
+    "runtimeSchedulerFieldsAdded": [
+      "runtimeSchedulerCursorReadLatencyMicroseconds",
+      "runtimeSchedulerDispatchToReadStartedMicroseconds",
+      "runtimeSchedulerQueueToDispatchMicroseconds",
+      "runtimeSchedulerReadCompletedToSampleRecordedMicroseconds",
+      "runtimeSchedulerDuplicateHoldRunLength",
+      "runtimeSchedulerLastMovementAgeMicroseconds",
+      "runtimeSchedulerPollCadenceGapMicroseconds",
+      "runtimeSchedulerMissedCadence",
+      "runtimeSchedulerSampleToTargetMicroseconds",
+      "runtimeSchedulerReadCompletedToTargetMicroseconds"
+    ],
+    "motionLabEntriesAdded": [
+      "motion-trace-alignment.csv"
+    ],
+    "motionTraceAlignmentFields": [
+      "traceSequence",
+      "traceEvent",
+      "traceElapsedMicroseconds",
+      "generatedElapsedMilliseconds",
+      "scenarioIndex",
+      "scenarioElapsedMilliseconds",
+      "progress",
+      "generatedX",
+      "generatedY",
+      "velocityPixelsPerSecond",
+      "movementPhase",
+      "holdIndex",
+      "phaseElapsedMilliseconds"
+    ]
+  },
+  "tests": {
+    "command": ".\\scripts\\test.ps1 -Configuration Debug",
+    "debugBuild": "passed",
+    "normalTests": {
+      "passed": 139,
+      "failed": 0
+    },
+    "testsAddedOrUpdated": [
+      "COT-MLU-20 Trace derived telemetry fields",
+      "COT-MNU-6 Motion package with trace contents",
+      "COT-MNU-11 Motion samples include transition telemetry"
+    ]
+  },
+  "dataRequirement": {
+    "newTraceRequired": true,
+    "reason": "Existing ZIPs do not contain trace format 10 derived runtime scheduler fields or MotionLab motion-trace-alignment.csv.",
+    "recommendedCapture": [
+      "TraceTool recording with runtime scheduler poll stream enabled",
+      "MotionLab Play and Record abrupt-stop scenarios with generated truth alignment",
+      "Optional load/no-load paired captures if the live leak is load-sensitive"
+    ]
+  },
+  "recommendation": "Stop model work until new traces are captured with the added telemetry; then rerun Step 08 missing-signal analysis on real data."
+}

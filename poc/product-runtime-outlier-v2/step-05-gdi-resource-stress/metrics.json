@@ -1,0 +1,12 @@
+{
+  "iterations": 250,
+  "movesPerImage": 24,
+  "gdiBefore": 20,
+  "gdiPeak": 28,
+  "gdiAfterDispose": 20,
+  "gdiFinalDelta": 0,
+  "allowedFinalDelta": 8,
+  "elapsedMilliseconds": 862,
+  "passed": true,
+  "error": ""
+}

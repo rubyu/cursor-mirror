@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace CursorMirror
 {
-    public sealed class CalibrationMotionPatternSuite
+    public sealed class CalibrationMotionPatternSuite : ICalibrationMotionSource
     {
         private readonly Segment[] _segments;
         private readonly double _totalDurationMilliseconds;
@@ -18,6 +18,21 @@ namespace CursorMirror
         public double TotalDurationMilliseconds
         {
             get { return _totalDurationMilliseconds; }
+        }
+
+        public string SourceName
+        {
+            get { return "calibrator-default"; }
+        }
+
+        public string GenerationProfile
+        {
+            get { return "calibrator-default"; }
+        }
+
+        public int ScenarioCount
+        {
+            get { return 0; }
         }
 
         public static CalibrationMotionPatternSuite CreateDefault(Rectangle pathBounds)
@@ -42,7 +57,9 @@ namespace CursorMirror
             Add(segments, ref start, "cubic-in-out", "strong-ease", 1000, right, left, y, MotionCurve.CubicInOut);
             Add(segments, ref start, "rapid-reversal", "bidirectional", 1000, left, right, y, MotionCurve.RapidReversal);
             Add(segments, ref start, "sine-sweep", "oscillating", 1400, left, right, y, MotionCurve.SineSweep);
+            Add(segments, ref start, "transition-to-jitter", "positioning", 450, left, jitterLeft, y, MotionCurve.CubicSmoothStep);
             Add(segments, ref start, "short-jitter", "small-oscillation", 1000, jitterLeft, jitterRight, y, MotionCurve.Jitter);
+            Add(segments, ref start, "transition-to-start", "positioning", 700, jitterRight, left, y, MotionCurve.CubicSmoothStep);
 
             return new CalibrationMotionPatternSuite(segments.ToArray());
         }
@@ -84,7 +101,14 @@ namespace CursorMirror
                 segment.PhaseName,
                 (int)Math.Round(x),
                 segment.Y,
-                velocity);
+                velocity,
+                SourceName,
+                GenerationProfile,
+                -1,
+                segmentElapsed,
+                segment.DurationMilliseconds <= 0 ? 0 : segmentElapsed / segment.DurationMilliseconds,
+                -1,
+                segmentElapsed);
         }
 
         private Segment FindSegment(double elapsedMilliseconds)
@@ -196,9 +220,11 @@ namespace CursorMirror
 
                 if (Curve == MotionCurve.Jitter)
                 {
-                    double center = FromX + ((ToX - FromX) / 2.0);
-                    double amplitude = Math.Abs(ToX - FromX) / 2.0;
-                    return center + (Math.Sin(Math.PI * 2.0 * 4.0 * p) * amplitude);
+                    double travel = Lerp(FromX, ToX, SmoothStep(p));
+                    double envelope = Math.Sin(Math.PI * p);
+                    double amplitude = Math.Abs(ToX - FromX) * 0.08;
+                    double wobble = Math.Sin(Math.PI * 2.0 * 4.0 * p) * amplitude * envelope;
+                    return Clamp(travel + wobble, Math.Min(FromX, ToX), Math.Max(FromX, ToX));
                 }
 
                 return Lerp(FromX, ToX, ApplyCurve(p, Curve));
@@ -262,6 +288,11 @@ namespace CursorMirror
             private static double Clamp01(double value)
             {
                 return Math.Max(0, Math.Min(1, value));
+            }
+
+            private static double Clamp(double value, double minimum, double maximum)
+            {
+                return Math.Max(minimum, Math.Min(maximum, value));
             }
 
             private static double Lerp(int start, int end, double progress)

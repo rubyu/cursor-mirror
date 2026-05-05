@@ -1,0 +1,94 @@
+{
+  "schemaVersion": "cursor-prediction-v24/experiment-plan/1",
+  "name": "cursor-prediction-v24-multi-horizon-mlp",
+  "goal": "Explore multi-horizon and SIMD-conscious ML prediction models for Cursor Mirror, with zero-error as the aspirational target and product CPU runtime as the hard constraint.",
+  "sourceArtifacts": {
+    "currentProductModel": "src/CursorMirror.Core/SmoothPredictorModel.g.cs",
+    "currentPredictor": "src/CursorMirror.Core/DwmAwareCursorPositionPredictor.cs",
+    "runtimeOnlyHarness": "poc/cursor-prediction-v21/step-07-runtime-only-correction/",
+    "asymmetricLossStudy": "poc/cursor-prediction-v20/step-01-asymmetric-loss-validation/",
+    "kernelBench": [
+      "src/CursorMirror.KernelBench/Program.cs",
+      "src/CursorMirror.KernelBench.Native/kernelbench_native.cpp"
+    ]
+  },
+  "constraints": {
+    "productRuntime": "CPU only",
+    "offlineTraining": "GPU allowed, single GPU runner only",
+    "measurement": "single runner only",
+    "runtimeFeaturePolicy": "current and past cursor samples only",
+    "diskPolicy": "avoid frequent checkpoints; keep compact reports, scores, and selected final weights"
+  },
+  "horizonSweep": {
+    "targetCorrectionMilliseconds": [-32, -24, -16, -8, 0, 8, 16, 24, 32],
+    "refreshMilliseconds": [16.6667],
+    "extraFutureMilliseconds": [0, 4, 8, 12, 16, 24, 32]
+  },
+  "modelFamilies": [
+    "ConstantVelocity baseline",
+    "LeastSquares baseline",
+    "current SmoothPredictor",
+    "larger scalar C# MLP",
+    "horizon-conditioned MLP",
+    "multi-head multi-horizon MLP",
+    "FSMN-like temporal MLP",
+    "teacher ensemble",
+    "distilled runtime MLP"
+  ],
+  "runtimeKernelCandidates": [
+    "generated scalar C#",
+    "generated unrolled scalar C#",
+    "System.Numerics managed SIMD",
+    "native AVX2/FMA",
+    "native AVX-512F"
+  ],
+  "primaryMetrics": [
+    "visual p95",
+    "visual p99",
+    "lead p99",
+    "future lag p95",
+    "future lag p99",
+    "stop-event peakLead max",
+    "stop-event returnMotion max",
+    "stationary jitter p95",
+    "runtime inference nanoseconds p50/p95/p99",
+    "scheduler outlier rate when measured through Calibrator"
+  ],
+  "steps": [
+    {
+      "id": "step-00-inventory",
+      "status": "in-progress",
+      "purpose": "Inventory existing assets and fix the v24 experiment contract."
+    },
+    {
+      "id": "step-01-horizon-target-audit",
+      "status": "pending",
+      "purpose": "Measure whether current candidates are robust across target correction and future horizon."
+    },
+    {
+      "id": "step-02-multi-horizon-dataset",
+      "status": "pending",
+      "purpose": "Build labels and splits for horizon-aware training."
+    },
+    {
+      "id": "step-03-teacher-model-search",
+      "status": "pending",
+      "purpose": "Find the best accuracy with high-capacity models before optimizing runtime cost."
+    },
+    {
+      "id": "step-04-distillation-and-runtime-shape",
+      "status": "pending",
+      "purpose": "Compress promising teachers into CPU-safe product candidates."
+    },
+    {
+      "id": "step-05-simd-kernel-study",
+      "status": "pending",
+      "purpose": "Benchmark scalar and SIMD inference paths only for candidates large enough to need it."
+    },
+    {
+      "id": "step-06-calibrator-validation",
+      "status": "pending",
+      "purpose": "Validate finalists in closed-loop measurement."
+    }
+  ]
+}

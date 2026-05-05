@@ -18,24 +18,6 @@ namespace CursorMirror
         private const double ConstantVelocityHighSpeedMinimumEfficiencyPercent = 75.0;
         private const double ConstantVelocityHighSpeedMinimumNetPixels = 160.0;
         private const int HistoryCapacity = 64;
-        private const int LeastSquaresDefaultHorizonCapMilliseconds = 8;
-        private const int LeastSquaresWindowMilliseconds = 72;
-        private const int LeastSquaresMinimumSamples = 4;
-        private const double LeastSquaresMinimumEfficiencyPercent = 75.0;
-        private const int LeastSquaresJitterWindowMilliseconds = 300;
-        private const int LeastSquaresJitterMaximumSpanPixels = 380;
-        private const int LeastSquaresJitterMinimumReversals = 2;
-        private const double LeastSquaresJitterMaximumEfficiencyPercent = 55.0;
-        private const int LeastSquaresFreshSampleRequirement = 6;
-        private const int LeastSquaresResetGapMilliseconds = 48;
-        private const double LeastSquaresResetSpeedPixelsPerSecond = 6000.0;
-        private const double LeastSquaresResetDisplacementPixels = 240.0;
-        private const int LeastSquaresResetLowHorizonMilliseconds = 2;
-        private const int LeastSquaresResetLowHorizonDurationMilliseconds = 120;
-        private const double LeastSquaresLowSpeedHorizonPixelsPerSecond = 450.0;
-        private const double LeastSquaresLowNetHorizonPixels = 32.0;
-        private const double LeastSquaresMaximumPredictionPixels = 48.0;
-        private const double LeastSquaresNetDisplacementScale = 0.8;
         private readonly double[] _historyX = new double[HistoryCapacity + 1];
         private readonly double[] _historyY = new double[HistoryCapacity + 1];
         private readonly long[] _historyTimestampTicks = new long[HistoryCapacity + 1];
@@ -62,13 +44,10 @@ namespace CursorMirror
         private int _adaptiveOscillationMaximumSpanPixels;
         private int _adaptiveOscillationMaximumEfficiencyPercent;
         private int _adaptiveOscillationLatchMilliseconds;
-        private int _predictionModel;
         private int _targetOffsetMilliseconds;
         private int _historyCount;
         private int _historyNextIndex;
         private long _oscillationLatchUntilTicks;
-        private int _leastSquaresFreshSampleCount;
-        private long _leastSquaresLowHorizonUntilTicks;
 
         public DwmAwareCursorPositionPredictor(int idleResetMilliseconds)
             : this(idleResetMilliseconds, CursorMirrorSettings.DefaultPredictionGainPercent)
@@ -220,6 +199,7 @@ namespace CursorMirror
                 adaptiveMaximumAccelerationPixelsPerSecondSquared,
                 adaptiveReversalCooldownSamples);
             ApplyPredictionModel(CursorMirrorSettings.DefaultDwmPredictionModel);
+            ApplyPredictionTargetOffsetMilliseconds(CursorMirrorSettings.DefaultDwmPredictionTargetOffsetMilliseconds);
         }
 
         public void ApplyIdleResetMilliseconds(int idleResetMilliseconds)
@@ -316,9 +296,7 @@ namespace CursorMirror
 
         public void ApplyPredictionModel(int predictionModel)
         {
-            _predictionModel = Math.Max(
-                CursorMirrorSettings.MinimumDwmPredictionModel,
-                Math.Min(CursorMirrorSettings.MaximumDwmPredictionModel, predictionModel));
+            CursorMirrorSettings.NormalizeDwmPredictionModel(predictionModel);
         }
 
         public void ApplyPredictionTargetOffsetMilliseconds(int targetOffsetMilliseconds)
@@ -342,8 +320,6 @@ namespace CursorMirror
             _historyCount = 0;
             _historyNextIndex = 0;
             _oscillationLatchUntilTicks = 0;
-            _leastSquaresFreshSampleCount = 0;
-            _leastSquaresLowHorizonUntilTicks = 0;
         }
 
         public Point PredictRounded(CursorPollSample sample, CursorPredictionCounters counters)
@@ -417,21 +393,6 @@ namespace CursorMirror
             }
 
             horizonTicks = ApplyHorizonCap(horizonTicks, sample.StopwatchFrequency);
-            if (_predictionModel == CursorMirrorSettings.DwmPredictionModelLeastSquares)
-            {
-                horizonTicks = ApplyLeastSquaresDefaultHorizonCap(horizonTicks, sample.StopwatchFrequency);
-                PointF leastSquaresPrediction;
-                if (TryPredictLeastSquares(sample, horizonTicks, out leastSquaresPrediction))
-                {
-                    StoreSample(sample, velocityXPerSecond, velocityYPerSecond);
-                    return leastSquaresPrediction;
-                }
-
-                counters.FallbackToHold++;
-                StoreSample(sample, velocityXPerSecond, velocityYPerSecond);
-                return new PointF(sample.Position.X, sample.Position.Y);
-            }
-
             double effectiveGain = SelectGain(sample, velocityXPerSecond, velocityYPerSecond, deltaSeconds);
             bool useHighSpeedLinearCap = ShouldUseHighSpeedConstantVelocityCap(sample, velocityXPerSecond, velocityYPerSecond);
             double scale = effectiveGain * horizonTicks / deltaTicks;
@@ -443,233 +404,6 @@ namespace CursorMirror
             double predictedY = sample.Position.Y + dyConstantVelocity;
             StoreSample(sample, velocityXPerSecond, velocityYPerSecond);
             return new PointF((float)predictedX, (float)predictedY);
-        }
-
-        private bool TryPredictLeastSquares(CursorPollSample sample, long horizonTicks, out PointF predicted)
-        {
-            predicted = new PointF(sample.Position.X, sample.Position.Y);
-            if (sample.StopwatchFrequency <= 0 || horizonTicks <= 0)
-            {
-                return false;
-            }
-
-            if (ShouldResetLeastSquaresHistory(sample))
-            {
-                ResetLeastSquaresHistory(sample);
-                return false;
-            }
-
-            if (_leastSquaresFreshSampleCount + 1 < LeastSquaresFreshSampleRequirement)
-            {
-                return false;
-            }
-
-            PathAnalysis fitPath;
-            if (!TryAnalyzeTimedPath(sample, LeastSquaresWindowMilliseconds, out fitPath) ||
-                fitPath.SampleCount < LeastSquaresMinimumSamples ||
-                fitPath.EfficiencyPercent < LeastSquaresMinimumEfficiencyPercent)
-            {
-                return false;
-            }
-
-            PathAnalysis jitterPath;
-            if (TryAnalyzeTimedPath(sample, LeastSquaresJitterWindowMilliseconds, out jitterPath) &&
-                jitterPath.Reversals >= LeastSquaresJitterMinimumReversals &&
-                jitterPath.Span <= LeastSquaresJitterMaximumSpanPixels &&
-                jitterPath.EfficiencyPercent <= LeastSquaresJitterMaximumEfficiencyPercent)
-            {
-                return false;
-            }
-
-            double velocityXPerSecond;
-            double velocityYPerSecond;
-            if (!TryFitLeastSquaresVelocity(sample, LeastSquaresWindowMilliseconds, out velocityXPerSecond, out velocityYPerSecond))
-            {
-                return false;
-            }
-
-            double speed = Magnitude(velocityXPerSecond, velocityYPerSecond);
-            long effectiveHorizonTicks = ApplyLeastSquaresHorizonGuard(sample, horizonTicks, speed, fitPath.Net);
-            if (effectiveHorizonTicks <= 0)
-            {
-                return false;
-            }
-
-            double horizonSeconds = effectiveHorizonTicks / (double)sample.StopwatchFrequency;
-            double dx = velocityXPerSecond * horizonSeconds * _gain;
-            double dy = velocityYPerSecond * horizonSeconds * _gain;
-            double maxPrediction = Math.Min(LeastSquaresMaximumPredictionPixels, fitPath.Net * LeastSquaresNetDisplacementScale);
-            if (maxPrediction <= 0)
-            {
-                return false;
-            }
-
-            ClampVector(ref dx, ref dy, maxPrediction);
-            predicted = new PointF((float)(sample.Position.X + dx), (float)(sample.Position.Y + dy));
-            return true;
-        }
-
-        private bool ShouldResetLeastSquaresHistory(CursorPollSample sample)
-        {
-            if (!_hasSample || sample.StopwatchFrequency <= 0)
-            {
-                return false;
-            }
-
-            long deltaTicks = sample.TimestampTicks - _lastTimestampTicks;
-            if (deltaTicks <= 0)
-            {
-                return true;
-            }
-
-            double deltaMilliseconds = deltaTicks * 1000.0 / sample.StopwatchFrequency;
-            double dx = sample.Position.X - _lastX;
-            double dy = sample.Position.Y - _lastY;
-            double displacement = Magnitude(dx, dy);
-            double speed = displacement / (deltaTicks / (double)sample.StopwatchFrequency);
-            return deltaMilliseconds > LeastSquaresResetGapMilliseconds ||
-                speed > LeastSquaresResetSpeedPixelsPerSecond ||
-                displacement > LeastSquaresResetDisplacementPixels;
-        }
-
-        private void ResetLeastSquaresHistory(CursorPollSample sample)
-        {
-            _historyCount = 0;
-            _historyNextIndex = 0;
-            _leastSquaresFreshSampleCount = 0;
-            _oscillationLatchUntilTicks = 0;
-            _leastSquaresLowHorizonUntilTicks = sample.TimestampTicks + MillisecondsToTicks(LeastSquaresResetLowHorizonDurationMilliseconds, sample.StopwatchFrequency);
-        }
-
-        private long ApplyLeastSquaresHorizonGuard(CursorPollSample sample, long horizonTicks, double speed, double net)
-        {
-            long guardedHorizonTicks = horizonTicks;
-            if (sample.TimestampTicks < _leastSquaresLowHorizonUntilTicks ||
-                speed < LeastSquaresLowSpeedHorizonPixelsPerSecond ||
-                net < LeastSquaresLowNetHorizonPixels)
-            {
-                long lowHorizonTicks = MillisecondsToTicks(LeastSquaresResetLowHorizonMilliseconds, sample.StopwatchFrequency);
-                if (lowHorizonTicks > 0)
-                {
-                    guardedHorizonTicks = Math.Min(guardedHorizonTicks, lowHorizonTicks);
-                }
-            }
-
-            return guardedHorizonTicks;
-        }
-
-        private bool TryFitLeastSquaresVelocity(
-            CursorPollSample sample,
-            int windowMilliseconds,
-            out double velocityXPerSecond,
-            out double velocityYPerSecond)
-        {
-            velocityXPerSecond = 0;
-            velocityYPerSecond = 0;
-            long windowTicks = MillisecondsToTicks(windowMilliseconds, sample.StopwatchFrequency);
-            if (windowTicks <= 0)
-            {
-                return false;
-            }
-
-            long minimumTicks = sample.TimestampTicks - windowTicks;
-            int count = 0;
-            double sumT = 0;
-            double sumX = 0;
-            double sumY = 0;
-            AccumulateLeastSquaresSample(sample.TimestampTicks, sample.Position.X, sample.Position.Y, sample, ref count, ref sumT, ref sumX, ref sumY);
-            int historyCount = _historyCount;
-            for (int i = 0; i < historyCount; i++)
-            {
-                int index = PriorHistoryIndex(i, historyCount);
-                if (_historyTimestampTicks[index] >= minimumTicks && _historyTimestampTicks[index] <= sample.TimestampTicks)
-                {
-                    AccumulateLeastSquaresSample(
-                        _historyTimestampTicks[index],
-                        _historyX[index],
-                        _historyY[index],
-                        sample,
-                        ref count,
-                        ref sumT,
-                        ref sumX,
-                        ref sumY);
-                }
-            }
-
-            if (count < LeastSquaresMinimumSamples)
-            {
-                return false;
-            }
-
-            double meanT = sumT / count;
-            double meanX = sumX / count;
-            double meanY = sumY / count;
-            double denominator = 0;
-            double numeratorX = 0;
-            double numeratorY = 0;
-            AccumulateLeastSquaresFit(sample.TimestampTicks, sample.Position.X, sample.Position.Y, sample, meanT, meanX, meanY, ref denominator, ref numeratorX, ref numeratorY);
-            for (int i = 0; i < historyCount; i++)
-            {
-                int index = PriorHistoryIndex(i, historyCount);
-                if (_historyTimestampTicks[index] >= minimumTicks && _historyTimestampTicks[index] <= sample.TimestampTicks)
-                {
-                    AccumulateLeastSquaresFit(
-                        _historyTimestampTicks[index],
-                        _historyX[index],
-                        _historyY[index],
-                        sample,
-                        meanT,
-                        meanX,
-                        meanY,
-                        ref denominator,
-                        ref numeratorX,
-                        ref numeratorY);
-                }
-            }
-
-            if (denominator <= 0)
-            {
-                return false;
-            }
-
-            velocityXPerSecond = numeratorX / denominator;
-            velocityYPerSecond = numeratorY / denominator;
-            return true;
-        }
-
-        private static void AccumulateLeastSquaresSample(
-            long timestampTicks,
-            double x,
-            double y,
-            CursorPollSample currentSample,
-            ref int count,
-            ref double sumT,
-            ref double sumX,
-            ref double sumY)
-        {
-            double t = (timestampTicks - currentSample.TimestampTicks) / (double)currentSample.StopwatchFrequency;
-            count++;
-            sumT += t;
-            sumX += x;
-            sumY += y;
-        }
-
-        private static void AccumulateLeastSquaresFit(
-            long timestampTicks,
-            double x,
-            double y,
-            CursorPollSample currentSample,
-            double meanT,
-            double meanX,
-            double meanY,
-            ref double denominator,
-            ref double numeratorX,
-            ref double numeratorY)
-        {
-            double centeredT = ((timestampTicks - currentSample.TimestampTicks) / (double)currentSample.StopwatchFrequency) - meanT;
-            denominator += centeredT * centeredT;
-            numeratorX += centeredT * (x - meanX);
-            numeratorY += centeredT * (y - meanY);
         }
 
         private double SelectGain(CursorPollSample sample, double velocityXPerSecond, double velocityYPerSecond, double deltaSeconds)
@@ -1058,22 +792,6 @@ namespace CursorMirror
             return Math.Min(horizonTicks, capTicks);
         }
 
-        private long ApplyLeastSquaresDefaultHorizonCap(long horizonTicks, long stopwatchFrequency)
-        {
-            if (_horizonCapMilliseconds > 0 || stopwatchFrequency <= 0)
-            {
-                return horizonTicks;
-            }
-
-            long capTicks = MillisecondsToTicks(LeastSquaresDefaultHorizonCapMilliseconds, stopwatchFrequency);
-            if (capTicks <= 0)
-            {
-                return horizonTicks;
-            }
-
-            return Math.Min(horizonTicks, capTicks);
-        }
-
         private long ApplyTargetOffset(long targetTicks, long stopwatchFrequency)
         {
             if (targetTicks <= 0 || stopwatchFrequency <= 0 || _targetOffsetMilliseconds == 0)
@@ -1196,10 +914,6 @@ namespace CursorMirror
                 _historyCount++;
             }
 
-            if (_leastSquaresFreshSampleCount < int.MaxValue)
-            {
-                _leastSquaresFreshSampleCount++;
-            }
         }
     }
 }

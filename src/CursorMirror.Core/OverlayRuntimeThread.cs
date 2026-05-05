@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
+using CursorMirror.ProductRuntimeTelemetry;
 
 namespace CursorMirror
 {
@@ -20,14 +21,35 @@ namespace CursorMirror
         private readonly CursorMirrorSettings _initialSettings;
         private readonly ManualResetEvent _ready = new ManualResetEvent(false);
         private readonly object _sync = new object();
+        private readonly object _mouseMoveSync = new object();
         private Thread _thread;
         private OverlayWindow _overlayWindow;
         private CursorMirrorController _controller;
+        private HighFrequencyCursorPoller _cursorPoller;
+        private HighResolutionWaitTimer _waitTimer;
+        private ThreadLatencyProfile _latencyProfile;
+        private ProcessLatencyProfile _processLatencyProfile;
+        private RuntimeSchedulerOptions _schedulerOptions;
         private Exception _startupException;
         private bool _started;
         private bool _disposed;
         private bool _timerResolutionActive;
         private volatile bool _stopping;
+        private int _lastProcessedMessageCount;
+        private long _lastProcessedMessageDurationTicks;
+        private long _lastMaxMessageDispatchTicks;
+        private int _lastWaitMessageWakeCount;
+        private ProductWaitReturnReason _lastWaitReturnReason = ProductWaitReturnReason.None;
+        private int _lastFineSleepZeroCount;
+        private int _lastFineSpinCount;
+        private bool _mouseMovePostPending;
+        private bool _hasPendingMouseMove;
+        private LowLevelMouseHook.MSLLHOOKSTRUCT _latestMouseMoveData;
+        private long _latestMouseMoveReceivedTicks;
+        private long _mouseMoveEventsReceivedSinceLastTick;
+        private long _mouseMoveEventsCoalescedSinceLastTick;
+        private long _mouseMovePostsQueuedSinceLastTick;
+        private long _mouseMoveCallbacksProcessedSinceLastTick;
 
         [DllImport("user32.dll", EntryPoint = "PeekMessageW", SetLastError = true)]
         private static extern bool PeekMessageNative(out NativeMessage message, IntPtr window, uint filterMin, uint filterMax, uint removeMessage);
@@ -48,6 +70,11 @@ namespace CursorMirror
         private static extern uint TimeEndPeriodNative(uint milliseconds);
 
         public OverlayRuntimeThread(CursorMirrorSettings initialSettings)
+            : this(initialSettings, null)
+        {
+        }
+
+        public OverlayRuntimeThread(CursorMirrorSettings initialSettings, RuntimeSchedulerOptions schedulerOptions)
         {
             if (initialSettings == null)
             {
@@ -55,6 +82,9 @@ namespace CursorMirror
             }
 
             _initialSettings = initialSettings.Normalize();
+            _schedulerOptions = schedulerOptions == null
+                ? RuntimeSchedulerOptions.FromSettings(_initialSettings)
+                : schedulerOptions.Normalize();
         }
 
         public void Start()
@@ -89,17 +119,84 @@ namespace CursorMirror
         {
             if (mouseEvent == LowLevelMouseHook.MouseEvent.WM_MOUSEMOVE)
             {
-                Post(delegate
-                {
-                    CursorMirrorController controller = GetController();
-                    if (controller != null)
-                    {
-                        controller.HandleMouseEvent(mouseEvent, data);
-                    }
-                });
+                QueueLatestMouseMove(data);
             }
 
             return HookResult.Transfer;
+        }
+
+        private void QueueLatestMouseMove(LowLevelMouseHook.MSLLHOOKSTRUCT data)
+        {
+            long receivedTicks = Stopwatch.GetTimestamp();
+            bool shouldPost = false;
+            Interlocked.Increment(ref _mouseMoveEventsReceivedSinceLastTick);
+
+            lock (_mouseMoveSync)
+            {
+                _latestMouseMoveData = data;
+                _latestMouseMoveReceivedTicks = receivedTicks;
+                _hasPendingMouseMove = true;
+                if (_mouseMovePostPending)
+                {
+                    Interlocked.Increment(ref _mouseMoveEventsCoalescedSinceLastTick);
+                    return;
+                }
+
+                _mouseMovePostPending = true;
+                shouldPost = true;
+            }
+
+            if (shouldPost)
+            {
+                if (Post(ProcessCoalescedMouseMoves))
+                {
+                    Interlocked.Increment(ref _mouseMovePostsQueuedSinceLastTick);
+                }
+                else
+                {
+                    lock (_mouseMoveSync)
+                    {
+                        _hasPendingMouseMove = false;
+                        _mouseMovePostPending = false;
+                    }
+                }
+            }
+        }
+
+        private void ProcessCoalescedMouseMoves()
+        {
+            while (!_stopping)
+            {
+                LowLevelMouseHook.MSLLHOOKSTRUCT data;
+                lock (_mouseMoveSync)
+                {
+                    if (!_hasPendingMouseMove)
+                    {
+                        _mouseMovePostPending = false;
+                        return;
+                    }
+
+                    data = _latestMouseMoveData;
+                    _hasPendingMouseMove = false;
+                }
+
+                CursorMirrorController controller = GetController();
+                if (controller != null)
+                {
+                    controller.HandleMouseEvent(LowLevelMouseHook.MouseEvent.WM_MOUSEMOVE, data);
+                }
+
+                Interlocked.Increment(ref _mouseMoveCallbacksProcessedSinceLastTick);
+
+                lock (_mouseMoveSync)
+                {
+                    if (!_hasPendingMouseMove)
+                    {
+                        _mouseMovePostPending = false;
+                        return;
+                    }
+                }
+            }
         }
 
         public void UpdateSettings(CursorMirrorSettings settings)
@@ -117,6 +214,8 @@ namespace CursorMirror
                 {
                     controller.UpdateSettings(normalized);
                 }
+
+                ApplySchedulerOptions(RuntimeSchedulerOptions.FromSettings(normalized));
             });
         }
 
@@ -124,6 +223,11 @@ namespace CursorMirror
         {
             CursorMirrorController controller = GetController();
             return controller == null ? new CursorPredictionCounters() : controller.PredictionCounters.Clone();
+        }
+
+        public ProductRuntimeOutlierSnapshot SnapshotProductRuntimeOutliers()
+        {
+            return ProductRuntimeOutlierRecorder.Current.Snapshot();
         }
 
         public void Dispose()
@@ -145,6 +249,8 @@ namespace CursorMirror
 
             try
             {
+                ApplyThreadLatencyProfileOption(_schedulerOptions.UseThreadLatencyProfile);
+
                 overlayWindow = new OverlayWindow();
                 overlayWindow.CreateControl();
                 IntPtr handle = overlayWindow.Handle;
@@ -154,7 +260,7 @@ namespace CursorMirror
                 }
 
                 ControlDispatcher dispatcher = new ControlDispatcher(overlayWindow);
-                cursorPoller = new HighFrequencyCursorPoller();
+                cursorPoller = new HighFrequencyCursorPoller(_schedulerOptions.UseThreadLatencyProfile);
                 cursorPoller.Start();
                 controller = new CursorMirrorController(
                     new CursorImageProvider(),
@@ -163,12 +269,14 @@ namespace CursorMirror
                     _initialSettings,
                     new SystemClock(),
                     cursorPoller);
-                waitTimer = HighResolutionWaitTimer.CreateBestEffort();
+                waitTimer = HighResolutionWaitTimer.CreateBestEffort(_schedulerOptions.PreferSetWaitableTimerEx);
+                _waitTimer = waitTimer;
 
                 lock (_sync)
                 {
                     _overlayWindow = overlayWindow;
                     _controller = controller;
+                    _cursorPoller = cursorPoller;
                 }
 
                 _timerResolutionActive = TimeBeginPeriodNative(DwmSynchronizedRuntimeScheduler.TimerResolutionMilliseconds) == 0;
@@ -187,6 +295,19 @@ namespace CursorMirror
                 if (waitTimer != null)
                 {
                     waitTimer.Dispose();
+                    waitTimer = null;
+                }
+
+                if (_latencyProfile != null)
+                {
+                    _latencyProfile.Dispose();
+                    _latencyProfile = null;
+                }
+
+                if (_processLatencyProfile != null)
+                {
+                    _processLatencyProfile.Dispose();
+                    _processLatencyProfile = null;
                 }
 
                 if (_timerResolutionActive)
@@ -213,6 +334,8 @@ namespace CursorMirror
                 {
                     _controller = null;
                     _overlayWindow = null;
+                    _cursorPoller = null;
+                    _waitTimer = null;
                 }
 
                 _ready.Set();
@@ -224,6 +347,55 @@ namespace CursorMirror
             lock (_sync)
             {
                 return _controller;
+            }
+        }
+
+        private void ApplySchedulerOptions(RuntimeSchedulerOptions schedulerOptions)
+        {
+            _schedulerOptions = schedulerOptions == null
+                ? RuntimeSchedulerOptions.Default()
+                : schedulerOptions.Normalize();
+
+            if (_waitTimer != null)
+            {
+                _waitTimer.PreferSetWaitableTimerEx = _schedulerOptions.PreferSetWaitableTimerEx;
+            }
+
+            if (_cursorPoller != null)
+            {
+                _cursorPoller.ApplyThreadLatencyProfile(_schedulerOptions.UseThreadLatencyProfile);
+            }
+
+            ApplyThreadLatencyProfileOption(_schedulerOptions.UseThreadLatencyProfile);
+        }
+
+        private void ApplyThreadLatencyProfileOption(bool enabled)
+        {
+            if (enabled)
+            {
+                if (_latencyProfile == null)
+                {
+                    _latencyProfile = ThreadLatencyProfile.Enter("overlayRuntime");
+                }
+
+                if (_processLatencyProfile == null)
+                {
+                    _processLatencyProfile = ProcessLatencyProfile.Enter();
+                }
+
+                return;
+            }
+
+            if (_latencyProfile != null)
+            {
+                _latencyProfile.Dispose();
+                _latencyProfile = null;
+            }
+
+            if (_processLatencyProfile != null)
+            {
+                _processLatencyProfile.Dispose();
+                _processLatencyProfile = null;
             }
         }
 
@@ -305,18 +477,45 @@ namespace CursorMirror
         private void RunSelfScheduledMessageLoop(CursorMirrorController controller, HighResolutionWaitTimer waitTimer)
         {
             long lastRequestedVBlankTicks = 0;
+            long loopIteration = 0;
 
             while (!_stopping)
             {
+                loopIteration++;
                 if (!ProcessPendingMessages())
                 {
                     return;
                 }
 
+                ProductRuntimeOutlierRecorder recorder = ProductRuntimeOutlierRecorder.Current;
+                bool telemetryEnabled = recorder.IsEnabled;
+                int messageCountBeforeTick = _lastProcessedMessageCount;
+                long messageDurationBeforeTick = _lastProcessedMessageDurationTicks;
+                long maxMessageDispatchBeforeTick = _lastMaxMessageDispatchTicks;
+                long loopStartedTicks = telemetryEnabled ? Stopwatch.GetTimestamp() : 0;
+                long timingReadStartedTicks = telemetryEnabled ? Stopwatch.GetTimestamp() : 0;
+                long timingReadCompletedTicks = 0;
+                long decisionStartedTicks = 0;
+                long decisionCompletedTicks = 0;
+                long waitStartedTicks = 0;
+                long waitCompletedTicks = 0;
+                long tickStartedTicks = 0;
+                long tickCompletedTicks = 0;
+                long plannedWakeTicks = 0;
+                long targetVBlankTicks = 0;
+                long runtimeRefreshPeriodTicks = 0;
+                ResetWaitTelemetry();
+
                 long lastDwmVBlankTicks;
                 long refreshPeriodTicks;
                 if (DwmSynchronizedRuntimeScheduler.TryGetDwmTiming(out lastDwmVBlankTicks, out refreshPeriodTicks))
                 {
+                    if (telemetryEnabled)
+                    {
+                        timingReadCompletedTicks = Stopwatch.GetTimestamp();
+                        decisionStartedTicks = timingReadCompletedTicks;
+                    }
+
                     long nowTicks = Stopwatch.GetTimestamp();
                     DwmSynchronizedRuntimeScheduleDecision decision =
                         DwmSynchronizedRuntimeScheduler.EvaluateOneShotDwmTiming(
@@ -325,15 +524,40 @@ namespace CursorMirror
                             lastDwmVBlankTicks,
                             refreshPeriodTicks,
                             lastRequestedVBlankTicks,
-                            DwmSynchronizedRuntimeScheduler.WakeAdvanceMilliseconds,
-                            DwmSynchronizedRuntimeScheduler.FallbackIntervalMilliseconds);
+                            _schedulerOptions.WakeAdvanceMilliseconds,
+                            _schedulerOptions.FallbackIntervalMilliseconds);
+
+                    if (telemetryEnabled)
+                    {
+                        decisionCompletedTicks = Stopwatch.GetTimestamp();
+                        targetVBlankTicks = decision.TargetVBlankTicks;
+                        runtimeRefreshPeriodTicks = refreshPeriodTicks;
+                        if (decision.TargetVBlankTicks > 0)
+                        {
+                            plannedWakeTicks = decision.TargetVBlankTicks - MillisecondsToTicks(_schedulerOptions.WakeAdvanceMilliseconds);
+                        }
+                    }
 
                     if (!decision.ShouldTick && decision.WaitUntilTicks > 0)
                     {
-                        if (!WaitUntilWithMessagePump(waitTimer, decision.WaitUntilTicks, DwmSynchronizedRuntimeScheduler.FallbackIntervalMilliseconds))
+                        if (telemetryEnabled)
+                        {
+                            waitStartedTicks = Stopwatch.GetTimestamp();
+                        }
+
+                        if (!WaitUntilWithMessagePump(waitTimer, decision.WaitUntilTicks, _schedulerOptions.FallbackIntervalMilliseconds))
                         {
                             return;
                         }
+
+                        if (telemetryEnabled)
+                        {
+                            waitCompletedTicks = Stopwatch.GetTimestamp();
+                        }
+                    }
+                    else
+                    {
+                        _lastWaitReturnReason = ProductWaitReturnReason.AlreadyDue;
                     }
 
                     if (_stopping)
@@ -342,14 +566,76 @@ namespace CursorMirror
                     }
 
                     lastRequestedVBlankTicks = decision.TargetVBlankTicks;
+                    if (telemetryEnabled)
+                    {
+                        tickStartedTicks = Stopwatch.GetTimestamp();
+                    }
+
                     controller.Tick(decision.TargetVBlankTicks, refreshPeriodTicks);
+                    if (telemetryEnabled)
+                    {
+                        tickCompletedTicks = Stopwatch.GetTimestamp();
+                        RecordSchedulerTelemetry(
+                            recorder,
+                            loopIteration,
+                            loopStartedTicks,
+                            timingReadStartedTicks,
+                            timingReadCompletedTicks,
+                            decisionStartedTicks,
+                            decisionCompletedTicks,
+                            waitStartedTicks,
+                            waitCompletedTicks,
+                            tickStartedTicks,
+                            tickCompletedTicks,
+                            targetVBlankTicks,
+                            plannedWakeTicks,
+                            runtimeRefreshPeriodTicks,
+                            messageCountBeforeTick,
+                            messageDurationBeforeTick,
+                            maxMessageDispatchBeforeTick);
+                    }
                 }
                 else
                 {
+                    if (telemetryEnabled)
+                    {
+                        timingReadCompletedTicks = Stopwatch.GetTimestamp();
+                        tickStartedTicks = timingReadCompletedTicks;
+                    }
+
                     controller.Tick();
-                    if (!WaitForMillisecondsWithMessagePump(waitTimer, DwmSynchronizedRuntimeScheduler.FallbackIntervalMilliseconds))
+                    if (telemetryEnabled)
+                    {
+                        tickCompletedTicks = Stopwatch.GetTimestamp();
+                        waitStartedTicks = tickCompletedTicks;
+                    }
+
+                    if (!WaitForMillisecondsWithMessagePump(waitTimer, _schedulerOptions.FallbackIntervalMilliseconds))
                     {
                         return;
+                    }
+
+                    if (telemetryEnabled)
+                    {
+                        waitCompletedTicks = Stopwatch.GetTimestamp();
+                        RecordSchedulerTelemetry(
+                            recorder,
+                            loopIteration,
+                            loopStartedTicks,
+                            timingReadStartedTicks,
+                            timingReadCompletedTicks,
+                            0,
+                            0,
+                            waitStartedTicks,
+                            waitCompletedTicks,
+                            tickStartedTicks,
+                            tickCompletedTicks,
+                            0,
+                            0,
+                            0,
+                            messageCountBeforeTick,
+                            messageDurationBeforeTick,
+                            maxMessageDispatchBeforeTick);
                     }
                 }
             }
@@ -357,29 +643,41 @@ namespace CursorMirror
 
         private bool WaitUntilWithMessagePump(HighResolutionWaitTimer waitTimer, long targetTicks, int fallbackMilliseconds)
         {
+            _lastWaitReturnReason = ProductWaitReturnReason.None;
             while (!_stopping)
             {
-                if (!ProcessPendingMessages())
+                long nowTicks = Stopwatch.GetTimestamp();
+                long deadlineDeferralTicks = MicrosecondsToTicks(_schedulerOptions.DeadlineMessageDeferralMicroseconds);
+                if (deadlineDeferralTicks <= 0 || targetTicks - nowTicks > deadlineDeferralTicks)
                 {
-                    return false;
+                    if (!ProcessPendingMessages())
+                    {
+                        return false;
+                    }
                 }
 
-                long nowTicks = Stopwatch.GetTimestamp();
+                nowTicks = Stopwatch.GetTimestamp();
                 if (targetTicks <= nowTicks)
                 {
+                    _lastWaitReturnReason = ProductWaitReturnReason.AlreadyDue;
                     return true;
                 }
 
-                long fineWaitTicks = MicrosecondsToTicks(DwmSynchronizedRuntimeScheduler.FineWaitAdvanceMicroseconds);
+                long fineWaitTicks = MicrosecondsToTicks(_schedulerOptions.FineWaitAdvanceMicroseconds);
                 long coarseTargetTicks = targetTicks - fineWaitTicks;
                 if (coarseTargetTicks <= nowTicks)
                 {
                     FineWaitUntil(targetTicks);
+                    if (_lastWaitReturnReason == ProductWaitReturnReason.None)
+                    {
+                        _lastWaitReturnReason = ProductWaitReturnReason.Timer;
+                    }
+
                     return !_stopping;
                 }
 
                 long coarseTicks = coarseTargetTicks - nowTicks;
-                if (!WaitForTicksOrMessage(waitTimer, coarseTicks, fallbackMilliseconds))
+                if (!WaitForTicksOrMessage(waitTimer, coarseTicks, fallbackMilliseconds, targetTicks))
                 {
                     return false;
                 }
@@ -390,13 +688,14 @@ namespace CursorMirror
 
         private bool WaitForMillisecondsWithMessagePump(HighResolutionWaitTimer waitTimer, int milliseconds)
         {
-            return WaitForTicksOrMessage(waitTimer, MillisecondsToTicks(Math.Max(1, milliseconds)), Math.Max(1, milliseconds));
+            return WaitForTicksOrMessage(waitTimer, MillisecondsToTicks(Math.Max(1, milliseconds)), Math.Max(1, milliseconds), 0);
         }
 
-        private bool WaitForTicksOrMessage(HighResolutionWaitTimer waitTimer, long ticks, int fallbackMilliseconds)
+        private bool WaitForTicksOrMessage(HighResolutionWaitTimer waitTimer, long ticks, int fallbackMilliseconds, long absoluteTargetTicks)
         {
             if (ticks <= 0)
             {
+                _lastWaitReturnReason = ProductWaitReturnReason.AlreadyDue;
                 return ProcessPendingMessages();
             }
 
@@ -408,11 +707,19 @@ namespace CursorMirror
                     uint result = MsgWaitForMultipleObjectsExNative(1, handles, WaitInfinite, QsAllInput, MwmoInputAvailable);
                     if (result == WaitObject0)
                     {
+                        _lastWaitReturnReason = ProductWaitReturnReason.Timer;
                         return true;
                     }
 
                     if (result == WaitObject0 + 1)
                     {
+                        _lastWaitMessageWakeCount++;
+                        _lastWaitReturnReason = ProductWaitReturnReason.Message;
+                        if (ShouldDeferMessageProcessingUntilDeadline(absoluteTargetTicks))
+                        {
+                            return true;
+                        }
+
                         if (!ProcessPendingMessages())
                         {
                             return false;
@@ -423,6 +730,7 @@ namespace CursorMirror
 
                     if (result == WaitFailed)
                     {
+                        _lastWaitReturnReason = ProductWaitReturnReason.Failed;
                         return WaitForTicksWithMessageTimeout(ticks, fallbackMilliseconds);
                     }
                 }
@@ -439,19 +747,41 @@ namespace CursorMirror
             uint result = MsgWaitForMultipleObjectsExNative(0, null, (uint)milliseconds, QsAllInput, MwmoInputAvailable);
             if (result == WaitObject0)
             {
+                _lastWaitMessageWakeCount++;
+                _lastWaitReturnReason = ProductWaitReturnReason.Message;
                 return ProcessPendingMessages();
             }
 
             if (result == WaitFailed)
             {
+                _lastWaitReturnReason = ProductWaitReturnReason.FallbackSleep;
                 Thread.Sleep(milliseconds);
+            }
+            else
+            {
+                _lastWaitReturnReason = ProductWaitReturnReason.Timeout;
             }
 
             return true;
         }
 
+        private bool ShouldDeferMessageProcessingUntilDeadline(long absoluteTargetTicks)
+        {
+            if (absoluteTargetTicks <= 0 || _schedulerOptions.DeadlineMessageDeferralMicroseconds <= 0)
+            {
+                return false;
+            }
+
+            long remainingTicks = absoluteTargetTicks - Stopwatch.GetTimestamp();
+            return remainingTicks > 0 && remainingTicks <= MicrosecondsToTicks(_schedulerOptions.DeadlineMessageDeferralMicroseconds);
+        }
+
         private bool ProcessPendingMessages()
         {
+            int count = 0;
+            long durationTicks = 0;
+            long maxDispatchTicks = 0;
+            long startedTicks = ProductRuntimeOutlierRecorder.Current.IsEnabled ? Stopwatch.GetTimestamp() : 0;
             NativeMessage message;
             while (PeekMessageNative(out message, IntPtr.Zero, 0, 0, PmRemove))
             {
@@ -461,8 +791,19 @@ namespace CursorMirror
                     return false;
                 }
 
+                long dispatchStartedTicks = ProductRuntimeOutlierRecorder.Current.IsEnabled ? Stopwatch.GetTimestamp() : 0;
                 TranslateMessageNative(ref message);
                 DispatchMessageNative(ref message);
+                if (ProductRuntimeOutlierRecorder.Current.IsEnabled)
+                {
+                    long dispatchTicks = Stopwatch.GetTimestamp() - dispatchStartedTicks;
+                    if (dispatchTicks > maxDispatchTicks)
+                    {
+                        maxDispatchTicks = dispatchTicks;
+                    }
+                }
+
+                count++;
 
                 if (_stopping)
                 {
@@ -470,12 +811,20 @@ namespace CursorMirror
                 }
             }
 
+            if (ProductRuntimeOutlierRecorder.Current.IsEnabled)
+            {
+                durationTicks = Stopwatch.GetTimestamp() - startedTicks;
+                _lastProcessedMessageCount = count;
+                _lastProcessedMessageDurationTicks = durationTicks;
+                _lastMaxMessageDispatchTicks = maxDispatchTicks;
+            }
+
             return true;
         }
 
         private void FineWaitUntil(long targetTicks)
         {
-            long yieldThresholdTicks = MicrosecondsToTicks(DwmSynchronizedRuntimeScheduler.FineWaitYieldThresholdMicroseconds);
+            long yieldThresholdTicks = MicrosecondsToTicks(_schedulerOptions.FineWaitYieldThresholdMicroseconds);
             while (!_stopping)
             {
                 long remainingTicks = targetTicks - Stopwatch.GetTimestamp();
@@ -486,13 +835,94 @@ namespace CursorMirror
 
                 if (remainingTicks > yieldThresholdTicks)
                 {
+                    _lastFineSleepZeroCount++;
                     Thread.Sleep(0);
                 }
                 else
                 {
+                    _lastFineSpinCount++;
                     Thread.SpinWait(FineWaitSpinIterations);
                 }
             }
+        }
+
+        private void ResetWaitTelemetry()
+        {
+            _lastWaitMessageWakeCount = 0;
+            _lastWaitReturnReason = ProductWaitReturnReason.None;
+            _lastFineSleepZeroCount = 0;
+            _lastFineSpinCount = 0;
+        }
+
+        private void RecordSchedulerTelemetry(
+            ProductRuntimeOutlierRecorder recorder,
+            long loopIteration,
+            long loopStartedTicks,
+            long timingReadStartedTicks,
+            long timingReadCompletedTicks,
+            long decisionStartedTicks,
+            long decisionCompletedTicks,
+            long waitStartedTicks,
+            long waitCompletedTicks,
+            long tickStartedTicks,
+            long tickCompletedTicks,
+            long targetVBlankTicks,
+            long plannedWakeTicks,
+            long refreshPeriodTicks,
+            int processedMessageCount,
+            long processedMessageDurationTicks,
+            long maxMessageDispatchTicks)
+        {
+            long mouseMoveEventsReceived = Interlocked.Exchange(ref _mouseMoveEventsReceivedSinceLastTick, 0);
+            long mouseMoveEventsCoalesced = Interlocked.Exchange(ref _mouseMoveEventsCoalescedSinceLastTick, 0);
+            long mouseMovePostsQueued = Interlocked.Exchange(ref _mouseMovePostsQueuedSinceLastTick, 0);
+            long mouseMoveCallbacksProcessed = Interlocked.Exchange(ref _mouseMoveCallbacksProcessedSinceLastTick, 0);
+            long latestMouseMoveReceivedTicks = Volatile.Read(ref _latestMouseMoveReceivedTicks);
+            ProductRuntimeOutlierEvent runtimeEvent = new ProductRuntimeOutlierEvent();
+            runtimeEvent.EventKind = (int)ProductRuntimeOutlierEventKind.SchedulerTick;
+            runtimeEvent.StopwatchTicks = tickCompletedTicks > 0 ? tickCompletedTicks : Stopwatch.GetTimestamp();
+            runtimeEvent.LoopIteration = loopIteration;
+            runtimeEvent.TargetVBlankTicks = targetVBlankTicks;
+            runtimeEvent.PlannedWakeTicks = plannedWakeTicks;
+            runtimeEvent.RefreshPeriodTicks = refreshPeriodTicks;
+            runtimeEvent.DwmReadDurationTicks = timingReadCompletedTicks > timingReadStartedTicks ? timingReadCompletedTicks - timingReadStartedTicks : 0;
+            runtimeEvent.DecisionDurationTicks = decisionCompletedTicks > decisionStartedTicks ? decisionCompletedTicks - decisionStartedTicks : 0;
+            runtimeEvent.WaitDurationTicks = waitCompletedTicks > waitStartedTicks ? waitCompletedTicks - waitStartedTicks : 0;
+            runtimeEvent.TickDurationTicks = tickCompletedTicks > tickStartedTicks ? tickCompletedTicks - tickStartedTicks : 0;
+            runtimeEvent.ProcessedMessageCountBeforeTick = processedMessageCount;
+            runtimeEvent.ProcessedMessageDurationTicksBeforeTick = processedMessageDurationTicks;
+            runtimeEvent.MaxMessageDispatchTicksBeforeTick = maxMessageDispatchTicks;
+            runtimeEvent.MessageWakeCount = _lastWaitMessageWakeCount;
+            runtimeEvent.WaitReturnReason = (int)_lastWaitReturnReason;
+            runtimeEvent.FineSleepZeroCount = _lastFineSleepZeroCount;
+            runtimeEvent.FineSpinCount = _lastFineSpinCount;
+            runtimeEvent.TotalTicks = runtimeEvent.StopwatchTicks - loopStartedTicks;
+            runtimeEvent.MouseMoveEventsReceived = mouseMoveEventsReceived;
+            runtimeEvent.MouseMoveEventsCoalesced = mouseMoveEventsCoalesced;
+            runtimeEvent.MouseMovePostsQueued = mouseMovePostsQueued;
+            runtimeEvent.MouseMoveCallbacksProcessed = mouseMoveCallbacksProcessed;
+            int currentProcessForeground;
+            int foregroundWindowProcessId;
+            ForegroundWindowTelemetry.Capture(out currentProcessForeground, out foregroundWindowProcessId);
+            runtimeEvent.CurrentProcessForeground = currentProcessForeground;
+            runtimeEvent.ForegroundWindowProcessId = foregroundWindowProcessId;
+
+            if (plannedWakeTicks > 0 && tickStartedTicks > 0)
+            {
+                runtimeEvent.WakeLateMicroseconds = ProductRuntimeOutlierRecorder.TicksToMicroseconds(tickStartedTicks - plannedWakeTicks);
+            }
+
+            if (targetVBlankTicks > 0 && tickStartedTicks > 0)
+            {
+                runtimeEvent.VBlankLeadMicroseconds = ProductRuntimeOutlierRecorder.TicksToMicroseconds(targetVBlankTicks - tickStartedTicks);
+            }
+
+            if (latestMouseMoveReceivedTicks > 0 && tickStartedTicks > 0)
+            {
+                runtimeEvent.LatestMouseMoveAgeMicroseconds = ProductRuntimeOutlierRecorder.TicksToMicroseconds(tickStartedTicks - latestMouseMoveReceivedTicks);
+            }
+
+            recorder.Record(ref runtimeEvent);
         }
 
         private static long MillisecondsToTicks(int milliseconds)

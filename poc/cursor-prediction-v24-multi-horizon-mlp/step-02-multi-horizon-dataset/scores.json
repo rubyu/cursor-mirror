@@ -1,0 +1,312 @@
+{
+    "schemaVersion":  "cursor-prediction-v24-step-02-multi-horizon-dataset-audit/1",
+    "generatedAtUtc":  "2026-05-05T03:40:47.9419457Z",
+    "sourceManifest":  "poc/cursor-prediction-v21/step-02-balanced-evaluation/split-manifest.json",
+    "warmupMilliseconds":  1500,
+    "horizonGridMilliseconds":  [
+                                    -24,
+                                    -16,
+                                    -8,
+                                    0,
+                                    4,
+                                    8,
+                                    12,
+                                    16,
+                                    24,
+                                    32,
+                                    40
+                                ],
+    "labelsPerEligibleRow":  11,
+    "packageCount":  10,
+    "allRequiredEntriesAndColumnsPresent":  true,
+    "packageAudits":  [
+                          {
+                              "packageId":  "m191827",
+                              "split":  "train",
+                              "qualityBucket":  "poll-delayed",
+                              "durationBucket":  "12s",
+                              "scenarioDurationMilliseconds":  12000,
+                              "scenarioCount":  64,
+                              "alignmentRows":  558923,
+                              "zipExists":  true,
+                              "requiredEntries":  {
+                                                      "motion-samples.csv":  true,
+                                                      "trace.csv":  true,
+                                                      "motion-script.json":  true,
+                                                      "motion-metadata.json":  true,
+                                                      "metadata.json":  true,
+                                                      "motion-trace-alignment.csv":  true
+                                                  },
+                              "missingAlignmentColumns":  [
+
+                                                          ],
+                              "missingTraceColumns":  [
+
+                                                      ]
+                          },
+                          {
+                              "packageId":  "m192020",
+                              "split":  "validation",
+                              "qualityBucket":  "poll-delayed",
+                              "durationBucket":  "12s",
+                              "scenarioDurationMilliseconds":  12000,
+                              "scenarioCount":  64,
+                              "alignmentRows":  567051,
+                              "zipExists":  true,
+                              "requiredEntries":  {
+                                                      "motion-samples.csv":  true,
+                                                      "trace.csv":  true,
+                                                      "motion-script.json":  true,
+                                                      "motion-metadata.json":  true,
+                                                      "metadata.json":  true,
+                                                      "motion-trace-alignment.csv":  true
+                                                  },
+                              "missingAlignmentColumns":  [
+
+                                                          ],
+                              "missingTraceColumns":  [
+
+                                                      ]
+                          },
+                          {
+                              "packageId":  "m192107",
+                              "split":  "robustness",
+                              "qualityBucket":  "poll-delayed",
+                              "durationBucket":  "12s",
+                              "scenarioDurationMilliseconds":  12000,
+                              "scenarioCount":  64,
+                              "alignmentRows":  500785,
+                              "zipExists":  true,
+                              "requiredEntries":  {
+                                                      "motion-samples.csv":  true,
+                                                      "trace.csv":  true,
+                                                      "motion-script.json":  true,
+                                                      "motion-metadata.json":  true,
+                                                      "metadata.json":  true,
+                                                      "motion-trace-alignment.csv":  true
+                                                  },
+                              "missingAlignmentColumns":  [
+
+                                                          ],
+                              "missingTraceColumns":  [
+
+                                                      ]
+                          },
+                          {
+                              "packageId":  "m193433",
+                              "split":  "robustness",
+                              "qualityBucket":  "poll-delayed",
+                              "durationBucket":  "8s",
+                              "scenarioDurationMilliseconds":  8000,
+                              "scenarioCount":  64,
+                              "alignmentRows":  443361,
+                              "zipExists":  true,
+                              "requiredEntries":  {
+                                                      "motion-samples.csv":  true,
+                                                      "trace.csv":  true,
+                                                      "motion-script.json":  true,
+                                                      "motion-metadata.json":  true,
+                                                      "metadata.json":  true,
+                                                      "motion-trace-alignment.csv":  true
+                                                  },
+                              "missingAlignmentColumns":  [
+
+                                                          ],
+                              "missingTraceColumns":  [
+
+                                                      ]
+                          },
+                          {
+                              "packageId":  "m193508",
+                              "split":  "train",
+                              "qualityBucket":  "poll-delayed",
+                              "durationBucket":  "6s",
+                              "scenarioDurationMilliseconds":  6000,
+                              "scenarioCount":  64,
+                              "alignmentRows":  320451,
+                              "zipExists":  true,
+                              "requiredEntries":  {
+                                                      "motion-samples.csv":  true,
+                                                      "trace.csv":  true,
+                                                      "motion-script.json":  true,
+                                                      "motion-metadata.json":  true,
+                                                      "metadata.json":  true,
+                                                      "motion-trace-alignment.csv":  true
+                                                  },
+                              "missingAlignmentColumns":  [
+
+                                                          ],
+                              "missingTraceColumns":  [
+
+                                                      ]
+                          },
+                          {
+                              "packageId":  "m194149",
+                              "split":  "train",
+                              "qualityBucket":  "poll-delayed",
+                              "durationBucket":  "4s",
+                              "scenarioDurationMilliseconds":  4000,
+                              "scenarioCount":  64,
+                              "alignmentRows":  239096,
+                              "zipExists":  true,
+                              "requiredEntries":  {
+                                                      "motion-samples.csv":  true,
+                                                      "trace.csv":  true,
+                                                      "motion-script.json":  true,
+                                                      "motion-metadata.json":  true,
+                                                      "metadata.json":  true,
+                                                      "motion-trace-alignment.csv":  true
+                                                  },
+                              "missingAlignmentColumns":  [
+
+                                                          ],
+                              "missingTraceColumns":  [
+
+                                                      ]
+                          },
+                          {
+                              "packageId":  "m194623",
+                              "split":  "robustness",
+                              "qualityBucket":  "poll-delayed",
+                              "durationBucket":  "10s",
+                              "scenarioDurationMilliseconds":  10000,
+                              "scenarioCount":  64,
+                              "alignmentRows":  508234,
+                              "zipExists":  true,
+                              "requiredEntries":  {
+                                                      "motion-samples.csv":  true,
+                                                      "trace.csv":  true,
+                                                      "motion-script.json":  true,
+                                                      "motion-metadata.json":  true,
+                                                      "metadata.json":  true,
+                                                      "motion-trace-alignment.csv":  true
+                                                  },
+                              "missingAlignmentColumns":  [
+
+                                                          ],
+                              "missingTraceColumns":  [
+
+                                                      ]
+                          },
+                          {
+                              "packageId":  "m194657",
+                              "split":  "robustness",
+                              "qualityBucket":  "poll-delayed",
+                              "durationBucket":  "6s",
+                              "scenarioDurationMilliseconds":  6000,
+                              "scenarioCount":  64,
+                              "alignmentRows":  362328,
+                              "zipExists":  true,
+                              "requiredEntries":  {
+                                                      "motion-samples.csv":  true,
+                                                      "trace.csv":  true,
+                                                      "motion-script.json":  true,
+                                                      "motion-metadata.json":  true,
+                                                      "metadata.json":  true,
+                                                      "motion-trace-alignment.csv":  true
+                                                  },
+                              "missingAlignmentColumns":  [
+
+                                                          ],
+                              "missingTraceColumns":  [
+
+                                                      ]
+                          },
+                          {
+                              "packageId":  "m195438",
+                              "split":  "test",
+                              "qualityBucket":  "normal",
+                              "durationBucket":  "4s",
+                              "scenarioDurationMilliseconds":  4000,
+                              "scenarioCount":  64,
+                              "alignmentRows":  252111,
+                              "zipExists":  true,
+                              "requiredEntries":  {
+                                                      "motion-samples.csv":  true,
+                                                      "trace.csv":  true,
+                                                      "motion-script.json":  true,
+                                                      "motion-metadata.json":  true,
+                                                      "metadata.json":  true,
+                                                      "motion-trace-alignment.csv":  true
+                                                  },
+                              "missingAlignmentColumns":  [
+
+                                                          ],
+                              "missingTraceColumns":  [
+
+                                                      ]
+                          },
+                          {
+                              "packageId":  "m195750",
+                              "split":  "train",
+                              "qualityBucket":  "poll-delayed",
+                              "durationBucket":  "8s",
+                              "scenarioDurationMilliseconds":  8000,
+                              "scenarioCount":  64,
+                              "alignmentRows":  429963,
+                              "zipExists":  true,
+                              "requiredEntries":  {
+                                                      "motion-samples.csv":  true,
+                                                      "trace.csv":  true,
+                                                      "motion-script.json":  true,
+                                                      "motion-metadata.json":  true,
+                                                      "metadata.json":  true,
+                                                      "motion-trace-alignment.csv":  true
+                                                  },
+                              "missingAlignmentColumns":  [
+
+                                                          ],
+                              "missingTraceColumns":  [
+
+                                                      ]
+                          }
+                      ],
+    "samplePackage":  {
+                          "packageId":  "m195438",
+                          "path":  "cursor-mirror-motion-recording-20260504-195438.zip",
+                          "split":  "test",
+                          "qualityBucket":  "normal",
+                          "counts":  {
+                                         "alignmentRowsRead":  252111,
+                                         "runtimeSchedulerPollRows":  15360,
+                                         "eligibleRowsAfterWarmup":  9600,
+                                         "eligibleRuntimeRatio":  0.038078,
+                                         "movementPhaseCounts":  {
+                                                                     "resume":  585,
+                                                                     "moving":  7432,
+                                                                     "hold":  1583
+                                                                 }
+                                     }
+                      },
+    "estimatedBySplit":  {
+                             "train":  {
+                                           "packages":  4,
+                                           "manifestAlignmentRows":  1548433,
+                                           "estimatedEligibleRows":  58961,
+                                           "estimatedMultiHorizonLabels":  648571
+                                       },
+                             "validation":  {
+                                                "packages":  1,
+                                                "manifestAlignmentRows":  567051,
+                                                "estimatedEligibleRows":  21592,
+                                                "estimatedMultiHorizonLabels":  237512
+                                            },
+                             "robustness":  {
+                                                "packages":  4,
+                                                "manifestAlignmentRows":  1814708,
+                                                "estimatedEligibleRows":  69100,
+                                                "estimatedMultiHorizonLabels":  760100
+                                            },
+                             "test":  {
+                                          "packages":  1,
+                                          "manifestAlignmentRows":  252111,
+                                          "estimatedEligibleRows":  9600,
+                                          "estimatedMultiHorizonLabels":  105600
+                                      }
+                         },
+    "limitations":  [
+                        "Only one package was fully scanned for runtimeSchedulerPoll/eligible ratio; other packages use manifest alignment rows multiplied by that ratio.",
+                        "This step does not materialize a row-level dataset and does not interpolate multi-horizon labels yet.",
+                        "The horizon grid includes internal target offsets from -24ms to +40ms plus intermediate future probes."
+                    ]
+}

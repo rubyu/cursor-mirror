@@ -1,0 +1,245 @@
+{
+  "schemaVersion": "cursor-prediction-v19-abrupt-stop-scenario-metadata/1",
+  "metadata": [
+    {
+      "scenarioIndex": 0,
+      "family": "straight-hard-stop",
+      "speedMultiplier": 0.9,
+      "stopDurationMs": 67,
+      "phaseShift": -0.035,
+      "curvePx": 0,
+      "nearZeroCreepMultiplier": 0,
+      "intendedFailure": "abrupt deceleration/stop overshoot then return"
+    },
+    {
+      "scenarioIndex": 1,
+      "family": "straight-hard-stop",
+      "speedMultiplier": 1.4,
+      "stopDurationMs": 133,
+      "phaseShift": -0.015,
+      "curvePx": 0,
+      "nearZeroCreepMultiplier": 0,
+      "intendedFailure": "abrupt deceleration/stop overshoot then return"
+    },
+    {
+      "scenarioIndex": 2,
+      "family": "straight-hard-stop",
+      "speedMultiplier": 2.1,
+      "stopDurationMs": 200,
+      "phaseShift": 0,
+      "curvePx": 0,
+      "nearZeroCreepMultiplier": 0,
+      "intendedFailure": "abrupt deceleration/stop overshoot then return"
+    },
+    {
+      "scenarioIndex": 3,
+      "family": "straight-one-frame-stop",
+      "speedMultiplier": 0.9,
+      "stopDurationMs": 333,
+      "phaseShift": 0.018,
+      "curvePx": 0,
+      "nearZeroCreepMultiplier": 0,
+      "intendedFailure": "abrupt deceleration/stop overshoot then return"
+    },
+    {
+      "scenarioIndex": 4,
+      "family": "straight-one-frame-stop",
+      "speedMultiplier": 1.4,
+      "stopDurationMs": 67,
+      "phaseShift": 0.037,
+      "curvePx": 0,
+      "nearZeroCreepMultiplier": 0,
+      "intendedFailure": "abrupt deceleration/stop overshoot then return"
+    },
+    {
+      "scenarioIndex": 5,
+      "family": "straight-one-frame-stop",
+      "speedMultiplier": 2.1,
+      "stopDurationMs": 133,
+      "phaseShift": -0.035,
+      "curvePx": 0,
+      "nearZeroCreepMultiplier": 0,
+      "intendedFailure": "abrupt deceleration/stop overshoot then return"
+    },
+    {
+      "scenarioIndex": 6,
+      "family": "curved-hard-stop",
+      "speedMultiplier": 0.9,
+      "stopDurationMs": 200,
+      "phaseShift": -0.015,
+      "curvePx": 90,
+      "nearZeroCreepMultiplier": 0,
+      "intendedFailure": "abrupt deceleration/stop overshoot then return"
+    },
+    {
+      "scenarioIndex": 7,
+      "family": "curved-hard-stop",
+      "speedMultiplier": 1.4,
+      "stopDurationMs": 333,
+      "phaseShift": 0,
+      "curvePx": 120,
+      "nearZeroCreepMultiplier": 0,
+      "intendedFailure": "abrupt deceleration/stop overshoot then return"
+    },
+    {
+      "scenarioIndex": 8,
+      "family": "curved-hard-stop",
+      "speedMultiplier": 2.1,
+      "stopDurationMs": 67,
+      "phaseShift": 0.018,
+      "curvePx": 150,
+      "nearZeroCreepMultiplier": 0,
+      "intendedFailure": "abrupt deceleration/stop overshoot then return"
+    },
+    {
+      "scenarioIndex": 9,
+      "family": "curved-creep-stop",
+      "speedMultiplier": 0.9,
+      "stopDurationMs": 133,
+      "phaseShift": 0.037,
+      "curvePx": 90,
+      "nearZeroCreepMultiplier": 0.18,
+      "intendedFailure": "abrupt deceleration/stop overshoot then return"
+    },
+    {
+      "scenarioIndex": 10,
+      "family": "curved-creep-stop",
+      "speedMultiplier": 1.4,
+      "stopDurationMs": 200,
+      "phaseShift": -0.035,
+      "curvePx": 120,
+      "nearZeroCreepMultiplier": 0.18,
+      "intendedFailure": "abrupt deceleration/stop overshoot then return"
+    },
+    {
+      "scenarioIndex": 11,
+      "family": "curved-creep-stop",
+      "speedMultiplier": 2.1,
+      "stopDurationMs": 333,
+      "phaseShift": -0.015,
+      "curvePx": 150,
+      "nearZeroCreepMultiplier": 0.18,
+      "intendedFailure": "abrupt deceleration/stop overshoot then return"
+    },
+    {
+      "scenarioIndex": 12,
+      "family": "short-stop-duration",
+      "speedMultiplier": 0.9,
+      "stopDurationMs": 67,
+      "phaseShift": 0,
+      "curvePx": 0,
+      "nearZeroCreepMultiplier": 0,
+      "intendedFailure": "abrupt deceleration/stop overshoot then return"
+    },
+    {
+      "scenarioIndex": 13,
+      "family": "short-stop-duration",
+      "speedMultiplier": 1.4,
+      "stopDurationMs": 133,
+      "phaseShift": 0.018,
+      "curvePx": 0,
+      "nearZeroCreepMultiplier": 0,
+      "intendedFailure": "abrupt deceleration/stop overshoot then return"
+    },
+    {
+      "scenarioIndex": 14,
+      "family": "short-stop-duration",
+      "speedMultiplier": 2.1,
+      "stopDurationMs": 200,
+      "phaseShift": 0.037,
+      "curvePx": 0,
+      "nearZeroCreepMultiplier": 0,
+      "intendedFailure": "abrupt deceleration/stop overshoot then return"
+    },
+    {
+      "scenarioIndex": 15,
+      "family": "long-stop-duration",
+      "speedMultiplier": 0.9,
+      "stopDurationMs": 333,
+      "phaseShift": -0.035,
+      "curvePx": 0,
+      "nearZeroCreepMultiplier": 0,
+      "intendedFailure": "abrupt deceleration/stop overshoot then return"
+    },
+    {
+      "scenarioIndex": 16,
+      "family": "long-stop-duration",
+      "speedMultiplier": 1.4,
+      "stopDurationMs": 67,
+      "phaseShift": -0.015,
+      "curvePx": 0,
+      "nearZeroCreepMultiplier": 0,
+      "intendedFailure": "abrupt deceleration/stop overshoot then return"
+    },
+    {
+      "scenarioIndex": 17,
+      "family": "long-stop-duration",
+      "speedMultiplier": 2.1,
+      "stopDurationMs": 133,
+      "phaseShift": 0,
+      "curvePx": 0,
+      "nearZeroCreepMultiplier": 0,
+      "intendedFailure": "abrupt deceleration/stop overshoot then return"
+    },
+    {
+      "scenarioIndex": 18,
+      "family": "phase-shifted-stop",
+      "speedMultiplier": 0.9,
+      "stopDurationMs": 200,
+      "phaseShift": 0.018,
+      "curvePx": 0,
+      "nearZeroCreepMultiplier": 0,
+      "intendedFailure": "abrupt deceleration/stop overshoot then return"
+    },
+    {
+      "scenarioIndex": 19,
+      "family": "phase-shifted-stop",
+      "speedMultiplier": 1.4,
+      "stopDurationMs": 333,
+      "phaseShift": 0.037,
+      "curvePx": 0,
+      "nearZeroCreepMultiplier": 0,
+      "intendedFailure": "abrupt deceleration/stop overshoot then return"
+    },
+    {
+      "scenarioIndex": 20,
+      "family": "phase-shifted-stop",
+      "speedMultiplier": 2.1,
+      "stopDurationMs": 67,
+      "phaseShift": -0.035,
+      "curvePx": 0,
+      "nearZeroCreepMultiplier": 0,
+      "intendedFailure": "abrupt deceleration/stop overshoot then return"
+    },
+    {
+      "scenarioIndex": 21,
+      "family": "dropout-proxy-stop",
+      "speedMultiplier": 0.9,
+      "stopDurationMs": 133,
+      "phaseShift": -0.015,
+      "curvePx": 0,
+      "nearZeroCreepMultiplier": 0,
+      "intendedFailure": "abrupt deceleration/stop overshoot then return"
+    },
+    {
+      "scenarioIndex": 22,
+      "family": "dropout-proxy-stop",
+      "speedMultiplier": 1.4,
+      "stopDurationMs": 200,
+      "phaseShift": 0,
+      "curvePx": 0,
+      "nearZeroCreepMultiplier": 0,
+      "intendedFailure": "abrupt deceleration/stop overshoot then return"
+    },
+    {
+      "scenarioIndex": 23,
+      "family": "dropout-proxy-stop",
+      "speedMultiplier": 2.1,
+      "stopDurationMs": 333,
+      "phaseShift": 0.018,
+      "curvePx": 0,
+      "nearZeroCreepMultiplier": 0,
+      "intendedFailure": "abrupt deceleration/stop overshoot then return"
+    }
+  ]
+}

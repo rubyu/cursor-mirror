@@ -1,0 +1,3567 @@
+{
+  "schemaVersion": "cursor-prediction-v19-step-08-missing-signal-oracle/1",
+  "generatedAtUtc": "2026-05-04T09:57:33.6000541+00:00",
+  "inputs": {
+    "realPackages": [
+      {
+        "PackageId": "m070248",
+        "ZipPath": "cursor-mirror-motion-recording-20260504-070248.zip",
+        "exists": true,
+        "Split": "train"
+      },
+      {
+        "PackageId": "m070307",
+        "ZipPath": "cursor-mirror-motion-recording-20260504-070307.zip",
+        "exists": true,
+        "Split": "test"
+      }
+    ],
+    "syntheticSet": {
+      "Id": "step04b_explicit_poll_stream",
+      "ScenarioPath": "C:/Users/seigl/OneDrive/my/\u30C9\u30AD\u30E5\u30E1\u30F3\u30C8/projects/cursor/poc/cursor-prediction-v19/step-04b-generator-revision/abrupt-stop-scenarios-revised.json",
+      "exists": true
+    },
+    "CallRateHz": 60,
+    "RefreshMs": 16.6666667,
+    "PhaseOffsetsMs": [
+      0,
+      4.1666667,
+      8.3333333,
+      12.5
+    ]
+  },
+  "datasetSummary": {
+    "rows": 97734,
+    "bySource": {
+      "real": 90522,
+      "step04b_explicit_poll_stream": 7212
+    },
+    "eventRows": 1615,
+    "explicitSignalRows": {
+      "duplicateHold": 492,
+      "rawMovementAge": 408,
+      "sampleAge": 72,
+      "missedPollBeforeStop": 24,
+      "targetCrossesStopBoundary": 38,
+      "nearZeroCreepAfterHigh": 1672
+    }
+  },
+  "signalFeasibility": {
+    "runtimeFeasibleNow": [
+      "duplicate/hold run from observed cursor samples",
+      "sample age if poll timestamp is exposed",
+      "DWM horizon/phase proxy"
+    ],
+    "requiresInstrumentation": [
+      "last raw movement age",
+      "missed poll before stop",
+      "explicit stale latest sample age",
+      "target-vs-stop-boundary proxy from MotionLab/TraceTool"
+    ],
+    "futureLabelOracleOnly": [
+      "true target crosses true stop boundary",
+      "future stop window oracle"
+    ]
+  },
+  "candidates": {
+    "baseline_product_brake": {
+      "candidate": {
+        "Id": "baseline_product_brake",
+        "Family": "baseline",
+        "Signals": "current product signals",
+        "Feasibility": "runtime now",
+        "Action": "none"
+      },
+      "rows": 97734,
+      "overall": {
+        "count": 97734,
+        "visual": {
+          "count": 97734,
+          "mean": 0.30065497364538996,
+          "p50": 0,
+          "p95": 1.6284302667853823,
+          "p99": 6.6548706043689565,
+          "max": 41.60288560009632
+        },
+        "stationaryJitter": {
+          "count": 68352,
+          "mean": 0.0012359506932067056,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 2.1830311495716224
+        }
+      },
+      "step04bStress": {
+        "overall": {
+          "count": 7212,
+          "visual": {
+            "count": 7212,
+            "mean": 3.1488774370840065,
+            "p50": 2.2023952448516715,
+            "p95": 9.379227917920542,
+            "p99": 17.836170539675653,
+            "max": 41.60288560009632
+          },
+          "stationaryJitter": {
+            "count": 96,
+            "mean": 0.3003447210623221,
+            "p50": 0.17649920000008024,
+            "p95": 0.8752004748172757,
+            "p99": 1.7063315894982034,
+            "max": 1.7063315894982034
+          }
+        },
+        "events": {
+          "count": 88,
+          "peakLead": {
+            "count": 88,
+            "mean": 1.8163296388256662,
+            "p50": 1.5630131118953159,
+            "p95": 4.944788620974211,
+            "p99": 5.278511003333506,
+            "max": 5.278511003333506
+          },
+          "peakDistance": {
+            "count": 88,
+            "mean": 5.66265815590049,
+            "p50": 2.8969212982342296,
+            "p95": 15.749279999999999,
+            "p99": 28.876642033957296,
+            "max": 28.876642033957296
+          },
+          "returnMotion": {
+            "count": 88,
+            "mean": 4.690817075833607,
+            "p50": 1.942141767857557,
+            "p95": 15.498559999999998,
+            "p99": 28.582686807686876,
+            "max": 28.582686807686876
+          },
+          "overshootThenReturnRateGt1": 0.2840909090909091,
+          "overshootThenReturnRateGt2": 0.13636363636363635
+        },
+        "normalMove": {
+          "count": 5628,
+          "visual": {
+            "count": 5628,
+            "mean": 3.493627082021033,
+            "p50": 2.7120414502951347,
+            "p95": 9.615976208722403,
+            "p99": 18.508538014065586,
+            "max": 41.60288560009632
+          },
+          "signedMean": 1.6356835105768563
+        },
+        "highSpeed": {
+          "count": 20,
+          "visual": {
+            "count": 20,
+            "mean": 3.547540512726877,
+            "p50": 2.2743272082478825,
+            "p95": 10.381338309148536,
+            "p99": 15.868889248850273,
+            "max": 15.868889248850273
+          },
+          "signedMean": 8.587998471358512
+        }
+      },
+      "realHoldout": {
+        "overall": {
+          "count": 44708,
+          "visual": {
+            "count": 44708,
+            "mean": 0.08319019880002643,
+            "p50": 0,
+            "p95": 0.4951999999880172,
+            "p99": 1.67939999997634,
+            "max": 36.07046403915525
+          },
+          "stationaryJitter": {
+            "count": 33674,
+            "mean": 0.0014688782881724205,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 2.1830311495716224
+          }
+        },
+        "events": {
+          "count": 236,
+          "peakLead": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "peakDistance": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "returnMotion": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "overshootThenReturnRateGt1": 0,
+          "overshootThenReturnRateGt2": 0
+        },
+        "normalMove": {
+          "count": 2180,
+          "visual": {
+            "count": 2180,
+            "mean": 0.48896210217553554,
+            "p50": 0,
+            "p95": 2.2096768970786,
+            "p99": 10.53413736039415,
+            "max": 36.07046403915525
+          },
+          "signedMean": 0
+        },
+        "highSpeed": {
+          "count": 3,
+          "visual": {
+            "count": 3,
+            "mean": 0.642749192143962,
+            "p50": 0,
+            "p95": 1.928247576431886,
+            "p99": 1.928247576431886,
+            "max": 1.928247576431886
+          },
+          "signedMean": 0
+        }
+      },
+      "events": {
+        "count": 544,
+        "peakLead": {
+          "count": 544,
+          "mean": 0.29381802981003424,
+          "p50": 0,
+          "p95": 2.8014992000000802,
+          "p99": 4.895519353578493,
+          "max": 5.278511003333506
+        },
+        "peakDistance": {
+          "count": 544,
+          "mean": 0.9160182311015499,
+          "p50": 0,
+          "p95": 4.690879999999879,
+          "p99": 15.749279999999999,
+          "max": 28.876642033957296
+        },
+        "returnMotion": {
+          "count": 544,
+          "mean": 0.7588086446201423,
+          "p50": 0,
+          "p95": 2.9897015336750155,
+          "p99": 15.35590309632503,
+          "max": 28.582686807686876
+        },
+        "overshootThenReturnRateGt1": 0.04595588235294118,
+        "overshootThenReturnRateGt2": 0.022058823529411766
+      },
+      "fireDiagnostics": {
+        "totalFires": 0,
+        "totalFireRate": 0,
+        "stopWindowFireRate": 0,
+        "normalMoveFireRate": 0,
+        "bySource": {
+          "real": {
+            "fireRate": 0,
+            "normalMoveFireRate": 0,
+            "stopWindowFireRate": 0
+          },
+          "step04b_explicit_poll_stream": {
+            "fireRate": 0,
+            "normalMoveFireRate": 0,
+            "stopWindowFireRate": 0
+          }
+        }
+      },
+      "tailRows": [
+        {
+          "SequenceId": "step04b_explicit_poll_stream:02:very-high-one-frame-hold:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 666.6666666666665,
+          "PeakLeadPx": 5.278511003333506,
+          "PeakDistancePx": 5.279990853430799,
+          "ReturnMotionPx": 3.962712541778542,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:01:very-high-one-frame-hold:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 5.145519353578493,
+          "PeakDistancePx": 5.159166058390719,
+          "ReturnMotionPx": 2.827124522311635,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:18:stale-sample-proxy:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "stale-sample-proxy",
+          "Split": "validation",
+          "StopElapsedMs": 633.3333333333333,
+          "PeakLeadPx": 5.029627536524686,
+          "PeakDistancePx": 28.876642033957296,
+          "ReturnMotionPx": 23.84546144127655,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:06:near-zero-creep-after-high:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "near-zero-creep-after-high",
+          "Split": "validation",
+          "StopElapsedMs": 716.6666666666664,
+          "PeakLeadPx": 4.975898776624717,
+          "PeakDistancePx": 4.982175090782675,
+          "ReturnMotionPx": 2.7930505685692486,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:14:phase-crossing-hard-stop:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "phase-crossing-hard-stop",
+          "Split": "validation",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 4.944788620974211,
+          "PeakDistancePx": 4.984568467196371,
+          "ReturnMotionPx": 4.5878245273956155,
+          "OvershootThenReturn": true
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:01:very-high-one-frame-hold:phase12p5",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 4.895519353578493,
+          "PeakDistancePx": 4.909860969646858,
+          "ReturnMotionPx": 2.632868080647783,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:18:stale-sample-proxy:phase12p5",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "stale-sample-proxy",
+          "Split": "validation",
+          "StopElapsedMs": 633.3333333333333,
+          "PeakLeadPx": 4.404627536524686,
+          "PeakDistancePx": 28.876642033957296,
+          "ReturnMotionPx": 24.427892913641394,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:02:very-high-one-frame-hold:phase12p5",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 666.6666666666665,
+          "PeakLeadPx": 4.153511003333506,
+          "PeakDistancePx": 4.244676507675527,
+          "ReturnMotionPx": 3.757281464004034,
+          "OvershootThenReturn": true
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:09:curved-near-zero-creep:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "curved-near-zero-creep",
+          "Split": "test",
+          "StopElapsedMs": 766.6666666666663,
+          "PeakLeadPx": 3.928163392301699,
+          "PeakDistancePx": 3.9440704515946363,
+          "ReturnMotionPx": 0,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:01:very-high-one-frame-hold:phase8p333",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 3.520519353578493,
+          "PeakDistancePx": 3.540435216032166,
+          "ReturnMotionPx": 3.205424512386777,
+          "OvershootThenReturn": true
+        }
+      ]
+    },
+    "current_signals_step07_best": {
+      "candidate": {
+        "Id": "current_signals_step07_best",
+        "Family": "current",
+        "Signals": "v5/latestDelta/recentHigh",
+        "Feasibility": "runtime now",
+        "Action": "snap"
+      },
+      "rows": 97734,
+      "overall": {
+        "count": 97734,
+        "visual": {
+          "count": 97734,
+          "mean": 0.2991771393884585,
+          "p50": 0,
+          "p95": 1.6176852810949882,
+          "p99": 6.6548706043689565,
+          "max": 41.60288560009632
+        },
+        "stationaryJitter": {
+          "count": 68352,
+          "mean": 0.0011866638923762793,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 2.1830311495716224
+        }
+      },
+      "step04bStress": {
+        "overall": {
+          "count": 7212,
+          "visual": {
+            "count": 7212,
+            "mean": 3.128850446891698,
+            "p50": 2.186659147960313,
+            "p95": 9.379227917920542,
+            "p99": 17.836170539675653,
+            "max": 41.60288560009632
+          },
+          "stationaryJitter": {
+            "count": 96,
+            "mean": 0.26525251887105855,
+            "p50": 0.17649920000008024,
+            "p95": 0.8752004748172757,
+            "p99": 1.7063315894982034,
+            "max": 1.7063315894982034
+          }
+        },
+        "events": {
+          "count": 88,
+          "peakLead": {
+            "count": 88,
+            "mean": 1.5162627407424738,
+            "p50": 1.1535293347484377,
+            "p95": 3.3592704539235,
+            "p99": 5.145519353578493,
+            "max": 5.145519353578493
+          },
+          "peakDistance": {
+            "count": 88,
+            "mean": 5.425796547385306,
+            "p50": 2.8575475113136237,
+            "p95": 15.749279999999999,
+            "p99": 28.876642033957296,
+            "max": 28.876642033957296
+          },
+          "returnMotion": {
+            "count": 88,
+            "mean": 4.719867064204905,
+            "p50": 1.7175176260694178,
+            "p95": 15.749279999999999,
+            "p99": 28.876642033957296,
+            "max": 28.876642033957296
+          },
+          "overshootThenReturnRateGt1": 0.3068181818181818,
+          "overshootThenReturnRateGt2": 0.1590909090909091
+        },
+        "normalMove": {
+          "count": 5628,
+          "visual": {
+            "count": 5628,
+            "mean": 3.4928239324924992,
+            "p50": 2.711462856073099,
+            "p95": 9.615976208722403,
+            "p99": 18.508538014065586,
+            "max": 41.60288560009632
+          },
+          "signedMean": 1.6363507301418556
+        },
+        "highSpeed": {
+          "count": 20,
+          "visual": {
+            "count": 20,
+            "mean": 3.547540512726877,
+            "p50": 2.2743272082478825,
+            "p95": 10.381338309148536,
+            "p99": 15.868889248850273,
+            "max": 15.868889248850273
+          },
+          "signedMean": 8.587998471358512
+        }
+      },
+      "realHoldout": {
+        "overall": {
+          "count": 44708,
+          "visual": {
+            "count": 44708,
+            "mean": 0.08319019880002643,
+            "p50": 0,
+            "p95": 0.4951999999880172,
+            "p99": 1.67939999997634,
+            "max": 36.07046403915525
+          },
+          "stationaryJitter": {
+            "count": 33674,
+            "mean": 0.0014688782881724205,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 2.1830311495716224
+          }
+        },
+        "events": {
+          "count": 236,
+          "peakLead": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "peakDistance": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "returnMotion": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "overshootThenReturnRateGt1": 0,
+          "overshootThenReturnRateGt2": 0
+        },
+        "normalMove": {
+          "count": 2180,
+          "visual": {
+            "count": 2180,
+            "mean": 0.48896210217553554,
+            "p50": 0,
+            "p95": 2.2096768970786,
+            "p99": 10.53413736039415,
+            "max": 36.07046403915525
+          },
+          "signedMean": 0
+        },
+        "highSpeed": {
+          "count": 3,
+          "visual": {
+            "count": 3,
+            "mean": 0.642749192143962,
+            "p50": 0,
+            "p95": 1.928247576431886,
+            "p99": 1.928247576431886,
+            "max": 1.928247576431886
+          },
+          "signedMean": 0
+        }
+      },
+      "events": {
+        "count": 544,
+        "peakLead": {
+          "count": 544,
+          "mean": 0.24527779629657664,
+          "p50": 0,
+          "p95": 2.4550367999999025,
+          "p99": 3.3571763589079637,
+          "max": 5.145519353578493
+        },
+        "peakDistance": {
+          "count": 544,
+          "mean": 0.8777023826652701,
+          "p50": 0,
+          "p95": 3.9440704515946363,
+          "p99": 15.749279999999999,
+          "max": 28.876642033957296
+        },
+        "returnMotion": {
+          "count": 544,
+          "mean": 0.7635079074449111,
+          "p50": 0,
+          "p95": 2.9628446113830327,
+          "p99": 15.35590309632503,
+          "max": 28.876642033957296
+        },
+        "overshootThenReturnRateGt1": 0.04963235294117647,
+        "overshootThenReturnRateGt2": 0.025735294117647058
+      },
+      "fireDiagnostics": {
+        "totalFires": 1670,
+        "totalFireRate": 0.01708719585814558,
+        "stopWindowFireRate": 0.4340557275541796,
+        "normalMoveFireRate": 0.07199846198212054,
+        "bySource": {
+          "real": {
+            "fireRate": 0.0144495260820574,
+            "normalMoveFireRate": 0.15539267015706806,
+            "stopWindowFireRate": 0.48451053283767037
+          },
+          "step04b_explicit_poll_stream": {
+            "fireRate": 0.050194120909595116,
+            "normalMoveFireRate": 0.0012437810945273632,
+            "stopWindowFireRate": 0.38366336633663367
+          }
+        }
+      },
+      "tailRows": [
+        {
+          "SequenceId": "step04b_explicit_poll_stream:01:very-high-one-frame-hold:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 5.145519353578493,
+          "PeakDistancePx": 5.159166058390719,
+          "ReturnMotionPx": 2.827124522311635,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:06:near-zero-creep-after-high:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "near-zero-creep-after-high",
+          "Split": "validation",
+          "StopElapsedMs": 716.6666666666664,
+          "PeakLeadPx": 4.975898776624717,
+          "PeakDistancePx": 4.982175090782675,
+          "ReturnMotionPx": 4.982175090782675,
+          "OvershootThenReturn": true
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:01:very-high-one-frame-hold:phase12p5",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 4.895519353578493,
+          "PeakDistancePx": 4.909860969646858,
+          "ReturnMotionPx": 2.632868080647783,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:09:curved-near-zero-creep:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "curved-near-zero-creep",
+          "Split": "test",
+          "StopElapsedMs": 766.6666666666663,
+          "PeakLeadPx": 3.928163392301699,
+          "PeakDistancePx": 3.9440704515946363,
+          "ReturnMotionPx": 0,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:15:short-hold-release:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "short-hold-release",
+          "Split": "validation",
+          "StopElapsedMs": 1099.9999999999993,
+          "PeakLeadPx": 3.3592704539235,
+          "PeakDistancePx": 3.368560223983445,
+          "ReturnMotionPx": 1.7942559744138744,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:20:stale-sample-proxy:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "stale-sample-proxy",
+          "Split": "validation",
+          "StopElapsedMs": 699.9999999999998,
+          "PeakLeadPx": 3.3571763589079637,
+          "PeakDistancePx": 4.690879999999879,
+          "ReturnMotionPx": 1.331377342639636,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:07:near-zero-creep-after-high:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "near-zero-creep-after-high",
+          "Split": "train",
+          "StopElapsedMs": 866.6666666666661,
+          "PeakLeadPx": 3.3206596908912616,
+          "PeakDistancePx": 3.32301155320141,
+          "ReturnMotionPx": 0.8862283190592879,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:07:near-zero-creep-after-high:phase12p5",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "near-zero-creep-after-high",
+          "Split": "train",
+          "StopElapsedMs": 866.6666666666661,
+          "PeakLeadPx": 3.3206596908912616,
+          "PeakDistancePx": 3.32301155320141,
+          "ReturnMotionPx": 1.011054856509844,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:21:missed-poll-proxy:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "missed-poll-proxy",
+          "Split": "test",
+          "StopElapsedMs": 733.333333333333,
+          "PeakLeadPx": 3.3129295592702874,
+          "PeakDistancePx": 15.749279999999999,
+          "ReturnMotionPx": 13.160149777709828,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:12:phase-crossing-hard-stop:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "phase-crossing-hard-stop",
+          "Split": "validation",
+          "StopElapsedMs": 600,
+          "PeakLeadPx": 3.299654714061347,
+          "PeakDistancePx": 3.312212623690079,
+          "ReturnMotionPx": 3.312212623690079,
+          "OvershootThenReturn": true
+        }
+      ]
+    },
+    "plus_duplicate_hold": {
+      "candidate": {
+        "Id": "plus_duplicate_hold",
+        "Family": "ablation",
+        "Signals": "duplicateHoldRun",
+        "Feasibility": "runtime now from cursor samples",
+        "Action": "snap"
+      },
+      "rows": 97734,
+      "overall": {
+        "count": 97734,
+        "visual": {
+          "count": 97734,
+          "mean": 0.29990698356941453,
+          "p50": 0,
+          "p95": 1.6250816946413151,
+          "p99": 6.6548706043689565,
+          "max": 41.60288560009632
+        },
+        "stationaryJitter": {
+          "count": 68352,
+          "mean": 0.0011866638923762793,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 2.1830311495716224
+        }
+      },
+      "step04bStress": {
+        "overall": {
+          "count": 7212,
+          "visual": {
+            "count": 7212,
+            "mean": 3.1387409892074984,
+            "p50": 2.2020273585214554,
+            "p95": 9.379227917920542,
+            "p99": 17.836170539675653,
+            "max": 41.60288560009632
+          },
+          "stationaryJitter": {
+            "count": 96,
+            "mean": 0.26525251887105855,
+            "p50": 0.17649920000008024,
+            "p95": 0.8752004748172757,
+            "p99": 1.7063315894982034,
+            "max": 1.7063315894982034
+          }
+        },
+        "events": {
+          "count": 88,
+          "peakLead": {
+            "count": 88,
+            "mean": 1.6868358632099278,
+            "p50": 1.475666946063189,
+            "p95": 4.710132799999883,
+            "p99": 5.145519353578493,
+            "max": 5.145519353578493
+          },
+          "peakDistance": {
+            "count": 88,
+            "mean": 5.614644782053253,
+            "p50": 2.876502764151074,
+            "p95": 15.749279999999999,
+            "p99": 28.876642033957296,
+            "max": 28.876642033957296
+          },
+          "returnMotion": {
+            "count": 88,
+            "mean": 4.832088577563906,
+            "p50": 1.9986748995273518,
+            "p95": 15.749279999999999,
+            "p99": 28.876642033957296,
+            "max": 28.876642033957296
+          },
+          "overshootThenReturnRateGt1": 0.3181818181818182,
+          "overshootThenReturnRateGt2": 0.17045454545454544
+        },
+        "normalMove": {
+          "count": 5628,
+          "visual": {
+            "count": 5628,
+            "mean": 3.493627082021033,
+            "p50": 2.7120414502951347,
+            "p95": 9.615976208722403,
+            "p99": 18.508538014065586,
+            "max": 41.60288560009632
+          },
+          "signedMean": 1.6356835105768563
+        },
+        "highSpeed": {
+          "count": 20,
+          "visual": {
+            "count": 20,
+            "mean": 3.547540512726877,
+            "p50": 2.2743272082478825,
+            "p95": 10.381338309148536,
+            "p99": 15.868889248850273,
+            "max": 15.868889248850273
+          },
+          "signedMean": 8.587998471358512
+        }
+      },
+      "realHoldout": {
+        "overall": {
+          "count": 44708,
+          "visual": {
+            "count": 44708,
+            "mean": 0.08319019880002643,
+            "p50": 0,
+            "p95": 0.4951999999880172,
+            "p99": 1.67939999997634,
+            "max": 36.07046403915525
+          },
+          "stationaryJitter": {
+            "count": 33674,
+            "mean": 0.0014688782881724205,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 2.1830311495716224
+          }
+        },
+        "events": {
+          "count": 236,
+          "peakLead": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "peakDistance": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "returnMotion": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "overshootThenReturnRateGt1": 0,
+          "overshootThenReturnRateGt2": 0
+        },
+        "normalMove": {
+          "count": 2180,
+          "visual": {
+            "count": 2180,
+            "mean": 0.48896210217553554,
+            "p50": 0,
+            "p95": 2.2096768970786,
+            "p99": 10.53413736039415,
+            "max": 36.07046403915525
+          },
+          "signedMean": 0
+        },
+        "highSpeed": {
+          "count": 3,
+          "visual": {
+            "count": 3,
+            "mean": 0.642749192143962,
+            "p50": 0,
+            "p95": 1.928247576431886,
+            "p99": 1.928247576431886,
+            "max": 1.928247576431886
+          },
+          "signedMean": 0
+        }
+      },
+      "events": {
+        "count": 544,
+        "peakLead": {
+          "count": 544,
+          "mean": 0.2728705072839589,
+          "p50": 0,
+          "p95": 2.625,
+          "p99": 3.928163392301699,
+          "max": 5.145519353578493
+        },
+        "peakDistance": {
+          "count": 544,
+          "mean": 0.908251361802732,
+          "p50": 0,
+          "p95": 4.690879999999879,
+          "p99": 15.749279999999999,
+          "max": 28.876642033957296
+        },
+        "returnMotion": {
+          "count": 544,
+          "mean": 0.7816613875471025,
+          "p50": 0,
+          "p95": 2.875,
+          "p99": 15.35590309632503,
+          "max": 28.876642033957296
+        },
+        "overshootThenReturnRateGt1": 0.051470588235294115,
+        "overshootThenReturnRateGt2": 0.027573529411764705
+      },
+      "fireDiagnostics": {
+        "totalFires": 281,
+        "totalFireRate": 0.0028751509198436573,
+        "stopWindowFireRate": 0.15727554179566564,
+        "normalMoveFireRate": 0,
+        "bySource": {
+          "real": {
+            "fireRate": 0,
+            "normalMoveFireRate": 0,
+            "stopWindowFireRate": 0
+          },
+          "step04b_explicit_poll_stream": {
+            "fireRate": 0.03896283971159179,
+            "normalMoveFireRate": 0,
+            "stopWindowFireRate": 0.31435643564356436
+          }
+        }
+      },
+      "tailRows": [
+        {
+          "SequenceId": "step04b_explicit_poll_stream:01:very-high-one-frame-hold:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 5.145519353578493,
+          "PeakDistancePx": 5.159166058390719,
+          "ReturnMotionPx": 2.827124522311635,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:06:near-zero-creep-after-high:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "near-zero-creep-after-high",
+          "Split": "validation",
+          "StopElapsedMs": 716.6666666666664,
+          "PeakLeadPx": 4.975898776624717,
+          "PeakDistancePx": 4.982175090782675,
+          "ReturnMotionPx": 2.7930505685692486,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:14:phase-crossing-hard-stop:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "phase-crossing-hard-stop",
+          "Split": "validation",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 4.944788620974211,
+          "PeakDistancePx": 4.984568467196371,
+          "ReturnMotionPx": 4.984568467196371,
+          "OvershootThenReturn": true
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:01:very-high-one-frame-hold:phase12p5",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 4.895519353578493,
+          "PeakDistancePx": 4.909860969646858,
+          "ReturnMotionPx": 2.632868080647783,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:02:very-high-one-frame-hold:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 666.6666666666665,
+          "PeakLeadPx": 4.710132799999883,
+          "PeakDistancePx": 4.751418313896887,
+          "ReturnMotionPx": 4.751418313896887,
+          "OvershootThenReturn": true
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:09:curved-near-zero-creep:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "curved-near-zero-creep",
+          "Split": "test",
+          "StopElapsedMs": 766.6666666666663,
+          "PeakLeadPx": 3.928163392301699,
+          "PeakDistancePx": 3.9440704515946363,
+          "ReturnMotionPx": 0,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:15:short-hold-release:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "short-hold-release",
+          "Split": "validation",
+          "StopElapsedMs": 1099.9999999999993,
+          "PeakLeadPx": 3.3592704539235,
+          "PeakDistancePx": 3.368560223983445,
+          "ReturnMotionPx": 1.7942559744138744,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:20:stale-sample-proxy:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "stale-sample-proxy",
+          "Split": "validation",
+          "StopElapsedMs": 699.9999999999998,
+          "PeakLeadPx": 3.3571763589079637,
+          "PeakDistancePx": 4.690879999999879,
+          "ReturnMotionPx": 1.331377342639636,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:07:near-zero-creep-after-high:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "near-zero-creep-after-high",
+          "Split": "train",
+          "StopElapsedMs": 866.6666666666661,
+          "PeakLeadPx": 3.3206596908912616,
+          "PeakDistancePx": 3.32301155320141,
+          "ReturnMotionPx": 0.8862283190592879,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:07:near-zero-creep-after-high:phase12p5",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "near-zero-creep-after-high",
+          "Split": "train",
+          "StopElapsedMs": 866.6666666666661,
+          "PeakLeadPx": 3.3206596908912616,
+          "PeakDistancePx": 3.32301155320141,
+          "ReturnMotionPx": 1.011054856509844,
+          "OvershootThenReturn": false
+        }
+      ]
+    },
+    "plus_raw_input_age": {
+      "candidate": {
+        "Id": "plus_raw_input_age",
+        "Family": "ablation",
+        "Signals": "lastRawMovementAge",
+        "Feasibility": "requires raw input age instrumentation",
+        "Action": "snap"
+      },
+      "rows": 97734,
+      "overall": {
+        "count": 97734,
+        "visual": {
+          "count": 97734,
+          "mean": 0.2998996833193,
+          "p50": 0,
+          "p95": 1.6250816946413151,
+          "p99": 6.6548706043689565,
+          "max": 41.60288560009632
+        },
+        "stationaryJitter": {
+          "count": 68352,
+          "mean": 0.0011866638923762793,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 2.1830311495716224
+        }
+      },
+      "step04bStress": {
+        "overall": {
+          "count": 7212,
+          "visual": {
+            "count": 7212,
+            "mean": 3.13864205927895,
+            "p50": 2.2020273585214554,
+            "p95": 9.379227917920542,
+            "p99": 17.836170539675653,
+            "max": 41.60288560009632
+          },
+          "stationaryJitter": {
+            "count": 96,
+            "mean": 0.26525251887105855,
+            "p50": 0.17649920000008024,
+            "p95": 0.8752004748172757,
+            "p99": 1.7063315894982034,
+            "max": 1.7063315894982034
+          }
+        },
+        "events": {
+          "count": 88,
+          "peakLead": {
+            "count": 88,
+            "mean": 1.6868358632099278,
+            "p50": 1.475666946063189,
+            "p95": 4.710132799999883,
+            "p99": 5.145519353578493,
+            "max": 5.145519353578493
+          },
+          "peakDistance": {
+            "count": 88,
+            "mean": 5.614644782053253,
+            "p50": 2.876502764151074,
+            "p95": 15.749279999999999,
+            "p99": 28.876642033957296,
+            "max": 28.876642033957296
+          },
+          "returnMotion": {
+            "count": 88,
+            "mean": 4.832088577563906,
+            "p50": 1.9986748995273518,
+            "p95": 15.749279999999999,
+            "p99": 28.876642033957296,
+            "max": 28.876642033957296
+          },
+          "overshootThenReturnRateGt1": 0.3181818181818182,
+          "overshootThenReturnRateGt2": 0.17045454545454544
+        },
+        "normalMove": {
+          "count": 5628,
+          "visual": {
+            "count": 5628,
+            "mean": 3.493627082021033,
+            "p50": 2.7120414502951347,
+            "p95": 9.615976208722403,
+            "p99": 18.508538014065586,
+            "max": 41.60288560009632
+          },
+          "signedMean": 1.6356835105768563
+        },
+        "highSpeed": {
+          "count": 20,
+          "visual": {
+            "count": 20,
+            "mean": 3.547540512726877,
+            "p50": 2.2743272082478825,
+            "p95": 10.381338309148536,
+            "p99": 15.868889248850273,
+            "max": 15.868889248850273
+          },
+          "signedMean": 8.587998471358512
+        }
+      },
+      "realHoldout": {
+        "overall": {
+          "count": 44708,
+          "visual": {
+            "count": 44708,
+            "mean": 0.08319019880002643,
+            "p50": 0,
+            "p95": 0.4951999999880172,
+            "p99": 1.67939999997634,
+            "max": 36.07046403915525
+          },
+          "stationaryJitter": {
+            "count": 33674,
+            "mean": 0.0014688782881724205,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 2.1830311495716224
+          }
+        },
+        "events": {
+          "count": 236,
+          "peakLead": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "peakDistance": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "returnMotion": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "overshootThenReturnRateGt1": 0,
+          "overshootThenReturnRateGt2": 0
+        },
+        "normalMove": {
+          "count": 2180,
+          "visual": {
+            "count": 2180,
+            "mean": 0.48896210217553554,
+            "p50": 0,
+            "p95": 2.2096768970786,
+            "p99": 10.53413736039415,
+            "max": 36.07046403915525
+          },
+          "signedMean": 0
+        },
+        "highSpeed": {
+          "count": 3,
+          "visual": {
+            "count": 3,
+            "mean": 0.642749192143962,
+            "p50": 0,
+            "p95": 1.928247576431886,
+            "p99": 1.928247576431886,
+            "max": 1.928247576431886
+          },
+          "signedMean": 0
+        }
+      },
+      "events": {
+        "count": 544,
+        "peakLead": {
+          "count": 544,
+          "mean": 0.2728705072839589,
+          "p50": 0,
+          "p95": 2.625,
+          "p99": 3.928163392301699,
+          "max": 5.145519353578493
+        },
+        "peakDistance": {
+          "count": 544,
+          "mean": 0.908251361802732,
+          "p50": 0,
+          "p95": 4.690879999999879,
+          "p99": 15.749279999999999,
+          "max": 28.876642033957296
+        },
+        "returnMotion": {
+          "count": 544,
+          "mean": 0.7816613875471025,
+          "p50": 0,
+          "p95": 2.875,
+          "p99": 15.35590309632503,
+          "max": 28.876642033957296
+        },
+        "overshootThenReturnRateGt1": 0.051470588235294115,
+        "overshootThenReturnRateGt2": 0.027573529411764705
+      },
+      "fireDiagnostics": {
+        "totalFires": 261,
+        "totalFireRate": 0.0026705138436982014,
+        "stopWindowFireRate": 0.15913312693498452,
+        "normalMoveFireRate": 0,
+        "bySource": {
+          "real": {
+            "fireRate": 0,
+            "normalMoveFireRate": 0,
+            "stopWindowFireRate": 0
+          },
+          "step04b_explicit_poll_stream": {
+            "fireRate": 0.03618968386023295,
+            "normalMoveFireRate": 0,
+            "stopWindowFireRate": 0.3180693069306931
+          }
+        }
+      },
+      "tailRows": [
+        {
+          "SequenceId": "step04b_explicit_poll_stream:01:very-high-one-frame-hold:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 5.145519353578493,
+          "PeakDistancePx": 5.159166058390719,
+          "ReturnMotionPx": 2.827124522311635,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:06:near-zero-creep-after-high:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "near-zero-creep-after-high",
+          "Split": "validation",
+          "StopElapsedMs": 716.6666666666664,
+          "PeakLeadPx": 4.975898776624717,
+          "PeakDistancePx": 4.982175090782675,
+          "ReturnMotionPx": 2.7930505685692486,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:14:phase-crossing-hard-stop:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "phase-crossing-hard-stop",
+          "Split": "validation",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 4.944788620974211,
+          "PeakDistancePx": 4.984568467196371,
+          "ReturnMotionPx": 4.984568467196371,
+          "OvershootThenReturn": true
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:01:very-high-one-frame-hold:phase12p5",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 4.895519353578493,
+          "PeakDistancePx": 4.909860969646858,
+          "ReturnMotionPx": 2.632868080647783,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:02:very-high-one-frame-hold:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 666.6666666666665,
+          "PeakLeadPx": 4.710132799999883,
+          "PeakDistancePx": 4.751418313896887,
+          "ReturnMotionPx": 4.751418313896887,
+          "OvershootThenReturn": true
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:09:curved-near-zero-creep:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "curved-near-zero-creep",
+          "Split": "test",
+          "StopElapsedMs": 766.6666666666663,
+          "PeakLeadPx": 3.928163392301699,
+          "PeakDistancePx": 3.9440704515946363,
+          "ReturnMotionPx": 0,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:15:short-hold-release:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "short-hold-release",
+          "Split": "validation",
+          "StopElapsedMs": 1099.9999999999993,
+          "PeakLeadPx": 3.3592704539235,
+          "PeakDistancePx": 3.368560223983445,
+          "ReturnMotionPx": 1.7942559744138744,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:20:stale-sample-proxy:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "stale-sample-proxy",
+          "Split": "validation",
+          "StopElapsedMs": 699.9999999999998,
+          "PeakLeadPx": 3.3571763589079637,
+          "PeakDistancePx": 4.690879999999879,
+          "ReturnMotionPx": 1.331377342639636,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:07:near-zero-creep-after-high:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "near-zero-creep-after-high",
+          "Split": "train",
+          "StopElapsedMs": 866.6666666666661,
+          "PeakLeadPx": 3.3206596908912616,
+          "PeakDistancePx": 3.32301155320141,
+          "ReturnMotionPx": 0.8862283190592879,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:07:near-zero-creep-after-high:phase12p5",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "near-zero-creep-after-high",
+          "Split": "train",
+          "StopElapsedMs": 866.6666666666661,
+          "PeakLeadPx": 3.3206596908912616,
+          "PeakDistancePx": 3.32301155320141,
+          "ReturnMotionPx": 1.011054856509844,
+          "OvershootThenReturn": false
+        }
+      ]
+    },
+    "plus_sample_age": {
+      "candidate": {
+        "Id": "plus_sample_age",
+        "Family": "ablation",
+        "Signals": "sampleAge/stale latest",
+        "Feasibility": "runtime if timestamp/age retained",
+        "Action": "snap"
+      },
+      "rows": 97734,
+      "overall": {
+        "count": 97734,
+        "visual": {
+          "count": 97734,
+          "mean": 0.30065497364538996,
+          "p50": 0,
+          "p95": 1.6284302667853823,
+          "p99": 6.6548706043689565,
+          "max": 41.60288560009632
+        },
+        "stationaryJitter": {
+          "count": 68352,
+          "mean": 0.0012359506932067056,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 2.1830311495716224
+        }
+      },
+      "step04bStress": {
+        "overall": {
+          "count": 7212,
+          "visual": {
+            "count": 7212,
+            "mean": 3.1488774370840065,
+            "p50": 2.2023952448516715,
+            "p95": 9.379227917920542,
+            "p99": 17.836170539675653,
+            "max": 41.60288560009632
+          },
+          "stationaryJitter": {
+            "count": 96,
+            "mean": 0.3003447210623221,
+            "p50": 0.17649920000008024,
+            "p95": 0.8752004748172757,
+            "p99": 1.7063315894982034,
+            "max": 1.7063315894982034
+          }
+        },
+        "events": {
+          "count": 88,
+          "peakLead": {
+            "count": 88,
+            "mean": 1.8163296388256662,
+            "p50": 1.5630131118953159,
+            "p95": 4.944788620974211,
+            "p99": 5.278511003333506,
+            "max": 5.278511003333506
+          },
+          "peakDistance": {
+            "count": 88,
+            "mean": 5.66265815590049,
+            "p50": 2.8969212982342296,
+            "p95": 15.749279999999999,
+            "p99": 28.876642033957296,
+            "max": 28.876642033957296
+          },
+          "returnMotion": {
+            "count": 88,
+            "mean": 4.690817075833607,
+            "p50": 1.942141767857557,
+            "p95": 15.498559999999998,
+            "p99": 28.582686807686876,
+            "max": 28.582686807686876
+          },
+          "overshootThenReturnRateGt1": 0.2840909090909091,
+          "overshootThenReturnRateGt2": 0.13636363636363635
+        },
+        "normalMove": {
+          "count": 5628,
+          "visual": {
+            "count": 5628,
+            "mean": 3.493627082021033,
+            "p50": 2.7120414502951347,
+            "p95": 9.615976208722403,
+            "p99": 18.508538014065586,
+            "max": 41.60288560009632
+          },
+          "signedMean": 1.6356835105768563
+        },
+        "highSpeed": {
+          "count": 20,
+          "visual": {
+            "count": 20,
+            "mean": 3.547540512726877,
+            "p50": 2.2743272082478825,
+            "p95": 10.381338309148536,
+            "p99": 15.868889248850273,
+            "max": 15.868889248850273
+          },
+          "signedMean": 8.587998471358512
+        }
+      },
+      "realHoldout": {
+        "overall": {
+          "count": 44708,
+          "visual": {
+            "count": 44708,
+            "mean": 0.08319019880002643,
+            "p50": 0,
+            "p95": 0.4951999999880172,
+            "p99": 1.67939999997634,
+            "max": 36.07046403915525
+          },
+          "stationaryJitter": {
+            "count": 33674,
+            "mean": 0.0014688782881724205,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 2.1830311495716224
+          }
+        },
+        "events": {
+          "count": 236,
+          "peakLead": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "peakDistance": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "returnMotion": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "overshootThenReturnRateGt1": 0,
+          "overshootThenReturnRateGt2": 0
+        },
+        "normalMove": {
+          "count": 2180,
+          "visual": {
+            "count": 2180,
+            "mean": 0.48896210217553554,
+            "p50": 0,
+            "p95": 2.2096768970786,
+            "p99": 10.53413736039415,
+            "max": 36.07046403915525
+          },
+          "signedMean": 0
+        },
+        "highSpeed": {
+          "count": 3,
+          "visual": {
+            "count": 3,
+            "mean": 0.642749192143962,
+            "p50": 0,
+            "p95": 1.928247576431886,
+            "p99": 1.928247576431886,
+            "max": 1.928247576431886
+          },
+          "signedMean": 0
+        }
+      },
+      "events": {
+        "count": 544,
+        "peakLead": {
+          "count": 544,
+          "mean": 0.29381802981003424,
+          "p50": 0,
+          "p95": 2.8014992000000802,
+          "p99": 4.895519353578493,
+          "max": 5.278511003333506
+        },
+        "peakDistance": {
+          "count": 544,
+          "mean": 0.9160182311015499,
+          "p50": 0,
+          "p95": 4.690879999999879,
+          "p99": 15.749279999999999,
+          "max": 28.876642033957296
+        },
+        "returnMotion": {
+          "count": 544,
+          "mean": 0.7588086446201423,
+          "p50": 0,
+          "p95": 2.9897015336750155,
+          "p99": 15.35590309632503,
+          "max": 28.582686807686876
+        },
+        "overshootThenReturnRateGt1": 0.04595588235294118,
+        "overshootThenReturnRateGt2": 0.022058823529411766
+      },
+      "fireDiagnostics": {
+        "totalFires": 0,
+        "totalFireRate": 0,
+        "stopWindowFireRate": 0,
+        "normalMoveFireRate": 0,
+        "bySource": {
+          "real": {
+            "fireRate": 0,
+            "normalMoveFireRate": 0,
+            "stopWindowFireRate": 0
+          },
+          "step04b_explicit_poll_stream": {
+            "fireRate": 0,
+            "normalMoveFireRate": 0,
+            "stopWindowFireRate": 0
+          }
+        }
+      },
+      "tailRows": [
+        {
+          "SequenceId": "step04b_explicit_poll_stream:02:very-high-one-frame-hold:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 666.6666666666665,
+          "PeakLeadPx": 5.278511003333506,
+          "PeakDistancePx": 5.279990853430799,
+          "ReturnMotionPx": 3.962712541778542,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:01:very-high-one-frame-hold:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 5.145519353578493,
+          "PeakDistancePx": 5.159166058390719,
+          "ReturnMotionPx": 2.827124522311635,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:18:stale-sample-proxy:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "stale-sample-proxy",
+          "Split": "validation",
+          "StopElapsedMs": 633.3333333333333,
+          "PeakLeadPx": 5.029627536524686,
+          "PeakDistancePx": 28.876642033957296,
+          "ReturnMotionPx": 23.84546144127655,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:06:near-zero-creep-after-high:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "near-zero-creep-after-high",
+          "Split": "validation",
+          "StopElapsedMs": 716.6666666666664,
+          "PeakLeadPx": 4.975898776624717,
+          "PeakDistancePx": 4.982175090782675,
+          "ReturnMotionPx": 2.7930505685692486,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:14:phase-crossing-hard-stop:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "phase-crossing-hard-stop",
+          "Split": "validation",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 4.944788620974211,
+          "PeakDistancePx": 4.984568467196371,
+          "ReturnMotionPx": 4.5878245273956155,
+          "OvershootThenReturn": true
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:01:very-high-one-frame-hold:phase12p5",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 4.895519353578493,
+          "PeakDistancePx": 4.909860969646858,
+          "ReturnMotionPx": 2.632868080647783,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:18:stale-sample-proxy:phase12p5",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "stale-sample-proxy",
+          "Split": "validation",
+          "StopElapsedMs": 633.3333333333333,
+          "PeakLeadPx": 4.404627536524686,
+          "PeakDistancePx": 28.876642033957296,
+          "ReturnMotionPx": 24.427892913641394,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:02:very-high-one-frame-hold:phase12p5",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 666.6666666666665,
+          "PeakLeadPx": 4.153511003333506,
+          "PeakDistancePx": 4.244676507675527,
+          "ReturnMotionPx": 3.757281464004034,
+          "OvershootThenReturn": true
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:09:curved-near-zero-creep:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "curved-near-zero-creep",
+          "Split": "test",
+          "StopElapsedMs": 766.6666666666663,
+          "PeakLeadPx": 3.928163392301699,
+          "PeakDistancePx": 3.9440704515946363,
+          "ReturnMotionPx": 0,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:01:very-high-one-frame-hold:phase8p333",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 3.520519353578493,
+          "PeakDistancePx": 3.540435216032166,
+          "ReturnMotionPx": 3.205424512386777,
+          "OvershootThenReturn": true
+        }
+      ]
+    },
+    "plus_target_cross_boundary": {
+      "candidate": {
+        "Id": "plus_target_cross_boundary",
+        "Family": "oracle",
+        "Signals": "target crosses true stop boundary",
+        "Feasibility": "future-label oracle; needs proxy instrumentation",
+        "Action": "snap"
+      },
+      "rows": 97734,
+      "overall": {
+        "count": 97734,
+        "visual": {
+          "count": 97734,
+          "mean": 0.30065497364538996,
+          "p50": 0,
+          "p95": 1.6284302667853823,
+          "p99": 6.6548706043689565,
+          "max": 41.60288560009632
+        },
+        "stationaryJitter": {
+          "count": 68352,
+          "mean": 0.0012359506932067056,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 2.1830311495716224
+        }
+      },
+      "step04bStress": {
+        "overall": {
+          "count": 7212,
+          "visual": {
+            "count": 7212,
+            "mean": 3.1488774370840065,
+            "p50": 2.2023952448516715,
+            "p95": 9.379227917920542,
+            "p99": 17.836170539675653,
+            "max": 41.60288560009632
+          },
+          "stationaryJitter": {
+            "count": 96,
+            "mean": 0.3003447210623221,
+            "p50": 0.17649920000008024,
+            "p95": 0.8752004748172757,
+            "p99": 1.7063315894982034,
+            "max": 1.7063315894982034
+          }
+        },
+        "events": {
+          "count": 88,
+          "peakLead": {
+            "count": 88,
+            "mean": 1.8163296388256662,
+            "p50": 1.5630131118953159,
+            "p95": 4.944788620974211,
+            "p99": 5.278511003333506,
+            "max": 5.278511003333506
+          },
+          "peakDistance": {
+            "count": 88,
+            "mean": 5.66265815590049,
+            "p50": 2.8969212982342296,
+            "p95": 15.749279999999999,
+            "p99": 28.876642033957296,
+            "max": 28.876642033957296
+          },
+          "returnMotion": {
+            "count": 88,
+            "mean": 4.690817075833607,
+            "p50": 1.942141767857557,
+            "p95": 15.498559999999998,
+            "p99": 28.582686807686876,
+            "max": 28.582686807686876
+          },
+          "overshootThenReturnRateGt1": 0.2840909090909091,
+          "overshootThenReturnRateGt2": 0.13636363636363635
+        },
+        "normalMove": {
+          "count": 5628,
+          "visual": {
+            "count": 5628,
+            "mean": 3.493627082021033,
+            "p50": 2.7120414502951347,
+            "p95": 9.615976208722403,
+            "p99": 18.508538014065586,
+            "max": 41.60288560009632
+          },
+          "signedMean": 1.6356835105768563
+        },
+        "highSpeed": {
+          "count": 20,
+          "visual": {
+            "count": 20,
+            "mean": 3.547540512726877,
+            "p50": 2.2743272082478825,
+            "p95": 10.381338309148536,
+            "p99": 15.868889248850273,
+            "max": 15.868889248850273
+          },
+          "signedMean": 8.587998471358512
+        }
+      },
+      "realHoldout": {
+        "overall": {
+          "count": 44708,
+          "visual": {
+            "count": 44708,
+            "mean": 0.08319019880002643,
+            "p50": 0,
+            "p95": 0.4951999999880172,
+            "p99": 1.67939999997634,
+            "max": 36.07046403915525
+          },
+          "stationaryJitter": {
+            "count": 33674,
+            "mean": 0.0014688782881724205,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 2.1830311495716224
+          }
+        },
+        "events": {
+          "count": 236,
+          "peakLead": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "peakDistance": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "returnMotion": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "overshootThenReturnRateGt1": 0,
+          "overshootThenReturnRateGt2": 0
+        },
+        "normalMove": {
+          "count": 2180,
+          "visual": {
+            "count": 2180,
+            "mean": 0.48896210217553554,
+            "p50": 0,
+            "p95": 2.2096768970786,
+            "p99": 10.53413736039415,
+            "max": 36.07046403915525
+          },
+          "signedMean": 0
+        },
+        "highSpeed": {
+          "count": 3,
+          "visual": {
+            "count": 3,
+            "mean": 0.642749192143962,
+            "p50": 0,
+            "p95": 1.928247576431886,
+            "p99": 1.928247576431886,
+            "max": 1.928247576431886
+          },
+          "signedMean": 0
+        }
+      },
+      "events": {
+        "count": 544,
+        "peakLead": {
+          "count": 544,
+          "mean": 0.29381802981003424,
+          "p50": 0,
+          "p95": 2.8014992000000802,
+          "p99": 4.895519353578493,
+          "max": 5.278511003333506
+        },
+        "peakDistance": {
+          "count": 544,
+          "mean": 0.9160182311015499,
+          "p50": 0,
+          "p95": 4.690879999999879,
+          "p99": 15.749279999999999,
+          "max": 28.876642033957296
+        },
+        "returnMotion": {
+          "count": 544,
+          "mean": 0.7588086446201423,
+          "p50": 0,
+          "p95": 2.9897015336750155,
+          "p99": 15.35590309632503,
+          "max": 28.582686807686876
+        },
+        "overshootThenReturnRateGt1": 0.04595588235294118,
+        "overshootThenReturnRateGt2": 0.022058823529411766
+      },
+      "fireDiagnostics": {
+        "totalFires": 0,
+        "totalFireRate": 0,
+        "stopWindowFireRate": 0,
+        "normalMoveFireRate": 0,
+        "bySource": {
+          "real": {
+            "fireRate": 0,
+            "normalMoveFireRate": 0,
+            "stopWindowFireRate": 0
+          },
+          "step04b_explicit_poll_stream": {
+            "fireRate": 0,
+            "normalMoveFireRate": 0,
+            "stopWindowFireRate": 0
+          }
+        }
+      },
+      "tailRows": [
+        {
+          "SequenceId": "step04b_explicit_poll_stream:02:very-high-one-frame-hold:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 666.6666666666665,
+          "PeakLeadPx": 5.278511003333506,
+          "PeakDistancePx": 5.279990853430799,
+          "ReturnMotionPx": 3.962712541778542,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:01:very-high-one-frame-hold:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 5.145519353578493,
+          "PeakDistancePx": 5.159166058390719,
+          "ReturnMotionPx": 2.827124522311635,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:18:stale-sample-proxy:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "stale-sample-proxy",
+          "Split": "validation",
+          "StopElapsedMs": 633.3333333333333,
+          "PeakLeadPx": 5.029627536524686,
+          "PeakDistancePx": 28.876642033957296,
+          "ReturnMotionPx": 23.84546144127655,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:06:near-zero-creep-after-high:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "near-zero-creep-after-high",
+          "Split": "validation",
+          "StopElapsedMs": 716.6666666666664,
+          "PeakLeadPx": 4.975898776624717,
+          "PeakDistancePx": 4.982175090782675,
+          "ReturnMotionPx": 2.7930505685692486,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:14:phase-crossing-hard-stop:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "phase-crossing-hard-stop",
+          "Split": "validation",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 4.944788620974211,
+          "PeakDistancePx": 4.984568467196371,
+          "ReturnMotionPx": 4.5878245273956155,
+          "OvershootThenReturn": true
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:01:very-high-one-frame-hold:phase12p5",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 4.895519353578493,
+          "PeakDistancePx": 4.909860969646858,
+          "ReturnMotionPx": 2.632868080647783,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:18:stale-sample-proxy:phase12p5",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "stale-sample-proxy",
+          "Split": "validation",
+          "StopElapsedMs": 633.3333333333333,
+          "PeakLeadPx": 4.404627536524686,
+          "PeakDistancePx": 28.876642033957296,
+          "ReturnMotionPx": 24.427892913641394,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:02:very-high-one-frame-hold:phase12p5",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 666.6666666666665,
+          "PeakLeadPx": 4.153511003333506,
+          "PeakDistancePx": 4.244676507675527,
+          "ReturnMotionPx": 3.757281464004034,
+          "OvershootThenReturn": true
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:09:curved-near-zero-creep:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "curved-near-zero-creep",
+          "Split": "test",
+          "StopElapsedMs": 766.6666666666663,
+          "PeakLeadPx": 3.928163392301699,
+          "PeakDistancePx": 3.9440704515946363,
+          "ReturnMotionPx": 0,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:01:very-high-one-frame-hold:phase8p333",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 3.520519353578493,
+          "PeakDistancePx": 3.540435216032166,
+          "ReturnMotionPx": 3.205424512386777,
+          "OvershootThenReturn": true
+        }
+      ]
+    },
+    "plus_phase": {
+      "candidate": {
+        "Id": "plus_phase",
+        "Family": "ablation",
+        "Signals": "target phase vs stop onset",
+        "Feasibility": "requires stop-boundary proxy",
+        "Action": "snap"
+      },
+      "rows": 97734,
+      "overall": {
+        "count": 97734,
+        "visual": {
+          "count": 97734,
+          "mean": 0.3004456781111843,
+          "p50": 0,
+          "p95": 1.6244728839641924,
+          "p99": 6.6548706043689565,
+          "max": 41.60288560009632
+        },
+        "stationaryJitter": {
+          "count": 68352,
+          "mean": 0.0012359506932067056,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 2.1830311495716224
+        }
+      },
+      "step04bStress": {
+        "overall": {
+          "count": 7212,
+          "visual": {
+            "count": 7212,
+            "mean": 3.1460411517623115,
+            "p50": 2.201686232467532,
+            "p95": 9.379227917920542,
+            "p99": 17.836170539675653,
+            "max": 41.60288560009632
+          },
+          "stationaryJitter": {
+            "count": 96,
+            "mean": 0.3003447210623221,
+            "p50": 0.17649920000008024,
+            "p95": 0.8752004748172757,
+            "p99": 1.7063315894982034,
+            "max": 1.7063315894982034
+          }
+        },
+        "events": {
+          "count": 88,
+          "peakLead": {
+            "count": 88,
+            "mean": 1.8143239660983925,
+            "p50": 1.5630131118953159,
+            "p95": 4.944788620974211,
+            "p99": 5.278511003333506,
+            "max": 5.278511003333506
+          },
+          "peakDistance": {
+            "count": 88,
+            "mean": 5.591364991085791,
+            "p50": 2.885849095153799,
+            "p95": 15.749279999999999,
+            "p99": 28.876642033957296,
+            "max": 28.876642033957296
+          },
+          "returnMotion": {
+            "count": 88,
+            "mean": 4.621520700142497,
+            "p50": 1.8429339861896192,
+            "p95": 15.498559999999998,
+            "p99": 28.582686807686876,
+            "max": 28.582686807686876
+          },
+          "overshootThenReturnRateGt1": 0.2840909090909091,
+          "overshootThenReturnRateGt2": 0.13636363636363635
+        },
+        "normalMove": {
+          "count": 5628,
+          "visual": {
+            "count": 5628,
+            "mean": 3.493627082021033,
+            "p50": 2.7120414502951347,
+            "p95": 9.615976208722403,
+            "p99": 18.508538014065586,
+            "max": 41.60288560009632
+          },
+          "signedMean": 1.6356835105768563
+        },
+        "highSpeed": {
+          "count": 20,
+          "visual": {
+            "count": 20,
+            "mean": 3.547540512726877,
+            "p50": 2.2743272082478825,
+            "p95": 10.381338309148536,
+            "p99": 15.868889248850273,
+            "max": 15.868889248850273
+          },
+          "signedMean": 8.587998471358512
+        }
+      },
+      "realHoldout": {
+        "overall": {
+          "count": 44708,
+          "visual": {
+            "count": 44708,
+            "mean": 0.08319019880002643,
+            "p50": 0,
+            "p95": 0.4951999999880172,
+            "p99": 1.67939999997634,
+            "max": 36.07046403915525
+          },
+          "stationaryJitter": {
+            "count": 33674,
+            "mean": 0.0014688782881724205,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 2.1830311495716224
+          }
+        },
+        "events": {
+          "count": 236,
+          "peakLead": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "peakDistance": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "returnMotion": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "overshootThenReturnRateGt1": 0,
+          "overshootThenReturnRateGt2": 0
+        },
+        "normalMove": {
+          "count": 2180,
+          "visual": {
+            "count": 2180,
+            "mean": 0.48896210217553554,
+            "p50": 0,
+            "p95": 2.2096768970786,
+            "p99": 10.53413736039415,
+            "max": 36.07046403915525
+          },
+          "signedMean": 0
+        },
+        "highSpeed": {
+          "count": 3,
+          "visual": {
+            "count": 3,
+            "mean": 0.642749192143962,
+            "p50": 0,
+            "p95": 1.928247576431886,
+            "p99": 1.928247576431886,
+            "max": 1.928247576431886
+          },
+          "signedMean": 0
+        }
+      },
+      "events": {
+        "count": 544,
+        "peakLead": {
+          "count": 544,
+          "mean": 0.29349358275121057,
+          "p50": 0,
+          "p95": 2.8014992000000802,
+          "p99": 4.895519353578493,
+          "max": 5.278511003333506
+        },
+        "peakDistance": {
+          "count": 544,
+          "mean": 0.9044855132638779,
+          "p50": 0,
+          "p95": 4.690879999999879,
+          "p99": 15.749279999999999,
+          "max": 28.876642033957296
+        },
+        "returnMotion": {
+          "count": 544,
+          "mean": 0.7475989367877569,
+          "p50": 0,
+          "p95": 2.9139849370065942,
+          "p99": 15.35590309632503,
+          "max": 28.582686807686876
+        },
+        "overshootThenReturnRateGt1": 0.04595588235294118,
+        "overshootThenReturnRateGt2": 0.022058823529411766
+      },
+      "fireDiagnostics": {
+        "totalFires": 25,
+        "totalFireRate": 0.00025579634518182006,
+        "stopWindowFireRate": 0.015479876160990712,
+        "normalMoveFireRate": 0,
+        "bySource": {
+          "real": {
+            "fireRate": 0,
+            "normalMoveFireRate": 0,
+            "stopWindowFireRate": 0
+          },
+          "step04b_explicit_poll_stream": {
+            "fireRate": 0.003466444814198558,
+            "normalMoveFireRate": 0,
+            "stopWindowFireRate": 0.03094059405940594
+          }
+        }
+      },
+      "tailRows": [
+        {
+          "SequenceId": "step04b_explicit_poll_stream:02:very-high-one-frame-hold:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 666.6666666666665,
+          "PeakLeadPx": 5.278511003333506,
+          "PeakDistancePx": 5.279990853430799,
+          "ReturnMotionPx": 3.962712541778542,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:01:very-high-one-frame-hold:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 5.145519353578493,
+          "PeakDistancePx": 5.159166058390719,
+          "ReturnMotionPx": 2.827124522311635,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:18:stale-sample-proxy:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "stale-sample-proxy",
+          "Split": "validation",
+          "StopElapsedMs": 633.3333333333333,
+          "PeakLeadPx": 5.029627536524686,
+          "PeakDistancePx": 28.876642033957296,
+          "ReturnMotionPx": 23.84546144127655,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:06:near-zero-creep-after-high:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "near-zero-creep-after-high",
+          "Split": "validation",
+          "StopElapsedMs": 716.6666666666664,
+          "PeakLeadPx": 4.975898776624717,
+          "PeakDistancePx": 4.982175090782675,
+          "ReturnMotionPx": 2.7930505685692486,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:14:phase-crossing-hard-stop:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "phase-crossing-hard-stop",
+          "Split": "validation",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 4.944788620974211,
+          "PeakDistancePx": 4.984568467196371,
+          "ReturnMotionPx": 4.5878245273956155,
+          "OvershootThenReturn": true
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:01:very-high-one-frame-hold:phase12p5",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 4.895519353578493,
+          "PeakDistancePx": 4.909860969646858,
+          "ReturnMotionPx": 2.632868080647783,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:18:stale-sample-proxy:phase12p5",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "stale-sample-proxy",
+          "Split": "validation",
+          "StopElapsedMs": 633.3333333333333,
+          "PeakLeadPx": 4.404627536524686,
+          "PeakDistancePx": 28.876642033957296,
+          "ReturnMotionPx": 24.427892913641394,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:02:very-high-one-frame-hold:phase12p5",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 666.6666666666665,
+          "PeakLeadPx": 4.153511003333506,
+          "PeakDistancePx": 4.244676507675527,
+          "ReturnMotionPx": 3.757281464004034,
+          "OvershootThenReturn": true
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:09:curved-near-zero-creep:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "curved-near-zero-creep",
+          "Split": "test",
+          "StopElapsedMs": 766.6666666666663,
+          "PeakLeadPx": 3.928163392301699,
+          "PeakDistancePx": 3.9440704515946363,
+          "ReturnMotionPx": 0,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:01:very-high-one-frame-hold:phase8p333",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 3.520519353578493,
+          "PeakDistancePx": 3.540435216032166,
+          "ReturnMotionPx": 3.205424512386777,
+          "OvershootThenReturn": true
+        }
+      ]
+    },
+    "combined_runtime_feasible": {
+      "candidate": {
+        "Id": "combined_runtime_feasible",
+        "Family": "combined",
+        "Signals": "v5/latestDelta \u002B duplicate/hold \u002B sampleAge",
+        "Feasibility": "runtime feasible with sample age field",
+        "Action": "snap"
+      },
+      "rows": 97734,
+      "overall": {
+        "count": 97734,
+        "visual": {
+          "count": 97734,
+          "mean": 0.29963465524775723,
+          "p50": 0,
+          "p95": 1.622800000011921,
+          "p99": 6.6548706043689565,
+          "max": 41.60288560009632
+        },
+        "stationaryJitter": {
+          "count": 68352,
+          "mean": 0.0011866638923762793,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 2.1830311495716224
+        }
+      },
+      "step04bStress": {
+        "overall": {
+          "count": 7212,
+          "visual": {
+            "count": 7212,
+            "mean": 3.13505050997998,
+            "p50": 2.2001105628321618,
+            "p95": 9.379227917920542,
+            "p99": 17.836170539675653,
+            "max": 41.60288560009632
+          },
+          "stationaryJitter": {
+            "count": 96,
+            "mean": 0.26525251887105855,
+            "p50": 0.17649920000008024,
+            "p95": 0.8752004748172757,
+            "p99": 1.7063315894982034,
+            "max": 1.7063315894982034
+          }
+        },
+        "events": {
+          "count": 88,
+          "peakLead": {
+            "count": 88,
+            "mean": 1.682075252334622,
+            "p50": 1.4113761954813648,
+            "p95": 4.710132799999883,
+            "p99": 5.145519353578493,
+            "max": 5.145519353578493
+          },
+          "peakDistance": {
+            "count": 88,
+            "mean": 5.609537603994213,
+            "p50": 2.876502764151074,
+            "p95": 15.749279999999999,
+            "p99": 28.876642033957296,
+            "max": 28.876642033957296
+          },
+          "returnMotion": {
+            "count": 88,
+            "mean": 4.8929902079915655,
+            "p50": 2,
+            "p95": 15.749279999999999,
+            "p99": 28.876642033957296,
+            "max": 28.876642033957296
+          },
+          "overshootThenReturnRateGt1": 0.3409090909090909,
+          "overshootThenReturnRateGt2": 0.19318181818181818
+        },
+        "normalMove": {
+          "count": 5628,
+          "visual": {
+            "count": 5628,
+            "mean": 3.4932445942310766,
+            "p50": 2.7120414502951347,
+            "p95": 9.615976208722403,
+            "p99": 18.508538014065586,
+            "max": 41.60288560009632
+          },
+          "signedMean": 1.6359443561739309
+        },
+        "highSpeed": {
+          "count": 20,
+          "visual": {
+            "count": 20,
+            "mean": 3.547540512726877,
+            "p50": 2.2743272082478825,
+            "p95": 10.381338309148536,
+            "p99": 15.868889248850273,
+            "max": 15.868889248850273
+          },
+          "signedMean": 8.587998471358512
+        }
+      },
+      "realHoldout": {
+        "overall": {
+          "count": 44708,
+          "visual": {
+            "count": 44708,
+            "mean": 0.08319019880002643,
+            "p50": 0,
+            "p95": 0.4951999999880172,
+            "p99": 1.67939999997634,
+            "max": 36.07046403915525
+          },
+          "stationaryJitter": {
+            "count": 33674,
+            "mean": 0.0014688782881724205,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 2.1830311495716224
+          }
+        },
+        "events": {
+          "count": 236,
+          "peakLead": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "peakDistance": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "returnMotion": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "overshootThenReturnRateGt1": 0,
+          "overshootThenReturnRateGt2": 0
+        },
+        "normalMove": {
+          "count": 2180,
+          "visual": {
+            "count": 2180,
+            "mean": 0.48896210217553554,
+            "p50": 0,
+            "p95": 2.2096768970786,
+            "p99": 10.53413736039415,
+            "max": 36.07046403915525
+          },
+          "signedMean": 0
+        },
+        "highSpeed": {
+          "count": 3,
+          "visual": {
+            "count": 3,
+            "mean": 0.642749192143962,
+            "p50": 0,
+            "p95": 1.928247576431886,
+            "p99": 1.928247576431886,
+            "max": 1.928247576431886
+          },
+          "signedMean": 0
+        }
+      },
+      "events": {
+        "count": 544,
+        "peakLead": {
+          "count": 544,
+          "mean": 0.2721004084658947,
+          "p50": 0,
+          "p95": 2.625,
+          "p99": 3.928163392301699,
+          "max": 5.145519353578493
+        },
+        "peakDistance": {
+          "count": 544,
+          "mean": 0.9074252006461228,
+          "p50": 0,
+          "p95": 4.690879999999879,
+          "p99": 15.749279999999999,
+          "max": 28.876642033957296
+        },
+        "returnMotion": {
+          "count": 544,
+          "mean": 0.7915131218809884,
+          "p50": 0,
+          "p95": 3.190462756657168,
+          "p99": 15.35590309632503,
+          "max": 28.876642033957296
+        },
+        "overshootThenReturnRateGt1": 0.05514705882352941,
+        "overshootThenReturnRateGt2": 0.03125
+      },
+      "fireDiagnostics": {
+        "totalFires": 325,
+        "totalFireRate": 0.0033253524873636604,
+        "stopWindowFireRate": 0.18080495356037152,
+        "normalMoveFireRate": 0.00038450446986446215,
+        "bySource": {
+          "real": {
+            "fireRate": 0,
+            "normalMoveFireRate": 0,
+            "stopWindowFireRate": 0
+          },
+          "step04b_explicit_poll_stream": {
+            "fireRate": 0.045063782584581255,
+            "normalMoveFireRate": 0.0007107320540156361,
+            "stopWindowFireRate": 0.3613861386138614
+          }
+        }
+      },
+      "tailRows": [
+        {
+          "SequenceId": "step04b_explicit_poll_stream:01:very-high-one-frame-hold:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 5.145519353578493,
+          "PeakDistancePx": 5.159166058390719,
+          "ReturnMotionPx": 2.827124522311635,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:06:near-zero-creep-after-high:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "near-zero-creep-after-high",
+          "Split": "validation",
+          "StopElapsedMs": 716.6666666666664,
+          "PeakLeadPx": 4.975898776624717,
+          "PeakDistancePx": 4.982175090782675,
+          "ReturnMotionPx": 4.982175090782675,
+          "OvershootThenReturn": true
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:14:phase-crossing-hard-stop:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "phase-crossing-hard-stop",
+          "Split": "validation",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 4.944788620974211,
+          "PeakDistancePx": 4.984568467196371,
+          "ReturnMotionPx": 4.984568467196371,
+          "OvershootThenReturn": true
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:01:very-high-one-frame-hold:phase12p5",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 4.895519353578493,
+          "PeakDistancePx": 4.909860969646858,
+          "ReturnMotionPx": 2.632868080647783,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:02:very-high-one-frame-hold:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 666.6666666666665,
+          "PeakLeadPx": 4.710132799999883,
+          "PeakDistancePx": 4.751418313896887,
+          "ReturnMotionPx": 4.751418313896887,
+          "OvershootThenReturn": true
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:09:curved-near-zero-creep:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "curved-near-zero-creep",
+          "Split": "test",
+          "StopElapsedMs": 766.6666666666663,
+          "PeakLeadPx": 3.928163392301699,
+          "PeakDistancePx": 3.9440704515946363,
+          "ReturnMotionPx": 0,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:15:short-hold-release:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "short-hold-release",
+          "Split": "validation",
+          "StopElapsedMs": 1099.9999999999993,
+          "PeakLeadPx": 3.3592704539235,
+          "PeakDistancePx": 3.368560223983445,
+          "ReturnMotionPx": 1.7942559744138744,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:20:stale-sample-proxy:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "stale-sample-proxy",
+          "Split": "validation",
+          "StopElapsedMs": 699.9999999999998,
+          "PeakLeadPx": 3.3571763589079637,
+          "PeakDistancePx": 4.690879999999879,
+          "ReturnMotionPx": 1.331377342639636,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:07:near-zero-creep-after-high:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "near-zero-creep-after-high",
+          "Split": "train",
+          "StopElapsedMs": 866.6666666666661,
+          "PeakLeadPx": 3.3206596908912616,
+          "PeakDistancePx": 3.32301155320141,
+          "ReturnMotionPx": 0.8862283190592879,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:07:near-zero-creep-after-high:phase12p5",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "near-zero-creep-after-high",
+          "Split": "train",
+          "StopElapsedMs": 866.6666666666661,
+          "PeakLeadPx": 3.3206596908912616,
+          "PeakDistancePx": 3.32301155320141,
+          "ReturnMotionPx": 1.011054856509844,
+          "OvershootThenReturn": false
+        }
+      ]
+    },
+    "combined_oracle": {
+      "candidate": {
+        "Id": "combined_oracle",
+        "Family": "combined",
+        "Signals": "runtime feasible \u002B targetCross \u002B future stop window",
+        "Feasibility": "oracle upper bound",
+        "Action": "snap"
+      },
+      "rows": 97734,
+      "overall": {
+        "count": 97734,
+        "visual": {
+          "count": 97734,
+          "mean": 0.2978261161709323,
+          "p50": 0,
+          "p95": 1.59764437969678,
+          "p99": 6.6548706043689565,
+          "max": 41.60288560009632
+        },
+        "stationaryJitter": {
+          "count": 68352,
+          "mean": 0.0010735459842030213,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 2.1830311495716224
+        }
+      },
+      "step04bStress": {
+        "overall": {
+          "count": 7212,
+          "visual": {
+            "count": 7212,
+            "mean": 3.110541946733393,
+            "p50": 2.1672374347264864,
+            "p95": 9.379227917920542,
+            "p99": 17.836170539675653,
+            "max": 41.60288560009632
+          },
+          "stationaryJitter": {
+            "count": 96,
+            "mean": 0.18471256825169913,
+            "p50": 0,
+            "p95": 0.8752004748172757,
+            "p99": 1.7063315894982034,
+            "max": 1.7063315894982034
+          }
+        },
+        "events": {
+          "count": 88,
+          "peakLead": {
+            "count": 88,
+            "mean": 1.3108702783918258,
+            "p50": 0.875,
+            "p95": 3.3571763589079637,
+            "p99": 5.145519353578493,
+            "max": 5.145519353578493
+          },
+          "peakDistance": {
+            "count": 88,
+            "mean": 5.074716802284277,
+            "p50": 2.333685603172741,
+            "p95": 15.749279999999999,
+            "p99": 28.876642033957296,
+            "max": 28.876642033957296
+          },
+          "returnMotion": {
+            "count": 88,
+            "mean": 4.62299052322256,
+            "p50": 1.1709641956120032,
+            "p95": 15.749279999999999,
+            "p99": 28.876642033957296,
+            "max": 28.876642033957296
+          },
+          "overshootThenReturnRateGt1": 0.3181818181818182,
+          "overshootThenReturnRateGt2": 0.20454545454545456
+        },
+        "normalMove": {
+          "count": 5628,
+          "visual": {
+            "count": 5628,
+            "mean": 3.492561897010252,
+            "p50": 2.711462856073099,
+            "p95": 9.615976208722403,
+            "p99": 18.508538014065586,
+            "max": 41.60288560009632
+          },
+          "signedMean": 1.6355574401326374
+        },
+        "highSpeed": {
+          "count": 20,
+          "visual": {
+            "count": 20,
+            "mean": 3.547540512726877,
+            "p50": 2.2743272082478825,
+            "p95": 10.381338309148536,
+            "p99": 15.868889248850273,
+            "max": 15.868889248850273
+          },
+          "signedMean": 8.587998471358512
+        }
+      },
+      "realHoldout": {
+        "overall": {
+          "count": 44708,
+          "visual": {
+            "count": 44708,
+            "mean": 0.08319019880002643,
+            "p50": 0,
+            "p95": 0.4951999999880172,
+            "p99": 1.67939999997634,
+            "max": 36.07046403915525
+          },
+          "stationaryJitter": {
+            "count": 33674,
+            "mean": 0.0014688782881724205,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 2.1830311495716224
+          }
+        },
+        "events": {
+          "count": 236,
+          "peakLead": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "peakDistance": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "returnMotion": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "overshootThenReturnRateGt1": 0,
+          "overshootThenReturnRateGt2": 0
+        },
+        "normalMove": {
+          "count": 2180,
+          "visual": {
+            "count": 2180,
+            "mean": 0.48896210217553554,
+            "p50": 0,
+            "p95": 2.2096768970786,
+            "p99": 10.53413736039415,
+            "max": 36.07046403915525
+          },
+          "signedMean": 0
+        },
+        "highSpeed": {
+          "count": 3,
+          "visual": {
+            "count": 3,
+            "mean": 0.642749192143962,
+            "p50": 0,
+            "p95": 1.928247576431886,
+            "p99": 1.928247576431886,
+            "max": 1.928247576431886
+          },
+          "signedMean": 0
+        }
+      },
+      "events": {
+        "count": 544,
+        "peakLead": {
+          "count": 544,
+          "mean": 0.21205254503397183,
+          "p50": 0,
+          "p95": 2.036964044507814,
+          "p99": 3.3206596908912616,
+          "max": 5.145519353578493
+        },
+        "peakDistance": {
+          "count": 544,
+          "mean": 0.8209100709577506,
+          "p50": 0,
+          "p95": 3.368560223983445,
+          "p99": 15.749279999999999,
+          "max": 28.876642033957296
+        },
+        "returnMotion": {
+          "count": 544,
+          "mean": 0.7478367022860023,
+          "p50": 0,
+          "p95": 3.190462756657168,
+          "p99": 15.35590309632503,
+          "max": 28.876642033957296
+        },
+        "overshootThenReturnRateGt1": 0.051470588235294115,
+        "overshootThenReturnRateGt2": 0.03308823529411765
+      },
+      "fireDiagnostics": {
+        "totalFires": 538,
+        "totalFireRate": 0.0055047373483127675,
+        "stopWindowFireRate": 0.27925696594427246,
+        "normalMoveFireRate": 0.0005767567047966932,
+        "bySource": {
+          "real": {
+            "fireRate": 0,
+            "normalMoveFireRate": 0,
+            "stopWindowFireRate": 0
+          },
+          "step04b_explicit_poll_stream": {
+            "fireRate": 0.07459789240155297,
+            "normalMoveFireRate": 0.0010660980810234541,
+            "stopWindowFireRate": 0.5581683168316832
+          }
+        }
+      },
+      "tailRows": [
+        {
+          "SequenceId": "step04b_explicit_poll_stream:01:very-high-one-frame-hold:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 5.145519353578493,
+          "PeakDistancePx": 5.159166058390719,
+          "ReturnMotionPx": 5.159166058390719,
+          "OvershootThenReturn": true
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:06:near-zero-creep-after-high:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "near-zero-creep-after-high",
+          "Split": "validation",
+          "StopElapsedMs": 716.6666666666664,
+          "PeakLeadPx": 4.975898776624717,
+          "PeakDistancePx": 4.982175090782675,
+          "ReturnMotionPx": 4.982175090782675,
+          "OvershootThenReturn": true
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:01:very-high-one-frame-hold:phase12p5",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 4.895519353578493,
+          "PeakDistancePx": 4.909860969646858,
+          "ReturnMotionPx": 4.909860969646858,
+          "OvershootThenReturn": true
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:15:short-hold-release:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "short-hold-release",
+          "Split": "validation",
+          "StopElapsedMs": 1099.9999999999993,
+          "PeakLeadPx": 3.3592704539235,
+          "PeakDistancePx": 3.368560223983445,
+          "ReturnMotionPx": 3.368560223983445,
+          "OvershootThenReturn": true
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:20:stale-sample-proxy:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "stale-sample-proxy",
+          "Split": "validation",
+          "StopElapsedMs": 699.9999999999998,
+          "PeakLeadPx": 3.3571763589079637,
+          "PeakDistancePx": 4.690879999999879,
+          "ReturnMotionPx": 1.331377342639636,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:07:near-zero-creep-after-high:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "near-zero-creep-after-high",
+          "Split": "train",
+          "StopElapsedMs": 866.6666666666661,
+          "PeakLeadPx": 3.3206596908912616,
+          "PeakDistancePx": 3.32301155320141,
+          "ReturnMotionPx": 0.8862283190592879,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:07:near-zero-creep-after-high:phase12p5",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "near-zero-creep-after-high",
+          "Split": "train",
+          "StopElapsedMs": 866.6666666666661,
+          "PeakLeadPx": 3.3206596908912616,
+          "PeakDistancePx": 3.32301155320141,
+          "ReturnMotionPx": 1.011054856509844,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:21:missed-poll-proxy:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "missed-poll-proxy",
+          "Split": "test",
+          "StopElapsedMs": 733.333333333333,
+          "PeakLeadPx": 3.3129295592702874,
+          "PeakDistancePx": 15.749279999999999,
+          "ReturnMotionPx": 13.160149777709828,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:12:phase-crossing-hard-stop:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "phase-crossing-hard-stop",
+          "Split": "validation",
+          "StopElapsedMs": 600,
+          "PeakLeadPx": 3.299654714061347,
+          "PeakDistancePx": 3.312212623690079,
+          "ReturnMotionPx": 3.312212623690079,
+          "OvershootThenReturn": true
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:00:very-high-one-frame-hold:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "validation",
+          "StopElapsedMs": 600,
+          "PeakLeadPx": 3.2295675762982228,
+          "PeakDistancePx": 3.231985725506345,
+          "ReturnMotionPx": 0.276584866857001,
+          "OvershootThenReturn": false
+        }
+      ]
+    },
+    "combined_oracle_cap0p5": {
+      "candidate": {
+        "Id": "combined_oracle_cap0p5",
+        "Family": "combined",
+        "Signals": "runtime feasible \u002B targetCross \u002B future stop window",
+        "Feasibility": "oracle upper bound",
+        "Action": "cap0p5"
+      },
+      "rows": 97734,
+      "overall": {
+        "count": 97734,
+        "visual": {
+          "count": 97734,
+          "mean": 0.29885140375774766,
+          "p50": 0,
+          "p95": 1.5969797677090893,
+          "p99": 6.6548706043689565,
+          "max": 41.60288560009632
+        },
+        "stationaryJitter": {
+          "count": 68352,
+          "mean": 0.0012307276257973402,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 2.1830311495716224
+        }
+      },
+      "step04bStress": {
+        "overall": {
+          "count": 7212,
+          "visual": {
+            "count": 7212,
+            "mean": 3.1244362142056357,
+            "p50": 2.16691704317411,
+            "p95": 9.379227917920542,
+            "p99": 17.836170539675653,
+            "max": 41.60288560009632
+          },
+          "stationaryJitter": {
+            "count": 96,
+            "mean": 0.2966258970668538,
+            "p50": 0.17649920000008024,
+            "p95": 0.8752004748172757,
+            "p99": 1.7063315894982034,
+            "max": 1.7063315894982034
+          }
+        },
+        "events": {
+          "count": 88,
+          "peakLead": {
+            "count": 88,
+            "mean": 1.4030542277050786,
+            "p50": 0.875,
+            "p95": 3.3571763589079637,
+            "p99": 5.145519353578493,
+            "max": 5.145519353578493
+          },
+          "peakDistance": {
+            "count": 88,
+            "mean": 5.148211307034058,
+            "p50": 2.333685603172741,
+            "p95": 15.749279999999999,
+            "p99": 28.876642033957296,
+            "max": 28.876642033957296
+          },
+          "returnMotion": {
+            "count": 88,
+            "mean": 4.527085584423111,
+            "p50": 1.114490984343249,
+            "p95": 15.498559999999998,
+            "p99": 28.582686807686876,
+            "max": 28.582686807686876
+          },
+          "overshootThenReturnRateGt1": 0.3181818181818182,
+          "overshootThenReturnRateGt2": 0.20454545454545456
+        },
+        "normalMove": {
+          "count": 5628,
+          "visual": {
+            "count": 5628,
+            "mean": 3.4927334562332306,
+            "p50": 2.7120414502951347,
+            "p95": 9.615976208722403,
+            "p99": 18.508538014065586,
+            "max": 41.60288560009632
+          },
+          "signedMean": 1.6354266319644628
+        },
+        "highSpeed": {
+          "count": 20,
+          "visual": {
+            "count": 20,
+            "mean": 3.547540512726877,
+            "p50": 2.2743272082478825,
+            "p95": 10.381338309148536,
+            "p99": 15.868889248850273,
+            "max": 15.868889248850273
+          },
+          "signedMean": 8.587998471358512
+        }
+      },
+      "realHoldout": {
+        "overall": {
+          "count": 44708,
+          "visual": {
+            "count": 44708,
+            "mean": 0.08319019880002643,
+            "p50": 0,
+            "p95": 0.4951999999880172,
+            "p99": 1.67939999997634,
+            "max": 36.07046403915525
+          },
+          "stationaryJitter": {
+            "count": 33674,
+            "mean": 0.0014688782881724205,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 2.1830311495716224
+          }
+        },
+        "events": {
+          "count": 236,
+          "peakLead": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "peakDistance": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "returnMotion": {
+            "count": 236,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "overshootThenReturnRateGt1": 0,
+          "overshootThenReturnRateGt2": 0
+        },
+        "normalMove": {
+          "count": 2180,
+          "visual": {
+            "count": 2180,
+            "mean": 0.48896210217553554,
+            "p50": 0,
+            "p95": 2.2096768970786,
+            "p99": 10.53413736039415,
+            "max": 36.07046403915525
+          },
+          "signedMean": 0
+        },
+        "highSpeed": {
+          "count": 3,
+          "visual": {
+            "count": 3,
+            "mean": 0.642749192143962,
+            "p50": 0,
+            "p95": 1.928247576431886,
+            "p99": 1.928247576431886,
+            "max": 1.928247576431886
+          },
+          "signedMean": 0
+        }
+      },
+      "events": {
+        "count": 544,
+        "peakLead": {
+          "count": 544,
+          "mean": 0.2269646544817039,
+          "p50": 0,
+          "p95": 2.036964044507814,
+          "p99": 3.3206596908912616,
+          "max": 5.145519353578493
+        },
+        "peakDistance": {
+          "count": 544,
+          "mean": 0.8327988879025682,
+          "p50": 0,
+          "p95": 3.368560223983445,
+          "p99": 15.749279999999999,
+          "max": 28.876642033957296
+        },
+        "returnMotion": {
+          "count": 544,
+          "mean": 0.7323226680684444,
+          "p50": 0,
+          "p95": 2.875,
+          "p99": 15.35590309632503,
+          "max": 28.582686807686876
+        },
+        "overshootThenReturnRateGt1": 0.051470588235294115,
+        "overshootThenReturnRateGt2": 0.03308823529411765
+      },
+      "fireDiagnostics": {
+        "totalFires": 538,
+        "totalFireRate": 0.0055047373483127675,
+        "stopWindowFireRate": 0.27925696594427246,
+        "normalMoveFireRate": 0.0005767567047966932,
+        "bySource": {
+          "real": {
+            "fireRate": 0,
+            "normalMoveFireRate": 0,
+            "stopWindowFireRate": 0
+          },
+          "step04b_explicit_poll_stream": {
+            "fireRate": 0.07459789240155297,
+            "normalMoveFireRate": 0.0010660980810234541,
+            "stopWindowFireRate": 0.5581683168316832
+          }
+        }
+      },
+      "tailRows": [
+        {
+          "SequenceId": "step04b_explicit_poll_stream:01:very-high-one-frame-hold:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 5.145519353578493,
+          "PeakDistancePx": 5.159166058390719,
+          "ReturnMotionPx": 4.65916605839066,
+          "OvershootThenReturn": true
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:06:near-zero-creep-after-high:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "near-zero-creep-after-high",
+          "Split": "validation",
+          "StopElapsedMs": 716.6666666666664,
+          "PeakLeadPx": 4.975898776624717,
+          "PeakDistancePx": 4.982175090782675,
+          "ReturnMotionPx": 4.482175090782727,
+          "OvershootThenReturn": true
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:01:very-high-one-frame-hold:phase12p5",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "train",
+          "StopElapsedMs": 566.6666666666667,
+          "PeakLeadPx": 4.895519353578493,
+          "PeakDistancePx": 4.909860969646858,
+          "ReturnMotionPx": 4.409860969646858,
+          "OvershootThenReturn": true
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:15:short-hold-release:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "short-hold-release",
+          "Split": "validation",
+          "StopElapsedMs": 1099.9999999999993,
+          "PeakLeadPx": 3.3592704539235,
+          "PeakDistancePx": 3.368560223983445,
+          "ReturnMotionPx": 2.868560223983377,
+          "OvershootThenReturn": true
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:20:stale-sample-proxy:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "stale-sample-proxy",
+          "Split": "validation",
+          "StopElapsedMs": 699.9999999999998,
+          "PeakLeadPx": 3.3571763589079637,
+          "PeakDistancePx": 4.690879999999879,
+          "ReturnMotionPx": 1.331377342639636,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:07:near-zero-creep-after-high:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "near-zero-creep-after-high",
+          "Split": "train",
+          "StopElapsedMs": 866.6666666666661,
+          "PeakLeadPx": 3.3206596908912616,
+          "PeakDistancePx": 3.32301155320141,
+          "ReturnMotionPx": 0.8862283190592879,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:07:near-zero-creep-after-high:phase12p5",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "near-zero-creep-after-high",
+          "Split": "train",
+          "StopElapsedMs": 866.6666666666661,
+          "PeakLeadPx": 3.3206596908912616,
+          "PeakDistancePx": 3.32301155320141,
+          "ReturnMotionPx": 1.011054856509844,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:21:missed-poll-proxy:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "missed-poll-proxy",
+          "Split": "test",
+          "StopElapsedMs": 733.333333333333,
+          "PeakLeadPx": 3.3129295592702874,
+          "PeakDistancePx": 15.749279999999999,
+          "ReturnMotionPx": 13.160149777709828,
+          "OvershootThenReturn": false
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:12:phase-crossing-hard-stop:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "phase-crossing-hard-stop",
+          "Split": "validation",
+          "StopElapsedMs": 600,
+          "PeakLeadPx": 3.299654714061347,
+          "PeakDistancePx": 3.312212623690079,
+          "ReturnMotionPx": 2.9139849370065942,
+          "OvershootThenReturn": true
+        },
+        {
+          "SequenceId": "step04b_explicit_poll_stream:00:very-high-one-frame-hold:phase0",
+          "Source": "step04b_explicit_poll_stream",
+          "Family": "very-high-one-frame-hold",
+          "Split": "validation",
+          "StopElapsedMs": 600,
+          "PeakLeadPx": 3.2295675762982228,
+          "PeakDistancePx": 3.231985725506345,
+          "ReturnMotionPx": 0.276584866857001,
+          "OvershootThenReturn": false
+        }
+      ]
+    }
+  },
+  "ranking": [
+    {
+      "id": "baseline_product_brake",
+      "score": {
+        "totalObjective": 58086.48786735711,
+        "step04bPeakLeadMax": 5.278511003333506,
+        "step04bOtrGt1": 0.2840909090909091,
+        "step04bReturnMax": 28.582686807686876,
+        "realHoldoutP95": 0.4951999999880172,
+        "realHoldoutP99": 1.67939999997634,
+        "normalMoveFireRate": 0
+      }
+    },
+    {
+      "id": "plus_sample_age",
+      "score": {
+        "totalObjective": 58086.48786735711,
+        "step04bPeakLeadMax": 5.278511003333506,
+        "step04bOtrGt1": 0.2840909090909091,
+        "step04bReturnMax": 28.582686807686876,
+        "realHoldoutP95": 0.4951999999880172,
+        "realHoldoutP99": 1.67939999997634,
+        "normalMoveFireRate": 0
+      }
+    },
+    {
+      "id": "plus_target_cross_boundary",
+      "score": {
+        "totalObjective": 58086.48786735711,
+        "step04bPeakLeadMax": 5.278511003333506,
+        "step04bOtrGt1": 0.2840909090909091,
+        "step04bReturnMax": 28.582686807686876,
+        "realHoldoutP95": 0.4951999999880172,
+        "realHoldoutP99": 1.67939999997634,
+        "normalMoveFireRate": 0
+      }
+    },
+    {
+      "id": "plus_phase",
+      "score": {
+        "totalObjective": 58086.48786735711,
+        "step04bPeakLeadMax": 5.278511003333506,
+        "step04bOtrGt1": 0.2840909090909091,
+        "step04bReturnMax": 28.582686807686876,
+        "realHoldoutP95": 0.4951999999880172,
+        "realHoldoutP99": 1.67939999997634,
+        "normalMoveFireRate": 0
+      }
+    },
+    {
+      "id": "combined_oracle_cap0p5",
+      "score": {
+        "totalObjective": 59018.428012075055,
+        "step04bPeakLeadMax": 5.145519353578493,
+        "step04bOtrGt1": 0.3181818181818182,
+        "step04bReturnMax": 28.582686807686876,
+        "realHoldoutP95": 0.4951999999880172,
+        "realHoldoutP99": 1.67939999997634,
+        "normalMoveFireRate": 0.0005767567047966932
+      }
+    },
+    {
+      "id": "current_signals_step07_best",
+      "score": {
+        "totalObjective": 59433.53410430793,
+        "step04bPeakLeadMax": 5.145519353578493,
+        "step04bOtrGt1": 0.3068181818181818,
+        "step04bReturnMax": 28.876642033957296,
+        "realHoldoutP95": 0.4951999999880172,
+        "realHoldoutP99": 1.67939999997634,
+        "normalMoveFireRate": 0.07199846198212054
+      }
+    },
+    {
+      "id": "plus_duplicate_hold",
+      "score": {
+        "totalObjective": 59486.44934728854,
+        "step04bPeakLeadMax": 5.145519353578493,
+        "step04bOtrGt1": 0.3181818181818182,
+        "step04bReturnMax": 28.876642033957296,
+        "realHoldoutP95": 0.4951999999880172,
+        "realHoldoutP99": 1.67939999997634,
+        "normalMoveFireRate": 0
+      }
+    },
+    {
+      "id": "plus_raw_input_age",
+      "score": {
+        "totalObjective": 59486.44934728854,
+        "step04bPeakLeadMax": 5.145519353578493,
+        "step04bOtrGt1": 0.3181818181818182,
+        "step04bReturnMax": 28.876642033957296,
+        "realHoldoutP95": 0.4951999999880172,
+        "realHoldoutP99": 1.67939999997634,
+        "normalMoveFireRate": 0
+      }
+    },
+    {
+      "id": "combined_oracle",
+      "score": {
+        "totalObjective": 59488.756374107725,
+        "step04bPeakLeadMax": 5.145519353578493,
+        "step04bOtrGt1": 0.3181818181818182,
+        "step04bReturnMax": 28.876642033957296,
+        "realHoldoutP95": 0.4951999999880172,
+        "realHoldoutP99": 1.67939999997634,
+        "normalMoveFireRate": 0.0005767567047966932
+      }
+    },
+    {
+      "id": "combined_runtime_feasible",
+      "score": {
+        "totalObjective": 60169.80554698618,
+        "step04bPeakLeadMax": 5.145519353578493,
+        "step04bOtrGt1": 0.3409090909090909,
+        "step04bReturnMax": 28.876642033957296,
+        "realHoldoutP95": 0.4951999999880172,
+        "realHoldoutP99": 1.67939999997634,
+        "normalMoveFireRate": 0.00038450446986446215
+      }
+    }
+  ],
+  "selected": {
+    "id": "baseline_product_brake",
+    "score": {
+      "totalObjective": 58086.48786735711,
+      "step04bPeakLeadMax": 5.278511003333506,
+      "step04bOtrGt1": 0.2840909090909091,
+      "step04bReturnMax": 28.582686807686876,
+      "realHoldoutP95": 0.4951999999880172,
+      "realHoldoutP99": 1.67939999997634,
+      "normalMoveFireRate": 0
+    }
+  },
+  "conclusion": {
+    "strongRuntimeFeasibleSignalFound": false,
+    "continueToStep09": false,
+    "blocker": "Runtime-feasible current/duplicate/sample-age signals improve return tail only partially; true target-crosses-stop-boundary oracle is the diagnostic upper bound."
+  }
+}
