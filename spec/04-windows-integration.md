@@ -78,10 +78,13 @@ Recommended extended window styles:
 - Idle fade mode MUST be independent from movement translucency mode.
 - After no pointer movement has been observed for the configured idle fade delay, the overlay MUST transition from its current opacity to the configured idle opacity.
 - The idle fade transition MUST use the same linear easing behavior as movement translucency transitions.
-- The default idle fade delay SHOULD be `3s`.
+- Idle fade MUST have separate controls for idle opacity, fade duration, and idle delay, matching the shape of movement translucency controls.
+- The default idle fade duration SHOULD be `80ms`.
+- The default idle fade delay SHOULD be `3000ms`.
 - The default idle opacity SHOULD be `0%`.
 - Idle opacity MUST be configurable within `0%` to `99%`.
-- Idle fade delay MUST be configurable within `0s` to `60s`.
+- Idle fade duration MUST be configurable within `0ms` to `300ms`.
+- Idle fade delay MUST be configurable within `0ms` to `60000ms`.
 - Any new pointer movement after idle fade starts MUST transition the overlay back toward the appropriate active opacity for the current movement-translucency settings.
 - Values outside supported ranges MUST be rejected or clamped consistently at the settings boundary.
 
@@ -110,7 +113,7 @@ Recommended extended window styles:
 - The `ExperimentalMLP` prediction model SHOULD reuse preallocated buffers during prediction and MAY use SIMD or other CPU-only acceleration when available.
 - The `DistilledMLP` prediction model MAY apply the fixed-weight v16 distilled 60Hz CPU-only model as a full cursor displacement prediction while keeping `ConstantVelocity`, `LeastSquares`, `ExperimentalMLP`, and `RuntimeEventSafeMLP` selectable.
 - The `DistilledMLP` prediction model SHOULD use the validated no-lag compensation variant when the generated model is updated.
-- When `DistilledMLP` is selected from the default DWM prediction target offset in UI, the UI SHOULD switch the target offset to the validated `-4ms` recommendation so it can be tested without manual settings-file edits.
+- Switching to `DistilledMLP` in UI MUST preserve the current DWM prediction target offset instead of applying a model-specific automatic offset.
 - The `DistilledMLP` prediction model MUST fall back to the existing baseline behavior when the refresh cadence is outside the model's supported 60Hz range, when history is insufficient, or when model evaluation fails.
 - The `DistilledMLP` prediction model MUST fall back to exact/baseline positioning for stationary or near-stationary cursor history so model bias cannot create visible mirror-cursor jitter while the real cursor is stopped.
 - Cursor Mirror MAY expose an off-by-default experimental `DistilledMLP` post-stop brake for validation.
@@ -120,7 +123,7 @@ Recommended extended window styles:
 - The `RuntimeEventSafeMLP` prediction model MAY apply the fixed-weight v21 60Hz CPU-only model as a full cursor displacement prediction while keeping all older prediction models selectable.
 - `RuntimeEventSafeMLP` MUST use only runtime-available cursor history, DWM timing, and polling-derived features. It MUST NOT depend on oracle labels, future cursor positions, generated scenario phase names, generated scenario velocities, or any training-only metadata at runtime.
 - `RuntimeEventSafeMLP` MUST include a runtime-only static/stop guard that can snap the overlay to the exact current cursor position after detected abrupt stops and during stationary cursor history.
-- When `RuntimeEventSafeMLP` is selected from the default DWM prediction target offset in UI, the UI SHOULD switch the target offset to the validated `-4ms` recommendation.
+- Switching to `RuntimeEventSafeMLP` in UI MUST preserve the current DWM prediction target offset instead of applying a model-specific automatic offset.
 - The `RuntimeEventSafeMLP` prediction model MUST fall back to the existing baseline behavior when the refresh cadence is outside the model's supported 60Hz range, when runtime history is insufficient, or when model evaluation fails.
 - The `RuntimeEventSafeMLP` prediction model MUST NOT require GPU acceleration, runtime model training, network access, or optional machine-learning runtimes in the installed application.
 - The default prediction gain SHOULD be `100%`.
@@ -139,8 +142,10 @@ Recommended extended window styles:
 - If an experimental DWM prediction horizon cap is configured, the DWM-aware polling predictor SHOULD clamp the next-vblank horizon to that cap after validating the DWM horizon.
 - The DWM-aware polling predictor MAY apply a small signed target-time offset after selecting the scheduler target vblank, to compensate for measured capture/composition phase mismatch.
 - The default DWM prediction horizon cap SHOULD be `10ms`.
-- The default DWM prediction target offset SHOULD be `2ms`.
-- The DWM prediction target offset MUST be normalized within `-8ms` to `8ms`.
+- The default user-facing DWM prediction target offset SHOULD be `0ms`.
+- The user-facing DWM prediction target offset MUST be configurable within `-32ms` to `32ms`.
+- The user-facing `0ms` offset MUST map to an internal `+8ms` target-time offset for compatibility with the validated baseline.
+- The internal DWM prediction target offset MUST be normalized within `-24ms` to `40ms`.
 - The DWM prediction target offset MUST affect only the prediction horizon; it MUST NOT change the scheduler's overlay update deadline counters.
 - If experimental DWM adaptive gain is enabled, the DWM-aware polling predictor SHOULD apply the alternate gain only when recent motion exceeds the configured speed threshold, direction remains consistent, and acceleration remains within the configured acceleration threshold.
 - If experimental DWM adaptive gain is enabled with a reversal cooldown, the DWM-aware polling predictor SHOULD keep using the normal gain for the configured number of samples after a direction reversal.
@@ -199,6 +204,9 @@ Recommended extended window styles:
 #### 4.5.1 Settings Window
 - The settings window MUST be a small utility UI, not a primary application workspace.
 - The settings window MUST use the Cursor Mirror application icon rather than the default Windows Forms icon.
+- The settings window SHOULD be wide enough to avoid clipping localized labels at the documented default size.
+- The settings window MUST group related settings in visible framed categories, including prediction, runtime scheduler, movement translucency, and idle fade.
+- The settings window SHOULD arrange these categories as a two-column grid: prediction next to runtime scheduler, and movement translucency next to idle fade.
 - The settings window MUST provide a control for enabling or disabling movement translucency mode.
 - The settings window MUST provide a control for enabling or disabling predictive overlay positioning.
 - The settings window MUST provide a control for selecting the prediction model.
@@ -209,9 +217,9 @@ Recommended extended window styles:
 - When any model other than `DistilledMLP` is selected, the post-stop brake control MUST be disabled visually and functionally.
 - The settings window MUST provide controls for moving opacity, fade duration, and idle delay.
 - When movement translucency mode is disabled in the settings window, moving opacity, fade duration, and idle delay controls MUST be disabled visually and functionally.
-- The settings window MUST provide controls for idle fade enablement, idle opacity, and idle fade delay.
-- When idle fade mode is disabled in the settings window, idle opacity and idle fade delay controls MUST be disabled visually and functionally.
-- Settings controls MUST expose values in user-understandable units: percent for opacity, milliseconds for short movement timing, and seconds for long idle-fade timing.
+- The settings window MUST provide controls for idle fade enablement, idle opacity, idle fade duration, and idle fade delay.
+- When idle fade mode is disabled in the settings window, idle opacity, idle fade duration, and idle fade delay controls MUST be disabled visually and functionally.
+- Settings controls MUST expose values in user-understandable units: percent for opacity and milliseconds for timing.
 - The settings window MUST provide `Reset`, `Close`, and `Exit Cursor Mirror` commands.
 - The `Reset` command MUST restore documented default settings.
 - The `Close` command MUST close or hide the settings window without shutting down Cursor Mirror.

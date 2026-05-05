@@ -35,6 +35,11 @@ namespace CursorMirror
             get { return Get("PredictiveOverlayPositioningLabel"); }
         }
 
+        public static string PredictionCategoryLabel
+        {
+            get { return Get("PredictionCategoryLabel"); }
+        }
+
         public static string PredictionGainLabel
         {
             get { return Get("PredictionGainLabel"); }
@@ -95,6 +100,11 @@ namespace CursorMirror
             get { return Get("MovingOpacityLabel"); }
         }
 
+        public static string MovementCategoryLabel
+        {
+            get { return Get("MovementCategoryLabel"); }
+        }
+
         public static string FadeDurationLabel
         {
             get { return Get("FadeDurationLabel"); }
@@ -110,9 +120,19 @@ namespace CursorMirror
             get { return Get("IdleFadeLabel"); }
         }
 
+        public static string IdleFadeCategoryLabel
+        {
+            get { return Get("IdleFadeCategoryLabel"); }
+        }
+
         public static string IdleOpacityLabel
         {
             get { return Get("IdleOpacityLabel"); }
+        }
+
+        public static string IdleFadeDurationLabel
+        {
+            get { return Get("IdleFadeDurationLabel"); }
         }
 
         public static string IdleFadeDelayLabel
@@ -539,6 +559,8 @@ namespace CursorMirror
                     return "Movement translucency";
                 case "PredictiveOverlayPositioningLabel":
                     return "Predict cursor position";
+                case "PredictionCategoryLabel":
+                    return "Prediction";
                 case "PredictionGainLabel":
                     return "Prediction gain (%)";
                 case "PredictionModelLabel":
@@ -561,6 +583,8 @@ namespace CursorMirror
                     return "Deferral window (us)";
                 case "RuntimeThreadLatencyProfileLabel":
                     return "MMCSS thread profile";
+                case "MovementCategoryLabel":
+                    return "Movement translucency";
                 case "MovingOpacityLabel":
                     return "Moving opacity (%)";
                 case "FadeDurationLabel":
@@ -569,10 +593,14 @@ namespace CursorMirror
                     return "Idle delay (ms)";
                 case "IdleFadeLabel":
                     return "Fade when idle";
+                case "IdleFadeCategoryLabel":
+                    return "Idle fade";
                 case "IdleOpacityLabel":
                     return "Idle opacity (%)";
+                case "IdleFadeDurationLabel":
+                    return "Fade duration (ms)";
                 case "IdleFadeDelayLabel":
-                    return "Idle fade delay (s)";
+                    return "Idle delay (ms)";
                 case "VersionMenuLabel":
                     return "Version";
                 case "UpdateStatusChecking":
@@ -728,6 +756,8 @@ namespace CursorMirror
                     return "移動中に半透明にする";
                 case "PredictiveOverlayPositioningLabel":
                     return "カーソル位置を予測する";
+                case "PredictionCategoryLabel":
+                    return "予測";
                 case "PredictionGainLabel":
                     return "予測ゲイン (%)";
                 case "PredictionModelLabel":
@@ -750,6 +780,8 @@ namespace CursorMirror
                     return "遅延幅 (us)";
                 case "RuntimeThreadLatencyProfileLabel":
                     return "MMCSS スレッドプロファイル";
+                case "MovementCategoryLabel":
+                    return "移動中の半透明化";
                 case "MovingOpacityLabel":
                     return "移動中の不透明度 (%)";
                 case "FadeDurationLabel":
@@ -758,10 +790,14 @@ namespace CursorMirror
                     return "待機時間 (ms)";
                 case "IdleFadeLabel":
                     return "停止後にフェードする";
+                case "IdleFadeCategoryLabel":
+                    return "停止後のフェード";
                 case "IdleOpacityLabel":
                     return "停止後の不透明度 (%)";
+                case "IdleFadeDurationLabel":
+                    return "フェード時間 (ms)";
                 case "IdleFadeDelayLabel":
-                    return "停止後フェード待機 (秒)";
+                    return "待機時間 (ms)";
                 case "VersionMenuLabel":
                     return "バージョン";
                 case "UpdateStatusChecking":

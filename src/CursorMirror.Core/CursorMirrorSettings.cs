@@ -12,6 +12,7 @@ namespace CursorMirror
         public const int DefaultMovingOpacityPercent = 70;
         public const int DefaultFadeDurationMilliseconds = 80;
         public const int DefaultIdleDelayMilliseconds = 120;
+        public const int DefaultIdleFadeDurationMilliseconds = 80;
         public const int DefaultIdleFadeDelayMilliseconds = 3000;
         public const int DefaultIdleOpacityPercent = 0;
         public const int DefaultPredictionHorizonMilliseconds = 8;
@@ -35,7 +36,10 @@ namespace CursorMirror
         public const int DwmPredictionModelDistilledMlp = 3;
         public const int DwmPredictionModelRuntimeEventSafeMlp = 4;
         public const int DefaultDwmPredictionModel = DwmPredictionModelConstantVelocity;
-        public const int DefaultDwmPredictionTargetOffsetMilliseconds = 2;
+        public const int DwmPredictionTargetOffsetDisplayOriginMilliseconds = 8;
+        public const int DefaultDwmPredictionTargetOffsetDisplayMilliseconds = 0;
+        public const int DefaultDwmPredictionTargetOffsetMilliseconds =
+            DwmPredictionTargetOffsetDisplayOriginMilliseconds + DefaultDwmPredictionTargetOffsetDisplayMilliseconds;
         public const int RecommendedDistilledMlpPredictionTargetOffsetMilliseconds = -4;
         public const int RecommendedRuntimeEventSafeMlpPredictionTargetOffsetMilliseconds = -4;
         public const bool DefaultDistilledMlpPostStopBrakeEnabled = false;
@@ -52,6 +56,8 @@ namespace CursorMirror
         public const int MaximumFadeDurationMilliseconds = 300;
         public const int MinimumIdleDelayMilliseconds = 50;
         public const int MaximumIdleDelayMilliseconds = 500;
+        public const int MinimumIdleFadeDurationMilliseconds = MinimumFadeDurationMilliseconds;
+        public const int MaximumIdleFadeDurationMilliseconds = MaximumFadeDurationMilliseconds;
         public const int MinimumIdleFadeDelayMilliseconds = 0;
         public const int MaximumIdleFadeDelayMilliseconds = 60000;
         public const int MinimumIdleOpacityPercent = 0;
@@ -86,8 +92,12 @@ namespace CursorMirror
         public const int MaximumDwmAdaptiveOscillationLatchMilliseconds = 1000;
         public const int MinimumDwmPredictionModel = DwmPredictionModelConstantVelocity;
         public const int MaximumDwmPredictionModel = DwmPredictionModelRuntimeEventSafeMlp;
-        public const int MinimumDwmPredictionTargetOffsetMilliseconds = -8;
-        public const int MaximumDwmPredictionTargetOffsetMilliseconds = 8;
+        public const int MinimumDwmPredictionTargetOffsetDisplayMilliseconds = -32;
+        public const int MaximumDwmPredictionTargetOffsetDisplayMilliseconds = 32;
+        public const int MinimumDwmPredictionTargetOffsetMilliseconds =
+            DwmPredictionTargetOffsetDisplayOriginMilliseconds + MinimumDwmPredictionTargetOffsetDisplayMilliseconds;
+        public const int MaximumDwmPredictionTargetOffsetMilliseconds =
+            DwmPredictionTargetOffsetDisplayOriginMilliseconds + MaximumDwmPredictionTargetOffsetDisplayMilliseconds;
         public const int MinimumRuntimeFineWaitAdvanceMicroseconds = 0;
         public const int MaximumRuntimeFineWaitAdvanceMicroseconds = 5000;
         public const int MinimumRuntimeFineWaitYieldThresholdMicroseconds = 0;
@@ -196,6 +206,9 @@ namespace CursorMirror
         [DataMember(Order = 32)]
         public bool RuntimeThreadLatencyProfileEnabled { get; set; }
 
+        [DataMember(Order = 33)]
+        public int IdleFadeDurationMilliseconds { get; set; }
+
         public static CursorMirrorSettings Default()
         {
             return new CursorMirrorSettings();
@@ -213,6 +226,7 @@ namespace CursorMirror
                 PredictionHorizonMilliseconds = PredictionHorizonMilliseconds,
                 PredictionIdleResetMilliseconds = PredictionIdleResetMilliseconds,
                 IdleFadeEnabled = IdleFadeEnabled,
+                IdleFadeDurationMilliseconds = IdleFadeDurationMilliseconds,
                 IdleFadeDelayMilliseconds = IdleFadeDelayMilliseconds,
                 IdleOpacityPercent = IdleOpacityPercent,
                 PredictionGainPercent = PredictionGainPercent,
@@ -252,6 +266,7 @@ namespace CursorMirror
                 PredictionHorizonMilliseconds = Clamp(PredictionHorizonMilliseconds, MinimumPredictionHorizonMilliseconds, MaximumPredictionHorizonMilliseconds),
                 PredictionIdleResetMilliseconds = Clamp(PredictionIdleResetMilliseconds, MinimumPredictionIdleResetMilliseconds, MaximumPredictionIdleResetMilliseconds),
                 IdleFadeEnabled = IdleFadeEnabled,
+                IdleFadeDurationMilliseconds = Clamp(IdleFadeDurationMilliseconds, MinimumIdleFadeDurationMilliseconds, MaximumIdleFadeDurationMilliseconds),
                 IdleFadeDelayMilliseconds = Clamp(IdleFadeDelayMilliseconds, MinimumIdleFadeDelayMilliseconds, MaximumIdleFadeDelayMilliseconds),
                 IdleOpacityPercent = Clamp(IdleOpacityPercent, MinimumIdleOpacityPercent, MaximumIdleOpacityPercent),
                 PredictionGainPercent = Clamp(PredictionGainPercent, MinimumPredictionGainPercent, MaximumPredictionGainPercent),
@@ -282,6 +297,22 @@ namespace CursorMirror
             };
         }
 
+        public static int DwmPredictionTargetOffsetToDisplayMilliseconds(int targetOffsetMilliseconds)
+        {
+            return Clamp(
+                targetOffsetMilliseconds - DwmPredictionTargetOffsetDisplayOriginMilliseconds,
+                MinimumDwmPredictionTargetOffsetDisplayMilliseconds,
+                MaximumDwmPredictionTargetOffsetDisplayMilliseconds);
+        }
+
+        public static int DwmPredictionTargetOffsetFromDisplayMilliseconds(int displayOffsetMilliseconds)
+        {
+            return DwmPredictionTargetOffsetDisplayOriginMilliseconds + Clamp(
+                displayOffsetMilliseconds,
+                MinimumDwmPredictionTargetOffsetDisplayMilliseconds,
+                MaximumDwmPredictionTargetOffsetDisplayMilliseconds);
+        }
+
         [OnDeserializing]
         private void OnDeserializing(StreamingContext context)
         {
@@ -298,6 +329,7 @@ namespace CursorMirror
             PredictionHorizonMilliseconds = DefaultPredictionHorizonMilliseconds;
             PredictionIdleResetMilliseconds = DefaultPredictionIdleResetMilliseconds;
             IdleFadeEnabled = DefaultIdleFadeEnabled;
+            IdleFadeDurationMilliseconds = DefaultIdleFadeDurationMilliseconds;
             IdleFadeDelayMilliseconds = DefaultIdleFadeDelayMilliseconds;
             IdleOpacityPercent = DefaultIdleOpacityPercent;
             PredictionGainPercent = DefaultPredictionGainPercent;

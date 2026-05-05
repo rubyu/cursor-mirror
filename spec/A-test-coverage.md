@@ -370,6 +370,18 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that `RuntimeEventSafeMLP` snaps to the exact current cursor position for stationary input and immediately after a detected abrupt stop without requiring training-only labels.
   Refs: Section 4.4.2.
 
+- COT-MOU-55 - Same-location polling skips overlay movement
+  Verify that polling a fresh sample whose overlay location has not changed does not call the layered-window move path.
+  Refs: Sections 3.3, 4.4.2.
+
+- COT-MOU-56 - Runtime scheduler options are projected from settings
+  Verify that persisted runtime scheduler settings are normalized and projected into runtime scheduler options.
+  Refs: Section 4.4.2.
+
+- COT-MOU-57 - Idle fade uses dedicated duration
+  Verify that idle fade uses its configured fade duration rather than the movement-translucency fade duration.
+  Refs: Sections 4.4.1.1, 6.1.
+
 #### A.4.T Tray and Application Lifetime
 ##### Unit
 - COT-MTU-1 - Tray icon created
@@ -411,7 +423,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 #### A.4.S Settings UI and Persistence
 ##### Unit
 - COT-MSU-1 - Settings defaults
-  Verify documented default settings: movement translucency enabled, predictive overlay positioning enabled, prediction model `ConstantVelocity`, prediction gain `100%`, DWM horizon cap `10ms`, DWM prediction target offset `2ms`, experimental `DistilledMLP` post-stop brake disabled, idle fade enabled, moving opacity `70%`, fade duration `80ms`, movement idle delay `120ms`, idle fade delay `3s`, and idle opacity `0%`.
+  Verify documented default settings: movement translucency enabled, predictive overlay positioning enabled, prediction model `ConstantVelocity`, prediction gain `100%`, DWM horizon cap `10ms`, DWM prediction target offset display `0ms` with internal `8ms`, experimental `DistilledMLP` post-stop brake disabled, idle fade enabled, moving opacity `70%`, fade duration `80ms`, movement idle delay `120ms`, idle fade duration `80ms`, idle fade delay `3000ms`, and idle opacity `0%`.
   Refs: Sections 4.4.1, 4.4.1.1, 4.4.2, 4.5.1.
 
 - COT-MSU-2 - Moving opacity validation
@@ -419,7 +431,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Section 4.4.1.
 
 - COT-MSU-3 - Timing validation
-  Verify that fade duration, movement idle delay, idle fade delay, idle opacity, prediction gain, prediction timing, DWM target offset, and experimental DWM adaptive prediction values outside their documented ranges are rejected or clamped consistently at the settings boundary.
+  Verify that fade duration, movement idle delay, idle fade duration, idle fade delay, idle opacity, prediction gain, prediction timing, DWM target offset, and experimental DWM adaptive prediction values outside their documented ranges are rejected or clamped consistently at the settings boundary.
   Refs: Sections 4.4.1, 4.4.1.1, 4.4.2.
 
 - COT-MSU-4 - Settings serialization round trip
@@ -459,7 +471,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Section 5.6.
 
 - COT-MSU-13 - Movement translucency dependent controls
-  Verify that disabling movement translucency in the settings window disables its moving opacity, fade duration, and idle delay controls, and that re-enabling movement translucency re-enables those controls.
+  Verify that disabling movement translucency in the settings window disables its moving opacity, fade duration, and idle delay controls, and that disabling idle fade disables its idle opacity, fade duration, and idle delay controls.
   Refs: Sections 4.5.1, 6.1.
 
 - COT-MSU-14 - Settings window application icon
@@ -475,12 +487,20 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Sections 4.4.2, 4.5.1, 6.1.
 
 - COT-MSU-17 - Prediction target offset control
-  Verify that the settings window exposes the DWM prediction target offset, applies edited values immediately, disables the control when prediction is disabled, and switches to the validated `-4ms` recommendation when `DistilledMLP` or `RuntimeEventSafeMLP` is selected from the default target offset.
+  Verify that the settings window exposes the user-facing DWM prediction target offset range, applies edited values immediately with the documented `+8ms` origin, disables the control when prediction is disabled, and preserves the current target offset when the prediction model changes.
   Refs: Sections 4.4.2, 4.5.1, 6.1.
 
 - COT-MSU-18 - DistilledMLP post-stop brake control
   Verify that the settings window exposes the off-by-default experimental `DistilledMLP` post-stop brake, enables it only when predictive positioning uses `DistilledMLP`, applies edited values immediately, and preserves its value while unavailable.
   Refs: Sections 4.4.2, 4.5.1, 6.1.
+
+- COT-MSU-19 - Runtime scheduler controls
+  Verify that runtime scheduler controls expose persisted defaults, apply edited values immediately, disable the message-deferral window unless message deferral is enabled, and clamp spin threshold to the fine-wait advance.
+  Refs: Sections 4.4.2, 4.5.1, 6.1.
+
+- COT-MSU-20 - Settings window grouped layout
+  Verify that the settings window is wide enough for grouped controls and shows framed prediction, runtime scheduler, movement translucency, and idle fade categories in the documented two-column grid.
+  Refs: Section 4.5.1.
 
 #### A.4.D DPI and Multi-Monitor Coordinates
 ##### Unit

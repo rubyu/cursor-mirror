@@ -18,6 +18,7 @@ namespace CursorMirror.Tests
             suite.Add("COT-MSU-17", PredictionTargetOffsetControl);
             suite.Add("COT-MSU-18", DistilledMlpPostStopBrakeControl);
             suite.Add("COT-MSU-19", RuntimeSchedulerControls);
+            suite.Add("COT-MSU-20", SettingsWindowGroupedLayout);
         }
 
         // Movement translucency dependent controls [COT-MSU-13]
@@ -43,10 +44,17 @@ namespace CursorMirror.Tests
                         NumericUpDown fadeDurationInput = GetField<NumericUpDown>(window, "_fadeDurationInput");
                         Label idleDelayLabel = GetField<Label>(window, "_idleDelayLabel");
                         NumericUpDown idleDelayInput = GetField<NumericUpDown>(window, "_idleDelayInput");
+                        CheckBox idleFadeCheckBox = GetField<CheckBox>(window, "_idleFadeCheckBox");
+                        Label idleFadeDurationLabel = GetField<Label>(window, "_idleFadeDurationLabel");
+                        NumericUpDown idleFadeDurationInput = GetField<NumericUpDown>(window, "_idleFadeDurationInput");
+                        Label idleFadeDelayLabel = GetField<Label>(window, "_idleFadeDelayLabel");
+                        NumericUpDown idleFadeDelayInput = GetField<NumericUpDown>(window, "_idleFadeDelayInput");
 
                         TestAssert.True(movingOpacityInput.Enabled, "moving opacity initially enabled");
                         TestAssert.True(fadeDurationInput.Enabled, "fade duration initially enabled");
                         TestAssert.True(idleDelayInput.Enabled, "idle delay initially enabled");
+                        TestAssert.True(idleFadeDurationInput.Enabled, "idle fade duration initially enabled");
+                        TestAssert.True(idleFadeDelayInput.Enabled, "idle fade delay initially enabled");
 
                         movementCheckBox.Checked = false;
 
@@ -66,6 +74,13 @@ namespace CursorMirror.Tests
                         TestAssert.True(fadeDurationInput.Enabled, "fade duration input re-enabled");
                         TestAssert.True(idleDelayLabel.Enabled, "idle delay label re-enabled");
                         TestAssert.True(idleDelayInput.Enabled, "idle delay input re-enabled");
+
+                        idleFadeCheckBox.Checked = false;
+
+                        TestAssert.False(idleFadeDurationLabel.Enabled, "idle fade duration label disabled");
+                        TestAssert.False(idleFadeDurationInput.Enabled, "idle fade duration input disabled");
+                        TestAssert.False(idleFadeDelayLabel.Enabled, "idle fade delay label disabled");
+                        TestAssert.False(idleFadeDelayInput.Enabled, "idle fade delay input disabled");
                     }
                 }
                 finally
@@ -203,20 +218,20 @@ namespace CursorMirror.Tests
                         predictionModelInput.SelectedIndex = 3;
 
                         TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelDistilledMlp, controller.CurrentSettings.DwmPredictionModel, "distilled MLP selection applied");
-                        TestAssert.Equal(CursorMirrorSettings.RecommendedDistilledMlpPredictionTargetOffsetMilliseconds, controller.CurrentSettings.DwmPredictionTargetOffsetMilliseconds, "distilled MLP selection applies recommended target offset");
-                        TestAssert.Equal(CursorMirrorSettings.RecommendedDistilledMlpPredictionTargetOffsetMilliseconds, (int)predictionTargetOffsetInput.Value, "distilled MLP target offset input updated");
+                        TestAssert.Equal(CursorMirrorSettings.DefaultDwmPredictionTargetOffsetMilliseconds, controller.CurrentSettings.DwmPredictionTargetOffsetMilliseconds, "distilled MLP selection preserves target offset");
+                        TestAssert.Equal(CursorMirrorSettings.DefaultDwmPredictionTargetOffsetDisplayMilliseconds, (int)predictionTargetOffsetInput.Value, "distilled MLP target offset input preserved");
                         TestAssert.True(postStopBrakeCheckBox.Enabled, "post-stop brake enabled for DistilledMLP");
 
                         predictionModelInput.SelectedIndex = 0;
 
                         TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, controller.CurrentSettings.DwmPredictionModel, "constant velocity selection applied");
 
-                        predictionTargetOffsetInput.Value = CursorMirrorSettings.DefaultDwmPredictionTargetOffsetMilliseconds;
+                        predictionTargetOffsetInput.Value = CursorMirrorSettings.DefaultDwmPredictionTargetOffsetDisplayMilliseconds;
                         predictionModelInput.SelectedIndex = 4;
 
                         TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelRuntimeEventSafeMlp, controller.CurrentSettings.DwmPredictionModel, "runtime event-safe MLP selection applied");
-                        TestAssert.Equal(CursorMirrorSettings.RecommendedRuntimeEventSafeMlpPredictionTargetOffsetMilliseconds, controller.CurrentSettings.DwmPredictionTargetOffsetMilliseconds, "runtime event-safe MLP selection applies recommended target offset");
-                        TestAssert.Equal(CursorMirrorSettings.RecommendedRuntimeEventSafeMlpPredictionTargetOffsetMilliseconds, (int)predictionTargetOffsetInput.Value, "runtime event-safe MLP target offset input updated");
+                        TestAssert.Equal(CursorMirrorSettings.DefaultDwmPredictionTargetOffsetMilliseconds, controller.CurrentSettings.DwmPredictionTargetOffsetMilliseconds, "runtime event-safe MLP selection preserves target offset");
+                        TestAssert.Equal(CursorMirrorSettings.DefaultDwmPredictionTargetOffsetDisplayMilliseconds, (int)predictionTargetOffsetInput.Value, "runtime event-safe MLP target offset input preserved");
                         TestAssert.False(postStopBrakeCheckBox.Enabled, "post-stop brake disabled for RuntimeEventSafeMLP");
                     }
                 }
@@ -245,11 +260,13 @@ namespace CursorMirror.Tests
                     {
                         NumericUpDown predictionTargetOffsetInput = GetField<NumericUpDown>(window, "_predictionTargetOffsetInput");
 
-                        TestAssert.Equal(CursorMirrorSettings.DefaultDwmPredictionTargetOffsetMilliseconds, (int)predictionTargetOffsetInput.Value, "target offset default displayed");
+                        TestAssert.Equal(CursorMirrorSettings.MinimumDwmPredictionTargetOffsetDisplayMilliseconds, (int)predictionTargetOffsetInput.Minimum, "target offset display minimum");
+                        TestAssert.Equal(CursorMirrorSettings.MaximumDwmPredictionTargetOffsetDisplayMilliseconds, (int)predictionTargetOffsetInput.Maximum, "target offset display maximum");
+                        TestAssert.Equal(CursorMirrorSettings.DefaultDwmPredictionTargetOffsetDisplayMilliseconds, (int)predictionTargetOffsetInput.Value, "target offset default displayed");
 
                         predictionTargetOffsetInput.Value = -4;
 
-                        TestAssert.Equal(-4, controller.CurrentSettings.DwmPredictionTargetOffsetMilliseconds, "target offset selection applied");
+                        TestAssert.Equal(4, controller.CurrentSettings.DwmPredictionTargetOffsetMilliseconds, "target offset selection applied");
                     }
                 }
                 finally
@@ -358,6 +375,85 @@ namespace CursorMirror.Tests
                     DeleteDirectory(directory);
                 }
             });
+        }
+
+        // Settings window grouped layout [COT-MSU-20]
+        private static void SettingsWindowGroupedLayout()
+        {
+            RunOnStaThread(delegate
+            {
+                string directory = NewTestDirectory();
+                try
+                {
+                    SettingsController controller = new SettingsController(
+                        new SettingsStore(Path.Combine(directory, "settings.json")),
+                        CursorMirrorSettings.Default(),
+                        delegate { },
+                        delegate { });
+
+                    using (SettingsWindow window = new SettingsWindow(controller))
+                    {
+                        TestAssert.True(window.ClientSize.Width >= 860, "settings window width should fit two-column grouped controls");
+                        TestAssert.True(ContainsGroupBox(window, LocalizedStrings.PredictionCategoryLabel), "prediction group visible");
+                        TestAssert.True(ContainsGroupBox(window, LocalizedStrings.RuntimeSchedulerHeaderLabel), "runtime scheduler group visible");
+                        TestAssert.True(ContainsGroupBox(window, LocalizedStrings.MovementCategoryLabel), "movement group visible");
+                        TestAssert.True(ContainsGroupBox(window, LocalizedStrings.IdleFadeCategoryLabel), "idle fade group visible");
+
+                        TestGroupPosition(window, LocalizedStrings.PredictionCategoryLabel, 0, 0, "prediction group position");
+                        TestGroupPosition(window, LocalizedStrings.RuntimeSchedulerHeaderLabel, 1, 0, "runtime scheduler group position");
+                        TestGroupPosition(window, LocalizedStrings.MovementCategoryLabel, 0, 1, "movement group position");
+                        TestGroupPosition(window, LocalizedStrings.IdleFadeCategoryLabel, 1, 1, "idle fade group position");
+                    }
+                }
+                finally
+                {
+                    DeleteDirectory(directory);
+                }
+            });
+        }
+
+        private static bool ContainsGroupBox(Control parent, string text)
+        {
+            return FindGroupBox(parent, text) != null;
+        }
+
+        private static void TestGroupPosition(Control parent, string text, int expectedColumn, int expectedRow, string message)
+        {
+            GroupBox groupBox = FindGroupBox(parent, text);
+            if (groupBox == null)
+            {
+                throw new InvalidOperationException("Group box not found: " + text);
+            }
+
+            TableLayoutPanel layout = groupBox.Parent as TableLayoutPanel;
+            if (layout == null)
+            {
+                throw new InvalidOperationException("Group box parent is not a table layout: " + text);
+            }
+
+            TableLayoutPanelCellPosition position = layout.GetPositionFromControl(groupBox);
+            TestAssert.Equal(expectedColumn, position.Column, message + " column");
+            TestAssert.Equal(expectedRow, position.Row, message + " row");
+        }
+
+        private static GroupBox FindGroupBox(Control parent, string text)
+        {
+            foreach (Control child in parent.Controls)
+            {
+                GroupBox groupBox = child as GroupBox;
+                if (groupBox != null && groupBox.Text == text)
+                {
+                    return groupBox;
+                }
+
+                GroupBox nested = FindGroupBox(child, text);
+                if (nested != null)
+                {
+                    return nested;
+                }
+            }
+
+            return null;
         }
 
         private static T GetField<T>(object instance, string fieldName)

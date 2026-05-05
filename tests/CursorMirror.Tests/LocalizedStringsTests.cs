@@ -25,6 +25,7 @@ namespace CursorMirror.Tests
                 TestAssert.Equal("Settings", LocalizedStrings.SettingsCommand, "English settings command");
                 TestAssert.Equal("Exit Cursor Mirror", LocalizedStrings.ExitCursorMirrorCommand, "English settings exit command");
                 TestAssert.Equal("Predict cursor position", LocalizedStrings.PredictiveOverlayPositioningLabel, "English prediction label");
+                TestAssert.Equal("Prediction", LocalizedStrings.PredictionCategoryLabel, "English prediction category");
                 TestAssert.Equal("Prediction model", LocalizedStrings.PredictionModelLabel, "English prediction model label");
                 TestAssert.Equal("Target offset (ms)", LocalizedStrings.PredictionTargetOffsetLabel, "English prediction target offset label");
                 TestAssert.Equal("Post-stop brake (experimental)", LocalizedStrings.DistilledMlpPostStopBrakeLabel, "English post-stop brake label");
@@ -41,9 +42,12 @@ namespace CursorMirror.Tests
                 TestAssert.Equal("DistilledMLP", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelDistilledMlp), "English distilled MLP option");
                 TestAssert.Equal("RuntimeEventSafeMLP", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelRuntimeEventSafeMlp), "English runtime event-safe MLP option");
                 TestAssert.Equal("Prediction gain (%)", LocalizedStrings.PredictionGainLabel, "English prediction gain label");
+                TestAssert.Equal("Movement translucency", LocalizedStrings.MovementCategoryLabel, "English movement category");
                 TestAssert.Equal("Fade when idle", LocalizedStrings.IdleFadeLabel, "English idle fade label");
+                TestAssert.Equal("Idle fade", LocalizedStrings.IdleFadeCategoryLabel, "English idle fade category");
                 TestAssert.Equal("Idle opacity (%)", LocalizedStrings.IdleOpacityLabel, "English idle opacity label");
-                TestAssert.Equal("Idle fade delay (s)", LocalizedStrings.IdleFadeDelayLabel, "English idle fade delay label");
+                TestAssert.Equal("Fade duration (ms)", LocalizedStrings.IdleFadeDurationLabel, "English idle fade duration label");
+                TestAssert.Equal("Idle delay (ms)", LocalizedStrings.IdleFadeDelayLabel, "English idle fade delay label");
                 TestAssert.Equal("Version: v1.2.0+20260501.abcdef123456", LocalizedStrings.VersionMenuText("v1.2.0+20260501.abcdef123456"), "English version menu text");
                 TestAssert.Equal("Update: up to date (v1.2.0)", LocalizedStrings.UpdateStatusUpToDate("v1.2.0"), "English up-to-date status");
                 TestAssert.Equal("Update: 2 release(s) behind (v1.3.0)", LocalizedStrings.UpdateStatusBehind(2, "v1.3.0"), "English behind status");
@@ -93,6 +97,7 @@ namespace CursorMirror.Tests
                 TestAssert.Equal("設定", LocalizedStrings.SettingsCommand, "Japanese settings command");
                 TestAssert.Equal("Cursor Mirror を終了", LocalizedStrings.ExitCursorMirrorCommand, "Japanese settings exit command");
                 TestAssert.Equal("カーソル位置を予測する", LocalizedStrings.PredictiveOverlayPositioningLabel, "Japanese prediction label");
+                TestAssert.Equal("予測", LocalizedStrings.PredictionCategoryLabel, "Japanese prediction category");
                 TestAssert.Equal("予測モデル", LocalizedStrings.PredictionModelLabel, "Japanese prediction model label");
                 TestAssert.Equal("ターゲット補正 (ms)", LocalizedStrings.PredictionTargetOffsetLabel, "Japanese prediction target offset label");
                 TestAssert.Equal("停止直後ブレーキ（実験）", LocalizedStrings.DistilledMlpPostStopBrakeLabel, "Japanese post-stop brake label");
@@ -109,9 +114,12 @@ namespace CursorMirror.Tests
                 TestAssert.Equal("DistilledMLP", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelDistilledMlp), "Japanese distilled MLP option");
                 TestAssert.Equal("RuntimeEventSafeMLP", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelRuntimeEventSafeMlp), "Japanese runtime event-safe MLP option");
                 TestAssert.Equal("予測ゲイン (%)", LocalizedStrings.PredictionGainLabel, "Japanese prediction gain label");
+                TestAssert.Equal("移動中の半透明化", LocalizedStrings.MovementCategoryLabel, "Japanese movement category");
                 TestAssert.Equal("停止後にフェードする", LocalizedStrings.IdleFadeLabel, "Japanese idle fade label");
+                TestAssert.Equal("停止後のフェード", LocalizedStrings.IdleFadeCategoryLabel, "Japanese idle fade category");
                 TestAssert.Equal("停止後の不透明度 (%)", LocalizedStrings.IdleOpacityLabel, "Japanese idle opacity label");
-                TestAssert.Equal("停止後フェード待機 (秒)", LocalizedStrings.IdleFadeDelayLabel, "Japanese idle fade delay label");
+                TestAssert.Equal("フェード時間 (ms)", LocalizedStrings.IdleFadeDurationLabel, "Japanese idle fade duration label");
+                TestAssert.Equal("待機時間 (ms)", LocalizedStrings.IdleFadeDelayLabel, "Japanese idle fade delay label");
                 TestAssert.Equal("バージョン: v1.2.0+20260501.abcdef123456", LocalizedStrings.VersionMenuText("v1.2.0+20260501.abcdef123456"), "Japanese version menu text");
                 TestAssert.Equal("更新: 最新です (v1.2.0)", LocalizedStrings.UpdateStatusUpToDate("v1.2.0"), "Japanese up-to-date status");
                 TestAssert.Equal("更新: 2 リリース遅れ (v1.3.0)", LocalizedStrings.UpdateStatusBehind(2, "v1.3.0"), "Japanese behind status");

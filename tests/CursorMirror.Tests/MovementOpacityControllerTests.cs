@@ -17,6 +17,7 @@ namespace CursorMirror.Tests
             suite.Add("COT-MOU-12", OpacityDoesNotAffectPlacement);
             suite.Add("COT-MOU-26", IdleFadeAfterStop);
             suite.Add("COT-MOU-27", MovementRestoresOpacityFromIdleFade);
+            suite.Add("COT-MOU-57", IdleFadeUsesDedicatedDuration);
         }
 
         // Movement translucency default enabled [COT-MOU-5]
@@ -135,6 +136,7 @@ namespace CursorMirror.Tests
         {
             CursorMirrorSettings settings = TestSettings();
             settings.IdleFadeEnabled = true;
+            settings.IdleFadeDurationMilliseconds = 100;
             settings.IdleFadeDelayMilliseconds = 3000;
             settings.IdleOpacityPercent = 0;
             MovementOpacityController controller = new MovementOpacityController(settings);
@@ -152,6 +154,7 @@ namespace CursorMirror.Tests
         {
             CursorMirrorSettings settings = TestSettings();
             settings.IdleFadeEnabled = true;
+            settings.IdleFadeDurationMilliseconds = 100;
             settings.IdleFadeDelayMilliseconds = 3000;
             settings.IdleOpacityPercent = 0;
             MovementOpacityController controller = new MovementOpacityController(settings);
@@ -164,6 +167,23 @@ namespace CursorMirror.Tests
             TestAssert.Equal(0, controller.GetOpacityPercent(3200), "restore start opacity");
             TestAssert.Equal(25, controller.GetOpacityPercent(3250), "restore half opacity");
             TestAssert.Equal(50, controller.GetOpacityPercent(3300), "restore moving opacity");
+        }
+
+        // Idle fade uses a dedicated duration [COT-MOU-57]
+        private static void IdleFadeUsesDedicatedDuration()
+        {
+            CursorMirrorSettings settings = TestSettings();
+            settings.FadeDurationMilliseconds = 100;
+            settings.IdleFadeEnabled = true;
+            settings.IdleFadeDurationMilliseconds = 200;
+            settings.IdleFadeDelayMilliseconds = 3000;
+            settings.IdleOpacityPercent = 0;
+            MovementOpacityController controller = new MovementOpacityController(settings);
+
+            controller.RecordMovement(0);
+
+            TestAssert.Equal(50, controller.GetOpacityPercent(3100), "idle fade uses dedicated midpoint");
+            TestAssert.Equal(0, controller.GetOpacityPercent(3200), "idle fade uses dedicated target time");
         }
 
         private static CursorMirrorSettings TestSettings()
