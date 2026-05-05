@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "cursor-prediction-v24-step-00-inventory/1",
+  "status": "in-progress",
+  "currentProductModel": {
+    "name": "SmoothPredictor",
+    "inputFeatures": 25,
+    "hiddenUnits": 32,
+    "outputs": 2,
+    "estimatedMacs": 864,
+    "parameterCount": 898,
+    "runtimeAllocation": "no per-call array allocation in normal evaluation"
+  },
+  "reusablePocArtifacts": {
+    "runtimeOnlyHarness": "poc/cursor-prediction-v21/step-07-runtime-only-correction/",
+    "asymmetricLossReport": "poc/cursor-prediction-v20/step-01-asymmetric-loss-validation/report.md",
+    "kernelBench": "src/CursorMirror.KernelBench/"
+  },
+  "initialDecision": {
+    "firstExperiment": "horizon and target-correction audit",
+    "scalarReference": true,
+    "nativeSimdDeferredUntilModelSizeJustifiesIt": true
+  }
+}

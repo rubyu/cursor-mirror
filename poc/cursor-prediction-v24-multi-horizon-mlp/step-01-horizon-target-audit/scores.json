@@ -1,0 +1,119 @@
+{
+    "schemaVersion":  "cursor-prediction-v24-step-01-horizon-target-audit/1",
+    "generatedAtUtc":  "2026-05-05T03:34:45.3979994Z",
+    "sourceFiles":  {
+                        "model":  "src/CursorMirror.Core/SmoothPredictorModel.g.cs",
+                        "settings":  "src/CursorMirror.Core/CursorMirrorSettings.cs",
+                        "predictor":  "src/CursorMirror.Core/DwmAwareCursorPositionPredictor.cs",
+                        "v21Scores":  "poc/cursor-prediction-v21/step-07-runtime-only-correction/scores.json"
+                    },
+    "currentModel":  {
+                         "name":  "SmoothPredictor",
+                         "featureCount":  25,
+                         "hidden":  32,
+                         "estimatedMacs":  864,
+                         "parameterCount":  898,
+                         "horizonFeature":  {
+                                                "rawMean":  -0.023009097,
+                                                "rawStd":  0.05,
+                                                "approximateMeanMilliseconds":  -0.383486,
+                                                "approximateStdMilliseconds":  0.833335,
+                                                "note":  "The model normalizes horizonMs / 16.67. This estimates the training horizon distribution from generated model normalization constants."
+                                            }
+                     },
+    "targetCorrection":  {
+                             "displayOriginMilliseconds":  8,
+                             "defaultDisplayMilliseconds":  0,
+                             "defaultInternalMilliseconds":  8,
+                             "displayMinimumMilliseconds":  -32,
+                             "displayMaximumMilliseconds":  32,
+                             "internalMinimumMilliseconds":  -24,
+                             "internalMaximumMilliseconds":  40,
+                             "sweep":  [
+                                           {
+                                               "displayOffsetMilliseconds":  -32,
+                                               "internalOffsetMilliseconds":  -24,
+                                               "relativeToDefaultMilliseconds":  -32,
+                                               "approximateTrainingStdShift":  -38.4
+                                           },
+                                           {
+                                               "displayOffsetMilliseconds":  -24,
+                                               "internalOffsetMilliseconds":  -16,
+                                               "relativeToDefaultMilliseconds":  -24,
+                                               "approximateTrainingStdShift":  -28.8
+                                           },
+                                           {
+                                               "displayOffsetMilliseconds":  -16,
+                                               "internalOffsetMilliseconds":  -8,
+                                               "relativeToDefaultMilliseconds":  -16,
+                                               "approximateTrainingStdShift":  -19.2
+                                           },
+                                           {
+                                               "displayOffsetMilliseconds":  -8,
+                                               "internalOffsetMilliseconds":  0,
+                                               "relativeToDefaultMilliseconds":  -8,
+                                               "approximateTrainingStdShift":  -9.6
+                                           },
+                                           {
+                                               "displayOffsetMilliseconds":  0,
+                                               "internalOffsetMilliseconds":  8,
+                                               "relativeToDefaultMilliseconds":  0,
+                                               "approximateTrainingStdShift":  0
+                                           },
+                                           {
+                                               "displayOffsetMilliseconds":  8,
+                                               "internalOffsetMilliseconds":  16,
+                                               "relativeToDefaultMilliseconds":  8,
+                                               "approximateTrainingStdShift":  9.6
+                                           },
+                                           {
+                                               "displayOffsetMilliseconds":  16,
+                                               "internalOffsetMilliseconds":  24,
+                                               "relativeToDefaultMilliseconds":  16,
+                                               "approximateTrainingStdShift":  19.2
+                                           },
+                                           {
+                                               "displayOffsetMilliseconds":  24,
+                                               "internalOffsetMilliseconds":  32,
+                                               "relativeToDefaultMilliseconds":  24,
+                                               "approximateTrainingStdShift":  28.8
+                                           },
+                                           {
+                                               "displayOffsetMilliseconds":  32,
+                                               "internalOffsetMilliseconds":  40,
+                                               "relativeToDefaultMilliseconds":  32,
+                                               "approximateTrainingStdShift":  38.4
+                                           }
+                                       ]
+                         },
+    "productRuntimeStructure":  {
+                                    "horizonIsInputFeature":  true,
+                                    "runtimeTargetDisplacementUsesHorizon":  true,
+                                    "rejectsHorizonOver125PercentRefreshBeforeCap":  true,
+                                    "horizonCapAppliedAfter125PercentReject":  true
+                                },
+    "v21SmoothPredictorSummary":  {
+                                      "seedCount":  3,
+                                      "objectiveMean":  1261.169213,
+                                      "objectiveWorst":  1319.168142,
+                                      "normalVisualP95Mean":  0.93442,
+                                      "normalVisualP99Mean":  2.141065,
+                                      "peakLeadMaxWorst":  0.311208,
+                                      "returnMotionMaxWorst":  0.403024,
+                                      "futureLeadP99Worst":  0.914915,
+                                      "futureLagP95Worst":  0.035877
+                                  },
+    "v21ProductReference":  {
+                                "normalVisualP95":  0.941407,
+                                "normalVisualP99":  2.161728,
+                                "peakLeadMax":  3,
+                                "returnMotionMax":  3.204001,
+                                "futureLeadP99":  0.9522
+                            },
+    "findings":  [
+                     "The model is horizon-aware structurally, but v21 scores do not prove robustness across the full target-correction range.",
+                     "The generated normalizer suggests the trained horizon distribution is narrow; display target correction shifts of +/-32 ms are many standard deviations away from the model\u0027s apparent training center.",
+                     "Because horizon over 1.25 refresh periods is rejected before the horizon cap is applied, large positive target correction can increase hold fallback risk rather than merely selecting a capped prediction.",
+                     "The next step should build multi-horizon labels and evaluate by horizon bucket, not only by aggregate deployment gates."
+                 ]
+}
