@@ -36,6 +36,7 @@ namespace CursorMirror.Tests
                 TestAssert.Equal("Deferral window (us)", LocalizedStrings.RuntimeMessageDeferralWindowLabel, "English message deferral window label");
                 TestAssert.Equal("MMCSS thread profile", LocalizedStrings.RuntimeThreadLatencyProfileLabel, "English MMCSS label");
                 TestAssert.Equal("ConstantVelocity (default)", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelConstantVelocity), "English constant velocity option");
+                TestAssert.Equal("ConstantVelocityHighSpeedSwitch", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelConstantVelocityHighSpeedSwitch), "English constant velocity high-speed switch option");
                 TestAssert.Equal("LeastSquares", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelLeastSquares), "English least-squares option");
                 TestAssert.Equal("SmoothPredictor", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelSmoothPredictor), "English smooth predictor option");
                 TestAssert.Equal("Prediction gain (%)", LocalizedStrings.PredictionGainLabel, "English prediction gain label");
@@ -105,6 +106,7 @@ namespace CursorMirror.Tests
                 TestAssert.Equal("遅延幅 (us)", LocalizedStrings.RuntimeMessageDeferralWindowLabel, "Japanese message deferral window label");
                 TestAssert.Equal("MMCSS スレッドプロファイル", LocalizedStrings.RuntimeThreadLatencyProfileLabel, "Japanese MMCSS label");
                 TestAssert.Equal("ConstantVelocity (default)", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelConstantVelocity), "Japanese constant velocity option");
+                TestAssert.Equal("ConstantVelocityHighSpeedSwitch", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelConstantVelocityHighSpeedSwitch), "Japanese constant velocity high-speed switch option");
                 TestAssert.Equal("LeastSquares", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelLeastSquares), "Japanese least-squares option");
                 TestAssert.Equal("SmoothPredictor", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelSmoothPredictor), "Japanese smooth predictor option");
                 TestAssert.Equal("予測ゲイン (%)", LocalizedStrings.PredictionGainLabel, "Japanese prediction gain label");

@@ -475,6 +475,11 @@ namespace CursorMirror
 
         public static string PredictionModelName(int predictionModel)
         {
+            if (predictionModel == CursorMirrorSettings.DwmPredictionModelConstantVelocityHighSpeedSwitch)
+            {
+                return "ConstantVelocityHighSpeedSwitch";
+            }
+
             if (predictionModel == CursorMirrorSettings.DwmPredictionModelLeastSquares)
             {
                 return "LeastSquares";

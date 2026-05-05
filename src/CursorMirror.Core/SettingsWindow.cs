@@ -362,6 +362,7 @@ namespace CursorMirror
             {
                 comboBox.Items.Clear();
                 comboBox.Items.Add(LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelConstantVelocity));
+                comboBox.Items.Add(LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelConstantVelocityHighSpeedSwitch));
                 comboBox.Items.Add(LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelLeastSquares));
                 comboBox.Items.Add(LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelSmoothPredictor));
                 comboBox.SelectedIndex = PredictionModelIndex(selectedModel);
@@ -376,10 +377,15 @@ namespace CursorMirror
         {
             if (comboBox.SelectedIndex == 1)
             {
-                return CursorMirrorSettings.DwmPredictionModelLeastSquares;
+                return CursorMirrorSettings.DwmPredictionModelConstantVelocityHighSpeedSwitch;
             }
 
             if (comboBox.SelectedIndex == 2)
+            {
+                return CursorMirrorSettings.DwmPredictionModelLeastSquares;
+            }
+
+            if (comboBox.SelectedIndex == 3)
             {
                 return CursorMirrorSettings.DwmPredictionModelSmoothPredictor;
             }
@@ -389,14 +395,19 @@ namespace CursorMirror
 
         private static int PredictionModelIndex(int model)
         {
-            if (model == CursorMirrorSettings.DwmPredictionModelLeastSquares)
+            if (model == CursorMirrorSettings.DwmPredictionModelConstantVelocityHighSpeedSwitch)
             {
                 return 1;
             }
 
-            if (CursorMirrorSettings.NormalizeDwmPredictionModel(model) == CursorMirrorSettings.DwmPredictionModelSmoothPredictor)
+            if (model == CursorMirrorSettings.DwmPredictionModelLeastSquares)
             {
                 return 2;
+            }
+
+            if (CursorMirrorSettings.NormalizeDwmPredictionModel(model) == CursorMirrorSettings.DwmPredictionModelSmoothPredictor)
+            {
+                return 3;
             }
 
             return 0;

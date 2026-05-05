@@ -370,6 +370,10 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that idle fade uses its configured fade duration rather than the movement-translucency fade duration.
   Refs: Sections 4.4.1.1, 6.1.
 
+- COT-MOU-58 - ConstantVelocityHighSpeedSwitch uses the longer CV window at lower speed
+  Verify that the selectable `ConstantVelocityHighSpeedSwitch` model can use the longer constant-velocity window for lower-speed movement while preserving the default `ConstantVelocity` model separately.
+  Refs: Section 4.4.2.
+
 #### A.4.T Tray and Application Lifetime
 ##### Unit
 - COT-MTU-1 - Tray icon created

@@ -183,8 +183,11 @@ namespace CursorMirror.Tests
             oldExperimentalModel.DwmPredictionModel = 2;
             CursorMirrorSettings oldDistilledModel = CursorMirrorSettings.Default();
             oldDistilledModel.DwmPredictionModel = 3;
+            CursorMirrorSettings constantVelocityHighSpeedSwitch = CursorMirrorSettings.Default();
+            constantVelocityHighSpeedSwitch.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelConstantVelocityHighSpeedSwitch;
             TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelSmoothPredictor, oldExperimentalModel.Normalize().DwmPredictionModel, "obsolete experimental model migration");
             TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelSmoothPredictor, oldDistilledModel.Normalize().DwmPredictionModel, "obsolete distilled model migration");
+            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocityHighSpeedSwitch, constantVelocityHighSpeedSwitch.Normalize().DwmPredictionModel, "constant velocity high-speed switch model preserved");
         }
 
         // Settings serialization round trip [COT-MSU-4]

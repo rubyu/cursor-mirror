@@ -33,6 +33,7 @@ namespace CursorMirror
         public const int DwmPredictionModelConstantVelocity = 0;
         public const int DwmPredictionModelLeastSquares = 1;
         public const int DwmPredictionModelSmoothPredictor = 4;
+        public const int DwmPredictionModelConstantVelocityHighSpeedSwitch = 5;
         public const int DefaultDwmPredictionModel = DwmPredictionModelConstantVelocity;
         public const int DwmPredictionTargetOffsetDisplayOriginMilliseconds = 8;
         public const int DefaultDwmPredictionTargetOffsetDisplayMilliseconds = 0;
@@ -291,7 +292,8 @@ namespace CursorMirror
         {
             if (predictionModel == DwmPredictionModelConstantVelocity ||
                 predictionModel == DwmPredictionModelLeastSquares ||
-                predictionModel == DwmPredictionModelSmoothPredictor)
+                predictionModel == DwmPredictionModelSmoothPredictor ||
+                predictionModel == DwmPredictionModelConstantVelocityHighSpeedSwitch)
             {
                 return predictionModel;
             }

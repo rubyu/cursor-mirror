@@ -294,6 +294,9 @@ namespace CursorMirror.Tests
             CalibratorRunOptions smoothOptions = CalibratorRunOptions.FromArguments(new[] { "--dwm-prediction-model", "SmoothPredictor" });
             TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelSmoothPredictor, smoothOptions.DwmPredictionModel.Value, "SmoothPredictor prediction model option");
 
+            CalibratorRunOptions constantVelocitySwitchOptions = CalibratorRunOptions.FromArguments(new[] { "--dwm-prediction-model", "cv-high-speed-switch" });
+            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocityHighSpeedSwitch, constantVelocitySwitchOptions.DwmPredictionModel.Value, "ConstantVelocityHighSpeedSwitch prediction model option");
+
             CalibratorRunOptions oldAliasOptions = CalibratorRunOptions.FromArguments(new[] { "--dwm-prediction-model", "RuntimeEventSafeMLP" });
             TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelSmoothPredictor, oldAliasOptions.DwmPredictionModel.Value, "old runtime event-safe MLP alias migrates to SmoothPredictor");
 

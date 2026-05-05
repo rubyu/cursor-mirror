@@ -17,6 +17,10 @@ namespace CursorMirror
         private const int ConstantVelocityHighSpeedWindowSamples = 18;
         private const double ConstantVelocityHighSpeedMinimumEfficiencyPercent = 75.0;
         private const double ConstantVelocityHighSpeedMinimumNetPixels = 160.0;
+        private const double ConstantVelocityHighSpeedSwitchMinimumPixelsPerSecond = 500.0;
+        private const double ConstantVelocityHighSpeedSwitchStaticMaximumPixelsPerSecond = 1.0;
+        private const int ConstantVelocityHighSpeedSwitchRecentSegmentSamples = 6;
+        private const int ConstantVelocityHighSpeedSwitchLongWindowSamples = 12;
         private const int HistoryCapacity = 64;
         private const int LeastSquaresDefaultHorizonCapMilliseconds = 8;
         private const int LeastSquaresWindowMilliseconds = 72;
@@ -466,6 +470,24 @@ namespace CursorMirror
             ClampVector(ref dxConstantVelocity, ref dyConstantVelocity, maximumPredictionPixels);
             double predictedX = sample.Position.X + dxConstantVelocity;
             double predictedY = sample.Position.Y + dyConstantVelocity;
+            if (_predictionModel == CursorMirrorSettings.DwmPredictionModelConstantVelocityHighSpeedSwitch)
+            {
+                double switchDx;
+                double switchDy;
+                if (TryPredictConstantVelocityHighSpeedSwitch(
+                    sample,
+                    horizonTicks,
+                    effectiveGain,
+                    velocityXPerSecond,
+                    velocityYPerSecond,
+                    out switchDx,
+                    out switchDy))
+                {
+                    predictedX = sample.Position.X + switchDx;
+                    predictedY = sample.Position.Y + switchDy;
+                }
+            }
+
             if (_predictionModel == CursorMirrorSettings.DwmPredictionModelSmoothPredictor)
             {
                 float smoothPredictorDx;
@@ -484,6 +506,60 @@ namespace CursorMirror
 
             StoreSample(sample, velocityXPerSecond, velocityYPerSecond);
             return new PointF((float)predictedX, (float)predictedY);
+        }
+
+        private bool TryPredictConstantVelocityHighSpeedSwitch(
+            CursorPollSample sample,
+            long horizonTicks,
+            double effectiveGain,
+            double velocityXPerSecond,
+            double velocityYPerSecond,
+            out double displacementX,
+            out double displacementY)
+        {
+            displacementX = 0.0;
+            displacementY = 0.0;
+            if (sample.StopwatchFrequency <= 0 || horizonTicks <= 0)
+            {
+                return false;
+            }
+
+            double speed2 = Magnitude(velocityXPerSecond, velocityYPerSecond);
+            if (speed2 <= ConstantVelocityHighSpeedSwitchStaticMaximumPixelsPerSecond)
+            {
+                return false;
+            }
+
+            double horizonMilliseconds = horizonTicks * 1000.0 / sample.StopwatchFrequency;
+            SmoothPredictorVelocity velocity5;
+            SmoothPredictorVelocity velocity8;
+            SmoothPredictorVelocity velocity12;
+            if (!TryComputeSmoothPredictorVelocity(sample, horizonMilliseconds, 5, out velocity5) ||
+                !TryComputeSmoothPredictorVelocity(sample, horizonMilliseconds, 8, out velocity8) ||
+                !TryComputeSmoothPredictorVelocity(sample, horizonMilliseconds, ConstantVelocityHighSpeedSwitchLongWindowSamples, out velocity12))
+            {
+                return false;
+            }
+
+            double recentHighSpeed = Math.Max(velocity5.Speed, Math.Max(velocity8.Speed, velocity12.Speed));
+            double recentSegmentMaxSpeed;
+            if (TryComputeSmoothPredictorRecentSegmentMaxSpeed(
+                sample,
+                ConstantVelocityHighSpeedSwitchRecentSegmentSamples,
+                out recentSegmentMaxSpeed))
+            {
+                recentHighSpeed = Math.Max(recentHighSpeed, recentSegmentMaxSpeed);
+            }
+
+            if (speed2 >= ConstantVelocityHighSpeedSwitchMinimumPixelsPerSecond ||
+                recentHighSpeed >= ConstantVelocityHighSpeedSwitchMinimumPixelsPerSecond)
+            {
+                return false;
+            }
+
+            displacementX = velocity12.DisplacementX * effectiveGain;
+            displacementY = velocity12.DisplacementY * effectiveGain;
+            return true;
         }
 
         private bool TryEvaluateSmoothPredictorPrediction(

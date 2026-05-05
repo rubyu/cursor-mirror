@@ -35,6 +35,7 @@ namespace CursorMirror.Tests
             suite.Add("COT-MOU-49", ConstantVelocityHighSpeedLinearMotionUsesWiderCap);
             suite.Add("COT-MOU-53", DwmSmoothPredictorPredictionIsSelectable);
             suite.Add("COT-MOU-54", DwmSmoothPredictorStaticAndStopGuardsSnapToExactPosition);
+            suite.Add("COT-MOU-58", ConstantVelocityHighSpeedSwitchUsesLongWindowAtLowerSpeed);
             suite.Add("COT-MOU-55", PollingSkipsOverlayMoveWhenLocationIsUnchanged);
             suite.Add("COT-MRU-1", HookCallbackExceptionContainment);
             suite.Add("COT-MDU-3", DispatcherMarshalsToUiThread);
@@ -716,6 +717,31 @@ namespace CursorMirror.Tests
             predicted = predictor.PredictRounded(stopSample, counters, 276, 16);
 
             TestAssert.Equal(new Point(450, 0), predicted, "SmoothPredictor stop latch must snap to exact position after an abrupt stop");
+        }
+
+        // ConstantVelocityHighSpeedSwitch lower-speed motion uses the longer CV window [COT-MOU-58]
+        private static void ConstantVelocityHighSpeedSwitchUsesLongWindowAtLowerSpeed()
+        {
+            CursorMirrorSettings settings = CursorMirrorSettings.Default();
+            settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelConstantVelocityHighSpeedSwitch;
+            settings.DwmPredictionHorizonCapMilliseconds = 0;
+            settings.DwmPredictionTargetOffsetMilliseconds = 0;
+            DwmAwareCursorPositionPredictor predictor = new DwmAwareCursorPositionPredictor(100);
+            predictor.ApplySettings(settings);
+            CursorPredictionCounters counters = new CursorPredictionCounters();
+            Point predicted = Point.Empty;
+
+            for (int i = 0; i <= 11; i++)
+            {
+                long timestamp = 100 + (i * 10);
+                CursorPollSample sample = PollSample(new Point(i * 2, 0), timestamp, true, timestamp + 16, 16);
+                predicted = predictor.PredictRounded(sample, counters, timestamp + 16, 16);
+            }
+
+            CursorPollSample deceleratingSample = PollSample(new Point(23, 0), 220, true, 236, 16);
+            predicted = predictor.PredictRounded(deceleratingSample, counters, 236, 16);
+
+            TestAssert.Equal(new Point(26, 0), predicted, "lower-speed switch model should use the longer ConstantVelocity window");
         }
 
         // Same-location polling should not call the layered-window move path [COT-MOU-55]

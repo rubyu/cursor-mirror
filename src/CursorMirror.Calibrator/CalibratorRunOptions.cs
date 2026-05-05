@@ -453,6 +453,18 @@ namespace CursorMirror.Calibrator
                 return true;
             }
 
+            if (normalized == "constantvelocityhighspeedswitch" ||
+                normalized == "constant-velocity-high-speed-switch" ||
+                normalized == "constant_velocity_high_speed_switch" ||
+                normalized == "cv-high-speed-switch" ||
+                normalized == "cv_high_speed_switch" ||
+                normalized == "switch-highspeed-cv2" ||
+                normalized == "switch_highspeed_cv2")
+            {
+                model = CursorMirrorSettings.DwmPredictionModelConstantVelocityHighSpeedSwitch;
+                return true;
+            }
+
             if (int.TryParse(value, out model))
             {
                 model = CursorMirrorSettings.NormalizeDwmPredictionModel(model);
