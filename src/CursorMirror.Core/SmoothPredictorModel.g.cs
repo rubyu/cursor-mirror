@@ -2,6 +2,7 @@
 // Candidate: mlp_h32_event_safe_runtime_latch_cap0p35
 // Seed: 2205
 using System;
+using System.Runtime.CompilerServices;
 
 namespace CursorMirror
 {
@@ -12,6 +13,10 @@ namespace CursorMirror
         public const int Hidden = 32;
         public const int EstimatedMacs = 864;
         public const int ParameterCount = 898;
+        private const float TanhTableMinimum = -5.0f;
+        private const float TanhTableMaximum = 5.0f;
+        private const float TanhTableInverseStep = 512.0f;
+        private const int TanhTableSize = 5121;
         private static readonly float[] FeatureMean = new float[] {
             -0.023009097f, 0f, 0f, 0.059912924f, 0f, 0f, 0.058129095f, 0f,
             0f, 0.056823995f, 0f, 0f, 0.05587904f, 0f, 0f, 0.05508849f,
@@ -24,6 +29,8 @@ namespace CursorMirror
             0.14215814f, 0.57078457f, 0.36364886f, 0.292854f, 0.3169284f, 0.05f, 0.09147808f, 0.05f,
             0.05f
         };
+        private static readonly float[] FeatureScale = BuildFeatureScale();
+        private static readonly float[] TanhTable = BuildTanhTable();
         private static readonly float[] W0 = new float[] {
             -0.16148596f, -0.19631402f, -0.0035994945f, 0.116206996f, -0.18042095f, 0.13157994f, -0.17817551f, -0.10716632f,
             -0.06394973f, 0.19537804f, 0.17423767f, -0.17007346f, -0.02348162f, -0.18245292f, 0.16753966f, -0.095716365f,
@@ -147,7 +154,6 @@ namespace CursorMirror
         };
 
         private readonly float[] _features = new float[FeatureCount];
-        private readonly float[] _hidden = new float[Hidden];
 
         public bool TryEvaluate(float[] features, out float dx, out float dy)
         {
@@ -160,34 +166,94 @@ namespace CursorMirror
 
             for (int i = 0; i < FeatureCount; i++)
             {
-                _features[i] = (features[i] - FeatureMean[i]) / SafeStd(FeatureStd[i]);
-            }
-
-            for (int h = 0; h < Hidden; h++)
-            {
-                float z = B0[h];
-                int offset = h * FeatureCount;
-                for (int i = 0; i < FeatureCount; i++)
-                {
-                    z += W0[offset + i] * _features[i];
-                }
-                _hidden[h] = (float)Math.Tanh(z);
+                _features[i] = (features[i] - FeatureMean[i]) * FeatureScale[i];
             }
 
             dx = B1[0];
             dy = B1[1];
             for (int h = 0; h < Hidden; h++)
             {
-                dx += W1[h] * _hidden[h];
-                dy += W1[Hidden + h] * _hidden[h];
+                int offset = h * FeatureCount;
+                float hidden = FastTanh(DotHidden(offset, h));
+                dx += W1[h] * hidden;
+                dy += W1[Hidden + h] * hidden;
             }
 
             return IsFinite(dx) && IsFinite(dy);
         }
 
-        private static float SafeStd(float value)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private float DotHidden(int offset, int hiddenIndex)
         {
-            return Math.Abs(value) < 0.000001f ? 1.0f : value;
+            return B0[hiddenIndex] +
+                (W0[offset] * _features[0]) +
+                (W0[offset + 1] * _features[1]) +
+                (W0[offset + 2] * _features[2]) +
+                (W0[offset + 3] * _features[3]) +
+                (W0[offset + 4] * _features[4]) +
+                (W0[offset + 5] * _features[5]) +
+                (W0[offset + 6] * _features[6]) +
+                (W0[offset + 7] * _features[7]) +
+                (W0[offset + 8] * _features[8]) +
+                (W0[offset + 9] * _features[9]) +
+                (W0[offset + 10] * _features[10]) +
+                (W0[offset + 11] * _features[11]) +
+                (W0[offset + 12] * _features[12]) +
+                (W0[offset + 13] * _features[13]) +
+                (W0[offset + 14] * _features[14]) +
+                (W0[offset + 15] * _features[15]) +
+                (W0[offset + 16] * _features[16]) +
+                (W0[offset + 17] * _features[17]) +
+                (W0[offset + 18] * _features[18]) +
+                (W0[offset + 19] * _features[19]) +
+                (W0[offset + 20] * _features[20]) +
+                (W0[offset + 21] * _features[21]) +
+                (W0[offset + 22] * _features[22]) +
+                (W0[offset + 23] * _features[23]) +
+                (W0[offset + 24] * _features[24]);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static float FastTanh(float value)
+        {
+            if (value <= TanhTableMinimum)
+            {
+                return -1.0f;
+            }
+
+            if (value >= TanhTableMaximum)
+            {
+                return 1.0f;
+            }
+
+            float position = (value - TanhTableMinimum) * TanhTableInverseStep;
+            int index = (int)position;
+            float fraction = position - index;
+            return TanhTable[index] + ((TanhTable[index + 1] - TanhTable[index]) * fraction);
+        }
+
+        private static float[] BuildFeatureScale()
+        {
+            float[] scale = new float[FeatureCount];
+            for (int i = 0; i < FeatureCount; i++)
+            {
+                float std = FeatureStd[i];
+                scale[i] = Math.Abs(std) < 0.000001f ? 1.0f : 1.0f / std;
+            }
+
+            return scale;
+        }
+
+        private static float[] BuildTanhTable()
+        {
+            float[] table = new float[TanhTableSize];
+            for (int i = 0; i < table.Length; i++)
+            {
+                float value = TanhTableMinimum + (i / TanhTableInverseStep);
+                table[i] = (float)Math.Tanh(value);
+            }
+
+            return table;
         }
 
         private static bool IsFinite(float value)
