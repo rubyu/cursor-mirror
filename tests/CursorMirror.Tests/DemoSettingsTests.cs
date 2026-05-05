@@ -26,7 +26,7 @@ namespace CursorMirror.Tests
             TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, settings.CursorSettings.DwmPredictionModel, "default prediction model");
             TestAssert.Equal(100, settings.CursorSettings.PredictionGainPercent, "default prediction gain");
             TestAssert.True(settings.CursorSettings.IdleFadeEnabled, "default idle fade enabled");
-            TestAssert.Equal(80, settings.CursorSettings.IdleFadeDurationMilliseconds, "default idle fade duration");
+            TestAssert.Equal(300, settings.CursorSettings.IdleFadeDurationMilliseconds, "default idle fade duration");
 
             settings.Language = "bad";
             settings.DisplayModeIndex = 99;

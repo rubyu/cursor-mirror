@@ -29,13 +29,13 @@ namespace CursorMirror.Tests
 
             TestAssert.True(settings.MovementTranslucencyEnabled, "default enabled");
             TestAssert.True(settings.PredictionEnabled, "prediction default enabled");
-            TestAssert.Equal(70, settings.MovingOpacityPercent, "default moving opacity");
-            TestAssert.Equal(80, settings.FadeDurationMilliseconds, "default fade duration");
-            TestAssert.Equal(120, settings.IdleDelayMilliseconds, "default idle delay");
+            TestAssert.Equal(20, settings.MovingOpacityPercent, "default moving opacity");
+            TestAssert.Equal(100, settings.FadeDurationMilliseconds, "default fade duration");
+            TestAssert.Equal(100, settings.IdleDelayMilliseconds, "default idle delay");
             TestAssert.True(settings.IdleFadeEnabled, "default idle fade enabled");
-            TestAssert.Equal(80, settings.IdleFadeDurationMilliseconds, "default idle fade duration");
+            TestAssert.Equal(300, settings.IdleFadeDurationMilliseconds, "default idle fade duration");
             TestAssert.Equal(3000, settings.IdleFadeDelayMilliseconds, "default idle fade delay");
-            TestAssert.Equal(0, settings.IdleOpacityPercent, "default idle opacity");
+            TestAssert.Equal(10, settings.IdleOpacityPercent, "default idle opacity");
             TestAssert.Equal(8, settings.PredictionHorizonMilliseconds, "default prediction horizon");
             TestAssert.Equal(100, settings.PredictionIdleResetMilliseconds, "default prediction idle reset");
             TestAssert.Equal(100, settings.PredictionGainPercent, "default prediction gain");
@@ -55,10 +55,10 @@ namespace CursorMirror.Tests
             TestAssert.Equal(8, settings.DwmPredictionTargetOffsetMilliseconds, "default DWM prediction target offset");
             TestAssert.Equal(0, CursorMirrorSettings.DwmPredictionTargetOffsetToDisplayMilliseconds(settings.DwmPredictionTargetOffsetMilliseconds), "default DWM prediction target offset display");
             TestAssert.True(settings.RuntimeSetWaitableTimerExEnabled, "default runtime set waitable timer ex enabled");
-            TestAssert.Equal(1000, settings.RuntimeFineWaitAdvanceMicroseconds, "default runtime fine wait");
-            TestAssert.Equal(250, settings.RuntimeFineWaitYieldThresholdMicroseconds, "default runtime spin threshold");
-            TestAssert.False(settings.RuntimeMessageDeferralEnabled, "default runtime message deferral disabled");
-            TestAssert.Equal(1000, settings.RuntimeMessageDeferralMicroseconds, "default runtime message deferral window");
+            TestAssert.Equal(2000, settings.RuntimeFineWaitAdvanceMicroseconds, "default runtime fine wait");
+            TestAssert.Equal(100, settings.RuntimeFineWaitYieldThresholdMicroseconds, "default runtime spin threshold");
+            TestAssert.True(settings.RuntimeMessageDeferralEnabled, "default runtime message deferral enabled");
+            TestAssert.Equal(100, settings.RuntimeMessageDeferralMicroseconds, "default runtime message deferral window");
             TestAssert.False(settings.RuntimeThreadLatencyProfileEnabled, "default runtime thread latency profile disabled");
         }
 
@@ -281,7 +281,7 @@ namespace CursorMirror.Tests
                 string restoreFailureMessage;
                 CursorMirrorSettings settings = store.Load(out restoreFailureMessage);
 
-                TestAssert.Equal(70, settings.MovingOpacityPercent, "missing settings default");
+                TestAssert.Equal(20, settings.MovingOpacityPercent, "missing settings default");
                 TestAssert.True(settings.PredictionEnabled, "missing settings prediction default");
                 TestAssert.Equal(null, restoreFailureMessage, "missing settings is not restore failure");
             }
@@ -303,7 +303,7 @@ namespace CursorMirror.Tests
                 string restoreFailureMessage;
                 CursorMirrorSettings settings = store.Load(out restoreFailureMessage);
 
-                TestAssert.Equal(70, settings.MovingOpacityPercent, "corrupt settings default");
+                TestAssert.Equal(20, settings.MovingOpacityPercent, "corrupt settings default");
                 TestAssert.True(settings.PredictionEnabled, "corrupt settings prediction default");
                 TestAssert.True(!string.IsNullOrWhiteSpace(restoreFailureMessage), "corrupt settings restore failure message");
             }
@@ -334,9 +334,9 @@ namespace CursorMirror.Tests
                 controller.ResetToDefaults();
 
                 TestAssert.Equal(2, applyCount, "reset apply count");
-                TestAssert.Equal(70, controller.CurrentSettings.MovingOpacityPercent, "reset current opacity");
+                TestAssert.Equal(20, controller.CurrentSettings.MovingOpacityPercent, "reset current opacity");
                 TestAssert.True(controller.CurrentSettings.PredictionEnabled, "reset current prediction");
-                TestAssert.Equal(70, applied.MovingOpacityPercent, "reset applied opacity");
+                TestAssert.Equal(20, applied.MovingOpacityPercent, "reset applied opacity");
                 TestAssert.True(applied.PredictionEnabled, "reset applied prediction");
             }
             finally
@@ -410,12 +410,12 @@ namespace CursorMirror.Tests
                 TestAssert.Equal(0, oldFormat.DwmAdaptiveOscillationWindowSamples, "old settings must use DWM adaptive oscillation window default");
                 TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, oldFormat.DwmPredictionModel, "old settings must use DWM prediction model default");
                 TestAssert.Equal(8, oldFormat.DwmPredictionTargetOffsetMilliseconds, "old settings must use DWM prediction target offset default");
-                TestAssert.Equal(80, oldFormat.IdleFadeDurationMilliseconds, "old settings must use idle fade duration default");
+                TestAssert.Equal(300, oldFormat.IdleFadeDurationMilliseconds, "old settings must use idle fade duration default");
                 TestAssert.True(oldFormat.RuntimeSetWaitableTimerExEnabled, "old settings must use runtime set waitable timer ex default");
-                TestAssert.Equal(1000, oldFormat.RuntimeFineWaitAdvanceMicroseconds, "old settings must use runtime fine wait default");
-                TestAssert.Equal(250, oldFormat.RuntimeFineWaitYieldThresholdMicroseconds, "old settings must use runtime spin threshold default");
-                TestAssert.False(oldFormat.RuntimeMessageDeferralEnabled, "old settings must use runtime message deferral default");
-                TestAssert.Equal(1000, oldFormat.RuntimeMessageDeferralMicroseconds, "old settings must use runtime message deferral window default");
+                TestAssert.Equal(2000, oldFormat.RuntimeFineWaitAdvanceMicroseconds, "old settings must use runtime fine wait default");
+                TestAssert.Equal(100, oldFormat.RuntimeFineWaitYieldThresholdMicroseconds, "old settings must use runtime spin threshold default");
+                TestAssert.True(oldFormat.RuntimeMessageDeferralEnabled, "old settings must use runtime message deferral default");
+                TestAssert.Equal(100, oldFormat.RuntimeMessageDeferralMicroseconds, "old settings must use runtime message deferral window default");
                 TestAssert.False(oldFormat.RuntimeThreadLatencyProfileEnabled, "old settings must use runtime thread latency profile default");
 
                 SettingsController controller = new SettingsController(store, loaded, delegate { }, delegate { });

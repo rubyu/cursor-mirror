@@ -411,7 +411,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 #### A.4.S Settings UI and Persistence
 ##### Unit
 - COT-MSU-1 - Settings defaults
-  Verify documented default settings: movement translucency enabled, predictive overlay positioning enabled, prediction model `ConstantVelocity`, prediction gain `100%`, DWM horizon cap `10ms`, DWM prediction target offset display `0ms` with internal `8ms`, idle fade enabled, moving opacity `70%`, fade duration `80ms`, movement idle delay `120ms`, idle fade duration `80ms`, idle fade delay `3000ms`, and idle opacity `0%`.
+  Verify documented default settings: movement translucency enabled, predictive overlay positioning enabled, prediction model `ConstantVelocity`, prediction gain `100%`, DWM horizon cap `10ms`, DWM prediction target offset display `0ms` with internal `8ms`, runtime fine wait `2000us`, runtime spin threshold `100us`, runtime message deferral enabled with a `100us` window, idle fade enabled, moving opacity `20%`, fade duration `100ms`, movement idle delay `100ms`, idle fade duration `300ms`, idle fade delay `3000ms`, and idle opacity `10%`.
   Refs: Sections 4.4.1, 4.4.1.1, 4.4.2, 4.5.1.
 
 - COT-MSU-2 - Moving opacity validation

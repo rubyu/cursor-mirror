@@ -9,12 +9,12 @@ namespace CursorMirror
         public const bool DefaultMovementTranslucencyEnabled = true;
         public const bool DefaultPredictionEnabled = true;
         public const bool DefaultIdleFadeEnabled = true;
-        public const int DefaultMovingOpacityPercent = 70;
-        public const int DefaultFadeDurationMilliseconds = 80;
-        public const int DefaultIdleDelayMilliseconds = 120;
-        public const int DefaultIdleFadeDurationMilliseconds = 80;
+        public const int DefaultMovingOpacityPercent = 20;
+        public const int DefaultFadeDurationMilliseconds = 100;
+        public const int DefaultIdleDelayMilliseconds = 100;
+        public const int DefaultIdleFadeDurationMilliseconds = 300;
         public const int DefaultIdleFadeDelayMilliseconds = 3000;
-        public const int DefaultIdleOpacityPercent = 0;
+        public const int DefaultIdleOpacityPercent = 10;
         public const int DefaultPredictionHorizonMilliseconds = 8;
         public const int DefaultPredictionIdleResetMilliseconds = 100;
         public const int DefaultPredictionGainPercent = 100;
@@ -39,10 +39,10 @@ namespace CursorMirror
         public const int DefaultDwmPredictionTargetOffsetMilliseconds =
             DwmPredictionTargetOffsetDisplayOriginMilliseconds + DefaultDwmPredictionTargetOffsetDisplayMilliseconds;
         public const bool DefaultRuntimeSetWaitableTimerExEnabled = true;
-        public const int DefaultRuntimeFineWaitAdvanceMicroseconds = DwmSynchronizedRuntimeScheduler.FineWaitAdvanceMicroseconds;
-        public const int DefaultRuntimeFineWaitYieldThresholdMicroseconds = DwmSynchronizedRuntimeScheduler.FineWaitYieldThresholdMicroseconds;
-        public const bool DefaultRuntimeMessageDeferralEnabled = false;
-        public const int DefaultRuntimeMessageDeferralMicroseconds = 1000;
+        public const int DefaultRuntimeFineWaitAdvanceMicroseconds = 2000;
+        public const int DefaultRuntimeFineWaitYieldThresholdMicroseconds = 100;
+        public const bool DefaultRuntimeMessageDeferralEnabled = true;
+        public const int DefaultRuntimeMessageDeferralMicroseconds = 100;
         public const bool DefaultRuntimeThreadLatencyProfileEnabled = false;
         private const int ObsoleteDwmPredictionModelExperimentalMlp = 2;
         private const int ObsoleteDwmPredictionModelDistilledMlp = 3;

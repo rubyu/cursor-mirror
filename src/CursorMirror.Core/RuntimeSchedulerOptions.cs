@@ -24,7 +24,9 @@ namespace CursorMirror
                 FallbackIntervalMilliseconds = DwmSynchronizedRuntimeScheduler.FallbackIntervalMilliseconds,
                 FineWaitAdvanceMicroseconds = DwmSynchronizedRuntimeScheduler.FineWaitAdvanceMicroseconds,
                 FineWaitYieldThresholdMicroseconds = DwmSynchronizedRuntimeScheduler.FineWaitYieldThresholdMicroseconds,
-                DeadlineMessageDeferralMicroseconds = 0,
+                DeadlineMessageDeferralMicroseconds = CursorMirrorSettings.DefaultRuntimeMessageDeferralEnabled
+                    ? CursorMirrorSettings.DefaultRuntimeMessageDeferralMicroseconds
+                    : 0,
                 PreferSetWaitableTimerEx = true,
                 UseThreadLatencyProfile = false
             };

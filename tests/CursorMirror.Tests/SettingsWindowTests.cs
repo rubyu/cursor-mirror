@@ -280,11 +280,11 @@ namespace CursorMirror.Tests
                         CheckBox threadLatencyProfileCheckBox = GetField<CheckBox>(window, "_runtimeThreadLatencyProfileCheckBox");
 
                         TestAssert.True(setExCheckBox.Checked, "set waitable timer ex default checked");
-                        TestAssert.Equal(1000, (int)fineWaitInput.Value, "fine wait default displayed");
-                        TestAssert.Equal(250, (int)spinThresholdInput.Value, "spin threshold default displayed");
-                        TestAssert.False(messageDeferralCheckBox.Checked, "message deferral default unchecked");
-                        TestAssert.False(messageDeferralLabel.Enabled, "message deferral label initially disabled");
-                        TestAssert.False(messageDeferralInput.Enabled, "message deferral input initially disabled");
+                        TestAssert.Equal(2000, (int)fineWaitInput.Value, "fine wait default displayed");
+                        TestAssert.Equal(100, (int)spinThresholdInput.Value, "spin threshold default displayed");
+                        TestAssert.True(messageDeferralCheckBox.Checked, "message deferral default checked");
+                        TestAssert.True(messageDeferralLabel.Enabled, "message deferral label initially enabled");
+                        TestAssert.True(messageDeferralInput.Enabled, "message deferral input initially enabled");
                         TestAssert.False(threadLatencyProfileCheckBox.Checked, "thread latency default unchecked");
 
                         setExCheckBox.Checked = false;

@@ -62,9 +62,9 @@ Recommended extended window styles:
 - The enter and exit transitions MUST use linear easing.
 - Overlay position updates MUST remain immediate; easing applies only to opacity.
 - Normal opacity MUST be `100%`.
-- The default moving opacity SHOULD be `70%`.
-- The default fade duration SHOULD be `80ms`.
-- The default idle delay SHOULD be `120ms`.
+- The default moving opacity SHOULD be `20%`.
+- The default fade duration SHOULD be `100ms`.
+- The default idle delay SHOULD be `100ms`.
 - Moving opacity MUST be configurable within `1%` to `100%`.
 - Fade duration MUST be configurable within `0ms` to `300ms`.
 - Idle delay MUST be configurable within `50ms` to `500ms`.
@@ -79,9 +79,9 @@ Recommended extended window styles:
 - After no pointer movement has been observed for the configured idle fade delay, the overlay MUST transition from its current opacity to the configured idle opacity.
 - The idle fade transition MUST use the same linear easing behavior as movement translucency transitions.
 - Idle fade MUST have separate controls for idle opacity, fade duration, and idle delay, matching the shape of movement translucency controls.
-- The default idle fade duration SHOULD be `80ms`.
+- The default idle fade duration SHOULD be `300ms`.
 - The default idle fade delay SHOULD be `3000ms`.
-- The default idle opacity SHOULD be `0%`.
+- The default idle opacity SHOULD be `10%`.
 - Idle opacity MUST be configurable within `0%` to `99%`.
 - Idle fade duration MUST be configurable within `0ms` to `300ms`.
 - Idle fade delay MUST be configurable within `0ms` to `60000ms`.
@@ -149,6 +149,7 @@ Recommended extended window styles:
 - The scheduler SHOULD calculate an absolute wait target for each DWM one-shot wait.
 - When an absolute loop wait target is available, the scheduler SHOULD use the waitable timer until slightly before that target and then use a bounded yield/spin fine wait for the final sub-millisecond segment.
 - The bounded fine wait MUST be short enough to avoid sustained CPU load and MUST preserve the normal waitable timer and `Thread.Sleep` fallback behavior.
+- The default runtime scheduler settings SHOULD use `SetWaitableTimerEx`, `2000us` fine wait, `100us` spin threshold, enabled message deferral, and a `100us` deferral window.
 - The normal overlay hot path SHOULD avoid dispatching through the tray or settings UI thread.
 - The overlay runtime thread SHOULD own the overlay window, cursor polling, prediction, opacity updates, and layered-window movement.
 - The overlay runtime thread SHOULD run the normal DWM-synchronized scheduler tick itself, using a message-aware wait, rather than posting every scheduler tick from a separate scheduler thread to the overlay runtime thread.
