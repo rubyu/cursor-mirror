@@ -80,6 +80,7 @@ namespace CursorMirror.Tests
             TestAssert.True(Contains(names, "rapid-reversal"), "rapid reversal pattern");
             TestAssert.True(Contains(names, "sine-sweep"), "sine sweep pattern");
             TestAssert.True(Contains(names, "short-jitter"), "short jitter pattern");
+            TestAssert.True(Contains(names, "transition-to-start"), "transition to start pattern");
 
             double maximumVelocity = 0;
             double maximumFourMillisecondStep = 0;
@@ -103,10 +104,15 @@ namespace CursorMirror.Tests
 
             CalibrationMotionSample finalSample = suite.GetSample(suite.TotalDurationMilliseconds);
             CalibrationMotionSample afterFinalSample = suite.GetSample(suite.TotalDurationMilliseconds + 1000);
+            CalibrationMotionSample beforeWrapSample = suite.GetSample(suite.TotalDurationMilliseconds - 4);
+            CalibrationMotionSample afterWrapSample = suite.GetSample(suite.TotalDurationMilliseconds + 4);
 
             TestAssert.True(maximumVelocity > 1000, "fast speed range");
             TestAssert.True(maximumFourMillisecondStep <= 25, "default pattern has no discontinuous cursor jumps");
-            TestAssert.Equal(finalSample.ExpectedX, afterFinalSample.ExpectedX, "default pattern clamps after its duration");
+            TestAssert.Equal(suite.GetSample(0).ExpectedX, finalSample.ExpectedX, "default pattern loops back to its start");
+            TestAssert.True(Math.Abs(finalSample.ExpectedX - beforeWrapSample.ExpectedX) <= 25, "default pattern enters loop boundary smoothly");
+            TestAssert.True(Math.Abs(afterWrapSample.ExpectedX - finalSample.ExpectedX) <= 25, "default pattern leaves loop boundary smoothly");
+            TestAssert.True(afterFinalSample.ExpectedX != finalSample.ExpectedX, "default pattern continues after one duration");
         }
 
         // Calibration pattern summary separation [COT-MCU-8]

@@ -59,6 +59,7 @@ namespace CursorMirror
             Add(segments, ref start, "sine-sweep", "oscillating", 1400, left, right, y, MotionCurve.SineSweep);
             Add(segments, ref start, "transition-to-jitter", "positioning", 450, left, jitterLeft, y, MotionCurve.CubicSmoothStep);
             Add(segments, ref start, "short-jitter", "small-oscillation", 1000, jitterLeft, jitterRight, y, MotionCurve.Jitter);
+            Add(segments, ref start, "transition-to-start", "positioning", 700, jitterRight, left, y, MotionCurve.CubicSmoothStep);
 
             return new CalibrationMotionPatternSuite(segments.ToArray());
         }
@@ -84,9 +85,14 @@ namespace CursorMirror
                 return new CalibrationMotionSample(0, string.Empty, string.Empty, 0, 0, 0);
             }
 
-            double clampedElapsed = Math.Max(0, Math.Min(_totalDurationMilliseconds, elapsedMilliseconds));
-            Segment segment = FindSegment(clampedElapsed);
-            double segmentElapsed = Math.Max(0, Math.Min(segment.DurationMilliseconds, clampedElapsed - segment.StartMilliseconds));
+            double wrapped = elapsedMilliseconds % _totalDurationMilliseconds;
+            if (wrapped < 0)
+            {
+                wrapped += _totalDurationMilliseconds;
+            }
+
+            Segment segment = FindSegment(wrapped);
+            double segmentElapsed = Math.Max(0, Math.Min(segment.DurationMilliseconds, wrapped - segment.StartMilliseconds));
             double x = segment.GetX(segmentElapsed);
             double velocity = segment.GetVelocityPixelsPerSecond(segmentElapsed);
             return new CalibrationMotionSample(
