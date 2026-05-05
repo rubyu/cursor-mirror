@@ -193,30 +193,15 @@ namespace CursorMirror.Tests
                         ComboBox predictionModelInput = GetField<ComboBox>(window, "_predictionModelInput");
                         NumericUpDown predictionTargetOffsetInput = GetField<NumericUpDown>(window, "_predictionTargetOffsetInput");
 
-                        TestAssert.Equal(4, predictionModelInput.Items.Count, "prediction model option count");
+                        TestAssert.Equal(1, predictionModelInput.Items.Count, "prediction model option count");
                         TestAssert.Equal("ConstantVelocity (default)", predictionModelInput.Items[0].ToString(), "constant velocity default option");
-                        TestAssert.Equal("ConstantVelocityHighSpeedSwitch", predictionModelInput.Items[1].ToString(), "constant velocity high-speed switch option");
-                        TestAssert.Equal("LeastSquares", predictionModelInput.Items[2].ToString(), "least-squares option");
-                        TestAssert.Equal("SmoothPredictor", predictionModelInput.Items[3].ToString(), "smooth predictor option");
                         TestAssert.Equal(0, predictionModelInput.SelectedIndex, "constant velocity selected by default");
-
-                        predictionModelInput.SelectedIndex = 1;
-
-                        TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocityHighSpeedSwitch, controller.CurrentSettings.DwmPredictionModel, "constant velocity high-speed switch selection applied");
-
-                        predictionModelInput.SelectedIndex = 2;
-
-                        TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelLeastSquares, controller.CurrentSettings.DwmPredictionModel, "least-squares selection applied");
-
-                        predictionModelInput.SelectedIndex = 3;
-
-                        TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelSmoothPredictor, controller.CurrentSettings.DwmPredictionModel, "smooth predictor selection applied");
-                        TestAssert.Equal(CursorMirrorSettings.DefaultDwmPredictionTargetOffsetMilliseconds, controller.CurrentSettings.DwmPredictionTargetOffsetMilliseconds, "smooth predictor selection preserves target offset");
-                        TestAssert.Equal(CursorMirrorSettings.DefaultDwmPredictionTargetOffsetDisplayMilliseconds, (int)predictionTargetOffsetInput.Value, "smooth predictor target offset input preserved");
 
                         predictionModelInput.SelectedIndex = 0;
 
                         TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, controller.CurrentSettings.DwmPredictionModel, "constant velocity selection applied");
+                        TestAssert.Equal(CursorMirrorSettings.DefaultDwmPredictionTargetOffsetMilliseconds, controller.CurrentSettings.DwmPredictionTargetOffsetMilliseconds, "constant velocity selection preserves target offset");
+                        TestAssert.Equal(CursorMirrorSettings.DefaultDwmPredictionTargetOffsetDisplayMilliseconds, (int)predictionTargetOffsetInput.Value, "constant velocity target offset input preserved");
                     }
                 }
                 finally

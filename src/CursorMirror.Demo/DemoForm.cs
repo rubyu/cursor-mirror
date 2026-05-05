@@ -603,9 +603,6 @@ namespace CursorMirror.Demo
             {
                 comboBox.Items.Clear();
                 comboBox.Items.Add(LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelConstantVelocity));
-                comboBox.Items.Add(LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelConstantVelocityHighSpeedSwitch));
-                comboBox.Items.Add(LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelLeastSquares));
-                comboBox.Items.Add(LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelSmoothPredictor));
                 comboBox.SelectedIndex = PredictionModelIndex(selectedModel);
             }
             finally
@@ -616,41 +613,11 @@ namespace CursorMirror.Demo
 
         private static int PredictionModelFromSelection(ComboBox comboBox)
         {
-            if (comboBox.SelectedIndex == 1)
-            {
-                return CursorMirrorSettings.DwmPredictionModelConstantVelocityHighSpeedSwitch;
-            }
-
-            if (comboBox.SelectedIndex == 2)
-            {
-                return CursorMirrorSettings.DwmPredictionModelLeastSquares;
-            }
-
-            if (comboBox.SelectedIndex == 3)
-            {
-                return CursorMirrorSettings.DwmPredictionModelSmoothPredictor;
-            }
-
             return CursorMirrorSettings.DwmPredictionModelConstantVelocity;
         }
 
         private static int PredictionModelIndex(int model)
         {
-            if (model == CursorMirrorSettings.DwmPredictionModelConstantVelocityHighSpeedSwitch)
-            {
-                return 1;
-            }
-
-            if (model == CursorMirrorSettings.DwmPredictionModelLeastSquares)
-            {
-                return 2;
-            }
-
-            if (CursorMirrorSettings.NormalizeDwmPredictionModel(model) == CursorMirrorSettings.DwmPredictionModelSmoothPredictor)
-            {
-                return 3;
-            }
-
             return 0;
         }
 

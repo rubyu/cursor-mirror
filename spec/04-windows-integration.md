@@ -91,8 +91,8 @@ Recommended extended window styles:
 #### 4.4.2 Predictive Overlay Positioning
 - Predictive overlay positioning MUST be enabled by default.
 - The settings UI MUST allow the user to disable predictive overlay positioning.
-- The settings UI MUST allow the user to choose the prediction model.
-- User-facing prediction model names MUST include `ConstantVelocity`, `LeastSquares`, and `SmoothPredictor`.
+- The settings UI MUST expose only the `ConstantVelocity` prediction model for release builds.
+- User-facing prediction model names MUST include `ConstantVelocity`.
 - The user-facing prediction model option for the default model MUST append ` (default)` to the model name.
 - The settings UI MUST allow the user to tune the prediction gain as a percentage.
 - The settings UI MUST allow the user to tune the DWM prediction target offset in milliseconds.
@@ -107,14 +107,7 @@ Recommended extended window styles:
   - `velocity = (currentPosition - previousPosition) / dt`;
   - `predictedPosition = currentPosition + velocity * horizonMs * gain`.
 - The default product prediction model SHOULD be `ConstantVelocity`.
-- The `LeastSquares` prediction model SHOULD fit velocity from a bounded recent sample window, remain allocation-free after construction, fall back to exact positioning when the fit is low-confidence, reset stale history after discontinuous cursor samples, and honor the configured DWM horizon cap.
-- The `SmoothPredictor` prediction model MAY apply the fixed-weight v21 60Hz CPU-only model as a full cursor displacement prediction.
-- `SmoothPredictor` MUST use only runtime-available cursor history, DWM timing, and polling-derived features. It MUST NOT depend on oracle labels, future cursor positions, generated scenario phase names, generated scenario velocities, or any training-only metadata at runtime.
-- `SmoothPredictor` MUST include a runtime-only static/stop guard that can snap the overlay to the exact current cursor position after detected abrupt stops and during stationary cursor history.
-- Switching to `SmoothPredictor` in UI MUST preserve the current DWM prediction target offset instead of applying a model-specific automatic offset.
-- The `SmoothPredictor` prediction model MUST fall back to the existing baseline behavior when the refresh cadence is outside the model's supported 60Hz range, when runtime history is insufficient, or when model evaluation fails.
-- The `SmoothPredictor` prediction model MUST NOT require GPU acceleration, runtime model training, network access, or optional machine-learning runtimes in the installed application.
-- Persisted settings that reference removed prediction model IDs MUST normalize to `SmoothPredictor` when they correspond to a previous ML-family model.
+- Persisted settings that reference removed prediction model IDs MUST normalize to `ConstantVelocity`.
 - The default prediction gain SHOULD be `100%`.
 - Prediction gain MUST be configurable within `50%` to `150%`.
 - The configured prediction gain SHOULD apply to both the DWM-aware polling predictor and the fixed-horizon fallback predictor.

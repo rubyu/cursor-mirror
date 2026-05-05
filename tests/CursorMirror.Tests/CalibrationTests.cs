@@ -313,13 +313,16 @@ namespace CursorMirror.Tests
             TestAssert.Equal(3, predictionOptions.DwmPredictionTargetOffsetMilliseconds.Value, "DWM prediction target offset option");
 
             CalibratorRunOptions smoothOptions = CalibratorRunOptions.FromArguments(new[] { "--dwm-prediction-model", "SmoothPredictor" });
-            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelSmoothPredictor, smoothOptions.DwmPredictionModel.Value, "SmoothPredictor prediction model option");
+            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, smoothOptions.DwmPredictionModel.Value, "removed SmoothPredictor prediction model option normalizes to ConstantVelocity");
 
             CalibratorRunOptions constantVelocitySwitchOptions = CalibratorRunOptions.FromArguments(new[] { "--dwm-prediction-model", "cv-high-speed-switch" });
-            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocityHighSpeedSwitch, constantVelocitySwitchOptions.DwmPredictionModel.Value, "ConstantVelocityHighSpeedSwitch prediction model option");
+            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, constantVelocitySwitchOptions.DwmPredictionModel.Value, "removed ConstantVelocityHighSpeedSwitch prediction model option normalizes to ConstantVelocity");
+
+            CalibratorRunOptions twoRegimeOptions = CalibratorRunOptions.FromArguments(new[] { "--dwm-prediction-model", "v28" });
+            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, twoRegimeOptions.DwmPredictionModel.Value, "removed TwoRegimeSmoothPredictor prediction model option normalizes to ConstantVelocity");
 
             CalibratorRunOptions oldAliasOptions = CalibratorRunOptions.FromArguments(new[] { "--dwm-prediction-model", "RuntimeEventSafeMLP" });
-            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelSmoothPredictor, oldAliasOptions.DwmPredictionModel.Value, "old runtime event-safe MLP alias migrates to SmoothPredictor");
+            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, oldAliasOptions.DwmPredictionModel.Value, "old runtime event-safe MLP alias migrates to ConstantVelocity");
 
             CalibratorRunOptions outlierOptions = CalibratorRunOptions.FromArguments(new[] { "--product-runtime-outlier-output", "product-runtime.zip" });
             TestAssert.Equal("product-runtime.zip", outlierOptions.ProductRuntimeOutlierOutputPath, "product runtime outlier output option");

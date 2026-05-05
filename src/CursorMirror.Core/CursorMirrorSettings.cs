@@ -32,9 +32,6 @@ namespace CursorMirror
         public const int DefaultDwmAdaptiveOscillationMaximumEfficiencyPercent = 55;
         public const int DefaultDwmAdaptiveOscillationLatchMilliseconds = 0;
         public const int DwmPredictionModelConstantVelocity = 0;
-        public const int DwmPredictionModelLeastSquares = 1;
-        public const int DwmPredictionModelSmoothPredictor = 4;
-        public const int DwmPredictionModelConstantVelocityHighSpeedSwitch = 5;
         public const int DefaultDwmPredictionModel = DwmPredictionModelConstantVelocity;
         public const int DwmPredictionTargetOffsetDisplayOriginMilliseconds = 8;
         public const int DefaultDwmPredictionTargetOffsetDisplayMilliseconds = 0;
@@ -46,8 +43,6 @@ namespace CursorMirror
         public const bool DefaultRuntimeMessageDeferralEnabled = true;
         public const int DefaultRuntimeMessageDeferralMicroseconds = 100;
         public const bool DefaultRuntimeThreadLatencyProfileEnabled = true;
-        private const int ObsoleteDwmPredictionModelExperimentalMlp = 2;
-        private const int ObsoleteDwmPredictionModelDistilledMlp = 3;
 
         public const int MinimumMovingOpacityPercent = 1;
         public const int MaximumMovingOpacityPercent = 100;
@@ -296,20 +291,6 @@ namespace CursorMirror
 
         public static int NormalizeDwmPredictionModel(int predictionModel)
         {
-            if (predictionModel == DwmPredictionModelConstantVelocity ||
-                predictionModel == DwmPredictionModelLeastSquares ||
-                predictionModel == DwmPredictionModelSmoothPredictor ||
-                predictionModel == DwmPredictionModelConstantVelocityHighSpeedSwitch)
-            {
-                return predictionModel;
-            }
-
-            if (predictionModel == ObsoleteDwmPredictionModelExperimentalMlp ||
-                predictionModel == ObsoleteDwmPredictionModelDistilledMlp)
-            {
-                return DwmPredictionModelSmoothPredictor;
-            }
-
             return DefaultDwmPredictionModel;
         }
 

@@ -36,9 +36,7 @@ namespace CursorMirror.Tests
                 TestAssert.Equal("Deferral window (us)", LocalizedStrings.RuntimeMessageDeferralWindowLabel, "English message deferral window label");
                 TestAssert.Equal("Low latency runtime profile", LocalizedStrings.RuntimeThreadLatencyProfileLabel, "English low latency runtime profile label");
                 TestAssert.Equal("ConstantVelocity (default)", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelConstantVelocity), "English constant velocity option");
-                TestAssert.Equal("ConstantVelocityHighSpeedSwitch", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelConstantVelocityHighSpeedSwitch), "English constant velocity high-speed switch option");
-                TestAssert.Equal("LeastSquares", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelLeastSquares), "English least-squares option");
-                TestAssert.Equal("SmoothPredictor", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelSmoothPredictor), "English smooth predictor option");
+                TestAssert.Equal("ConstantVelocity (default)", LocalizedStrings.PredictionModelOptionText(4), "English removed model normalizes to constant velocity option");
                 TestAssert.Equal("Prediction gain (%)", LocalizedStrings.PredictionGainLabel, "English prediction gain label");
                 TestAssert.Equal("Movement translucency", LocalizedStrings.MovementCategoryLabel, "English movement category");
                 TestAssert.Equal("Fade when idle", LocalizedStrings.IdleFadeLabel, "English idle fade label");
@@ -106,9 +104,7 @@ namespace CursorMirror.Tests
                 TestAssert.Equal("遅延幅 (us)", LocalizedStrings.RuntimeMessageDeferralWindowLabel, "Japanese message deferral window label");
                 TestAssert.Equal("低遅延ランタイムプロファイル", LocalizedStrings.RuntimeThreadLatencyProfileLabel, "Japanese low latency runtime profile label");
                 TestAssert.Equal("ConstantVelocity (default)", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelConstantVelocity), "Japanese constant velocity option");
-                TestAssert.Equal("ConstantVelocityHighSpeedSwitch", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelConstantVelocityHighSpeedSwitch), "Japanese constant velocity high-speed switch option");
-                TestAssert.Equal("LeastSquares", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelLeastSquares), "Japanese least-squares option");
-                TestAssert.Equal("SmoothPredictor", LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelSmoothPredictor), "Japanese smooth predictor option");
+                TestAssert.Equal("ConstantVelocity (default)", LocalizedStrings.PredictionModelOptionText(4), "Japanese removed model normalizes to constant velocity option");
                 TestAssert.Equal("予測ゲイン (%)", LocalizedStrings.PredictionGainLabel, "Japanese prediction gain label");
                 TestAssert.Equal("移動中の半透明化", LocalizedStrings.MovementCategoryLabel, "Japanese movement category");
                 TestAssert.Equal("停止後にフェードする", LocalizedStrings.IdleFadeLabel, "Japanese idle fade label");

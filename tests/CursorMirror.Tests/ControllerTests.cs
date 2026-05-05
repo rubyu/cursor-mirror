@@ -27,15 +27,11 @@ namespace CursorMirror.Tests
             suite.Add("COT-MOU-40", DwmAdaptiveGainCooldownHoldsBaseGainAfterReversal);
             suite.Add("COT-MOU-41", DwmAdaptiveGainOscillationLatchHoldsBaseGain);
             suite.Add("COT-MOU-42", DwmAdaptiveGainFastLinearOverrideBypassesOscillationLatch);
-            suite.Add("COT-MOU-43", DwmLeastSquaresPredictionFitsLinearMotion);
             suite.Add("COT-MOU-45", ScheduledDwmTargetControlsPrediction);
             suite.Add("COT-MOU-46", NearScheduledDwmTargetUsesNextVBlank);
             suite.Add("COT-MOU-47", OverlayUpdateTimingCountersDeadlineMiss);
             suite.Add("COT-MOU-48", DwmPredictionTargetOffsetControlsProjection);
             suite.Add("COT-MOU-49", ConstantVelocityHighSpeedLinearMotionUsesWiderCap);
-            suite.Add("COT-MOU-53", DwmSmoothPredictorPredictionIsSelectable);
-            suite.Add("COT-MOU-54", DwmSmoothPredictorStaticAndStopGuardsSnapToExactPosition);
-            suite.Add("COT-MOU-58", ConstantVelocityHighSpeedSwitchUsesLongWindowAtLowerSpeed);
             suite.Add("COT-MOU-55", PollingSkipsOverlayMoveWhenLocationIsUnchanged);
             suite.Add("COT-MRU-1", HookCallbackExceptionContainment);
             suite.Add("COT-MDU-3", DispatcherMarshalsToUiThread);
@@ -489,39 +485,6 @@ namespace CursorMirror.Tests
             controller.Dispose();
         }
 
-        // DWM least-squares prediction [COT-MOU-43]
-        private static void DwmLeastSquaresPredictionFitsLinearMotion()
-        {
-            FakeCursorImageProvider provider = new FakeCursorImageProvider();
-            FakeOverlayPresenter overlay = new FakeOverlayPresenter();
-            FakeClock clock = new FakeClock();
-            FakeCursorPoller poller = new FakeCursorPoller();
-            CursorMirrorSettings settings = CursorMirrorSettings.Default();
-            settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelLeastSquares;
-            settings.DwmPredictionHorizonCapMilliseconds = 0;
-            settings.DwmPredictionTargetOffsetMilliseconds = 0;
-            provider.EnqueueCapture(new CursorCapture(new IntPtr(1), new Bitmap(16, 16), new Point(0, 0)));
-            CursorMirrorController controller = new CursorMirrorController(provider, overlay, new ImmediateDispatcher(), settings, clock, poller);
-
-            controller.UpdateAt(new Point(0, 0));
-            poller.EnqueueSample(PollSample(new Point(0, 0), 100, true, 110, 16));
-            poller.EnqueueSample(PollSample(new Point(10, 0), 110, true, 120, 16));
-            poller.EnqueueSample(PollSample(new Point(20, 0), 120, true, 130, 16));
-            poller.EnqueueSample(PollSample(new Point(30, 0), 130, true, 140, 16));
-            poller.EnqueueSample(PollSample(new Point(40, 0), 140, true, 150, 16));
-            poller.EnqueueSample(PollSample(new Point(50, 0), 150, true, 160, 16));
-            clock.Now = 10;
-            controller.Tick();
-            controller.Tick();
-            controller.Tick();
-            controller.Tick();
-            controller.Tick();
-            controller.Tick();
-
-            TestAssert.Equal(new Point(58, 0), overlay.LastLocation, "least-squares model predicts linear motion with its default horizon cap");
-            controller.Dispose();
-        }
-
         // Scheduled DWM target controls prediction horizon [COT-MOU-45]
         private static void ScheduledDwmTargetControlsPrediction()
         {
@@ -660,88 +623,6 @@ namespace CursorMirror.Tests
 
             TestAssert.Equal(new Point(204, 0), overlay.LastLocation, "high-speed one-directional motion should use the wider ConstantVelocity cap");
             controller.Dispose();
-        }
-
-        // DWM SmoothPredictor prediction [COT-MOU-53]
-        private static void DwmSmoothPredictorPredictionIsSelectable()
-        {
-            CursorMirrorSettings settings = CursorMirrorSettings.Default();
-            settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelSmoothPredictor;
-            settings.DwmPredictionHorizonCapMilliseconds = 0;
-            settings.DwmPredictionTargetOffsetMilliseconds = 0;
-            DwmAwareCursorPositionPredictor predictor = new DwmAwareCursorPositionPredictor(100);
-            predictor.ApplySettings(settings);
-            CursorPredictionCounters counters = new CursorPredictionCounters();
-            Point predicted = Point.Empty;
-
-            for (int i = 0; i <= 15; i++)
-            {
-                long timestamp = 100 + (i * 10);
-                CursorPollSample sample = PollSample(new Point(i * 3, 0), timestamp, true, timestamp + 16, 16);
-                predicted = predictor.PredictRounded(sample, counters, timestamp + 16, 16);
-            }
-
-            TestAssert.Equal(new Point(45, 1), predicted, "SmoothPredictor should be selectable and produce its fixed-weight prediction");
-        }
-
-        // DWM SmoothPredictor guards [COT-MOU-54]
-        private static void DwmSmoothPredictorStaticAndStopGuardsSnapToExactPosition()
-        {
-            CursorMirrorSettings settings = CursorMirrorSettings.Default();
-            settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelSmoothPredictor;
-            settings.DwmPredictionHorizonCapMilliseconds = 0;
-            settings.DwmPredictionTargetOffsetMilliseconds = 0;
-            DwmAwareCursorPositionPredictor predictor = new DwmAwareCursorPositionPredictor(100);
-            predictor.ApplySettings(settings);
-            CursorPredictionCounters counters = new CursorPredictionCounters();
-            Point predicted = Point.Empty;
-
-            for (int i = 0; i <= 15; i++)
-            {
-                long timestamp = 100 + (i * 10);
-                CursorPollSample sample = PollSample(new Point(40, 20), timestamp, true, timestamp + 16, 16);
-                predicted = predictor.PredictRounded(sample, counters, timestamp + 16, 16);
-            }
-
-            TestAssert.Equal(new Point(40, 20), predicted, "SmoothPredictor static guard must snap to exact position");
-
-            predictor.Reset();
-            for (int i = 0; i <= 15; i++)
-            {
-                long timestamp = 100 + (i * 10);
-                CursorPollSample sample = PollSample(new Point(i * 30, 0), timestamp, true, timestamp + 16, 16);
-                predicted = predictor.PredictRounded(sample, counters, timestamp + 16, 16);
-            }
-
-            CursorPollSample stopSample = PollSample(new Point(450, 0), 260, true, 276, 16);
-            predicted = predictor.PredictRounded(stopSample, counters, 276, 16);
-
-            TestAssert.Equal(new Point(450, 0), predicted, "SmoothPredictor stop latch must snap to exact position after an abrupt stop");
-        }
-
-        // ConstantVelocityHighSpeedSwitch lower-speed motion uses the longer CV window [COT-MOU-58]
-        private static void ConstantVelocityHighSpeedSwitchUsesLongWindowAtLowerSpeed()
-        {
-            CursorMirrorSettings settings = CursorMirrorSettings.Default();
-            settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelConstantVelocityHighSpeedSwitch;
-            settings.DwmPredictionHorizonCapMilliseconds = 0;
-            settings.DwmPredictionTargetOffsetMilliseconds = 0;
-            DwmAwareCursorPositionPredictor predictor = new DwmAwareCursorPositionPredictor(100);
-            predictor.ApplySettings(settings);
-            CursorPredictionCounters counters = new CursorPredictionCounters();
-            Point predicted = Point.Empty;
-
-            for (int i = 0; i <= 11; i++)
-            {
-                long timestamp = 100 + (i * 10);
-                CursorPollSample sample = PollSample(new Point(i * 2, 0), timestamp, true, timestamp + 16, 16);
-                predicted = predictor.PredictRounded(sample, counters, timestamp + 16, 16);
-            }
-
-            CursorPollSample deceleratingSample = PollSample(new Point(23, 0), 220, true, 236, 16);
-            predicted = predictor.PredictRounded(deceleratingSample, counters, 236, 16);
-
-            TestAssert.Equal(new Point(26, 0), predicted, "lower-speed switch model should use the longer ConstantVelocity window");
         }
 
         // Same-location polling should not call the layered-window move path [COT-MOU-55]

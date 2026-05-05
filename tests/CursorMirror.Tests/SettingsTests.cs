@@ -184,11 +184,17 @@ namespace CursorMirror.Tests
             oldExperimentalModel.DwmPredictionModel = 2;
             CursorMirrorSettings oldDistilledModel = CursorMirrorSettings.Default();
             oldDistilledModel.DwmPredictionModel = 3;
-            CursorMirrorSettings constantVelocityHighSpeedSwitch = CursorMirrorSettings.Default();
-            constantVelocityHighSpeedSwitch.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelConstantVelocityHighSpeedSwitch;
-            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelSmoothPredictor, oldExperimentalModel.Normalize().DwmPredictionModel, "obsolete experimental model migration");
-            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelSmoothPredictor, oldDistilledModel.Normalize().DwmPredictionModel, "obsolete distilled model migration");
-            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocityHighSpeedSwitch, constantVelocityHighSpeedSwitch.Normalize().DwmPredictionModel, "constant velocity high-speed switch model preserved");
+            CursorMirrorSettings removedSmoothPredictor = CursorMirrorSettings.Default();
+            removedSmoothPredictor.DwmPredictionModel = 4;
+            CursorMirrorSettings removedHighSpeedSwitch = CursorMirrorSettings.Default();
+            removedHighSpeedSwitch.DwmPredictionModel = 5;
+            CursorMirrorSettings removedTwoRegimeSmoothPredictor = CursorMirrorSettings.Default();
+            removedTwoRegimeSmoothPredictor.DwmPredictionModel = 6;
+            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, oldExperimentalModel.Normalize().DwmPredictionModel, "obsolete experimental model migrates to constant velocity");
+            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, oldDistilledModel.Normalize().DwmPredictionModel, "obsolete distilled model migrates to constant velocity");
+            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, removedSmoothPredictor.Normalize().DwmPredictionModel, "removed smooth predictor model migrates to constant velocity");
+            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, removedHighSpeedSwitch.Normalize().DwmPredictionModel, "removed high-speed switch model migrates to constant velocity");
+            TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, removedTwoRegimeSmoothPredictor.Normalize().DwmPredictionModel, "removed two-regime model migrates to constant velocity");
         }
 
         // Settings serialization round trip [COT-MSU-4]
@@ -220,7 +226,7 @@ namespace CursorMirror.Tests
                 settings.DwmAdaptiveOscillationMaximumSpanPixels = 450;
                 settings.DwmAdaptiveOscillationMaximumEfficiencyPercent = 55;
                 settings.DwmAdaptiveOscillationLatchMilliseconds = 300;
-                settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelLeastSquares;
+                settings.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelConstantVelocity;
                 settings.DwmPredictionTargetOffsetMilliseconds = 3;
                 settings.RuntimeSetWaitableTimerExEnabled = false;
                 settings.RuntimeFineWaitAdvanceMicroseconds = 1800;
@@ -257,7 +263,7 @@ namespace CursorMirror.Tests
                 TestAssert.Equal(450, loaded.DwmAdaptiveOscillationMaximumSpanPixels, "loaded DWM adaptive oscillation span");
                 TestAssert.Equal(55, loaded.DwmAdaptiveOscillationMaximumEfficiencyPercent, "loaded DWM adaptive oscillation efficiency");
                 TestAssert.Equal(300, loaded.DwmAdaptiveOscillationLatchMilliseconds, "loaded DWM adaptive oscillation latch");
-                TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelLeastSquares, loaded.DwmPredictionModel, "loaded DWM prediction model");
+                TestAssert.Equal(CursorMirrorSettings.DwmPredictionModelConstantVelocity, loaded.DwmPredictionModel, "loaded DWM prediction model");
                 TestAssert.Equal(3, loaded.DwmPredictionTargetOffsetMilliseconds, "loaded DWM prediction target offset");
                 TestAssert.False(loaded.RuntimeSetWaitableTimerExEnabled, "loaded runtime set waitable timer ex");
                 TestAssert.Equal(1800, loaded.RuntimeFineWaitAdvanceMicroseconds, "loaded runtime fine wait");

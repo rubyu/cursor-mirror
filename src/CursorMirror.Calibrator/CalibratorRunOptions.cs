@@ -276,7 +276,7 @@ namespace CursorMirror.Calibrator
                 }
                 else if (argument == "--dwm-lsq-predictor")
                 {
-                    options.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelLeastSquares;
+                    options.DwmPredictionModel = CursorMirrorSettings.DwmPredictionModelConstantVelocity;
                 }
                 else if (argument == "--runtime-mode" && i + 1 < args.Length)
                 {
@@ -419,7 +419,7 @@ namespace CursorMirror.Calibrator
             string normalized = (value ?? string.Empty).Trim().ToLowerInvariant();
             if (normalized == "lsq" || normalized == "leastsquares" || normalized == "least-squares" || normalized == "least_squares")
             {
-                model = CursorMirrorSettings.DwmPredictionModelLeastSquares;
+                model = CursorMirrorSettings.DwmPredictionModelConstantVelocity;
                 return true;
             }
 
@@ -443,7 +443,7 @@ namespace CursorMirror.Calibrator
                 normalized == "event_safe_mlp" ||
                 normalized == "v21")
             {
-                model = CursorMirrorSettings.DwmPredictionModelSmoothPredictor;
+                model = CursorMirrorSettings.DwmPredictionModelConstantVelocity;
                 return true;
             }
 
@@ -461,7 +461,20 @@ namespace CursorMirror.Calibrator
                 normalized == "switch-highspeed-cv2" ||
                 normalized == "switch_highspeed_cv2")
             {
-                model = CursorMirrorSettings.DwmPredictionModelConstantVelocityHighSpeedSwitch;
+                model = CursorMirrorSettings.DwmPredictionModelConstantVelocity;
+                return true;
+            }
+
+            if (normalized == "tworegimesmoothpredictor" ||
+                normalized == "two-regime-smooth-predictor" ||
+                normalized == "two_regime_smooth_predictor" ||
+                normalized == "two-regime" ||
+                normalized == "two_regime" ||
+                normalized == "gated-smooth" ||
+                normalized == "gated_smooth" ||
+                normalized == "v28")
+            {
+                model = CursorMirrorSettings.DwmPredictionModelConstantVelocity;
                 return true;
             }
 

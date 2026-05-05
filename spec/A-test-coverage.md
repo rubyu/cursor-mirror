@@ -322,10 +322,6 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that experimental DWM adaptive gain can resume the alternate gain during a high-speed, high-efficiency, one-directional motion even when an oscillation suppression latch is still active.
   Refs: Section 4.4.2.
 
-- COT-MOU-43 - DWM least-squares prediction
-  Verify that the experimental DWM least-squares prediction model fits a linear recent sample window and predicts using the DWM horizon.
-  Refs: Section 4.4.2.
-
 - COT-MOU-44 - High-frequency poller blocking wait
   Verify that the high-frequency cursor poller fallback uses a blocking wait interval instead of yielding in a tight loop for positive remaining time.
   Refs: Sections 3.3, 4.4.2.
@@ -350,14 +346,6 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that high-speed, high-efficiency, one-directional `ConstantVelocity` motion can use a wider prediction displacement cap while ordinary motion remains bounded by the conservative cap.
   Refs: Section 4.4.2.
 
-- COT-MOU-53 - SmoothPredictor prediction model is selectable
-  Verify that `SmoothPredictor` can be selected as the DWM prediction model and produces a deterministic fixed-weight prediction with runtime-only features after 60Hz history is available.
-  Refs: Section 4.4.2.
-
-- COT-MOU-54 - SmoothPredictor static and stop guards snap to exact position
-  Verify that `SmoothPredictor` snaps to the exact current cursor position for stationary input and immediately after a detected abrupt stop without requiring training-only labels.
-  Refs: Section 4.4.2.
-
 - COT-MOU-55 - Same-location polling skips overlay movement
   Verify that polling a fresh sample whose overlay location has not changed does not call the layered-window move path.
   Refs: Sections 3.3, 4.4.2.
@@ -369,10 +357,6 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
 - COT-MOU-57 - Idle fade uses dedicated duration
   Verify that idle fade uses its configured fade duration rather than the movement-translucency fade duration.
   Refs: Sections 4.4.1.1, 6.1.
-
-- COT-MOU-58 - ConstantVelocityHighSpeedSwitch uses the longer CV window at lower speed
-  Verify that the selectable `ConstantVelocityHighSpeedSwitch` model can use the longer constant-velocity window for lower-speed movement while preserving the default `ConstantVelocity` model separately.
-  Refs: Section 4.4.2.
 
 #### A.4.T Tray and Application Lifetime
 ##### Unit
@@ -475,7 +459,7 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Sections 4.4.2, 4.5.1, 6.1.
 
 - COT-MSU-16 - Prediction model selection
-  Verify that the settings window exposes `ConstantVelocity (default)`, `ConstantVelocityHighSpeedSwitch`, `LeastSquares`, and `SmoothPredictor`, selects `ConstantVelocity` by default, applies model changes immediately, and disables the prediction model control when prediction is disabled.
+  Verify that the settings window exposes only `ConstantVelocity (default)`, selects `ConstantVelocity` by default, applies the model value immediately, and disables the prediction model control when prediction is disabled.
   Refs: Sections 4.4.2, 4.5.1, 6.1.
 
 - COT-MSU-17 - Prediction target offset control
@@ -898,5 +882,5 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Refs: Sections 4.5.1, 6.3.
 
 - COT-BVM-9 - Prediction settings manual pass
-  Verify that predictive overlay positioning is enabled by default, `ConstantVelocity (default)`, `LeastSquares`, and `SmoothPredictor` can be selected from the settings window, and disabling prediction returns to exact pointer positioning.
+  Verify that predictive overlay positioning is enabled by default, `ConstantVelocity (default)` is the only prediction model exposed in the settings window, and disabling prediction returns to exact pointer positioning.
   Refs: Sections 2.3, 4.4.2, 4.5.1, 6.3.
