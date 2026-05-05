@@ -1,0 +1,2465 @@
+{
+  "generatedAt": "2026-05-05T00:28:44.4984344Z",
+  "packageCount": 7,
+  "closedLoopUsablePackageCount": 7,
+  "totalFrameCount": 8218,
+  "overallSeparation": {
+    "count": 8218,
+    "avg": 8.652470187393526,
+    "p50": 11.0,
+    "p95": 12.0,
+    "p99": 12.0,
+    "max": 23.0
+  },
+  "primaryFrameCount": 8218,
+  "primarySeparation": {
+    "count": 8218,
+    "avg": 8.652470187393526,
+    "p50": 11.0,
+    "p95": 12.0,
+    "p99": 12.0,
+    "max": 23.0
+  },
+  "overallCaptureIntervalMilliseconds": {
+    "count": 8211,
+    "avg": 41.74487468030692,
+    "p50": 44.52299999999923,
+    "p95": 52.02399999999761,
+    "p99": 60.11000000000058,
+    "max": 72.37999999999738
+  },
+  "holdMeasurementFloor": {
+    "count": 943,
+    "avg": 11.590668080593849,
+    "p50": 12.0,
+    "p95": 12.0,
+    "p99": 12.0,
+    "max": 12.0
+  },
+  "primaryHoldMeasurementFloor": {
+    "count": 943,
+    "avg": 11.590668080593849,
+    "p50": 12.0,
+    "p95": 12.0,
+    "p99": 12.0,
+    "max": 12.0
+  },
+  "zeroFrameCount": 404,
+  "over12FrameCount": 23,
+  "over20FrameCount": 2,
+  "primaryOver12FrameCount": 23,
+  "primaryOver20FrameCount": 2,
+  "patternSummaries": [
+    {
+      "name": "scenario-000",
+      "count": 669,
+      "avg": 11.070254110612854,
+      "p50": 12.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 17.0,
+      "zeroRate": 0.0014947683109118087
+    },
+    {
+      "name": "scenario-001",
+      "count": 840,
+      "avg": 7.182142857142857,
+      "p50": 7.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 12.0,
+      "zeroRate": 0.01904761904761905
+    },
+    {
+      "name": "scenario-002",
+      "count": 838,
+      "avg": 7.6539379474940334,
+      "p50": 8.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 12.0,
+      "zeroRate": 0.060859188544152745
+    },
+    {
+      "name": "scenario-003",
+      "count": 839,
+      "avg": 7.595947556615018,
+      "p50": 8.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 14.0,
+      "zeroRate": 0.05125148986889154
+    },
+    {
+      "name": "scenario-004",
+      "count": 839,
+      "avg": 6.384982121573302,
+      "p50": 7.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 12.0,
+      "zeroRate": 0.10011918951132301
+    },
+    {
+      "name": "scenario-005",
+      "count": 839,
+      "avg": 9.226460071513706,
+      "p50": 12.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 12.0,
+      "zeroRate": 0.050059594755661505
+    },
+    {
+      "name": "scenario-006",
+      "count": 838,
+      "avg": 10.28400954653938,
+      "p50": 12.0,
+      "p95": 12.0,
+      "p99": 15.0,
+      "max": 23.0,
+      "zeroRate": 0.014319809069212411
+    },
+    {
+      "name": "scenario-007",
+      "count": 839,
+      "avg": 7.741358760429082,
+      "p50": 8.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 12.0,
+      "zeroRate": 0.0631704410011919
+    },
+    {
+      "name": "scenario-008",
+      "count": 840,
+      "avg": 11.771428571428572,
+      "p50": 12.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 14.0,
+      "zeroRate": 0.002380952380952381
+    },
+    {
+      "name": "scenario-009",
+      "count": 837,
+      "avg": 8.101553166069294,
+      "p50": 10.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 12.0,
+      "zeroRate": 0.11947431302270012
+    }
+  ],
+  "phaseSummaries": [
+    {
+      "name": "moving",
+      "count": 7143,
+      "avg": 8.202715945681087,
+      "p50": 10.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 23.0,
+      "zeroRate": 0.05641887162256755
+    },
+    {
+      "name": "hold",
+      "count": 943,
+      "avg": 11.590668080593849,
+      "p50": 12.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 12.0,
+      "zeroRate": 0.0010604453870625664
+    },
+    {
+      "name": "resume",
+      "count": 132,
+      "avg": 12.0,
+      "p50": 12.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 12.0,
+      "zeroRate": 0.0
+    }
+  ],
+  "variantSummaries": [
+    {
+      "name": "constant-velocity-offset-0",
+      "count": 1174,
+      "avg": 8.09710391822828,
+      "p50": 8.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 15.0,
+      "zeroRate": 0.036626916524701875
+    },
+    {
+      "name": "constant-velocity-offset-minus2",
+      "count": 1172,
+      "avg": 8.183447098976108,
+      "p50": 8.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 23.0,
+      "zeroRate": 0.043515358361774746
+    },
+    {
+      "name": "constant-velocity-offset-plus2",
+      "count": 1175,
+      "avg": 8.00595744680851,
+      "p50": 8.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 17.0,
+      "zeroRate": 0.03829787234042553
+    },
+    {
+      "name": "distilled-mlp-offset-minus4",
+      "count": 1174,
+      "avg": 8.853492333901192,
+      "p50": 12.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 19.0,
+      "zeroRate": 0.10051107325383304
+    },
+    {
+      "name": "least-squares-offset-0",
+      "count": 1174,
+      "avg": 7.661839863713799,
+      "p50": 8.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 18.0,
+      "zeroRate": 0.04514480408858603
+    },
+    {
+      "name": "runtime-event-safe-mlp-offset-minus2",
+      "count": 1176,
+      "avg": 9.930272108843537,
+      "p50": 12.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 17.0,
+      "zeroRate": 0.0391156462585034
+    },
+    {
+      "name": "runtime-event-safe-mlp-offset-minus4",
+      "count": 1173,
+      "avg": 9.83375959079284,
+      "p50": 12.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 19.0,
+      "zeroRate": 0.04092071611253197
+    }
+  ],
+  "packages": [
+    {
+      "variantName": "constant-velocity-offset-0",
+      "name": "calibration.zip",
+      "relativePath": "constant-velocity-offset-0\\calibration.zip",
+      "lengthBytes": 47134,
+      "lastWriteTime": "2026-05-05T09:23:40.4960377+09:00",
+      "frameCount": 1174,
+      "darkFrameCount": 1174,
+      "averageEstimatedSeparationPixels": 8.09710391822828,
+      "p95EstimatedSeparationPixels": 12.0,
+      "maximumEstimatedSeparationPixels": 15.0,
+      "runtimeMode": "ProductRuntime",
+      "predictionModel": 0,
+      "targetOffsetMilliseconds": 0,
+      "motionSourceName": "motion-lab",
+      "motionGenerationProfile": "calibrator-verification-v22",
+      "motionScenarioCount": 10,
+      "motionDurationMilliseconds": 50000.0,
+      "usableForClosedLoop": true,
+      "motionContextFrameCount": 1174,
+      "separation": {
+        "count": 1174,
+        "avg": 8.09710391822828,
+        "p50": 8.0,
+        "p95": 12.0,
+        "p99": 12.0,
+        "max": 15.0
+      },
+      "captureIntervalMilliseconds": {
+        "count": 1173,
+        "avg": 41.73357033248082,
+        "p50": 44.19599999999991,
+        "p95": 51.961999999999534,
+        "p99": 60.597999999999956,
+        "max": 67.36300000000006
+      },
+      "holdMeasurementFloor": {
+        "count": 134,
+        "avg": 11.455223880597014,
+        "p50": 12.0,
+        "p95": 12.0,
+        "p99": 12.0,
+        "max": 12.0
+      },
+      "over12FrameCount": 3,
+      "zeroFrameCount": 43,
+      "patternSummaries": [
+        {
+          "name": "scenario-000",
+          "count": 94,
+          "avg": 10.851063829787234,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.0
+        },
+        {
+          "name": "scenario-001",
+          "count": 120,
+          "avg": 5.891666666666667,
+          "p50": 6.0,
+          "p95": 9.0,
+          "p99": 10.0,
+          "max": 10.0,
+          "zeroRate": 0.016666666666666666
+        },
+        {
+          "name": "scenario-002",
+          "count": 120,
+          "avg": 6.875,
+          "p50": 7.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.025
+        },
+        {
+          "name": "scenario-003",
+          "count": 120,
+          "avg": 7.391666666666667,
+          "p50": 8.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.03333333333333333
+        },
+        {
+          "name": "scenario-004",
+          "count": 120,
+          "avg": 6.016666666666667,
+          "p50": 6.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.058333333333333334
+        },
+        {
+          "name": "scenario-005",
+          "count": 120,
+          "avg": 8.441666666666666,
+          "p50": 10.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.016666666666666666
+        },
+        {
+          "name": "scenario-006",
+          "count": 120,
+          "avg": 9.633333333333333,
+          "p50": 11.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 15.0,
+          "zeroRate": 0.041666666666666664
+        },
+        {
+          "name": "scenario-007",
+          "count": 120,
+          "avg": 7.008333333333334,
+          "p50": 6.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.05
+        },
+        {
+          "name": "scenario-008",
+          "count": 120,
+          "avg": 11.808333333333334,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 13.0,
+          "max": 13.0,
+          "zeroRate": 0.0
+        },
+        {
+          "name": "scenario-009",
+          "count": 120,
+          "avg": 7.65,
+          "p50": 8.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.11666666666666667
+        }
+      ],
+      "phaseSummaries": [
+        {
+          "name": "moving",
+          "count": 1021,
+          "avg": 7.583741429970617,
+          "p50": 8.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 15.0,
+          "zeroRate": 0.04113614103819784
+        },
+        {
+          "name": "hold",
+          "count": 134,
+          "avg": 11.455223880597014,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.007462686567164179
+        },
+        {
+          "name": "resume",
+          "count": 19,
+          "avg": 12.0,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.0
+        }
+      ],
+      "worstFrames": [
+        {
+          "frameIndex": 817,
+          "elapsedMilliseconds": 34520.975,
+          "separationPixels": 15.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 917,
+          "expectedY": 619,
+          "expectedVelocityPixelsPerSecond": 356.124
+        },
+        {
+          "frameIndex": 949,
+          "elapsedMilliseconds": 40018.076,
+          "separationPixels": 13.0,
+          "patternName": "scenario-008",
+          "phaseName": "moving",
+          "scenarioIndex": 8,
+          "expectedX": 1240,
+          "expectedY": 720,
+          "expectedVelocityPixelsPerSecond": 28.862
+        },
+        {
+          "frameIndex": 1056,
+          "elapsedMilliseconds": 44475.349,
+          "separationPixels": 13.0,
+          "patternName": "scenario-008",
+          "phaseName": "moving",
+          "scenarioIndex": 8,
+          "expectedX": 1287,
+          "expectedY": 714,
+          "expectedVelocityPixelsPerSecond": 29.116
+        },
+        {
+          "frameIndex": 329,
+          "elapsedMilliseconds": 14189.997,
+          "separationPixels": 12.0,
+          "patternName": "scenario-002",
+          "phaseName": "hold",
+          "scenarioIndex": 2,
+          "expectedX": 2051,
+          "expectedY": 775,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 328,
+          "elapsedMilliseconds": 14144.492,
+          "separationPixels": 12.0,
+          "patternName": "scenario-002",
+          "phaseName": "hold",
+          "scenarioIndex": 2,
+          "expectedX": 2051,
+          "expectedY": 775,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 744,
+          "elapsedMilliseconds": 31474.384,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1579,
+          "expectedY": 562,
+          "expectedVelocityPixelsPerSecond": 360.024
+        },
+        {
+          "frameIndex": 325,
+          "elapsedMilliseconds": 14017.844,
+          "separationPixels": 12.0,
+          "patternName": "scenario-002",
+          "phaseName": "moving",
+          "scenarioIndex": 2,
+          "expectedX": 2050,
+          "expectedY": 775,
+          "expectedVelocityPixelsPerSecond": 230.005
+        },
+        {
+          "frameIndex": 324,
+          "elapsedMilliseconds": 13975.671,
+          "separationPixels": 12.0,
+          "patternName": "scenario-002",
+          "phaseName": "moving",
+          "scenarioIndex": 2,
+          "expectedX": 2042,
+          "expectedY": 775,
+          "expectedVelocityPixelsPerSecond": 148.206
+        },
+        {
+          "frameIndex": 323,
+          "elapsedMilliseconds": 13941.035,
+          "separationPixels": 12.0,
+          "patternName": "scenario-002",
+          "phaseName": "moving",
+          "scenarioIndex": 2,
+          "expectedX": 2038,
+          "expectedY": 775,
+          "expectedVelocityPixelsPerSecond": 92.737
+        },
+        {
+          "frameIndex": 322,
+          "elapsedMilliseconds": 13894.299,
+          "separationPixels": 12.0,
+          "patternName": "scenario-002",
+          "phaseName": "moving",
+          "scenarioIndex": 2,
+          "expectedX": 2035,
+          "expectedY": 775,
+          "expectedVelocityPixelsPerSecond": 55.952
+        },
+        {
+          "frameIndex": 321,
+          "elapsedMilliseconds": 13845.883,
+          "separationPixels": 12.0,
+          "patternName": "scenario-002",
+          "phaseName": "moving",
+          "scenarioIndex": 2,
+          "expectedX": 2034,
+          "expectedY": 775,
+          "expectedVelocityPixelsPerSecond": 20.551
+        },
+        {
+          "frameIndex": 765,
+          "elapsedMilliseconds": 32349.488,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "hold",
+          "scenarioIndex": 6,
+          "expectedX": 1289,
+          "expectedY": 585,
+          "expectedVelocityPixelsPerSecond": 0.0
+        }
+      ]
+    },
+    {
+      "variantName": "constant-velocity-offset-minus2",
+      "name": "calibration.zip",
+      "relativePath": "constant-velocity-offset-minus2\\calibration.zip",
+      "lengthBytes": 47073,
+      "lastWriteTime": "2026-05-05T09:24:31.4927797+09:00",
+      "frameCount": 1172,
+      "darkFrameCount": 1172,
+      "averageEstimatedSeparationPixels": 8.183447098976108,
+      "p95EstimatedSeparationPixels": 12.0,
+      "maximumEstimatedSeparationPixels": 23.0,
+      "runtimeMode": "ProductRuntime",
+      "predictionModel": 0,
+      "targetOffsetMilliseconds": -2,
+      "motionSourceName": "motion-lab",
+      "motionGenerationProfile": "calibrator-verification-v22",
+      "motionScenarioCount": 10,
+      "motionDurationMilliseconds": 50000.0,
+      "usableForClosedLoop": true,
+      "motionContextFrameCount": 1172,
+      "separation": {
+        "count": 1172,
+        "avg": 8.183447098976108,
+        "p50": 8.0,
+        "p95": 12.0,
+        "p99": 12.0,
+        "max": 23.0
+      },
+      "captureIntervalMilliseconds": {
+        "count": 1171,
+        "avg": 41.808212638770286,
+        "p50": 44.775000000001455,
+        "p95": 52.1510000000053,
+        "p99": 58.567000000002736,
+        "max": 72.37999999999738
+      },
+      "holdMeasurementFloor": {
+        "count": 131,
+        "avg": 11.725190839694656,
+        "p50": 12.0,
+        "p95": 12.0,
+        "p99": 12.0,
+        "max": 12.0
+      },
+      "over12FrameCount": 5,
+      "zeroFrameCount": 51,
+      "patternSummaries": [
+        {
+          "name": "scenario-000",
+          "count": 95,
+          "avg": 11.0,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.010526315789473684
+        },
+        {
+          "name": "scenario-001",
+          "count": 120,
+          "avg": 6.191666666666666,
+          "p50": 7.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.041666666666666664
+        },
+        {
+          "name": "scenario-002",
+          "count": 120,
+          "avg": 6.916666666666667,
+          "p50": 8.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.03333333333333333
+        },
+        {
+          "name": "scenario-003",
+          "count": 119,
+          "avg": 6.899159663865547,
+          "p50": 8.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 14.0,
+          "zeroRate": 0.025210084033613446
+        },
+        {
+          "name": "scenario-004",
+          "count": 120,
+          "avg": 5.808333333333334,
+          "p50": 6.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.058333333333333334
+        },
+        {
+          "name": "scenario-005",
+          "count": 120,
+          "avg": 8.975,
+          "p50": 11.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.06666666666666667
+        },
+        {
+          "name": "scenario-006",
+          "count": 120,
+          "avg": 11.133333333333333,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 21.0,
+          "max": 23.0,
+          "zeroRate": 0.008333333333333333
+        },
+        {
+          "name": "scenario-007",
+          "count": 120,
+          "avg": 6.733333333333333,
+          "p50": 8.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.058333333333333334
+        },
+        {
+          "name": "scenario-008",
+          "count": 120,
+          "avg": 11.791666666666666,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 14.0,
+          "zeroRate": 0.008333333333333333
+        },
+        {
+          "name": "scenario-009",
+          "count": 118,
+          "avg": 6.940677966101695,
+          "p50": 8.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.11864406779661017
+        }
+      ],
+      "phaseSummaries": [
+        {
+          "name": "moving",
+          "count": 1021,
+          "avg": 7.654260528893242,
+          "p50": 8.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 23.0,
+          "zeroRate": 0.04995102840352596
+        },
+        {
+          "name": "hold",
+          "count": 131,
+          "avg": 11.725190839694656,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.0
+        },
+        {
+          "name": "resume",
+          "count": 20,
+          "avg": 12.0,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.0
+        }
+      ],
+      "worstFrames": [
+        {
+          "frameIndex": 744,
+          "elapsedMilliseconds": 31467.491,
+          "separationPixels": 23.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1581,
+          "expectedY": 562,
+          "expectedVelocityPixelsPerSecond": 360.038
+        },
+        {
+          "frameIndex": 778,
+          "elapsedMilliseconds": 32892.402,
+          "separationPixels": 21.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1235,
+          "expectedY": 591,
+          "expectedVelocityPixelsPerSecond": 359.978
+        },
+        {
+          "frameIndex": 743,
+          "elapsedMilliseconds": 31437.273,
+          "separationPixels": 15.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1592,
+          "expectedY": 561,
+          "expectedVelocityPixelsPerSecond": 360.034
+        },
+        {
+          "frameIndex": 350,
+          "elapsedMilliseconds": 15015.894,
+          "separationPixels": 14.0,
+          "patternName": "scenario-003",
+          "phaseName": "moving",
+          "scenarioIndex": 3,
+          "expectedX": 629,
+          "expectedY": 921,
+          "expectedVelocityPixelsPerSecond": 306.771
+        },
+        {
+          "frameIndex": 949,
+          "elapsedMilliseconds": 40019.598,
+          "separationPixels": 14.0,
+          "patternName": "scenario-008",
+          "phaseName": "moving",
+          "scenarioIndex": 8,
+          "expectedX": 1240,
+          "expectedY": 720,
+          "expectedVelocityPixelsPerSecond": 28.804
+        },
+        {
+          "frameIndex": 788,
+          "elapsedMilliseconds": 33315.937,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1087,
+          "expectedY": 610,
+          "expectedVelocityPixelsPerSecond": 311.928
+        },
+        {
+          "frameIndex": 789,
+          "elapsedMilliseconds": 33350.618,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1076,
+          "expectedY": 611,
+          "expectedVelocityPixelsPerSecond": 296.496
+        },
+        {
+          "frameIndex": 349,
+          "elapsedMilliseconds": 14970.767,
+          "separationPixels": 12.0,
+          "patternName": "scenario-002",
+          "phaseName": "moving",
+          "scenarioIndex": 2,
+          "expectedX": 2088,
+          "expectedY": 775,
+          "expectedVelocityPixelsPerSecond": 395.184
+        },
+        {
+          "frameIndex": 348,
+          "elapsedMilliseconds": 14938.105,
+          "separationPixels": 12.0,
+          "patternName": "scenario-002",
+          "phaseName": "moving",
+          "scenarioIndex": 2,
+          "expectedX": 2075,
+          "expectedY": 775,
+          "expectedVelocityPixelsPerSecond": 395.097
+        },
+        {
+          "frameIndex": 347,
+          "elapsedMilliseconds": 14893.143,
+          "separationPixels": 12.0,
+          "patternName": "scenario-002",
+          "phaseName": "resume",
+          "scenarioIndex": 2,
+          "expectedX": 2053,
+          "expectedY": 775,
+          "expectedVelocityPixelsPerSecond": 250.497
+        },
+        {
+          "frameIndex": 346,
+          "elapsedMilliseconds": 14842.27,
+          "separationPixels": 12.0,
+          "patternName": "scenario-002",
+          "phaseName": "hold",
+          "scenarioIndex": 2,
+          "expectedX": 2051,
+          "expectedY": 775,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 345,
+          "elapsedMilliseconds": 14810.442,
+          "separationPixels": 12.0,
+          "patternName": "scenario-002",
+          "phaseName": "hold",
+          "scenarioIndex": 2,
+          "expectedX": 2051,
+          "expectedY": 775,
+          "expectedVelocityPixelsPerSecond": 0.0
+        }
+      ]
+    },
+    {
+      "variantName": "constant-velocity-offset-plus2",
+      "name": "calibration.zip",
+      "relativePath": "constant-velocity-offset-plus2\\calibration.zip",
+      "lengthBytes": 47421,
+      "lastWriteTime": "2026-05-05T09:22:49.2846458+09:00",
+      "frameCount": 1175,
+      "darkFrameCount": 1175,
+      "averageEstimatedSeparationPixels": 8.00595744680851,
+      "p95EstimatedSeparationPixels": 12.0,
+      "maximumEstimatedSeparationPixels": 17.0,
+      "runtimeMode": "ProductRuntime",
+      "predictionModel": 0,
+      "targetOffsetMilliseconds": 2,
+      "motionSourceName": "motion-lab",
+      "motionGenerationProfile": "calibrator-verification-v22",
+      "motionScenarioCount": 10,
+      "motionDurationMilliseconds": 50000.0,
+      "usableForClosedLoop": true,
+      "motionContextFrameCount": 1175,
+      "separation": {
+        "count": 1175,
+        "avg": 8.00595744680851,
+        "p50": 8.0,
+        "p95": 12.0,
+        "p99": 12.0,
+        "max": 17.0
+      },
+      "captureIntervalMilliseconds": {
+        "count": 1174,
+        "avg": 41.698326235093695,
+        "p50": 44.43000000000029,
+        "p95": 52.199000000000524,
+        "p99": 61.17699999999968,
+        "max": 64.81699999999546
+      },
+      "holdMeasurementFloor": {
+        "count": 134,
+        "avg": 11.253731343283581,
+        "p50": 12.0,
+        "p95": 12.0,
+        "p99": 12.0,
+        "max": 12.0
+      },
+      "over12FrameCount": 8,
+      "zeroFrameCount": 45,
+      "patternSummaries": [
+        {
+          "name": "scenario-000",
+          "count": 96,
+          "avg": 10.677083333333334,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 17.0,
+          "max": 17.0,
+          "zeroRate": 0.0
+        },
+        {
+          "name": "scenario-001",
+          "count": 120,
+          "avg": 6.475,
+          "p50": 7.0,
+          "p95": 10.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.008333333333333333
+        },
+        {
+          "name": "scenario-002",
+          "count": 119,
+          "avg": 6.899159663865547,
+          "p50": 7.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.06722689075630252
+        },
+        {
+          "name": "scenario-003",
+          "count": 120,
+          "avg": 7.208333333333333,
+          "p50": 8.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 13.0,
+          "zeroRate": 0.06666666666666667
+        },
+        {
+          "name": "scenario-004",
+          "count": 120,
+          "avg": 5.883333333333334,
+          "p50": 6.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.058333333333333334
+        },
+        {
+          "name": "scenario-005",
+          "count": 120,
+          "avg": 7.9,
+          "p50": 8.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.041666666666666664
+        },
+        {
+          "name": "scenario-006",
+          "count": 120,
+          "avg": 9.533333333333333,
+          "p50": 10.0,
+          "p95": 12.0,
+          "p99": 15.0,
+          "max": 17.0,
+          "zeroRate": 0.025
+        },
+        {
+          "name": "scenario-007",
+          "count": 120,
+          "avg": 7.025,
+          "p50": 7.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.03333333333333333
+        },
+        {
+          "name": "scenario-008",
+          "count": 120,
+          "avg": 11.358333333333333,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 14.0,
+          "max": 14.0,
+          "zeroRate": 0.0
+        },
+        {
+          "name": "scenario-009",
+          "count": 120,
+          "avg": 7.625,
+          "p50": 8.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.075
+        }
+      ],
+      "phaseSummaries": [
+        {
+          "name": "moving",
+          "count": 1022,
+          "avg": 7.50587084148728,
+          "p50": 8.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 17.0,
+          "zeroRate": 0.04403131115459882
+        },
+        {
+          "name": "hold",
+          "count": 134,
+          "avg": 11.253731343283581,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.0
+        },
+        {
+          "name": "resume",
+          "count": 19,
+          "avg": 12.0,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.0
+        }
+      ],
+      "worstFrames": [
+        {
+          "frameIndex": 821,
+          "elapsedMilliseconds": 34595.973,
+          "separationPixels": 17.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 890,
+          "expectedY": 618,
+          "expectedVelocityPixelsPerSecond": 360.246
+        },
+        {
+          "frameIndex": 81,
+          "elapsedMilliseconds": 3707.555,
+          "separationPixels": 17.0,
+          "patternName": "scenario-000",
+          "phaseName": "moving",
+          "scenarioIndex": 0,
+          "expectedX": 836,
+          "expectedY": 727,
+          "expectedVelocityPixelsPerSecond": 138.161
+        },
+        {
+          "frameIndex": 820,
+          "elapsedMilliseconds": 34538.874,
+          "separationPixels": 15.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 911,
+          "expectedY": 619,
+          "expectedVelocityPixelsPerSecond": 358.297
+        },
+        {
+          "frameIndex": 1005,
+          "elapsedMilliseconds": 42255.651,
+          "separationPixels": 14.0,
+          "patternName": "scenario-008",
+          "phaseName": "moving",
+          "scenarioIndex": 8,
+          "expectedX": 1265,
+          "expectedY": 722,
+          "expectedVelocityPixelsPerSecond": 3.457
+        },
+        {
+          "frameIndex": 1031,
+          "elapsedMilliseconds": 43334.34,
+          "separationPixels": 14.0,
+          "patternName": "scenario-008",
+          "phaseName": "moving",
+          "scenarioIndex": 8,
+          "expectedX": 1273,
+          "expectedY": 719,
+          "expectedVelocityPixelsPerSecond": 24.291
+        },
+        {
+          "frameIndex": 972,
+          "elapsedMilliseconds": 40884.258,
+          "separationPixels": 13.0,
+          "patternName": "scenario-008",
+          "phaseName": "moving",
+          "scenarioIndex": 8,
+          "expectedX": 1257,
+          "expectedY": 726,
+          "expectedVelocityPixelsPerSecond": 13.712
+        },
+        {
+          "frameIndex": 351,
+          "elapsedMilliseconds": 15005.931,
+          "separationPixels": 13.0,
+          "patternName": "scenario-003",
+          "phaseName": "moving",
+          "scenarioIndex": 3,
+          "expectedX": 626,
+          "expectedY": 922,
+          "expectedVelocityPixelsPerSecond": 307.606
+        },
+        {
+          "frameIndex": 1058,
+          "elapsedMilliseconds": 44457.968,
+          "separationPixels": 13.0,
+          "patternName": "scenario-008",
+          "phaseName": "moving",
+          "scenarioIndex": 8,
+          "expectedX": 1286,
+          "expectedY": 714,
+          "expectedVelocityPixelsPerSecond": 28.956
+        },
+        {
+          "frameIndex": 16,
+          "elapsedMilliseconds": 1003.074,
+          "separationPixels": 12.0,
+          "patternName": "scenario-000",
+          "phaseName": "moving",
+          "scenarioIndex": 0,
+          "expectedX": 672,
+          "expectedY": 721,
+          "expectedVelocityPixelsPerSecond": 20.687
+        },
+        {
+          "frameIndex": 783,
+          "elapsedMilliseconds": 33005.985,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1194,
+          "expectedY": 596,
+          "expectedVelocityPixelsPerSecond": 360.087
+        },
+        {
+          "frameIndex": 787,
+          "elapsedMilliseconds": 33161.161,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1139,
+          "expectedY": 604,
+          "expectedVelocityPixelsPerSecond": 358.283
+        },
+        {
+          "frameIndex": 790,
+          "elapsedMilliseconds": 33285.856,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1096,
+          "expectedY": 609,
+          "expectedVelocityPixelsPerSecond": 322.306
+        }
+      ]
+    },
+    {
+      "variantName": "distilled-mlp-offset-minus4",
+      "name": "calibration.zip",
+      "relativePath": "distilled-mlp-offset-minus4\\calibration.zip",
+      "lengthBytes": 46923,
+      "lastWriteTime": "2026-05-05T09:26:13.6827204+09:00",
+      "frameCount": 1174,
+      "darkFrameCount": 1174,
+      "averageEstimatedSeparationPixels": 8.853492333901192,
+      "p95EstimatedSeparationPixels": 12.0,
+      "maximumEstimatedSeparationPixels": 19.0,
+      "runtimeMode": "ProductRuntime",
+      "predictionModel": 3,
+      "targetOffsetMilliseconds": -4,
+      "motionSourceName": "motion-lab",
+      "motionGenerationProfile": "calibrator-verification-v22",
+      "motionScenarioCount": 10,
+      "motionDurationMilliseconds": 50000.0,
+      "usableForClosedLoop": true,
+      "motionContextFrameCount": 1174,
+      "separation": {
+        "count": 1174,
+        "avg": 8.853492333901192,
+        "p50": 12.0,
+        "p95": 12.0,
+        "p99": 12.0,
+        "max": 19.0
+      },
+      "captureIntervalMilliseconds": {
+        "count": 1173,
+        "avg": 41.7342958226769,
+        "p50": 44.3730000000005,
+        "p95": 52.06900000000314,
+        "p99": 60.26900000000023,
+        "max": 64.7390000000014
+      },
+      "holdMeasurementFloor": {
+        "count": 135,
+        "avg": 11.466666666666667,
+        "p50": 12.0,
+        "p95": 12.0,
+        "p99": 12.0,
+        "max": 12.0
+      },
+      "over12FrameCount": 1,
+      "zeroFrameCount": 118,
+      "patternSummaries": [
+        {
+          "name": "scenario-000",
+          "count": 95,
+          "avg": 11.473684210526315,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.0
+        },
+        {
+          "name": "scenario-001",
+          "count": 120,
+          "avg": 6.616666666666666,
+          "p50": 6.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.016666666666666666
+        },
+        {
+          "name": "scenario-002",
+          "count": 120,
+          "avg": 7.8,
+          "p50": 11.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.15
+        },
+        {
+          "name": "scenario-003",
+          "count": 120,
+          "avg": 8.083333333333334,
+          "p50": 10.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.11666666666666667
+        },
+        {
+          "name": "scenario-004",
+          "count": 120,
+          "avg": 6.241666666666666,
+          "p50": 10.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.31666666666666665
+        },
+        {
+          "name": "scenario-005",
+          "count": 120,
+          "avg": 9.691666666666666,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.09166666666666666
+        },
+        {
+          "name": "scenario-006",
+          "count": 120,
+          "avg": 10.225,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 19.0,
+          "zeroRate": 0.008333333333333333
+        },
+        {
+          "name": "scenario-007",
+          "count": 119,
+          "avg": 8.411764705882353,
+          "p50": 11.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.14285714285714285
+        },
+        {
+          "name": "scenario-008",
+          "count": 120,
+          "avg": 11.683333333333334,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.008333333333333333
+        },
+        {
+          "name": "scenario-009",
+          "count": 120,
+          "avg": 8.85,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.13333333333333333
+        }
+      ],
+      "phaseSummaries": [
+        {
+          "name": "moving",
+          "count": 1019,
+          "avg": 8.445534838076545,
+          "p50": 11.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 19.0,
+          "zeroRate": 0.11579980372914622
+        },
+        {
+          "name": "hold",
+          "count": 135,
+          "avg": 11.466666666666667,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.0
+        },
+        {
+          "name": "resume",
+          "count": 20,
+          "avg": 12.0,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.0
+        }
+      ],
+      "worstFrames": [
+        {
+          "frameIndex": 779,
+          "elapsedMilliseconds": 32897.937,
+          "separationPixels": 19.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1233,
+          "expectedY": 591,
+          "expectedVelocityPixelsPerSecond": 360.083
+        },
+        {
+          "frameIndex": 15,
+          "elapsedMilliseconds": 1021.154,
+          "separationPixels": 12.0,
+          "patternName": "scenario-000",
+          "phaseName": "moving",
+          "scenarioIndex": 0,
+          "expectedX": 672,
+          "expectedY": 721,
+          "expectedVelocityPixelsPerSecond": 20.678
+        },
+        {
+          "frameIndex": 769,
+          "elapsedMilliseconds": 32476.508,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "hold",
+          "scenarioIndex": 6,
+          "expectedX": 1289,
+          "expectedY": 585,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 770,
+          "elapsedMilliseconds": 32521.075,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "hold",
+          "scenarioIndex": 6,
+          "expectedX": 1289,
+          "expectedY": 585,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 771,
+          "elapsedMilliseconds": 32552.628,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "hold",
+          "scenarioIndex": 6,
+          "expectedX": 1289,
+          "expectedY": 585,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 772,
+          "elapsedMilliseconds": 32604.197,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "hold",
+          "scenarioIndex": 6,
+          "expectedX": 1289,
+          "expectedY": 585,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 773,
+          "elapsedMilliseconds": 32647.799,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "hold",
+          "scenarioIndex": 6,
+          "expectedX": 1289,
+          "expectedY": 585,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 774,
+          "elapsedMilliseconds": 32677.485,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "hold",
+          "scenarioIndex": 6,
+          "expectedX": 1289,
+          "expectedY": 585,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 775,
+          "elapsedMilliseconds": 32725.678,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "hold",
+          "scenarioIndex": 6,
+          "expectedX": 1289,
+          "expectedY": 585,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 776,
+          "elapsedMilliseconds": 32773.547,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "resume",
+          "scenarioIndex": 6,
+          "expectedX": 1288,
+          "expectedY": 585,
+          "expectedVelocityPixelsPerSecond": 160.847
+        },
+        {
+          "frameIndex": 777,
+          "elapsedMilliseconds": 32805.682,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "resume",
+          "scenarioIndex": 6,
+          "expectedX": 1277,
+          "expectedY": 586,
+          "expectedVelocityPixelsPerSecond": 523.035
+        },
+        {
+          "frameIndex": 778,
+          "elapsedMilliseconds": 32851.166,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "resume",
+          "scenarioIndex": 6,
+          "expectedX": 1250,
+          "expectedY": 589,
+          "expectedVelocityPixelsPerSecond": 475.852
+        }
+      ]
+    },
+    {
+      "variantName": "least-squares-offset-0",
+      "name": "calibration.zip",
+      "relativePath": "least-squares-offset-0\\calibration.zip",
+      "lengthBytes": 47057,
+      "lastWriteTime": "2026-05-05T09:25:22.5829461+09:00",
+      "frameCount": 1174,
+      "darkFrameCount": 1174,
+      "averageEstimatedSeparationPixels": 7.661839863713799,
+      "p95EstimatedSeparationPixels": 12.0,
+      "maximumEstimatedSeparationPixels": 18.0,
+      "runtimeMode": "ProductRuntime",
+      "predictionModel": 1,
+      "targetOffsetMilliseconds": 0,
+      "motionSourceName": "motion-lab",
+      "motionGenerationProfile": "calibrator-verification-v22",
+      "motionScenarioCount": 10,
+      "motionDurationMilliseconds": 50000.0,
+      "usableForClosedLoop": true,
+      "motionContextFrameCount": 1174,
+      "separation": {
+        "count": 1174,
+        "avg": 7.661839863713799,
+        "p50": 8.0,
+        "p95": 12.0,
+        "p99": 12.0,
+        "max": 18.0
+      },
+      "captureIntervalMilliseconds": {
+        "count": 1173,
+        "avg": 41.768936913896,
+        "p50": 44.99699999999939,
+        "p95": 51.830000000001746,
+        "p99": 58.556000000000495,
+        "max": 69.34900000000198
+      },
+      "holdMeasurementFloor": {
+        "count": 135,
+        "avg": 11.637037037037038,
+        "p50": 12.0,
+        "p95": 12.0,
+        "p99": 12.0,
+        "max": 12.0
+      },
+      "over12FrameCount": 1,
+      "zeroFrameCount": 53,
+      "patternSummaries": [
+        {
+          "name": "scenario-000",
+          "count": 97,
+          "avg": 10.927835051546392,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.0
+        },
+        {
+          "name": "scenario-001",
+          "count": 120,
+          "avg": 5.908333333333333,
+          "p50": 7.0,
+          "p95": 9.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.025
+        },
+        {
+          "name": "scenario-002",
+          "count": 119,
+          "avg": 6.647058823529412,
+          "p50": 7.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.05042016806722689
+        },
+        {
+          "name": "scenario-003",
+          "count": 120,
+          "avg": 5.658333333333333,
+          "p50": 6.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.058333333333333334
+        },
+        {
+          "name": "scenario-004",
+          "count": 120,
+          "avg": 3.9583333333333335,
+          "p50": 3.0,
+          "p95": 9.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.075
+        },
+        {
+          "name": "scenario-005",
+          "count": 119,
+          "avg": 8.46218487394958,
+          "p50": 10.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.06722689075630252
+        },
+        {
+          "name": "scenario-006",
+          "count": 120,
+          "avg": 9.65,
+          "p50": 11.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 18.0,
+          "zeroRate": 0.008333333333333333
+        },
+        {
+          "name": "scenario-007",
+          "count": 120,
+          "avg": 6.4,
+          "p50": 6.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.075
+        },
+        {
+          "name": "scenario-008",
+          "count": 120,
+          "avg": 11.825,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.0
+        },
+        {
+          "name": "scenario-009",
+          "count": 119,
+          "avg": 7.80672268907563,
+          "p50": 8.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.08403361344537816
+        }
+      ],
+      "phaseSummaries": [
+        {
+          "name": "moving",
+          "count": 1020,
+          "avg": 7.0549019607843135,
+          "p50": 8.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 18.0,
+          "zeroRate": 0.05196078431372549
+        },
+        {
+          "name": "hold",
+          "count": 135,
+          "avg": 11.637037037037038,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.0
+        },
+        {
+          "name": "resume",
+          "count": 19,
+          "avg": 12.0,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.0
+        }
+      ],
+      "worstFrames": [
+        {
+          "frameIndex": 744,
+          "elapsedMilliseconds": 31462.534,
+          "separationPixels": 18.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1583,
+          "expectedY": 562,
+          "expectedVelocityPixelsPerSecond": 360.03
+        },
+        {
+          "frameIndex": 15,
+          "elapsedMilliseconds": 997.187,
+          "separationPixels": 12.0,
+          "patternName": "scenario-000",
+          "phaseName": "moving",
+          "scenarioIndex": 0,
+          "expectedX": 672,
+          "expectedY": 721,
+          "expectedVelocityPixelsPerSecond": 20.69
+        },
+        {
+          "frameIndex": 771,
+          "elapsedMilliseconds": 32587.238,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "hold",
+          "scenarioIndex": 6,
+          "expectedX": 1289,
+          "expectedY": 585,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 772,
+          "elapsedMilliseconds": 32619.674,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "hold",
+          "scenarioIndex": 6,
+          "expectedX": 1289,
+          "expectedY": 585,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 773,
+          "elapsedMilliseconds": 32666.426,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "hold",
+          "scenarioIndex": 6,
+          "expectedX": 1289,
+          "expectedY": 585,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 774,
+          "elapsedMilliseconds": 32711.791,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "hold",
+          "scenarioIndex": 6,
+          "expectedX": 1289,
+          "expectedY": 585,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 775,
+          "elapsedMilliseconds": 32741.689,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "hold",
+          "scenarioIndex": 6,
+          "expectedX": 1289,
+          "expectedY": 585,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 776,
+          "elapsedMilliseconds": 32790.545,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "resume",
+          "scenarioIndex": 6,
+          "expectedX": 1283,
+          "expectedY": 585,
+          "expectedVelocityPixelsPerSecond": 357.712
+        },
+        {
+          "frameIndex": 770,
+          "elapsedMilliseconds": 32543.731,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "hold",
+          "scenarioIndex": 6,
+          "expectedX": 1289,
+          "expectedY": 585,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 777,
+          "elapsedMilliseconds": 32836.555,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "resume",
+          "scenarioIndex": 6,
+          "expectedX": 1258,
+          "expectedY": 588,
+          "expectedVelocityPixelsPerSecond": 619.009
+        },
+        {
+          "frameIndex": 783,
+          "elapsedMilliseconds": 33088.306,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1165,
+          "expectedY": 600,
+          "expectedVelocityPixelsPerSecond": 360.119
+        },
+        {
+          "frameIndex": 791,
+          "elapsedMilliseconds": 33415.005,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1058,
+          "expectedY": 613,
+          "expectedVelocityPixelsPerSecond": 275.498
+        }
+      ]
+    },
+    {
+      "variantName": "runtime-event-safe-mlp-offset-minus2",
+      "name": "calibration.zip",
+      "relativePath": "runtime-event-safe-mlp-offset-minus2\\calibration.zip",
+      "lengthBytes": 46556,
+      "lastWriteTime": "2026-05-05T09:27:55.7280228+09:00",
+      "frameCount": 1176,
+      "darkFrameCount": 1176,
+      "averageEstimatedSeparationPixels": 9.930272108843537,
+      "p95EstimatedSeparationPixels": 12.0,
+      "maximumEstimatedSeparationPixels": 17.0,
+      "runtimeMode": "ProductRuntime",
+      "predictionModel": 4,
+      "targetOffsetMilliseconds": -2,
+      "motionSourceName": "motion-lab",
+      "motionGenerationProfile": "calibrator-verification-v22",
+      "motionScenarioCount": 10,
+      "motionDurationMilliseconds": 50000.0,
+      "usableForClosedLoop": true,
+      "motionContextFrameCount": 1176,
+      "separation": {
+        "count": 1176,
+        "avg": 9.930272108843537,
+        "p50": 12.0,
+        "p95": 12.0,
+        "p99": 12.0,
+        "max": 17.0
+      },
+      "captureIntervalMilliseconds": {
+        "count": 1175,
+        "avg": 41.70443829787234,
+        "p50": 44.91200000000026,
+        "p95": 51.65100000000166,
+        "p99": 59.86899999999878,
+        "max": 64.91100000000006
+      },
+      "holdMeasurementFloor": {
+        "count": 137,
+        "avg": 11.861313868613138,
+        "p50": 12.0,
+        "p95": 12.0,
+        "p99": 12.0,
+        "max": 12.0
+      },
+      "over12FrameCount": 3,
+      "zeroFrameCount": 46,
+      "patternSummaries": [
+        {
+          "name": "scenario-000",
+          "count": 97,
+          "avg": 11.092783505154639,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.0
+        },
+        {
+          "name": "scenario-001",
+          "count": 120,
+          "avg": 9.641666666666667,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.016666666666666666
+        },
+        {
+          "name": "scenario-002",
+          "count": 120,
+          "avg": 9.3,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.05
+        },
+        {
+          "name": "scenario-003",
+          "count": 120,
+          "avg": 8.691666666666666,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.041666666666666664
+        },
+        {
+          "name": "scenario-004",
+          "count": 120,
+          "avg": 9.0,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.058333333333333334
+        },
+        {
+          "name": "scenario-005",
+          "count": 120,
+          "avg": 10.575,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.041666666666666664
+        },
+        {
+          "name": "scenario-006",
+          "count": 119,
+          "avg": 11.117647058823529,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 15.0,
+          "max": 17.0,
+          "zeroRate": 0.0
+        },
+        {
+          "name": "scenario-007",
+          "count": 120,
+          "avg": 9.416666666666666,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.025
+        },
+        {
+          "name": "scenario-008",
+          "count": 120,
+          "avg": 11.95,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.0
+        },
+        {
+          "name": "scenario-009",
+          "count": 120,
+          "avg": 8.75,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.15
+        }
+      ],
+      "phaseSummaries": [
+        {
+          "name": "moving",
+          "count": 1021,
+          "avg": 9.634671890303624,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 17.0,
+          "zeroRate": 0.04505386875612145
+        },
+        {
+          "name": "hold",
+          "count": 137,
+          "avg": 11.861313868613138,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.0
+        },
+        {
+          "name": "resume",
+          "count": 18,
+          "avg": 12.0,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.0
+        }
+      ],
+      "worstFrames": [
+        {
+          "frameIndex": 745,
+          "elapsedMilliseconds": 31417.42,
+          "separationPixels": 17.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1599,
+          "expectedY": 561,
+          "expectedVelocityPixelsPerSecond": 360.02
+        },
+        {
+          "frameIndex": 746,
+          "elapsedMilliseconds": 31462.229,
+          "separationPixels": 15.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1583,
+          "expectedY": 562,
+          "expectedVelocityPixelsPerSecond": 360.029
+        },
+        {
+          "frameIndex": 820,
+          "elapsedMilliseconds": 34588.278,
+          "separationPixels": 14.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 893,
+          "expectedY": 618,
+          "expectedVelocityPixelsPerSecond": 359.941
+        },
+        {
+          "frameIndex": 747,
+          "elapsedMilliseconds": 31494.182,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1572,
+          "expectedY": 563,
+          "expectedVelocityPixelsPerSecond": 360.043
+        },
+        {
+          "frameIndex": 748,
+          "elapsedMilliseconds": 31540.771,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1555,
+          "expectedY": 563,
+          "expectedVelocityPixelsPerSecond": 360.02
+        },
+        {
+          "frameIndex": 749,
+          "elapsedMilliseconds": 31588.58,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1538,
+          "expectedY": 564,
+          "expectedVelocityPixelsPerSecond": 360.043
+        },
+        {
+          "frameIndex": 750,
+          "elapsedMilliseconds": 31618.773,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1527,
+          "expectedY": 565,
+          "expectedVelocityPixelsPerSecond": 360.004
+        },
+        {
+          "frameIndex": 751,
+          "elapsedMilliseconds": 31664.868,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1510,
+          "expectedY": 566,
+          "expectedVelocityPixelsPerSecond": 360.038
+        },
+        {
+          "frameIndex": 753,
+          "elapsedMilliseconds": 31742.323,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1482,
+          "expectedY": 568,
+          "expectedVelocityPixelsPerSecond": 360.016
+        },
+        {
+          "frameIndex": 754,
+          "elapsedMilliseconds": 31793.24,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1464,
+          "expectedY": 569,
+          "expectedVelocityPixelsPerSecond": 359.989
+        },
+        {
+          "frameIndex": 755,
+          "elapsedMilliseconds": 31836.446,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1449,
+          "expectedY": 570,
+          "expectedVelocityPixelsPerSecond": 360.018
+        },
+        {
+          "frameIndex": 756,
+          "elapsedMilliseconds": 31869.742,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1437,
+          "expectedY": 571,
+          "expectedVelocityPixelsPerSecond": 360.082
+        }
+      ]
+    },
+    {
+      "variantName": "runtime-event-safe-mlp-offset-minus4",
+      "name": "calibration.zip",
+      "relativePath": "runtime-event-safe-mlp-offset-minus4\\calibration.zip",
+      "lengthBytes": 46393,
+      "lastWriteTime": "2026-05-05T09:27:04.6751008+09:00",
+      "frameCount": 1173,
+      "darkFrameCount": 1173,
+      "averageEstimatedSeparationPixels": 9.83375959079284,
+      "p95EstimatedSeparationPixels": 12.0,
+      "maximumEstimatedSeparationPixels": 19.0,
+      "runtimeMode": "ProductRuntime",
+      "predictionModel": 4,
+      "targetOffsetMilliseconds": -4,
+      "motionSourceName": "motion-lab",
+      "motionGenerationProfile": "calibrator-verification-v22",
+      "motionScenarioCount": 10,
+      "motionDurationMilliseconds": 50000.0,
+      "usableForClosedLoop": true,
+      "motionContextFrameCount": 1173,
+      "separation": {
+        "count": 1173,
+        "avg": 9.83375959079284,
+        "p50": 12.0,
+        "p95": 12.0,
+        "p99": 12.0,
+        "max": 19.0
+      },
+      "captureIntervalMilliseconds": {
+        "count": 1172,
+        "avg": 41.76657764505119,
+        "p50": 44.14299999999639,
+        "p95": 52.38100000000122,
+        "p99": 59.98800000000483,
+        "max": 66.02100000000064
+      },
+      "holdMeasurementFloor": {
+        "count": 137,
+        "avg": 11.72992700729927,
+        "p50": 12.0,
+        "p95": 12.0,
+        "p99": 12.0,
+        "max": 12.0
+      },
+      "over12FrameCount": 2,
+      "zeroFrameCount": 48,
+      "patternSummaries": [
+        {
+          "name": "scenario-000",
+          "count": 95,
+          "avg": 11.473684210526315,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.0
+        },
+        {
+          "name": "scenario-001",
+          "count": 120,
+          "avg": 9.55,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.008333333333333333
+        },
+        {
+          "name": "scenario-002",
+          "count": 120,
+          "avg": 9.125,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.05
+        },
+        {
+          "name": "scenario-003",
+          "count": 120,
+          "avg": 9.233333333333333,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.016666666666666666
+        },
+        {
+          "name": "scenario-004",
+          "count": 119,
+          "avg": 7.798319327731092,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.07563025210084033
+        },
+        {
+          "name": "scenario-005",
+          "count": 120,
+          "avg": 10.533333333333333,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.025
+        },
+        {
+          "name": "scenario-006",
+          "count": 119,
+          "avg": 10.705882352941176,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 15.0,
+          "max": 19.0,
+          "zeroRate": 0.008403361344537815
+        },
+        {
+          "name": "scenario-007",
+          "count": 120,
+          "avg": 9.2,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.058333333333333334
+        },
+        {
+          "name": "scenario-008",
+          "count": 120,
+          "avg": 11.983333333333333,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.0
+        },
+        {
+          "name": "scenario-009",
+          "count": 120,
+          "avg": 9.066666666666666,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.15833333333333333
+        }
+      ],
+      "phaseSummaries": [
+        {
+          "name": "moving",
+          "count": 1019,
+          "avg": 9.54268891069676,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 19.0,
+          "zeroRate": 0.047105004906771344
+        },
+        {
+          "name": "hold",
+          "count": 137,
+          "avg": 11.72992700729927,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.0
+        },
+        {
+          "name": "resume",
+          "count": 17,
+          "avg": 12.0,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.0
+        }
+      ],
+      "worstFrames": [
+        {
+          "frameIndex": 777,
+          "elapsedMilliseconds": 32884.339,
+          "separationPixels": 19.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1238,
+          "expectedY": 591,
+          "expectedVelocityPixelsPerSecond": 360.08
+        },
+        {
+          "frameIndex": 817,
+          "elapsedMilliseconds": 34537.292,
+          "separationPixels": 15.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 911,
+          "expectedY": 619,
+          "expectedVelocityPixelsPerSecond": 358.239
+        },
+        {
+          "frameIndex": 15,
+          "elapsedMilliseconds": 1008.247,
+          "separationPixels": 12.0,
+          "patternName": "scenario-000",
+          "phaseName": "moving",
+          "scenarioIndex": 0,
+          "expectedX": 672,
+          "expectedY": 721,
+          "expectedVelocityPixelsPerSecond": 20.684
+        },
+        {
+          "frameIndex": 750,
+          "elapsedMilliseconds": 31711.22,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1494,
+          "expectedY": 567,
+          "expectedVelocityPixelsPerSecond": 359.981
+        },
+        {
+          "frameIndex": 751,
+          "elapsedMilliseconds": 31758.974,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1476,
+          "expectedY": 568,
+          "expectedVelocityPixelsPerSecond": 360.045
+        },
+        {
+          "frameIndex": 755,
+          "elapsedMilliseconds": 31917.315,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1420,
+          "expectedY": 572,
+          "expectedVelocityPixelsPerSecond": 360.87
+        },
+        {
+          "frameIndex": 756,
+          "elapsedMilliseconds": 31964.086,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1402,
+          "expectedY": 573,
+          "expectedVelocityPixelsPerSecond": 382.838
+        },
+        {
+          "frameIndex": 759,
+          "elapsedMilliseconds": 32087.927,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1350,
+          "expectedY": 578,
+          "expectedVelocityPixelsPerSecond": 447.443
+        },
+        {
+          "frameIndex": 760,
+          "elapsedMilliseconds": 32134.214,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1330,
+          "expectedY": 580,
+          "expectedVelocityPixelsPerSecond": 449.42
+        },
+        {
+          "frameIndex": 761,
+          "elapsedMilliseconds": 32199.638,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "moving",
+          "scenarioIndex": 6,
+          "expectedX": 1301,
+          "expectedY": 583,
+          "expectedVelocityPixelsPerSecond": 429.785
+        },
+        {
+          "frameIndex": 762,
+          "elapsedMilliseconds": 32257.92,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "hold",
+          "scenarioIndex": 6,
+          "expectedX": 1289,
+          "expectedY": 585,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 764,
+          "elapsedMilliseconds": 32335.658,
+          "separationPixels": 12.0,
+          "patternName": "scenario-006",
+          "phaseName": "hold",
+          "scenarioIndex": 6,
+          "expectedX": 1289,
+          "expectedY": 585,
+          "expectedVelocityPixelsPerSecond": 0.0
+        }
+      ]
+    }
+  ]
+}

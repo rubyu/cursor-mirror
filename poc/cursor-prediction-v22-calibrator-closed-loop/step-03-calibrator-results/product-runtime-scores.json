@@ -1,0 +1,461 @@
+{
+  "generatedAt": "2026-05-05T00:31:29.8231104Z",
+  "packageCount": 7,
+  "packages": [
+    {
+      "variantName": "constant-velocity-offset-0",
+      "eventCount": 17949,
+      "schedulerCount": 3002,
+      "controllerCount": 3002,
+      "overlayMoveCount": 2323,
+      "overlayUpdateLayerCount": 2987,
+      "wakeLateMicroseconds": {
+        "count": 3002,
+        "avg": 82.51065956029313,
+        "p50": 0.0,
+        "p95": 395.0,
+        "p99": 1541.0,
+        "max": 12267.0
+      },
+      "controllerTickTotalMicroseconds": {
+        "count": 3002,
+        "avg": 403.5184210526313,
+        "p50": 388.0,
+        "p95": 926.7,
+        "p99": 1185.5,
+        "max": 6134.5
+      },
+      "controllerPredictMicroseconds": {
+        "count": 3002,
+        "avg": 4.151132578281138,
+        "p50": 2.1,
+        "p95": 6.5,
+        "p99": 9.9,
+        "max": 1638.4
+      },
+      "controllerMoveOverlayMicroseconds": {
+        "count": 3002,
+        "avg": 376.65756162558273,
+        "p50": 373.5,
+        "p95": 883.7,
+        "p99": 1143.5,
+        "max": 2497.3
+      },
+      "overlayUpdateLayerMicroseconds": {
+        "count": 2987,
+        "avg": 404.2880147304982,
+        "p50": 371.4,
+        "p95": 876.4,
+        "p99": 1140.5,
+        "max": 2481.2
+      },
+      "overlayTotalMicroseconds": {
+        "count": 2987,
+        "avg": 429.3592567793768,
+        "p50": 384.2,
+        "p95": 891.8,
+        "p99": 1177.7,
+        "max": 2491.9
+      },
+      "latestMouseMoveAgeMicroseconds": {
+        "count": 2323,
+        "avg": 0.0,
+        "p50": 0.0,
+        "p95": 0.0,
+        "p99": 0.0,
+        "max": 0.0
+      },
+      "overlayMoveSkippedCount": 0
+    },
+    {
+      "variantName": "constant-velocity-offset-minus2",
+      "eventCount": 17836,
+      "schedulerCount": 3001,
+      "controllerCount": 3001,
+      "overlayMoveCount": 2276,
+      "overlayUpdateLayerCount": 2927,
+      "wakeLateMicroseconds": {
+        "count": 3001,
+        "avg": 105.08930356547818,
+        "p50": 0.0,
+        "p95": 557.0,
+        "p99": 1802.0,
+        "max": 23060.0
+      },
+      "controllerTickTotalMicroseconds": {
+        "count": 3001,
+        "avg": 451.2976674441856,
+        "p50": 413.9,
+        "p95": 1038.8,
+        "p99": 1418.1,
+        "max": 5658.6
+      },
+      "controllerPredictMicroseconds": {
+        "count": 3001,
+        "avg": 4.804098633788735,
+        "p50": 3.0,
+        "p95": 7.2,
+        "p99": 10.4,
+        "max": 1533.3
+      },
+      "controllerMoveOverlayMicroseconds": {
+        "count": 3001,
+        "avg": 421.49800066644804,
+        "p50": 396.8,
+        "p95": 996.3,
+        "p99": 1350.8,
+        "max": 3163.1
+      },
+      "overlayUpdateLayerMicroseconds": {
+        "count": 2927,
+        "avg": 457.68066279467,
+        "p50": 406.2,
+        "p95": 986.2,
+        "p99": 1370.8,
+        "max": 3139.6
+      },
+      "overlayTotalMicroseconds": {
+        "count": 2927,
+        "avg": 484.7588315681581,
+        "p50": 426.7,
+        "p95": 999.7,
+        "p99": 1413.6,
+        "max": 3155.0
+      },
+      "latestMouseMoveAgeMicroseconds": {
+        "count": 2276,
+        "avg": 0.0,
+        "p50": 0.0,
+        "p95": 0.0,
+        "p99": 0.0,
+        "max": 0.0
+      },
+      "overlayMoveSkippedCount": 0
+    },
+    {
+      "variantName": "constant-velocity-offset-plus2",
+      "eventCount": 18014,
+      "schedulerCount": 3001,
+      "controllerCount": 3001,
+      "overlayMoveCount": 2357,
+      "overlayUpdateLayerCount": 3022,
+      "wakeLateMicroseconds": {
+        "count": 3001,
+        "avg": 87.4921692769077,
+        "p50": 0.0,
+        "p95": 447.0,
+        "p99": 1539.0,
+        "max": 13261.0
+      },
+      "controllerTickTotalMicroseconds": {
+        "count": 3001,
+        "avg": 360.150116627791,
+        "p50": 348.6,
+        "p95": 796.8,
+        "p99": 1114.3,
+        "max": 5399.7
+      },
+      "controllerPredictMicroseconds": {
+        "count": 3001,
+        "avg": 3.6414528490503146,
+        "p50": 1.8,
+        "p95": 5.5,
+        "p99": 8.3,
+        "max": 1589.8
+      },
+      "controllerMoveOverlayMicroseconds": {
+        "count": 3001,
+        "avg": 336.92762412529,
+        "p50": 333.6,
+        "p95": 768.4,
+        "p99": 1043.2,
+        "max": 2023.5
+      },
+      "overlayUpdateLayerMicroseconds": {
+        "count": 3022,
+        "avg": 358.85363997352823,
+        "p50": 330.0,
+        "p95": 760.1,
+        "p99": 1031.9,
+        "max": 2004.7
+      },
+      "overlayTotalMicroseconds": {
+        "count": 3022,
+        "avg": 382.5015221707474,
+        "p50": 344.8,
+        "p95": 772.3,
+        "p99": 1066.6,
+        "max": 2629.0
+      },
+      "latestMouseMoveAgeMicroseconds": {
+        "count": 2357,
+        "avg": 0.0,
+        "p50": 0.0,
+        "p95": 0.0,
+        "p99": 0.0,
+        "max": 0.0
+      },
+      "overlayMoveSkippedCount": 0
+    },
+    {
+      "variantName": "distilled-mlp-offset-minus4",
+      "eventCount": 17730,
+      "schedulerCount": 3002,
+      "controllerCount": 3002,
+      "overlayMoveCount": 2225,
+      "overlayUpdateLayerCount": 2873,
+      "wakeLateMicroseconds": {
+        "count": 3002,
+        "avg": 81.10059960026649,
+        "p50": 0.0,
+        "p95": 390.0,
+        "p99": 1498.0,
+        "max": 13547.0
+      },
+      "controllerTickTotalMicroseconds": {
+        "count": 3002,
+        "avg": 369.0968021319128,
+        "p50": 356.7,
+        "p95": 842.9,
+        "p99": 1183.0,
+        "max": 7469.2
+      },
+      "controllerPredictMicroseconds": {
+        "count": 3002,
+        "avg": 15.966622251832124,
+        "p50": 10.2,
+        "p95": 29.1,
+        "p99": 46.2,
+        "max": 5829.3
+      },
+      "controllerMoveOverlayMicroseconds": {
+        "count": 3002,
+        "avg": 333.4460692871399,
+        "p50": 334.5,
+        "p95": 792.8,
+        "p99": 1097.7,
+        "max": 2653.4
+      },
+      "overlayUpdateLayerMicroseconds": {
+        "count": 2873,
+        "avg": 374.86265227984705,
+        "p50": 342.9,
+        "p95": 791.2,
+        "p99": 1103.3,
+        "max": 2642.9
+      },
+      "overlayTotalMicroseconds": {
+        "count": 2873,
+        "avg": 400.66637660981627,
+        "p50": 355.3,
+        "p95": 803.4,
+        "p99": 1123.9,
+        "max": 4852.1
+      },
+      "latestMouseMoveAgeMicroseconds": {
+        "count": 2225,
+        "avg": 0.0,
+        "p50": 0.0,
+        "p95": 0.0,
+        "p99": 0.0,
+        "max": 0.0
+      },
+      "overlayMoveSkippedCount": 0
+    },
+    {
+      "variantName": "least-squares-offset-0",
+      "eventCount": 17278,
+      "schedulerCount": 3002,
+      "controllerCount": 3002,
+      "overlayMoveCount": 1993,
+      "overlayUpdateLayerCount": 2655,
+      "wakeLateMicroseconds": {
+        "count": 3002,
+        "avg": 105.88940706195869,
+        "p50": 0.0,
+        "p95": 531.0,
+        "p99": 1984.0,
+        "max": 13113.0
+      },
+      "controllerTickTotalMicroseconds": {
+        "count": 3002,
+        "avg": 371.1511992005328,
+        "p50": 350.9,
+        "p95": 926.2,
+        "p99": 1292.2,
+        "max": 5125.5
+      },
+      "controllerPredictMicroseconds": {
+        "count": 3002,
+        "avg": 7.434843437708182,
+        "p50": 4.5,
+        "p95": 10.7,
+        "p99": 14.7,
+        "max": 3104.8
+      },
+      "controllerMoveOverlayMicroseconds": {
+        "count": 3002,
+        "avg": 340.97121918720626,
+        "p50": 332.7,
+        "p95": 883.2,
+        "p99": 1229.0,
+        "max": 2486.5
+      },
+      "overlayUpdateLayerMicroseconds": {
+        "count": 2655,
+        "avg": 419.29883239171284,
+        "p50": 369.3,
+        "p95": 898.4,
+        "p99": 1280.2,
+        "max": 2465.8
+      },
+      "overlayTotalMicroseconds": {
+        "count": 2655,
+        "avg": 447.8698305084745,
+        "p50": 388.0,
+        "p95": 919.4,
+        "p99": 1306.3,
+        "max": 2479.7
+      },
+      "latestMouseMoveAgeMicroseconds": {
+        "count": 1993,
+        "avg": 0.0,
+        "p50": 0.0,
+        "p95": 0.0,
+        "p99": 0.0,
+        "max": 0.0
+      },
+      "overlayMoveSkippedCount": 0
+    },
+    {
+      "variantName": "runtime-event-safe-mlp-offset-minus2",
+      "eventCount": 17452,
+      "schedulerCount": 3002,
+      "controllerCount": 3002,
+      "overlayMoveCount": 2082,
+      "overlayUpdateLayerCount": 2735,
+      "wakeLateMicroseconds": {
+        "count": 3002,
+        "avg": 107.96235842771486,
+        "p50": 0.0,
+        "p95": 572.0,
+        "p99": 1824.0,
+        "max": 9863.0
+      },
+      "controllerTickTotalMicroseconds": {
+        "count": 3002,
+        "avg": 425.1881745502993,
+        "p50": 385.6,
+        "p95": 1017.1,
+        "p99": 1441.6,
+        "max": 5278.7
+      },
+      "controllerPredictMicroseconds": {
+        "count": 3002,
+        "avg": 16.46139240506332,
+        "p50": 12.4,
+        "p95": 28.8,
+        "p99": 38.5,
+        "max": 5143.7
+      },
+      "controllerMoveOverlayMicroseconds": {
+        "count": 3002,
+        "avg": 381.22771485676077,
+        "p50": 361.6,
+        "p95": 947.1,
+        "p99": 1321.0,
+        "max": 2939.0
+      },
+      "overlayUpdateLayerMicroseconds": {
+        "count": 2735,
+        "avg": 446.30705667276095,
+        "p50": 392.2,
+        "p95": 948.6,
+        "p99": 1356.2,
+        "max": 2922.2
+      },
+      "overlayTotalMicroseconds": {
+        "count": 2735,
+        "avg": 473.8189396709329,
+        "p50": 415.2,
+        "p95": 961.5,
+        "p99": 1390.6,
+        "max": 2934.4
+      },
+      "latestMouseMoveAgeMicroseconds": {
+        "count": 2082,
+        "avg": 0.0,
+        "p50": 0.0,
+        "p95": 0.0,
+        "p99": 0.0,
+        "max": 0.0
+      },
+      "overlayMoveSkippedCount": 0
+    },
+    {
+      "variantName": "runtime-event-safe-mlp-offset-minus4",
+      "eventCount": 17294,
+      "schedulerCount": 3002,
+      "controllerCount": 3002,
+      "overlayMoveCount": 1998,
+      "overlayUpdateLayerCount": 2663,
+      "wakeLateMicroseconds": {
+        "count": 3002,
+        "avg": 94.3597601598934,
+        "p50": 0.0,
+        "p95": 505.0,
+        "p99": 1932.0,
+        "max": 5136.0
+      },
+      "controllerTickTotalMicroseconds": {
+        "count": 3002,
+        "avg": 368.2703197868085,
+        "p50": 367.2,
+        "p95": 908.5,
+        "p99": 1261.8,
+        "max": 6242.7
+      },
+      "controllerPredictMicroseconds": {
+        "count": 3002,
+        "avg": 13.046768820786118,
+        "p50": 8.2,
+        "p95": 24.0,
+        "p99": 33.8,
+        "max": 5589.8
+      },
+      "controllerMoveOverlayMicroseconds": {
+        "count": 3002,
+        "avg": 332.3451032644877,
+        "p50": 347.8,
+        "p95": 863.1,
+        "p99": 1155.3,
+        "max": 2238.1
+      },
+      "overlayUpdateLayerMicroseconds": {
+        "count": 2663,
+        "avg": 404.18745775441175,
+        "p50": 372.2,
+        "p95": 877.0,
+        "p99": 1182.3,
+        "max": 2224.0
+      },
+      "overlayTotalMicroseconds": {
+        "count": 2663,
+        "avg": 432.1625985730373,
+        "p50": 389.0,
+        "p95": 899.9,
+        "p99": 1211.5,
+        "max": 2235.1
+      },
+      "latestMouseMoveAgeMicroseconds": {
+        "count": 1998,
+        "avg": 0.0,
+        "p50": 0.0,
+        "p95": 0.0,
+        "p99": 0.0,
+        "max": 0.0
+      },
+      "overlayMoveSkippedCount": 0
+    }
+  ]
+}

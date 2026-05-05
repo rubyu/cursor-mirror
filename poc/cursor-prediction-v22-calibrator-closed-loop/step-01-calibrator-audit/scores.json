@@ -1,0 +1,1402 @@
+{
+  "generatedAt": "2026-05-05T00:06:16.8315078Z",
+  "packageCount": 4,
+  "closedLoopUsablePackageCount": 2,
+  "totalFrameCount": 1767,
+  "overallSeparation": {
+    "count": 1767,
+    "avg": 7.113752122241086,
+    "p50": 0.0,
+    "p95": 12.0,
+    "p99": 12.0,
+    "max": 3805.0
+  },
+  "primaryFrameCount": 1616,
+  "primarySeparation": {
+    "count": 1616,
+    "avg": 3.0959158415841586,
+    "p50": 0.0,
+    "p95": 12.0,
+    "p99": 12.0,
+    "max": 78.0
+  },
+  "overallCaptureIntervalMilliseconds": {
+    "count": 1614,
+    "avg": 42.07044919454767,
+    "p50": 44.11000000000058,
+    "p95": 52.23500000000058,
+    "p99": 56.35299999999552,
+    "max": 66.40000000000055
+  },
+  "holdMeasurementFloor": {
+    "count": 81,
+    "avg": 7.518518518518518,
+    "p50": 12.0,
+    "p95": 12.0,
+    "p99": 12.0,
+    "max": 12.0
+  },
+  "primaryHoldMeasurementFloor": {
+    "count": 81,
+    "avg": 7.518518518518518,
+    "p50": 12.0,
+    "p95": 12.0,
+    "p99": 12.0,
+    "max": 12.0
+  },
+  "zeroFrameCount": 1119,
+  "over12FrameCount": 11,
+  "over20FrameCount": 4,
+  "primaryOver12FrameCount": 8,
+  "primaryOver20FrameCount": 2,
+  "patternSummaries": [
+    {
+      "name": "linear-slow",
+      "count": 252,
+      "avg": 2.9642857142857144,
+      "p50": 0.0,
+      "p95": 9.0,
+      "p99": 12.0,
+      "max": 12.0,
+      "zeroRate": 0.6031746031746031
+    },
+    {
+      "name": "hold-right",
+      "count": 39,
+      "avg": 8.333333333333334,
+      "p50": 12.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 12.0,
+      "zeroRate": 0.23076923076923078
+    },
+    {
+      "name": "linear-fast",
+      "count": 109,
+      "avg": 4.055045871559633,
+      "p50": 0.0,
+      "p95": 12.0,
+      "p99": 75.0,
+      "max": 78.0,
+      "zeroRate": 0.7614678899082569
+    },
+    {
+      "name": "hold-left",
+      "count": 42,
+      "avg": 6.761904761904762,
+      "p50": 12.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 12.0,
+      "zeroRate": 0.42857142857142855
+    },
+    {
+      "name": "quadratic-ease-in",
+      "count": 199,
+      "avg": 4.442211055276382,
+      "p50": 0.0,
+      "p95": 12.0,
+      "p99": 13.0,
+      "max": 13.0,
+      "zeroRate": 0.5728643216080402
+    },
+    {
+      "name": "quadratic-ease-out",
+      "count": 173,
+      "avg": 1.8381502890173411,
+      "p50": 0.0,
+      "p95": 10.0,
+      "p99": 12.0,
+      "max": 12.0,
+      "zeroRate": 0.7745664739884393
+    },
+    {
+      "name": "cubic-smoothstep",
+      "count": 200,
+      "avg": 3.905,
+      "p50": 0.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 12.0,
+      "zeroRate": 0.585
+    },
+    {
+      "name": "cubic-in-out",
+      "count": 143,
+      "avg": 3.5174825174825175,
+      "p50": 0.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 12.0,
+      "zeroRate": 0.6363636363636364
+    },
+    {
+      "name": "rapid-reversal",
+      "count": 143,
+      "avg": 1.6853146853146854,
+      "p50": 0.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 12.0,
+      "zeroRate": 0.8321678321678322
+    },
+    {
+      "name": "sine-sweep",
+      "count": 199,
+      "avg": 1.1909547738693467,
+      "p50": 0.0,
+      "p95": 11.0,
+      "p99": 12.0,
+      "max": 12.0,
+      "zeroRate": 0.864321608040201
+    },
+    {
+      "name": "short-jitter",
+      "count": 117,
+      "avg": 2.0598290598290596,
+      "p50": 0.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 12.0,
+      "zeroRate": 0.7863247863247863
+    }
+  ],
+  "phaseSummaries": [
+    {
+      "name": "constant-speed",
+      "count": 361,
+      "avg": 3.293628808864266,
+      "p50": 0.0,
+      "p95": 12.0,
+      "p99": 17.0,
+      "max": 78.0,
+      "zeroRate": 0.6509695290858726
+    },
+    {
+      "name": "stationary",
+      "count": 81,
+      "avg": 7.518518518518518,
+      "p50": 12.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 12.0,
+      "zeroRate": 0.3333333333333333
+    },
+    {
+      "name": "accelerating",
+      "count": 199,
+      "avg": 4.442211055276382,
+      "p50": 0.0,
+      "p95": 12.0,
+      "p99": 13.0,
+      "max": 13.0,
+      "zeroRate": 0.5728643216080402
+    },
+    {
+      "name": "decelerating",
+      "count": 173,
+      "avg": 1.8381502890173411,
+      "p50": 0.0,
+      "p95": 10.0,
+      "p99": 12.0,
+      "max": 12.0,
+      "zeroRate": 0.7745664739884393
+    },
+    {
+      "name": "ease-in-out",
+      "count": 200,
+      "avg": 3.905,
+      "p50": 0.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 12.0,
+      "zeroRate": 0.585
+    },
+    {
+      "name": "strong-ease",
+      "count": 143,
+      "avg": 3.5174825174825175,
+      "p50": 0.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 12.0,
+      "zeroRate": 0.6363636363636364
+    },
+    {
+      "name": "bidirectional",
+      "count": 143,
+      "avg": 1.6853146853146854,
+      "p50": 0.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 12.0,
+      "zeroRate": 0.8321678321678322
+    },
+    {
+      "name": "oscillating",
+      "count": 199,
+      "avg": 1.1909547738693467,
+      "p50": 0.0,
+      "p95": 11.0,
+      "p99": 12.0,
+      "max": 12.0,
+      "zeroRate": 0.864321608040201
+    },
+    {
+      "name": "small-oscillation",
+      "count": 117,
+      "avg": 2.0598290598290596,
+      "p50": 0.0,
+      "p95": 12.0,
+      "p99": 12.0,
+      "max": 12.0,
+      "zeroRate": 0.7863247863247863
+    }
+  ],
+  "packages": [
+    {
+      "name": "cursor-mirror-calibration-20260502-230553.zip",
+      "lengthBytes": 1569,
+      "lastWriteTime": "2026-05-02T23:05:53.3253614+09:00",
+      "frameCount": 82,
+      "darkFrameCount": 82,
+      "averageEstimatedSeparationPixels": 84.6829268292683,
+      "p95EstimatedSeparationPixels": 12.0,
+      "maximumEstimatedSeparationPixels": 3805.0,
+      "runtimeMode": "",
+      "predictionModel": 0,
+      "targetOffsetMilliseconds": 0,
+      "motionSourceName": "",
+      "motionGenerationProfile": "",
+      "motionScenarioCount": 0,
+      "motionDurationMilliseconds": 0.0,
+      "usableForClosedLoop": false,
+      "motionContextFrameCount": 0,
+      "separation": {
+        "count": 82,
+        "avg": 84.6829268292683,
+        "p50": 9.0,
+        "p95": 12.0,
+        "p99": 3805.0,
+        "max": 3805.0
+      },
+      "captureIntervalMilliseconds": {
+        "count": 0,
+        "avg": 0.0,
+        "p50": 0.0,
+        "p95": 0.0,
+        "p99": 0.0,
+        "max": 0.0
+      },
+      "holdMeasurementFloor": {
+        "count": 0,
+        "avg": 0.0,
+        "p50": 0.0,
+        "p95": 0.0,
+        "p99": 0.0,
+        "max": 0.0
+      },
+      "over12FrameCount": 2,
+      "zeroFrameCount": 18,
+      "patternSummaries": {
+        "name": "(missing)",
+        "count": 82,
+        "avg": 84.6829268292683,
+        "p50": 9.0,
+        "p95": 12.0,
+        "p99": 3805.0,
+        "max": 3805.0,
+        "zeroRate": 0.21951219512195122
+      },
+      "phaseSummaries": {
+        "name": "(missing)",
+        "count": 82,
+        "avg": 84.6829268292683,
+        "p50": 9.0,
+        "p95": 12.0,
+        "p99": 3805.0,
+        "max": 3805.0,
+        "zeroRate": 0.21951219512195122
+      },
+      "worstFrames": [
+        {
+          "frameIndex": 0,
+          "elapsedMilliseconds": 0.0,
+          "separationPixels": 3805.0,
+          "patternName": "",
+          "phaseName": "",
+          "scenarioIndex": -1,
+          "expectedX": 0,
+          "expectedY": 0,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 1,
+          "elapsedMilliseconds": 0.0,
+          "separationPixels": 2520.0,
+          "patternName": "",
+          "phaseName": "",
+          "scenarioIndex": -1,
+          "expectedX": 0,
+          "expectedY": 0,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 67,
+          "elapsedMilliseconds": 0.0,
+          "separationPixels": 12.0,
+          "patternName": "",
+          "phaseName": "",
+          "scenarioIndex": -1,
+          "expectedX": 0,
+          "expectedY": 0,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 66,
+          "elapsedMilliseconds": 0.0,
+          "separationPixels": 12.0,
+          "patternName": "",
+          "phaseName": "",
+          "scenarioIndex": -1,
+          "expectedX": 0,
+          "expectedY": 0,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 65,
+          "elapsedMilliseconds": 0.0,
+          "separationPixels": 12.0,
+          "patternName": "",
+          "phaseName": "",
+          "scenarioIndex": -1,
+          "expectedX": 0,
+          "expectedY": 0,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 25,
+          "elapsedMilliseconds": 0.0,
+          "separationPixels": 12.0,
+          "patternName": "",
+          "phaseName": "",
+          "scenarioIndex": -1,
+          "expectedX": 0,
+          "expectedY": 0,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 64,
+          "elapsedMilliseconds": 0.0,
+          "separationPixels": 12.0,
+          "patternName": "",
+          "phaseName": "",
+          "scenarioIndex": -1,
+          "expectedX": 0,
+          "expectedY": 0,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 63,
+          "elapsedMilliseconds": 0.0,
+          "separationPixels": 12.0,
+          "patternName": "",
+          "phaseName": "",
+          "scenarioIndex": -1,
+          "expectedX": 0,
+          "expectedY": 0,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 62,
+          "elapsedMilliseconds": 0.0,
+          "separationPixels": 12.0,
+          "patternName": "",
+          "phaseName": "",
+          "scenarioIndex": -1,
+          "expectedX": 0,
+          "expectedY": 0,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 61,
+          "elapsedMilliseconds": 0.0,
+          "separationPixels": 12.0,
+          "patternName": "",
+          "phaseName": "",
+          "scenarioIndex": -1,
+          "expectedX": 0,
+          "expectedY": 0,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 32,
+          "elapsedMilliseconds": 0.0,
+          "separationPixels": 12.0,
+          "patternName": "",
+          "phaseName": "",
+          "scenarioIndex": -1,
+          "expectedX": 0,
+          "expectedY": 0,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 60,
+          "elapsedMilliseconds": 0.0,
+          "separationPixels": 12.0,
+          "patternName": "",
+          "phaseName": "",
+          "scenarioIndex": -1,
+          "expectedX": 0,
+          "expectedY": 0,
+          "expectedVelocityPixelsPerSecond": 0.0
+        }
+      ]
+    },
+    {
+      "name": "cursor-mirror-calibration-20260502-230713.zip",
+      "lengthBytes": 1372,
+      "lastWriteTime": "2026-05-02T23:07:13.5440082+09:00",
+      "frameCount": 69,
+      "darkFrameCount": 69,
+      "averageEstimatedSeparationPixels": 9.028985507246377,
+      "p95EstimatedSeparationPixels": 12.0,
+      "maximumEstimatedSeparationPixels": 16.0,
+      "runtimeMode": "",
+      "predictionModel": 0,
+      "targetOffsetMilliseconds": 0,
+      "motionSourceName": "",
+      "motionGenerationProfile": "",
+      "motionScenarioCount": 0,
+      "motionDurationMilliseconds": 0.0,
+      "usableForClosedLoop": false,
+      "motionContextFrameCount": 0,
+      "separation": {
+        "count": 69,
+        "avg": 9.028985507246377,
+        "p50": 12.0,
+        "p95": 12.0,
+        "p99": 16.0,
+        "max": 16.0
+      },
+      "captureIntervalMilliseconds": {
+        "count": 0,
+        "avg": 0.0,
+        "p50": 0.0,
+        "p95": 0.0,
+        "p99": 0.0,
+        "max": 0.0
+      },
+      "holdMeasurementFloor": {
+        "count": 0,
+        "avg": 0.0,
+        "p50": 0.0,
+        "p95": 0.0,
+        "p99": 0.0,
+        "max": 0.0
+      },
+      "over12FrameCount": 1,
+      "zeroFrameCount": 0,
+      "patternSummaries": {
+        "name": "(missing)",
+        "count": 69,
+        "avg": 9.028985507246377,
+        "p50": 12.0,
+        "p95": 12.0,
+        "p99": 16.0,
+        "max": 16.0,
+        "zeroRate": 0.0
+      },
+      "phaseSummaries": {
+        "name": "(missing)",
+        "count": 69,
+        "avg": 9.028985507246377,
+        "p50": 12.0,
+        "p95": 12.0,
+        "p99": 16.0,
+        "max": 16.0,
+        "zeroRate": 0.0
+      },
+      "worstFrames": [
+        {
+          "frameIndex": 1,
+          "elapsedMilliseconds": 0.0,
+          "separationPixels": 16.0,
+          "patternName": "",
+          "phaseName": "",
+          "scenarioIndex": -1,
+          "expectedX": 0,
+          "expectedY": 0,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 18,
+          "elapsedMilliseconds": 0.0,
+          "separationPixels": 12.0,
+          "patternName": "",
+          "phaseName": "",
+          "scenarioIndex": -1,
+          "expectedX": 0,
+          "expectedY": 0,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 49,
+          "elapsedMilliseconds": 0.0,
+          "separationPixels": 12.0,
+          "patternName": "",
+          "phaseName": "",
+          "scenarioIndex": -1,
+          "expectedX": 0,
+          "expectedY": 0,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 48,
+          "elapsedMilliseconds": 0.0,
+          "separationPixels": 12.0,
+          "patternName": "",
+          "phaseName": "",
+          "scenarioIndex": -1,
+          "expectedX": 0,
+          "expectedY": 0,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 23,
+          "elapsedMilliseconds": 0.0,
+          "separationPixels": 12.0,
+          "patternName": "",
+          "phaseName": "",
+          "scenarioIndex": -1,
+          "expectedX": 0,
+          "expectedY": 0,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 24,
+          "elapsedMilliseconds": 0.0,
+          "separationPixels": 12.0,
+          "patternName": "",
+          "phaseName": "",
+          "scenarioIndex": -1,
+          "expectedX": 0,
+          "expectedY": 0,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 47,
+          "elapsedMilliseconds": 0.0,
+          "separationPixels": 12.0,
+          "patternName": "",
+          "phaseName": "",
+          "scenarioIndex": -1,
+          "expectedX": 0,
+          "expectedY": 0,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 26,
+          "elapsedMilliseconds": 0.0,
+          "separationPixels": 12.0,
+          "patternName": "",
+          "phaseName": "",
+          "scenarioIndex": -1,
+          "expectedX": 0,
+          "expectedY": 0,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 46,
+          "elapsedMilliseconds": 0.0,
+          "separationPixels": 12.0,
+          "patternName": "",
+          "phaseName": "",
+          "scenarioIndex": -1,
+          "expectedX": 0,
+          "expectedY": 0,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 28,
+          "elapsedMilliseconds": 0.0,
+          "separationPixels": 12.0,
+          "patternName": "",
+          "phaseName": "",
+          "scenarioIndex": -1,
+          "expectedX": 0,
+          "expectedY": 0,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 45,
+          "elapsedMilliseconds": 0.0,
+          "separationPixels": 12.0,
+          "patternName": "",
+          "phaseName": "",
+          "scenarioIndex": -1,
+          "expectedX": 0,
+          "expectedY": 0,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 44,
+          "elapsedMilliseconds": 0.0,
+          "separationPixels": 12.0,
+          "patternName": "",
+          "phaseName": "",
+          "scenarioIndex": -1,
+          "expectedX": 0,
+          "expectedY": 0,
+          "expectedVelocityPixelsPerSecond": 0.0
+        }
+      ]
+    },
+    {
+      "name": "cursor-mirror-calibration-20260505-075120.zip",
+      "lengthBytes": 7068,
+      "lastWriteTime": "2026-05-05T07:51:29.3177728+09:00",
+      "frameCount": 216,
+      "darkFrameCount": 216,
+      "averageEstimatedSeparationPixels": 2.9166666666666665,
+      "p95EstimatedSeparationPixels": 12.0,
+      "maximumEstimatedSeparationPixels": 17.0,
+      "runtimeMode": "ProductRuntime",
+      "predictionModel": 0,
+      "targetOffsetMilliseconds": 2,
+      "motionSourceName": "",
+      "motionGenerationProfile": "",
+      "motionScenarioCount": 0,
+      "motionDurationMilliseconds": 0.0,
+      "usableForClosedLoop": true,
+      "motionContextFrameCount": 216,
+      "separation": {
+        "count": 216,
+        "avg": 2.9166666666666665,
+        "p50": 0.0,
+        "p95": 12.0,
+        "p99": 12.0,
+        "max": 17.0
+      },
+      "captureIntervalMilliseconds": {
+        "count": 215,
+        "avg": 41.63501395348837,
+        "p50": 44.222999999999956,
+        "p95": 50.7450000000008,
+        "p99": 53.9419999999991,
+        "max": 55.256999999999834
+      },
+      "holdMeasurementFloor": {
+        "count": 12,
+        "avg": 7.0,
+        "p50": 12.0,
+        "p95": 12.0,
+        "p99": 12.0,
+        "max": 12.0
+      },
+      "over12FrameCount": 2,
+      "zeroFrameCount": 151,
+      "patternSummaries": [
+        {
+          "name": "linear-slow",
+          "count": 20,
+          "avg": 2.35,
+          "p50": 0.0,
+          "p95": 7.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.7
+        },
+        {
+          "name": "hold-right",
+          "count": 6,
+          "avg": 8.0,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.3333333333333333
+        },
+        {
+          "name": "linear-fast",
+          "count": 15,
+          "avg": 2.7333333333333334,
+          "p50": 0.0,
+          "p95": 17.0,
+          "p99": 17.0,
+          "max": 17.0,
+          "zeroRate": 0.8
+        },
+        {
+          "name": "hold-left",
+          "count": 6,
+          "avg": 6.0,
+          "p50": 0.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.5
+        },
+        {
+          "name": "quadratic-ease-in",
+          "count": 29,
+          "avg": 4.896551724137931,
+          "p50": 0.0,
+          "p95": 12.0,
+          "p99": 13.0,
+          "max": 13.0,
+          "zeroRate": 0.5172413793103449
+        },
+        {
+          "name": "quadratic-ease-out",
+          "count": 29,
+          "avg": 2.0,
+          "p50": 0.0,
+          "p95": 9.0,
+          "p99": 9.0,
+          "max": 9.0,
+          "zeroRate": 0.7241379310344828
+        },
+        {
+          "name": "cubic-smoothstep",
+          "count": 33,
+          "avg": 3.242424242424242,
+          "p50": 0.0,
+          "p95": 11.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.6666666666666666
+        },
+        {
+          "name": "cubic-in-out",
+          "count": 24,
+          "avg": 3.9583333333333335,
+          "p50": 0.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.5833333333333334
+        },
+        {
+          "name": "rapid-reversal",
+          "count": 24,
+          "avg": 1.5416666666666667,
+          "p50": 0.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.8333333333333334
+        },
+        {
+          "name": "sine-sweep",
+          "count": 30,
+          "avg": 0.6333333333333333,
+          "p50": 0.0,
+          "p95": 7.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.9333333333333333
+        }
+      ],
+      "phaseSummaries": [
+        {
+          "name": "constant-speed",
+          "count": 35,
+          "avg": 2.5142857142857142,
+          "p50": 0.0,
+          "p95": 12.0,
+          "p99": 17.0,
+          "max": 17.0,
+          "zeroRate": 0.7428571428571429
+        },
+        {
+          "name": "stationary",
+          "count": 12,
+          "avg": 7.0,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.4166666666666667
+        },
+        {
+          "name": "accelerating",
+          "count": 29,
+          "avg": 4.896551724137931,
+          "p50": 0.0,
+          "p95": 12.0,
+          "p99": 13.0,
+          "max": 13.0,
+          "zeroRate": 0.5172413793103449
+        },
+        {
+          "name": "decelerating",
+          "count": 29,
+          "avg": 2.0,
+          "p50": 0.0,
+          "p95": 9.0,
+          "p99": 9.0,
+          "max": 9.0,
+          "zeroRate": 0.7241379310344828
+        },
+        {
+          "name": "ease-in-out",
+          "count": 33,
+          "avg": 3.242424242424242,
+          "p50": 0.0,
+          "p95": 11.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.6666666666666666
+        },
+        {
+          "name": "strong-ease",
+          "count": 24,
+          "avg": 3.9583333333333335,
+          "p50": 0.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.5833333333333334
+        },
+        {
+          "name": "bidirectional",
+          "count": 24,
+          "avg": 1.5416666666666667,
+          "p50": 0.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.8333333333333334
+        },
+        {
+          "name": "oscillating",
+          "count": 30,
+          "avg": 0.6333333333333333,
+          "p50": 0.0,
+          "p95": 7.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.9333333333333333
+        }
+      ],
+      "worstFrames": [
+        {
+          "frameIndex": 43,
+          "elapsedMilliseconds": 2171.166,
+          "separationPixels": 17.0,
+          "patternName": "linear-fast",
+          "phaseName": "constant-speed",
+          "scenarioIndex": -1,
+          "expectedX": 1882,
+          "expectedY": 720,
+          "expectedVelocityPixelsPerSecond": 2953.846
+        },
+        {
+          "frameIndex": 65,
+          "elapsedMilliseconds": 3098.602,
+          "separationPixels": 13.0,
+          "patternName": "quadratic-ease-in",
+          "phaseName": "accelerating",
+          "scenarioIndex": -1,
+          "expectedX": 349,
+          "expectedY": 720,
+          "expectedVelocityPixelsPerSecond": 396.273
+        },
+        {
+          "frameIndex": 41,
+          "elapsedMilliseconds": 2095.807,
+          "separationPixels": 12.0,
+          "patternName": "linear-fast",
+          "phaseName": "constant-speed",
+          "scenarioIndex": -1,
+          "expectedX": 2105,
+          "expectedY": 720,
+          "expectedVelocityPixelsPerSecond": 2953.846
+        },
+        {
+          "frameIndex": 37,
+          "elapsedMilliseconds": 1923.182,
+          "separationPixels": 12.0,
+          "patternName": "hold-right",
+          "phaseName": "stationary",
+          "scenarioIndex": -1,
+          "expectedX": 2240,
+          "expectedY": 720,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 38,
+          "elapsedMilliseconds": 1971.41,
+          "separationPixels": 12.0,
+          "patternName": "hold-right",
+          "phaseName": "stationary",
+          "scenarioIndex": -1,
+          "expectedX": 2240,
+          "expectedY": 720,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 39,
+          "elapsedMilliseconds": 2015.836,
+          "separationPixels": 12.0,
+          "patternName": "hold-right",
+          "phaseName": "stationary",
+          "scenarioIndex": -1,
+          "expectedX": 2240,
+          "expectedY": 720,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 40,
+          "elapsedMilliseconds": 2049.57,
+          "separationPixels": 12.0,
+          "patternName": "hold-right",
+          "phaseName": "stationary",
+          "scenarioIndex": -1,
+          "expectedX": 2240,
+          "expectedY": 720,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 42,
+          "elapsedMilliseconds": 2139.906,
+          "separationPixels": 12.0,
+          "patternName": "linear-fast",
+          "phaseName": "constant-speed",
+          "scenarioIndex": -1,
+          "expectedX": 1974,
+          "expectedY": 720,
+          "expectedVelocityPixelsPerSecond": 2953.846
+        },
+        {
+          "frameIndex": 75,
+          "elapsedMilliseconds": 3515.692,
+          "separationPixels": 12.0,
+          "patternName": "quadratic-ease-in",
+          "phaseName": "accelerating",
+          "scenarioIndex": -1,
+          "expectedX": 747,
+          "expectedY": 720,
+          "expectedVelocityPixelsPerSecond": 1508.512
+        },
+        {
+          "frameIndex": 59,
+          "elapsedMilliseconds": 2843.813,
+          "separationPixels": 12.0,
+          "patternName": "hold-left",
+          "phaseName": "stationary",
+          "scenarioIndex": -1,
+          "expectedX": 320,
+          "expectedY": 720,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 60,
+          "elapsedMilliseconds": 2890.991,
+          "separationPixels": 12.0,
+          "patternName": "hold-left",
+          "phaseName": "stationary",
+          "scenarioIndex": -1,
+          "expectedX": 320,
+          "expectedY": 720,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 61,
+          "elapsedMilliseconds": 2921.934,
+          "separationPixels": 12.0,
+          "patternName": "hold-left",
+          "phaseName": "stationary",
+          "scenarioIndex": -1,
+          "expectedX": 320,
+          "expectedY": 720,
+          "expectedVelocityPixelsPerSecond": 0.0
+        }
+      ]
+    },
+    {
+      "name": "cursor-mirror-calibration-20260505-075624.zip",
+      "lengthBytes": 38359,
+      "lastWriteTime": "2026-05-05T07:56:28.1172744+09:00",
+      "frameCount": 1400,
+      "darkFrameCount": 1400,
+      "averageEstimatedSeparationPixels": 3.1235714285714287,
+      "p95EstimatedSeparationPixels": 12.0,
+      "maximumEstimatedSeparationPixels": 78.0,
+      "runtimeMode": "ProductRuntime",
+      "predictionModel": 0,
+      "targetOffsetMilliseconds": 2,
+      "motionSourceName": "",
+      "motionGenerationProfile": "",
+      "motionScenarioCount": 0,
+      "motionDurationMilliseconds": 0.0,
+      "usableForClosedLoop": true,
+      "motionContextFrameCount": 1400,
+      "separation": {
+        "count": 1400,
+        "avg": 3.1235714285714287,
+        "p50": 0.0,
+        "p95": 12.0,
+        "p99": 12.0,
+        "max": 78.0
+      },
+      "captureIntervalMilliseconds": {
+        "count": 1399,
+        "avg": 42.13736740528949,
+        "p50": 44.10699999999997,
+        "p95": 52.33999999999651,
+        "p99": 56.63100000000122,
+        "max": 66.40000000000055
+      },
+      "holdMeasurementFloor": {
+        "count": 69,
+        "avg": 7.608695652173913,
+        "p50": 12.0,
+        "p95": 12.0,
+        "p99": 12.0,
+        "max": 12.0
+      },
+      "over12FrameCount": 6,
+      "zeroFrameCount": 950,
+      "patternSummaries": [
+        {
+          "name": "linear-slow",
+          "count": 232,
+          "avg": 3.0172413793103448,
+          "p50": 0.0,
+          "p95": 9.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.5948275862068966
+        },
+        {
+          "name": "hold-right",
+          "count": 33,
+          "avg": 8.393939393939394,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.21212121212121213
+        },
+        {
+          "name": "linear-fast",
+          "count": 94,
+          "avg": 4.26595744680851,
+          "p50": 0.0,
+          "p95": 12.0,
+          "p99": 78.0,
+          "max": 78.0,
+          "zeroRate": 0.7553191489361702
+        },
+        {
+          "name": "hold-left",
+          "count": 36,
+          "avg": 6.888888888888889,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.4166666666666667
+        },
+        {
+          "name": "quadratic-ease-in",
+          "count": 170,
+          "avg": 4.364705882352941,
+          "p50": 0.0,
+          "p95": 12.0,
+          "p99": 13.0,
+          "max": 13.0,
+          "zeroRate": 0.5823529411764706
+        },
+        {
+          "name": "quadratic-ease-out",
+          "count": 144,
+          "avg": 1.8055555555555556,
+          "p50": 0.0,
+          "p95": 10.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.7847222222222222
+        },
+        {
+          "name": "cubic-smoothstep",
+          "count": 167,
+          "avg": 4.0359281437125745,
+          "p50": 0.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.5688622754491018
+        },
+        {
+          "name": "cubic-in-out",
+          "count": 119,
+          "avg": 3.4285714285714284,
+          "p50": 0.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.6470588235294118
+        },
+        {
+          "name": "rapid-reversal",
+          "count": 119,
+          "avg": 1.7142857142857142,
+          "p50": 0.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.8319327731092437
+        },
+        {
+          "name": "sine-sweep",
+          "count": 169,
+          "avg": 1.2899408284023668,
+          "p50": 0.0,
+          "p95": 11.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.8520710059171598
+        },
+        {
+          "name": "short-jitter",
+          "count": 117,
+          "avg": 2.0598290598290596,
+          "p50": 0.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.7863247863247863
+        }
+      ],
+      "phaseSummaries": [
+        {
+          "name": "constant-speed",
+          "count": 326,
+          "avg": 3.3773006134969323,
+          "p50": 0.0,
+          "p95": 12.0,
+          "p99": 17.0,
+          "max": 78.0,
+          "zeroRate": 0.6411042944785276
+        },
+        {
+          "name": "stationary",
+          "count": 69,
+          "avg": 7.608695652173913,
+          "p50": 12.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.3188405797101449
+        },
+        {
+          "name": "accelerating",
+          "count": 170,
+          "avg": 4.364705882352941,
+          "p50": 0.0,
+          "p95": 12.0,
+          "p99": 13.0,
+          "max": 13.0,
+          "zeroRate": 0.5823529411764706
+        },
+        {
+          "name": "decelerating",
+          "count": 144,
+          "avg": 1.8055555555555556,
+          "p50": 0.0,
+          "p95": 10.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.7847222222222222
+        },
+        {
+          "name": "ease-in-out",
+          "count": 167,
+          "avg": 4.0359281437125745,
+          "p50": 0.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.5688622754491018
+        },
+        {
+          "name": "strong-ease",
+          "count": 119,
+          "avg": 3.4285714285714284,
+          "p50": 0.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.6470588235294118
+        },
+        {
+          "name": "bidirectional",
+          "count": 119,
+          "avg": 1.7142857142857142,
+          "p50": 0.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.8319327731092437
+        },
+        {
+          "name": "oscillating",
+          "count": 169,
+          "avg": 1.2899408284023668,
+          "p50": 0.0,
+          "p95": 11.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.8520710059171598
+        },
+        {
+          "name": "small-oscillation",
+          "count": 117,
+          "avg": 2.0598290598290596,
+          "p50": 0.0,
+          "p95": 12.0,
+          "p99": 12.0,
+          "max": 12.0,
+          "zeroRate": 0.7863247863247863
+        }
+      ],
+      "worstFrames": [
+        {
+          "frameIndex": 43,
+          "elapsedMilliseconds": 2185.93,
+          "separationPixels": 78.0,
+          "patternName": "linear-fast",
+          "phaseName": "constant-speed",
+          "scenarioIndex": -1,
+          "expectedX": 1838,
+          "expectedY": 720,
+          "expectedVelocityPixelsPerSecond": 2953.846
+        },
+        {
+          "frameIndex": 1365,
+          "elapsedMilliseconds": 57883.68,
+          "separationPixels": 75.0,
+          "patternName": "linear-fast",
+          "phaseName": "constant-speed",
+          "scenarioIndex": -1,
+          "expectedX": 1993,
+          "expectedY": 720,
+          "expectedVelocityPixelsPerSecond": 2953.846
+        },
+        {
+          "frameIndex": 308,
+          "elapsedMilliseconds": 13338.807,
+          "separationPixels": 17.0,
+          "patternName": "linear-fast",
+          "phaseName": "constant-speed",
+          "scenarioIndex": -1,
+          "expectedX": 1830,
+          "expectedY": 720,
+          "expectedVelocityPixelsPerSecond": 2953.846
+        },
+        {
+          "frameIndex": 839,
+          "elapsedMilliseconds": 35637.611,
+          "separationPixels": 17.0,
+          "patternName": "linear-fast",
+          "phaseName": "constant-speed",
+          "scenarioIndex": -1,
+          "expectedX": 1834,
+          "expectedY": 720,
+          "expectedVelocityPixelsPerSecond": 2953.846
+        },
+        {
+          "frameIndex": 1388,
+          "elapsedMilliseconds": 58837.951,
+          "separationPixels": 13.0,
+          "patternName": "quadratic-ease-in",
+          "phaseName": "accelerating",
+          "scenarioIndex": -1,
+          "expectedX": 345,
+          "expectedY": 720,
+          "expectedVelocityPixelsPerSecond": 367.869
+        },
+        {
+          "frameIndex": 860,
+          "elapsedMilliseconds": 36557.722,
+          "separationPixels": 13.0,
+          "patternName": "quadratic-ease-in",
+          "phaseName": "accelerating",
+          "scenarioIndex": -1,
+          "expectedX": 353,
+          "expectedY": 720,
+          "expectedVelocityPixelsPerSecond": 420.591
+        },
+        {
+          "frameIndex": 1144,
+          "elapsedMilliseconds": 48514.698,
+          "separationPixels": 12.0,
+          "patternName": "quadratic-ease-in",
+          "phaseName": "accelerating",
+          "scenarioIndex": -1,
+          "expectedX": 1561,
+          "expectedY": 720,
+          "expectedVelocityPixelsPerSecond": 2572.527
+        },
+        {
+          "frameIndex": 325,
+          "elapsedMilliseconds": 14058.046,
+          "separationPixels": 12.0,
+          "patternName": "hold-left",
+          "phaseName": "stationary",
+          "scenarioIndex": -1,
+          "expectedX": 320,
+          "expectedY": 720,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 324,
+          "elapsedMilliseconds": 14010.161,
+          "separationPixels": 12.0,
+          "patternName": "hold-left",
+          "phaseName": "stationary",
+          "scenarioIndex": -1,
+          "expectedX": 320,
+          "expectedY": 720,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 323,
+          "elapsedMilliseconds": 13964.697,
+          "separationPixels": 12.0,
+          "patternName": "hold-left",
+          "phaseName": "stationary",
+          "scenarioIndex": -1,
+          "expectedX": 320,
+          "expectedY": 720,
+          "expectedVelocityPixelsPerSecond": 0.0
+        },
+        {
+          "frameIndex": 1215,
+          "elapsedMilliseconds": 51507.768,
+          "separationPixels": 12.0,
+          "patternName": "cubic-in-out",
+          "phaseName": "strong-ease",
+          "scenarioIndex": -1,
+          "expectedX": 2210,
+          "expectedY": 720,
+          "expectedVelocityPixelsPerSecond": 573.487
+        },
+        {
+          "frameIndex": 326,
+          "elapsedMilliseconds": 14091.012,
+          "separationPixels": 12.0,
+          "patternName": "hold-left",
+          "phaseName": "stationary",
+          "scenarioIndex": -1,
+          "expectedX": 320,
+          "expectedY": 720,
+          "expectedVelocityPixelsPerSecond": 0.0
+        }
+      ]
+    }
+  ]
+}
