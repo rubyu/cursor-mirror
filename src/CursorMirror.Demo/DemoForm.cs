@@ -94,55 +94,55 @@ namespace CursorMirror.Demo
             ConfigureRows(layout);
             _startPanel.Controls.Add(layout);
 
-            _languageInput = AddComboRow(layout, 0, string.Empty, out _languageLabel);
+            _languageInput = CursorMirrorFormLayout.AddComboRow(layout, 0, string.Empty, out _languageLabel);
             _languageInput.SelectedIndexChanged += delegate { LanguageSelectionChanged(); };
-            _displayModeInput = AddComboRow(layout, 1, string.Empty, out _displayModeLabel);
+            _displayModeInput = CursorMirrorFormLayout.AddComboRow(layout, 1, string.Empty, out _displayModeLabel);
             _displayModeInput.SelectedIndexChanged += delegate { SaveCurrentSettings(); };
-            _speedInput = AddComboRow(layout, 2, string.Empty, out _speedLabel);
+            _speedInput = CursorMirrorFormLayout.AddComboRow(layout, 2, string.Empty, out _speedLabel);
             _speedInput.SelectedIndexChanged += delegate { SaveCurrentSettings(); };
 
-            _mirrorCursorCheckBox = AddCheckBox(layout, 3, string.Empty);
+            _mirrorCursorCheckBox = CursorMirrorFormLayout.AddCheckBoxRow(layout, 3, string.Empty);
             _mirrorCursorCheckBox.CheckedChanged += delegate
             {
                 UpdateMirrorDependentControls();
                 SaveCurrentSettings();
             };
-            _predictionCheckBox = AddCheckBox(layout, 4, string.Empty);
+            _predictionCheckBox = CursorMirrorFormLayout.AddCheckBoxRow(layout, 4, string.Empty);
             _predictionCheckBox.CheckedChanged += delegate
             {
                 UpdateMirrorDependentControls();
                 SaveCurrentSettings();
             };
-            _predictionModelInput = AddComboRow(layout, 5, string.Empty, out _predictionModelLabel);
+            _predictionModelInput = CursorMirrorFormLayout.AddComboRow(layout, 5, string.Empty, out _predictionModelLabel);
             _predictionModelInput.SelectedIndexChanged += delegate { PredictionModelSelectionChanged(); };
-            _predictionGainInput = AddNumberRow(layout, 6, string.Empty, CursorMirrorSettings.MinimumPredictionGainPercent, CursorMirrorSettings.MaximumPredictionGainPercent, out _predictionGainLabel);
+            _predictionGainInput = CursorMirrorFormLayout.AddNumberRow(layout, 6, string.Empty, CursorMirrorSettingRanges.PredictionGain, out _predictionGainLabel);
             _predictionGainInput.ValueChanged += delegate { SaveCurrentSettings(); };
-            _predictionTargetOffsetInput = AddNumberRow(layout, 7, string.Empty, CursorMirrorSettings.MinimumDwmPredictionTargetOffsetDisplayMilliseconds, CursorMirrorSettings.MaximumDwmPredictionTargetOffsetDisplayMilliseconds, out _predictionTargetOffsetLabel);
+            _predictionTargetOffsetInput = CursorMirrorFormLayout.AddNumberRow(layout, 7, string.Empty, CursorMirrorSettingRanges.DwmPredictionTargetOffsetDisplay, out _predictionTargetOffsetLabel);
             _predictionTargetOffsetInput.ValueChanged += delegate { SaveCurrentSettings(); };
-            _movementTranslucencyCheckBox = AddCheckBox(layout, 8, string.Empty);
+            _movementTranslucencyCheckBox = CursorMirrorFormLayout.AddCheckBoxRow(layout, 8, string.Empty);
             _movementTranslucencyCheckBox.CheckedChanged += delegate
             {
                 UpdateMirrorDependentControls();
                 SaveCurrentSettings();
             };
-            _movingOpacityInput = AddNumberRow(layout, 9, string.Empty, CursorMirrorSettings.MinimumMovingOpacityPercent, CursorMirrorSettings.MaximumMovingOpacityPercent, out _movingOpacityLabel);
+            _movingOpacityInput = CursorMirrorFormLayout.AddNumberRow(layout, 9, string.Empty, CursorMirrorSettingRanges.MovingOpacity, out _movingOpacityLabel);
             _movingOpacityInput.ValueChanged += delegate { SaveCurrentSettings(); };
-            _fadeDurationInput = AddNumberRow(layout, 10, string.Empty, CursorMirrorSettings.MinimumFadeDurationMilliseconds, CursorMirrorSettings.MaximumFadeDurationMilliseconds, out _fadeDurationLabel);
+            _fadeDurationInput = CursorMirrorFormLayout.AddNumberRow(layout, 10, string.Empty, CursorMirrorSettingRanges.FadeDuration, out _fadeDurationLabel);
             _fadeDurationInput.ValueChanged += delegate { SaveCurrentSettings(); };
-            _idleDelayInput = AddNumberRow(layout, 11, string.Empty, CursorMirrorSettings.MinimumIdleDelayMilliseconds, CursorMirrorSettings.MaximumIdleDelayMilliseconds, out _idleDelayLabel);
+            _idleDelayInput = CursorMirrorFormLayout.AddNumberRow(layout, 11, string.Empty, CursorMirrorSettingRanges.IdleDelay, out _idleDelayLabel);
             _idleDelayInput.ValueChanged += delegate { SaveCurrentSettings(); };
 
-            _idleFadeCheckBox = AddCheckBox(layout, 12, string.Empty);
+            _idleFadeCheckBox = CursorMirrorFormLayout.AddCheckBoxRow(layout, 12, string.Empty);
             _idleFadeCheckBox.CheckedChanged += delegate
             {
                 UpdateMirrorDependentControls();
                 SaveCurrentSettings();
             };
-            _idleFadeOpacityInput = AddNumberRow(layout, 13, string.Empty, CursorMirrorSettings.MinimumIdleOpacityPercent, CursorMirrorSettings.MaximumIdleOpacityPercent, out _idleFadeOpacityLabel);
+            _idleFadeOpacityInput = CursorMirrorFormLayout.AddNumberRow(layout, 13, string.Empty, CursorMirrorSettingRanges.IdleOpacity, out _idleFadeOpacityLabel);
             _idleFadeOpacityInput.ValueChanged += delegate { SaveCurrentSettings(); };
-            _idleFadeDurationInput = AddNumberRow(layout, 14, string.Empty, CursorMirrorSettings.MinimumIdleFadeDurationMilliseconds, CursorMirrorSettings.MaximumIdleFadeDurationMilliseconds, out _idleFadeDurationLabel);
+            _idleFadeDurationInput = CursorMirrorFormLayout.AddNumberRow(layout, 14, string.Empty, CursorMirrorSettingRanges.IdleFadeDuration, out _idleFadeDurationLabel);
             _idleFadeDurationInput.ValueChanged += delegate { SaveCurrentSettings(); };
-            _idleFadeDelayInput = AddNumberRow(layout, 15, string.Empty, CursorMirrorSettings.MinimumIdleFadeDelayMilliseconds, CursorMirrorSettings.MaximumIdleFadeDelayMilliseconds, out _idleFadeDelayLabel);
+            _idleFadeDelayInput = CursorMirrorFormLayout.AddNumberRow(layout, 15, string.Empty, CursorMirrorSettingRanges.IdleFadeDelay, out _idleFadeDelayLabel);
             _idleFadeDelayInput.ValueChanged += delegate { SaveCurrentSettings(); };
 
             _noteLabel = new Label();
@@ -217,21 +217,6 @@ namespace CursorMirror.Demo
             return settings;
         }
 
-        private static ComboBox AddComboRow(TableLayoutPanel layout, int row, string labelText, out Label label)
-        {
-            label = new Label();
-            label.Text = labelText;
-            label.AutoSize = true;
-            label.Anchor = AnchorStyles.Left;
-            layout.Controls.Add(label, 0, row);
-
-            ComboBox input = new ComboBox();
-            input.DropDownStyle = ComboBoxStyle.DropDownList;
-            input.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            layout.Controls.Add(input, 1, row);
-            return input;
-        }
-
         private static void ConfigureRows(TableLayoutPanel layout)
         {
             layout.RowStyles.Clear();
@@ -242,34 +227,6 @@ namespace CursorMirror.Demo
 
             layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
             layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-        }
-
-        private static CheckBox AddCheckBox(TableLayoutPanel layout, int row, string text)
-        {
-            CheckBox checkBox = new CheckBox();
-            checkBox.Text = text;
-            checkBox.AutoSize = true;
-            checkBox.Anchor = AnchorStyles.Left;
-            layout.Controls.Add(checkBox, 0, row);
-            layout.SetColumnSpan(checkBox, 2);
-            return checkBox;
-        }
-
-        private static NumericUpDown AddNumberRow(TableLayoutPanel layout, int row, string labelText, int minimum, int maximum, out Label label)
-        {
-            label = new Label();
-            label.Text = labelText;
-            label.AutoSize = true;
-            label.Anchor = AnchorStyles.Left;
-            layout.Controls.Add(label, 0, row);
-
-            NumericUpDown input = new NumericUpDown();
-            input.Minimum = minimum;
-            input.Maximum = maximum;
-            input.DecimalPlaces = 0;
-            input.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            layout.Controls.Add(input, 1, row);
-            return input;
         }
 
         private void LoadSettings(DemoSettings settings)
@@ -462,20 +419,20 @@ namespace CursorMirror.Demo
                 _exitButton.Text = LocalizedStrings.ExitCommand;
                 _startButton.Text = LocalizedStrings.DemoStartCommand;
 
-                ReplaceItems(
+                CursorMirrorFormLayout.ReplaceItems(
                     _languageInput,
                     _languageInput.SelectedIndex,
                     LocalizedStrings.DemoLanguageSystem,
                     LocalizedStrings.DemoLanguageEnglish,
                     LocalizedStrings.DemoLanguageJapanese);
-                ReplaceItems(
+                CursorMirrorFormLayout.ReplaceItems(
                     _displayModeInput,
                     _displayModeInput.SelectedIndex,
                     LocalizedStrings.DemoWindowPresetVga,
                     LocalizedStrings.DemoWindowPreset720,
                     LocalizedStrings.DemoWindowPreset1080,
                     LocalizedStrings.DemoFullscreenOption);
-                ReplaceItems(
+                CursorMirrorFormLayout.ReplaceItems(
                     _speedInput,
                     _speedInput.SelectedIndex,
                     LocalizedStrings.DemoSpeedNormal,
@@ -489,32 +446,6 @@ namespace CursorMirror.Demo
             }
 
             _scene.Invalidate();
-        }
-
-        private static void ReplaceItems(ComboBox comboBox, int selectedIndex, params string[] items)
-        {
-            comboBox.BeginUpdate();
-            try
-            {
-                comboBox.Items.Clear();
-                for (int i = 0; i < items.Length; i++)
-                {
-                    comboBox.Items.Add(items[i]);
-                }
-
-                if (items.Length == 0)
-                {
-                    comboBox.SelectedIndex = -1;
-                    return;
-                }
-
-                int safeIndex = selectedIndex < 0 ? 0 : Math.Min(selectedIndex, items.Length - 1);
-                comboBox.SelectedIndex = safeIndex;
-            }
-            finally
-            {
-                comboBox.EndUpdate();
-            }
         }
 
         private void SaveCurrentSettings()
@@ -598,27 +529,17 @@ namespace CursorMirror.Demo
 
         private static void ReplacePredictionModelItems(ComboBox comboBox, int selectedModel)
         {
-            comboBox.BeginUpdate();
-            try
-            {
-                comboBox.Items.Clear();
-                comboBox.Items.Add(LocalizedStrings.PredictionModelOptionText(CursorMirrorSettings.DwmPredictionModelConstantVelocity));
-                comboBox.SelectedIndex = PredictionModelIndex(selectedModel);
-            }
-            finally
-            {
-                comboBox.EndUpdate();
-            }
+            PredictionModelOptions.ReplaceItems(comboBox, selectedModel);
         }
 
         private static int PredictionModelFromSelection(ComboBox comboBox)
         {
-            return CursorMirrorSettings.DwmPredictionModelConstantVelocity;
+            return PredictionModelOptions.FromSelection(comboBox);
         }
 
         private static int PredictionModelIndex(int model)
         {
-            return 0;
+            return PredictionModelOptions.IndexOf(model);
         }
 
         private void ApplyDisplayMode()

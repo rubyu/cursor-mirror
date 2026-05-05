@@ -446,6 +446,10 @@ Headings follow `A.<scope>.<family>`. Within each family, items are grouped by m
   Verify that a failed temporary-file validation or replacement failure leaves the previous active settings readable when possible.
   Refs: Section 5.6.
 
+- COT-MSU-21 - Setting range metadata
+  Verify that centralized setting range metadata matches normalization behavior, including dependent runtime spin-threshold clamping.
+  Refs: Sections 4.4.1, 4.4.1.1, 4.4.2, 4.5.1.
+
 - COT-MSU-13 - Movement translucency dependent controls
   Verify that disabling movement translucency in the settings window disables its moving opacity, fade duration, and idle delay controls, and that disabling idle fade disables its idle opacity, fade duration, and idle delay controls.
   Refs: Sections 4.5.1, 6.1.

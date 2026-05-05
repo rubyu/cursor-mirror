@@ -30,9 +30,6 @@ namespace CursorMirror
         [DllImport("user32.dll", EntryPoint = "GetCursorPos", SetLastError = true)]
         private static extern bool GetCursorPosNative(out NativePoint point);
 
-        [DllImport("dwmapi.dll", EntryPoint = "DwmGetCompositionTimingInfo", PreserveSig = true)]
-        private static extern int DwmGetCompositionTimingInfoNative(IntPtr hwnd, ref DwmTimingInfo timingInfo);
-
         [DllImport("winmm.dll", EntryPoint = "timeBeginPeriod", PreserveSig = true)]
         private static extern uint TimeBeginPeriodNative(uint milliseconds);
 
@@ -291,9 +288,8 @@ namespace CursorMirror
 
         private static void PopulateSample(Point position, long timestampTicks, out CursorPollSample sample)
         {
-            DwmTimingInfo timing = new DwmTimingInfo();
-            timing.Size = (uint)Marshal.SizeOf(typeof(DwmTimingInfo));
-            bool hasTiming = DwmGetCompositionTimingInfoNative(IntPtr.Zero, ref timing) == 0;
+            DwmTimingInfo timing;
+            bool hasTiming = DwmNative.TryGetCompositionTimingInfo(out timing);
 
             sample = new CursorPollSample();
             sample.Position = position;
@@ -302,8 +298,8 @@ namespace CursorMirror
             sample.DwmTimingAvailable = hasTiming;
             if (hasTiming)
             {
-                sample.DwmVBlankTicks = ToSignedTicks(timing.QpcVBlank);
-                sample.DwmRefreshPeriodTicks = ToSignedTicks(timing.QpcRefreshPeriod);
+                sample.DwmVBlankTicks = DwmNative.ToSignedTicks(timing.QpcVBlank);
+                sample.DwmRefreshPeriodTicks = DwmNative.ToSignedTicks(timing.QpcRefreshPeriod);
             }
         }
 
@@ -316,16 +312,6 @@ namespace CursorMirror
             }
 
             return (long)Math.Round(ticks);
-        }
-
-        private static long ToSignedTicks(ulong value)
-        {
-            if (value > long.MaxValue)
-            {
-                return long.MaxValue;
-            }
-
-            return (long)value;
         }
 
         private void ThrowIfDisposed()

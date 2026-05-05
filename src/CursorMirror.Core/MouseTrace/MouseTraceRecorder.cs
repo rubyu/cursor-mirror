@@ -100,6 +100,11 @@ namespace CursorMirror.MouseTrace
             return _session.Snapshot();
         }
 
+        public void MarkSaved()
+        {
+            _session.MarkSaved();
+        }
+
         public MouseTraceSampleCounts GetSampleCounts()
         {
             return _session.GetSampleCounts();
@@ -331,8 +336,8 @@ namespace CursorMirror.MouseTrace
                         DwmSynchronizedRuntimeScheduler.EvaluateOneShotDwmTiming(
                             timingReadCompletedTicks,
                             Stopwatch.Frequency,
-                            ToSignedTicks(timing.QpcVBlank),
-                            ToSignedTicks(timing.QpcRefreshPeriod),
+                            CursorMirror.DwmNative.ToSignedTicks(timing.QpcVBlank),
+                            CursorMirror.DwmNative.ToSignedTicks(timing.QpcRefreshPeriod),
                             _lastRuntimeSchedulerVBlankTicks,
                             DwmSynchronizedRuntimeScheduler.WakeAdvanceMilliseconds,
                             DwmSynchronizedRuntimeScheduler.FallbackIntervalMilliseconds);
@@ -694,16 +699,6 @@ namespace CursorMirror.MouseTrace
             }
 
             return (long)Math.Round(ticks);
-        }
-
-        private static long ToSignedTicks(ulong value)
-        {
-            if (value > long.MaxValue)
-            {
-                return long.MaxValue;
-            }
-
-            return (long)value;
         }
 
         private void ThrowIfDisposed()

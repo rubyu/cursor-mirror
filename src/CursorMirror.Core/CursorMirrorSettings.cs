@@ -253,38 +253,35 @@ namespace CursorMirror
                 SettingsSchemaVersion = CurrentSettingsSchemaVersion,
                 MovementTranslucencyEnabled = MovementTranslucencyEnabled,
                 PredictionEnabled = PredictionEnabled,
-                MovingOpacityPercent = Clamp(MovingOpacityPercent, MinimumMovingOpacityPercent, MaximumMovingOpacityPercent),
-                FadeDurationMilliseconds = Clamp(FadeDurationMilliseconds, MinimumFadeDurationMilliseconds, MaximumFadeDurationMilliseconds),
-                IdleDelayMilliseconds = Clamp(IdleDelayMilliseconds, MinimumIdleDelayMilliseconds, MaximumIdleDelayMilliseconds),
-                PredictionHorizonMilliseconds = Clamp(PredictionHorizonMilliseconds, MinimumPredictionHorizonMilliseconds, MaximumPredictionHorizonMilliseconds),
-                PredictionIdleResetMilliseconds = Clamp(PredictionIdleResetMilliseconds, MinimumPredictionIdleResetMilliseconds, MaximumPredictionIdleResetMilliseconds),
+                MovingOpacityPercent = CursorMirrorSettingRanges.MovingOpacity.Clamp(MovingOpacityPercent),
+                FadeDurationMilliseconds = CursorMirrorSettingRanges.FadeDuration.Clamp(FadeDurationMilliseconds),
+                IdleDelayMilliseconds = CursorMirrorSettingRanges.IdleDelay.Clamp(IdleDelayMilliseconds),
+                PredictionHorizonMilliseconds = CursorMirrorSettingRanges.PredictionHorizon.Clamp(PredictionHorizonMilliseconds),
+                PredictionIdleResetMilliseconds = CursorMirrorSettingRanges.PredictionIdleReset.Clamp(PredictionIdleResetMilliseconds),
                 IdleFadeEnabled = IdleFadeEnabled,
-                IdleFadeDurationMilliseconds = Clamp(IdleFadeDurationMilliseconds, MinimumIdleFadeDurationMilliseconds, MaximumIdleFadeDurationMilliseconds),
-                IdleFadeDelayMilliseconds = Clamp(IdleFadeDelayMilliseconds, MinimumIdleFadeDelayMilliseconds, MaximumIdleFadeDelayMilliseconds),
-                IdleOpacityPercent = Clamp(IdleOpacityPercent, MinimumIdleOpacityPercent, MaximumIdleOpacityPercent),
-                PredictionGainPercent = Clamp(PredictionGainPercent, MinimumPredictionGainPercent, MaximumPredictionGainPercent),
-                DwmPredictionHorizonCapMilliseconds = Clamp(DwmPredictionHorizonCapMilliseconds, MinimumDwmPredictionHorizonCapMilliseconds, MaximumDwmPredictionHorizonCapMilliseconds),
+                IdleFadeDurationMilliseconds = CursorMirrorSettingRanges.IdleFadeDuration.Clamp(IdleFadeDurationMilliseconds),
+                IdleFadeDelayMilliseconds = CursorMirrorSettingRanges.IdleFadeDelay.Clamp(IdleFadeDelayMilliseconds),
+                IdleOpacityPercent = CursorMirrorSettingRanges.IdleOpacity.Clamp(IdleOpacityPercent),
+                PredictionGainPercent = CursorMirrorSettingRanges.PredictionGain.Clamp(PredictionGainPercent),
+                DwmPredictionHorizonCapMilliseconds = CursorMirrorSettingRanges.DwmPredictionHorizonCap.Clamp(DwmPredictionHorizonCapMilliseconds),
                 DwmAdaptiveGainEnabled = DwmAdaptiveGainEnabled,
-                DwmAdaptiveGainPercent = Clamp(DwmAdaptiveGainPercent, MinimumDwmAdaptiveGainPercent, MaximumDwmAdaptiveGainPercent),
-                DwmAdaptiveMinimumSpeedPixelsPerSecond = Clamp(DwmAdaptiveMinimumSpeedPixelsPerSecond, MinimumDwmAdaptiveMinimumSpeedPixelsPerSecond, MaximumDwmAdaptiveMinimumSpeedPixelsPerSecond),
-                DwmAdaptiveMaximumAccelerationPixelsPerSecondSquared = Clamp(DwmAdaptiveMaximumAccelerationPixelsPerSecondSquared, MinimumDwmAdaptiveMaximumAccelerationPixelsPerSecondSquared, MaximumDwmAdaptiveMaximumAccelerationPixelsPerSecondSquared),
-                DwmAdaptiveReversalCooldownSamples = Clamp(DwmAdaptiveReversalCooldownSamples, MinimumDwmAdaptiveReversalCooldownSamples, MaximumDwmAdaptiveReversalCooldownSamples),
-                DwmAdaptiveStableDirectionSamples = Clamp(DwmAdaptiveStableDirectionSamples, MinimumDwmAdaptiveStableDirectionSamples, MaximumDwmAdaptiveStableDirectionSamples),
-                DwmAdaptiveOscillationWindowSamples = Clamp(DwmAdaptiveOscillationWindowSamples, MinimumDwmAdaptiveOscillationWindowSamples, MaximumDwmAdaptiveOscillationWindowSamples),
-                DwmAdaptiveOscillationMinimumReversals = Clamp(DwmAdaptiveOscillationMinimumReversals, MinimumDwmAdaptiveOscillationMinimumReversals, MaximumDwmAdaptiveOscillationMinimumReversals),
-                DwmAdaptiveOscillationMaximumSpanPixels = Clamp(DwmAdaptiveOscillationMaximumSpanPixels, MinimumDwmAdaptiveOscillationMaximumSpanPixels, MaximumDwmAdaptiveOscillationMaximumSpanPixels),
-                DwmAdaptiveOscillationMaximumEfficiencyPercent = Clamp(DwmAdaptiveOscillationMaximumEfficiencyPercent, MinimumDwmAdaptiveOscillationMaximumEfficiencyPercent, MaximumDwmAdaptiveOscillationMaximumEfficiencyPercent),
-                DwmAdaptiveOscillationLatchMilliseconds = Clamp(DwmAdaptiveOscillationLatchMilliseconds, MinimumDwmAdaptiveOscillationLatchMilliseconds, MaximumDwmAdaptiveOscillationLatchMilliseconds),
+                DwmAdaptiveGainPercent = CursorMirrorSettingRanges.DwmAdaptiveGain.Clamp(DwmAdaptiveGainPercent),
+                DwmAdaptiveMinimumSpeedPixelsPerSecond = CursorMirrorSettingRanges.DwmAdaptiveMinimumSpeed.Clamp(DwmAdaptiveMinimumSpeedPixelsPerSecond),
+                DwmAdaptiveMaximumAccelerationPixelsPerSecondSquared = CursorMirrorSettingRanges.DwmAdaptiveMaximumAcceleration.Clamp(DwmAdaptiveMaximumAccelerationPixelsPerSecondSquared),
+                DwmAdaptiveReversalCooldownSamples = CursorMirrorSettingRanges.DwmAdaptiveReversalCooldown.Clamp(DwmAdaptiveReversalCooldownSamples),
+                DwmAdaptiveStableDirectionSamples = CursorMirrorSettingRanges.DwmAdaptiveStableDirection.Clamp(DwmAdaptiveStableDirectionSamples),
+                DwmAdaptiveOscillationWindowSamples = CursorMirrorSettingRanges.DwmAdaptiveOscillationWindow.Clamp(DwmAdaptiveOscillationWindowSamples),
+                DwmAdaptiveOscillationMinimumReversals = CursorMirrorSettingRanges.DwmAdaptiveOscillationMinimumReversals.Clamp(DwmAdaptiveOscillationMinimumReversals),
+                DwmAdaptiveOscillationMaximumSpanPixels = CursorMirrorSettingRanges.DwmAdaptiveOscillationMaximumSpan.Clamp(DwmAdaptiveOscillationMaximumSpanPixels),
+                DwmAdaptiveOscillationMaximumEfficiencyPercent = CursorMirrorSettingRanges.DwmAdaptiveOscillationMaximumEfficiency.Clamp(DwmAdaptiveOscillationMaximumEfficiencyPercent),
+                DwmAdaptiveOscillationLatchMilliseconds = CursorMirrorSettingRanges.DwmAdaptiveOscillationLatch.Clamp(DwmAdaptiveOscillationLatchMilliseconds),
                 DwmPredictionModel = NormalizeDwmPredictionModel(DwmPredictionModel),
-                DwmPredictionTargetOffsetMilliseconds = Clamp(DwmPredictionTargetOffsetMilliseconds, MinimumDwmPredictionTargetOffsetMilliseconds, MaximumDwmPredictionTargetOffsetMilliseconds),
+                DwmPredictionTargetOffsetMilliseconds = CursorMirrorSettingRanges.DwmPredictionTargetOffset.Clamp(DwmPredictionTargetOffsetMilliseconds),
                 RuntimeSetWaitableTimerExEnabled = RuntimeSetWaitableTimerExEnabled,
-                RuntimeFineWaitAdvanceMicroseconds = Clamp(RuntimeFineWaitAdvanceMicroseconds, MinimumRuntimeFineWaitAdvanceMicroseconds, MaximumRuntimeFineWaitAdvanceMicroseconds),
-                RuntimeFineWaitYieldThresholdMicroseconds = Clamp(
-                    RuntimeFineWaitYieldThresholdMicroseconds,
-                    MinimumRuntimeFineWaitYieldThresholdMicroseconds,
-                    Math.Min(MaximumRuntimeFineWaitYieldThresholdMicroseconds, Clamp(RuntimeFineWaitAdvanceMicroseconds, MinimumRuntimeFineWaitAdvanceMicroseconds, MaximumRuntimeFineWaitAdvanceMicroseconds))),
+                RuntimeFineWaitAdvanceMicroseconds = CursorMirrorSettingRanges.RuntimeFineWaitAdvance.Clamp(RuntimeFineWaitAdvanceMicroseconds),
+                RuntimeFineWaitYieldThresholdMicroseconds = CursorMirrorSettingRanges.ClampRuntimeFineWaitYieldThreshold(RuntimeFineWaitYieldThresholdMicroseconds, RuntimeFineWaitAdvanceMicroseconds),
                 RuntimeMessageDeferralEnabled = RuntimeMessageDeferralEnabled,
-                RuntimeMessageDeferralMicroseconds = Clamp(RuntimeMessageDeferralMicroseconds, MinimumRuntimeMessageDeferralMicroseconds, MaximumRuntimeMessageDeferralMicroseconds),
+                RuntimeMessageDeferralMicroseconds = CursorMirrorSettingRanges.RuntimeMessageDeferral.Clamp(RuntimeMessageDeferralMicroseconds),
                 RuntimeThreadLatencyProfileEnabled = RuntimeThreadLatencyProfileEnabled
             };
         }
@@ -296,18 +293,14 @@ namespace CursorMirror
 
         public static int DwmPredictionTargetOffsetToDisplayMilliseconds(int targetOffsetMilliseconds)
         {
-            return Clamp(
-                targetOffsetMilliseconds - DwmPredictionTargetOffsetDisplayOriginMilliseconds,
-                MinimumDwmPredictionTargetOffsetDisplayMilliseconds,
-                MaximumDwmPredictionTargetOffsetDisplayMilliseconds);
+            return CursorMirrorSettingRanges.DwmPredictionTargetOffsetDisplay.Clamp(
+                targetOffsetMilliseconds - DwmPredictionTargetOffsetDisplayOriginMilliseconds);
         }
 
         public static int DwmPredictionTargetOffsetFromDisplayMilliseconds(int displayOffsetMilliseconds)
         {
-            return DwmPredictionTargetOffsetDisplayOriginMilliseconds + Clamp(
-                displayOffsetMilliseconds,
-                MinimumDwmPredictionTargetOffsetDisplayMilliseconds,
-                MaximumDwmPredictionTargetOffsetDisplayMilliseconds);
+            return DwmPredictionTargetOffsetDisplayOriginMilliseconds +
+                CursorMirrorSettingRanges.DwmPredictionTargetOffsetDisplay.Clamp(displayOffsetMilliseconds);
         }
 
         [OnDeserializing]
@@ -369,9 +362,5 @@ namespace CursorMirror
             RuntimeThreadLatencyProfileEnabled = DefaultRuntimeThreadLatencyProfileEnabled;
         }
 
-        private static int Clamp(int value, int minimum, int maximum)
-        {
-            return Math.Max(minimum, Math.Min(maximum, value));
-        }
     }
 }

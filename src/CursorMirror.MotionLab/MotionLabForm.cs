@@ -1,7 +1,5 @@
 using System;
-using System.Diagnostics;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 using CursorMirror.MouseTrace;
 using CursorMirror.MotionLab;
@@ -36,11 +34,7 @@ namespace CursorMirror.MotionLabApp
 
         private MotionLabScenarioSet _scenarioSet;
         private MotionLabScenarioSetSampler _sampler;
-        private MotionLabPlaybackRunner _playbackRunner;
-        private MotionLabInputBlocker _inputBlocker;
-        private MouseTraceRecorder _recorder;
-        private string _recordingOutputPath;
-        private Process _loadProcess;
+        private MotionLabPlaybackSession _playbackSession;
 
         public MotionLabForm()
         {
@@ -165,16 +159,10 @@ namespace CursorMirror.MotionLabApp
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             StopMotion();
-            if (_playbackRunner != null)
+            if (_playbackSession != null)
             {
-                _playbackRunner.Dispose();
-                _playbackRunner = null;
-            }
-
-            if (_recorder != null)
-            {
-                _recorder.Dispose();
-                _recorder = null;
+                _playbackSession.Dispose();
+                _playbackSession = null;
             }
 
             base.OnFormClosing(e);
@@ -188,39 +176,21 @@ namespace CursorMirror.MotionLabApp
 
         private static NumericUpDown AddNumber(TableLayoutPanel layout, int row, string label, int minimum, int maximum, int value, out Label labelControl)
         {
-            labelControl = new Label();
-            labelControl.Text = label;
-            labelControl.AutoSize = true;
-            labelControl.Anchor = AnchorStyles.Left;
-            layout.Controls.Add(labelControl, 0, row);
-
-            NumericUpDown input = new NumericUpDown();
-            input.Minimum = minimum;
-            input.Maximum = maximum;
-            input.Value = Math.Max(minimum, Math.Min(maximum, value));
+            NumericUpDown input = CursorMirrorFormLayout.AddNumberRow(layout, row, label, minimum, maximum, value, out labelControl);
             input.Dock = DockStyle.Fill;
-            layout.Controls.Add(input, 1, row);
             return input;
         }
 
         private static ComboBox AddCombo(TableLayoutPanel layout, int row, string label, string[] values, int selectedIndex)
         {
-            Label labelControl = new Label();
-            labelControl.Text = label;
-            labelControl.AutoSize = true;
-            labelControl.Anchor = AnchorStyles.Left;
-            layout.Controls.Add(labelControl, 0, row);
-
-            ComboBox input = new ComboBox();
-            input.DropDownStyle = ComboBoxStyle.DropDownList;
+            Label labelControl;
+            ComboBox input = CursorMirrorFormLayout.AddComboRow(layout, row, label, out labelControl);
             input.Dock = DockStyle.Fill;
             input.Items.AddRange(values);
             if (values.Length > 0)
             {
                 input.SelectedIndex = Math.Max(0, Math.Min(values.Length - 1, selectedIndex));
             }
-
-            layout.Controls.Add(input, 1, row);
             return input;
         }
 
@@ -301,17 +271,17 @@ namespace CursorMirror.MotionLabApp
                 return;
             }
 
-            _recordingOutputPath = outputPath;
             try
             {
-                _recorder = new MouseTraceRecorder();
-                _recorder.Start();
-                _inputBlocker = new MotionLabInputBlocker(_cursorDriver.InjectionExtraInfo);
-                _inputBlocker.Start();
-                StartLoadGenerator();
-                _playbackRunner = new MotionLabPlaybackRunner(_cursorDriver);
-                _playbackRunner.Completed += PlaybackCompleted;
-                _playbackRunner.Start(_scenarioSet);
+                _playbackSession = new MotionLabPlaybackSession(
+                    _scenarioSet,
+                    _cursorDriver,
+                    outputPath,
+                    _runLoadCheckBox.Checked,
+                    (int)_loadPercentInput.Value,
+                    (int)_loadWorkerInput.Value);
+                _playbackSession.Completed += PlaybackCompleted;
+                _playbackSession.Start();
                 _timer.Start();
                 RefreshUi();
             }
@@ -326,61 +296,37 @@ namespace CursorMirror.MotionLabApp
         {
             bool wasRunning = IsRunning();
             _timer.Stop();
-            Exception playbackException = null;
-            if (_playbackRunner != null)
+            MotionLabPlaybackResult result = null;
+            MotionLabPlaybackSession session = _playbackSession;
+            if (session != null)
             {
-                _playbackRunner.Completed -= PlaybackCompleted;
-                playbackException = _playbackRunner.Exception;
-                _playbackRunner.Stop();
-                if (playbackException == null)
-                {
-                    playbackException = _playbackRunner.Exception;
-                }
-
-                _playbackRunner.Dispose();
-                _playbackRunner = null;
+                session.Completed -= PlaybackCompleted;
+                result = session.Stop();
+                session.Dispose();
+                _playbackSession = null;
             }
 
-            StopLoadGenerator();
-
-            MouseTraceSnapshot snapshot = null;
-            if (_recorder != null)
-            {
-                try
-                {
-                    snapshot = _recorder.Stop();
-                }
-                finally
-                {
-                    _recorder.Dispose();
-                    _recorder = null;
-                }
-            }
-
-            StopInputBlocker();
             RefreshUi();
-            if (playbackException != null)
+            if (result != null && result.Exception != null)
             {
-                MessageBox.Show(this, playbackException.Message, "Cursor Mirror Motion Lab", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, result.Exception.Message, "Cursor Mirror Motion Lab", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            if (wasRunning && snapshot != null)
+            if (wasRunning && result != null && result.Snapshot != null)
             {
-                SaveRecordedPackage(snapshot);
+                SaveRecordedPackage(result.Snapshot, session.OutputPath);
             }
-
-            _recordingOutputPath = null;
         }
 
         private void TimerTick(object sender, EventArgs e)
         {
-            if (_scenarioSet == null || _sampler == null || _playbackRunner == null)
+            if (_scenarioSet == null || _sampler == null || _playbackSession == null)
             {
                 return;
             }
 
-            MotionLabScenarioSetSample sample = _playbackRunner.LastSample ?? _sampler.GetSample(0);
-            MouseTraceSampleCounts counts = _recorder == null ? new MouseTraceSampleCounts(0, 0, 0, 0, 0, 0, 0) : _recorder.GetSampleCounts();
+            MotionLabScenarioSetSample sample = _playbackSession.LastSample ?? _sampler.GetSample(0);
+            MouseTraceSampleCounts counts = _playbackSession.GetSampleCounts();
             _statusLabel.Text = "Recording " + sample.ElapsedMilliseconds.ToString("0") + " ms, scenario " + (sample.ScenarioIndex + 1).ToString() + "/" + _sampler.ScenarioCount.ToString() + ", progress " + sample.Progress.ToString("0.000") + ", velocity " + sample.VelocityPixelsPerSecond.ToString("0") + " px/s, samples " + counts.TotalSamples.ToString() + ". Mouse input is blocked; press Esc to stop.";
         }
 
@@ -397,7 +343,7 @@ namespace CursorMirror.MotionLabApp
             }
         }
 
-        private void SaveRecordedPackage(MouseTraceSnapshot snapshot)
+        private void SaveRecordedPackage(MouseTraceSnapshot snapshot, string outputPath)
         {
             if (snapshot.Samples.Length == 0)
             {
@@ -407,73 +353,14 @@ namespace CursorMirror.MotionLabApp
 
             try
             {
-                new MotionLabPackageWriter().Write(_recordingOutputPath, _scenarioSet, snapshot);
-                _statusLabel.Text = "Saved Play and Record package: " + _recordingOutputPath;
+                new MotionLabPackageWriter().Write(outputPath, _scenarioSet, snapshot);
+                _statusLabel.Text = "Saved Play and Record package: " + outputPath;
             }
             catch (Exception ex)
             {
                 _statusLabel.Text = "Could not save Play and Record package.";
                 MessageBox.Show(this, ex.Message, "Cursor Mirror Motion Lab", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void StartLoadGenerator()
-        {
-            if (!_runLoadCheckBox.Checked || _loadProcess != null)
-            {
-                return;
-            }
-
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CursorMirror.LoadGen.exe");
-            if (!File.Exists(path))
-            {
-                _statusLabel.Text = "Load generator was not found.";
-                return;
-            }
-
-            ProcessStartInfo startInfo = new ProcessStartInfo(path);
-            startInfo.UseShellExecute = false;
-            startInfo.CreateNoWindow = true;
-            startInfo.Arguments =
-                "--duration-seconds " + Math.Max(1, (int)Math.Ceiling(GetTotalDurationMilliseconds() / 1000.0)).ToString() +
-                " --workers " + ((int)_loadWorkerInput.Value).ToString() +
-                " --load-percent " + ((int)_loadPercentInput.Value).ToString();
-            _loadProcess = Process.Start(startInfo);
-        }
-
-        private void StopLoadGenerator()
-        {
-            if (_loadProcess == null)
-            {
-                return;
-            }
-
-            try
-            {
-                if (!_loadProcess.HasExited)
-                {
-                    _loadProcess.Kill();
-                }
-            }
-            catch
-            {
-            }
-            finally
-            {
-                _loadProcess.Dispose();
-                _loadProcess = null;
-            }
-        }
-
-        private void StopInputBlocker()
-        {
-            if (_inputBlocker == null)
-            {
-                return;
-            }
-
-            _inputBlocker.Dispose();
-            _inputBlocker = null;
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
@@ -586,7 +473,7 @@ namespace CursorMirror.MotionLabApp
 
         private bool IsRunning()
         {
-            return _timer.Enabled || _recorder != null || (_playbackRunner != null && _playbackRunner.IsRunning);
+            return _timer.Enabled || (_playbackSession != null && _playbackSession.IsRunning);
         }
 
         private void PlaybackCompleted(object sender, EventArgs e)
@@ -637,25 +524,9 @@ namespace CursorMirror.MotionLabApp
             return (double)_scenarioCountInput.Value * (double)_durationInput.Value;
         }
 
-        private double GetTotalDurationMilliseconds()
-        {
-            return _scenarioSet == null ? GetConfiguredTotalDurationMilliseconds() : _scenarioSet.DurationMilliseconds;
-        }
-
         private static Label AddValueRow(TableLayoutPanel layout, int row, string label, string value)
         {
-            Label labelControl = new Label();
-            labelControl.Text = label;
-            labelControl.AutoSize = true;
-            labelControl.Anchor = AnchorStyles.Left;
-            layout.Controls.Add(labelControl, 0, row);
-
-            Label valueControl = new Label();
-            valueControl.Text = value;
-            valueControl.AutoSize = true;
-            valueControl.Anchor = AnchorStyles.Left;
-            layout.Controls.Add(valueControl, 1, row);
-            return valueControl;
+            return CursorMirrorFormLayout.AddAutoValueRow(layout, row, label, value);
         }
     }
 }

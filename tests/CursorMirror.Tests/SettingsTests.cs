@@ -20,6 +20,24 @@ namespace CursorMirror.Tests
             suite.Add("COT-MSU-10", DurableSettingsSaveValidation);
             suite.Add("COT-MSU-11", SettingsBackupRetention);
             suite.Add("COT-MSU-12", FailedStagedSavePreservesActiveSettings);
+            suite.Add("COT-MSU-21", SettingRangeMetadataMatchesNormalization);
+        }
+
+        // Setting range metadata [COT-MSU-21]
+        private static void SettingRangeMetadataMatchesNormalization()
+        {
+            CursorMirrorSettings settings = CursorMirrorSettings.Default();
+            settings.MovingOpacityPercent = CursorMirrorSettingRanges.MovingOpacity.Minimum - 1;
+            settings.RuntimeFineWaitAdvanceMicroseconds = 120;
+            settings.RuntimeFineWaitYieldThresholdMicroseconds = CursorMirrorSettingRanges.RuntimeFineWaitYieldThreshold.Maximum;
+            settings.DwmPredictionTargetOffsetMilliseconds = CursorMirrorSettingRanges.DwmPredictionTargetOffset.Maximum + 1;
+
+            CursorMirrorSettings normalized = settings.Normalize();
+
+            TestAssert.Equal(CursorMirrorSettingRanges.MovingOpacity.Minimum, normalized.MovingOpacityPercent, "range metadata moving opacity");
+            TestAssert.Equal(120, normalized.RuntimeFineWaitAdvanceMicroseconds, "range metadata fine wait");
+            TestAssert.Equal(120, normalized.RuntimeFineWaitYieldThresholdMicroseconds, "range metadata dependent spin threshold");
+            TestAssert.Equal(CursorMirrorSettingRanges.DwmPredictionTargetOffset.Maximum, normalized.DwmPredictionTargetOffsetMilliseconds, "range metadata target offset");
         }
 
         // Settings defaults [COT-MSU-1]
