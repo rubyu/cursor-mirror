@@ -1,0 +1,1165 @@
+﻿{
+    "generatedAt":  "2026-05-05T10:55:19.8815210Z",
+    "packageCount":  3,
+    "closedLoopUsablePackageCount":  3,
+    "totalFrameCount":  3438,
+    "overallSeparation":  {
+                              "count":  3438,
+                              "avg":  4.4313554392088426,
+                              "p50":  3,
+                              "p95":  12,
+                              "p99":  12,
+                              "max":  17
+                          },
+    "primaryFrameCount":  3438,
+    "primarySeparation":  {
+                              "count":  3438,
+                              "avg":  4.4313554392088426,
+                              "p50":  3,
+                              "p95":  12,
+                              "p99":  12,
+                              "max":  17
+                          },
+    "overallCaptureIntervalMilliseconds":  {
+                                               "count":  3435,
+                                               "avg":  42.795421542940424,
+                                               "p50":  44.765000000000327,
+                                               "p95":  52.88799999999901,
+                                               "p99":  62.00800000000163,
+                                               "max":  75.489999999997963
+                                           },
+    "holdMeasurementFloor":  {
+                                 "count":  401,
+                                 "avg":  9.329177057356608,
+                                 "p50":  12,
+                                 "p95":  12,
+                                 "p99":  12,
+                                 "max":  12
+                             },
+    "primaryHoldMeasurementFloor":  {
+                                        "count":  401,
+                                        "avg":  9.329177057356608,
+                                        "p50":  12,
+                                        "p95":  12,
+                                        "p99":  12,
+                                        "max":  12
+                                    },
+    "zeroFrameCount":  816,
+    "over12FrameCount":  12,
+    "over20FrameCount":  0,
+    "primaryOver12FrameCount":  12,
+    "primaryOver20FrameCount":  0,
+    "patternSummaries":  [
+                             {
+                                 "name":  "scenario-006",
+                                 "count":  350,
+                                 "avg":  5.4628571428571426,
+                                 "p50":  3,
+                                 "p95":  12,
+                                 "p99":  13,
+                                 "max":  17,
+                                 "zeroRate":  0.14285714285714285
+                             },
+                             {
+                                 "name":  "scenario-005",
+                                 "count":  347,
+                                 "avg":  3.1671469740634004,
+                                 "p50":  3,
+                                 "p95":  7,
+                                 "p99":  8,
+                                 "max":  8,
+                                 "zeroRate":  0.30547550432276654
+                             },
+                             {
+                                 "name":  "scenario-007",
+                                 "count":  351,
+                                 "avg":  4.7378917378917382,
+                                 "p50":  3,
+                                 "p95":  12,
+                                 "p99":  12,
+                                 "max":  12,
+                                 "zeroRate":  0.21937321937321938
+                             },
+                             {
+                                 "name":  "scenario-009",
+                                 "count":  357,
+                                 "avg":  3.5714285714285716,
+                                 "p50":  2,
+                                 "p95":  12,
+                                 "p99":  12,
+                                 "max":  13,
+                                 "zeroRate":  0.33893557422969189
+                             },
+                             {
+                                 "name":  "scenario-008",
+                                 "count":  355,
+                                 "avg":  8.7492957746478872,
+                                 "p50":  8,
+                                 "p95":  12,
+                                 "p99":  13,
+                                 "max":  14,
+                                 "zeroRate":  0.039436619718309862
+                             },
+                             {
+                                 "name":  "scenario-001",
+                                 "count":  346,
+                                 "avg":  2.6329479768786128,
+                                 "p50":  2,
+                                 "p95":  7,
+                                 "p99":  7,
+                                 "max":  7,
+                                 "zeroRate":  0.33815028901734107
+                             },
+                             {
+                                 "name":  "scenario-000",
+                                 "count":  282,
+                                 "avg":  6.1985815602836878,
+                                 "p50":  7,
+                                 "p95":  12,
+                                 "p99":  12,
+                                 "max":  12,
+                                 "zeroRate":  0.12411347517730496
+                             },
+                             {
+                                 "name":  "scenario-002",
+                                 "count":  348,
+                                 "avg":  4.3591954022988508,
+                                 "p50":  3,
+                                 "p95":  12,
+                                 "p99":  12,
+                                 "max":  12,
+                                 "zeroRate":  0.27586206896551724
+                             },
+                             {
+                                 "name":  "scenario-004",
+                                 "count":  351,
+                                 "avg":  2.8262108262108261,
+                                 "p50":  3,
+                                 "p95":  7,
+                                 "p99":  8,
+                                 "max":  8,
+                                 "zeroRate":  0.27350427350427353
+                             },
+                             {
+                                 "name":  "scenario-003",
+                                 "count":  351,
+                                 "avg":  2.883190883190883,
+                                 "p50":  2,
+                                 "p95":  7,
+                                 "p99":  8,
+                                 "max":  12,
+                                 "zeroRate":  0.29629629629629628
+                             }
+                         ],
+    "phaseSummaries":  [
+                           {
+                               "name":  "resume",
+                               "count":  52,
+                               "avg":  12,
+                               "p50":  12,
+                               "p95":  12,
+                               "p99":  12,
+                               "max":  12,
+                               "zeroRate":  0
+                           },
+                           {
+                               "name":  "hold",
+                               "count":  401,
+                               "avg":  9.329177057356608,
+                               "p50":  12,
+                               "p95":  12,
+                               "p99":  12,
+                               "max":  12,
+                               "zeroRate":  0.034912718204488775
+                           },
+                           {
+                               "name":  "moving",
+                               "count":  2985,
+                               "avg":  3.641541038525963,
+                               "p50":  3,
+                               "p95":  11,
+                               "p99":  12,
+                               "max":  17,
+                               "zeroRate":  0.26867671691792294
+                           }
+                       ],
+    "variantSummaries":  [
+                             {
+                                 "name":  "tworegime-smoothpredictor-displayoffset0-50s",
+                                 "count":  1133,
+                                 "avg":  4.5119152691968223,
+                                 "p50":  3,
+                                 "p95":  12,
+                                 "p99":  12,
+                                 "max":  14,
+                                 "zeroRate":  0.20123565754633715
+                             },
+                             {
+                                 "name":  "smoothpredictor-displayoffset0-50s",
+                                 "count":  1162,
+                                 "avg":  4.3820998278829606,
+                                 "p50":  3,
+                                 "p95":  12,
+                                 "p99":  12,
+                                 "max":  17,
+                                 "zeroRate":  0.32702237521514632
+                             },
+                             {
+                                 "name":  "constantvelocity-displayoffset0-50s",
+                                 "count":  1143,
+                                 "avg":  4.4015748031496065,
+                                 "p50":  3,
+                                 "p95":  12,
+                                 "p99":  12,
+                                 "max":  14,
+                                 "zeroRate":  0.18197725284339458
+                             }
+                         ],
+    "packages":  [
+                     {
+                         "variantName":  "constantvelocity-displayoffset0-50s",
+                         "name":  "calibration.zip",
+                         "relativePath":  "constantvelocity-displayoffset0-50s\\calibration.zip",
+                         "lengthBytes":  45566,
+                         "lastWriteTime":  "2026-05-05T19:52:53.2003008+09:00",
+                         "frameCount":  1143,
+                         "darkFrameCount":  1143,
+                         "averageEstimatedSeparationPixels":  4.4015748031496065,
+                         "p95EstimatedSeparationPixels":  12,
+                         "maximumEstimatedSeparationPixels":  14,
+                         "runtimeMode":  "ProductRuntime",
+                         "predictionModel":  0,
+                         "targetOffsetMilliseconds":  8,
+                         "motionSourceName":  "motion-lab",
+                         "motionGenerationProfile":  "calibrator-verification-v22",
+                         "motionScenarioCount":  10,
+                         "motionDurationMilliseconds":  50000,
+                         "usableForClosedLoop":  true,
+                         "motionContextFrameCount":  1143,
+                         "separation":  {
+                                            "count":  1143,
+                                            "avg":  4.4015748031496065,
+                                            "p50":  3,
+                                            "p95":  12,
+                                            "p99":  12,
+                                            "max":  14
+                                        },
+                         "captureIntervalMilliseconds":  {
+                                                             "count":  1142,
+                                                             "avg":  42.90714973730298,
+                                                             "p50":  44.640999999995984,
+                                                             "p95":  53.222999999998137,
+                                                             "p99":  62.384000000000015,
+                                                             "max":  75.489999999997963
+                                                         },
+                         "holdMeasurementFloor":  {
+                                                      "count":  134,
+                                                      "avg":  9.2388059701492544,
+                                                      "p50":  12,
+                                                      "p95":  12,
+                                                      "p99":  12,
+                                                      "max":  12
+                                                  },
+                         "over12FrameCount":  5,
+                         "zeroFrameCount":  208,
+                         "patternSummaries":  [
+                                                  {
+                                                      "name":  "scenario-006",
+                                                      "count":  115,
+                                                      "avg":  5.7652173913043478,
+                                                      "p50":  6,
+                                                      "p95":  12,
+                                                      "p99":  12,
+                                                      "max":  13,
+                                                      "zeroRate":  0.12173913043478261
+                                                  },
+                                                  {
+                                                      "name":  "scenario-005",
+                                                      "count":  116,
+                                                      "avg":  3.5431034482758621,
+                                                      "p50":  3,
+                                                      "p95":  8,
+                                                      "p99":  8,
+                                                      "max":  8,
+                                                      "zeroRate":  0.19827586206896552
+                                                  },
+                                                  {
+                                                      "name":  "scenario-007",
+                                                      "count":  117,
+                                                      "avg":  4.4102564102564106,
+                                                      "p50":  2,
+                                                      "p95":  12,
+                                                      "p99":  12,
+                                                      "max":  12,
+                                                      "zeroRate":  0.17948717948717949
+                                                  },
+                                                  {
+                                                      "name":  "scenario-009",
+                                                      "count":  118,
+                                                      "avg":  3.5084745762711864,
+                                                      "p50":  2,
+                                                      "p95":  12,
+                                                      "p99":  12,
+                                                      "max":  13,
+                                                      "zeroRate":  0.3135593220338983
+                                                  },
+                                                  {
+                                                      "name":  "scenario-008",
+                                                      "count":  119,
+                                                      "avg":  8.6050420168067223,
+                                                      "p50":  8,
+                                                      "p95":  12,
+                                                      "p99":  13,
+                                                      "max":  14,
+                                                      "zeroRate":  0.033613445378151259
+                                                  },
+                                                  {
+                                                      "name":  "scenario-001",
+                                                      "count":  115,
+                                                      "avg":  2.6173913043478261,
+                                                      "p50":  2,
+                                                      "p95":  7,
+                                                      "p99":  7,
+                                                      "max":  7,
+                                                      "zeroRate":  0.23478260869565218
+                                                  },
+                                                  {
+                                                      "name":  "scenario-000",
+                                                      "count":  93,
+                                                      "avg":  5.655913978494624,
+                                                      "p50":  7,
+                                                      "p95":  12,
+                                                      "p99":  12,
+                                                      "max":  12,
+                                                      "zeroRate":  0.10752688172043011
+                                                  },
+                                                  {
+                                                      "name":  "scenario-002",
+                                                      "count":  114,
+                                                      "avg":  4.333333333333333,
+                                                      "p50":  3,
+                                                      "p95":  12,
+                                                      "p99":  12,
+                                                      "max":  12,
+                                                      "zeroRate":  0.22807017543859648
+                                                  },
+                                                  {
+                                                      "name":  "scenario-004",
+                                                      "count":  118,
+                                                      "avg":  3.1864406779661016,
+                                                      "p50":  3,
+                                                      "p95":  8,
+                                                      "p99":  8,
+                                                      "max":  8,
+                                                      "zeroRate":  0.1440677966101695
+                                                  },
+                                                  {
+                                                      "name":  "scenario-003",
+                                                      "count":  118,
+                                                      "avg":  2.593220338983051,
+                                                      "p50":  2,
+                                                      "p95":  7,
+                                                      "p99":  8,
+                                                      "max":  12,
+                                                      "zeroRate":  0.24576271186440679
+                                                  }
+                                              ],
+                         "phaseSummaries":  [
+                                                {
+                                                    "name":  "resume",
+                                                    "count":  19,
+                                                    "avg":  12,
+                                                    "p50":  12,
+                                                    "p95":  12,
+                                                    "p99":  12,
+                                                    "max":  12,
+                                                    "zeroRate":  0
+                                                },
+                                                {
+                                                    "name":  "hold",
+                                                    "count":  134,
+                                                    "avg":  9.2388059701492544,
+                                                    "p50":  12,
+                                                    "p95":  12,
+                                                    "p99":  12,
+                                                    "max":  12,
+                                                    "zeroRate":  0.022388059701492536
+                                                },
+                                                {
+                                                    "name":  "moving",
+                                                    "count":  990,
+                                                    "avg":  3.6010101010101012,
+                                                    "p50":  3,
+                                                    "p95":  11,
+                                                    "p99":  12,
+                                                    "max":  14,
+                                                    "zeroRate":  0.20707070707070707
+                                                }
+                                            ],
+                         "worstFrames":  [
+                                             {
+                                                 "frameIndex":  921,
+                                                 "elapsedMilliseconds":  40076.55,
+                                                 "separationPixels":  14,
+                                                 "patternName":  "scenario-008",
+                                                 "phaseName":  "moving",
+                                                 "scenarioIndex":  8,
+                                                 "expectedX":  1241,
+                                                 "expectedY":  721,
+                                                 "expectedVelocityPixelsPerSecond":  28.572
+                                             },
+                                             {
+                                                 "frameIndex":  1026,
+                                                 "elapsedMilliseconds":  44481.873,
+                                                 "separationPixels":  13,
+                                                 "patternName":  "scenario-008",
+                                                 "phaseName":  "moving",
+                                                 "scenarioIndex":  8,
+                                                 "expectedX":  1287,
+                                                 "expectedY":  714,
+                                                 "expectedVelocityPixelsPerSecond":  28.637
+                                             },
+                                             {
+                                                 "frameIndex":  941,
+                                                 "elapsedMilliseconds":  40918.144,
+                                                 "separationPixels":  13,
+                                                 "patternName":  "scenario-008",
+                                                 "phaseName":  "moving",
+                                                 "scenarioIndex":  8,
+                                                 "expectedX":  1257,
+                                                 "expectedY":  726,
+                                                 "expectedVelocityPixelsPerSecond":  19.562
+                                             },
+                                             {
+                                                 "frameIndex":  1130,
+                                                 "elapsedMilliseconds":  48901.625,
+                                                 "separationPixels":  13,
+                                                 "patternName":  "scenario-009",
+                                                 "phaseName":  "moving",
+                                                 "scenarioIndex":  9,
+                                                 "expectedX":  1537,
+                                                 "expectedY":  713,
+                                                 "expectedVelocityPixelsPerSecond":  244.229
+                                             },
+                                             {
+                                                 "frameIndex":  792,
+                                                 "elapsedMilliseconds":  34573.205,
+                                                 "separationPixels":  13,
+                                                 "patternName":  "scenario-006",
+                                                 "phaseName":  "moving",
+                                                 "scenarioIndex":  6,
+                                                 "expectedX":  898,
+                                                 "expectedY":  619,
+                                                 "expectedVelocityPixelsPerSecond":  359.877
+                                             },
+                                             {
+                                                 "frameIndex":  954,
+                                                 "elapsedMilliseconds":  41450.55,
+                                                 "separationPixels":  12,
+                                                 "patternName":  "scenario-008",
+                                                 "phaseName":  "hold",
+                                                 "scenarioIndex":  8,
+                                                 "expectedX":  1263,
+                                                 "expectedY":  723,
+                                                 "expectedVelocityPixelsPerSecond":  0
+                                             },
+                                             {
+                                                 "frameIndex":  955,
+                                                 "elapsedMilliseconds":  41494.032,
+                                                 "separationPixels":  12,
+                                                 "patternName":  "scenario-008",
+                                                 "phaseName":  "hold",
+                                                 "scenarioIndex":  8,
+                                                 "expectedX":  1263,
+                                                 "expectedY":  723,
+                                                 "expectedVelocityPixelsPerSecond":  0
+                                             },
+                                             {
+                                                 "frameIndex":  715,
+                                                 "elapsedMilliseconds":  31279.074,
+                                                 "separationPixels":  12,
+                                                 "patternName":  "scenario-006",
+                                                 "phaseName":  "hold",
+                                                 "scenarioIndex":  6,
+                                                 "expectedX":  1637,
+                                                 "expectedY":  558,
+                                                 "expectedVelocityPixelsPerSecond":  0
+                                             },
+                                             {
+                                                 "frameIndex":  965,
+                                                 "elapsedMilliseconds":  41901.533,
+                                                 "separationPixels":  12,
+                                                 "patternName":  "scenario-008",
+                                                 "phaseName":  "moving",
+                                                 "scenarioIndex":  8,
+                                                 "expectedX":  1264,
+                                                 "expectedY":  722,
+                                                 "expectedVelocityPixelsPerSecond":  4.056
+                                             },
+                                             {
+                                                 "frameIndex":  964,
+                                                 "elapsedMilliseconds":  41854.963,
+                                                 "separationPixels":  12,
+                                                 "patternName":  "scenario-008",
+                                                 "phaseName":  "moving",
+                                                 "scenarioIndex":  8,
+                                                 "expectedX":  1263,
+                                                 "expectedY":  722,
+                                                 "expectedVelocityPixelsPerSecond":  4.329
+                                             },
+                                             {
+                                                 "frameIndex":  716,
+                                                 "elapsedMilliseconds":  31321.712,
+                                                 "separationPixels":  12,
+                                                 "patternName":  "scenario-006",
+                                                 "phaseName":  "resume",
+                                                 "scenarioIndex":  6,
+                                                 "expectedX":  1637,
+                                                 "expectedY":  558,
+                                                 "expectedVelocityPixelsPerSecond":  36.047
+                                             },
+                                             {
+                                                 "frameIndex":  959,
+                                                 "elapsedMilliseconds":  41652.99,
+                                                 "separationPixels":  12,
+                                                 "patternName":  "scenario-008",
+                                                 "phaseName":  "hold",
+                                                 "scenarioIndex":  8,
+                                                 "expectedX":  1263,
+                                                 "expectedY":  723,
+                                                 "expectedVelocityPixelsPerSecond":  0
+                                             }
+                                         ]
+                     },
+                     {
+                         "variantName":  "smoothpredictor-displayoffset0-50s",
+                         "name":  "calibration.zip",
+                         "relativePath":  "smoothpredictor-displayoffset0-50s\\calibration.zip",
+                         "lengthBytes":  45973,
+                         "lastWriteTime":  "2026-05-05T19:53:55.3951543+09:00",
+                         "frameCount":  1162,
+                         "darkFrameCount":  1162,
+                         "averageEstimatedSeparationPixels":  4.3820998278829606,
+                         "p95EstimatedSeparationPixels":  12,
+                         "maximumEstimatedSeparationPixels":  17,
+                         "runtimeMode":  "ProductRuntime",
+                         "predictionModel":  4,
+                         "targetOffsetMilliseconds":  8,
+                         "motionSourceName":  "motion-lab",
+                         "motionGenerationProfile":  "calibrator-verification-v22",
+                         "motionScenarioCount":  10,
+                         "motionDurationMilliseconds":  50000,
+                         "usableForClosedLoop":  true,
+                         "motionContextFrameCount":  1162,
+                         "separation":  {
+                                            "count":  1162,
+                                            "avg":  4.3820998278829606,
+                                            "p50":  3,
+                                            "p95":  12,
+                                            "p99":  12,
+                                            "max":  17
+                                        },
+                         "captureIntervalMilliseconds":  {
+                                                             "count":  1161,
+                                                             "avg":  42.205633936261847,
+                                                             "p50":  44.265999999999622,
+                                                             "p95":  52.248000000006869,
+                                                             "p99":  57.623999999999796,
+                                                             "max":  72.043000000001484
+                                                         },
+                         "holdMeasurementFloor":  {
+                                                      "count":  136,
+                                                      "avg":  9.625,
+                                                      "p50":  12,
+                                                      "p95":  12,
+                                                      "p99":  12,
+                                                      "max":  12
+                                                  },
+                         "over12FrameCount":  2,
+                         "zeroFrameCount":  380,
+                         "patternSummaries":  [
+                                                  {
+                                                      "name":  "scenario-006",
+                                                      "count":  119,
+                                                      "avg":  5.1596638655462188,
+                                                      "p50":  2,
+                                                      "p95":  12,
+                                                      "p99":  15,
+                                                      "max":  17,
+                                                      "zeroRate":  0.11764705882352941
+                                                  },
+                                                  {
+                                                      "name":  "scenario-005",
+                                                      "count":  118,
+                                                      "avg":  3.2033898305084745,
+                                                      "p50":  3,
+                                                      "p95":  7,
+                                                      "p99":  7,
+                                                      "max":  7,
+                                                      "zeroRate":  0.40677966101694918
+                                                  },
+                                                  {
+                                                      "name":  "scenario-007",
+                                                      "count":  120,
+                                                      "avg":  5.041666666666667,
+                                                      "p50":  6,
+                                                      "p95":  12,
+                                                      "p99":  12,
+                                                      "max":  12,
+                                                      "zeroRate":  0.275
+                                                  },
+                                                  {
+                                                      "name":  "scenario-009",
+                                                      "count":  119,
+                                                      "avg":  3.6134453781512605,
+                                                      "p50":  3,
+                                                      "p95":  12,
+                                                      "p99":  12,
+                                                      "max":  12,
+                                                      "zeroRate":  0.42857142857142855
+                                                  },
+                                                  {
+                                                      "name":  "scenario-008",
+                                                      "count":  117,
+                                                      "avg":  9.0427350427350426,
+                                                      "p50":  8,
+                                                      "p95":  12,
+                                                      "p99":  12,
+                                                      "max":  12,
+                                                      "zeroRate":  0.042735042735042736
+                                                  },
+                                                  {
+                                                      "name":  "scenario-001",
+                                                      "count":  118,
+                                                      "avg":  2.3644067796610169,
+                                                      "p50":  0,
+                                                      "p95":  7,
+                                                      "p99":  7,
+                                                      "max":  7,
+                                                      "zeroRate":  0.576271186440678
+                                                  },
+                                                  {
+                                                      "name":  "scenario-000",
+                                                      "count":  96,
+                                                      "avg":  6.739583333333333,
+                                                      "p50":  7,
+                                                      "p95":  12,
+                                                      "p99":  12,
+                                                      "max":  12,
+                                                      "zeroRate":  0.15625
+                                                  },
+                                                  {
+                                                      "name":  "scenario-002",
+                                                      "count":  119,
+                                                      "avg":  4.3361344537815123,
+                                                      "p50":  3,
+                                                      "p95":  12,
+                                                      "p99":  12,
+                                                      "max":  12,
+                                                      "zeroRate":  0.34453781512605042
+                                                  },
+                                                  {
+                                                      "name":  "scenario-004",
+                                                      "count":  118,
+                                                      "avg":  1.9406779661016949,
+                                                      "p50":  0,
+                                                      "p95":  7,
+                                                      "p99":  7,
+                                                      "max":  7,
+                                                      "zeroRate":  0.50847457627118642
+                                                  },
+                                                  {
+                                                      "name":  "scenario-003",
+                                                      "count":  118,
+                                                      "avg":  2.847457627118644,
+                                                      "p50":  3,
+                                                      "p95":  7,
+                                                      "p99":  7,
+                                                      "max":  8,
+                                                      "zeroRate":  0.38135593220338981
+                                                  }
+                                              ],
+                         "phaseSummaries":  [
+                                                {
+                                                    "name":  "resume",
+                                                    "count":  17,
+                                                    "avg":  12,
+                                                    "p50":  12,
+                                                    "p95":  12,
+                                                    "p99":  12,
+                                                    "max":  12,
+                                                    "zeroRate":  0
+                                                },
+                                                {
+                                                    "name":  "hold",
+                                                    "count":  136,
+                                                    "avg":  9.625,
+                                                    "p50":  12,
+                                                    "p95":  12,
+                                                    "p99":  12,
+                                                    "max":  12,
+                                                    "zeroRate":  0.022058823529411766
+                                                },
+                                                {
+                                                    "name":  "moving",
+                                                    "count":  1009,
+                                                    "avg":  3.5470763131813676,
+                                                    "p50":  3,
+                                                    "p95":  10,
+                                                    "p99":  12,
+                                                    "max":  17,
+                                                    "zeroRate":  0.37363726461843411
+                                                }
+                                            ],
+                         "worstFrames":  [
+                                             {
+                                                 "frameIndex":  736,
+                                                 "elapsedMilliseconds":  31451.994,
+                                                 "separationPixels":  17,
+                                                 "patternName":  "scenario-006",
+                                                 "phaseName":  "moving",
+                                                 "scenarioIndex":  6,
+                                                 "expectedX":  1587,
+                                                 "expectedY":  562,
+                                                 "expectedVelocityPixelsPerSecond":  360.039
+                                             },
+                                             {
+                                                 "frameIndex":  771,
+                                                 "elapsedMilliseconds":  32902.782,
+                                                 "separationPixels":  15,
+                                                 "patternName":  "scenario-006",
+                                                 "phaseName":  "moving",
+                                                 "scenarioIndex":  6,
+                                                 "expectedX":  1231,
+                                                 "expectedY":  592,
+                                                 "expectedVelocityPixelsPerSecond":  359.932
+                                             },
+                                             {
+                                                 "frameIndex":  806,
+                                                 "elapsedMilliseconds":  34421.518,
+                                                 "separationPixels":  12,
+                                                 "patternName":  "scenario-006",
+                                                 "phaseName":  "resume",
+                                                 "scenarioIndex":  6,
+                                                 "expectedX":  952,
+                                                 "expectedY":  620,
+                                                 "expectedVelocityPixelsPerSecond":  1.602
+                                             },
+                                             {
+                                                 "frameIndex":  805,
+                                                 "elapsedMilliseconds":  34373.374,
+                                                 "separationPixels":  12,
+                                                 "patternName":  "scenario-006",
+                                                 "phaseName":  "hold",
+                                                 "scenarioIndex":  6,
+                                                 "expectedX":  952,
+                                                 "expectedY":  620,
+                                                 "expectedVelocityPixelsPerSecond":  0
+                                             },
+                                             {
+                                                 "frameIndex":  735,
+                                                 "elapsedMilliseconds":  31401.889,
+                                                 "separationPixels":  12,
+                                                 "patternName":  "scenario-006",
+                                                 "phaseName":  "moving",
+                                                 "scenarioIndex":  6,
+                                                 "expectedX":  1605,
+                                                 "expectedY":  560,
+                                                 "expectedVelocityPixelsPerSecond":  363.521
+                                             },
+                                             {
+                                                 "frameIndex":  807,
+                                                 "elapsedMilliseconds":  34451.993,
+                                                 "separationPixels":  12,
+                                                 "patternName":  "scenario-006",
+                                                 "phaseName":  "resume",
+                                                 "scenarioIndex":  6,
+                                                 "expectedX":  948,
+                                                 "expectedY":  620,
+                                                 "expectedVelocityPixelsPerSecond":  265.613
+                                             },
+                                             {
+                                                 "frameIndex":  1038,
+                                                 "elapsedMilliseconds":  44151.472,
+                                                 "separationPixels":  12,
+                                                 "patternName":  "scenario-008",
+                                                 "phaseName":  "hold",
+                                                 "scenarioIndex":  8,
+                                                 "expectedX":  1283,
+                                                 "expectedY":  714,
+                                                 "expectedVelocityPixelsPerSecond":  0
+                                             },
+                                             {
+                                                 "frameIndex":  809,
+                                                 "elapsedMilliseconds":  34531.479,
+                                                 "separationPixels":  12,
+                                                 "patternName":  "scenario-006",
+                                                 "phaseName":  "moving",
+                                                 "scenarioIndex":  6,
+                                                 "expectedX":  913,
+                                                 "expectedY":  619,
+                                                 "expectedVelocityPixelsPerSecond":  358.028
+                                             },
+                                             {
+                                                 "frameIndex":  808,
+                                                 "elapsedMilliseconds":  34495.696,
+                                                 "separationPixels":  12,
+                                                 "patternName":  "scenario-006",
+                                                 "phaseName":  "resume",
+                                                 "scenarioIndex":  6,
+                                                 "expectedX":  927,
+                                                 "expectedY":  620,
+                                                 "expectedVelocityPixelsPerSecond":  551.06
+                                             },
+                                             {
+                                                 "frameIndex":  940,
+                                                 "elapsedMilliseconds":  40029.1,
+                                                 "separationPixels":  12,
+                                                 "patternName":  "scenario-008",
+                                                 "phaseName":  "moving",
+                                                 "scenarioIndex":  8,
+                                                 "expectedX":  1240,
+                                                 "expectedY":  720,
+                                                 "expectedVelocityPixelsPerSecond":  28.443
+                                             },
+                                             {
+                                                 "frameIndex":  346,
+                                                 "elapsedMilliseconds":  14994.02,
+                                                 "separationPixels":  12,
+                                                 "patternName":  "scenario-002",
+                                                 "phaseName":  "moving",
+                                                 "scenarioIndex":  2,
+                                                 "expectedX":  2097,
+                                                 "expectedY":  775,
+                                                 "expectedVelocityPixelsPerSecond":  390.971
+                                             },
+                                             {
+                                                 "frameIndex":  800,
+                                                 "elapsedMilliseconds":  34166.928,
+                                                 "separationPixels":  12,
+                                                 "patternName":  "scenario-006",
+                                                 "phaseName":  "hold",
+                                                 "scenarioIndex":  6,
+                                                 "expectedX":  952,
+                                                 "expectedY":  620,
+                                                 "expectedVelocityPixelsPerSecond":  0
+                                             }
+                                         ]
+                     },
+                     {
+                         "variantName":  "tworegime-smoothpredictor-displayoffset0-50s",
+                         "name":  "calibration.zip",
+                         "relativePath":  "tworegime-smoothpredictor-displayoffset0-50s\\calibration.zip",
+                         "lengthBytes":  45243,
+                         "lastWriteTime":  "2026-05-05T19:55:01.3909569+09:00",
+                         "frameCount":  1133,
+                         "darkFrameCount":  1133,
+                         "averageEstimatedSeparationPixels":  4.5119152691968223,
+                         "p95EstimatedSeparationPixels":  12,
+                         "maximumEstimatedSeparationPixels":  14,
+                         "runtimeMode":  "ProductRuntime",
+                         "predictionModel":  6,
+                         "targetOffsetMilliseconds":  8,
+                         "motionSourceName":  "motion-lab",
+                         "motionGenerationProfile":  "calibrator-verification-v22",
+                         "motionScenarioCount":  10,
+                         "motionDurationMilliseconds":  50000,
+                         "usableForClosedLoop":  true,
+                         "motionContextFrameCount":  1133,
+                         "separation":  {
+                                            "count":  1133,
+                                            "avg":  4.5119152691968223,
+                                            "p50":  3,
+                                            "p95":  12,
+                                            "p99":  12,
+                                            "max":  14
+                                        },
+                         "captureIntervalMilliseconds":  {
+                                                             "count":  1132,
+                                                             "avg":  43.287603356890465,
+                                                             "p50":  45.2609999999986,
+                                                             "p95":  53.8900000000001,
+                                                             "p99":  62.509000000001834,
+                                                             "max":  66.842000000000553
+                                                         },
+                         "holdMeasurementFloor":  {
+                                                      "count":  131,
+                                                      "avg":  9.1145038167938939,
+                                                      "p50":  12,
+                                                      "p95":  12,
+                                                      "p99":  12,
+                                                      "max":  12
+                                                  },
+                         "over12FrameCount":  5,
+                         "zeroFrameCount":  228,
+                         "patternSummaries":  [
+                                                  {
+                                                      "name":  "scenario-006",
+                                                      "count":  116,
+                                                      "avg":  5.4741379310344831,
+                                                      "p50":  3,
+                                                      "p95":  12,
+                                                      "p99":  12,
+                                                      "max":  13,
+                                                      "zeroRate":  0.18965517241379309
+                                                  },
+                                                  {
+                                                      "name":  "scenario-005",
+                                                      "count":  113,
+                                                      "avg":  2.7433628318584069,
+                                                      "p50":  2,
+                                                      "p95":  7,
+                                                      "p99":  7,
+                                                      "max":  7,
+                                                      "zeroRate":  0.30973451327433627
+                                                  },
+                                                  {
+                                                      "name":  "scenario-007",
+                                                      "count":  114,
+                                                      "avg":  4.7543859649122808,
+                                                      "p50":  3,
+                                                      "p95":  12,
+                                                      "p99":  12,
+                                                      "max":  12,
+                                                      "zeroRate":  0.20175438596491227
+                                                  },
+                                                  {
+                                                      "name":  "scenario-009",
+                                                      "count":  120,
+                                                      "avg":  3.5916666666666668,
+                                                      "p50":  2,
+                                                      "p95":  12,
+                                                      "p99":  12,
+                                                      "max":  13,
+                                                      "zeroRate":  0.275
+                                                  },
+                                                  {
+                                                      "name":  "scenario-008",
+                                                      "count":  119,
+                                                      "avg":  8.6050420168067223,
+                                                      "p50":  8,
+                                                      "p95":  12,
+                                                      "p99":  14,
+                                                      "max":  14,
+                                                      "zeroRate":  0.042016806722689079
+                                                  },
+                                                  {
+                                                      "name":  "scenario-001",
+                                                      "count":  113,
+                                                      "avg":  2.9292035398230087,
+                                                      "p50":  2,
+                                                      "p95":  7,
+                                                      "p99":  7,
+                                                      "max":  7,
+                                                      "zeroRate":  0.19469026548672566
+                                                  },
+                                                  {
+                                                      "name":  "scenario-000",
+                                                      "count":  93,
+                                                      "avg":  6.182795698924731,
+                                                      "p50":  7,
+                                                      "p95":  12,
+                                                      "p99":  12,
+                                                      "max":  12,
+                                                      "zeroRate":  0.10752688172043011
+                                                  },
+                                                  {
+                                                      "name":  "scenario-002",
+                                                      "count":  115,
+                                                      "avg":  4.4086956521739129,
+                                                      "p50":  3,
+                                                      "p95":  12,
+                                                      "p99":  12,
+                                                      "max":  12,
+                                                      "zeroRate":  0.25217391304347825
+                                                  },
+                                                  {
+                                                      "name":  "scenario-004",
+                                                      "count":  115,
+                                                      "avg":  3.3652173913043479,
+                                                      "p50":  3,
+                                                      "p95":  8,
+                                                      "p99":  8,
+                                                      "max":  8,
+                                                      "zeroRate":  0.16521739130434782
+                                                  },
+                                                  {
+                                                      "name":  "scenario-003",
+                                                      "count":  115,
+                                                      "avg":  3.2173913043478262,
+                                                      "p50":  3,
+                                                      "p95":  7,
+                                                      "p99":  12,
+                                                      "max":  12,
+                                                      "zeroRate":  0.2608695652173913
+                                                  }
+                                              ],
+                         "phaseSummaries":  [
+                                                {
+                                                    "name":  "resume",
+                                                    "count":  16,
+                                                    "avg":  12,
+                                                    "p50":  12,
+                                                    "p95":  12,
+                                                    "p99":  12,
+                                                    "max":  12,
+                                                    "zeroRate":  0
+                                                },
+                                                {
+                                                    "name":  "hold",
+                                                    "count":  131,
+                                                    "avg":  9.1145038167938939,
+                                                    "p50":  12,
+                                                    "p95":  12,
+                                                    "p99":  12,
+                                                    "max":  12,
+                                                    "zeroRate":  0.061068702290076333
+                                                },
+                                                {
+                                                    "name":  "moving",
+                                                    "count":  986,
+                                                    "avg":  3.7789046653144016,
+                                                    "p50":  3,
+                                                    "p95":  11,
+                                                    "p99":  12,
+                                                    "max":  14,
+                                                    "zeroRate":  0.2231237322515213
+                                                }
+                                            ],
+                         "worstFrames":  [
+                                             {
+                                                 "frameIndex":  910,
+                                                 "elapsedMilliseconds":  40059.566,
+                                                 "separationPixels":  14,
+                                                 "patternName":  "scenario-008",
+                                                 "phaseName":  "moving",
+                                                 "scenarioIndex":  8,
+                                                 "expectedX":  1241,
+                                                 "expectedY":  721,
+                                                 "expectedVelocityPixelsPerSecond":  28.691
+                                             },
+                                             {
+                                                 "frameIndex":  977,
+                                                 "elapsedMilliseconds":  42834.68,
+                                                 "separationPixels":  14,
+                                                 "patternName":  "scenario-008",
+                                                 "phaseName":  "moving",
+                                                 "scenarioIndex":  8,
+                                                 "expectedX":  1267,
+                                                 "expectedY":  721,
+                                                 "expectedVelocityPixelsPerSecond":  5.825
+                                             },
+                                             {
+                                                 "frameIndex":  712,
+                                                 "elapsedMilliseconds":  31462.648,
+                                                 "separationPixels":  13,
+                                                 "patternName":  "scenario-006",
+                                                 "phaseName":  "moving",
+                                                 "scenarioIndex":  6,
+                                                 "expectedX":  1583,
+                                                 "expectedY":  562,
+                                                 "expectedVelocityPixelsPerSecond":  360.031
+                                             },
+                                             {
+                                                 "frameIndex":  1016,
+                                                 "elapsedMilliseconds":  44510.738,
+                                                 "separationPixels":  13,
+                                                 "patternName":  "scenario-008",
+                                                 "phaseName":  "moving",
+                                                 "scenarioIndex":  8,
+                                                 "expectedX":  1288,
+                                                 "expectedY":  714,
+                                                 "expectedVelocityPixelsPerSecond":  29.285
+                                             },
+                                             {
+                                                 "frameIndex":  1121,
+                                                 "elapsedMilliseconds":  48915.779,
+                                                 "separationPixels":  13,
+                                                 "patternName":  "scenario-009",
+                                                 "phaseName":  "moving",
+                                                 "scenarioIndex":  9,
+                                                 "expectedX":  1541,
+                                                 "expectedY":  712,
+                                                 "expectedVelocityPixelsPerSecond":  251.443
+                                             },
+                                             {
+                                                 "frameIndex":  984,
+                                                 "elapsedMilliseconds":  43128.983,
+                                                 "separationPixels":  12,
+                                                 "patternName":  "scenario-008",
+                                                 "phaseName":  "moving",
+                                                 "scenarioIndex":  8,
+                                                 "expectedX":  1269,
+                                                 "expectedY":  720,
+                                                 "expectedVelocityPixelsPerSecond":  11.705
+                                             },
+                                             {
+                                                 "frameIndex":  983,
+                                                 "elapsedMilliseconds":  43088.003,
+                                                 "separationPixels":  12,
+                                                 "patternName":  "scenario-008",
+                                                 "phaseName":  "moving",
+                                                 "scenarioIndex":  8,
+                                                 "expectedX":  1269,
+                                                 "expectedY":  720,
+                                                 "expectedVelocityPixelsPerSecond":  10.137
+                                             },
+                                             {
+                                                 "frameIndex":  982,
+                                                 "elapsedMilliseconds":  43034.498,
+                                                 "separationPixels":  12,
+                                                 "patternName":  "scenario-008",
+                                                 "phaseName":  "moving",
+                                                 "scenarioIndex":  8,
+                                                 "expectedX":  1268,
+                                                 "expectedY":  720,
+                                                 "expectedVelocityPixelsPerSecond":  8.71
+                                             },
+                                             {
+                                                 "frameIndex":  782,
+                                                 "elapsedMilliseconds":  34462.095,
+                                                 "separationPixels":  12,
+                                                 "patternName":  "scenario-006",
+                                                 "phaseName":  "resume",
+                                                 "scenarioIndex":  6,
+                                                 "expectedX":  945,
+                                                 "expectedY":  620,
+                                                 "expectedVelocityPixelsPerSecond":  391.293
+                                             },
+                                             {
+                                                 "frameIndex":  985,
+                                                 "elapsedMilliseconds":  43166.231,
+                                                 "separationPixels":  12,
+                                                 "patternName":  "scenario-008",
+                                                 "phaseName":  "moving",
+                                                 "scenarioIndex":  8,
+                                                 "expectedX":  1270,
+                                                 "expectedY":  720,
+                                                 "expectedVelocityPixelsPerSecond":  13.014
+                                             },
+                                             {
+                                                 "frameIndex":  784,
+                                                 "elapsedMilliseconds":  34545.537,
+                                                 "separationPixels":  12,
+                                                 "patternName":  "scenario-006",
+                                                 "phaseName":  "moving",
+                                                 "scenarioIndex":  6,
+                                                 "expectedX":  908,
+                                                 "expectedY":  619,
+                                                 "expectedVelocityPixelsPerSecond":  359.317
+                                             },
+                                             {
+                                                 "frameIndex":  783,
+                                                 "elapsedMilliseconds":  34509.536,
+                                                 "separationPixels":  12,
+                                                 "patternName":  "scenario-006",
+                                                 "phaseName":  "moving",
+                                                 "scenarioIndex":  6,
+                                                 "expectedX":  921,
+                                                 "expectedY":  619,
+                                                 "expectedVelocityPixelsPerSecond":  358.311
+                                             }
+                                         ]
+                     }
+                 ]
+}
